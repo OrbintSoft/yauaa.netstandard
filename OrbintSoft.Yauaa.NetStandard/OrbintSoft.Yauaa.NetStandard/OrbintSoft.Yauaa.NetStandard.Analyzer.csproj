@@ -7,35 +7,16 @@
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <RootNamespace>OrbintSoft.Yauaa.Analyzer</RootNamespace>
     <RepositoryType>Git</RepositoryType>
-    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>
-  Yet Another UserAgent Analyzer .NET Standard
-  Porting realized by Balzarotti Stefano, Copyright (C) OrbintSoft
-  
-  Original Author and License:
-  
-  Yet Another UserAgent Analyzer
-  Copyright (C) 2013-2018 Niels Basjes
- 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
- 
-  https://www.apache.org/licenses/LICENSE-2.0
- 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-  
-  All rights should be reserved to the original author Niels Basjes
-</PackageReleaseNotes>
-    <Version>5.1.0-alpha1</Version>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <Version>5.2.0-alpha1</Version>
     <AssemblyVersion>5.2.0.0</AssemblyVersion>
     <FileVersion>5.2.0.0</FileVersion>
+    <PackageProjectUrl></PackageProjectUrl>
+    <Description>This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
+    <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Antlr4" Version="4.6.5">

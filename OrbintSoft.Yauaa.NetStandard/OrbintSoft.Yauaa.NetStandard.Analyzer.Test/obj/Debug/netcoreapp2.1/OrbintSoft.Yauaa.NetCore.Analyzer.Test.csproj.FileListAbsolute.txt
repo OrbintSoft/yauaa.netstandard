@@ -1,0 +1,17 @@
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\xunit.runner.reporters.netcoreapp10.dll
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\xunit.runner.utility.netcoreapp10.dll
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.deps.json
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.runtimeconfig.json
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.runtimeconfig.dev.json
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.dll
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.pdb
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\obj\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.csprojAssemblyReference.cache
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\obj\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.csproj.CoreCompileInputs.cache
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\obj\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.AssemblyInfoInputs.cache
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\obj\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.AssemblyInfo.cs
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\obj\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.dll
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\obj\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.pdb
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetStandard.Analyzer.dll
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\bin\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetStandard.Analyzer.pdb
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.Test\obj\Debug\netcoreapp2.1\OrbintSoft.Yauaa.NetCore.Analyzer.Test.csproj.CopyComplete
