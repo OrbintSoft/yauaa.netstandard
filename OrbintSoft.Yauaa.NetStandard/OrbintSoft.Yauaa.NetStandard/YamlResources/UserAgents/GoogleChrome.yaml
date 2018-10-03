@@ -1,0 +1,1333 @@
+#
+# Yet Another UserAgent Analyzer
+# Copyright (C) 2013-2018 Niels Basjes
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an AS IS BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#https://en.wikipedia.org/wiki/List_of_web_browsers
+#
+#Layout engines
+#Gecko is developed by the Mozilla Foundation.
+#KHTML is developed by the KDE project.
+#Presto is developed by Opera Software for use in Opera. Development stopped as Opera transitioned to Blink.
+#Tasman was developed by Microsoft for use in Internet Explorer 5 for Macintosh.
+#Trident is developed by Microsoft for use in the Windows versions of Internet Explorer 4 to Internet Explorer 11.
+#WebKit is a fork of KHTML by Apple Inc. used in Apple Safari, Chromium and Google Chrome.
+#Blink is a 2013 fork of WebKit by Google used in Chromium, Google Chrome and Opera.[20]
+#Servo is an experimental web browser layout engine being developed cooperatively by Mozilla and Samsung.
+#EdgeHTML is the engine developed by Microsoft for Edge. It is a largely rewritten fork of Trident with all legacy code removed.
+
+config:
+
+- matcher:
+    extract:
+    - 'AgentClass                          :   2014 :"Browser"'
+    - 'AgentName                           :   2014 :"Chrome"'
+    - 'AgentVersion                        :   2014 :agent.product.(1)name="Chrome"^.version'
+
+  # Chrome on iOS
+- matcher:
+    extract:
+    - 'AgentClass                          :   2014 :"Browser"'
+    - 'AgentName                           :   2014 :"Chrome"'
+    - 'AgentVersion                        :   2014 :agent.product.(1)name="CriOS"^.version'
+
+  # Chrome uses Blink starting with version 28
+  # See https://en.wikipedia.org/wiki/Blink_(web_engine)
+  # We define the 'old' version with a higher score and set the new one as the default
+- matcher:
+    require:
+    - 'LookUp[ChromeLayoutEngineName;agent.product.(1)name="Chrome"^.version[-1]]'
+    extract:
+    - 'LayoutEngineClass                   :   1000 :"Browser"'
+    - 'LayoutEngineName                    :   1000 :"AppleWebKit"'
+    - 'LayoutEngineVersion                 :   1000 :agent.product.(1)name="AppleWebKit"^.version'
+
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :    999 :"Browser"'
+    - 'LayoutEngineName                    :    999 :"Blink"'
+    - 'LayoutEngineVersion                 :    999 :agent.product.(1)name="Chrome"^.version[-2]'
+
+- matcher:
+    require:
+    - 'LookUp[ChromeLayoutEngineName;agent.product.(1)name="CriOS"^.version[-1]]'
+    extract:
+    - 'LayoutEngineClass                   :   1000 :"Browser"'
+    - 'LayoutEngineName                    :   1000 :"AppleWebKit"'
+    - 'LayoutEngineVersion                 :   1000 :agent.product.(1)name="AppleWebKit"^.version'
+
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :    999 :"Browser"'
+    - 'LayoutEngineName                    :    999 :"Blink"'
+    - 'LayoutEngineVersion                 :    999 :agent.product.(1)name="CriOS"^.version[-2]'
+
+# Sometimes (Coc coc does this) we do not have "Chrome" with "Mobile Safari" but instead: "Mobile Chrome" with "Safari"
+- matcher:
+    require:
+    - 'LookUp[ChromeLayoutEngineName;agent.product.(1)name="Mobile Chrome"^.version[-1]]'
+    extract:
+    - 'DeviceClass                         :   1000 :"Phone"'
+    - 'LayoutEngineClass                   :   1000 :"Browser"'
+    - 'LayoutEngineName                    :   1000 :"AppleWebKit"'
+    - 'LayoutEngineVersion                 :   1000 :agent.product.(1)name="AppleWebKit"^.version'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    999 :"Phone"'
+    - 'LayoutEngineClass                   :    999 :"Browser"'
+    - 'LayoutEngineName                    :    999 :"Blink"'
+    - 'LayoutEngineVersion                 :    999 :agent.product.(1)name="Mobile Chrome"^.version[-2]'
+
+
+- lookup:
+    name: 'ChromeLayoutEngineName'
+    map:
+      "0"  : "AppleWebKit"
+      "1"  : "AppleWebKit"
+      "2"  : "AppleWebKit"
+      "3"  : "AppleWebKit"
+      "4"  : "AppleWebKit"
+      "5"  : "AppleWebKit"
+      "6"  : "AppleWebKit"
+      "7"  : "AppleWebKit"
+      "8"  : "AppleWebKit"
+      "9"  : "AppleWebKit"
+      "10" : "AppleWebKit"
+      "11" : "AppleWebKit"
+      "12" : "AppleWebKit"
+      "13" : "AppleWebKit"
+      "14" : "AppleWebKit"
+      "15" : "AppleWebKit"
+      "16" : "AppleWebKit"
+      "17" : "AppleWebKit"
+      "18" : "AppleWebKit"
+      "19" : "AppleWebKit"
+      "20" : "AppleWebKit"
+      "21" : "AppleWebKit"
+      "22" : "AppleWebKit"
+      "23" : "AppleWebKit"
+      "24" : "AppleWebKit"
+      "25" : "AppleWebKit"
+      "26" : "AppleWebKit"
+      "27" : "AppleWebKit"
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP'
+      OperatingSystemNameVersion           : 'Windows XP'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '525.13'
+      LayoutEngineVersionMajor             : '525'
+      LayoutEngineNameVersion              : 'AppleWebKit 525.13'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 525'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '0.2.149.27'
+      AgentVersionMajor                    : '0'
+      AgentNameVersion                     : 'Chrome 0.2.149.27'
+      AgentNameVersionMajor                : 'Chrome 0'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; CrOS x86_64 6310.68.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.96 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Google Chromebook'
+      DeviceBrand                          : 'Google'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Chrome OS'
+      OperatingSystemVersion               : '6310.68.0'
+      OperatingSystemNameVersion           : 'Chrome OS 6310.68.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '39.0'
+      LayoutEngineVersionMajor             : '39'
+      LayoutEngineNameVersion              : 'Blink 39.0'
+      LayoutEngineNameVersionMajor         : 'Blink 39'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '39.0.2171.96'
+      AgentVersionMajor                    : '39'
+      AgentNameVersion                     : 'Chrome 39.0.2171.96'
+      AgentNameVersionMajor                : 'Chrome 39'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; CrOS armv7l 6680.81.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.118 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Google Chromebook'
+      DeviceBrand                          : 'Google'
+      DeviceCpu                            : 'ARMv7l'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Chrome OS'
+      OperatingSystemVersion               : '6680.81.0'
+      OperatingSystemNameVersion           : 'Chrome OS 6680.81.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '41.0'
+      LayoutEngineVersionMajor             : '41'
+      LayoutEngineNameVersion              : 'Blink 41.0'
+      LayoutEngineNameVersionMajor         : 'Blink 41'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '41.0.2272.118'
+      AgentVersionMajor                    : '41'
+      AgentNameVersion                     : 'Chrome 41.0.2272.118'
+      AgentNameVersionMajor                : 'Chrome 41'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; CrOS x86_64 6680.78.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.102 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Google Chromebook'
+      DeviceBrand                          : 'Google'            # This is a "Best guess".
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Chrome OS'
+      OperatingSystemVersion               : '6680.78.0'
+      OperatingSystemNameVersion           : 'Chrome OS 6680.78.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '41.0'
+      LayoutEngineVersionMajor             : '41'
+      LayoutEngineNameVersion              : 'Blink 41.0'
+      LayoutEngineNameVersionMajor         : 'Blink 41'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '41.0.2272.102'
+      AgentVersionMajor                    : '41'
+      AgentNameVersion                     : 'Chrome 41.0.2272.102'
+      AgentNameVersionMajor                : 'Chrome 41'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.133 Mobile Safari/535.19'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung Galaxy Nexus'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.0.4'
+      OperatingSystemNameVersion           : 'Android 4.0.4'
+      OperatingSystemVersionBuild          : 'IMM76B'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '535.19'
+      LayoutEngineVersionMajor             : '535'
+      LayoutEngineNameVersion              : 'AppleWebKit 535.19'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 535'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '18.0.1025.133'
+      AgentVersionMajor                    : '18'
+      AgentNameVersion                     : 'Chrome 18.0.1025.133'
+      AgentNameVersionMajor                : 'Chrome 18'
+
+# Webview
+# https://developer.chrome.com/multidevice/user-agent
+
+# WebView UA in KitKat to Lollipop
+# Mozilla/5.0 (Linux; Android 4.4; Nexus 5 Build/_BuildID_) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36
+# If you’re attempting to differentiate between the WebView and Chrome for Android, you should look for the
+# presence of the Version/_X.X_ string in the WebView user-agent string.
+# Don’t rely on the specific Chrome version number (for example, 30.0.0.0) as the version numbers
+# changes with each release.
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Version"'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :      0 :"Unknown Webview App"'
+    - 'WebviewAppVersion                   :      0 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Version"'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     10 :NormalizeBrand[agent.product.(1)name="Chrome"^>>.name]'
+    - 'WebviewAppVersion                   :     10 :agent.product.(1)name="Chrome"^>>.version'
+
+- matcher:
+    variable:
+    - 'WebViewProduct: agent.product.(1)name="Chrome"^>>'
+    require:
+    - 'agent.product.(1)name="Version"'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     11 :LookUp[SpecialChromeBrowserNames;@WebViewProduct.name]'
+    - 'WebviewAppVersion                   :     11 :@WebViewProduct.version'
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Version"'
+    - 'agent.product.(1)name="Chrome"'
+    variable:
+    - 'WebViewProduct: agent.product.(1)name="Version"^>>.name="Chrome"^<'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     12 :LookUp[SpecialChromeBrowserNames;@WebViewProduct.name]'
+    - 'WebviewAppVersion                   :     12 :@WebViewProduct.version'
+
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Version"'
+    - 'agent.product.(1)name="Chrome"'
+    - 'agent.product.(1)name="Safari"'
+    variable:
+    - 'WebViewProduct: agent.product.(1)name="Version"^>.name="Chrome"^>>.name="Safari"^<'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     12 :LookUp[SpecialChromeBrowserNames;@WebViewProduct.name]'
+    - 'WebviewAppVersion                   :     12 :@WebViewProduct.version'
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Version"'
+    - 'agent.product.(1)name="Chrome"'
+    - 'agent.product.(1)name="Mobile Safari"'
+    variable:
+    - 'WebViewProduct: agent.product.(1)name="Version"^>.name="Chrome"^>>.name="Mobile Safari"^<'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     12 :LookUp[SpecialChromeBrowserNames;@WebViewProduct.name]'
+    - 'WebviewAppVersion                   :     12 :@WebViewProduct.version'
+
+- lookup:
+    name: 'KnownWebviewAppNames'
+    map:
+      'GSApp' : 'Google Search App'
+      'Focus' : 'Firefox Focus'
+
+- matcher:
+    variable:
+    - 'WebViewProduct: agent.product.(1)name="Chrome"^>>'
+    require:
+    - 'agent.product.(1)name="Version"'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     11 :LookUp[KnownWebviewAppNames;@WebViewProduct.name]'
+    - 'WebviewAppVersion                   :     11 :@WebViewProduct.version'
+
+- matcher:
+    variable:
+    - 'WebViewProduct: agent.product.(1)name="Version"^>>.name="Chrome"^<'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     12 :LookUp[KnownWebviewAppNames;@WebViewProduct.name]'
+    - 'WebviewAppVersion                   :     12 :@WebViewProduct.version'
+
+- matcher:
+    variable:
+    - 'WebViewProduct: agent.product.(1)name="Version"^>>.name="Chrome"^<'
+    extract:
+    - 'AgentClass                          :   2500 :"Browser Webview"'
+    - 'AgentName                           :   2500 :"Chrome Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :     11 :@WebViewProduct.name'
+    - 'WebviewAppVersion                   :     11 :@WebViewProduct.version'
+
+# WebView UA in Lollipop and Above
+# In the newer versions of WebView, you can differentiate the WebView by looking for the wv field
+# as highlighted below.
+
+# Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)text="wv"'
+    extract:
+    - 'AgentClass                          :  10000 :"Browser Webview"'
+    - 'AgentName                           :  10000 :"Chrome Webview"'
+    - 'AgentVersion                        :  10000 :agent.product.(1)name="Chrome"^.version'
+    - 'WebviewAppName                      :      0 :"Unknown Webview App"'
+    - 'WebviewAppVersion                   :      0 :"??"'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 5.1.1; Nexus 5 Build/LMY48B; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.65 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 5'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '5.1.1'
+      OperatingSystemNameVersion           : 'Android 5.1.1'
+      OperatingSystemVersionBuild          : 'LMY48B'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '43.0'
+      LayoutEngineVersionMajor             : '43'
+      LayoutEngineNameVersion              : 'Blink 43.0'
+      LayoutEngineNameVersionMajor         : 'Blink 43'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '43.0.2357.65'
+      AgentVersionMajor                    : '43'
+      AgentNameVersion                     : 'Chrome Webview 43.0.2357.65'
+      AgentNameVersionMajor                : 'Chrome Webview 43'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 6 Build/MMB29S; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/47.0.2526.100 Mobile Safari/537.36 GSApp/1.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : 'MMB29S'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '47.0'
+      LayoutEngineVersionMajor             : '47'
+      LayoutEngineNameVersion              : 'Blink 47.0'
+      LayoutEngineNameVersionMajor         : 'Blink 47'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '47.0.2526.100'
+      AgentVersionMajor                    : '47'
+      AgentNameVersion                     : 'Chrome Webview 47.0.2526.100'
+      AgentNameVersionMajor                : 'Chrome Webview 47'
+      WebviewAppName                       : 'Google Search App'
+      WebviewAppNameVersionMajor           : 'Google Search App 1'
+      WebviewAppVersion                    : '1.1'
+      WebviewAppVersionMajor               : '1'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 5.1; ZP951 Build/LMY47D) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 GSApp/1.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'ZP951'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '5.1'
+      OperatingSystemNameVersion           : 'Android 5.1'
+      OperatingSystemVersionBuild          : 'LMY47D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '39.0'
+      LayoutEngineVersionMajor             : '39'
+      LayoutEngineNameVersion              : 'Blink 39.0'
+      LayoutEngineNameVersionMajor         : 'Blink 39'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '39.0.0.0'
+      AgentVersionMajor                    : '39'
+      AgentNameVersion                     : 'Chrome Webview 39.0.0.0'
+      AgentNameVersionMajor                : 'Chrome Webview 39'
+      WebviewAppName                       : 'Google Search App'
+      WebviewAppNameVersionMajor           : 'Google Search App 1'
+      WebviewAppVersion                    : '1.1'
+      WebviewAppVersionMajor               : '1'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 6.0; HUAWEI MT7-L09 Build/HuaweiMT7-L09; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/58.0.3029.83 Mobile Safari/537.36 PlayStation App/4.20.5/nl-NL/nl-NL'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Huawei MT7-L09'
+      DeviceBrand                          : 'Huawei'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0'
+      OperatingSystemNameVersion           : 'Android 6.0'
+      OperatingSystemVersionBuild          : 'HuaweiMT7-L09'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '58.0'
+      LayoutEngineVersionMajor             : '58'
+      LayoutEngineNameVersion              : 'Blink 58.0'
+      LayoutEngineNameVersionMajor         : 'Blink 58'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '58.0.3029.83'
+      AgentVersionMajor                    : '58'
+      AgentNameVersion                     : 'Chrome Webview 58.0.3029.83'
+      AgentNameVersionMajor                : 'Chrome Webview 58'
+      WebviewAppName                       : 'PlayStation APP'
+      WebviewAppNameVersionMajor           : 'PlayStation APP 4'
+      WebviewAppVersion                    : '4.20.5'
+      WebviewAppVersionMajor               : '4'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_1_1 like Mac OS X) AppleWebKit/602.2.14 (KHTML, like Gecko) Mobile/14B100 PlayStation Messages App/4.0.15'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Apple iPhone'
+      DeviceBrand                          : 'Apple'
+      DeviceFirmwareVersion                : '14B100'
+      DeviceVersion                        : 'iPhone'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'iOS'
+      OperatingSystemVersion               : '10.1.1'
+      OperatingSystemNameVersion           : 'iOS 10.1.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '602.2.14'
+      LayoutEngineVersionMajor             : '602'
+      LayoutEngineNameVersion              : 'AppleWebKit 602.2.14'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 602'
+      AgentClass                           : 'Mobile App'
+      AgentName                            : 'PlayStation Messages App'
+      AgentVersion                         : '4.0.15'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'PlayStation Messages App 4.0.15'
+      AgentNameVersionMajor                : 'PlayStation Messages App 4'
+
+- lookup:
+    name: 'SpecialChromeBrowserNames'
+    map:
+      "Vivaldi"         : "Vivaldi"
+      "OPR"             : "Opera"
+      "MMS"             : "Opera Neon"
+      "OPT"             : "Opera Touch"
+      "Amigo"           : "Amigo"       # https://amigo.mail.ru/
+      "MRCHROME"        : "Amigo"       # https://amigo.mail.ru/
+      "MRPULSE"         : "Pulse"       # https://amigo.mail.ru/
+      "Chromium"        : "Chromium"
+      "Ubuntu Chromium" : "Chromium"
+      "Epiphany"        : "Epiphany"
+      "UCBrowser"       : "UCBrowser"
+      "Viera"           : "Viera"
+      "Puffin"          : "Puffin"
+      "AvantBrowser"    : "AvantBrowser"
+      "CoolNovo"        : "CoolNovo"
+
+- matcher:
+    variable:
+    - 'ProductAfterChrome: agent.product.(1)name="Chrome"^>'
+    extract:
+    - 'AgentName                           :   2022 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.(1)name]'
+    - 'AgentVersion                        :   2022 :@ProductAfterChrome.(1)version'
+
+- matcher:
+    variable:
+    - 'ProductAfterChrome: agent.product.(1)name="Chrome"^>>'
+    extract:
+    - 'AgentName                           :   2021 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.(1)name]'
+    - 'AgentVersion                        :   2021 :@ProductAfterChrome.(1)version'
+
+- matcher:
+    variable:
+    - 'ProductAfterChrome: agent.product.(1)name="Chrome"^>>>'
+    extract:
+    - 'AgentName                           :   2020 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.(1)name]'
+    - 'AgentVersion                        :   2020 :@ProductAfterChrome.(1)version'
+
+- matcher:
+    variable:
+    - 'ProductAfterChrome: agent.product.(1)name="Chrome"^>>>>'
+    extract:
+    - 'AgentName                           :   2019 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.(1)name]'
+    - 'AgentVersion                        :   2019 :@ProductAfterChrome.(1)version'
+
+- matcher:
+    extract:
+    - 'AgentName                           :   2019 :LookUp[SpecialChromeBrowserNames;agent.text]'
+    - 'AgentVersion                        :   2019 :agent.product.(1)name="Chrome"^.version'
+
+- matcher:
+    variable:
+    - 'ProductBeforeChrome: agent.product.(1)name="Chrome"^<'
+    extract:
+    - 'AgentName                           :   2017 :LookUp[SpecialChromeBrowserNames;@ProductBeforeChrome.(1)name]'
+    - 'AgentVersion                        :   2017 :@ProductBeforeChrome.(1)version'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.99 Safari/537.36 Vivaldi/1.0.321.3'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '45.0'
+      LayoutEngineVersionMajor             : '45'
+      LayoutEngineNameVersion              : 'Blink 45.0'
+      LayoutEngineNameVersionMajor         : 'Blink 45'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Vivaldi'
+      AgentVersion                         : '1.0.321.3'
+      AgentVersionMajor                    : '1'
+      AgentNameVersion                     : 'Vivaldi 1.0.321.3'
+      AgentNameVersionMajor                : 'Vivaldi 1'
+
+# Opera Neon
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.21 Safari/537.36 MMS/1.0.2459.0'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '53.0'
+      LayoutEngineVersionMajor             : '53'
+      LayoutEngineNameVersion              : 'Blink 53.0'
+      LayoutEngineNameVersionMajor         : 'Blink 53'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Opera Neon'
+      AgentVersion                         : '1.0.2459.0'
+      AgentVersionMajor                    : '1'
+      AgentNameVersion                     : 'Opera Neon 1.0.2459.0'
+      AgentNameVersionMajor                : 'Opera Neon 1'
+
+# Confusing case. I am unsure what the right value for the CPU and the bits of the CPU are. So any of the two options is valid.
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux i686 (x86_64)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel i686'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'Intel i686'
+      OperatingSystemNameVersion           : 'Linux Intel i686'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '39.0'
+      LayoutEngineVersionMajor             : '39'
+      LayoutEngineNameVersion              : 'Blink 39.0'
+      LayoutEngineNameVersionMajor         : 'Blink 39'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '39.0.2171.95'
+      AgentVersionMajor                    : '39'
+      AgentNameVersion                     : 'Chrome 39.0.2171.95'
+      AgentNameVersionMajor                : 'Chrome 39'
+
+- test:
+    input:
+      # Pulse browser from https://amigo.mail.ru/
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD92G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.105 Mobile Safari/537.36 MRPULSE v1.3.5'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.0'
+      OperatingSystemNameVersion           : 'Android 7.0'
+      OperatingSystemVersionBuild          : 'NBD92G'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '55.0'
+      LayoutEngineVersionMajor             : '55'
+      LayoutEngineNameVersion              : 'Blink 55.0'
+      LayoutEngineNameVersionMajor         : 'Blink 55'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Pulse'
+      AgentVersion                         : 'v1.3.5'
+      AgentVersionMajor                    : 'v1'
+      AgentNameVersion                     : 'Pulse v1.3.5'
+      AgentNameVersionMajor                : 'Pulse v1'
+
+- test:
+    input:
+      # Several sources on the internet indicate this is a robot
+      #   https://github.com/fnando/browser/issues/205
+      #   http://www.spambotsecurity.com/forum/viewtopic.php?f=7&t=1424
+      # It is also possible MrChrome is just the internal name name of the Amigo browser
+      # (The android variant is called Pulse which shows MRPULSE)
+      # See https://amigo.mail.ru/
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1709.117 Amigo/32.0.1709.117 MRCHROME SOC Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'Vista'
+      OperatingSystemNameVersion           : 'Windows Vista'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '32.0'
+      LayoutEngineVersionMajor             : '32'
+      LayoutEngineNameVersion              : 'Blink 32.0'
+      LayoutEngineNameVersionMajor         : 'Blink 32'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Amigo'
+      AgentVersion                         : '32.0.1709.117'
+      AgentVersionMajor                    : '32'
+      AgentNameVersion                     : 'Amigo 32.0.1709.117'
+      AgentNameVersionMajor                : 'Amigo 32'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.46 Safari/535.11 MRCHROME'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '535.11'
+      LayoutEngineVersionMajor             : '535'
+      LayoutEngineNameVersion              : 'AppleWebKit 535.11'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 535'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Amigo'
+      AgentVersion                         : '17.0.963.46'
+      AgentVersionMajor                    : '17'
+      AgentNameVersion                     : 'Amigo 17.0.963.46'
+      AgentNameVersionMajor                : 'Amigo 17'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Focus/1.3 Chrome/60.0.3112.116 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Android Mobile'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.1.1'
+      OperatingSystemNameVersion           : 'Android 7.1.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '60.0'
+      LayoutEngineVersionMajor             : '60'
+      LayoutEngineNameVersion              : 'Blink 60.0'
+      LayoutEngineNameVersionMajor         : 'Blink 60'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '60.0.3112.116'
+      AgentVersionMajor                    : '60'
+      AgentNameVersion                     : 'Chrome Webview 60.0.3112.116'
+      AgentNameVersionMajor                : 'Chrome Webview 60'
+      WebviewAppName                       : 'Firefox Focus'
+      WebviewAppNameVersionMajor           : 'Firefox Focus 1'
+      WebviewAppVersion                    : '1.3'
+      WebviewAppVersionMajor               : '1'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 SomeThing Unexpected/3.14 Chrome/60.0.3112.116 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Android Mobile'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.1.1'
+      OperatingSystemNameVersion           : 'Android 7.1.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '60.0'
+      LayoutEngineVersionMajor             : '60'
+      LayoutEngineNameVersion              : 'Blink 60.0'
+      LayoutEngineNameVersionMajor         : 'Blink 60'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '60.0.3112.116'
+      AgentVersionMajor                    : '60'
+      AgentNameVersion                     : 'Chrome Webview 60.0.3112.116'
+      AgentNameVersionMajor                : 'Chrome Webview 60'
+      WebviewAppName                       : 'SomeThing Unexpected'
+      WebviewAppNameVersionMajor           : 'SomeThing Unexpected 3'
+      WebviewAppVersion                    : '3.14'
+      WebviewAppVersionMajor               : '3'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.1.1) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/60.0.3112.116 Mobile Safari/537.36 SomeThing Unexpected/3.14'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Android Mobile'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.1.1'
+      OperatingSystemNameVersion           : 'Android 7.1.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '60.0'
+      LayoutEngineVersionMajor             : '60'
+      LayoutEngineNameVersion              : 'Blink 60.0'
+      LayoutEngineNameVersionMajor         : 'Blink 60'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '60.0.3112.116'
+      AgentVersionMajor                    : '60'
+      AgentNameVersion                     : 'Chrome Webview 60.0.3112.116'
+      AgentNameVersionMajor                : 'Chrome Webview 60'
+      WebviewAppName                       : 'SomeThing Unexpected'
+      WebviewAppNameVersionMajor           : 'SomeThing Unexpected 3'
+      WebviewAppVersion                    : '3.14'
+      WebviewAppVersionMajor               : '3'
+
+# Chromium
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/45.0.2454.101 Chrome/45.0.2454.101 Safari/537.36 FirePHP/4Chrome'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Ubuntu'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Ubuntu ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '45.0'
+      LayoutEngineVersionMajor             : '45'
+      LayoutEngineNameVersion              : 'Blink 45.0'
+      LayoutEngineNameVersionMajor         : 'Blink 45'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chromium'
+      AgentVersion                         : '45.0.2454.101'
+      AgentVersionMajor                    : '45'
+      AgentNameVersion                     : 'Chromium 45.0.2454.101'
+      AgentNameVersionMajor                : 'Chromium 45'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/45.0.2454.101 Chrome/45.0.2454.101 Safari/537.36,gzip(gfe)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Ubuntu'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Ubuntu ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '45.0'
+      LayoutEngineVersionMajor             : '45'
+      LayoutEngineNameVersion              : 'Blink 45.0'
+      LayoutEngineNameVersionMajor         : 'Blink 45'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chromium'
+      AgentVersion                         : '45.0.2454.101'
+      AgentVersionMajor                    : '45'
+      AgentNameVersion                     : 'Chromium 45.0.2454.101'
+      AgentNameVersionMajor                : 'Chromium 45'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.22+ (KHTML, like Gecko) Chromium/17.0.963.56 Chrome/17.0.963.56 Safari/535.22+ Debian/7.0 (3.4.2-2.1) Epiphany/3.4.2'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Debian'
+      OperatingSystemVersion               : '7.0'
+      OperatingSystemNameVersion           : 'Debian 7.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '535.22'
+      LayoutEngineVersionMajor             : '535'
+      LayoutEngineNameVersion              : 'AppleWebKit 535.22'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 535'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Epiphany'
+      AgentVersion                         : '3.4.2'
+      AgentVersionMajor                    : '3'
+      AgentNameVersion                     : 'Epiphany 3.4.2'
+      AgentNameVersionMajor                : 'Epiphany 3'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (SMART-TV; X11; Linux armv7l) AppleWebKit/537.42 (KHTML, like Gecko) Chromium/25.0.1349.2 Chrome/25.0.1349.2 Safari/537.42'
+    expected:
+      DeviceClass                          : 'TV'
+      DeviceName                           : 'Samsung Smart TV'
+      DeviceBrand                          : 'Samsung'
+      DeviceCpu                            : 'ARMv7l'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Embedded'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'SmartTV'
+      OperatingSystemNameVersion           : 'Linux SmartTV'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '537.42'
+      LayoutEngineVersionMajor             : '537'
+      LayoutEngineNameVersion              : 'AppleWebKit 537.42'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chromium'
+      AgentVersion                         : '25.0.1349.2'
+      AgentVersionMajor                    : '25'
+      AgentNameVersion                     : 'Chromium 25.0.1349.2'
+      AgentNameVersionMajor                : 'Chromium 25'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (SMART-TV; X11; Linux armv7l) AppleWebkit/537.42 (KHTML, like Gecko) Chromium/25.0.1349.2 Chrome/25.0.1349.2 Safari/537.42,gzip(gfe)'
+    expected:
+      DeviceClass                          : 'TV'
+      DeviceName                           : 'Samsung Smart TV'
+      DeviceBrand                          : 'Samsung'
+      DeviceCpu                            : 'ARMv7l'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Embedded'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'SmartTV'
+      OperatingSystemNameVersion           : 'Linux SmartTV'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '537.42'
+      LayoutEngineVersionMajor             : '537'
+      LayoutEngineNameVersion              : 'AppleWebKit 537.42'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chromium'
+      AgentVersion                         : '25.0.1349.2'
+      AgentVersionMajor                    : '25'
+      AgentNameVersion                     : 'Chromium 25.0.1349.2'
+      AgentNameVersionMajor                : 'Chromium 25'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux armv7l) AppleWebKit/537.6+ (KHTML, like Gecko) Chromium/23.0.1271.95 Chrome/23.0.1271.95 Safari/537.6+ Epiphany/3.6.1'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'ARMv7l'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'ARMv7l'
+      OperatingSystemNameVersion           : 'Linux ARMv7l'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '537.6'
+      LayoutEngineVersionMajor             : '537'
+      LayoutEngineNameVersion              : 'AppleWebKit 537.6'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Epiphany'
+      AgentVersion                         : '3.6.1'
+      AgentVersionMajor                    : '3'
+      AgentNameVersion                     : 'Epiphany 3.6.1'
+      AgentNameVersionMajor                : 'Epiphany 3'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/62.0.3202.89 Chrome/62.0.3202.89 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Ubuntu'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Ubuntu ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '62.0'
+      LayoutEngineVersionMajor             : '62'
+      LayoutEngineNameVersion              : 'Blink 62.0'
+      LayoutEngineNameVersionMajor         : 'Blink 62'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chromium'
+      AgentVersion                         : '62.0.3202.89'
+      AgentVersionMajor                    : '62'
+      AgentNameVersion                     : 'Chromium 62.0.3202.89'
+      AgentNameVersionMajor                : 'Chromium 62'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/63.0.3239.84 Chrome/63.0.3239.84 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Ubuntu'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Ubuntu ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '63.0'
+      LayoutEngineVersionMajor             : '63'
+      LayoutEngineNameVersion              : 'Blink 63.0'
+      LayoutEngineNameVersionMajor         : 'Blink 63'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chromium'
+      AgentVersion                         : '63.0.3239.84'
+      AgentVersionMajor                    : '63'
+      AgentNameVersion                     : 'Chromium 63.0.3239.84'
+      AgentNameVersionMajor                : 'Chromium 63'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0; ARM; Touch; WPDesktop) UCBrowser/4.2.1.541'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Windows Phone'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'ARM'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Phone'
+      OperatingSystemVersion               : '8'
+      OperatingSystemNameVersion           : 'Windows Phone 8'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '6.0'
+      LayoutEngineVersionMajor             : '6'
+      LayoutEngineNameVersion              : 'Trident 6.0'
+      LayoutEngineNameVersionMajor         : 'Trident 6'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '10.0'
+      AgentVersionMajor                    : '10'
+      AgentNameVersion                     : 'Internet Explorer 10.0'
+      AgentNameVersionMajor                : 'Internet Explorer 10'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.108 Safari/537.36 UCBrowser/12.5.5.1111'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP x64 Edition'
+      OperatingSystemNameVersion           : 'Windows XP x64 Edition'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '57.0'
+      LayoutEngineVersionMajor             : '57'
+      LayoutEngineNameVersion              : 'Blink 57.0'
+      LayoutEngineNameVersionMajor         : 'Blink 57'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'UCBrowser'
+      AgentVersion                         : '12.5.5.1111'
+      AgentVersionMajor                    : '12'
+      AgentNameVersion                     : 'UCBrowser 12.5.5.1111'
+      AgentNameVersionMajor                : 'UCBrowser 12'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36 UCBrowser/11.4.5.1005'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '31.0'
+      LayoutEngineVersionMajor             : '31'
+      LayoutEngineNameVersion              : 'Blink 31.0'
+      LayoutEngineNameVersionMajor         : 'Blink 31'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'UCBrowser'
+      AgentVersion                         : '11.4.5.1005'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'UCBrowser 11.4.5.1005'
+      AgentNameVersionMajor                : 'UCBrowser 11'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US) AppleWebKit/534.31 (KHTML, like Gecko) Chrome/17.0.558.0 Safari/534.31 UCBrowser/11.0.4.846'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP x64 Edition'
+      OperatingSystemNameVersion           : 'Windows XP x64 Edition'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.31'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.31'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'UCBrowser'
+      AgentVersion                         : '11.0.4.846'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'UCBrowser 11.0.4.846'
+      AgentNameVersionMajor                : 'UCBrowser 11'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 5.2; zh-CN) AppleWebKit/537.51.1 (KHTML, like Gecko) Chrome/40.0.2214.89 Safari/537.36 UCBrowser/11.9.2.1062 AliApp(TUnionSDK/0.1.20.2)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP x64 Edition'
+      OperatingSystemNameVersion           : 'Windows XP x64 Edition'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '40.0'
+      LayoutEngineVersionMajor             : '40'
+      LayoutEngineNameVersion              : 'Blink 40.0'
+      LayoutEngineNameVersionMajor         : 'Blink 40'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'UCBrowser'
+      AgentVersion                         : '11.9.2.1062'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'UCBrowser 11.9.2.1062'
+      AgentNameVersionMajor                : 'UCBrowser 11'
+      AgentLanguage                        : 'Chinese (S)'
+      AgentLanguageCode                    : 'zh-cn'
+      AgentSecurity                        : 'Strong security'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X; zh-CN) AppleWebKit/537.51.1 (KHTML, like Gecko) Mobile/13C75 UCBrowser/11.2.0.863 Mobile AliApp(TUnionSDK/0.1.6)'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Apple iPhone'
+      DeviceBrand                          : 'Apple'
+      DeviceFirmwareVersion                : '13C75'
+      DeviceVersion                        : 'iPhone'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'iOS'
+      OperatingSystemVersion               : '9.2'
+      OperatingSystemNameVersion           : 'iOS 9.2'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'UCBrowser'
+      LayoutEngineVersion                  : '11.2.0.863'
+      LayoutEngineVersionMajor             : '11'
+      LayoutEngineNameVersion              : 'UCBrowser 11.2.0.863'
+      LayoutEngineNameVersionMajor         : 'UCBrowser 11'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'UCBrowser'
+      AgentVersion                         : '11.2.0.863'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'UCBrowser 11.2.0.863'
+      AgentNameVersionMajor                : 'UCBrowser 11'
+      AgentLanguage                        : 'Chinese (S)'
+      AgentLanguageCode                    : 'zh-cn'
+
+# This is actually a GAME running on a Desktop PC
+# See https://en.wikipedia.org/wiki/Tabletop_Simulator
+# ZFBrowser
+# https://zenfulcrum.com/docs/browser/Readme.html
+# Quote: This asset allows you to embed a full copy of Chromium, the open-source core of Google Chrome, inside your game!
+# So this is just Chrome running inside a game.
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1; Unity 3D; ZFBrowser 1.1.0; Tabletop Simulator 1.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2556.0 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '48.0'
+      LayoutEngineVersionMajor             : '48'
+      LayoutEngineNameVersion              : 'Blink 48.0'
+      LayoutEngineNameVersionMajor         : 'Blink 48'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '48.0.2556.0'
+      AgentVersionMajor                    : '48'
+      AgentNameVersion                     : 'Chrome 48.0.2556.0'
+      AgentNameVersionMajor                : 'Chrome 48'
+
+
+# Current guess: https://browser.yandex.com/
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 YaBrowser/17.7.1.791 Yowser/2.5 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '59.0'
+      LayoutEngineVersionMajor             : '59'
+      LayoutEngineNameVersion              : 'Blink 59.0'
+      LayoutEngineNameVersionMajor         : 'Blink 59'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'YaBrowser'
+      AgentVersion                         : '17.7.1.791'
+      AgentVersionMajor                    : '17'
+      AgentNameVersion                     : 'YaBrowser 17.7.1.791'
+      AgentNameVersionMajor                : 'YaBrowser 17'
+
+
+# 2345Explorer seems to be a bad advertising plugin
+# https://greatis.com/blog/win32-pup-gen/fix-2345explorer-virus.htm .
+# https://malwaretips.com/blogs/2345-com-removal/ --> "The 2345.com browser hijacker"
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.108 Safari/537.36 2345Explorer/7.1.0.12633'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP'
+      OperatingSystemNameVersion           : 'Windows XP'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '47.0'
+      LayoutEngineVersionMajor             : '47'
+      LayoutEngineNameVersion              : 'Blink 47.0'
+      LayoutEngineNameVersionMajor         : 'Blink 47'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '47.0.2526.108'
+      AgentVersionMajor                    : '47'
+      AgentNameVersion                     : 'Chrome 47.0.2526.108'
+      AgentNameVersionMajor                : 'Chrome 47'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.1.1; Nexus 6 Build/N6F27M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 YaBrowser/18.6.0.683.00 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.1.1'
+      OperatingSystemNameVersion           : 'Android 7.1.1'
+      OperatingSystemVersionBuild          : 'N6F27M'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '66.0'
+      LayoutEngineVersionMajor             : '66'
+      LayoutEngineNameVersion              : 'Blink 66.0'
+      LayoutEngineNameVersionMajor         : 'Blink 66'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'YaBrowser'
+      AgentVersion                         : '18.6.0.683.00'
+      AgentVersionMajor                    : '18'
+      AgentNameVersion                     : 'YaBrowser 18.6.0.683.00'
+      AgentNameVersionMajor                : 'YaBrowser 18'

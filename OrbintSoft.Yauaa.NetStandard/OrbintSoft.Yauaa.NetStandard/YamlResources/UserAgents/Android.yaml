@@ -1,0 +1,1847 @@
+#
+# Yet Another UserAgent Analyzer
+# Copyright (C) 2013-2018 Niels Basjes
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an AS IS BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+config:
+
+#- matcher:
+#    require:
+#    - 'agent.(1-2)product.comments.entry.text="Android"'
+#    extract:
+#    - 'DeviceClass                 : 7:"Mobile"'
+#    - 'DeviceName                  : 7:"Android Mobile"'
+#    - 'OperatingSystemClass        : 7:"Mobile"'
+#    - 'OperatingSystemName         : 7:"Android"'
+#    - 'OperatingSystemVersion      : 7:"??"'
+#
+#- matcher:
+#    require:
+#    - 'agent.(1-2)product.comments.entry.text="Adr"'
+#    extract:
+#    - 'DeviceClass                 : 7:"Mobile"'
+#    - 'DeviceName                  : 7:"Android Mobile"'
+#    - 'OperatingSystemClass        : 7:"Mobile"'
+#    - 'OperatingSystemName         : 7:"Android"'
+#    - 'OperatingSystemVersion      : 7:"??"'
+#
+- matcher:
+    extract:
+    - 'DeviceClass                         :     50 :"Mobile"'
+    - 'DeviceName                          :     10 :"Android Mobile"'
+    - 'OperatingSystemClass                :    500 :"Mobile"'
+    - 'OperatingSystemName                 :    500 :"Android"'
+    - 'OperatingSystemVersion              :    500 :agent.(1-2)product.comments.entry.product.name[1]="Android"^.version'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :     50 :"Mobile"'
+    - 'DeviceName                          :     10 :"Android Mobile"'
+    - 'OperatingSystemClass                :    500 :"Mobile"'
+    - 'OperatingSystemName                 :    500 :"Android"'
+    - 'OperatingSystemVersion              :    500 :agent.(1-2)product.comments.entry.product.name="Adr"^.version'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :     51 :"Mobile"'
+    - 'DeviceName                          :     11 :"Android Mobile"'
+    - 'OperatingSystemClass                :    501 :"Mobile"'
+    - 'OperatingSystemName                 :    501 :"Android"'
+    - 'OperatingSystemVersion              :    501 :agent.product.name="Android"^.version'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :     51 :"Mobile"'
+    - 'DeviceName                          :     11 :"Android Mobile"'
+    - 'OperatingSystemClass                :    501 :"Mobile"'
+    - 'OperatingSystemName                 :    501 :"Android"'
+    - 'OperatingSystemVersion              :    501 :agent.product.name="Adr"^.version'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.comments.entry.text="Android"'
+    extract:
+    - 'DeviceClass                         :      2 :"Mobile"'
+    - 'DeviceName                          :      4 :"Android Mobile"'
+    - 'OperatingSystemClass                :      4 :"Mobile"'
+    - 'OperatingSystemName                 :      4 :"Android"'
+    - 'OperatingSystemVersion              :      4 :"??"'
+
+- matcher:
+    variable:
+    - 'ProductBuild: agent.(1-2)product.(1)comments.entry.product.name="Build"^'
+    require:
+    - 'agent.(1-2)product.comments.entry.product.name[1]="Android"'
+    extract:
+    - 'DeviceClass                         :     51 :"Mobile"'
+    - 'DeviceName                          :     51 :@ProductBuild<'
+    - 'OperatingSystemVersionBuild         :     51 :@ProductBuild.version'
+
+# ===========================
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Gecko_user_agent_string_reference
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent
+# When Firefox runs on a device that has the phone form factor, there is a Mobile; token in the platform part of the UA string.
+# When Firefox runs on a tablet device, there is a Tablet; token in the platform part of the UA string instead
+- matcher:
+    require:
+    - 'agent.(1)product.comments.entry.text="Tablet"'
+    extract:
+    - 'DeviceClass                         :   1000 :"Tablet"'
+    - 'OperatingSystemClass                :   1000 :"Mobile"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.comments.entry.text="Mobile"'
+    extract:
+    - 'DeviceClass                         :   1000 :"Phone"'
+    - 'OperatingSystemClass                :   1000 :"Mobile"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.comments.entry.text="Phone"'
+    extract:
+    - 'DeviceClass                         :   1000 :"Phone"'
+    - 'OperatingSystemClass                :   1000 :"Mobile"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.comments.entry.text="TV"'
+    extract:
+    - 'DeviceClass                         :   1000 :"TV"'
+#        - 'OperatingSystemClass        :  1000:"Mobile"'
+
+# ===========================
+# https://developer.chrome.com/multidevice/user-agent
+#   If you are parsing user agent strings using regular expressions, the following can be used to check against Chrome on Android phones and tablets:
+#
+#   Phone pattern: 'Android' + 'Chrome/[.0-9]* Mobile'
+#   Tablet pattern: 'Android' + 'Chrome/[.0-9]* (?!Mobile)'
+
+# We ignore the Chrome part and apply this to all "Safari/ Mobile Safari" situations on what seems to be Android
+
+- matcher:
+    require:
+#    - 'agent.(1-2)product.(1)comments.entry.(1)product.(1)name[1]="Android"'
+    - 'agent.product.(1)name="Mobile Safari"'
+    extract:
+    - 'DeviceClass                         :   1000 :"Phone"'
+    - 'OperatingSystemClass                :   1000 :"Mobile"'
+
+#- matcher:
+#    require:
+#    - 'agent.product.(1)name[1]="Android"'
+#    - 'agent.product.(1)name="Mobile Safari"'
+#    extract:
+#    - 'DeviceClass                 :   1000:"Phone"'
+#    - 'OperatingSystemClass        :   1000:"Mobile"'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.(1)product.(1)name[1]="Android"'
+    - 'agent.product.(1)name="Safari"'
+    extract:
+    - 'DeviceClass                         :   1000 :"Tablet"'
+    - 'OperatingSystemClass                :   1000 :"Mobile"'
+
+- matcher:
+    require:
+    - 'agent.product.(1)name[1]="Android"'
+    - 'agent.product.(1)name="Safari"'
+    extract:
+    - 'DeviceClass                         :   1000 :"Tablet"'
+    - 'OperatingSystemClass                :   1000 :"Mobile"'
+
+# ===========================
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'OperatingSystemVersionBuild         :     80 :agent.(1-2)product.(1)comments.entry.product.name[1]="Build"^.version'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'OperatingSystemVersionBuild         :     79 :agent.(1-2)product.(1)comments.entry.product.name[2]="Build"^.version'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'OperatingSystemVersionBuild         :     78 :agent.(1-2)product.(1)comments.entry.product.name[3]="Build"^.version'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'OperatingSystemVersionBuild         :     77 :agent.(1-2)product.(1)comments.entry.product.name[4]="Build"^.version'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'OperatingSystemVersionBuild         :     77 :agent.(1-2)product.(1)comments.entry.product.name[5]="Build"^.version'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'OperatingSystemVersionBuild         :     77 :agent.(1-2)product.(1)comments.entry.product.name[6]="Build"^.version'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'DeviceName                          :     75 :agent.(1-2)product.(1)comments.entry[2]="Build"@[-1]'
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'DeviceName                          :     76 :agent.(1-2)product.(1)comments.entry[3]="Build"@[-2]'
+
+- matcher:
+    variable:
+    - 'BuildString: agent.(1-2)product.(1)comments.entry[4]="Build"@'
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'DeviceName                          :     77 :@BuildString[-3]'
+    - 'DeviceBrand                         :      1 :NormalizeBrand[@BuildString[1]]'
+
+- matcher:
+    variable:
+    - 'BuildString: agent.(1-2)product.(1)comments.entry[5]="Build"@'
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'DeviceName                          :     77 :@BuildString[-4]'
+    - 'DeviceBrand                         :      1 :NormalizeBrand[@BuildString[1]]'
+
+- matcher:
+    variable:
+    - 'BuildString: agent.(1-2)product.(1)comments.entry[6]="Build"@'
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'DeviceName                          :     77 :@BuildString[-5]'
+    - 'DeviceBrand                         :      1 :NormalizeBrand[@BuildString[1]]'
+
+- matcher:
+    variable:
+    - 'BuildString: agent.(1-2)product.(1)comments.entry[7]="Build"@'
+    require:
+    - 'agent.(1-2)product.(1)comments.entry.product.name[1]="Android"'
+    extract:
+    - 'DeviceName                          :     77 :@BuildString[-6]'
+    - 'DeviceBrand                         :      1 :NormalizeBrand[@BuildString[1]]'
+
+- matcher:
+    variable:
+    - 'CrOSProduct                   :agent.(1)product.(1)comments.entry.product.(1)name="CrOS"^'
+    extract:
+    - 'DeviceClass                         :   2015 :"Desktop"'
+    - 'DeviceBrand                         :   2015 :"Google"'
+    - 'DeviceName                          :   2015 :"Chromebook"'
+    - 'DeviceCpu                           :   2015 :LookUp[CPUArchitectures;@CrOSProduct.(1)version]'
+    - 'OperatingSystemClass                :   2015 :"Desktop"'
+    - 'OperatingSystemName                 :   2015 :"Chrome OS"'
+    - 'OperatingSystemVersion              :   2015 :@CrOSProduct.(2)version'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :   2014 :"Desktop"'
+    - 'DeviceBrand                         :   2014 :"Google"'
+    - 'DeviceName                          :   2014 :"Chromebook"'
+    - 'OperatingSystemClass                :   2014 :"Desktop"'
+    - 'OperatingSystemName                 :   2014 :"Chrome OS"'
+    - 'OperatingSystemVersion              :   2014 :agent.(1)product.(1)comments.entry.product.(1)name="CrOS"^.(1)version'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 6.0; Nexus 6 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0'
+      OperatingSystemNameVersion           : 'Android 6.0'
+      OperatingSystemVersionBuild          : 'MRA58N'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '46.0'
+      LayoutEngineVersionMajor             : '46'
+      LayoutEngineNameVersion              : 'Blink 46.0'
+      LayoutEngineNameVersionMajor         : 'Blink 46'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '46.0.2490.76'
+      AgentVersionMajor                    : '46'
+      AgentNameVersion                     : 'Chrome 46.0.2490.76'
+      AgentNameVersionMajor                : 'Chrome 46'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 6 Build/MOB30M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.81 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : 'MOB30M'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '51.0'
+      LayoutEngineVersionMajor             : '51'
+      LayoutEngineNameVersion              : 'Blink 51.0'
+      LayoutEngineNameVersionMajor         : 'Blink 51'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '51.0.2704.81'
+      AgentVersionMajor                    : '51'
+      AgentNameVersion                     : 'Chrome 51.0.2704.81'
+      AgentNameVersionMajor                : 'Chrome 51'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.0'
+      OperatingSystemNameVersion           : 'Android 7.0'
+      OperatingSystemVersionBuild          : 'NBD90Z'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '53.0'
+      LayoutEngineVersionMajor             : '53'
+      LayoutEngineNameVersion              : 'Blink 53.0'
+      LayoutEngineNameVersionMajor         : 'Blink 53'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '53.0.2785.124'
+      AgentVersionMajor                    : '53'
+      AgentNameVersion                     : 'Chrome 53.0.2785.124'
+      AgentNameVersionMajor                : 'Chrome 53'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.4.2; SM-N9005 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.70 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung SM-N9005'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.4.2'
+      OperatingSystemNameVersion           : 'Android 4.4.2'
+      OperatingSystemVersionBuild          : 'KOT49H'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '33.0'
+      LayoutEngineVersionMajor             : '33'
+      LayoutEngineNameVersion              : 'Blink 33.0'
+      LayoutEngineNameVersionMajor         : 'Blink 33'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '33.0.1750.70'
+      AgentVersionMajor                    : '33'
+      AgentNameVersion                     : 'Chrome 33.0.1750.70'
+      AgentNameVersionMajor                : 'Chrome 33'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.4.4; SM-G901F Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.57 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung SM-G901F'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.4.4'
+      OperatingSystemNameVersion           : 'Android 4.4.4'
+      OperatingSystemVersionBuild          : 'KTU84P'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '41.0'
+      LayoutEngineVersionMajor             : '41'
+      LayoutEngineNameVersion              : 'Blink 41.0'
+      LayoutEngineNameVersionMajor         : 'Blink 41'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '41.0.2272.57'
+      AgentVersionMajor                    : '41'
+      AgentNameVersion                     : 'Chrome 41.0.2272.57'
+      AgentNameVersionMajor                : 'Chrome 41'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.4.4; Xperia P Build/KTU84Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.109 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Sony Xperia P'
+      DeviceBrand                          : 'Sony'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.4.4'
+      OperatingSystemNameVersion           : 'Android 4.4.4'
+      OperatingSystemVersionBuild          : 'KTU84Q'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '40.0'
+      LayoutEngineVersionMajor             : '40'
+      LayoutEngineNameVersion              : 'Blink 40.0'
+      LayoutEngineNameVersionMajor         : 'Blink 40'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '40.0.2214.109'
+      AgentVersionMajor                    : '40'
+      AgentNameVersion                     : 'Chrome 40.0.2214.109'
+      AgentNameVersionMajor                : 'Chrome 40'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.4.4; Xoom 3G Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.96 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Motorola Xoom 3G'
+      DeviceBrand                          : 'Motorola'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.4.4'
+      OperatingSystemNameVersion           : 'Android 4.4.4'
+      OperatingSystemVersionBuild          : 'KTU84P'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '41.0'
+      LayoutEngineVersionMajor             : '41'
+      LayoutEngineNameVersion              : 'Blink 41.0'
+      LayoutEngineNameVersionMajor         : 'Blink 41'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '41.0.2272.96'
+      AgentVersionMajor                    : '41'
+      AgentNameVersion                     : 'Chrome 41.0.2272.96'
+      AgentNameVersionMajor                : 'Chrome 41'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 5.0; nl-be; LG-D855 Build/LRX21R.A1417119896) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/34.0.1847.118 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'LG D855'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '5.0'
+      OperatingSystemNameVersion           : 'Android 5.0'
+      OperatingSystemVersionBuild          : 'LRX21R.A1417119896'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '34.0'
+      LayoutEngineVersionMajor             : '34'
+      LayoutEngineNameVersion              : 'Blink 34.0'
+      LayoutEngineNameVersionMajor         : 'Blink 34'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '34.0.1847.118'
+      AgentVersionMajor                    : '34'
+      AgentNameVersion                     : 'Chrome Webview 34.0.1847.118'
+      AgentNameVersionMajor                : 'Chrome Webview 34'
+      AgentLanguage                        : 'Dutch (Belgium)'
+      AgentLanguageCode                    : 'nl-be'
+      AgentSecurity                        : 'Strong security'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 5.0; en-gb; LG-D855/V20e Build/LRX21R.A1417847022) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/34.0.1847.118 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'LG D855/V20E'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '5.0'
+      OperatingSystemNameVersion           : 'Android 5.0'
+      OperatingSystemVersionBuild          : 'LRX21R.A1417847022'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '34.0'
+      LayoutEngineVersionMajor             : '34'
+      LayoutEngineNameVersion              : 'Blink 34.0'
+      LayoutEngineNameVersionMajor         : 'Blink 34'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '34.0.1847.118'
+      AgentVersionMajor                    : '34'
+      AgentNameVersion                     : 'Chrome Webview 34.0.1847.118'
+      AgentNameVersionMajor                : 'Chrome Webview 34'
+      AgentLanguage                        : 'English (United Kingdom)'
+      AgentLanguageCode                    : 'en-gb'
+      AgentSecurity                        : 'Strong security'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 5.0; en-gb; LG-D855/D85520e Build/LRX21R.A1417604035) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/34.0.1847.118 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'LG D855/D85520E'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '5.0'
+      OperatingSystemNameVersion           : 'Android 5.0'
+      OperatingSystemVersionBuild          : 'LRX21R.A1417604035'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '34.0'
+      LayoutEngineVersionMajor             : '34'
+      LayoutEngineNameVersion              : 'Blink 34.0'
+      LayoutEngineNameVersionMajor         : 'Blink 34'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '34.0.1847.118'
+      AgentVersionMajor                    : '34'
+      AgentNameVersion                     : 'Chrome Webview 34.0.1847.118'
+      AgentNameVersionMajor                : 'Chrome Webview 34'
+      AgentLanguage                        : 'English (United Kingdom)'
+      AgentLanguageCode                    : 'en-gb'
+      AgentSecurity                        : 'Strong security'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.2.1; Nexus 4 Build/JOP40D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 4'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.1'
+      OperatingSystemNameVersion           : 'Android 4.2.1'
+      OperatingSystemVersionBuild          : 'JOP40D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '40.0'
+      LayoutEngineVersionMajor             : '40'
+      LayoutEngineNameVersion              : 'Blink 40.0'
+      LayoutEngineNameVersionMajor         : 'Blink 40'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '40.0.2214.89'
+      AgentVersionMajor                    : '40'
+      AgentNameVersion                     : 'Chrome 40.0.2214.89'
+      AgentNameVersionMajor                : 'Chrome 40'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.2.1; Galaxy Nexus Build/JOP40D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.108 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung Galaxy Nexus'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.1'
+      OperatingSystemNameVersion           : 'Android 4.2.1'
+      OperatingSystemVersionBuild          : 'JOP40D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '42.0'
+      LayoutEngineVersionMajor             : '42'
+      LayoutEngineNameVersion              : 'Blink 42.0'
+      LayoutEngineNameVersionMajor         : 'Blink 42'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '42.0.2311.108'
+      AgentVersionMajor                    : '42'
+      AgentNameVersion                     : 'Chrome 42.0.2311.108'
+      AgentNameVersionMajor                : 'Chrome 42'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.3; HP SlateBook 10 x2 PC Build/4.3-17r20-03-23) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.59 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'HP SlateBook 10 X2 PC'
+      DeviceBrand                          : 'HP'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.3'
+      OperatingSystemNameVersion           : 'Android 4.3'
+      OperatingSystemVersionBuild          : '4.3-17r20-03-23'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '31.0'
+      LayoutEngineVersionMajor             : '31'
+      LayoutEngineNameVersion              : 'Blink 31.0'
+      LayoutEngineNameVersionMajor         : 'Blink 31'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '31.0.1650.59'
+      AgentVersionMajor                    : '31'
+      AgentNameVersion                     : 'Chrome 31.0.1650.59'
+      AgentNameVersionMajor                : 'Chrome 31'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.3; GT-N7105 Build/JSS15J) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.108 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung GT-N7105'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.3'
+      OperatingSystemNameVersion           : 'Android 4.3'
+      OperatingSystemVersionBuild          : 'JSS15J'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '42.0'
+      LayoutEngineVersionMajor             : '42'
+      LayoutEngineNameVersion              : 'Blink 42.0'
+      LayoutEngineNameVersionMajor         : 'Blink 42'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '42.0.2311.108'
+      AgentVersionMajor                    : '42'
+      AgentNameVersion                     : 'Chrome 42.0.2311.108'
+      AgentNameVersionMajor                : 'Chrome 42'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.0.3; HTC Sensation XE with Beats Audio Z715e Build/IML74K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Mobile Safari/537.36 OPR/27.0.1698.88647'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Sensation XE With Beats Audio Z715E'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.0.3'
+      OperatingSystemNameVersion           : 'Android 4.0.3'
+      OperatingSystemVersionBuild          : 'IML74K'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '40.0'
+      LayoutEngineVersionMajor             : '40'
+      LayoutEngineNameVersion              : 'Blink 40.0'
+      LayoutEngineNameVersionMajor         : 'Blink 40'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Opera'
+      AgentVersion                         : '27.0.1698.88647'
+      AgentVersionMajor                    : '27'
+      AgentNameVersion                     : 'Opera 27.0.1698.88647'
+      AgentNameVersionMajor                : 'Opera 27'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.2.2; el-gr; Tab1060 Build/JDQ39) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'TAB1060'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.2'
+      OperatingSystemNameVersion           : 'Android 4.2.2'
+      OperatingSystemVersionBuild          : 'JDQ39'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.30'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Greek (Greece)'
+      AgentLanguageCode                    : 'el-gr'
+      AgentSecurity                        : 'Strong security'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.6; nl-nl; GT-I9070 Build/GINGERBREAD) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung GT-I9070'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.6'
+      OperatingSystemNameVersion           : 'Android 2.3.6'
+      OperatingSystemVersionBuild          : 'GINGERBREAD'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Dutch (Netherlands)'
+      AgentLanguageCode                    : 'nl-nl'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Android; Tablet; rv:34.0) Gecko/34.0 Firefox/34.0'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Android Mobile'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Android ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Gecko'
+      LayoutEngineVersion                  : '34.0'
+      LayoutEngineVersionMajor             : '34'
+      LayoutEngineNameVersion              : 'Gecko 34.0'
+      LayoutEngineNameVersionMajor         : 'Gecko 34'
+      LayoutEngineBuild                    : '34.0'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Firefox'
+      AgentVersion                         : '34.0'
+      AgentVersionMajor                    : '34'
+      AgentNameVersion                     : 'Firefox 34.0'
+      AgentNameVersionMajor                : 'Firefox 34'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.1.1; en-us; TAB10-201 Build/Xenta) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'TAB10 201'
+      DeviceBrand                          : 'TAB10'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.1.1'
+      OperatingSystemNameVersion           : 'Android 4.1.1'
+      OperatingSystemVersionBuild          : 'Xenta'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.30'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.4.2; HUAWEI G6-U10 Build/HuaweiG6-U10) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Huawei G6-U10'
+      DeviceBrand                          : 'Huawei'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.4.2'
+      OperatingSystemNameVersion           : 'Android 4.4.2'
+      OperatingSystemVersionBuild          : 'HuaweiG6-U10'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '30.0'
+      LayoutEngineVersionMajor             : '30'
+      LayoutEngineNameVersion              : 'Blink 30.0'
+      LayoutEngineNameVersionMajor         : 'Blink 30'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '30.0.0.0'
+      AgentVersionMajor                    : '30'
+      AgentNameVersion                     : 'Chrome Webview 30.0.0.0'
+      AgentNameVersionMajor                : 'Chrome Webview 30'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.2.1; nl-nl; ASUS Transformer Pad TF300T Build/JOP40D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Asus Transformer PAD TF300T'
+      DeviceBrand                          : 'Asus'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.1'
+      OperatingSystemNameVersion           : 'Android 4.2.1'
+      OperatingSystemVersionBuild          : 'JOP40D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.30'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Dutch (Netherlands)'
+      AgentLanguageCode                    : 'nl-nl'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.0.3; nl-nl; Transformer TF101 Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Asus Transformer TF101'
+      DeviceBrand                          : 'Asus'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.0.3'
+      OperatingSystemNameVersion           : 'Android 4.0.3'
+      OperatingSystemVersionBuild          : 'IML74K'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.30'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Dutch (Netherlands)'
+      AgentLanguageCode                    : 'nl-nl'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.2.1; ASUS Transformer Pad TF300T Build/JOP40D) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.109 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Asus Transformer PAD TF300T'
+      DeviceBrand                          : 'Asus'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.1'
+      OperatingSystemNameVersion           : 'Android 4.2.1'
+      OperatingSystemVersionBuild          : 'JOP40D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '40.0'
+      LayoutEngineVersionMajor             : '40'
+      LayoutEngineNameVersion              : 'Blink 40.0'
+      LayoutEngineNameVersionMajor         : 'Blink 40'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '40.0.2214.109'
+      AgentVersionMajor                    : '40'
+      AgentNameVersion                     : 'Chrome 40.0.2214.109'
+      AgentNameVersionMajor                : 'Chrome 40'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.0.3; Transformer TF101 Build/IML74K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.93 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Asus Transformer TF101'
+      DeviceBrand                          : 'Asus'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.0.3'
+      OperatingSystemNameVersion           : 'Android 4.0.3'
+      OperatingSystemVersionBuild          : 'IML74K'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '39.0'
+      LayoutEngineVersionMajor             : '39'
+      LayoutEngineNameVersion              : 'Blink 39.0'
+      LayoutEngineNameVersionMajor         : 'Blink 39'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '39.0.2171.93'
+      AgentVersionMajor                    : '39'
+      AgentNameVersion                     : 'Chrome 39.0.2171.93'
+      AgentNameVersionMajor                : 'Chrome 39'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.4.2; HP Pavilion dv6500 Notebook PC     Build/KVT49L) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Safari/537.36 OPR/27.0.1698.88647'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'HP Pavilion DV6500 Notebook PC'
+      DeviceBrand                          : 'HP'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.4.2'
+      OperatingSystemNameVersion           : 'Android 4.4.2'
+      OperatingSystemVersionBuild          : 'KVT49L'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '40.0'
+      LayoutEngineVersionMajor             : '40'
+      LayoutEngineNameVersion              : 'Blink 40.0'
+      LayoutEngineNameVersionMajor         : 'Blink 40'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Opera'
+      AgentVersion                         : '27.0.1698.88647'
+      AgentVersionMajor                    : '27'
+      AgentNameVersion                     : 'Opera 27.0.1698.88647'
+      AgentNameVersionMajor                : 'Opera 27'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)name~"Android"'
+    extract:
+    - 'DeviceClass                         :      1 :"Mobile"'
+    - 'OperatingSystemClass                :      1 :"Mobile"'
+    - 'OperatingSystemName                 :      1 :"Android"'
+    - 'OperatingSystemVersion              :      1 :"??"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)name="Android-Mail"'
+    extract:
+    - 'OperatingSystemClass                :    100 :"Mobile"'
+    - 'OperatingSystemName                 :    100 :"Android"'
+    - 'OperatingSystemVersion              :    100 :"??"'
+    - 'OperatingSystemNameVersion          :    100 :"Android ??"'
+    - 'AgentClass                          :    100 :"Special"'
+    - 'AgentName                           :    100 :"Android-Mail"'
+    - 'AgentVersion                        :    100 :agent.(1)product.(1)version'
+
+# Android-Mail --> This is the GMail app on Android
+- test:
+    input:
+      user_agent_string: 'Android-Mail/6.5.122794288.release'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Android ??'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'Android-Mail'
+      AgentVersion                         : '6.5.122794288.release'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'Android-Mail 6.5.122794288.release'
+      AgentNameVersionMajor                : 'Android-Mail 6'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)name[-2]="Android-SAMSUNG"'
+    extract:
+    - 'DeviceClass                         :      1 :"Mobile"'
+    - 'DeviceBrand                         :      1 :"Samsung"'
+    - 'DeviceName                          :      1 :agent.(1)product.(1)name[3-]'
+
+- test:
+    input:
+      user_agent_string: 'Android-SAMSUNG-GT-I9060C/101.40404'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Samsung GT-I9060C'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Android ??'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '101.40404'
+      AgentVersionMajor                    : '101'
+      AgentNameVersion                     : 'Stock Android Browser 101.40404'
+      AgentNameVersionMajor                : 'Stock Android Browser 101'
+
+# AndroidDownloadManager
+- test:
+    input:
+      user_agent_string: 'AndroidDownloadManager/5.1 (Linux; U; Android 5.1; XT1039 Build/LPB23.13-17.6)'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Motorola XT1039'
+      DeviceBrand                          : 'Motorola'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '5.1'
+      OperatingSystemNameVersion           : 'Android 5.1'
+      OperatingSystemVersionBuild          : 'LPB23.13-17.6'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'AndroidDownloadManager'
+      AgentVersion                         : '5.1'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'AndroidDownloadManager 5.1'
+      AgentNameVersionMajor                : 'AndroidDownloadManager 5'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'AndroidDownloadManager/6.0.1 (Linux; U; Android 6.0.1; A0001 Build/MMB29X)'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Oneplus A0001'
+      DeviceBrand                          : 'Oneplus'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : 'MMB29X'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'AndroidDownloadManager'
+      AgentVersion                         : '6.0.1'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'AndroidDownloadManager 6.0.1'
+      AgentNameVersionMajor                : 'AndroidDownloadManager 6'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'AndroidDownloadManager/6.0.1 (Linux; U; Android 6.0.1; D5803 Build/23.5.A.0.575)'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Sony D5803'
+      DeviceBrand                          : 'Sony'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : '23.5.A.0.575'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'AndroidDownloadManager'
+      AgentVersion                         : '6.0.1'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'AndroidDownloadManager 6.0.1'
+      AgentNameVersionMajor                : 'AndroidDownloadManager 6'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'AndroidDownloadManager/6.0.1 (Linux; U; Android 6.0.1; MI 4W Build/MMB29M)'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Xiaomi MI 4W'
+      DeviceBrand                          : 'Xiaomi'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : 'MMB29M'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'AndroidDownloadManager'
+      AgentVersion                         : '6.0.1'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'AndroidDownloadManager 6.0.1'
+      AgentNameVersionMajor                : 'AndroidDownloadManager 6'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'AndroidDownloadManager/6.0.1 (Linux; U; Android 6.0.1; MI NOTE LTE Build/MMB29M)'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Xiaomi MI Note LTE'
+      DeviceBrand                          : 'Xiaomi'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : 'MMB29M'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'AndroidDownloadManager'
+      AgentVersion                         : '6.0.1'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'AndroidDownloadManager 6.0.1'
+      AgentNameVersionMajor                : 'AndroidDownloadManager 6'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'AndroidDownloadManager/6.0.1 (Linux; U; Android 6.0.1; Nexus 6P Build/MMB29M)'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Google Nexus 6P'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : 'MMB29M'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'AndroidDownloadManager'
+      AgentVersion                         : '6.0.1'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'AndroidDownloadManager 6.0.1'
+      AgentNameVersionMajor                : 'AndroidDownloadManager 6'
+      AgentSecurity                        : 'Strong security'
+
+
+#Stock android browser
+#http://stackoverflow.com/questions/14403766/how-to-detect-the-stock-android-browser
+# The stock Android browser never went above 534, and Chrome is 537 or higher.
+
+# My analysis:
+# There is no browser on Android that is Safari.
+# So if we conclude that it must be Safari then it really is the stock android browser.
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Mobile Safari"'
+    - 'agent.(1)product.comments.entry.product.(1)name[1]="Android"'
+    extract:
+    - 'AgentClass                          :     56 :"Browser"'
+    - 'AgentName                           :     56 :"Stock Android Browser"'
+    - 'AgentVersion                        :     56 :agent.product.(1)name="Version"^.version'
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Safari"'
+    - 'agent.(1)product.comments.entry.product.(1)name[1]="Android"'
+    extract:
+    - 'AgentClass                          :     56 :"Browser"'
+    - 'AgentName                           :     56 :"Stock Android Browser"'
+    - 'AgentVersion                        :     56 :agent.product.(1)name="Version"^.version'
+
+- matcher:
+    extract:
+    - 'AgentClass                          :     10 :"Browser"'
+    - 'AgentName                           :     10 :"Stock Android Browser"'
+    - 'AgentVersion                        :     10 :agent.product.(1)name[1]="Android"^.version'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 1.6; ar-us; SonyEricssonX10i Build/R2BA026) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'SonyEricsson X10I'
+      DeviceBrand                          : 'SonyEricsson'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '1.6'
+      OperatingSystemNameVersion           : 'Android 1.6'
+      OperatingSystemVersionBuild          : 'R2BA026'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '528.5'
+      LayoutEngineVersionMajor             : '528'
+      LayoutEngineNameVersion              : 'AppleWebKit 528.5'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 528'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '3.1.2'
+      AgentVersionMajor                    : '3'
+      AgentNameVersion                     : 'Stock Android Browser 3.1.2'
+      AgentNameVersionMajor                : 'Stock Android Browser 3'
+      AgentLanguage                        : 'Arabic (United States)'
+      AgentLanguageCode                    : 'ar-us'
+      AgentSecurity                        : 'Strong security'
+
+
+# Tablet classified as phone
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.4.2; MID713 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.105 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Tablet' # The MID713 is a tablet but uses the useragent of a Phone.
+      DeviceName                           : 'Manta MID713'
+      DeviceBrand                          : 'Manta'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.4.2'
+      OperatingSystemNameVersion           : 'Android 4.4.2'
+      OperatingSystemVersionBuild          : 'KOT49H'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '49.0'
+      LayoutEngineVersionMajor             : '49'
+      LayoutEngineNameVersion              : 'Blink 49.0'
+      LayoutEngineNameVersionMajor         : 'Blink 49'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '49.0.2623.105'
+      AgentVersionMajor                    : '49'
+      AgentNameVersion                     : 'Chrome 49.0.2623.105'
+      AgentNameVersionMajor                : 'Chrome 49'
+
+
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product.(1)name[1]="Phone"'
+    extract:
+    - 'DeviceClass                         :   1001 :"Phone"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product.(1)name[2]="Phone"'
+    extract:
+    - 'DeviceClass                         :   1001 :"Phone"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product.(1)name[3]="Phone"'
+    extract:
+    - 'DeviceClass                         :   1001 :"Phone"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product.(1)name[1]="Tablet"'
+    extract:
+    - 'DeviceClass                         :   1001 :"Tablet"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product.(1)name[2]="Tablet"'
+    extract:
+    - 'DeviceClass                         :   1001 :"Tablet"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product.(1)name[3]="Tablet"'
+    extract:
+    - 'DeviceClass                         :   1001 :"Tablet"'
+
+
+# Tablet classified as phone
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.0.3; en-US; Sony Tablet S Build/TISU0143) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 UCBrowser/11.4.0.982 U3/0.8.0 Mobile Safari/534.30'
+    expected:
+      DeviceClass                          : 'Tablet' # The "Sony Tablet S" is a tablet.
+      DeviceName                           : 'Sony Tablet S'
+      DeviceBrand                          : 'Sony'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.0.3'
+      OperatingSystemNameVersion           : 'Android 4.0.3'
+      OperatingSystemVersionBuild          : 'TISU0143'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'UCBrowser U3'
+      LayoutEngineVersion                  : '0.8.0'
+      LayoutEngineVersionMajor             : '0'
+      LayoutEngineNameVersion              : 'UCBrowser U3 0.8.0'
+      LayoutEngineNameVersionMajor         : 'UCBrowser U3 0'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'UCBrowser'
+      AgentVersion                         : '11.4.0.982'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'UCBrowser 11.4.0.982'
+      AgentNameVersionMajor                : 'UCBrowser 11'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.1-update1; es-mx; SonyEricssonE10a Build/2.0.A.0.504) AppleWebKit/530.17 (KHTML, like Gecko) Version/4.0 Mobile Safari/530.17'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'SonyEricsson E10A'
+      DeviceBrand                          : 'SonyEricsson'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.1-update1'
+      OperatingSystemNameVersion           : 'Android 2.1-update1'
+      OperatingSystemVersionBuild          : '2.0.A.0.504'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '530.17'
+      LayoutEngineVersionMajor             : '530'
+      LayoutEngineNameVersion              : 'AppleWebKit 530.17'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 530'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Spanish (Mexico)'
+      AgentLanguageCode                    : 'es-mx'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.2.1; de-de; HTC_Wildfire_A3333 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Wildfire A3333'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.2.1'
+      OperatingSystemNameVersion           : 'Android 2.2.1'
+      OperatingSystemVersionBuild          : 'FRG83D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'German (Germany)'
+      AgentLanguageCode                    : 'de-de'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.2.1; en-ca; LG-P505R Build/FRG83) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'LG P505R'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.2.1'
+      OperatingSystemNameVersion           : 'Android 2.2.1'
+      OperatingSystemVersionBuild          : 'FRG83'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'English (Canada)'
+      AgentLanguageCode                    : 'en-ca'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.2.1; en-gb; HTC_DesireZ_A7272 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC DesireZ A7272'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.2.1'
+      OperatingSystemNameVersion           : 'Android 2.2.1'
+      OperatingSystemVersionBuild          : 'FRG83D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'English (United Kingdom)'
+      AgentLanguageCode                    : 'en-gb'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.2.1; fr-fr; HTC_DesireZ_A7272 Build/FRG83D) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC DesireZ A7272'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.2.1'
+      OperatingSystemNameVersion           : 'Android 2.2.1'
+      OperatingSystemVersionBuild          : 'FRG83D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'French (France)'
+      AgentLanguageCode                    : 'fr-fr'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.2; en-sa; HTC_DesireHD_A9191 Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC DesireHd A9191'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.2'
+      OperatingSystemNameVersion           : 'Android 2.2'
+      OperatingSystemVersionBuild          : 'FRF91'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'English (Saudi Arabia)'
+      AgentLanguageCode                    : 'en-sa'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.2; fr-lu; HTC Legend Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Legend'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.2'
+      OperatingSystemNameVersion           : 'Android 2.2'
+      OperatingSystemVersionBuild          : 'FRF91'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'French (Luxembourg)'
+      AgentLanguageCode                    : 'fr-lu'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.3; de-ch; HTC Desire Build/FRF91) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Desire'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.3'
+      OperatingSystemNameVersion           : 'Android 2.3.3'
+      OperatingSystemVersionBuild          : 'FRF91'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'German (Switzerland)'
+      AgentLanguageCode                    : 'de-ch'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.3; de-de; HTC Desire Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Desire'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.3'
+      OperatingSystemNameVersion           : 'Android 2.3.3'
+      OperatingSystemVersionBuild          : 'GRI40'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'German (Germany)'
+      AgentLanguageCode                    : 'de-de'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.3; en-us; HTC_DesireS_S510e Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC DesireS S510E'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.3'
+      OperatingSystemNameVersion           : 'Android 2.3.3'
+      OperatingSystemVersionBuild          : 'GRI40'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.3; ko-kr; LG-LU3000 Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'LG LU3000'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.3'
+      OperatingSystemNameVersion           : 'Android 2.3.3'
+      OperatingSystemVersionBuild          : 'GRI40'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Korean (South Korea)'
+      AgentLanguageCode                    : 'ko-kr'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.3; zh-tw; HTC Pyramid Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Pyramid'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.3'
+      OperatingSystemNameVersion           : 'Android 2.3.3'
+      OperatingSystemVersionBuild          : 'GRI40'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Chinese (Taiwan)'
+      AgentLanguageCode                    : 'zh-tw'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.4; en-us; T-Mobile myTouch 3G Slide Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'T Mobile Mytouch 3G Slide'
+      DeviceBrand                          : 'T' # FIXME (low prio): Should be 'T-Mobile' instead of 'T'...
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.4'
+      OperatingSystemNameVersion           : 'Android 2.3.4'
+      OperatingSystemVersionBuild          : 'GRI40'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.4; fr-fr; HTC Desire Build/GRJ22) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Desire'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.4'
+      OperatingSystemNameVersion           : 'Android 2.3.4'
+      OperatingSystemVersionBuild          : 'GRJ22'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'French (France)'
+      AgentLanguageCode                    : 'fr-fr'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.5; en-us; HTC Vision Build/GRI40) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Vision'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.5'
+      OperatingSystemNameVersion           : 'Android 2.3.5'
+      OperatingSystemVersionBuild          : 'GRI40'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3.5; zh-cn; HTC_IncredibleS_S710e Build/GRJ90) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC IncredibleS S710E'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3.5'
+      OperatingSystemNameVersion           : 'Android 2.3.5'
+      OperatingSystemVersionBuild          : 'GRJ90'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '533.1'
+      LayoutEngineVersionMajor             : '533'
+      LayoutEngineNameVersion              : 'AppleWebKit 533.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 533'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Chinese (S)'
+      AgentLanguageCode                    : 'zh-cn'
+      AgentSecurity                        : 'Strong security'
+
+# FIXME: Version 999 is an indication of some kind of manipulation
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Android Mobile'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '2.3'
+      OperatingSystemNameVersion           : 'Android 2.3'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '999'
+      LayoutEngineVersionMajor             : '999'
+      LayoutEngineNameVersion              : 'AppleWebKit 999'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 999'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Safari'
+      AgentVersion                         : '999.9'
+      AgentVersionMajor                    : '999'
+      AgentNameVersion                     : 'Safari 999.9'
+      AgentNameVersionMajor                : 'Safari 999'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.0.3; de-ch; HTC Sensation Build/IML74K) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'HTC Sensation'
+      DeviceBrand                          : 'HTC'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.0.3'
+      OperatingSystemNameVersion           : 'Android 4.0.3'
+      OperatingSystemVersionBuild          : 'IML74K'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.30'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'German (Switzerland)'
+      AgentLanguageCode                    : 'de-ch'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.0.3; ko-kr; LG-L160L Build/IML74K) AppleWebkit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'LG L160L'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.0.3'
+      OperatingSystemNameVersion           : 'Android 4.0.3'
+      OperatingSystemVersionBuild          : 'IML74K'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.30'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Korean (South Korea)'
+      AgentLanguageCode                    : 'ko-kr'
+      AgentSecurity                        : 'Strong security'
+
