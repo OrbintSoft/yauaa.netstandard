@@ -63,7 +63,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent
         public static readonly string UNKNOWN_VALUE = "Unknown";
         public static readonly string UNKNOWN_VERSION = "??";
 
-        public static readonly String[] STANDARD_FIELDS = {
+        public static readonly string[] STANDARD_FIELDS = {
             DEVICE_CLASS,
             DEVICE_BRAND,
             DEVICE_NAME,

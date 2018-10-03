@@ -588,24 +588,22 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent.Debug
             return allMatches;
         }
 
-        public static new UserAgentAnalyzerTesterBuilder<UAA, B> NewBuilder<UAA, B>()
-            where UAA : UserAgentAnalyzerTester, new()
-            where B : UserAgentAnalyzerTesterBuilder<UAA, B>, new()
+        public static new UserAgentAnalyzerTesterBuilder NewBuilder()
         {
-            var a = new UAA();
-            var b = new B();
+            var a = new UserAgentAnalyzerTester();
+            var b = new UserAgentAnalyzerTesterBuilder(a);
             b.SetUAA(a);
             return b;
         }
 
-        public class UserAgentAnalyzerTesterBuilder<UAA, B> : UserAgentAnalyzerBuilder<UAA, B> where UAA : UserAgentAnalyzerTester where B : UserAgentAnalyzerTesterBuilder<UAA, B>
+        public class UserAgentAnalyzerTesterBuilder : UserAgentAnalyzerBuilder
         { 
-            public UserAgentAnalyzerTesterBuilder(UAA newUaa): base(newUaa)
+            public UserAgentAnalyzerTesterBuilder(UserAgentAnalyzerTester newUaa): base(newUaa)
             {
                 
             }
             
-            public override UAA Build()
+            public override UserAgentAnalyzer Build()
             {
                 return base.Build();
             }

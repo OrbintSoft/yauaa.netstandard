@@ -1,4 +1,28 @@
-﻿using log4net;
+﻿/*
+ * Yet Another UserAgent Analyzer .NET Standard
+ * Porting realized by Balzarotti Stefano, Copyright (C) OrbintSoft
+ * 
+ * Original Author and License:
+ * 
+ * Yet Another UserAgent Analyzer
+ * Copyright (C) 2013-2018 Niels Basjes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * All rights should be reserved to the original author Niels Basjes
+ */
+
+using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgent.Analyze;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgent.Parse;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgent.Utils;
@@ -16,13 +40,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent
 {
     public class UserAgentAnalyzerDirect: IAnalyzer
     {
-
-        // We set this to 1000000 always.
-        // Why?
-        // At the time of writing this the actual HashMap size needed about 410K entries.
-        // To keep the bins small the load factor of 0.75 already puts us at the capacity of 1048576
-        private static readonly int INFORM_ACTIONS_HASHMAP_CAPACITY = 1000000;
-
         private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
         protected readonly List<Matcher> allMatchers = new List<Matcher>();
         private readonly Dictionary<string, HashSet<MatcherAction>> informMatcherActions = new Dictionary<string, HashSet<MatcherAction>>();

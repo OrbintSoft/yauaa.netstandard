@@ -21,7 +21,6 @@
  * 
  * All rights should be reserved to the original author Niels Basjes
  */
-
 using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent
@@ -66,7 +65,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent
             }
         }
 
-        public int GetCacheSize()
+        public int getCacheSize()
         {
             return cacheSize;
         }
@@ -100,22 +99,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent
             return userAgent;
         }
 
-        public static new UserAgentAnalyzerBuilder<UAA, B> NewBuilder<UAA, B>()
-            where UAA : UserAgentAnalyzer, new()
-            where B : UserAgentAnalyzerBuilder<UAA, B>, new()
+        public static UserAgentAnalyzerBuilder NewBuilder()           
         {
-            var a = new UAA();
-            var b = new B();
+            var a = new UserAgentAnalyzer();
+            var b = new UserAgentAnalyzerBuilder(a);
             b.SetUAA(a);
             return b;
         }
 
 
-        public class UserAgentAnalyzerBuilder<UAA, B>: UserAgentAnalyzerDirectBuilder<UAA, B> where UAA : UserAgentAnalyzer where B : UserAgentAnalyzerBuilder<UAA, B>
+        public class UserAgentAnalyzerBuilder: UserAgentAnalyzerDirectBuilder<UserAgentAnalyzer, UserAgentAnalyzerBuilder>
         {
-            private readonly UAA uaa;
+            private readonly UserAgentAnalyzer uaa;
 
-            public UserAgentAnalyzerBuilder(UAA newUaa):base(newUaa)
+            public UserAgentAnalyzerBuilder(UserAgentAnalyzer newUaa):base(newUaa)
             {                
                 uaa = newUaa;
             }
@@ -125,26 +122,26 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent
              * @param newCacheSize The new cache size value
              * @return the current Builder instance.
              */
-            public B WithCache(int newCacheSize)
+            public UserAgentAnalyzerBuilder WithCache(int newCacheSize)
             {
                 FailIfAlreadyBuilt();
                 uaa.SetCacheSize(newCacheSize);
-                return (B)this;
+                return this;
             }
 
             /**
              * Disable caching.
              * @return the current Builder instance.
              */
-            public B WithoutCache()
+            public UserAgentAnalyzerBuilder WithoutCache()
             {
                 FailIfAlreadyBuilt();
                 uaa.SetCacheSize(0);
-                return (B)this;
+                return this;
             }
 
             // We must override the method because of the generic return value.
-            public override UAA Build()
+            public override UserAgentAnalyzer Build()
             {
                 return base.Build();
             }

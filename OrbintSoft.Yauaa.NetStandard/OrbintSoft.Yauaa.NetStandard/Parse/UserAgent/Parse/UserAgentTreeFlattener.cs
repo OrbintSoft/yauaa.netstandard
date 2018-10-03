@@ -195,7 +195,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent.Parse
             return Inform(ctx, ctx, name, value, fakeChild);
         }
 
-        private string Inform(IParseTree stateCtx, IParseTree ctx, String name, String value, bool fakeChild)
+        private string Inform(IParseTree stateCtx, IParseTree ctx, string name, string value, bool fakeChild)
         {
             State myState = new State(this, stateCtx, name);
 

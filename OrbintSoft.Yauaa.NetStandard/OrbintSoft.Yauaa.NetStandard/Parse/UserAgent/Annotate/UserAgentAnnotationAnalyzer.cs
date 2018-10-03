@@ -105,10 +105,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgent.Annotate
             }
 
             var builder = UserAgentAnalyzer.NewBuilder();
-            builder.hideMatcherLoadStats();
+            builder.HideMatcherLoadStats();
             if (fieldSetters.Count != 0)
             {
-                builder.withFields(fieldSetters.Keys);
+                builder.WithFields(fieldSetters.Keys.ToList());
             }
             userAgentAnalyzer = builder.Build();
         }
