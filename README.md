@@ -62,12 +62,12 @@ Contribute
 If you like this project or if has business value for you then don't hesitate to support me or the author.
 
 To support the original project you can make a small donation to:
-[![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/nielsbasjes) [Niels Basjes, Original Author]
+[![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/nielsbasjes) **Niels Basjes, Original Author**
 
 To support this porting, don't esitate to contribute to code sending a Pull request
 
 Otherwise a small payapal donation can also be apreciated
-[![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/orbintsoft) [Stefano Balzarotti, Author of porting]
+[![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/orbintsoft) **Stefano Balzarotti, Author of porting**
 
 Don't forget to be thankful to the original author Nicolaas Basjes, he did most of the effort.
 
