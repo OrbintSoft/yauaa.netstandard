@@ -1,0 +1,86 @@
+﻿/*
+ * Yet Another UserAgent Analyzer .NET Standard
+ * Porting realized by Balzarotti Stefano, Copyright (C) OrbintSoft
+ * 
+ * Original Author and License:
+ * 
+ * Yet Another UserAgent Analyzer
+ * Copyright (C) 2013-2018 Niels Basjes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * All rights should be reserved to the original author Niels Basjes
+ */
+
+using Antlr4.Runtime;
+using log4net;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+
+namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
+{
+    public class MatcherRequireAction : MatcherAction
+    {
+        private static readonly ILog LOG = LogManager.GetLogger(typeof(MatcherRequireAction));
+
+        public MatcherRequireAction(string config, Matcher matcher)
+        {
+            Init(config, matcher);
+        }
+
+        protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
+        {
+            return parser.matcherRequire();
+        }
+
+        protected override void SetFixedValue(string fixedValue)
+        {
+            throw new InvalidParserConfigurationException(
+                    "It is useless to put a fixed value \"" + fixedValue + "\" in the require section.");
+        }
+
+        private bool foundRequiredValue = false;
+
+        public override void Inform(string key, WalkList.WalkResult foundValue)
+        {
+            foundRequiredValue = true;
+            if (verbose)
+            {
+                LOG.Info(string.Format("Info REQUIRE: {0}", key));
+                LOG.Info(string.Format("NEED REQUIRE: {0}", GetMatchExpression()));
+                LOG.Info(string.Format("KEPT REQUIRE: {0}", key));
+            }
+        }
+
+        public override bool ObtainResult()
+        {
+            if (IsValidIsNull())
+            {
+                foundRequiredValue = true;
+            }
+            ProcessInformedMatches();
+            return foundRequiredValue;
+        }
+
+        public override void Reset()
+        {
+            base.Reset();
+            foundRequiredValue = false;
+        }
+
+        public override string ToString()
+        {
+            return "Require: " + GetMatchExpression();
+        }
+    }
+}
