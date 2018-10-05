@@ -85,7 +85,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
 
             string userAgentString = userAgent.GetUserAgentString();
-            UserAgent cachedValue = parseCache[userAgentString];
+            UserAgent cachedValue = parseCache.ContainsKey(userAgentString) ? parseCache[userAgentString] : null;
             if (cachedValue != null)
             {
                 userAgent.Clone(cachedValue);

@@ -61,7 +61,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
         private bool loadTests = false;
 
-        private static readonly string DEFAULT_RESOURCES = "UserAgents";
+        private static readonly string DEFAULT_RESOURCES = @"YamlResources\UserAgents";
 
         private void InitTransientFields()
         {
@@ -71,15 +71,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         private void ReadObject(Stream stream)
         {
             InitTransientFields();
-        
-            List<string> lines = new List<string>();
-            lines.Add("This Analyzer instance was deserialized.");
-            lines.Add("");
-            lines.Add("Lookups      : " + ((lookups == null) ? 0 : lookups.Count));
-            lines.Add("LookupSets   : " + lookupSets.Count);
-            lines.Add("Matchers     : " + allMatchers.Count);
-            lines.Add("Hashmap size : " + informMatcherActions.Count);
-            lines.Add("Testcases    : " + testCases.Count);
+
+            List<string> lines = new List<string>
+            {
+                "This Analyzer instance was deserialized.",
+                "",
+                "Lookups      : " + ((lookups == null) ? 0 : lookups.Count),
+                "LookupSets   : " + lookupSets.Count,
+                "Matchers     : " + allMatchers.Count,
+                "Hashmap size : " + informMatcherActions.Count,
+                "Testcases    : " + testCases.Count
+            };
 
             string[] x = { };
             YauaaVersion.LogVersion(lines.ToArray());
@@ -137,7 +139,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         protected void Initialize(List<string> resources)
         {
             YauaaVersion.LogVersion();
-            resources.ForEach(r => this.LoadResources(r));
+            resources.ForEach(r => LoadResources(r));
             VerifyWeAreNotAskingForImpossibleFields();
             if (!delayInitialization)
             {
@@ -203,7 +205,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     resources[Path.GetFileName(filePath)] = new FileInfo(filePath);
                 }
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e.StackTrace);
                 return;
@@ -252,7 +254,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
                     LoadResource(yaml, filename);
                 }
-                catch (IOException e)
+                catch (Exception e)
                 {
                     System.Diagnostics.Debug.WriteLine(e.StackTrace);
                 }
@@ -298,8 +300,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 foreach (var resourceEntry in resources)
                 {
                     FileInfo resource = resourceEntry.Value;
-                    string configFilename = resource.Name;
-                    List<YamlMappingNode> matcherConfig = matcherConfigs[configFilename];
+                    string configFilename = resource.FullName;
+                    List<YamlMappingNode> matcherConfig = matcherConfigs.ContainsKey(configFilename) ? matcherConfigs[configFilename] : null;
                     if (matcherConfig == null)
                     {
                         continue; // No matchers in this file (probably only lookups and/or tests)
@@ -467,7 +469,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
 
             YamlSequenceNode configNode = YamlUtils.GetValueAsSequenceNode(configNodeTuple, filename);
-            List<YamlNode> configList = configNode.AllNodes.ToList();
+            IList<YamlNode> configList = configNode.Children;
 
             foreach (YamlNode configEntry in configList)
             {

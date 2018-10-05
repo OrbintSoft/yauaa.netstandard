@@ -362,9 +362,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        public virtual void Set(String attribute, String value, long confidence)
+        public virtual void Set(string attribute, string value, long confidence)
         {
-            AgentField field = allFields[attribute];
+            AgentField field = allFields.ContainsKey(attribute) ? allFields[attribute] : null;
             if (field == null)
             {
                 field = new AgentField(null); // The fields we do not know get a 'null' default

@@ -18,6 +18,308 @@
     <Description>This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="YamlResources\UserAgents\Alcatel.yaml" />
+    <None Remove="YamlResources\UserAgents\Amazon.yaml" />
+    <None Remove="YamlResources\UserAgents\AmazonDevices.yaml" />
+    <None Remove="YamlResources\UserAgents\Android.yaml" />
+    <None Remove="YamlResources\UserAgents\AndroidDeviceOverrides.yaml" />
+    <None Remove="YamlResources\UserAgents\Anonymized.yaml" />
+    <None Remove="YamlResources\UserAgents\Apple.yaml" />
+    <None Remove="YamlResources\UserAgents\AppleTypes.yaml" />
+    <None Remove="YamlResources\UserAgents\AppleTypesBasic.yaml" />
+    <None Remove="YamlResources\UserAgents\AppleWebview.yaml" />
+    <None Remove="YamlResources\UserAgents\Apps.yaml" />
+    <None Remove="YamlResources\UserAgents\Asus.yaml" />
+    <None Remove="YamlResources\UserAgents\Bada.yaml" />
+    <None Remove="YamlResources\UserAgents\BlackBerry.yaml" />
+    <None Remove="YamlResources\UserAgents\BrokenUseragents.yaml" />
+    <None Remove="YamlResources\UserAgents\CPUTypes.yaml" />
+    <None Remove="YamlResources\UserAgents\Cubot.yaml" />
+    <None Remove="YamlResources\UserAgents\eBook.yaml" />
+    <None Remove="YamlResources\UserAgents\EMailClients.yaml" />
+    <None Remove="YamlResources\UserAgents\Facebook-OsMeta.yaml" />
+    <None Remove="YamlResources\UserAgents\Facebook.yaml" />
+    <None Remove="YamlResources\UserAgents\GameConsoles.yaml" />
+    <None Remove="YamlResources\UserAgents\GeckoFirefox.yaml" />
+    <None Remove="YamlResources\UserAgents\GoannaPaleMoon.yaml" />
+    <None Remove="YamlResources\UserAgents\GoogleChrome.yaml" />
+    <None Remove="YamlResources\UserAgents\GoogleFavicon.yaml" />
+    <None Remove="YamlResources\UserAgents\GooglePixel.yaml" />
+    <None Remove="YamlResources\UserAgents\Hackers-SQLInjections.yaml" />
+    <None Remove="YamlResources\UserAgents\Hackers.yaml" />
+    <None Remove="YamlResources\UserAgents\Huawei.yaml" />
+    <None Remove="YamlResources\UserAgents\InternetExplorer.yaml" />
+    <None Remove="YamlResources\UserAgents\ISOLanguageCode-tests.yaml" />
+    <None Remove="YamlResources\UserAgents\ISOLanguageCode.yaml" />
+    <None Remove="YamlResources\UserAgents\Konqueror.yaml" />
+    <None Remove="YamlResources\UserAgents\Lenovo-Tests.yaml" />
+    <None Remove="YamlResources\UserAgents\LG.yaml" />
+    <None Remove="YamlResources\UserAgents\Linux.yaml" />
+    <None Remove="YamlResources\UserAgents\Maxthon.yaml" />
+    <None Remove="YamlResources\UserAgents\Meizu.yaml" />
+    <None Remove="YamlResources\UserAgents\Mobile.yaml" />
+    <None Remove="YamlResources\UserAgents\MobileBrand-tests.yaml" />
+    <None Remove="YamlResources\UserAgents\MobileBrands.yaml" />
+    <None Remove="YamlResources\UserAgents\Mozilla-Testcases.yaml" />
+    <None Remove="YamlResources\UserAgents\Nokia.yaml" />
+    <None Remove="YamlResources\UserAgents\Opera.yaml" />
+    <None Remove="YamlResources\UserAgents\OperatingSystemDeviceNames.yaml" />
+    <None Remove="YamlResources\UserAgents\Oppo.yaml" />
+    <None Remove="YamlResources\UserAgents\OtherOS.yaml" />
+    <None Remove="YamlResources\UserAgents\Robots-Bing.yaml" />
+    <None Remove="YamlResources\UserAgents\Robots-Google.yaml" />
+    <None Remove="YamlResources\UserAgents\Robots.yaml" />
+    <None Remove="YamlResources\UserAgents\Safari.yaml" />
+    <None Remove="YamlResources\UserAgents\Samsung.yaml" />
+    <None Remove="YamlResources\UserAgents\SecurityFlag.yaml" />
+    <None Remove="YamlResources\UserAgents\SettopBox.yaml" />
+    <None Remove="YamlResources\UserAgents\Sony.yaml" />
+    <None Remove="YamlResources\UserAgents\SpecialBrowsers.yaml" />
+    <None Remove="YamlResources\UserAgents\Tencent.yaml" />
+    <None Remove="YamlResources\UserAgents\TV.yaml" />
+    <None Remove="YamlResources\UserAgents\Ubuntu.yaml" />
+    <None Remove="YamlResources\UserAgents\UbuntuVersionLookups.yaml" />
+    <None Remove="YamlResources\UserAgents\URL.yaml" />
+    <None Remove="YamlResources\UserAgents\UUID.yaml" />
+    <None Remove="YamlResources\UserAgents\Vodafone.yaml" />
+    <None Remove="YamlResources\UserAgents\Watches.yaml" />
+    <None Remove="YamlResources\UserAgents\Wiko.yaml" />
+    <None Remove="YamlResources\UserAgents\Windows.yaml" />
+    <None Remove="YamlResources\UserAgents\WindowsCE.yaml" />
+    <None Remove="YamlResources\UserAgents\WindowsDesktopLookups.yaml" />
+    <None Remove="YamlResources\UserAgents\WindowsOEM-tests.yaml" />
+    <None Remove="YamlResources\UserAgents\WindowsOEMCodes.yaml" />
+    <None Remove="YamlResources\UserAgents\WindowsPhone.yaml" />
+    <None Remove="YamlResources\UserAgents\WindowsPhoneLookups.yaml" />
+    <None Remove="YamlResources\UserAgents\Xiaomi.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="YamlResources\UserAgents\Alcatel.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Amazon.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\AmazonDevices.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Android.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\AndroidDeviceOverrides.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Anonymized.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Apple.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\AppleTypes.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\AppleTypesBasic.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\AppleWebview.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Apps.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Asus.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Bada.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\BlackBerry.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\BrokenUseragents.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\CPUTypes.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Cubot.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\eBook.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\EMailClients.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Facebook-OsMeta.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Facebook.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\GameConsoles.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\GeckoFirefox.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\GoannaPaleMoon.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\GoogleChrome.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\GoogleFavicon.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\GooglePixel.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Hackers-SQLInjections.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Hackers.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Huawei.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\InternetExplorer.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\ISOLanguageCode-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\ISOLanguageCode.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Konqueror.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Lenovo-Tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\LG.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Linux.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Maxthon.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Meizu.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Mobile.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\MobileBrand-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\MobileBrands.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Mozilla-Testcases.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Nokia.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Opera.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\OperatingSystemDeviceNames.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Oppo.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\OtherOS.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Robots-Bing.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Robots-Google.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Robots.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Safari.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Samsung.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\SecurityFlag.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\SettopBox.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Sony.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\SpecialBrowsers.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Tencent.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\TV.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Ubuntu.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\UbuntuVersionLookups.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\URL.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\UUID.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Vodafone.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Watches.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Wiko.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Windows.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\WindowsCE.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\WindowsDesktopLookups.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\WindowsOEM-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\WindowsOEMCodes.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\WindowsPhone.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\WindowsPhoneLookups.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Xiaomi.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Antlr4" Version="4.6.5">
       <PrivateAssets>all</PrivateAssets>

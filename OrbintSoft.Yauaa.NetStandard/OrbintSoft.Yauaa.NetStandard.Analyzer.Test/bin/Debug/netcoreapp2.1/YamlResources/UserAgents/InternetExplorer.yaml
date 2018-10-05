@@ -1,0 +1,1266 @@
+#
+# Yet Another UserAgent Analyzer
+# Copyright (C) 2013-2018 Niels Basjes
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an AS IS BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# https://msdn.microsoft.com/en-us/library/ms537503(v=vs.85).aspx
+
+config:
+
+- lookup:
+    name: 'TridentAgentName'
+    map:
+      "Trident/4.0": "Internet Explorer"
+      "Trident/5.0": "Internet Explorer"
+      "Trident/6.0": "Internet Explorer"
+      "Trident/7.0": "Internet Explorer"
+
+- lookup:
+    name: 'TridentAgentVersion'
+    map:
+      "Trident/4.0": "8.0"
+      "Trident/5.0": "9.0"
+      "Trident/6.0": "10.0"
+      "Trident/7.0": "11.0"
+
+- lookup:
+    name: 'MSIELayoutEngineName'
+    map:
+      "8": "Trident"
+      "9": "Trident"
+      "10": "Trident"
+      "11": "Trident"
+
+- lookup:
+    name: 'MSIELayoutEngineVersion'
+    map:
+      "8" : "4.0"
+      "9" : "5.0"
+      "10": "6.0"
+      "11": "7.0"
+
+- matcher:
+    variable:
+    - 'MSIEVersion: agent.product.comments.entry.product.name="MSIEMobile"^.version'
+    extract:
+    - 'LayoutEngineClass                   :   2011 :"Browser"'
+    - 'LayoutEngineName                    :   2011 :"Internet Explorer Mobile"'
+    - 'LayoutEngineVersion                 :   2011 :@MSIEVersion'
+    - 'AgentClass                          :   2003 :"Browser"'
+    - 'AgentName                           :   2003 :"Internet Explorer"'
+    - 'AgentVersion                        :   2003 :@MSIEVersion'
+
+- matcher:
+    variable:
+    - 'MSIEVersion: agent.product.comments.entry.product.name="MSIE"^.version'
+    extract:
+    - 'LayoutEngineClass                   :   2002 :"Browser"'
+    - 'LayoutEngineName                    :   2002 :"Internet Explorer"'
+    - 'LayoutEngineVersion                 :   2002 :@MSIEVersion'
+    - 'AgentClass                          :   2002 :"Browser"'
+    - 'AgentName                           :   2002 :"Internet Explorer"'
+    - 'AgentVersion                        :   2002 :@MSIEVersion'
+
+- matcher:
+    variable:
+    - 'MSIEVersion: agent.product.comments.entry.product.name="MSIE"^.version'
+    extract:
+    - 'LayoutEngineClass                   :   2009 :"Browser"'
+    - 'LayoutEngineName                    :   2009 :LookUp[MSIELayoutEngineName;@MSIEVersion[1]]'
+    - 'LayoutEngineVersion                 :   2009 :LookUp[MSIELayoutEngineVersion;@MSIEVersion[1]]'
+
+    - 'AgentClass                          :   2009 :"Browser"'
+    - 'AgentName                           :   2009 :"Internet Explorer"'
+    - 'AgentVersion                        :   2009 :@MSIEVersion'
+
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :   2010 :"Browser"'
+    - 'LayoutEngineName                    :   2010 :"Trident"'
+    - 'LayoutEngineVersion                 :   2010 :agent.product.comments.entry.product.name="Trident"^.version'
+
+    - 'AgentClass                          :   2010 :"Browser"'
+    - 'AgentName                           :   2010 :LookUp[TridentAgentName;agent.product.comments.entry.product.name="Trident"^]'
+    - 'AgentVersion                        :   2010 :LookUp[TridentAgentVersion;agent.product.comments.entry.product.name="Trident"^]'
+
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :   2009 :"Browser"'
+    - 'LayoutEngineName                    :   2009 :LookUp[MSIELayoutEngineName;agent.product.name="MSIE"^.version[1]]'
+    - 'LayoutEngineVersion                 :   2009 :LookUp[MSIELayoutEngineVersion;agent.product.name="MSIE"^.version[1]]'
+
+    - 'AgentClass                          :   2009 :"Browser"'
+    - 'AgentName                           :   2009 :"Internet Explorer"'
+    - 'AgentVersion                        :   2009 :agent.product.name="MSIE"^.version'
+
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :   2010 :"Browser"'
+    - 'LayoutEngineName                    :   2010 :"Trident"'
+    - 'LayoutEngineVersion                 :   2010 :agent.product.name="Trident"^.version'
+
+    - 'AgentClass                          :   2010 :"Browser"'
+    - 'AgentName                           :   2010 :LookUp[TridentAgentName;agent.product.name="Trident"^]'
+    - 'AgentVersion                        :   2010 :LookUp[TridentAgentVersion;agent.product.name="Trident"^]'
+
+# https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
+# User-agent strings for Microsoft Edge
+
+# Desktop
+# Mozilla/5.0 (Windows NT 10.0; <64-bit tags>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) Chrome/<Chrome Rev> Safari/<WebKit Rev> Edge/<EdgeHTML Rev>.<Windows Build>
+
+# Mobile:
+# Mozilla/5.0 (Windows Phone 10.0; Android <Android Version>; <Device Manufacturer>; <Device Model>) AppleWebKit/<WebKit Rev> (KHTML, like Gecko) Chrome/<Chrome Rev> Mobile Safari/<WebKit Rev> Edge/<EdgeHTML Rev>.<Windows Build>
+
+# Webview
+# Note  "MSAppHost/<WebView Rev>" is added when EdgeHTML is hosted in a Universal Windows App using WebView.
+
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :   2015 :"Browser"'
+    - 'LayoutEngineName                    :   2015 :"EdgeHTML"'
+    - 'LayoutEngineVersion                 :   2015 :agent.product.name="Edge"^.version[-1]'
+
+    - 'AgentClass                          :   2015 :"Browser"'
+    - 'AgentName                           :   2015 :agent.product.name="Edge"'
+    - 'AgentVersion                        :   2015 :agent.product.name="Edge"^.version[-1]'
+
+# If it is not '??' then the second part of the Edge version is the Windows 10 BUILD number
+- matcher:
+    require:
+    - 'agent.product.name="Edge"^.version[2]!="0"'
+    extract:
+    - 'OperatingSystemVersionBuild         :    100 :agent.product.name="Edge"^.version[2]'
+
+# IE 2.0:
+- test:
+    input:
+      user_agent_string: 'Mozilla/1.22 (compatible; MSIE 2.0; Windows 95)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows 9x'
+      OperatingSystemVersion               : '95'
+      OperatingSystemNameVersion           : 'Windows 95'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineVersion                  : '2.0'
+      LayoutEngineVersionMajor             : '2'
+      LayoutEngineNameVersion              : 'Internet Explorer 2.0'
+      LayoutEngineNameVersionMajor         : 'Internet Explorer 2'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '2.0'
+      AgentVersionMajor                    : '2'
+      AgentNameVersion                     : 'Internet Explorer 2.0'
+      AgentNameVersionMajor                : 'Internet Explorer 2'
+
+# IE 8.0:
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'Vista'
+      OperatingSystemNameVersion           : 'Windows Vista'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '4.0'
+      LayoutEngineVersionMajor             : '4'
+      LayoutEngineNameVersion              : 'Trident 4.0'
+      LayoutEngineNameVersionMajor         : 'Trident 4'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '8.0'
+      AgentVersionMajor                    : '8'
+      AgentNameVersion                     : 'Internet Explorer 8.0'
+      AgentNameVersionMajor                : 'Internet Explorer 8'
+
+# IE 11
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '11.0'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Internet Explorer 11.0'
+      AgentNameVersionMajor                : 'Internet Explorer 11'
+
+# Edge (IE >= 12):
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '12'
+      LayoutEngineVersionMajor             : '12'
+      LayoutEngineNameVersion              : 'EdgeHTML 12'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 12'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '12'
+      AgentVersionMajor                    : '12'
+      AgentNameVersion                     : 'Edge 12'
+      AgentNameVersionMajor                : 'Edge 12'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; NOKIA; Lumia 928) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Mobile Safari/537.36 Edge/13.10586'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Nokia Lumia 928'
+      DeviceBrand                          : 'Nokia'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Phone'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows Phone 10.0'
+      OperatingSystemVersionBuild          : '10586'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '13'
+      LayoutEngineVersionMajor             : '13'
+      LayoutEngineNameVersion              : 'EdgeHTML 13'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 13'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '13'
+      AgentVersionMajor                    : '13'
+      AgentNameVersion                     : 'Edge 13'
+      AgentNameVersionMajor                : 'Edge 13'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Xbox; Xbox One) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Mobile Safari/537.36 Edge/13.10586'
+    expected:
+      DeviceClass                          : 'Game Console'
+      DeviceName                           : 'Microsoft Xbox'
+      DeviceBrand                          : 'Microsoft'
+      DeviceVersion                        : 'Xbox One'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Phone'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows Phone 10.0'
+      OperatingSystemVersionBuild          : '10586'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '13'
+      LayoutEngineVersionMajor             : '13'
+      LayoutEngineNameVersion              : 'EdgeHTML 13'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 13'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '13'
+      AgentVersionMajor                    : '13'
+      AgentNameVersion                     : 'Edge 13'
+      AgentNameVersionMajor                : 'Edge 13'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; NOKIA; Lumia 730 Dual SIM) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Mobile Safari/537.36 Edge/12.10166'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Nokia Lumia 730 Dual SIM'
+      DeviceBrand                          : 'Nokia'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Phone'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows Phone 10.0'
+      OperatingSystemVersionBuild          : '10166'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '12'
+      LayoutEngineVersionMajor             : '12'
+      LayoutEngineNameVersion              : 'EdgeHTML 12'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 12'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '12'
+      AgentVersionMajor                    : '12'
+      AgentNameVersion                     : 'Edge 12'
+      AgentNameVersionMajor                : 'Edge 12'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; Microsoft; RM-1092) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Mobile Safari/537.36 Edge/14.14295'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Microsoft RM-1092'
+      DeviceBrand                          : 'Microsoft'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Phone'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows Phone 10.0'
+      OperatingSystemVersionBuild          : '14295'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '14'
+      LayoutEngineVersionMajor             : '14'
+      LayoutEngineNameVersion              : 'EdgeHTML 14'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 14'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '14'
+      AgentVersionMajor                    : '14'
+      AgentNameVersion                     : 'Edge 14'
+      AgentNameVersionMajor                : 'Edge 14'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.14257'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      OperatingSystemVersionBuild          : '14257'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '13'
+      LayoutEngineVersionMajor             : '13'
+      LayoutEngineNameVersion              : 'EdgeHTML 13'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 13'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '13'
+      AgentVersionMajor                    : '13'
+      AgentNameVersion                     : 'Edge 13'
+      AgentNameVersionMajor                : 'Edge 13'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; ARM) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/14.14291'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Windows Phone'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'ARM'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Mobile'
+      OperatingSystemVersion               : '10'
+      OperatingSystemNameVersion           : 'Windows 10 Mobile'
+      OperatingSystemVersionBuild          : '14291'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '14'
+      LayoutEngineVersionMajor             : '14'
+      LayoutEngineNameVersion              : 'EdgeHTML 14'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 14'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '14'
+      AgentVersionMajor                    : '14'
+      AgentNameVersion                     : 'Edge 14'
+      AgentNameVersionMajor                : 'Edge 14'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; ARM; Lumia 640 LTE) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'
+    expected:
+      # WTF: Desktop OS on Mobile phone ?!?!?!
+      # http://www.gsmarena.com/microsoft_lumia_640_lte-7055.php
+      # OS: Microsoft Windows Phone 8.1, upgradable to Microsoft Windows 10
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Nokia Lumia 640 LTE'
+      DeviceBrand                          : 'Nokia'
+      DeviceCpu                            : 'ARM'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Mobile'
+      OperatingSystemVersion               : '10'
+      OperatingSystemNameVersion           : 'Windows 10 Mobile'
+      OperatingSystemVersionBuild          : '10586'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '13'
+      LayoutEngineVersionMajor             : '13'
+      LayoutEngineNameVersion              : 'EdgeHTML 13'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 13'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '13'
+      AgentVersionMajor                    : '13'
+      AgentNameVersion                     : 'Edge 13'
+      AgentNameVersionMajor                : 'Edge 13'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; ARM; Lumia 640 LTE Dual SIM) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'
+    expected:
+      # http://www.gsmarena.com/microsoft_lumia_640_lte-7055.php
+      # OS: Microsoft Windows Phone 8.1, upgradable to Microsoft Windows 10
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Nokia Lumia 640 LTE Dual SIM'
+      DeviceBrand                          : 'Nokia'
+      DeviceCpu                            : 'ARM'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Mobile'
+      OperatingSystemVersion               : '10'
+      OperatingSystemNameVersion           : 'Windows 10 Mobile'
+      OperatingSystemVersionBuild          : '10586'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '13'
+      LayoutEngineVersionMajor             : '13'
+      LayoutEngineNameVersion              : 'EdgeHTML 13'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 13'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '13'
+      AgentVersionMajor                    : '13'
+      AgentNameVersion                     : 'Edge 13'
+      AgentNameVersionMajor                : 'Edge 13'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; WebView/3.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10240'
+    expected:
+      #TODO (Low prio): What is WebView??
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      OperatingSystemVersionBuild          : '10240'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '12'
+      LayoutEngineVersionMajor             : '12'
+      LayoutEngineNameVersion              : 'EdgeHTML 12'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 12'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '12'
+      AgentVersionMajor                    : '12'
+      AgentNameVersion                     : 'Edge 12'
+      AgentNameVersionMajor                : 'Edge 12'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2351.3 Safari/537.36 Edge/12.0'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '12'
+      LayoutEngineVersionMajor             : '12'
+      LayoutEngineNameVersion              : 'EdgeHTML 12'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 12'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '12'
+      AgentVersionMajor                    : '12'
+      AgentNameVersion                     : 'Edge 12'
+      AgentNameVersionMajor                : 'Edge 12'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586,gzip(gfe)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      OperatingSystemVersionBuild          : '10586'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '13'
+      LayoutEngineVersionMajor             : '13'
+      LayoutEngineNameVersion              : 'EdgeHTML 13'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 13'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '13'
+      AgentVersionMajor                    : '13'
+      AgentNameVersion                     : 'Edge 13'
+      AgentNameVersionMajor                : 'Edge 13'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/14.14279'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows 10.0'
+      OperatingSystemVersionBuild          : '14279'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '14'
+      LayoutEngineVersionMajor             : '14'
+      LayoutEngineNameVersion              : 'EdgeHTML 14'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 14'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '14'
+      AgentVersionMajor                    : '14'
+      AgentNameVersion                     : 'Edge 14'
+      AgentNameVersionMajor                : 'Edge 14'
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Edge"'
+    extract:
+    - 'AgentClass                          :  10000 :"Browser Webview"'
+    - 'AgentName                           :  10000 :"Edge Webview"'
+    - 'AgentVersion                        :   2500 :agent.(1)product.(1)comments.entry.product.name="MSAppHost"^.version'
+    - 'WebviewAppName                      :      0 :"Unknown Webview App"'
+    - 'WebviewAppVersion                   :      0 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.(1)name="Edge"'
+    extract:
+    - 'AgentClass                          :  10000 :"Browser Webview"'
+    - 'AgentName                           :  10000 :"Edge Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="MSAppHost"^.version'
+    - 'WebviewAppName                      :      0 :"Unknown Webview App"'
+    - 'WebviewAppVersion                   :      0 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.product.name="Trident"'
+    extract:
+    - 'AgentClass                          :  10000 :"Browser Webview"'
+    - 'AgentName                           :  10000 :"Internet Explorer Webview"'
+    - 'AgentVersion                        :   2500 :agent.(1)product.(1)comments.entry.product.name="MSAppHost"^.version'
+    - 'WebviewAppName                      :      0 :"Unknown Webview App"'
+    - 'WebviewAppVersion                   :      0 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.product.name="Trident"'
+    extract:
+    - 'AgentClass                          :  10000 :"Browser Webview"'
+    - 'AgentName                           :  10000 :"Internet Explorer Webview"'
+    - 'AgentVersion                        :   2500 :agent.product.(1)name="MSAppHost"^.version'
+    - 'WebviewAppName                      :      0 :"Unknown Webview App"'
+    - 'WebviewAppVersion                   :      0 :"??"'
+
+# =================================================
+# Edge for Android & iOS
+# Specs:
+# https://blogs.windows.com/msedgedev/2017/10/05/microsoft-edge-ios-android-developer/
+# A few notes:
+# - The app/OS identifier is chosen so that it does not contain the string “Edge.”
+#   This is to avoid triggering any existing UA detection logic that might accidentally decide that
+#   these browsers are Microsoft Edge for Windows 10, resulting in a desktop site or something equally confusing.
+# - The version number “41” is the app version number aligned across all current versions of Microsoft Edge
+#   (note that for simplicity, the app version number is not currently exposed in Microsoft Edge for PC;
+#   only the EdgeHTML engine version number is exposed).
+# - The sub-version number is a platform-specific version number that internal version number of
+#   the app on that platform.
+
+# Specs say:
+# On Android, we are using the Blink rendering engine from the Chromium browser project.
+# This approach gives us more control and better performance than using the Android WebView control,
+# but means that we are shipping our own copy of the rendering engine in the app.
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :   2015 :"Browser"'
+    - 'LayoutEngineName                    :   2015 :"Blink"'
+    - 'LayoutEngineVersion                 :   2015 :agent.product.name="Chrome"^.version[-2]'
+
+    - 'AgentClass                          :   2015 :"Browser"'
+    - 'AgentName                           :   2015 :"Edge"'
+    - 'AgentVersion                        :   2015 :agent.product.name="EdgA"^.version'
+
+# Specs say:
+# On iOS, we are using the WebKit engine, as provided by iOS in the WKWebView control.
+# That means that from a compatibility perspective, Microsoft Edge for iOS should match
+# the version of Safari that is currently available for iOS.
+- matcher:
+    extract:
+    - 'LayoutEngineClass                   :   2015 :"Browser"'
+    - 'LayoutEngineName                    :   2015 :"AppleWebKit"'
+    - 'LayoutEngineVersion                 :   2015 :agent.product.name="AppleWebKit"^.version'
+
+    - 'AgentClass                          :   2015 :"Browser"'
+    - 'AgentName                           :   2015 :"Edge"'
+    - 'AgentVersion                        :   2015 :agent.product.name="EdgiOS"^.version'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.1.1; Nexus 6 Build/N6F27M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.145 Mobile Safari/537.36 EdgA/41.0.0.1136'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.1.1'
+      OperatingSystemNameVersion           : 'Android 7.1.1'
+      OperatingSystemVersionBuild          : 'N6F27M'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '58.0'
+      LayoutEngineVersionMajor             : '58'
+      LayoutEngineNameVersion              : 'Blink 58.0'
+      LayoutEngineNameVersionMajor         : 'Blink 58'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '41.0.0.1136'
+      AgentVersionMajor                    : '41'
+      AgentNameVersion                     : 'Edge 41.0.0.1136'
+      AgentNameVersionMajor                : 'Edge 41'
+
+# Example from specs page
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/OPP3.170518.006) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.0 Mobile Safari/537.36 EdgA/41.1.35.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Pixel XL'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '8.0'
+      OperatingSystemNameVersion           : 'Android 8.0'
+      OperatingSystemVersionBuild          : 'OPP3.170518.006'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '58.0'
+      LayoutEngineVersionMajor             : '58'
+      LayoutEngineNameVersion              : 'Blink 58.0'
+      LayoutEngineNameVersionMajor         : 'Blink 58'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '41.1.35.1'
+      AgentVersionMajor                    : '41'
+      AgentNameVersion                     : 'Edge 41.1.35.1'
+      AgentNameVersionMajor                : 'Edge 41'
+
+# Example from specs page
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89 Safari/603.2.4 EdgiOS/41.1.35.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Apple iPhone'
+      DeviceBrand                          : 'Apple'
+      DeviceFirmwareVersion                : '14F89'
+      DeviceVersion                        : 'iPhone'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'iOS'
+      OperatingSystemVersion               : '10.3.2'
+      OperatingSystemNameVersion           : 'iOS 10.3.2'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '603.2.4'
+      LayoutEngineVersionMajor             : '603'
+      LayoutEngineNameVersion              : 'AppleWebKit 603.2.4'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 603'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Edge'
+      AgentVersion                         : '41.1.35.1'
+      AgentVersionMajor                    : '41'
+      AgentNameVersion                     : 'Edge 41.1.35.1'
+      AgentNameVersionMajor                : 'Edge 41'
+
+# ===============================================
+
+# MSAppHost means webview
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows Phone 10.0; Android 4.2.1; MSAppHost/3.0; Microsoft; Virtual) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Mobile Safari/537.36 Edge/13.10586'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Microsoft Virtual'
+#      DeviceBrand                          : 'Unknown'
+      DeviceBrand                          : 'Microsoft'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Windows Phone'
+      OperatingSystemVersion               : '10.0'
+      OperatingSystemNameVersion           : 'Windows Phone 10.0'
+      OperatingSystemVersionBuild          : '10586'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'EdgeHTML'
+      LayoutEngineVersion                  : '13'
+      LayoutEngineVersionMajor             : '13'
+      LayoutEngineNameVersion              : 'EdgeHTML 13'
+      LayoutEngineNameVersionMajor         : 'EdgeHTML 13'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Edge Webview'
+      AgentVersion                         : '3.0'
+      AgentVersionMajor                    : '3'
+      AgentNameVersion                     : 'Edge Webview 3.0'
+      AgentNameVersionMajor                : 'Edge Webview 3'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.3; Win64; x64; Trident/7.0; MSAppHost/2.0; rv:11.0) like Gecko'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '8.1'
+      OperatingSystemNameVersion           : 'Windows 8.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Internet Explorer Webview'
+      AgentVersion                         : '2.0'
+      AgentVersionMajor                    : '2'
+      AgentNameVersion                     : 'Internet Explorer Webview 2.0'
+      AgentNameVersionMajor                : 'Internet Explorer Webview 2'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0(compatible; MSIE 7.0b; Windows NT 6.0)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'Vista'
+      OperatingSystemNameVersion           : 'Windows Vista'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineVersion                  : '7.0b'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Internet Explorer 7.0b'
+      LayoutEngineNameVersionMajor         : 'Internet Explorer 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '7.0b'
+      AgentVersionMajor                    : '7'
+      AgentNameVersion                     : 'Internet Explorer 7.0b'
+      AgentNameVersionMajor                : 'Internet Explorer 7'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 compatible; MSIE 9.0; Windows NT 4.1 Chrome/31.0.1229.79'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '4.1'
+      OperatingSystemNameVersion           : 'Windows NT 4.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Trident 5.0'
+      LayoutEngineNameVersionMajor         : 'Trident 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '31.0.1229.79'
+      AgentVersionMajor                    : '31'
+      AgentNameVersion                     : 'Chrome 31.0.1229.79'
+      AgentNameVersionMajor                : 'Chrome 31'
+
+# Internet Explorer CPU Type
+# See: https://msdn.microsoft.com/library/ms537503.aspx
+#   Win64; IA64     System has a 64-bit processor (Intel).
+#   Win64; x64      System has a 64-bit processor (AMD).
+#   WOW64           A 32-bit version of Internet Explorer is running on a 64-bit processor.
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)text="Win64"'
+    extract:
+    - 'DeviceCpuBits                       :    200 :"64"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)text="IA64"'
+    extract:
+    - 'DeviceCpu                           :    200 :"Intel Itanium 64"'
+    - 'DeviceCpuBits                       :    200 :"64"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)text="x64"'
+    extract:
+    - 'DeviceCpu                           :    200 :"Intel x86_64"'
+    - 'DeviceCpuBits                       :    200 :"64"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)text="WOW64"'
+    extract:
+    - 'DeviceCpu                           :    200 :"Intel x86_64"'
+    - 'DeviceCpuBits                       :    200 :"64"'
+
+
+# Internet Explorer Compatibility mode.
+# ------------------------------------------
+# When in Compatibility mode IE will lie about it's real version.
+# If it does then it still shows the correct Trident version of the real version.
+# See: https://msdn.microsoft.com/library/ms537503.aspx#tritoken
+#     When the F12 developer tools are used to change the browser mode of Internet Explorer,
+#     the version token of the user-agent string is modified to appear so that the browser
+#     appears to be an earlier version.
+#     ...
+#     When this happens, a Trident token is added to the user-agent string.
+#     This token includes a version number that enables you to identify the version of the browser, regardless of
+#     the current browser mode.
+# In the table of versions on this page it says:
+# Version token  Description
+# MSIE 10.0      Internet Explorer 10
+# MSIE 9.0       Internet Explorer 9
+# MSIE 8.0       Internet Explorer 8            or IE8 Compatibility View/Browser Mode
+# MSIE 7.0       Windows Internet Explorer 7    or IE7 Compatibility View/Browser Mode
+# MSIE 6.0       Microsoft Internet Explorer 6
+#
+# So only IE 7 and 8 are possible 'compatibility' version.
+# And only IE 9 and up have a compatibility option
+- lookup:
+    name: 'CompatibilityTridentAgentVersion'
+    map:
+      "Trident/5.0": "9.0"
+      "Trident/6.0": "10.0"
+      "Trident/7.0": "11.0"
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product="MSIE 7.0"'
+    - 'agent.(1)product.(1)comments.(1)entry.(1)text="compatible"'
+    - 'agent.(1)product.(1)comments.entry.(1)product[1-2]="Windows NT"'
+    - 'LookUp[CompatibilityTridentAgentVersion;agent.product.comments.entry.product.name="Trident"^]'
+    extract:
+    - 'IECompatibilityVersion              :      1 :"7.0"'
+    - 'IECompatibilityVersionMajor         :      1 :"7"'
+    - 'IECompatibilityNameVersion          :      1 :"Internet Explorer 7.0"'
+    - 'IECompatibilityNameVersionMajor     :      1 :"Internet Explorer 7"'
+
+- matcher:
+    require:
+    - 'agent.(1)product.(1)comments.entry.(1)product="MSIE 8.0"'
+    - 'agent.(1)product.(1)comments.(1)entry.(1)text="compatible"'
+    - 'agent.(1)product.(1)comments.entry.(1)product[1-2]="Windows NT"'
+    - 'LookUp[CompatibilityTridentAgentVersion;agent.product.comments.entry.product.name="Trident"^]'
+    extract:
+    - 'IECompatibilityVersion              :      1 :"8.0"'
+    - 'IECompatibilityVersionMajor         :      1 :"8"'
+    - 'IECompatibilityNameVersion          :      1 :"Internet Explorer 8.0"'
+    - 'IECompatibilityNameVersionMajor     :      1 :"Internet Explorer 8"'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/7.0; SLCC2)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '11.0'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Internet Explorer 11.0'
+      AgentNameVersionMajor                : 'Internet Explorer 11'
+      IECompatibilityVersion               : '7.0'
+      IECompatibilityVersionMajor          : '7'
+      IECompatibilityNameVersion           : 'Internet Explorer 7.0'
+      IECompatibilityNameVersionMajor      : 'Internet Explorer 7'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.2; Win64; x64; Trident/6.0; .NET4.0E; .NET4.0C)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '8'
+      OperatingSystemNameVersion           : 'Windows 8'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '6.0'
+      LayoutEngineVersionMajor             : '6'
+      LayoutEngineNameVersion              : 'Trident 6.0'
+      LayoutEngineNameVersionMajor         : 'Trident 6'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '10.0'
+      AgentVersionMajor                    : '10'
+      AgentNameVersion                     : 'Internet Explorer 10.0'
+      AgentNameVersionMajor                : 'Internet Explorer 10'
+      IECompatibilityVersion               : '7.0'
+      IECompatibilityVersionMajor          : '7'
+      IECompatibilityNameVersion           : 'Internet Explorer 7.0'
+      IECompatibilityNameVersionMajor      : 'Internet Explorer 7'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.2; Win64; IA64; Trident/6.0; .NET4.0E; .NET4.0C)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel Itanium 64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '8'
+      OperatingSystemNameVersion           : 'Windows 8'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '6.0'
+      LayoutEngineVersionMajor             : '6'
+      LayoutEngineNameVersion              : 'Trident 6.0'
+      LayoutEngineNameVersionMajor         : 'Trident 6'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '10.0'
+      AgentVersionMajor                    : '10'
+      AgentNameVersion                     : 'Internet Explorer 10.0'
+      AgentNameVersionMajor                : 'Internet Explorer 10'
+      IECompatibilityVersion               : '7.0'
+      IECompatibilityVersionMajor          : '7'
+      IECompatibilityNameVersion           : 'Internet Explorer 7.0'
+      IECompatibilityNameVersionMajor      : 'Internet Explorer 7'
+
+# IE 11 in normal mode
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; Trident/7.0; rv:11.0) like Gecko'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '11.0'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Internet Explorer 11.0'
+      AgentNameVersionMajor                : 'Internet Explorer 11'
+
+# IE 11 in Compatibility mode
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Win64; x64; Trident/7.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; InfoPath.3; .NET4.0E)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '11.0'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Internet Explorer 11.0'
+      AgentNameVersionMajor                : 'Internet Explorer 11'
+      IECompatibilityVersion               : '7.0'
+      IECompatibilityVersionMajor          : '7'
+      IECompatibilityNameVersion           : 'Internet Explorer 7.0'
+      IECompatibilityNameVersionMajor      : 'Internet Explorer 7'
+
+
+# ===================================================================================
+# Some problem cases with IE where the Trident and other indicators seem off.
+# Reported via https://github.com/nielsbasjes/yauaa/issues/75
+
+- matcher:
+    require:
+    - 'agent.product.comments.entry.product.name="Trident"'
+    extract:
+    - 'AgentClass                          :   2010 :"Browser"'
+    - 'AgentName                           :   2010 :"Internet Explorer"'
+    - 'AgentVersion                        :   2012 :agent.product.comments.entry.keyvalue.key="rv"^.value'
+
+#Example 1 (IE 11)
+#UserAgent: "Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.1) like Gecko"
+#Actual Version: "11.0"
+#Right Version "11.1"
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.1) like Gecko'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '8.1'
+      OperatingSystemNameVersion           : 'Windows 8.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '11.1'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Internet Explorer 11.1'
+      AgentNameVersionMajor                : 'Internet Explorer 11'
+
+# Examples of an incorrect "Compatibility mode"
+# The Trident value indicates IE 8 or IE 9, Yet it says it is compatible with IE 10 ...
+# That is impossible so we are forcing it into reporting "IE 10.0"
+
+- matcher:
+    require:
+    - 'agent.product.comments.entry.product.name="Trident"'
+    - 'agent.product.comments.entry.product.name="MSIE"^.version[1]="10"'
+    extract:
+    - 'AgentClass                          :   2010 :"Browser"'
+    - 'AgentName                           :   2010 :"Internet Explorer"'
+    - 'AgentVersion                        :   2013 :agent.product.comments.entry.product.name="MSIE"^.version'
+
+- matcher:
+    require:
+    - 'agent.product.comments.entry.product.name="Trident"'
+    - 'agent.product.comments.entry.product.name="MSIE"^.version[1]="11"'
+    extract:
+    - 'AgentClass                          :   2010 :"Browser"'
+    - 'AgentName                           :   2010 :"Internet Explorer"'
+    - 'AgentVersion                        :   2013 :agent.product.comments.entry.product.name="MSIE"^.version'
+
+#Example 3 (IE10)
+#UserAgent: "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)"
+#Actual Version: "9.0"
+#Right Version: "10.0"
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Trident 5.0'
+      LayoutEngineNameVersionMajor         : 'Trident 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '10.0'
+      AgentVersionMajor                    : '10'
+      AgentNameVersion                     : 'Internet Explorer 10.0'
+      AgentNameVersionMajor                : 'Internet Explorer 10'
+
+#Example 4 (IE10)
+#UserAgent: "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/4.0; InfoPath.2; SV1; .NET CLR 2.0.50727; WOW64)"
+#Actual Vesion: "8.0"
+#Right Version: "10.0"
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/4.0; InfoPath.2; SV1; .NET CLR 2.0.50727; WOW64)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '4.0'
+      LayoutEngineVersionMajor             : '4'
+      LayoutEngineNameVersion              : 'Trident 4.0'
+      LayoutEngineNameVersionMajor         : 'Trident 4'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '10.0'
+      AgentVersionMajor                    : '10'
+      AgentNameVersion                     : 'Internet Explorer 10.0'
+      AgentNameVersionMajor                : 'Internet Explorer 10'
+
+#Example 5 (IE10)
+#UserAgent: "Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)"
+#Actual Version: "9.0"
+#Right Version: "10.0"
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/5.0)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Trident 5.0'
+      LayoutEngineNameVersionMajor         : 'Trident 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '10.0'
+      AgentVersionMajor                    : '10'
+      AgentNameVersion                     : 'Internet Explorer 10.0'
+      AgentNameVersionMajor                : 'Internet Explorer 10'
+
+
+# Extra trailing stuff
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 6.0; en-US); 0110120602120527'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'Vista'
+      OperatingSystemNameVersion           : 'Windows Vista'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Internet Explorer 7.0'
+      LayoutEngineNameVersionMajor         : 'Internet Explorer 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '7.0'
+      AgentVersionMajor                    : '7'
+      AgentNameVersion                     : 'Internet Explorer 7.0'
+      AgentNameVersionMajor                : 'Internet Explorer 7'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
