@@ -181,7 +181,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return "Yauaa " + ThisVersion.GetProjectVersion() + " (" + ThisVersion.GetGitCommitIdDescribeShort() + " @ " + ThisVersion.GetBuildTimestamp() + ")";
         }
 
-        public void LoadResources(string resourceString)
+        public void LoadResources(string resourceString, string pattern = "*.yaml")
         {
             if (matchersHaveBeenInitialized)
             {
@@ -198,7 +198,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             Dictionary<string, FileInfo> resources = new Dictionary<string, FileInfo>();
             try
             {
-                string[] filePaths = Directory.GetFiles(resourceString, "*.yaml");
+                string[] filePaths = Directory.GetFiles(resourceString, pattern, SearchOption.TopDirectoryOnly);
                 
                 foreach (string filePath in filePaths)
                 {

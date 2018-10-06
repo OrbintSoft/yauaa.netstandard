@@ -1,10 +1,6 @@
 ﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using FluentAssertions;
 using Xunit;
-using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {

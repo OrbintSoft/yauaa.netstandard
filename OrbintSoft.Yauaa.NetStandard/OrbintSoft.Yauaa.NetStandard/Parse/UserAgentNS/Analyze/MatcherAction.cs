@@ -314,6 +314,126 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return 0;
         }
 
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherRequireContext tree)
+        {
+            if (tree is UserAgentTreeWalkerParser.MatcherBaseContext) {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext)tree).matcher());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherPathIsNullContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext)tree).matcher());
+            }
+            return 0;
+        }
+
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherContext tree)
+        {
+            if (tree is UserAgentTreeWalkerParser.MatcherPathContext) {
+                return CalculateInformPath(treeName, (ParserRuleContext)((UserAgentTreeWalkerParser.MatcherPathContext)tree).basePath());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherCleanVersionContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext)tree).matcher());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)tree).matcher());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherPathLookupContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext)tree).matcher());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherWordRangeContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext)tree).matcher());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherConcatContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatContext)tree).matcher());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherConcatPrefixContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext)tree).matcher());
+            }
+            if (tree is UserAgentTreeWalkerParser.MatcherConcatPostfixContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext)tree).matcher());
+            }
+            return 0;
+        }
+
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.BasePathContext tree)
+        {
+            // Useless to register a fixed value
+            //             case "PathFixedValueContext"         : calculateInformPath(treeName, (PathFixedValueContext)         tree); break;
+            if (tree is UserAgentTreeWalkerParser.PathVariableContext) {
+                matcher.InformMeAboutVariable(this, ((UserAgentTreeWalkerParser.PathVariableContext)tree).variable.Text);
+                return 0;
+            }
+            if (tree is UserAgentTreeWalkerParser.PathWalkContext) {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.PathWalkContext)tree).nextStep);
+            }
+            return 0;
+        }
+
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.PathContext tree)
+        {
+            if (tree != null)
+            {
+                if (tree is UserAgentTreeWalkerParser.StepDownContext)
+                {
+                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepDownContext)tree);
+                }
+                if (tree is UserAgentTreeWalkerParser.StepEqualsValueContext)
+                {
+                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.PathContext)(UserAgentTreeWalkerParser.StepEqualsValueContext)tree);
+                }
+                if (tree is UserAgentTreeWalkerParser.StepStartsWithValueContext)
+                {
+                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepStartsWithValueContext)tree);
+                }
+                if (tree is UserAgentTreeWalkerParser.StepWordRangeContext) {
+                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepWordRangeContext)tree);
+                }
+            }
+            matcher.InformMeAbout(this, treeName);
+            return 1;
+        }
+
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepDownContext tree)
+        {
+            if (treeName.Length == 0)
+            {
+                return CalculateInformPath(treeName + '.' + tree.name.Text, tree.nextStep);
+            }
+
+            int informs = 0;
+            foreach (int? number in NumberRangeVisitor.NUMBER_RANGE_VISITOR.Visit(tree.numberRange()))
+            {
+                informs += CalculateInformPath(treeName + '.' + "(" + number + ")" + tree.name.Text, tree.nextStep);
+            }
+            return informs;
+        }
+
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepEqualsValueContext tree)
+        {
+            matcher.InformMeAbout(this, treeName + "=\"" + tree.value.Text + "\"");
+            return 1;
+        }
+
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepStartsWithValueContext tree)
+        {
+            matcher.InformMeAboutPrefix(this, treeName, tree.value.Text);
+            return 1;
+        }
+
+        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepWordRangeContext tree)
+        {
+            WordRangeVisitor.Range range = WordRangeVisitor.getRange(tree.wordRange());
+            matcher.LookingForRange(treeName, range);
+            return CalculateInformPath(treeName + range, tree.nextStep);
+        }
+
         public virtual void Reset()
         {
             matches.Clear();

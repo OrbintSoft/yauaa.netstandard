@@ -10,7 +10,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         public void TestCacheSetter()
         {
             UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer.NewBuilder().Build();
-            userAgentAnalyzer.LoadResources("classpath*:AllFields-tests.yaml");
+            userAgentAnalyzer.LoadResources("YamlResources", "*-tests.yaml");
 
             userAgentAnalyzer.GetCacheSize().Should().Be(10000, "Default cache size");
             
@@ -37,7 +37,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         public void TestUserAgentMaxLengthSetter()
         {
             UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer.NewBuilder().Build();
-            userAgentAnalyzer.LoadResources("classpath*:AllFields-tests.yaml");
+            userAgentAnalyzer.LoadResources("YamlResources", "*-tests.yaml");
 
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(UserAgentAnalyzerDirect.DEFAULT_USER_AGENT_MAX_LENGTH, "Default user agent max length");
             

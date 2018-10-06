@@ -80,7 +80,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return maxRange ?? 0;
         }
 
-        static readonly NumberRangeVisitor NUMBER_RANGE_VISITOR = new NumberRangeVisitor();
+        internal static readonly NumberRangeVisitor NUMBER_RANGE_VISITOR = new NumberRangeVisitor();
 
         public static NumberRangeList GetList(UserAgentTreeWalkerParser.NumberRangeContext ctx)
         {
