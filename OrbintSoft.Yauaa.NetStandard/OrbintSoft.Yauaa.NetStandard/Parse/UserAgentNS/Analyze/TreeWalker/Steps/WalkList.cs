@@ -391,10 +391,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 FromHereItCannotBeInHashMapAnymore();
 
                 string lookupSetName = context.set.Text;
-                HashSet<string> lookupSet = walkList.lookupSets[lookupSetName];
+                HashSet<string> lookupSet = walkList.lookupSets.ContainsKey(lookupSetName) ? walkList.lookupSets[lookupSetName] : null;
                 if (lookupSet == null)
                 {
-                    Dictionary<string, string> lookup = walkList.lookups[lookupSetName];
+                    Dictionary<string, string> lookup = walkList.lookups.ContainsKey(lookupSetName) ? walkList.lookups[lookupSetName] : null;
                     if (lookup != null)
                     {
                         lookupSet = new HashSet<string>(lookup.Keys);

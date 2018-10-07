@@ -154,7 +154,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 return; // Nothing to check
             }
             List<string> impossibleFields = new List<string>();
-            List<string> allPossibleFields = getAllPossibleFieldNamesSorted();
+            List<string> allPossibleFields = GetAllPossibleFieldNamesSorted();
 
             foreach (string wantedFieldName in wantedFieldNames)
             {
@@ -366,7 +366,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 informMatcherActionRanges.Count));
         }
 
-        public SortedSet<string> getAllPossibleFieldNames()
+        public SortedSet<string> GetAllPossibleFieldNames()
         {
             SortedSet<string> results = new SortedSet<string>();
             foreach (Matcher matcher in allMatchers)
@@ -376,9 +376,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return results;
         }
 
-        public List<string> getAllPossibleFieldNamesSorted()
+        public List<string> GetAllPossibleFieldNamesSorted()
         {
-            List<string> fieldNames = new List<string>(getAllPossibleFieldNames());
+            List<string> fieldNames = new List<string>(GetAllPossibleFieldNames());
             fieldNames.Sort();
 
             List<string> result = new List<string>();

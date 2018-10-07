@@ -261,7 +261,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             foreach (MatcherVariableAction variableAction in variableActions)
             {
                 seenVariables.Add(variableAction); // Add myself
-                HashSet<MatcherAction> interestedActions = informMatcherActionsAboutVariables[variableAction.GetVariableName()];
+                var variableName = variableAction.GetVariableName();
+                HashSet<MatcherAction> interestedActions = informMatcherActionsAboutVariables.ContainsKey(variableName) ? informMatcherActionsAboutVariables[variableName] : null;
                 if (interestedActions != null && interestedActions.Count > 0)
                 {
                     variableAction.SetInterestedActions(interestedActions);
