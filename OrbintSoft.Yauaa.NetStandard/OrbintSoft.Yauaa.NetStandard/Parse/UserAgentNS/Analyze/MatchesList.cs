@@ -104,14 +104,54 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return true;
         }
 
+        public class MatchEnumerator : IEnumerator<Match>
+        {
+            private int offset = -1;
+            private readonly int count = 0;
+
+            private readonly Match[] matches;
+
+            public Match Current => matches[offset];
+
+            object IEnumerator.Current => matches[offset];
+
+            public MatchEnumerator(Match[] matches, int count)
+            {
+                this.matches = matches;
+                this.count = count;
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                if (offset < count - 1)
+                {
+                    offset++;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public void Reset()
+            {
+                offset = 0;
+            }
+        }
+
         public IEnumerator<Match> GetEnumerator()
         {
-            return allElements.Cast<Match>().GetEnumerator();
+            return new MatchEnumerator(allElements, Count);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return allElements.GetEnumerator();
+            return new MatchEnumerator(allElements, Count);
         }
 
         private static readonly int CAPACITY_INCREASE = 3;
