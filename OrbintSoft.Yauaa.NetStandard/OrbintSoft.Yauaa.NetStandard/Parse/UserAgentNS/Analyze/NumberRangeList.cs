@@ -27,72 +27,19 @@ using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
-    public class NumberRangeList: IList<int>
+    public class NumberRangeList: IReadOnlyList<int>
     {
         private readonly int start;
         private readonly int end;
-        List<int> list = new List<int>();
+
+        public int Count => end - start + 1;
+
+        public int this[int index] => start + index;
 
         public NumberRangeList(int start, int end)
         {
             this.start = start;
             this.end = end;
-        }
-
-        public int this[int index] { get => start + index; set => list[index] = value; }
-
-        public int Count => end - start + 1;
-
-        public bool IsReadOnly => false;
-
-        public void Add(int item)
-        {
-            list.Add(item);
-        }
-
-        public void Clear()
-        {
-            list.Clear();
-        }
-
-        public bool Contains(int item)
-        {
-            return list.Contains(item);
-        }
-
-        public void CopyTo(int[] array, int arrayIndex)
-        {
-            list.CopyTo(array, arrayIndex);
-        }
-
-        public IEnumerator<int> GetEnumerator()
-        {
-            return list.GetEnumerator();
-        }
-
-        public int IndexOf(int item)
-        {
-            return list.IndexOf(item);
-        }
-
-        public void Insert(int index, int item)
-        {
-            list.Insert(index, item);
-        }
-
-        public bool Remove(int item)
-        {
-            return list.Remove(item);
-        }
-
-        public void RemoveAt(int index)
-        {
-            list.RemoveAt(index);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return list.GetEnumerator();
         }
 
         public int GetStart()
@@ -103,6 +50,53 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public int GetEnd()
         {
             return end;
+        }
+
+        public class NumberRangeEnumerator : IEnumerator<int>
+        {
+            readonly NumberRangeList list;
+            int offset = -1;
+            public int Current => list[offset];
+
+            object IEnumerator.Current => list[offset];
+
+            public NumberRangeEnumerator(NumberRangeList list)
+            {
+                this.list = list;
+            }
+
+            public void Dispose()
+            {
+                
+            }
+
+            public bool MoveNext()
+            {
+                if (offset < list.Count - 1)
+                {
+                    offset++;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public void Reset()
+            {
+                offset = -1;
+            }
+        }
+
+        public IEnumerator<int> GetEnumerator()
+        {
+            return new NumberRangeEnumerator(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

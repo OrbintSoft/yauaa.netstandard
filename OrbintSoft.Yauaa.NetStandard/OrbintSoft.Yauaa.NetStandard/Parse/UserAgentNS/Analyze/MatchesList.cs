@@ -140,7 +140,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             public void Reset()
             {
-                offset = 0;
+                offset = -1;
             }
         }
 
