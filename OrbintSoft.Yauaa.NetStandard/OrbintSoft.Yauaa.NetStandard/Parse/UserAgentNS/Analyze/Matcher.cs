@@ -29,9 +29,11 @@ using System.Collections.Generic;
 using System.Text;
 using YamlDotNet.RepresentationModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("OrbintSoft.Yauaa.NetCore.Analyzer.Test")]
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
-{
+{    
     public class Matcher 
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(Matcher));
@@ -327,17 +329,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return results;
         }
 
-        public void LookingForRange(string treeName, WordRangeVisitor.Range range)
+        public virtual void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
             analyzer.LookingForRange(treeName, range);
         }
 
-        public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
+        public virtual void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
             analyzer.InformMeAbout(matcherAction, keyPattern);
         }
 
-        public void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
+        public virtual void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
         {
             analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
         }
@@ -360,7 +362,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// IFF all success then we tell the userAgent
         /// </summary>
         /// <param name="userAgent">userAgent The useragent that needs to analyzed</param>
-        public void Analyze(UserAgent userAgent)
+        public virtual void Analyze(UserAgent userAgent)
         {
 
             if (verbose)

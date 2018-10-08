@@ -329,7 +329,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherContext tree)
         {
             if (tree is UserAgentTreeWalkerParser.MatcherPathContext) {
-                return CalculateInformPath(treeName, (ParserRuleContext)((UserAgentTreeWalkerParser.MatcherPathContext)tree).basePath());
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathContext)tree).basePath());
             }
             if (tree is UserAgentTreeWalkerParser.MatcherCleanVersionContext)
             {
@@ -386,7 +386,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 }
                 if (tree is UserAgentTreeWalkerParser.StepEqualsValueContext)
                 {
-                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.PathContext)(UserAgentTreeWalkerParser.StepEqualsValueContext)tree);
+                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepEqualsValueContext)tree);
                 }
                 if (tree is UserAgentTreeWalkerParser.StepStartsWithValueContext)
                 {
