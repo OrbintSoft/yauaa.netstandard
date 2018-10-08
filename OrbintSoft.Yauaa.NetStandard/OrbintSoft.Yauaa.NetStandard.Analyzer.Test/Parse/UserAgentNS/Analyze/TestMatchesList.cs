@@ -1,7 +1,6 @@
 ﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 using FluentAssertions;
 
@@ -33,6 +32,31 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             match2.GetKey().Should().Be("three");
             match2.GetValue().Should().Be("four");
             match2.GetResult().Should().BeNull();
+        }
+
+        [Fact]
+        public void TestUnsupportedAdd()
+        {
+            new MatchesList(1).Invoking(m => m.Add(null)).Should().Throw<NotImplementedException>();
+        }
+
+        [Fact]
+        public void TestUnsupportedRemove()
+        {
+            new MatchesList(1).Invoking(m => m.Remove(null)).Should().Throw<NotImplementedException>();
+        }
+
+        [Fact]
+        public void TestUnsupportedContains()
+        {
+            new MatchesList(1).Invoking(m => m.Contains(null)).Should().Throw<NotImplementedException>();
+        }
+
+        [Fact]
+        public void TestUnsupportedCopyTo()
+        {
+            var array = new MatchesList.Match[1];
+            new MatchesList(1).Invoking(m => m.CopyTo(array, 0)).Should().Throw<NotImplementedException>();
         }
     }
 }

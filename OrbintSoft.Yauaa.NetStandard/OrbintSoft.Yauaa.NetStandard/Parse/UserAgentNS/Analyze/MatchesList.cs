@@ -192,7 +192,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         public void CopyTo(Match[] array, int arrayIndex)
         {
-            allElements.CopyTo(array, arrayIndex);
+            throw new System.NotImplementedException();
+            //allElements.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(Match item)
