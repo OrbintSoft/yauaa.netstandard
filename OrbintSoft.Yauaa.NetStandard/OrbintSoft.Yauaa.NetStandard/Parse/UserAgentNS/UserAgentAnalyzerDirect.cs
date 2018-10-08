@@ -734,7 +734,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public ISet<int?> GetRequiredPrefixLengths(string treeName)
         {
-            return informMatcherActionPrefixesLengths[treeName];
+            return informMatcherActionPrefixesLengths.ContainsKey(treeName) ? informMatcherActionPrefixesLengths[treeName] : null;
         }
 
         public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
@@ -780,7 +780,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return Parse(userAgent);
         }
 
-        private UserAgent setAsHacker(UserAgent userAgent, int confidence)
+        private UserAgent SetAsHacker(UserAgent userAgent, int confidence)
         {
             userAgent.Set(UserAgent.DEVICE_CLASS, "Hacker", confidence);
             userAgent.Set(UserAgent.DEVICE_BRAND, "Hacker", confidence);
@@ -808,9 +808,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             string useragentString = userAgent.GetUserAgentString();
             if (useragentString != null && useragentString.Length > userAgentMaxLength)
             {
-                userAgent = setAsHacker(userAgent, 100);
+                userAgent = SetAsHacker(userAgent, 100);
                 userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
-                return hardCodedPostProcessing(userAgent);
+                return HardCodedPostProcessing(userAgent);
             }
 
             // Reset all Matchers
@@ -838,14 +838,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
 
                 userAgent.ProcessSetAll();
-                return hardCodedPostProcessing(userAgent);
+                return HardCodedPostProcessing(userAgent);
             }
             catch (NullReferenceException npe)
             {
                 userAgent.Reset();
-                userAgent = setAsHacker(userAgent, 10000);
+                userAgent = SetAsHacker(userAgent, 10000);
                 userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
-                return hardCodedPostProcessing(userAgent);
+                return HardCodedPostProcessing(userAgent);
             }
         }
 
@@ -874,7 +874,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return wantedFieldNames.Contains(fieldName);
         }
 
-        private UserAgent hardCodedPostProcessing(UserAgent userAgent)
+        private UserAgent HardCodedPostProcessing(UserAgent userAgent)
         {
             // If it is really really bad ... then it is a Hacker.
             if ("true".Equals(userAgent.GetValue(UserAgent.SYNTAX_ERROR)))
@@ -999,7 +999,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             UserAgent.AgentField informationUrl = userAgent.Get("AgentInformationUrl");
             if (informationUrl != null && informationUrl.GetConfidence() >= 0)
             {
-                String hostname = informationUrl.GetValue();
+                string hostname = informationUrl.GetValue();
                 try
                 {
                     Uri url = new Uri(hostname);
@@ -1159,7 +1159,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
-            HashSet<MatcherAction> relevantActions = informMatcherActions[match.ToLower(CultureInfo.InvariantCulture)];
+            var _match = match.ToLower(CultureInfo.InvariantCulture);
+            HashSet<MatcherAction> relevantActions = informMatcherActions.ContainsKey(_match) ? informMatcherActions[_match] : null;
             if (verbose)
             {
                 if (relevantActions == null)

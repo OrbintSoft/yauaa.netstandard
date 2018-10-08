@@ -116,7 +116,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             while (idxSearchFor >= 0)
             {
                 //grab a part of input which does not include searchFor
-                result.Append(input.Substring(startIdx, idxSearchFor));
+                result.Append(input.Substring(startIdx, idxSearchFor - startIdx));
                 //add replaceWith to take place of searchFor
                 result.Append(replaceWith);
 

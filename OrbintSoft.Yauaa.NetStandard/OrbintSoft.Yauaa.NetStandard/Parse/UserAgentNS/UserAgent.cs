@@ -346,7 +346,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public void ProcessSetAll()
         {
-            AgentField setAllField = allFields[SET_ALL_FIELDS];
+            AgentField setAllField = allFields.ContainsKey(SET_ALL_FIELDS) ? allFields[SET_ALL_FIELDS] : null;
             if (setAllField == null)
             {
                 return;
@@ -427,7 +427,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
             else
             {
-                return allFields[fieldName];
+                return allFields.ContainsKey(fieldName) ? allFields[fieldName] : null;
             }
         }
 
@@ -437,7 +437,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 return userAgentString;
             }
-            AgentField field = allFields[fieldName];
+            AgentField field = allFields.ContainsKey(fieldName) ? allFields[fieldName] : null;
             if (field == null)
             {
                 return UNKNOWN_VALUE;

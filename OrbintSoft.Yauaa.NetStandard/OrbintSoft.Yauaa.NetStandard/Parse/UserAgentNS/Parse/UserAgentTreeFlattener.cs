@@ -199,7 +199,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         {
             State myState = new State(this, stateCtx, name);
 
-            if (!fakeChild)
+            if (!fakeChild && stateCtx != null)
             {
                 state.Put(stateCtx, myState);
             }
