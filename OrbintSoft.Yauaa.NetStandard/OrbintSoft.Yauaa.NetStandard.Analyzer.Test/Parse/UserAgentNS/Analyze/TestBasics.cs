@@ -1,6 +1,6 @@
-﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+﻿using FluentAssertions;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
 using Xunit;
-using FluentAssertions;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
@@ -13,7 +13,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.LoadResources("YamlResources", "*-tests.yaml");
 
             userAgentAnalyzer.GetCacheSize().Should().Be(10000, "Default cache size");
-            
+
             userAgentAnalyzer.SetCacheSize(50);
             userAgentAnalyzer.GetCacheSize().Should().Be(50, "I set that size");
 
@@ -30,7 +30,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.GetCacheSize().Should().Be(50000, "I set that size");
 
             userAgentAnalyzer.SetUserAgentMaxLength(555);
-            userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(555, "I set that size");           
+            userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(555, "I set that size");
         }
 
         [Fact]
@@ -40,12 +40,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.LoadResources("YamlResources", "*-tests.yaml");
 
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(UserAgentAnalyzerDirect.DEFAULT_USER_AGENT_MAX_LENGTH, "Default user agent max length");
-            
+
             userAgentAnalyzer.SetUserAgentMaxLength(250);
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(250, "I set that size");
 
             userAgentAnalyzer.SetUserAgentMaxLength(-100);
-            userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(UserAgentAnalyzerDirect.DEFAULT_USER_AGENT_MAX_LENGTH, "I set incorrect cache size"); ;            
+            userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(UserAgentAnalyzerDirect.DEFAULT_USER_AGENT_MAX_LENGTH, "I set incorrect cache size"); ;
         }
 
         [Fact]
