@@ -31,7 +31,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
         }
 
         private static VersionSplitter instance;
-        public static VersionSplitter getInstance()
+        public static VersionSplitter GetInstance()
         {
             if (instance == null)
             {
@@ -63,7 +63,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             return (value.StartsWith("www.") || value.StartsWith("http") || (value.Contains("@") && value.Contains(".")));
         }
 
-        public override string getSingleSplit(string value, int split)
+        public override string GetSingleSplit(string value, int split)
         {
             if (looksLikeEmailOrWebaddress(value))
             {
@@ -77,7 +77,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
                 return null;
             }
             int end = FindSplitEnd(characters, start);
-            return value.Substring(start, end);
+            return value.Substring(start, end - start);
         }
 
         public override string GetFirstSplits(string value, int split)

@@ -1118,7 +1118,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     string version = agentVersion.GetValue();
                     if (version != null)
                     {
-                        version = VersionSplitter.getInstance().getSingleSplit(agentVersion.GetValue(), 1);
+                        version = VersionSplitter.GetInstance().GetSingleSplit(agentVersion.GetValue(), 1);
                     }
                     userAgent.Set(
                         majorVersionName,

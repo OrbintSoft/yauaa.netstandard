@@ -46,9 +46,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
             if (tree.ChildCount == 1 && (
                   tree.GetChild(0) is UserAgentParser.SingleVersionContext ||
                   tree.GetChild(0) is UserAgentParser.SingleVersionWithCommasContext)) {
-                filteredValue = VersionSplitter.getInstance().getSplitRange(actualValue, firstWord, lastWord);
+                filteredValue = VersionSplitter.GetInstance().GetSplitRange(actualValue, firstWord, lastWord);
             } else {
-                filteredValue = WordSplitter.GetInstance().getSplitRange(actualValue, firstWord, lastWord);
+                filteredValue = WordSplitter.GetInstance().GetSplitRange(actualValue, firstWord, lastWord);
             }
             if (filteredValue == null)
             {

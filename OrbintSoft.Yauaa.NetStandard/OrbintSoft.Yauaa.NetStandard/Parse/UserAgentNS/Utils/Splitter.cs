@@ -140,7 +140,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             return chars.Length; // == The end of the string
         }
 
-        public virtual string getSingleSplit(string value, int split)
+        public virtual string GetSingleSplit(string value, int split)
         {
             char[] characters = value.ToCharArray();
             int start = FindSplitStart(characters, split);
@@ -149,7 +149,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
                 return null;
             }
             int end = FindSplitEnd(characters, start);
-            return value.Substring(start, end);
+            return value.Substring(start, end - start);
         }
 
         public virtual string GetFirstSplits(string value, int split)
@@ -164,7 +164,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             return value.Substring(0, end);
         }
 
-        public string getSplitRange(string value, int firstSplit, int lastSplit)
+        public string GetSplitRange(string value, int firstSplit, int lastSplit)
         {
             if (value == null || (lastSplit > 0 && lastSplit < firstSplit))
             {
@@ -179,7 +179,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 
             if (lastSplit == -1)
             {
-                return value.Substring(firstCharOfFirstSplit, FindEndOfString(characters, firstCharOfFirstSplit));
+                return value.Substring(firstCharOfFirstSplit, FindEndOfString(characters, firstCharOfFirstSplit) - firstCharOfFirstSplit);
             }
             int firstCharOfLastSplit = firstCharOfFirstSplit;
             if (lastSplit != firstSplit)
@@ -193,12 +193,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 
             int lastCharOfLastSplit = FindSplitEnd(characters, firstCharOfLastSplit);
 
-            return value.Substring(firstCharOfFirstSplit, lastCharOfLastSplit);
+            return value.Substring(firstCharOfFirstSplit, lastCharOfLastSplit - firstCharOfFirstSplit);
         }
 
         public string GetSplitRange(string value, Analyze.WordRangeVisitor.Range range)
         {
-            return getSplitRange(value, range.GetFirst(), range.GetLast());
+            return GetSplitRange(value, range.GetFirst(), range.GetLast());
         }
 
         public string GetSplitRange(string value, List<Tuple<int, int>> splitList, Analyze.WordRangeVisitor.Range range)
@@ -225,7 +225,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
                 return null;
             }
 
-            return value.Substring(splitList[firstIndex].Item1, splitList[lastIndex].Item2);
+            return value.Substring(splitList[firstIndex].Item1, splitList[lastIndex].Item2 - splitList[firstIndex].Item1);
         }
 
         public List<Tuple<int, int>> CreateSplitList(string characters)

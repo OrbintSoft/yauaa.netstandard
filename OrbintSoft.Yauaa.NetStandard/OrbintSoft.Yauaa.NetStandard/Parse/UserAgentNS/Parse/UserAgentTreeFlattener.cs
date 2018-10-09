@@ -370,7 +370,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 
         private void InformSubVersions(ParserRuleContext ctx, string name)
         {
-            InformSubstrings(ctx, name, false, VersionSplitter.getInstance());
+            InformSubstrings(ctx, name, false, VersionSplitter.GetInstance());
         }
 
         private void InformSubstrings(ParserRuleContext ctx, String name, bool fakeChild, Splitter splitter)
