@@ -53,25 +53,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
 
         internal class ChildIterator : IEnumerator<ParserRuleContext> {
             private readonly IEnumerator<IParseTree> childIterator;
-            private bool? _hasNext;
-            private int index = 0;
-            private ParserRuleContext nextChild;
+            private int index = -1;
             private readonly ChildIterable childIterable;
 
-
-            public ParserRuleContext Current
-            {
-                get
-                {
-                    return nextChild;
-                }
-            }
+            public ParserRuleContext Current { get; private set; } = null;
 
             object IEnumerator.Current
             {
                 get
                 {
-                    return nextChild;
+                    return Current;
                 }
             }
 
@@ -81,13 +72,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                 if (treeContext.children == null)
                 {
                     childIterator = null;
-                    nextChild = null;
-                    _hasNext = false;
+                    Current = null;
+                    index = -1;
                 }
                 else
                 {
                     childIterator = treeContext.children.GetEnumerator();
-                    _hasNext = FindNext(); // We always want the first one
                 }
             }
 
@@ -95,9 +85,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             /// Find and set the nextChild
             /// </summary>
             /// <returns>If there is a next</returns>
-            private bool FindNext()
+            public bool MoveNext()
             {
-                do
+                while (childIterator.MoveNext())
                 {
                     IParseTree nextParseTree = childIterator.Current;
                     if (Step.TreeIsSeparator(nextParseTree))
@@ -122,51 +112,25 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                     }
                     if (index > childIterable.end)
                     {
-                        nextChild = null;
+                        Current = null;
                         return false;
                     }
                     if (childIterable.start <= index)
                     {
-                        nextChild = possibleNextChild;
+                        Current = possibleNextChild;
                         return true;
                     }
-                } while (childIterator.MoveNext());
+                }
 
                 // We found nothing
-                nextChild = null;
+                Current = null;
                 return false;
             }
-
-
-            public bool HasNext()
-            {
-                if (_hasNext == null)
-                {
-                    _hasNext = FindNext();
-                }
-                return _hasNext ?? false;
-            }
-
         
-            public ParserRuleContext Next()
-            {
-                if (!(HasNext()))
-                {
-                    throw new Exception();
-                }
-                _hasNext = null;
-                return nextChild;
-            }
-
-            public bool MoveNext()
-            {
-                return HasNext();
-            }
-
             public void Reset()
             {
                 index = 0;
-                nextChild = null;
+                Current = null;
                 childIterator.Reset();
             }
 

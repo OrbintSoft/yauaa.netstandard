@@ -105,7 +105,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                     AgentField partialField = result.Get(fieldName);
                     if (partialField != null && partialField.GetConfidence() >= 0)
                     {
-                        string previousValue = receivedValues[partialField.GetConfidence()];
+                        var conf = partialField.GetConfidence();
+                        string previousValue =  receivedValues.ContainsKey(conf) ? receivedValues[conf] : null;
                         if (previousValue != null)
                         {
                             if (!previousValue.Equals(partialField.GetValue()))

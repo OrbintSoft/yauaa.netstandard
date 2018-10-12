@@ -46,13 +46,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 
             if (mapper == null)
             {
-                throw new ArgumentNullException("[Initialize] The mapper instance is null.");
+                throw new InvalidParserConfigurationException("[Initialize] The mapper instance is null.");
             }
 
             Type[] classOfTArray = mapper.GetType().GenericTypeArguments;
-            if (classOfTArray == null || classOfTArray[0] == null)
+            if (classOfTArray == null || classOfTArray.Count() == 0 || classOfTArray[0] == null)
             {
-                throw new NullReferenceException("Couldn't find the used generic type of the UserAgentAnnotationMapper.");
+                throw new InvalidParserConfigurationException("Couldn't find the used generic type of the UserAgentAnnotationMapper.");
             }
 
             Type classOfT = classOfTArray[0];

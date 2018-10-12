@@ -386,7 +386,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             allFields[attribute] = field;
         }
 
-        public void SetForced(String attribute, String value, long confidence)
+        public void SetForced(string attribute, string value, long confidence)
         {
             AgentField field = allFields[attribute];
             if (field == null)
@@ -451,7 +451,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 return 0L;
             }
-            AgentField field = allFields[fieldName];
+            AgentField field = allFields.ContainsKey(fieldName) ? allFields[fieldName] : null;
             if (field == null)
             {
                 return -1L;
@@ -514,7 +514,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
                 if (comments != null)
                 {
-                    string comment = comments[fieldName];
+                    string comment = comments.ContainsKey(fieldName) ? comments[fieldName] : null;
                     if (comment != null)
                     {
                         sb.Append(" | ").Append(comment);

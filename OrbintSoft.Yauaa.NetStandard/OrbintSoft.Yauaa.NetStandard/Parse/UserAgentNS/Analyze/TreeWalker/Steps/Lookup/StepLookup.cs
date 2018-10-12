@@ -41,11 +41,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.L
         this.defaultValue = defaultValue;
     }
 
-    public override WalkList.WalkResult Walk(IParseTree tree, String value)
+    public override WalkList.WalkResult Walk(IParseTree tree, string value)
     {
-        string input = GetActualValue(tree, value);
+        string input = GetActualValue(tree, value).ToLower();
 
-        string result = lookup[input.ToLower()];
+        string result = lookup.ContainsKey(input) ? lookup[input] : null;
 
         if (result == null)
         {

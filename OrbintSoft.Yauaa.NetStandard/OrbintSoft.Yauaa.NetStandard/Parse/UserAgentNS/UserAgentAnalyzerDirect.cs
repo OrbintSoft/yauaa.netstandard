@@ -197,7 +197,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             Dictionary<string, FileInfo> resources = new Dictionary<string, FileInfo>();
             try
-            {
+            {               
                 string[] filePaths = Directory.GetFiles(resourceString, pattern, SearchOption.TopDirectoryOnly);
                 
                 foreach (string filePath in filePaths)

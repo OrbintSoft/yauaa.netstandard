@@ -58,7 +58,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             logprefix = sb.ToString();
         }
 
-        protected WalkList.WalkResult WalkNextStep(IParseTree tree, String value)
+        protected WalkList.WalkResult WalkNextStep(IParseTree tree, string value)
         {
             if (nextStep == null)
             {

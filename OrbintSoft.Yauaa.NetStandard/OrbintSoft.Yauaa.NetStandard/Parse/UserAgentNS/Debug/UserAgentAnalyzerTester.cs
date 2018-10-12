@@ -40,9 +40,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             KeepTests();
         }
 
-        public UserAgentAnalyzerTester(string resourceString):this()
+        public UserAgentAnalyzerTester(string resourceString, string pattern = "*.yaml"):this()
         {
-            LoadResources(resourceString);
+            LoadResources(resourceString, pattern);
         }
 
         internal class TestResult
@@ -156,7 +156,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                     init = true;
                 }
 
-                string testName = input["name"];
+                string testName = input.ContainsKey("name") ? input["name"] : null;
                 string userAgentString = input["user_agent_string"];
 
                 if (testName == null)
@@ -209,7 +209,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                 }
                 if (agent.HasAmbiguity)
                 {
-                    sb.Append(String.Format("|%2d", agent.AmbiguityCount));
+                    sb.Append(string.Format("|%2d", agent.AmbiguityCount));
                 }
                 else
                 {
@@ -299,7 +299,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                         }
 
                         // Expected value
-                        String expectedValue = expected[fieldName];
+                        string expectedValue = expected.ContainsKey(fieldName) ? expected[fieldName] : null;
                         if (expectedValue == null)
                         {
                             expectedSomething = false;
