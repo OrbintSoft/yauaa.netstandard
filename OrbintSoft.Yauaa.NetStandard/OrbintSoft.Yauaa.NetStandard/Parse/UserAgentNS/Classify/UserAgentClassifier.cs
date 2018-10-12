@@ -50,7 +50,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
                 case "Hacker": return DeviceClass.Hacker;
                 case "Unknown": return DeviceClass.Unknown;
                 default: return DeviceClass.Unclassified;
-            }
+            }            
         }
 
 

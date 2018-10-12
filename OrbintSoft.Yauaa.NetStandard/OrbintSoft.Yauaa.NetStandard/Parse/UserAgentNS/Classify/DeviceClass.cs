@@ -21,6 +21,8 @@
  * 
  * All rights should be reserved to the original author Niels Basjes
  */
+using System;
+
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
 {
     public enum DeviceClass
@@ -97,5 +99,53 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
         ///  We found a deviceclass string that we have no enum value for.
         /// </summary>
         Unclassified
+    }
+
+    public static class DeviceClassExtension
+    {
+        public static string GetValue(this DeviceClass deviceClass)
+        {
+            switch (deviceClass)
+            {
+                case DeviceClass.Desktop:
+                    return "Desktop";
+                case DeviceClass.Anonymized:
+                    return "Anonymized";
+                case DeviceClass.Mobile:
+                    return "Mobile";
+                case DeviceClass.Tablet:
+                    return "Tablet";
+                case DeviceClass.Phone:
+                    return "Phone";
+                case DeviceClass.Watch:
+                    return "Watch";
+                case DeviceClass.VirtualReality:
+                    return "Virtual Reality";
+                case DeviceClass.eReader:
+                    return "eReader";
+                case DeviceClass.SetTopBox:
+                    return "Set-top box";
+                case DeviceClass.TV:
+                    return "TV";
+                case DeviceClass.GameConsole:
+                    return "Game Console";
+                case DeviceClass.HandheldGameConsole:
+                    return "Handheld Game Console";
+                case DeviceClass.Robot:
+                    return "Robot";
+                case DeviceClass.RobotMobile:
+                    return "Robot Mobile";
+                case DeviceClass.Spy:
+                    return "Spy";
+                case DeviceClass.Hacker:
+                    return "Hacker";
+                case DeviceClass.Unknown:
+                    return "Unknown";
+                case DeviceClass.Unclassified:
+                    return "Unclassified";
+                default:
+                    throw new NotImplementedException();
+            }
+        }
     }
 }
