@@ -98,8 +98,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             allFields[SYNTAX_ERROR] = syntaxError;
         }
 
-        
-
         public void SyntaxError(IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
             SyntaxError(recognizer, null, line, charPositionInLine, msg, e);

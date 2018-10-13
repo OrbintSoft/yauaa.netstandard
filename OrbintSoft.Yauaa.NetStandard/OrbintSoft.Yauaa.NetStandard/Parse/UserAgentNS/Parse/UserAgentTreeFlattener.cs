@@ -309,7 +309,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 
         public override void EnterProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
         {
-            EnterProductVersion((IParseTree)context);
+            EnterProductVersion(context);
+        }
+
+        public override void EnterProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
+        {
+            EnterProductVersion(context);
         }
 
         private void EnterProductVersion(IParseTree ctx)
@@ -335,6 +340,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             Inform(context, "version");
         }
 
+        public override void EnterSingleVersion([NotNull] UserAgentParser.SingleVersionContext context)
+        {
+            InformSubVersions(context, "version");
+        }
 
         public override void EnterSingleVersionWithCommas([NotNull] UserAgentParser.SingleVersionWithCommasContext context)
         {
@@ -472,6 +481,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         public override void EnterEmptyWord([NotNull] UserAgentParser.EmptyWordContext context)
         {
             Inform(context, "text", "");
-        }
+        } 
     }
 }
