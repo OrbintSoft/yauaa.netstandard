@@ -128,8 +128,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             this.analyzer = analyzer;
         }
 
+#if DEBUG
+        private bool verbose = true;
+#else
         private bool verbose = false;
-
+#endif
         public void SetVerbose(bool newVerbose)
         {
             verbose = newVerbose;

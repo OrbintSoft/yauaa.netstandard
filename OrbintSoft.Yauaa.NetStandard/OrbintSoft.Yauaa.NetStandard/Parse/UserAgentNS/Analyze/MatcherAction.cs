@@ -51,10 +51,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private Matcher matcher;
         private MatchesList matches;
         internal bool MustHaveMatches { get; private set; } = false;
-        
+
+#if DEBUG
+        public bool verbose = true;
+        private bool verbosePermanent = true;
+        private bool verboseTemporary = true;
+#else
         public bool verbose = false;
         private bool verbosePermanent = false;
         private bool verboseTemporary = false;
+#endif
+
 
         private void SetVerbose(bool newVerbose)
         {

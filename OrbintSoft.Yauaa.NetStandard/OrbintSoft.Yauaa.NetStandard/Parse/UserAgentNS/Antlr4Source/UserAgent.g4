@@ -6,7 +6,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -68,12 +68,17 @@ fragment UserAgent
 USERAGENT1   : '-'* UserAgent ' '*(COLON|EQUALS|CURLYBRACEOPEN)' '* -> skip;
 USERAGENT2   : '\'' UserAgent '\'' COLON -> skip;
 
+fragment EMailFirstLetter
+    : [a-zA-Z0-9]
+    ;
+
 fragment EMailLetter
     : [a-zA-Z0-9_+-]
     ;
 
 fragment EMailWord
-    : ( EMailLetter +
+    : EMailFirstLetter
+      ( EMailLetter +
         | ' dash '
       )+
     ;
@@ -134,6 +139,10 @@ URL
     : ( '<'? ('www.'BareHostname UrlPath|BasicURL) '>'? | HTMLURL | 'index.htm' UrlPath)
     ;
 
+UNASSIGNEDVARIABLE
+    : '@' [-_0-9a-zA-Z]+ '@'
+    ;
+
 GIBBERISH
     : '@'(~[ ;])*
     ;
@@ -141,6 +150,7 @@ GIBBERISH
 // A version is a WORD with at least 1 number in it (and that can contain a '-').
 VERSION
     : (~[0-9+;{}()\\/ \t:=[\]"])*[0-9]+(~[+;{}()\\/ \t:=[\]"])*
+    | UNASSIGNEDVARIABLE
     ;
 
 fragment WORDLetter
@@ -151,6 +161,7 @@ fragment WORDLetter
 WORD
     : MINUS* WORDLetter+ (MINUS+ WORDLetter+ )* MINUS*
     | SPACE MINUS SPACE
+    | UNASSIGNEDVARIABLE
     ;
 
 // Base64 Encoded strings: Note we do NOT recognize the variant where the '-' is used because that conflicts with the uuid
@@ -254,6 +265,7 @@ commentProduct
 
 productVersionWords
     : WORD (MINUS? WORD)*
+    | UNASSIGNEDVARIABLE
     ;
 
 productName

@@ -8,7 +8,12 @@
     <RootNamespace>OrbintSoft.Yauaa.Analyzer.Test</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
+    <None Remove="log4net.config" />
     <None Remove="YamlResources\AllFields-tests.yaml" />
     <None Remove="YamlResources\AllPossibleSteps.yaml" />
     <None Remove="YamlResources\BadDefinitions\BadEntry.yaml" />
@@ -54,6 +59,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="YamlResources\AllFields-tests.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -184,7 +192,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.4.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0">
       <PrivateAssets>all</PrivateAssets>

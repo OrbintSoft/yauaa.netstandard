@@ -125,15 +125,18 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         // The original input value
         private string userAgentString = null;
 
+#if DEBUG
+        private bool debug = true;
+#else
         private bool debug = false;
-
+#endif
 
         public bool IsDebug()
         {
             return debug;
         }
 
-        public void setDebug(bool newDebug)
+        public void SetDebug(bool newDebug)
         {
             debug = newDebug;
         }
@@ -261,7 +264,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        private readonly Dictionary<string, AgentField> allFields = new Dictionary<String, AgentField>();
+        private readonly Dictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
 
         public UserAgent()
         {

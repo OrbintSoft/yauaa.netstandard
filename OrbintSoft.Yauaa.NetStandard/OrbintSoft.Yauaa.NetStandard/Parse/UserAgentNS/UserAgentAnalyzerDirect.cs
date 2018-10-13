@@ -749,8 +749,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             analyzerSet.Add(matcherAction);
         }
 
+#if DEBUG
+        private bool verbose = true;
+#else
         private bool verbose = false;
-
+#endif
         public void SetVerbose(bool newVerbose)
         {
             verbose = newVerbose;
@@ -1248,14 +1251,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         // ===============================================================================================================
 
-        public class GetAllPathsAnalyzer: IAnalyzer
+        public class GetAllPathsAnalyzerClass: IAnalyzer
         {
             internal readonly List<string> values = new List<string>();
             internal readonly UserAgentTreeFlattener flattener;
 
             private readonly UserAgent result;
 
-            internal GetAllPathsAnalyzer(string useragent)
+            internal GetAllPathsAnalyzerClass(string useragent)
             {
                 flattener = new UserAgentTreeFlattener(this);
                 result = flattener.Parse(useragent);
@@ -1305,12 +1308,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public static List<string> GetAllPaths(string agent)
         {
-            return new GetAllPathsAnalyzer(agent).GetValues();
+            return new GetAllPathsAnalyzerClass(agent).GetValues();
         }
 
-        public static GetAllPathsAnalyzer getAllPathsAnalyzer(string agent)
+        public static GetAllPathsAnalyzerClass GetAllPathsAnalyzer(string agent)
         {
-            return new GetAllPathsAnalyzer(agent);
+            return new GetAllPathsAnalyzerClass(agent);
         }
 
         // ===============================================================================================================

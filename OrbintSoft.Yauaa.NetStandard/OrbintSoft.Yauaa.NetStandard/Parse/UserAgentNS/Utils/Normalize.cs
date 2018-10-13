@@ -134,20 +134,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
         {
             string lowerDeviceBrand = deviceBrand.ToLower(CultureInfo.InvariantCulture);
 
-            deviceName = deviceName.Replace("_", " ");
-            deviceName = deviceName.Replace("- +", "-");
-            deviceName = deviceName.Replace(" +-", "-");
-            deviceName = deviceName.Replace(" +", " ");
+            deviceName = Regex.Replace(deviceName, "_", " ");
+            deviceName = Regex.Replace(deviceName, "- +", "-");
+            deviceName = Regex.Replace(deviceName, " +-", "-");
+            deviceName = Regex.Replace(deviceName, " +", " ");
 
             string lowerDeviceName = deviceName.ToLower(CultureInfo.InvariantCulture);
 
             // In some cases it does start with the brand but without a separator following the brand
             if (lowerDeviceName.StartsWith(lowerDeviceBrand))
             {
-                deviceName = deviceName.Replace("_", " ");
+                deviceName = Regex.Replace(deviceName, "_", " ");
                 // (?i) means: case insensitive
-                deviceName = deviceName.Replace("(?i)^" + Regex.Escape(deviceBrand) + "([^ ].*)$", Regex.Escape(deviceBrand) + " $1");
-                deviceName = deviceName.Replace("( -| )+", " ");
+                deviceName = Regex.Replace(deviceName, "(?i)^" + Regex.Escape(deviceBrand) + "([^ ].*)$", Regex.Escape(deviceBrand) + " $1");
+                deviceName = Regex.Replace(deviceName, "( -| )+", " ");
             }
             else
             {
@@ -157,11 +157,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 
             if (result.Contains("I"))
             {
-                result = result
-                    .Replace("Ipad", "iPad")
-                    .Replace("Ipod", "iPod")
-                    .Replace("Iphone", "iPhone")
-                    .Replace("IOS ", "iOS ");
+                result = Regex.Replace(result, "Ipad", "iPad");
+                result = Regex.Replace(result, "IpadIpod", "iPod");
+                result = Regex.Replace(result, "Iphone", "iPhone");
+                result = Regex.Replace(result, "IOS", "iOS");
             }
             return result;
         }
@@ -169,15 +168,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
         public static string Email(string email)
         {
             string cleaned = email;
-            cleaned = cleaned.Replace("\\[at]", "@");
+            cleaned = Regex.Replace(cleaned,"\\[at]", "@");
 
-            cleaned = cleaned.Replace("\\[\\\\xc3\\\\xa07]", "@");
-            cleaned = cleaned.Replace("\\[dot]", ".");
-            cleaned = cleaned.Replace("\\\\", " ");
-            cleaned = cleaned.Replace(" at ", "@");
-            cleaned = cleaned.Replace("dot", ".");
-            cleaned = cleaned.Replace(" dash ", "-");
-            cleaned = cleaned.Replace(" ", "");
+            cleaned = Regex.Replace(cleaned, "\\[\\\\xc3\\\\xa07]", "@");
+            cleaned = Regex.Replace(cleaned, "\\[dot]", ".");
+            cleaned = Regex.Replace(cleaned, "\\\\", " ");
+            cleaned = Regex.Replace(cleaned, " at ", "@");
+            cleaned = Regex.Replace(cleaned, "dot", ".");
+            cleaned = Regex.Replace(cleaned, " dash ", "-");
+            cleaned = Regex.Replace(cleaned, " ", "");
             return cleaned;
         }
     }

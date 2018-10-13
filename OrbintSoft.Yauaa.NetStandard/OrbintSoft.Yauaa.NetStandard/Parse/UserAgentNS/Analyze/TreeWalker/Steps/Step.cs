@@ -39,8 +39,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
         protected string logprefix = "";
         private Step nextStep;
 
+#if DEBUG
+        protected bool verbose = true;
+#else
         protected bool verbose = false;
-
+#endif
         public void SetVerbose(bool newVerbose)
         {
             verbose = newVerbose;

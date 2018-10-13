@@ -19,6 +19,10 @@
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="YamlResources\UserAgents\Alcatel.yaml" />
     <None Remove="YamlResources\UserAgents\Amazon.yaml" />

@@ -61,7 +61,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             }
         }
 
-        public WalkList(ParserRuleContext requiredPattern, Dictionary<String, Dictionary<String, String>> lookups, Dictionary<String, HashSet<String>> lookupSets, bool verbose)
+        public WalkList(ParserRuleContext requiredPattern, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets, bool verbose)
         {
             this.lookups = lookups;
             this.lookupSets = lookupSets;

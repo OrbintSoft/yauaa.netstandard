@@ -3,7 +3,7 @@ using Xunit;
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify;
 
-namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.Classify
+namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Classify
 {
     public class TestClassifier
     {
