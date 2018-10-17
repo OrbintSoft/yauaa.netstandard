@@ -43,7 +43,6 @@
     <None Remove="YamlResources\ExtraLoadedRule1.yaml" />
     <None Remove="YamlResources\ExtraLoadedRule2.yaml" />
     <None Remove="YamlResources\GenerateAllPossibleSteps\AllPossibleStepsTests.yaml" />
-    <None Remove="YamlResources\log4j.properties" />
     <None Remove="YamlResources\Lookup-tests.yaml" />
     <None Remove="YamlResources\Matcher-IsNull-tests.yaml" />
     <None Remove="YamlResources\Matcher-nested-functions.yaml" />
@@ -146,9 +145,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\GenerateAllPossibleSteps\AllPossibleStepsTests.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="YamlResources\log4j.properties">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\Lookup-tests.yaml">

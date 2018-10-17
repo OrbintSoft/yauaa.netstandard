@@ -100,6 +100,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
                 }
                 return resultingValue;
             }
+
+            public override string VisitPathFixedValue(UserAgentTreeWalkerParser.PathFixedValueContext ctx)
+            {
+                return ctx.value.Text;
+            }
         }
 
         private string CalculateFixedValue(ParserRuleContext requiredPattern)

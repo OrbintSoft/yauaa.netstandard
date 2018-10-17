@@ -64,10 +64,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
                 if (method.GetCustomAttribute(typeof(YauaaFieldAttribute)) is YauaaFieldAttribute field)
                 {
                     Type returnType = method.ReturnType;
-                    Type[] parameters = method.GetParameters().Select(p => p.GetType()).ToArray();
+                    Type[] parameters = method.GetParameters().Select(p => p.ParameterType).ToArray();
                     if (returnType == typeof(void) && parameters.Length == 2 && parameters[0] == classOfT && parameters[1] == typeof(string))
                     {
-                        if (!method.IsPublic || !classOfT.IsPublic)
+                        if (!method.IsPublic || !classOfT.IsVisible)
                         {
                             throw new InvalidParserConfigurationException("Method annotated with YauaaField is not public: " + method.Name);
                         }
