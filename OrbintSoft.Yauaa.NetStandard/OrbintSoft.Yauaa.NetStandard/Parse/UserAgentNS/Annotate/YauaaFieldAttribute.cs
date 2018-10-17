@@ -29,5 +29,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
     public class YauaaFieldAttribute: Attribute
     {
         public string[] Value { get; set; }
+
+        public YauaaFieldAttribute(params string[] value)
+        {
+            Value = value;
+        }        
     }
 }

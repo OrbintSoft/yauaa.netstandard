@@ -29,11 +29,9 @@ using System.Collections.Generic;
 using System.Text;
 using YamlDotNet.RepresentationModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("OrbintSoft.Yauaa.NetCore.Analyzer.Test")]
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
-{    
+{
     public class Matcher 
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(Matcher));

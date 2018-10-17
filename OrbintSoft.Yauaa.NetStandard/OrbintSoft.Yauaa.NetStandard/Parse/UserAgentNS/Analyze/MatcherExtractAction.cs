@@ -73,12 +73,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             fixedValue = newFixedValue;
         }
 
-        public String GetAttribute()
+        public string GetAttribute()
         {
             return attribute;
         }
 
-        public override void Inform(String key, WalkList.WalkResult newlyFoundValue)
+        public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
             if (verbose)
             {

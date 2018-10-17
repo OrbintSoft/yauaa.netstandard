@@ -250,7 +250,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     }
 
                    
-                    string filename = resourceEntry.Value.FullName;
+                    string filename = resourceEntry.Value.Name;
                     maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
                     LoadResource(yaml, filename);
                 }
@@ -300,7 +300,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 foreach (var resourceEntry in resources)
                 {
                     FileInfo resource = resourceEntry.Value;
-                    string configFilename = resource.FullName;
+                    string configFilename = resource.Name;
                     List<YamlMappingNode> matcherConfig = matcherConfigs.ContainsKey(configFilename) ? matcherConfigs[configFilename] : null;
                     if (matcherConfig == null)
                     {

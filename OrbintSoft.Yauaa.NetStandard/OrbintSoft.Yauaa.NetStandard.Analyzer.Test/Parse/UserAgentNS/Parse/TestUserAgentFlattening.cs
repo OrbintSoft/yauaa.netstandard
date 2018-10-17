@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
 {
-    public class TestUserAgentFlattening: IClassFixture<LoggingFixture>
+    public class TestUserAgentFlattening
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestUserAgentFlattening));
 
