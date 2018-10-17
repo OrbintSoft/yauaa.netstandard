@@ -171,7 +171,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
                 sb.Length = 0;
 
-                sb.Append("|").Append(String.Format("%5d", testcount))
+                sb.Append("|").Append(string.Format("%5d", testcount))
                   .Append(".(").Append(filename).Append(':').Append(linenumber).Append(')');
                 for (int i = filename.Length + linenumber.Length + 7; i < maxFilenameLength; i++)
                 {

@@ -1,10 +1,11 @@
 ﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
 using FluentAssertions;
 using Xunit;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestBuilder
+    public class TestBuilder : IClassFixture<LogFixture>
     {
         private void RunTestCase(UserAgentAnalyzerDirect userAgentAnalyzer)
         {

@@ -3,6 +3,7 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ using Xunit;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestTreewalkerParsing
+    public class TestTreewalkerParsing : IClassFixture<LogFixture>
     {
         [Fact]
         public void ValidateWalkPathParsing()

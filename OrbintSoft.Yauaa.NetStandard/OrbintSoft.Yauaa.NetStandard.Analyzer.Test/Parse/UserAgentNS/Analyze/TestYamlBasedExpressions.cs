@@ -4,10 +4,11 @@ using System.Text;
 using Xunit;
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestYamlBasedExpressions
+    public class TestYamlBasedExpressions : IClassFixture<LogFixture>
     {
         //    @Test
         //    public void runSingleMatcherFile() {

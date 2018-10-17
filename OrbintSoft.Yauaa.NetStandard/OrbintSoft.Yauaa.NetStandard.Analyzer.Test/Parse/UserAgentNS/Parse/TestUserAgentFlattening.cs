@@ -6,10 +6,11 @@ using System.Text;
 using Xunit;
 using FluentAssertions;
 using System.Text.RegularExpressions;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
 {
-    public class TestUserAgentFlattening
+    public class TestUserAgentFlattening : IClassFixture<LogFixture>
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestUserAgentFlattening));
 

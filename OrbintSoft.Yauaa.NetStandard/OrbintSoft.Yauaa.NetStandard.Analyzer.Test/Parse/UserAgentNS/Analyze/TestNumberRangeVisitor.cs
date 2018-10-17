@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using Xunit;
 using FluentAssertions;
 using System.Linq;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestNumberRangeVisitor
+    public class TestNumberRangeVisitor : IClassFixture<LogFixture>
     {
         [Fact]
         public void RangeSingleValue()

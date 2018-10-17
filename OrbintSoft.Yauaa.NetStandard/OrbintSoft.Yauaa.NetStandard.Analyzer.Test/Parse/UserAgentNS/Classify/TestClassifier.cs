@@ -2,10 +2,11 @@
 using Xunit;
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Classify
 {
-    public class TestClassifier
+    public class TestClassifier : IClassFixture<LogFixture>
     {
         [Fact]
         public void TestEnumCreation()

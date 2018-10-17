@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 using Xunit;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestBasics
+    public class TestBasics: IClassFixture<LogFixture>
     {
         [Fact]
         public void TestCacheSetter()

@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 using FluentAssertions;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestMatchesList
+    public class TestMatchesList : IClassFixture<LogFixture>
     {
         [Fact]
         public void TestNormalUse()

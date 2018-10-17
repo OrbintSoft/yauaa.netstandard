@@ -1,4 +1,5 @@
 ﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,7 +7,7 @@ using Xunit;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
 {
-    public class TestAnnotationSystem
+    public class TestAnnotationSystem : IClassFixture<LogFixture>
     {
 
         public class TestRecord

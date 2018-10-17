@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 using System.Reflection;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
-    public class TestCaching
+    public class TestCaching : IClassFixture<LogFixture>
     {
         [Fact]
         public void TestSettingNoCaching()

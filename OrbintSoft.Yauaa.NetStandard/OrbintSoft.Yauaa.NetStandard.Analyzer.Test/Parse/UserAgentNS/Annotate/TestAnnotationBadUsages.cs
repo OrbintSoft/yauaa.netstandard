@@ -3,10 +3,11 @@ using Xunit;
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
 {
-    public class TestAnnotationBadUsages
+    public class TestAnnotationBadUsages : IClassFixture<LogFixture>
     {
         [Fact]
         public void TestNullInitAnalyzer()

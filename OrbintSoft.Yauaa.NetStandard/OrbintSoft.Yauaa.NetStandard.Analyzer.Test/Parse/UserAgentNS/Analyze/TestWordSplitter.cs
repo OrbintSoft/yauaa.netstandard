@@ -3,10 +3,11 @@ using Xunit;
 using FluentAssertions;
 using System.Collections.Generic;
 using System;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestWordSplitter
+    public class TestWordSplitter : IClassFixture<LogFixture>
     {
         [Fact]
         public void VersionSplitterEmpty()
