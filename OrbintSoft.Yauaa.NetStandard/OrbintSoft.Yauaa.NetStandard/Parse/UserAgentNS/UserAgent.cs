@@ -262,7 +262,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        private readonly Dictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
+        private readonly SortedDictionary<string, AgentField> allFields = new SortedDictionary<string, AgentField>(); //TODO: Restore dictionary
 
         public UserAgent()
         {
@@ -284,6 +284,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
             Init();
             SetUserAgentString(userAgent.userAgentString);
+
             foreach (var entry in userAgent.allFields)
             {
                 Set(entry.Key, entry.Value.GetValue(), entry.Value.confidence);
@@ -377,7 +378,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 if (updated)
                 {
-                    LOG.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
+                    i++;
+                    LOG.Info(string.Format("{0} USE  {1} ({2}) = {3}", i, attribute, confidence, value ?? "null"));
                 }
                 else
                 {
@@ -415,7 +417,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         private void Set(string fieldName, AgentField agentField)
         {
-            Set(fieldName, agentField.GetValue(), agentField.GetConfidence());
+            Set(fieldName, agentField.GetValue(), agentField.confidence);
         }
 
         public AgentField Get(string fieldName)
