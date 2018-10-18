@@ -64,7 +64,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.L
 
         public override string ToString()
         {
-            return "Lookup(@" + lookupName + " ; default=" + defaultValue + ")";
+            return string.Format("Lookup(@{0}; default={1})", lookupName, defaultValue ?? "null");
         }
 
 }

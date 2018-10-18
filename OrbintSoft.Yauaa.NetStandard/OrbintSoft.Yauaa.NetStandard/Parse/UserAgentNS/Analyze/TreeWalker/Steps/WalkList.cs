@@ -111,7 +111,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             {
                 Step.LOG.Info(string.Format("Leave step ({0}): {1}", result == null ? "-" : "+", firstStep));
             }
-            return null;
+            return result;
         }
 
         public Step GetFirstStep()
@@ -254,6 +254,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 Visit(context.matcher());
                 FromHereItCannotBeInHashMapAnymore();
                 Add(new StepConcatPrefix(context.prefix.Text));
+                return null; // Void
+            }
+
+            public override object VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context)
+            {
+                Visit(context.matcher());
+                FromHereItCannotBeInHashMapAnymore();
+                Add(new StepConcatPostfix(context.postfix.Text));
                 return null; // Void
             }
 

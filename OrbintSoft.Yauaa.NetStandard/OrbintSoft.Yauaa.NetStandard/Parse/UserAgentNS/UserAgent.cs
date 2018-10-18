@@ -164,7 +164,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             private readonly string defaultValue;
             private string value;
 
-            private long confidence;
+            internal long confidence;
 
             internal AgentField(string defaultValue)
             {
@@ -286,7 +286,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             SetUserAgentString(userAgent.userAgentString);
             foreach (var entry in userAgent.allFields)
             {
-                Set(entry.Key, entry.Value.GetValue(), entry.Value.GetConfidence());
+                Set(entry.Key, entry.Value.GetValue(), entry.Value.confidence);
             }
         }
 
@@ -377,11 +377,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 if (updated)
                 {
-                    LOG.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
+                    LOG.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
                 else
                 {
-                    LOG.Info(string.Format("SKIP {0} ({1}) = {2}", attribute, confidence, value));
+                    LOG.Info(string.Format("SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
             }
             allFields[attribute] = field;

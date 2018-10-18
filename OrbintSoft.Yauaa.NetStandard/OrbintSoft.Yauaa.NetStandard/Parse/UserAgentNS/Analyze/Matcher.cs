@@ -255,8 +255,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 }
             }
 
-            fixedStringActions.Clear();
-            uselessRequireActions.Clear();
+            fixedStringActions.ForEach(f => dynamicActions.Remove(f));
+            uselessRequireActions.ToList().ForEach(u => dynamicActions.Remove(u));
 
             // Verify that a variable only contains the variables that have been defined BEFORE it (also not referencing itself).
             // If all is ok we link them
