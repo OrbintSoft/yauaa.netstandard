@@ -261,7 +261,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             {
                 Visit(context.matcher());
                 FromHereItCannotBeInHashMapAnymore();
-                Add(new StepWordRange(WordRangeVisitor.getRange(context.wordRange())));
+                Add(new StepWordRange(WordRangeVisitor.GetRange(context.wordRange())));
                 return null; // Void
             }
 
@@ -454,7 +454,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
 
             public override object VisitStepWordRange([NotNull] UserAgentTreeWalkerParser.StepWordRangeContext context)
             {
-                WordRangeVisitor.Range range = WordRangeVisitor.getRange(context.wordRange());
+                WordRangeVisitor.Range range = WordRangeVisitor.GetRange(context.wordRange());
                 Add(new StepWordRange(range));
                 VisitNext(context.nextStep);
                 return null; // Void

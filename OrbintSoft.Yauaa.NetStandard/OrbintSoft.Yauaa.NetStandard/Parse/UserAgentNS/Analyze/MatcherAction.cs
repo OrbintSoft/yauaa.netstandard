@@ -436,7 +436,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepWordRangeContext tree)
         {
-            WordRangeVisitor.Range range = WordRangeVisitor.getRange(tree.wordRange());
+            WordRangeVisitor.Range range = WordRangeVisitor.GetRange(tree.wordRange());
             matcher.LookingForRange(treeName, range);
             return CalculateInformPath(treeName + range, tree.nextStep);
         }

@@ -90,7 +90,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
         }
 
-        public static Range getRange(UserAgentTreeWalkerParser.WordRangeContext ctx)
+        public static Range GetRange(UserAgentTreeWalkerParser.WordRangeContext ctx)
         {
             return WORD_RANGE_VISITOR.Visit(ctx);
         }

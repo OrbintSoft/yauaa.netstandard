@@ -87,8 +87,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
                 {
                     throw new InvalidParserConfigurationException("Missing lookup \"" + context.lookup.Text + "\" ");
                 }
-
-                string resultingValue = lookup[value.ToLower()];
+                var l = value.ToLower();
+                string resultingValue = lookup.ContainsKey(l) ? lookup[l] : null;
                 if (resultingValue == null)
                 {
                     if (context.defaultValue != null)

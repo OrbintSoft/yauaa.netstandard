@@ -385,7 +385,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             InformSubstrings(ctx, name, false, VersionSplitter.GetInstance());
         }
 
-        private void InformSubstrings(ParserRuleContext ctx, String name, bool fakeChild, Splitter splitter)
+        private void InformSubstrings(ParserRuleContext ctx, string name, bool fakeChild, Splitter splitter)
         {
             string text = AntlrUtils.GetSourceText(ctx);
             string path = Inform(ctx, name, text, fakeChild);
