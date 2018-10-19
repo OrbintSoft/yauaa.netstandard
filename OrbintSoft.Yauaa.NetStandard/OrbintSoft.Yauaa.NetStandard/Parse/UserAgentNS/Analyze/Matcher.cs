@@ -260,12 +260,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             // Verify that a variable only contains the variables that have been defined BEFORE it (also not referencing itself).
             // If all is ok we link them
-            HashSet<MatcherAction> seenVariables = new HashSet<MatcherAction>();
+            ISet<MatcherAction> seenVariables = new HashSet<MatcherAction>();
             foreach (MatcherVariableAction variableAction in variableActions)
             {
                 seenVariables.Add(variableAction); // Add myself
                 var variableName = variableAction.GetVariableName();
-                HashSet<MatcherAction> interestedActions = informMatcherActionsAboutVariables.ContainsKey(variableName) ? informMatcherActionsAboutVariables[variableName] : null;
+                ISet<MatcherAction> interestedActions = informMatcherActionsAboutVariables.ContainsKey(variableName) ? informMatcherActionsAboutVariables[variableName] : null;
                 if (interestedActions != null && interestedActions.Count > 0)
                 {
                     variableAction.SetInterestedActions(interestedActions);
@@ -345,17 +345,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
         }
 
-        private static Dictionary<string, HashSet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, HashSet<MatcherAction>>();
+        private static Dictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
 
         internal void InformMeAboutVariable(MatcherAction matcherAction, string variableName)
         {
             if (!informMatcherActionsAboutVariables.ContainsKey(variableName))
             {
-                ISet<MatcherAction> analyzerSet = new HashSet<MatcherAction>
-                {
-                    matcherAction
-                };
+                ISet<MatcherAction> analyzerSet = new HashSet<MatcherAction>();
+                informMatcherActionsAboutVariables[variableName] = analyzerSet;
             }
+            informMatcherActionsAboutVariables[variableName].Add(matcherAction);
         }
 
         /// <summary>

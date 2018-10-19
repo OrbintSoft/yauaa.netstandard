@@ -37,7 +37,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private readonly string variableName;
         private WalkList.WalkResult foundValue = null;
         private readonly string expression;
-        private HashSet<MatcherAction> interestedActions;
+        private ISet<MatcherAction> interestedActions;
 
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
@@ -74,9 +74,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
              * This is also the priority in the fields.
              * So we always use the first value we find.
              */
-            if (this.foundValue == null)
+            if (foundValue == null)
             {
-                this.foundValue = newlyFoundValue;
+                foundValue = newlyFoundValue;
                 if (verbose)
                 {
                     LOG.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", variableName, key));
@@ -117,7 +117,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return "VARIABLE: (" + variableName + "): " + expression;
         }
 
-        public void SetInterestedActions(HashSet<MatcherAction> newInterestedActions)
+        public void SetInterestedActions(ISet<MatcherAction> newInterestedActions)
         {
             interestedActions = newInterestedActions;
         }
