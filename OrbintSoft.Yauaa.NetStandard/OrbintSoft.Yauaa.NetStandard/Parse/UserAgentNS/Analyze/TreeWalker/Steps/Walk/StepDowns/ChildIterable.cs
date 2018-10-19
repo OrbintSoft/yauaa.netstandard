@@ -110,12 +110,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                     {
                         index++;
                     }
-                    if (index > childIterable.end)
+                    if (index + 1 > childIterable.end)
                     {
                         Current = null;
                         return false;
                     }
-                    if (childIterable.start <= index)
+                    if (childIterable.start <= index + 1)
                     {
                         Current = possibleNextChild;
                         return true;
@@ -129,7 +129,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         
             public void Reset()
             {
-                index = 0;
+                index = -1;
                 Current = null;
                 childIterator.Reset();
             }
