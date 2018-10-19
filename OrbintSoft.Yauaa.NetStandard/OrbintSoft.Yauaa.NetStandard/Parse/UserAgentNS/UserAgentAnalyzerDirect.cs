@@ -42,7 +42,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
         protected readonly List<Matcher> allMatchers = new List<Matcher>();
-        private readonly Dictionary<string, HashSet<MatcherAction>> informMatcherActions = new Dictionary<string, HashSet<MatcherAction>>();
+        private readonly Dictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
         private Dictionary<string, List<YamlMappingNode>> matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
 
         private bool showMatcherStats = false;
@@ -745,7 +745,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 informMatcherActions[hashKey] = new HashSet<MatcherAction>();
             }
 
-            HashSet<MatcherAction> analyzerSet = informMatcherActions[hashKey];                
+            ISet<MatcherAction> analyzerSet = informMatcherActions[hashKey];                
             analyzerSet.Add(matcherAction);
         }
 
@@ -1163,7 +1163,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
             var _match = match.ToLower(CultureInfo.InvariantCulture);
-            HashSet<MatcherAction> relevantActions = informMatcherActions.ContainsKey(_match) ? informMatcherActions[_match] : null;
+            ISet<MatcherAction> relevantActions = informMatcherActions.ContainsKey(_match) ? informMatcherActions[_match] : null;
             if (verbose)
             {
                 if (relevantActions == null)

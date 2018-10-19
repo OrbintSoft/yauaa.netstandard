@@ -378,8 +378,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 if (updated)
                 {
-                    i++;
-                    LOG.Info(string.Format("{0} USE  {1} ({2}) = {3}", i, attribute, confidence, value ?? "null"));
+                    LOG.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
                 else
                 {
