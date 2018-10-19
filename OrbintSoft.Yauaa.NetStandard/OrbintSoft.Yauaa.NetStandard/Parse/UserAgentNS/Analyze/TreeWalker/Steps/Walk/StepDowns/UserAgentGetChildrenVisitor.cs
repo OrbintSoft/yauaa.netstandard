@@ -147,7 +147,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
 
         public override IEnumerator<ParserRuleContext> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
-            return base.VisitUserAgent(context);
+            IEnumerator<ParserRuleContext> children = GetChildrenByName(context);
+            return children;
         }
 
         public override IEnumerator<ParserRuleContext> VisitRootElements([NotNull] UserAgentParser.RootElementsContext context)

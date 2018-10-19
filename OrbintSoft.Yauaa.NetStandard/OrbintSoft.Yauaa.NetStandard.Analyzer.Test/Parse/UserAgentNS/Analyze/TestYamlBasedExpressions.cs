@@ -71,5 +71,33 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "Positional-tests.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
+
+        [Fact]
+        public void RunWalkingTests()
+        {
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "Walking-tests.yaml");
+            uaa.RunTests(false, false).Should().BeTrue();
+        }
+
+        [Fact]
+        public void RunAllFieldsTests()
+        {
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "AllFields-tests.yaml");
+            uaa.RunTests(false, true).Should().BeTrue();
+        }
+
+        [Fact]
+        public void RunDebugOutputTest()
+        {
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "DebugOutput-tests.yaml");
+            uaa.RunTests(true, true).Should().BeTrue();
+        }
+
+        [Fact]
+        public void RunEdgecasesTest()
+        {
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "Edgecases-tests.yaml");
+            uaa.RunTests(false, true).Should().BeTrue();
+        }
     }
 }

@@ -76,6 +76,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 }
                 return new WalkList.WalkResult(tree, res);
             }
+            if (nextStep.ToString() == "Down([2:2]product)" )
+            {
+
+            }
 
             if (verbose)
             {
@@ -85,7 +89,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             WalkList.WalkResult result = nextStep.Walk(tree, value);
             if (verbose)
             {
-                LOG.Info(string.Format("{0} Result: >>>{1}<<<", logprefix, result));
+                LOG.Info(string.Format("{0} Result: >>>{1}<<<", logprefix, result == null ? "null" : result.ToString()));
                 LOG.Info(string.Format("{0} Leave step({1}): {2}", logprefix, result == null ? "-" : "+", nextStep));
             }
             return result;           
