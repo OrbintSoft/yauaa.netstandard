@@ -262,7 +262,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        private readonly SortedDictionary<string, AgentField> allFields = new SortedDictionary<string, AgentField>(); //TODO: Restore dictionary
+        private readonly IDictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
 
         public UserAgent()
         {
