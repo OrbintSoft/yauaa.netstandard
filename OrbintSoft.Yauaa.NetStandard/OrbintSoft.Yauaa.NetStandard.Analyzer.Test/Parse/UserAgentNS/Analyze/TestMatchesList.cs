@@ -52,12 +52,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         {
             new MatchesList(1).Invoking(m => m.Contains(null)).Should().Throw<NotImplementedException>();
         }
-
-        [Fact]
-        public void TestUnsupportedCopyTo()
-        {
-            var array = new MatchesList.Match[1];
-            new MatchesList(1).Invoking(m => m.CopyTo(array, 0)).Should().Throw<NotImplementedException>();
-        }
     }
 }

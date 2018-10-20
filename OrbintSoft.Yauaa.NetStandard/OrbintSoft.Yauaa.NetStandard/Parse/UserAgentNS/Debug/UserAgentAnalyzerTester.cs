@@ -125,8 +125,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             foreach (Dictionary<string, Dictionary<string, string>> test in testCases)
             {
                 testcount++;
-                Dictionary<string, string> input = test["input"];
-                Dictionary<string, string> expected = test["expected"];
+                Dictionary<string, string> input = test.ContainsKey("input") ? test["input"] : null;
+                Dictionary<string, string> expected = test.ContainsKey("expected") ? test["expected"] : null;
     
                 List<string> options = null;
                 if (test.ContainsKey("options"))

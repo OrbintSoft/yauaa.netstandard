@@ -576,14 +576,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     sb
                         .Append("\"Useragent\"")
                         .Append(':')
-                        .Append('"').AppendFormat(JsonConvert.ToString(GetUserAgentString())).Append('"');
+                        .Append(JsonConvert.ToString(GetUserAgentString()));
                 }
                 else
                 {
                     sb
-                        .Append('"').Append(JsonConvert.ToString(fieldName)).Append('"')
+                        .Append(JsonConvert.ToString(fieldName))
                         .Append(':')
-                        .Append('"').Append(JsonConvert.ToString(GetValue(fieldName))).Append('"');
+                        .Append(JsonConvert.ToString(GetValue(fieldName)));
                 }
             }
 
@@ -593,7 +593,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public override string ToString()
         {
-            return base.ToString();
+            return ToString(GetAvailableFieldNamesSorted());
         }
 
         public string ToString(List<string> fieldNames)

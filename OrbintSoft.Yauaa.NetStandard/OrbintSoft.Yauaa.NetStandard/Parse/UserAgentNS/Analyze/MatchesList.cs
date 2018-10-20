@@ -179,6 +179,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return result;
         }
 
+        public void CopyTo(Match[] array, int arrayIndex)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                array.SetValue(allElements[i], arrayIndex);
+                arrayIndex = arrayIndex + 1;
+            }
+        }
 
         public void Add(Match item)
         {
@@ -188,12 +196,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public bool Contains(Match item)
         {
             throw new System.NotImplementedException();
-        }
-
-        public void CopyTo(Match[] array, int arrayIndex)
-        {
-            throw new System.NotImplementedException();
-            //allElements.CopyTo(array, arrayIndex);
         }
 
         public bool Remove(Match item)
