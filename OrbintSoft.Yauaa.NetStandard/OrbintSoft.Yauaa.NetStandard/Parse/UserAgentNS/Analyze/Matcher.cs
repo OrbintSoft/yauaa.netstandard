@@ -106,11 +106,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             matcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
 
-#if DEBUG
-            verbose = true;
-#else
             verbose = false;
-#endif
+
             bool hasActiveExtractConfigs = false;
             bool hasDefinedExtractConfigs = false;
 

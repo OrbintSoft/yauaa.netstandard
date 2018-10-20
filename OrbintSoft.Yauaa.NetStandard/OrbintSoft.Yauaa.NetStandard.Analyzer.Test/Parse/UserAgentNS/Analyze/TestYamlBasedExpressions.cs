@@ -99,5 +99,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "Edgecases-tests.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
+
+        [Fact]
+        public void RunAllPossibleSteps()
+        {
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "AllPossibleSteps.yaml");
+            uaa.RunTests(false, false).Should().BeTrue();
+        }
     }
 }

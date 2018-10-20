@@ -72,7 +72,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 return DEFAULT_MAX;
             }
-            int? maxRange = MAX_RANGE[name];
+            int? maxRange = MAX_RANGE.ContainsKey(name) ? (int?) MAX_RANGE[name] : null;
             if (maxRange == null)
             {
                 return DEFAULT_MAX;

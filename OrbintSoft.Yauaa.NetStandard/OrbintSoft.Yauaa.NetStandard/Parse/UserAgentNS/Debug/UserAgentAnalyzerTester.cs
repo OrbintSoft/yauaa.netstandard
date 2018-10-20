@@ -141,11 +141,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
                 if (options == null)
                 {
-#if DEBUG
-                    SetVerbose(true);
-                    agent.SetDebug(true);
-#else
                     SetVerbose(false);
+#if DEBUG                    
+                    agent.SetDebug(true);
+#else                    
                     agent.SetDebug(false);
 #endif
                 }
@@ -580,9 +579,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             foreach (Matcher matcher in allMatchers)
             {
                 matcher.Reset();
-#if !DEBUG
                 matcher.SetVerboseTemporarily(false);
-#endif
             }
 
             flattener.Parse(userAgent);

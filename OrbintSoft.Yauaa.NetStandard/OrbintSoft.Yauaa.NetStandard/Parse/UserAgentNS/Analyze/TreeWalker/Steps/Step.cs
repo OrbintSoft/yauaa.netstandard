@@ -39,11 +39,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
         protected string logprefix = "";
         private Step nextStep;
 
-#if DEBUG
-        protected bool verbose = true;
-#else
         protected bool verbose = false;
-#endif
+
         public void SetVerbose(bool newVerbose)
         {
             verbose = newVerbose;
@@ -76,11 +73,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 }
                 return new WalkList.WalkResult(tree, res);
             }
-            if (nextStep.ToString() == "Down([2:2]product)" )
-            {
-
-            }
-
             if (verbose)
             {
                 LOG.Info(string.Format("{0} Tree: >>>{1}<<<", logprefix, AntlrUtils.GetSourceText((ParserRuleContext)tree)));

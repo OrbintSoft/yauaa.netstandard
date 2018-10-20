@@ -749,11 +749,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             analyzerSet.Add(matcherAction);
         }
 
-#if DEBUG
-        private bool verbose = true;
-#else
         private bool verbose = false;
-#endif
+
         public void SetVerbose(bool newVerbose)
         {
             verbose = newVerbose;

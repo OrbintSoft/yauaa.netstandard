@@ -261,8 +261,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 return ">" + value + "#" + confidence + "<";
             }
         }
-
-        private readonly IDictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
+        private readonly IDictionary<string, AgentField> allFields = new SortedDictionary<string, AgentField>();
 
         public UserAgent()
         {
@@ -354,7 +353,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 return;
             }
             string value = setAllField.GetValue();
-            long confidence = setAllField.GetConfidence();
+            long confidence = setAllField.confidence;
             foreach (var fieldEntry in allFields)
             {
                 if (!IsSystemField(fieldEntry.Key))
