@@ -59,7 +59,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 
             var anonymous = false;
             // Get all methods of the correct signature that have been annotated with YauaaField
-            foreach (MethodInfo method in theMapper.GetType().GetMethods())
+            foreach (MethodInfo method in theMapper.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 if (method.GetCustomAttribute(typeof(YauaaFieldAttribute)) is YauaaFieldAttribute field)
                 {
@@ -87,6 +87,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
                             {
                                 fieldSetters[fieldName] = new List<MethodInfo>();
                             }
+                            fieldSetters[fieldName].Add(method);
                         }
                     }
                     else

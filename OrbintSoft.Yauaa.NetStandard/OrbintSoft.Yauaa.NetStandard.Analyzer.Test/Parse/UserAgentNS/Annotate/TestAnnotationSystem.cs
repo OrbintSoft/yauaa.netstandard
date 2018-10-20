@@ -1,9 +1,9 @@
 ﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate;
 using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using FluentAssertions;
 using Xunit;
+using System;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
 {
@@ -67,9 +67,113 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
                 "Chrome/48.0.2564.82 Safari/537.36");
 
             record = mapper.Enrich(record);
-
-            //assertEquals("Desktop", record.deviceClass);
-            //assertEquals("Chrome 48.0.2564.82", record.agentNameVersion);
+            record.deviceClass.Should().Be("Desktop");
+            record.agentNameVersion.Should().Be("Chrome 48.0.2564.82");
         }
-    }
+
+        public class ImpossibleFieldMapper : MyBaseMapper
+        {
+            [YauaaField("NielsBasjes")]
+            public void SetImpossibleField(TestRecord record, string value)
+            {
+                record.agentNameVersion = value;
+            }
+        }
+
+        [Fact]
+        public void TestImpossibleField()
+        {
+            Action a = new Action(() => new ImpossibleFieldMapper());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("We cannot provide these fields: [NielsBasjes]");
+        }
+
+
+        public class InaccessibleSetterMapper : MyBaseMapper
+        {
+            [YauaaField("DeviceClass")]
+            private void InaccessibleSetter(TestRecord record, string value)
+            {
+                throw new Xunit.Sdk.XunitException("May NEVER call this method");
+            }
+        }
+
+        [Fact]
+        public void TestInaccessibleSetter()
+        {
+            Action a = new Action(() => new InaccessibleSetterMapper());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("Method annotated with YauaaField is not public: inaccessibleSetter");
+        }
+
+        public class TooManyParameters : MyBaseMapper
+        {
+            [YauaaField("DeviceClass")]
+            public void WrongSetter(TestRecord record, string value, string extra)
+            {
+                throw new Xunit.Sdk.XunitException("May NEVER call this method");
+            }
+        }
+
+        [Fact]
+        public void TestTooManyParameters()
+        {
+            Action a = new Action(() => new TooManyParameters());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("In class [TooManyParameters] the method [WrongSetter] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void WrongSetter(TestRecord record, String value) ]");
+        }
+
+        public class WrongTypeParameters1: MyBaseMapper
+        {
+            [YauaaField("DeviceClass")]
+            public void WrongSetter(string record, string value)
+            {
+                throw new Xunit.Sdk.XunitException("May NEVER call this method");
+            }
+        }
+
+        [Fact]
+        public void TestWrongTypeParameters1()
+        {
+            Action a = new Action(() => new WrongTypeParameters1());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("In class [WrongTypeParameters1] the method [WrongSetter] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void WrongSetter(TestRecord record, String value) ]");
+        }
+
+        public class WrongTypeParameters2 : MyBaseMapper
+        {
+            [YauaaField("DeviceClass")]
+            public void WrongSetter(TestRecord record, double value)
+            {
+                throw new Xunit.Sdk.XunitException("May NEVER call this method");
+            }
+        }
+
+        [Fact]
+        public void TestWrongTypeParameters2()
+        {
+            Action a = new Action(() => new WrongTypeParameters2());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("In class [WrongTypeParameters2] the method [WrongSetter] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void WrongSetter(TestRecord record, String value) ]");
+        }
+
+        public class MissingAnnotations : MyBaseMapper
+        {
+            public void SetWasNotAnnotated(TestRecord record, double value)
+            {
+                throw new Xunit.Sdk.XunitException("May NEVER call this method");
+            }
+        }
+
+        [Fact]
+        public void TestMissingAnnotations()
+        {
+            Action a = new Action(() => new MissingAnnotations());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("You MUST specify at least 1 field to extract.");
+        }
+
+        [Fact]
+        public void TestBadGeneric()
+        {          
+            UserAgentAnnotationAnalyzer<object> userAgentAnalyzer = new UserAgentAnnotationAnalyzer<object>();
+            Action a = new Action(() => userAgentAnalyzer.Map("Foo"));
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("[Map] The mapper instance is null.");
+        }
+
+}
 }
