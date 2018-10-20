@@ -35,6 +35,7 @@ using System.Linq;
 using System.Globalization;
 using Antlr4.Runtime.Tree;
 using Nager.PublicSuffix;
+using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
@@ -61,7 +62,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
         private bool loadTests = false;
 
-        private static readonly string DEFAULT_RESOURCES = @"YamlResources\UserAgents";
+        private static readonly ResourcesPath DEFAULT_RESOURCES = new ResourcesPath(@"YamlResources\UserAgents", "*.yaml");
 
         private void InitTransientFields()
         {
@@ -133,13 +134,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         protected void Initialize()
         {
-            Initialize(new List<string>() { DEFAULT_RESOURCES });
+            Initialize(new List<ResourcesPath>() {DEFAULT_RESOURCES});
         }
 
-        protected void Initialize(List<string> resources)
+        protected void Initialize(List<ResourcesPath> resources)
         {
             YauaaVersion.LogVersion();
-            resources.ForEach(r => LoadResources(r));
+            resources.ForEach(r => LoadResources(r.Directory, r.Filter));
             VerifyWeAreNotAskingForImpossibleFields();
             if (!delayInitialization)
             {
@@ -171,7 +172,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 return;
             }
-            throw new InvalidParserConfigurationException("We cannot provide these fields:" + impossibleFields.ToString());
+            StringBuilder bd = new StringBuilder();
+            foreach (var item in impossibleFields)
+            {
+                bd.AppendFormat(" [{0}]", item);
+            }
+            throw new InvalidParserConfigurationException("We cannot provide these fields:" + bd.ToString());
         }
 
         // --------------------------------------------
@@ -221,19 +227,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             // We need to determine if we are trying to load the yaml files TWICE.
             // This can happen if the library is loaded twice (perhaps even two different versions).
 
-            HashSet<string>  alreadyLoadedResourceBasenames = new HashSet<string>();
-            foreach (var item in matcherConfigs.Keys)
-            {
-                if (resources.Keys.Contains(item))
-                {
-                    alreadyLoadedResourceBasenames.Add(item);
-                }
-            }
+            //todo: chck this part            
+            string[] alreadyLoadedResourceBasenames = matcherConfigs.Keys.Where(r => resources.Keys.Contains(r)).ToArray();
 
-            if (alreadyLoadedResourceBasenames.Count != 0)
+            //alreadyLoadedResourceBasenames.retainAll(resourceBasenames);
+
+            if (alreadyLoadedResourceBasenames.Length > 0)
             {
-                LOG.Error(string.Format("Trying to load these {0} resources for the second time: {1}", alreadyLoadedResourceBasenames.Count,  alreadyLoadedResourceBasenames.ToString()));
-                throw new InvalidParserConfigurationException("Trying to load " + alreadyLoadedResourceBasenames.Count +" resources for the second time");
+                LOG.Error(string.Format("Trying to load these {0} resources for the second time: {1}", alreadyLoadedResourceBasenames.Length,  alreadyLoadedResourceBasenames.ToString()));
+                throw new InvalidParserConfigurationException("Trying to load " + alreadyLoadedResourceBasenames.Length +" resources for the second time");
             }
 
             
@@ -1331,7 +1333,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             private bool didBuildStep = false;
             private int preheatIterations = 0;
 
-            private List<string> resources = new List<string>();
+            private List<ResourcesPath> resources = new List<ResourcesPath>();
 
             protected void FailIfAlreadyBuilt()
             {
@@ -1362,12 +1364,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <summary>
             /// Add a set of additional rules. Useful in handling specific cases.
             /// </summary>
-            /// <param name="resourceString">resourceString The resource list that needs to be added.</param>
+            /// <param name="resourceString">resourceString The dirctory that contains the resources list that needs to be added.</param>
             /// <returns>the current Builder instance.</returns>
-            public B AddResources(string resourceString)
+            public B AddResources(string resourceString, string filter = "*.yaml")
             {
                 FailIfAlreadyBuilt();
-                resources.Add(resourceString);
+                resources.Add(new ResourcesPath(resourceString, filter));
                 return (B)this;
             }
 
