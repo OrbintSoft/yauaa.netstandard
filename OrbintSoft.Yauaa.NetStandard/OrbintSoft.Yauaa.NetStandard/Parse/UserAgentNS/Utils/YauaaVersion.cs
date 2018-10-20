@@ -29,6 +29,7 @@ using System.Collections.Generic;
 using System.Text;
 using YamlDotNet.RepresentationModel;
 using System.Linq;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
@@ -137,7 +138,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
                         // Ignore those two when comparing.
                         break;
                     default:
-                        throw new Exception(
+                        throw new InvalidParserConfigurationException(
                             "Yaml config.(" + filename + ":" + versionNode.Start.Line + "): " +
                                 "Found unexpected config entry: " + key + ", allowed are " +
                                 "'git_commit_id_describe_short', 'build_timestamp' and 'project_version'");
@@ -172,7 +173,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             LOG.Error("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
             LOG.Error("===============================================");
 
-            throw new Exception("Two different Yauaa versions have been loaded: \n" +
+            throw new InvalidParserConfigurationException("Two different Yauaa versions have been loaded: \n" +
                 "Runtime Library: " + libraryVersion + "\n" +
                 "Rule sets      : " + rulesVersion + "\n");
         }

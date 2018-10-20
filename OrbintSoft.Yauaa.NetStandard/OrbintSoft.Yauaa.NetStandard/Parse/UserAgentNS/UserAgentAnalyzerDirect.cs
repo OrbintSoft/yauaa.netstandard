@@ -256,10 +256,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
                     LoadResource(yaml, filename);
                 }
-                catch (Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e.StackTrace);
-                }
+                catch (FileNotFoundException) { }
+                catch (DirectoryNotFoundException) { }
+                catch (IOException) { }
             }
 
             stopwatch.Stop();
