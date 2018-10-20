@@ -33,6 +33,7 @@ using log4net;
 using Newtonsoft.Json;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using System.Linq;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
@@ -148,10 +149,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             if (!(obj is UserAgent))
             {
                 return false;
-            }
+            }          
             UserAgent agent = (UserAgent)obj;
             return Equals(userAgentString, agent.userAgentString) &&
-                   Equals(allFields, agent.allFields);
+                   (allFields == agent.allFields || (allFields != null && allFields.SequenceEqual(agent.allFields)));
         }
 
         public override int GetHashCode()
