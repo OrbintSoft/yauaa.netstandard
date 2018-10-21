@@ -209,7 +209,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 FromHereItCannotBeInHashMapAnymore();
 
                 string lookupName = context.lookup.Text;
-                Dictionary<string, string> lookup = walkList.lookups[lookupName];
+                Dictionary<string, string> lookup = walkList.lookups.ContainsKey(lookupName) ? walkList.lookups[lookupName] : null;
                 if (lookup == null)
                 {
                     throw new InvalidParserConfigurationException("Missing lookup \"" + context.lookup.Text + "\" ");

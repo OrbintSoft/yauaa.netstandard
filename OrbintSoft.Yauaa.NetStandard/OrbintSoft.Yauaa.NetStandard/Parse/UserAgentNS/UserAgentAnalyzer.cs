@@ -85,16 +85,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
 
             string userAgentString = userAgent.GetUserAgentString();
-            UserAgent cachedValue = parseCache.ContainsKey(userAgentString) ? parseCache[userAgentString] : null;
-            if (cachedValue != null)
+            if (userAgentString != null)
             {
-                userAgent.Clone(cachedValue);
-            }
-            else
-            {
-                cachedValue = new UserAgent(base.Parse(userAgent));
-                parseCache[userAgentString] = cachedValue;
-            }
+                UserAgent cachedValue = parseCache.ContainsKey(userAgentString) ? parseCache[userAgentString] : null;
+                if (cachedValue != null)
+                {
+                    userAgent.Clone(cachedValue);
+                }
+                else
+                {
+                    cachedValue = new UserAgent(base.Parse(userAgent));
+                    parseCache[userAgentString] = cachedValue;
+                }
+            }            
             // We have our answer.
             return userAgent;
         }

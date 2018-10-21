@@ -428,7 +428,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             YamlNode loadedYaml;
             try
             {  
-                loadedYaml = yaml.RootNode;
+                loadedYaml = yaml?.RootNode;
             }
             catch (Exception e)
             {
