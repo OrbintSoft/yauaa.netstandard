@@ -5,10 +5,11 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using Xunit;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
-    public class TestErrorHandling
+    public class TestErrorHandling : IClassFixture<LogFixture>
     {
         private void RunTest(string directory, string file, string expectedMessage)
         {            

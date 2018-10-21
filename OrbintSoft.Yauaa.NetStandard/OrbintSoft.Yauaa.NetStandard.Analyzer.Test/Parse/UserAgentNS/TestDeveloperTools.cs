@@ -6,7 +6,7 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
-    public class TestDeveloperTools
+    public class TestDeveloperTools : IClassFixture<LogFixture>
     {
         [Fact]
         public void ValidateErrorSituationOutput()

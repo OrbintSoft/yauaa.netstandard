@@ -3,10 +3,11 @@ using System;
 using Xunit;
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
 {
-    public class TestVersionCollisionChecks
+    public class TestVersionCollisionChecks : IClassFixture<LogFixture>
     {
         [Fact]
         public void TestBadVersion()
