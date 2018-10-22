@@ -14,7 +14,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
         public void ValidateAllPredefinedBrowsers()
         {
             UserAgentAnalyzerTester uaa;
-            uaa = UserAgentAnalyzerTester.NewBuilder().ImmediateInitialization().Build() as UserAgentAnalyzerTester;
+            uaa = UserAgentAnalyzerTester
+                .NewBuilder()
+                .ImmediateInitialization()                
+                .Build() as UserAgentAnalyzerTester;
+            uaa.SetVerbose(true);
             LOG.Info("==============================================================");
             LOG.Info("Validating when getting all fields");
             LOG.Info("--------------------------------------------------------------");

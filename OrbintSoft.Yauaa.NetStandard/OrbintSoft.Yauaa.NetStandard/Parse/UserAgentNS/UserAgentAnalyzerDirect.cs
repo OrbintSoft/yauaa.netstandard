@@ -226,8 +226,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             // We need to determine if we are trying to load the yaml files TWICE.
             // This can happen if the library is loaded twice (perhaps even two different versions).
-
-            //todo: chck this part            
+          
             string[] alreadyLoadedResourceBasenames = matcherConfigs.Keys.Where(r => resources.Keys.Contains(r)).ToArray();
 
             //alreadyLoadedResourceBasenames.retainAll(resourceBasenames);

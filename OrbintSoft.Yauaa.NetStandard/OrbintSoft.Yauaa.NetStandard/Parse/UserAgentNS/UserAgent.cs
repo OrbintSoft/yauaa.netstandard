@@ -124,11 +124,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         // The original input value
         private string userAgentString = null;
 
-#if DEBUG
-        private bool debug = true;
-#else
         private bool debug = false;
-#endif
 
         public bool IsDebug()
         {

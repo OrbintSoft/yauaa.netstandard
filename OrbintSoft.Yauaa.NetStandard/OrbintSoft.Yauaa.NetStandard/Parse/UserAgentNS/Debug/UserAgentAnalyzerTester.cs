@@ -141,12 +141,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
                 if (options == null)
                 {
-                    SetVerbose(false);
-#if DEBUG                    
-                    agent.SetDebug(true);
-#else                    
-                    agent.SetDebug(false);
-#endif
+                    SetVerbose(false);            
+                    agent.SetDebug(false); 
                 }
                 else
                 {

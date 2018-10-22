@@ -3,6 +3,7 @@ using Xunit;
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
