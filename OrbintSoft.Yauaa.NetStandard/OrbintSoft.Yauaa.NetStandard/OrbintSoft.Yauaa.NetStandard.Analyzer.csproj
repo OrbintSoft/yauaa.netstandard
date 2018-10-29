@@ -10,10 +10,14 @@
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>5.2.0-alpha1</Version>
-    <AssemblyVersion>5.2.0.0</AssemblyVersion>
-    <FileVersion>5.2.0.0</FileVersion>
+    <PackageReleaseNotes>major.minor.*.patch
+0: alpha
+1: beta
+2:rc
+3:release</PackageReleaseNotes>
+    <Version>5.2.0-alpha.2</Version>
+    <AssemblyVersion>5.2.0.2</AssemblyVersion>
+    <FileVersion>5.2.0.2</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
     <Description>This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
