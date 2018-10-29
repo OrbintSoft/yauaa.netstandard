@@ -354,7 +354,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
         }
 
-        private static Dictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
+        private readonly Dictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
 
         internal void InformMeAboutVariable(MatcherAction matcherAction, string variableName)
         {

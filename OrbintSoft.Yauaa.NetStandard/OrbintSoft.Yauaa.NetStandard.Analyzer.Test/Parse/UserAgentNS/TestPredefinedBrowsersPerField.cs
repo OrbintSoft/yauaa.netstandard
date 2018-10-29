@@ -29,7 +29,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 
         [Theory]
         [MemberData(nameof(Data))]
-        //[InlineData("AgentClass")]
         public void ValidateAllPredefinedBrowsersForField(string fieldName)
         {
             HashSet<string> singleFieldList = new HashSet<string>();
@@ -57,16 +56,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             UserAgentAnalyzer
                 .NewBuilder()
                 .DropDefaultResources()
-                .AddResources("YamlResources/UserAgents", "TV.yaml")
-                .WithField("AgentClass")
+                .AddResources("YamlResources/UserAgents", "CPUTypes.yaml")
+                .AddResources("YamlResources/UserAgents", "GeckoFirefox.yaml")
+                .AddResources("YamlResources/UserAgents", "OperatingSystemDeviceNames.yaml")
+                .AddResources("YamlResources/UserAgents", "OtherOS.yaml")
+                .WithField("AgentName")
                 .WithoutCache()
                 .HideMatcherLoadStats()
                 .Build();
 
-            UserAgent parsedAgent = userAgentAnalyzer.Parse("Model/Sony-KDL-55HX750");
+            UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Windows NT; Win64; x64; rv:26.0) Gecko/20100101 Firefox/26.0 Waterfox/26.0");
 
             // The requested fields
-            parsedAgent.GetValue("AgentClass").Should().Be("Browser");
+            parsedAgent.GetValue("AgentName").Should().Be("Waterfox");
         }
     }
 }

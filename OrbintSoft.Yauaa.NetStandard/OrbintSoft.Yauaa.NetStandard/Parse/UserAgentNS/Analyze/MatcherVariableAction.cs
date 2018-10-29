@@ -69,6 +69,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 LOG.Info(string.Format("INFO  : VARIABLE ({0}): {1}", variableName, key));
                 LOG.Info(string.Format("NEED  : VARIABLE ({0}): {1}", variableName, GetMatchExpression()));
             }
+            if (GetMatchExpression() == "agent.(2-5)product.name=\"Gecko\"^>>") //todo: remove
+            {
+
+            }
+
             /*
              * We know the tree is parsed from left to right.
              * This is also the priority in the fields.

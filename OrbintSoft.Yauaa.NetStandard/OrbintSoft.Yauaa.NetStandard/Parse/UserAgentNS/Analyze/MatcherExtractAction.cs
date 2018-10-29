@@ -90,7 +90,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
              * This is also the priority in the fields.
              * So we always use the first value we find.
              */
-            if (this.foundValue == null)
+            if (foundValue == null)
             {
                 foundValue = newlyFoundValue.GetValue();
                 if (verbose)
