@@ -8,6 +8,12 @@
     <RootNamespace>OrbintSoft.Yauaa.Analyzer.Test</RootNamespace>
 
     <Configurations>Debug;Release;Verbose</Configurations>
+
+    <Version>5.2-alpha.2</Version>
+
+    <AssemblyVersion>5.2.0.2</AssemblyVersion>
+
+    <FileVersion>5.2.0.2</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -10,12 +10,13 @@
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>major.minor.*.patch
+    <PackageReleaseNotes>This project uses semver
+major.minor-*.patch
 0: alpha
 1: beta
 2:rc
 3:release</PackageReleaseNotes>
-    <Version>5.2.0-alpha.2</Version>
+    <Version>5.2-alpha.2</Version>
     <AssemblyVersion>5.2.0.2</AssemblyVersion>
     <FileVersion>5.2.0.2</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
@@ -23,6 +24,7 @@
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
