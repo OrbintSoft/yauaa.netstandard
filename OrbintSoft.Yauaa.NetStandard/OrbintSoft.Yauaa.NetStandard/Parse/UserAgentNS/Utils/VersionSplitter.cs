@@ -46,6 +46,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             {
                 case '.':
                 case '_':
+                case '-':
                     return true;
                 default:
                     return false;

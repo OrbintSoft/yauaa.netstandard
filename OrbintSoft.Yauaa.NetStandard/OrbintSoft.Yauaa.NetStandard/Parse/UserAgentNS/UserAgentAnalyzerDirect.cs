@@ -1164,7 +1164,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
-            if (value == "Mobile Safari")
+            if (value == "KDL-55HX750") //todo:remove
             {
 
             }

@@ -28,8 +28,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
         }
 
         [Theory]
-        //[MemberData(nameof(Data))]
-        [InlineData("AgentClass")]
+        [MemberData(nameof(Data))]
+        //[InlineData("AgentClass")]
         public void ValidateAllPredefinedBrowsersForField(string fieldName)
         {
             HashSet<string> singleFieldList = new HashSet<string>();
@@ -57,16 +57,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             UserAgentAnalyzer
                 .NewBuilder()
                 .DropDefaultResources()
-                .AddResources("YamlResources/UserAgents", "GoogleChrome.yaml")
+                .AddResources("YamlResources/UserAgents", "TV.yaml")
                 .WithField("AgentClass")
                 .WithoutCache()
                 .HideMatcherLoadStats()
                 .Build();
 
-            UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android ; VM_Vertis 4010 You Build/VM AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36");
+            UserAgent parsedAgent = userAgentAnalyzer.Parse("Model/Sony-KDL-55HX750");
 
             // The requested fields
-            parsedAgent.GetValue("AgentClass").Should().Be("Browser Webview");
+            parsedAgent.GetValue("AgentClass").Should().Be("Browser");
         }
     }
 }
