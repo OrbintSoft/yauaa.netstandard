@@ -201,7 +201,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             flattener = new UserAgentTreeFlattener(this);
             YamlDocument yaml;
 
-            Dictionary<string, FileInfo> resources = new Dictionary<string, FileInfo>();
+#if VERBOSE
+            IDictionary<string, FileInfo> resources = new SortedDictionary<string, FileInfo>(StringComparer.Ordinal);
+#else
+            IDictionary<string, FileInfo> resources = new Dictionary<string, FileInfo>();
+#endif
             try
             {               
                 string[] filePaths = Directory.GetFiles(resourceString, pattern, SearchOption.TopDirectoryOnly);
@@ -292,12 +296,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 LOG.Info("Building all matchers for all possible fields.");
             }
+
             int totalNumberOfMatchers = 0;
             int skippedMatchers = 0;
+
             if (matcherConfigs != null)
             {
                 Stopwatch fullStart = Stopwatch.StartNew();
-                foreach (var resourceEntry in resources)
+                 foreach (var resourceEntry in resources)
                 {
                     FileInfo resource = resourceEntry.Value;
                     string configFilename = resource.Name;
@@ -316,7 +322,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             allMatchers.Add(new Matcher(this, lookups, lookupSets, wantedFieldNames, map, configFilename));
                             totalNumberOfMatchers++;
                         }
-                        catch (UselessMatcherException ume)
+                        catch (UselessMatcherException)
                         {
                             skippedMatchers++;
                         }
@@ -332,19 +338,18 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             configFilename,
                             start.ElapsedMilliseconds));
                     }
-                    fullStart.Stop();
-
-                    LOG.Info(string.Format("Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
-                        totalNumberOfMatchers,
-                        skippedMatchers,
-                        (lookups == null) ? 0 : lookups.Count(),
-                        lookupSets.Count(),
-                        testCases.Count,
-                        matcherConfigs.Count,
-                        fullStart.ElapsedMilliseconds
-                    ));
                 }
+                fullStart.Stop();
 
+                LOG.Info(string.Format("Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
+                    totalNumberOfMatchers,
+                    skippedMatchers,
+                    (lookups == null) ? 0 : lookups.Count(),
+                    lookupSets.Count(),
+                    testCases.Count,
+                    matcherConfigs.Count,
+                    fullStart.ElapsedMilliseconds
+                ));
             }
         }
 
@@ -620,7 +625,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                         case "input":
                             foreach (KeyValuePair<YamlNode, YamlNode> inputTuple in YamlUtils.GetValueAsMappingNode(tuple, filename))
                             {
-                                String inputName = YamlUtils.GetKeyAsString(inputTuple, filename);
+                                string inputName = YamlUtils.GetKeyAsString(inputTuple, filename);
                                 switch (inputName)
                                 {
                                     case "user_agent_string":
@@ -1159,6 +1164,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
+            if (value == "Mobile Safari")
+            {
+
+            }
             var _match = match.ToLower(CultureInfo.InvariantCulture);
             ISet<MatcherAction> relevantActions = informMatcherActions.ContainsKey(_match) ? informMatcherActions[_match] : null;
             if (verbose)
@@ -1418,7 +1427,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// </summary>
             /// <param name="fieldNames">The collection of names of the additional fields</param>
             /// <returns>the current Builder instance.</returns>
-            public B WithFields(List<string> fieldNames)
+            public B WithFields(ICollection<string> fieldNames)
             {
                 foreach (string fieldName in fieldNames)
                 {

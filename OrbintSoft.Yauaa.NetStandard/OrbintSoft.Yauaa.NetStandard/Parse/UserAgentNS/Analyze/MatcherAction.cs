@@ -113,10 +113,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             SetVerbose(newMatcher.GetVerbose());
         }
 
+
         public void Initialize()
         {
             InitErrorListener<int> lexerErrorListener = new InitErrorListener<int>(this);
             AntlrInputStream input = new AntlrInputStream(matchExpression);
+
             UserAgentTreeWalkerLexer lexer = new UserAgentTreeWalkerLexer(input);
 
             lexer.AddErrorListener(lexerErrorListener);

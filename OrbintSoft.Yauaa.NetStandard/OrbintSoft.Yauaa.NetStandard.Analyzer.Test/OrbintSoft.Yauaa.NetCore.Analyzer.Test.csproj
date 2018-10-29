@@ -6,10 +6,16 @@
     <IsPackable>false</IsPackable>
 
     <RootNamespace>OrbintSoft.Yauaa.Analyzer.Test</RootNamespace>
+
+    <Configurations>Debug;Release;Verbose</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Verbose|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;VERBOSE</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

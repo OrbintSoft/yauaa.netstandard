@@ -71,7 +71,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             return RunTests(showAll, failOnUnexpected, null, false, false);
         }
 
-        public bool RunTests(bool showAll, bool failOnUnexpected, List<string> onlyValidateFieldNames, bool measureSpeed, bool showPassedTests)
+        public bool RunTests(bool showAll, bool failOnUnexpected, ICollection<string> onlyValidateFieldNames, bool measureSpeed, bool showPassedTests)
         {
             bool allPass = true;
             InitializeMatchers();
@@ -141,8 +141,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
                 if (options == null)
                 {
-                    SetVerbose(false);            
-                    agent.SetDebug(false); 
+#if VERBOSE
+                    SetVerbose(true);            
+                    agent.SetDebug(true); 
+#else
+                    SetVerbose(false);
+                    agent.SetDebug(false);
+#endif
                 }
                 else
                 {

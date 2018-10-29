@@ -64,6 +64,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             // This one is a single useragent that hold significant traffic
             result = ReplaceString(result, "Microsoft Windows NT 6.2.9200.0);", "Microsoft Windows NT 6.2.9200.0;");
 
+            // The VM_Vertis 4010 You Build/VM is missing a ')'
+            result = ReplaceString(result, "You Build/VM", "You Build/VM)");
+
+            // Some agents are providing comment values that are ONLY a version
+            result = ReplaceString(result, "(/", "(Unknown/");
+            result = ReplaceString(result, "; /", "; Unknown/");
+            
             // Repair certain cases of broken useragents (like we see for the Facebook app a lot)
             if (MISSING_PRODUCT_AT_START.IsMatch(result))
             {

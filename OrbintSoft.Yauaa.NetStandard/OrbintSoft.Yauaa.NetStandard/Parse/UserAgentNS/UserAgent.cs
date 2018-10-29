@@ -124,7 +124,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         // The original input value
         private string userAgentString = null;
 
+#if VERBOSE
+        private bool debug = true; 
+#else
         private bool debug = false;
+#endif
 
         public bool IsDebug()
         {
@@ -258,7 +262,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 return ">" + value + "#" + confidence + "<";
             }
         }
+
+#if VERBOSE
         private readonly IDictionary<string, AgentField> allFields = new SortedDictionary<string, AgentField>();
+#else
+         private readonly IDictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
+#endif
 
         public UserAgent()
         {
@@ -359,7 +368,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
             }
         }
-
+        public static int i = 0;//todo:remove
         public virtual void Set(string attribute, string value, long confidence)
         {
             AgentField field = allFields.ContainsKey(attribute) ? allFields[attribute] : null;
@@ -378,7 +387,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
                 else
                 {
-                    LOG.Info(string.Format("SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
+                    LOG.Info(string.Format(i.ToString() + " SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
+                    i++;
                 }
             }
             allFields[attribute] = field;
@@ -508,7 +518,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     {
                         sb.Append(' ');
                     }
-                    sb.Append("# ").Append(string.Format("%5d", Get(fieldName).GetConfidence()));
+                    sb.Append("# ").Append(string.Format("%5d", Get(fieldName).confidence));
                 }
                 if (comments != null)
                 {
@@ -629,7 +639,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 if (!resultSet.Contains(fieldName))
                 {
                     AgentField field = allFields[fieldName];
-                    if (field != null && field.GetConfidence() >= 0 && field.GetValue() != null)
+                    if (field != null && field.confidence >= 0 && field.GetValue() != null)
                     {
                         resultSet.Add(fieldName);
                     }

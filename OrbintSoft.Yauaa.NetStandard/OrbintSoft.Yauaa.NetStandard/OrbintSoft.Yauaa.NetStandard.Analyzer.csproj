@@ -17,10 +17,20 @@
     <PackageProjectUrl></PackageProjectUrl>
     <Description>This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
+    <Configurations>Debug;Release;Verbose</Configurations>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Verbose|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;VERBOSE</DefineConstants>
+    <Optimize>false</Optimize>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
@@ -342,6 +352,6 @@
     <PackageReference Include="Nager.PublicSuffix" Version="1.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="YamlDotNet" Version="5.2.0" />
+    <PackageReference Include="YamlDotNet" Version="5.2.1" />
   </ItemGroup>
 </Project>

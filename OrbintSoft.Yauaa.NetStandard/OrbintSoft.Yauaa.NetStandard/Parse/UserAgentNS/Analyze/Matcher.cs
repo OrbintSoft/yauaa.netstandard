@@ -46,8 +46,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private long actionsThatRequireInput;
         private readonly Dictionary<string, Dictionary<string, string>> lookups;
         private readonly Dictionary<string, HashSet<string>> lookupSets;
-        private bool verbose;
-        private readonly bool permanentVerbose;
+
+#if VERBOSE
+        private bool verbose = true;
+        private readonly bool permanentVerbose = true;
+#else
+        private bool verbose = false;
+        private readonly bool permanentVerbose = false;
+#endif
+
 
         // Used for error reporting: The filename and line number where the config was located.
         private readonly string matcherSourceLocation;
@@ -77,9 +84,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             public enum Type
             {
-                VARIABLE,
-                REQUIRE,
-                EXTRACT
+                VARIABLE = 2,
+                REQUIRE = 1,
+                EXTRACT = 0
             }
             public readonly Type type;
             public readonly string attribute;
@@ -106,14 +113,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             matcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
 
+#if VERBOSE
+            verbose = true;
+#else
             verbose = false;
-
+#endif
             bool hasActiveExtractConfigs = false;
             bool hasDefinedExtractConfigs = false;
 
             // List of 'attribute', 'confidence', 'expression'
-            List<ConfigLine> configLines = new List<ConfigLine>(16);
-            foreach (KeyValuePair<YamlNode,YamlNode> nodeTuple in matcherConfig.ToList()) {
+            List<ConfigLine> configLines = new List<ConfigLine>(16);           
+            foreach (KeyValuePair<YamlNode,YamlNode> nodeTuple in matcherConfig) {
                 string name = YamlUtils.GetKeyAsString(nodeTuple, matcherSourceLocation);
                 switch (name) {
                     case "options":
@@ -142,7 +152,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                         break;
                     case "extract":
                         foreach (string extractConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation)) {
-                            string[] configParts = extractConfig.Split(new Char[] { ':' }, 3);
+                            string[] configParts = extractConfig.Split(new char[] { ':' }, 3);
 
                             if (configParts.Length != 3) {
                                 throw new InvalidParserConfigurationException("Invalid extract config line: " + extractConfig);
@@ -185,7 +195,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             if (!hasActiveExtractConfigs) {
                 throw new UselessMatcherException("Does not extract any wanted fields");
             }
-
+#if VERBOSE
+            configLines = configLines.OrderBy(c => c.type).ThenBy(n => n.attribute, StringComparer.Ordinal).ThenBy(n => n?.expression, StringComparer.Ordinal).ToList();
+#endif
             foreach (ConfigLine configLine in configLines) {
                 if (verbose) {
                     LOG.Info(string.Format("{0}: {1}", configLine.type, configLine.expression));
@@ -354,6 +366,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             informMatcherActionsAboutVariables[variableName].Add(matcherAction);
         }
 
+        public static int j = 0; //todo: remove
+
         /// <summary>
         /// Fires all matcher actions.
         /// IFF all success then we tell the userAgent
@@ -366,7 +380,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 LOG.Info("");
                 LOG.Info("--- Matcher ------------------------");
-                LOG.Info("ANALYSE ----------------------------");
+                LOG.Info(j + " ANALYSE ----------------------------");
+                j++;
                 bool good = true;
                 foreach (MatcherAction action in dynamicActions)
                 {
@@ -488,7 +503,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 {
                     sb.Append("        @").Append(((MatcherVariableAction)action).GetVariableName())
                         .Append(":    ").Append(action.GetMatchExpression()).Append('\n');
-                    sb.Append("        -->").Append(action.GetMatches().ToStrings()).Append('\n');
+                    sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
                 }
             }
             sb.Append("    REQUIRE:\n");
@@ -497,7 +512,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 if (action is MatcherRequireAction)
                 {
                     sb.Append("        ").Append(action.GetMatchExpression()).Append('\n');
-                    sb.Append("        -->").Append(action.GetMatches().ToStrings()).Append('\n');
+                    sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
                 }
             }
             sb.Append("    EXTRACT:\n");
@@ -506,7 +521,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 if (action is MatcherExtractAction)
                 {
                     sb.Append("        ").Append(action.ToString()).Append('\n');
-                    sb.Append("        -->").Append(action.GetMatches().ToStrings()).Append('\n');
+                    sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
                 }
             }
             foreach (MatcherAction action in fixedStringActions)
