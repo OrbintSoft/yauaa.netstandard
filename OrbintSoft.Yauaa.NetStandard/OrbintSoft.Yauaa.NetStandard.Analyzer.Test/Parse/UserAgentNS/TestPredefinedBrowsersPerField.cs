@@ -42,33 +42,35 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
                     .WithField(fieldName)
                     .HideMatcherLoadStats()
                     .Build() as UserAgentAnalyzerTester;
-            userAgentAnalyzer.SetVerbose(true);
             singleFieldList.Clear();
             singleFieldList.Add(fieldName);
             userAgentAnalyzer.Should().NotBeNull();
             userAgentAnalyzer.RunTests(false, true, singleFieldList, false, false).Should().BeTrue();
         }
 
-        [Fact]
-        public void TestUA()
-        {
-            UserAgentAnalyzer userAgentAnalyzer =
-            UserAgentAnalyzer
-                .NewBuilder()
-                .DropDefaultResources()
-                .AddResources("YamlResources/UserAgents", "CPUTypes.yaml")
-                .AddResources("YamlResources/UserAgents", "GeckoFirefox.yaml")
-                .AddResources("YamlResources/UserAgents", "OperatingSystemDeviceNames.yaml")
-                .AddResources("YamlResources/UserAgents", "OtherOS.yaml")
-                .WithField("AgentName")
-                .WithoutCache()
-                .HideMatcherLoadStats()
-                .Build();
+        //[Fact]
+        //public void TestUA()
+        //{
+        //    UserAgentAnalyzer userAgentAnalyzer =
+        //    UserAgentAnalyzer
+        //        .NewBuilder()
+        //        //.DropDefaultResources()
+        //        //.AddResources("YamlResources/UserAgents", "CPUTypes.yaml")
+        //        .WithField("DeviceBrand")
+        //        .WithoutCache()
+        //        .HideMatcherLoadStats()
+        //        .Build();
 
-            UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Windows NT; Win64; x64; rv:26.0) Gecko/20100101 Firefox/26.0 Waterfox/26.0");
+        //    UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) index.html?Referrer=ADVNLGOO0020270001kop Safari/538.1");
 
-            // The requested fields
-            parsedAgent.GetValue("AgentName").Should().Be("Waterfox");
-        }
+        //    // The requested fields
+        //    parsedAgent.GetValue("DeviceBrand").Should().Be("Unknown");
+        //}
+
+        //[Fact]
+        //public void Testnager()
+        //{
+        //    UserAgentAnalyzerDirect.ExtractCompanyFromHostName("www.Noldus.com");
+        //}
     }
 }

@@ -350,12 +350,12 @@ major.minor-*.patch
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Antlr4.Runtime" Version="4.6.5" />
+    <PackageReference Include="domainname-parser" Version="1.0.25" />
     <PackageReference Include="GitInfo" Version="2.0.18">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Nager.PublicSuffix" Version="1.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
     <PackageReference Include="YamlDotNet" Version="5.2.1" />

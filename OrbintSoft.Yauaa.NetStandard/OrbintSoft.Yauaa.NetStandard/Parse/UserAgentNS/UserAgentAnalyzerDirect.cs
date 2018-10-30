@@ -34,8 +34,8 @@ using YamlDotNet.RepresentationModel;
 using System.Linq;
 using System.Globalization;
 using Antlr4.Runtime.Tree;
-using Nager.PublicSuffix;
 using System.Text;
+using DomainParser.Library;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
@@ -982,14 +982,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         }
 
         private string ExtractCompanyFromHostName(string hostname)
-        {
-            try
+        {            
+            if (DomainName.TryParse(hostname, out DomainName outDomain))
             {
-                var domainParser = new DomainParser(new WebTldRuleProvider());
-                DomainName domainName = domainParser.Get(hostname);
-                return Normalize.Brand(domainName.Hostname);
+                return Normalize.Brand(outDomain.Domain);
             }
-            catch (Exception e)
+            else
             {
                 return null;
             }
