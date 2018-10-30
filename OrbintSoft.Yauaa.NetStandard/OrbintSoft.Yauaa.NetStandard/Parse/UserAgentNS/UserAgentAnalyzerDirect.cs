@@ -1162,10 +1162,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
-            if (value == "KDL-55HX750") //todo:remove
-            {
-
-            }
             var _match = match.ToLower(CultureInfo.InvariantCulture);
             ISet<MatcherAction> relevantActions = informMatcherActions.ContainsKey(_match) ? informMatcherActions[_match] : null;
             if (verbose)

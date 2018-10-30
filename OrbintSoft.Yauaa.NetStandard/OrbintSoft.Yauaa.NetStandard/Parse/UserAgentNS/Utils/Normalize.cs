@@ -158,7 +158,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             if (result.Contains("I"))
             {
                 result = Regex.Replace(result, "Ipad", "iPad");
-                result = Regex.Replace(result, "IpadIpod", "iPod");
+                result = Regex.Replace(result, "Ipod", "iPod");
                 result = Regex.Replace(result, "Iphone", "iPhone");
                 result = Regex.Replace(result, "IOS", "iOS");
             }

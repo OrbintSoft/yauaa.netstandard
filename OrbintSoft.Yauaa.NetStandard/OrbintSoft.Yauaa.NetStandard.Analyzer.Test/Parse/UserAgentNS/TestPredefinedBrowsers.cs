@@ -56,10 +56,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
         [Fact]
         public void Validate_DeviceClass_AgentNameVersionMajor_OperatingSystemVersionBuild()
         {
-            HashSet<string> fields = new HashSet<string>();
-            fields.Add("DeviceClass");
-            fields.Add("AgentNameVersionMajor");
-            fields.Add("OperatingSystemVersionBuild");
+            HashSet<string> fields = new HashSet<string>
+            {
+                "DeviceClass",
+                "AgentNameVersionMajor",
+                "OperatingSystemVersionBuild"
+            };
             ValidateAllPredefinedBrowsersMultipleFields(fields);
         }
     }

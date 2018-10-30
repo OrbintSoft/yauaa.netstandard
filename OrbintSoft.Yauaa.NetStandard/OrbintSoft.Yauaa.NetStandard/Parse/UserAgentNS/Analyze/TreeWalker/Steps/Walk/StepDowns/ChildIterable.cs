@@ -87,41 +87,44 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             /// <returns>If there is a next</returns>
             public bool MoveNext()
             {
-                while (childIterator.MoveNext())
+                if (childIterator != null)
                 {
-                    IParseTree nextParseTree = childIterator.Current;
-                    if (Step.TreeIsSeparator(nextParseTree))
+                    while (childIterator.MoveNext())
                     {
-                        continue;
+                        IParseTree nextParseTree = childIterator.Current;
+                        if (Step.TreeIsSeparator(nextParseTree))
+                        {
+                            continue;
+                        }
+                        if (!(nextParseTree is ParserRuleContext))
+                        {
+                            continue;
+                        }
+                        if (!childIterable.privateNumberRange)
+                        {
+                            index++;
+                        }
+                        ParserRuleContext possibleNextChild = (ParserRuleContext)nextParseTree;
+                        if (!childIterable.isWantedClassPredicate(possibleNextChild))
+                        {
+                            continue;
+                        }
+                        if (childIterable.privateNumberRange)
+                        {
+                            index++;
+                        }
+                        if (index + 1 > childIterable.end)
+                        {
+                            Current = null;
+                            return false;
+                        }
+                        if (childIterable.start <= index + 1)
+                        {
+                            Current = possibleNextChild;
+                            return true;
+                        }
                     }
-                    if (!(nextParseTree is ParserRuleContext)) {
-                        continue;
-                    }
-                    if (!childIterable.privateNumberRange)
-                    {
-                        index++;
-                    }
-                    ParserRuleContext possibleNextChild = (ParserRuleContext)nextParseTree;
-                    if (!childIterable.isWantedClassPredicate(possibleNextChild))
-                    {
-                        continue;
-                    }
-                    if (childIterable.privateNumberRange)
-                    {
-                        index++;
-                    }
-                    if (index + 1 > childIterable.end)
-                    {
-                        Current = null;
-                        return false;
-                    }
-                    if (childIterable.start <= index + 1)
-                    {
-                        Current = possibleNextChild;
-                        return true;
-                    }
-                }
-
+                }              
                 // We found nothing
                 Current = null;
                 return false;
