@@ -9,11 +9,23 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.2-alpha.2</Version>
+    <Version>5.2-alpha.3</Version>
 
-    <AssemblyVersion>5.2.0.2</AssemblyVersion>
+    <AssemblyVersion>5.2.0.3</AssemblyVersion>
 
-    <FileVersion>5.2.0.2</FileVersion>
+    <FileVersion>5.2.0.3</FileVersion>
+
+    <NeutralLanguage>en</NeutralLanguage>
+
+    <Authors>Stefano Balzarotti, Niels Basjes</Authors>
+
+    <Company>OrbintSoft</Company>
+
+    <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
+
+    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
