@@ -16,16 +16,17 @@ major.minor-*.patch
 1: beta
 2:rc
 3:release</PackageReleaseNotes>
-    <Version>5.2-alpha.3</Version>
-    <AssemblyVersion>5.2.0.3</AssemblyVersion>
-    <FileVersion>5.2.0.3</FileVersion>
+    <Version>5.2-alpha.4</Version>
+    <AssemblyVersion>5.2.0.4</AssemblyVersion>
+    <FileVersion>5.2.0.4</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
     <Description>This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageTags></PackageTags>
+    <PackageTags>user agent parser; user agent parsing; ua; parser; parsing; browser detection; detection; device; platform;</PackageTags>
+    <Product>Yauaa: Yet Another User Agent Parser</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
