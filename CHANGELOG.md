@@ -4,4 +4,5 @@ v5.2
 ===
 -First porting from Java to .NET
 
-For complete changelog of mail library see: https://github.com/nielsbasjes/yauaa/blob/master/CHANGELOG.md
+---------------------------------------------------------------------------------------------------------
+For complete changelog of main library see: https://github.com/nielsbasjes/yauaa/blob/master/CHANGELOG.md
