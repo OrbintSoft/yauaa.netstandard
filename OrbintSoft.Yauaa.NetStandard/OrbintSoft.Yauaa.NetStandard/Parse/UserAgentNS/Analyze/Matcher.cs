@@ -366,8 +366,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             informMatcherActionsAboutVariables[variableName].Add(matcherAction);
         }
 
-        public static int j = 0; //todo: remove
-
         /// <summary>
         /// Fires all matcher actions.
         /// IFF all success then we tell the userAgent
@@ -380,8 +378,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 LOG.Info("");
                 LOG.Info("--- Matcher ------------------------");
-                LOG.Info(j + " ANALYSE ----------------------------");
-                j++;
+                LOG.Info(" ANALYSE ----------------------------");
                 bool good = true;
                 foreach (MatcherAction action in dynamicActions)
                 {

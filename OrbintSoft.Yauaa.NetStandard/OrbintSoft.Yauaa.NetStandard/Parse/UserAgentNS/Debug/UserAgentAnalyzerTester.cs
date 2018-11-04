@@ -103,7 +103,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                 sb.Append(' ');
             }
 
-            sb.Append(" |S|AA|MF|");
+            sb.Append("|S|AA|MF|");
             if (measureSpeed)
             {
                 sb.Append("  PPS| msPP|");
@@ -171,7 +171,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
                 sb.Length = 0;
 
-                sb.Append("|").Append(string.Format("%5d", testcount))
+                sb.Append("|").Append(string.Format("{0}", testcount))
                   .Append(".(").Append(filename).Append(':').Append(linenumber).Append(')');
                 for (int i = filename.Length + linenumber.Length + 7; i < maxFilenameLength; i++)
                 {
@@ -190,13 +190,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                     {
                         Parse(agent);
                     }
-                    Stopwatch startTime = Stopwatch.StartNew();
+                    Stopwatch stopwatch = Stopwatch.StartNew();
                     for (int i = 0; i < 1000; i++)
                     {
                         Parse(agent);
                     }
-                    startTime.Stop();
-                    measuredSpeed = startTime.ElapsedMilliseconds;
+                    stopwatch.Stop();
+                    measuredSpeed = stopwatch.ElapsedMilliseconds;
                 }
                 else
                 {
@@ -214,19 +214,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                 }
                 if (agent.HasAmbiguity)
                 {
-                    sb.Append(string.Format("|%2d", agent.AmbiguityCount));
+                    sb.Append(string.Format("|{0}", agent.AmbiguityCount));
                 }
                 else
                 {
                     sb.Append("|  ");
                 }
 
-                sb.Append(string.Format("|%2d", agent.GetNumberOfAppliedMatches()));
+                sb.Append(string.Format("|{0}", agent.GetNumberOfAppliedMatches()));
 
                 if (measureSpeed)
                 {
-                    sb.Append('|').Append(string.Format("%5d", measuredSpeed));
-                    sb.Append('|').Append(string.Format("%5.2f", 1000.0 / measuredSpeed));
+                    sb.Append('|').Append(string.Format("{0}", measuredSpeed));
+                    sb.Append('|').Append(string.Format("{0}", 1000.0 / measuredSpeed));
                 }
 
                 sb.Append("| ").Append(testName);
@@ -497,7 +497,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                         sb.Append(' ');
                     }
                     sb.Append(" | ");
-                    sb.Append(String.Format("%10d", result.confidence));
+                    sb.Append(string.Format("{0}", result.confidence));
                     sb.Append(" | ");
 
                     if (result.pass)

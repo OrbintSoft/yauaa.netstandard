@@ -368,7 +368,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
             }
         }
-        public static int i = 0;//todo:remove
+
         public virtual void Set(string attribute, string value, long confidence)
         {
             AgentField field = allFields.ContainsKey(attribute) ? allFields[attribute] : null;
@@ -387,8 +387,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
                 else
                 {
-                    LOG.Info(string.Format(i.ToString() + " SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
-                    i++;
+                    LOG.Info(string.Format(" SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
             }
             allFields[attribute] = field;

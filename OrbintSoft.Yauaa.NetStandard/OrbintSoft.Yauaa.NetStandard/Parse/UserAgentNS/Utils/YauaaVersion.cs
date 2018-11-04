@@ -44,7 +44,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
         public static void LogVersion(params string[] extraLines)
         {
             string[] lines = {
-                "For more information: https://github.com/nielsbasjes/yauaa",
+                "For more information: https://github.com/OrbintSoft/yauaa.netstandard",
                 ThisVersion.GetCopyright() + " - " + ThisVersion.GetLicense()
             };
             string version = GetVersion();

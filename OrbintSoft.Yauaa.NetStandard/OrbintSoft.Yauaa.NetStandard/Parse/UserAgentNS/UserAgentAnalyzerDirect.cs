@@ -195,7 +195,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
 
             Stopwatch stopwatch = Stopwatch.StartNew();
-            LOG.Info(string.Format("Loading from: \"{0}\"", resourceString));
+            LOG.Info(string.Format("Loading from: \"{0}\": \"{1}\"", resourceString, pattern));
             long startFiles = DateTime.Now.Ticks;
 
             flattener = new UserAgentTreeFlattener(this);
@@ -302,7 +302,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             if (matcherConfigs != null)
             {
-                Stopwatch fullStart = Stopwatch.StartNew();
+                Stopwatch fullStopwatch = Stopwatch.StartNew();
                  foreach (var resourceEntry in resources)
                 {
                     FileInfo resource = resourceEntry.Value;
@@ -339,7 +339,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             start.ElapsedMilliseconds));
                     }
                 }
-                fullStart.Stop();
+                fullStopwatch.Stop();
 
                 LOG.Info(string.Format("Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
                     totalNumberOfMatchers,
@@ -348,7 +348,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     lookupSets.Count(),
                     testCases.Count,
                     matcherConfigs.Count,
-                    fullStart.ElapsedMilliseconds
+                    fullStopwatch.ElapsedMilliseconds
                 ));
             }
         }
@@ -361,12 +361,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 return;
             }
             LOG.Info("Initializing Analyzer data structures");
-            Stopwatch start = Stopwatch.StartNew();
+            Stopwatch stopwatch = Stopwatch.StartNew();
             allMatchers.ForEach(m => m.Initialize());
-            start.Stop();
+            stopwatch.Stop();
             matchersHaveBeenInitialized = true;
             LOG.Info(string.Format("Built in {0} msec : Hashmap {1}, Ranges map:{2}",
-                start.ElapsedMilliseconds,
+                stopwatch.ElapsedMilliseconds,
                 informMatcherActions.Count,
                 informMatcherActionRanges.Count));
         }
@@ -1212,7 +1212,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 if (log)
                 {
-                    LOG.Info(string.Format("Preheating JVM by running {0} testcases.", preheatIterations));
+                    LOG.Info(string.Format("Preheating CLR by running {0} testcases.", preheatIterations));
                 }
                 int remainingIterations = preheatIterations;
                 int goodResults = 0;
@@ -1244,7 +1244,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
                 if (log)
                 {
-                    LOG.Info(string.Format("Preheating JVM completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
+                    LOG.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
                 }
             }
         }

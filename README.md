@@ -8,18 +8,19 @@ A bit more background about this useragent parser can be found in this blog whic
 
 The Java documentation can be found here https://yauaa.basjes.nl, soon will be provided a .NET documentation specific for this project
 
-STATUS: Still in alpha but almost ready
+STATUS: Now in Beta, let's try it
 =========
 
 The library is almost ready to target the equivalent 5.2 Java version, all tets passes.
 
-You can finally download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer/5.2.0-alpha.3
+You can finally download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
 
 Soon I release a beta, but a lot of work is still needed to do:
 -Improve performance
 -Add more tests
 -Make more C# like
 -Clean the code
+-Add documenation
 
 Consider to contribute to the project to release soon a stable version
 
