@@ -11,7 +11,7 @@ The Java documentation can be found here https://yauaa.basjes.nl, soon will be p
 STATUS: Now in Beta, let's try it
 =========
 
-The library is almost ready to target the equivalent 5.2 Java version, all tets passes.
+The library is almost ready to target the equivalent 5.2 Java version, all tests passes.
 
 You can finally download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
 
