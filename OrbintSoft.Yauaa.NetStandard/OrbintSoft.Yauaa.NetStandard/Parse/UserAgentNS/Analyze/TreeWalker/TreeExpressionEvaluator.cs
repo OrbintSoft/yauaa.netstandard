@@ -22,6 +22,7 @@
  * All rights should be reserved to the original author Niels Basjes
  */
 
+using System;
 using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
@@ -36,6 +37,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
     /// This class gets the symbol table (1 value) uses that to evaluate
     /// the expression against the parsed user agent
     /// </summary>
+    [Serializable]
     public class TreeExpressionEvaluator
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TreeExpressionEvaluator));

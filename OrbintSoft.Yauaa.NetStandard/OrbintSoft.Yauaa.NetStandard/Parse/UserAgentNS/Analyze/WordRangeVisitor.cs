@@ -28,6 +28,7 @@ using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    [Serializable]
     public sealed class WordRangeVisitor: UserAgentTreeWalkerBaseVisitor<WordRangeVisitor.Range>
     {
         public class Range

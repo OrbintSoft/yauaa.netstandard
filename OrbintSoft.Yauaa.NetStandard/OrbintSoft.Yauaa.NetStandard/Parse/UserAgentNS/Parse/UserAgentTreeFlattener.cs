@@ -33,6 +33,7 @@ using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 {
+    [Serializable]
     public class UserAgentTreeFlattener: UserAgentBaseListener 
     {
         private static readonly ParseTreeWalker WALKER = new ParseTreeWalker();

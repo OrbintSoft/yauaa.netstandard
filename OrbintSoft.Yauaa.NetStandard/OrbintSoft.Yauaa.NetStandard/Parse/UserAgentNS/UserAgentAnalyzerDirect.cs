@@ -39,6 +39,7 @@ using DomainParser.Library;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
+    [Serializable]
     public class UserAgentAnalyzerDirect: IAnalyzer
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));

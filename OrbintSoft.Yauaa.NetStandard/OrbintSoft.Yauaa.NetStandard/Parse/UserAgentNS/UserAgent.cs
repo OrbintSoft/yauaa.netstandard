@@ -37,6 +37,7 @@ using System.Linq;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
+    [Serializable]
     public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgent));
@@ -160,6 +161,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return ValueTuple.Create(userAgentString, allFields).GetHashCode();
         }
 
+        [Serializable]
         public class AgentField
         {
             private readonly string defaultValue;

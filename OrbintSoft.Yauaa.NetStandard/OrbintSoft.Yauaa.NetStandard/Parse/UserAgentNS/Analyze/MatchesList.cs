@@ -23,14 +23,16 @@
  */
 
 using Antlr4.Runtime.Tree;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    [Serializable]
     public sealed class MatchesList: ICollection<MatchesList.Match>
     {
+        [Serializable]
         public class Match
         {
             private string key;

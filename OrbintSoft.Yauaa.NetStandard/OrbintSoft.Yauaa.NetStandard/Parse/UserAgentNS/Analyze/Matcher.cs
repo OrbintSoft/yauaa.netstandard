@@ -32,6 +32,7 @@ using System.Linq;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    [Serializable]
     public class Matcher 
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(Matcher));

@@ -31,6 +31,7 @@ using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 {
+    [Serializable]
     public class UserAgentAnalyzerTester: UserAgentAnalyzer
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgentAnalyzerTester));

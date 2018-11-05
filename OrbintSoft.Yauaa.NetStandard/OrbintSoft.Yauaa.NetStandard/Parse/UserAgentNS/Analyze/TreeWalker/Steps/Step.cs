@@ -32,6 +32,7 @@ using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
 {
+    [Serializable]
     public abstract class Step
     {
         internal static readonly ILog LOG = LogManager.GetLogger(typeof(Step));

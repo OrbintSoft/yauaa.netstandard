@@ -21,10 +21,12 @@
  * 
  * All rights should be reserved to the original author Niels Basjes
  */
+using System;
 using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
+    [Serializable]
     public class UserAgentAnalyzer: UserAgentAnalyzerDirect
     {
         private static readonly int DEFAULT_PARSE_CACHE_SIZE = 10000;
