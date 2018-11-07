@@ -25,9 +25,11 @@
 using Antlr4.Runtime.Tree;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
+using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Value
 {
+    [Serializable]
     public class StepWordRange: Step
     {
         private readonly int firstWord;

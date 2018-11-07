@@ -25,15 +25,25 @@
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk.StepDowns
 {
-    public class UserAgentGetChildrenVisitor: UserAgentBaseVisitor<IEnumerator<ParserRuleContext>>
+    [Serializable]
+    public class UserAgentGetChildrenVisitor: UserAgentBaseVisitor<IEnumerator<ParserRuleContext>>, ISerializable
     { 
         private readonly string name;
         private readonly ChildIterable childIterable;
+
+        public UserAgentGetChildrenVisitor(SerializationInfo info, StreamingContext context)
+        {
+            name = (string)info.GetValue("name", typeof(string));
+            childIterable = (ChildIterable)info.GetValue("childIterable", typeof(ChildIterable));
+        }
+
 
         public UserAgentGetChildrenVisitor(string name, int start, int end)
         {
@@ -129,6 +139,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                     break;
             }
         }
+
+       
 
         private static readonly IEnumerator<ParserRuleContext> EMPTY = null;
 
@@ -248,5 +260,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         {
             return GetChildrenByName(context);
         }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("name", name, typeof(string));
+            info.AddValue("childIterable", childIterable, typeof(ChildIterable));
+        }
+
+        
     }
 }

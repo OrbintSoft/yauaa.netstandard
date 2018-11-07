@@ -27,6 +27,7 @@ using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Compare
 {
+    [Serializable]
     public class StepNotEquals: Step
     {
         private readonly string desiredValue;

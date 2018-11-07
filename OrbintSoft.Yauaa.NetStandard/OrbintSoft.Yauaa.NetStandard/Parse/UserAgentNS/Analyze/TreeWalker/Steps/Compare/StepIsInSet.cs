@@ -22,11 +22,13 @@
  * All rights should be reserved to the original author Niels Basjes
  */
 
+using System;
 using System.Collections.Generic;
 using Antlr4.Runtime.Tree;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Compare
 {
+    [Serializable]
     public class StepIsInSet: Step
     {
         private readonly string listName;

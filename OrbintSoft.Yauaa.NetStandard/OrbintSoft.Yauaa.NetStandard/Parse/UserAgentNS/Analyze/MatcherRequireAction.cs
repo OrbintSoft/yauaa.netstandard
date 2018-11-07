@@ -26,9 +26,11 @@ using Antlr4.Runtime;
 using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    [Serializable]
     public class MatcherRequireAction : MatcherAction
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MatcherRequireAction));

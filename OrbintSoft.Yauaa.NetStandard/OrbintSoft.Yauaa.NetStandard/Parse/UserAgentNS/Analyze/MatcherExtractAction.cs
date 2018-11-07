@@ -30,6 +30,7 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    [Serializable]
     public class MatcherExtractAction: MatcherAction
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(MatcherExtractAction));

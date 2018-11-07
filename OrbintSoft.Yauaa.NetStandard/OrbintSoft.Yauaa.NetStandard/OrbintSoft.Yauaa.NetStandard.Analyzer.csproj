@@ -12,8 +12,8 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
     <Version>5.2-beta.1</Version>
-    <AssemblyVersion>5.2.1.1</AssemblyVersion>
-    <FileVersion>5.2.1.1</FileVersion>
+    <AssemblyVersion>5.2.1.2</AssemblyVersion>
+    <FileVersion>5.2.1.2</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
     <Description>This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>

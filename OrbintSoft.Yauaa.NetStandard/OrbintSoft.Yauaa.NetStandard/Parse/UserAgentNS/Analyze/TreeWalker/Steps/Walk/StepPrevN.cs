@@ -23,9 +23,11 @@
  */
 
 using Antlr4.Runtime.Tree;
+using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk
 {
+    [Serializable]
     public class StepPrevN: Step
     {
         private static readonly int SIZE = 20;

@@ -28,6 +28,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
 
         private readonly bool verbose;
 
+        [Serializable]
         public sealed class WalkResult
         {
             private readonly IParseTree tree;

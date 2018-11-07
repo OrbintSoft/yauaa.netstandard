@@ -15,18 +15,23 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
     {
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestPredefinedBrowsersPerField));
 
-        protected static UserAgentAnalyzerTester uaa;
-
-        [Fact(Skip="Sorry serialization is not supported")]
-        public void SerializeAndDeserializeUAA()
+        public UserAgentAnalyzerTester SerializeAndDeserializeUAA(bool delay)
         {
             LOG.Info("==============================================================");
             LOG.Info("Create");
             LOG.Info("--------------------------------------------------------------");
-            uaa = new UserAgentAnalyzerTester();
+            var uaa = new UserAgentAnalyzerTester();
             uaa.SetShowMatcherStats(false);
-            uaa.ImmediateInitialization();
-            uaa.InitializeMatchers();
+            if (delay)
+            {
+                uaa.DelayInitialization();
+            }
+            else
+            {
+                uaa.ImmediateInitialization();
+            }
+           
+            uaa.Initialize();
 
             LOG.Info("--------------------------------------------------------------");
             LOG.Info("Serialize");
@@ -48,11 +53,24 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
                 var formatter = new BinaryFormatter();
                 object obj = formatter.Deserialize(memoryStream);
                 obj.Should().BeOfType<UserAgentAnalyzerTester>();
-            }
-
-    
+                uaa = obj as UserAgentAnalyzerTester;
+            }           
+            
             LOG.Info("Done");
             LOG.Info("==============================================================");
+
+            return uaa;
+        }
+
+
+        [Fact]
+        public void ValidateAllPredefinedBrowsers()
+        {
+            UserAgentAnalyzerTester uaa = SerializeAndDeserializeUAA(false);
+            LOG.Info("==============================================================");
+            LOG.Info("Validating when getting all fields");
+            LOG.Info("--------------------------------------------------------------");
+            uaa.RunTests(false, true).Should().BeTrue();
         }
     }
 }

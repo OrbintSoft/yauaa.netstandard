@@ -28,6 +28,7 @@ using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Lookup
 {
+    [Serializable]
     public class StepLookup: Step
     {
         private readonly string lookupName;

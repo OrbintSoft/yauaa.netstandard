@@ -133,7 +133,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return testCases.Count;
         }
 
-        protected void Initialize()
+        protected internal void Initialize()
         {
             Initialize(new List<ResourcesPath>() {DEFAULT_RESOURCES});
         }

@@ -23,9 +23,11 @@
  */
 
 using Antlr4.Runtime.Tree;
+using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Compare
 {
+    [Serializable]
     public class StepIsNull: Step
     {
         public override WalkList.WalkResult Walk(IParseTree tree, string value)

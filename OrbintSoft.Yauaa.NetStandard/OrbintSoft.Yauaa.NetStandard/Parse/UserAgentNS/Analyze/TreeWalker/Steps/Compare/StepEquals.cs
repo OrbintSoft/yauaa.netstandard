@@ -27,6 +27,7 @@ using Antlr4.Runtime.Tree;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Compare
 {
+    [Serializable]
     public class StepEquals : Step
     {
         private readonly string desiredValue;

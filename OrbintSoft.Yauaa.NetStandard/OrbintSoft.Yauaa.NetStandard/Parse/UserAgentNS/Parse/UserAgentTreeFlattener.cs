@@ -27,6 +27,7 @@ using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.SerializableHelpers;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             VERSION
         }
 
+        [Serializable]
         public class State
         {
             internal long child = 0;
@@ -122,7 +124,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             }
         }
 
-        private ParseTreeProperty<State> state;
+        private SerializableParseTreeProperty<State> state;
 
         public UserAgentTreeFlattener(IAnalyzer analyzer)
         {
@@ -165,7 +167,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             UserAgentParser.UserAgentContext userAgentContext = ParseUserAgent(userAgent);
 
             // Walk the tree an inform the calling analyzer about all the nodes found
-            state = new ParseTreeProperty<State>();
+            state = new SerializableParseTreeProperty<State>();
 
             State rootState = new State(this, "agent");
             rootState.CalculatePath(PathType.CHILD, false);

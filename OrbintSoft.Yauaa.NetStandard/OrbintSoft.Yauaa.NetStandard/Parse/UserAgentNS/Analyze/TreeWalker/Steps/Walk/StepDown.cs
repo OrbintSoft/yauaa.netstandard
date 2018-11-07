@@ -26,11 +26,13 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk.StepDowns;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk
 {
+    [Serializable]
     public class StepDown: Step
     {
         private readonly int start;
