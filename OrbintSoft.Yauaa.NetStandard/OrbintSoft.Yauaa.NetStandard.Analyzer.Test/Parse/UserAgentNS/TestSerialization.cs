@@ -63,10 +63,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
         }
 
 
-        [Fact]
-        public void ValidateAllPredefinedBrowsers()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateAllPredefinedBrowsers(bool delay)
         {
-            UserAgentAnalyzerTester uaa = SerializeAndDeserializeUAA(false);
+            UserAgentAnalyzerTester uaa = SerializeAndDeserializeUAA(delay);
             LOG.Info("==============================================================");
             LOG.Info("Validating when getting all fields");
             LOG.Info("--------------------------------------------------------------");

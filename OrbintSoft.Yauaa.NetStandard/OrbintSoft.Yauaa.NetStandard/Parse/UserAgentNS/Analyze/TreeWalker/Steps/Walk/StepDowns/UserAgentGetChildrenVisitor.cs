@@ -36,18 +36,28 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
     public class UserAgentGetChildrenVisitor: UserAgentBaseVisitor<IEnumerator<ParserRuleContext>>, ISerializable
     { 
         private readonly string name;
-        private readonly ChildIterable childIterable;
+        private readonly int start;
+        private readonly int end;
+        private ChildIterable childIterable;
 
         public UserAgentGetChildrenVisitor(SerializationInfo info, StreamingContext context)
         {
             name = (string)info.GetValue("name", typeof(string));
-            childIterable = (ChildIterable)info.GetValue("childIterable", typeof(ChildIterable));
+            start = (int)info.GetValue("start", typeof(int));
+            end = (int)info.GetValue("end", typeof(int));
+            Init(name, start, end);
         }
-
 
         public UserAgentGetChildrenVisitor(string name, int start, int end)
         {
             this.name = name;
+            this.start = start;
+            this.end = end;
+            Init(name, start, end);
+        }
+
+        private void Init(string name, int start, int end)
+        {
             switch (name)
             {
                 case "keyvalue":
@@ -140,7 +150,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             }
         }
 
-       
 
         private static readonly IEnumerator<ParserRuleContext> EMPTY = null;
 
@@ -264,7 +273,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("name", name, typeof(string));
-            info.AddValue("childIterable", childIterable, typeof(ChildIterable));
+            info.AddValue("start", start, typeof(int));
+            info.AddValue("end", end, typeof(int));
         }
 
         
