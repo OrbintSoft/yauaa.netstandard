@@ -17,11 +17,11 @@ You can finally download the .nuget package there: https://www.nuget.org/package
 
 Soon I release a beta, but a lot of work is still needed to do:
 
-*Improve performance
-*Add more tests
-*Make more C# like
-*Clean the code
-*Add documenation
+* Improve performance
+* Add more tests
+* Make more C# like
+* Clean the code
+* Add documenation
 
 Consider to contribute to the project to release soon a stable version
 

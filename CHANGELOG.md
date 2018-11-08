@@ -1,8 +1,14 @@
 This is intended as an overview of the major changes
 
-v5.2
+v5.3
 ===
--First porting from Java to .NET
+- Target equivalent Java 5.3 Version
+- Refactoring of code to make more C# like, inprove readibility and performance
+
+
+v5.2-beta.2
+===
+- First porting from Java to .NET
 
 ---------------------------------------------------------------------------------------------------------
 For complete changelog of main library see: https://github.com/nielsbasjes/yauaa/blob/master/CHANGELOG.md
