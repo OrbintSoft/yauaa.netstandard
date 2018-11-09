@@ -743,6 +743,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 return ">" + value + "#" + confidence + "<";
             }
         }
-
     }
 }
