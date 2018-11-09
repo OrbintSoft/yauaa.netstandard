@@ -840,7 +840,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 userAgent.ProcessSetAll();
                 return HardCodedPostProcessing(userAgent);
             }
-            catch (NullReferenceException npe)
+            catch (NullReferenceException)
             {
                 userAgent.Reset();
                 userAgent = SetAsHacker(userAgent, 10000);
