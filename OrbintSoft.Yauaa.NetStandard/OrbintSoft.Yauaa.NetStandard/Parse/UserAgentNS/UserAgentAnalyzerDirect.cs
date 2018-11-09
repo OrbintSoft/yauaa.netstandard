@@ -183,11 +183,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         // --------------------------------------------
 
-        public static string GetVersion()
-        {
-            return "Yauaa " + ThisVersion.GetProjectVersion() + " (" + ThisVersion.GetGitCommitIdDescribeShort() + " @ " + ThisVersion.GetBuildTimestamp() + ")";
-        }
-
         public void LoadResources(string resourceString, string pattern = "*.yaml")
         {
             if (matchersHaveBeenInitialized)
