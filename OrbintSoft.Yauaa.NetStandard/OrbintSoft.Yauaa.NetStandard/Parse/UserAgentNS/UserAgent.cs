@@ -66,8 +66,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public const string UNKNOWN_VALUE = "Unknown";
         public const string UNKNOWN_VERSION = "??";
 
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         public static readonly string[] StandardFields = {
             DEVICE_CLASS,
             DEVICE_BRAND,
@@ -84,6 +82,106 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             AGENT_VERSION,
             AGENT_VERSION_MAJOR
         };
+
+        // We manually sort the list of fields to ensure the output is consistent.
+        // Any unspecified fieldnames will be appended to the end.
+        public static readonly List<string> PreSortedFieldList = new List<string>(32);
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        // The original input value
+        private string userAgentString = null;
+
+#if VERBOSE
+        private bool debug = true; 
+        private readonly IDictionary<string, AgentField> allFields = new SortedDictionary<string, AgentField>();
+#else
+        private bool debug = false;
+        private readonly IDictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
+#endif
+        static UserAgent()
+        {
+            PreSortedFieldList.Add("DeviceClass");
+            PreSortedFieldList.Add("DeviceName");
+            PreSortedFieldList.Add("DeviceBrand");
+            PreSortedFieldList.Add("DeviceCpu");
+            PreSortedFieldList.Add("DeviceCpuBits");
+            PreSortedFieldList.Add("DeviceFirmwareVersion");
+            PreSortedFieldList.Add("DeviceVersion");
+
+            PreSortedFieldList.Add("OperatingSystemClass");
+            PreSortedFieldList.Add("OperatingSystemName");
+            PreSortedFieldList.Add("OperatingSystemVersion");
+            PreSortedFieldList.Add("OperatingSystemNameVersion");
+            PreSortedFieldList.Add("OperatingSystemVersionBuild");
+
+            PreSortedFieldList.Add("LayoutEngineClass");
+            PreSortedFieldList.Add("LayoutEngineName");
+            PreSortedFieldList.Add("LayoutEngineVersion");
+            PreSortedFieldList.Add("LayoutEngineVersionMajor");
+            PreSortedFieldList.Add("LayoutEngineNameVersion");
+            PreSortedFieldList.Add("LayoutEngineNameVersionMajor");
+            PreSortedFieldList.Add("LayoutEngineBuild");
+
+            PreSortedFieldList.Add("AgentClass");
+            PreSortedFieldList.Add("AgentName");
+            PreSortedFieldList.Add("AgentVersion");
+            PreSortedFieldList.Add("AgentVersionMajor");
+            PreSortedFieldList.Add("AgentNameVersion");
+            PreSortedFieldList.Add("AgentNameVersionMajor");
+            PreSortedFieldList.Add("AgentBuild");
+            PreSortedFieldList.Add("AgentLanguage");
+            PreSortedFieldList.Add("AgentLanguageCode");
+            PreSortedFieldList.Add("AgentInformationEmail");
+            PreSortedFieldList.Add("AgentInformationUrl");
+            PreSortedFieldList.Add("AgentSecurity");
+            PreSortedFieldList.Add("AgentUuid");
+
+            PreSortedFieldList.Add("WebviewAppName");
+            PreSortedFieldList.Add("WebviewAppVersion");
+            PreSortedFieldList.Add("WebviewAppVersionMajor");
+            PreSortedFieldList.Add("WebviewAppNameVersionMajor");
+
+            PreSortedFieldList.Add("FacebookCarrier");
+            PreSortedFieldList.Add("FacebookDeviceClass");
+            PreSortedFieldList.Add("FacebookDeviceName");
+            PreSortedFieldList.Add("FacebookDeviceVersion");
+            PreSortedFieldList.Add("FacebookFBOP");
+            PreSortedFieldList.Add("FacebookFBSS");
+            PreSortedFieldList.Add("FacebookOperatingSystemName");
+            PreSortedFieldList.Add("FacebookOperatingSystemVersion");
+
+            PreSortedFieldList.Add("Anonymized");
+
+            PreSortedFieldList.Add("HackerAttackVector");
+            PreSortedFieldList.Add("HackerToolkit");
+
+            PreSortedFieldList.Add("KoboAffiliate");
+            PreSortedFieldList.Add("KoboPlatformId");
+
+            PreSortedFieldList.Add("IECompatibilityVersion");
+            PreSortedFieldList.Add("IECompatibilityVersionMajor");
+            PreSortedFieldList.Add("IECompatibilityNameVersion");
+            PreSortedFieldList.Add("IECompatibilityNameVersionMajor");
+
+            PreSortedFieldList.Add(SYNTAX_ERROR);
+        }
+
+        public UserAgent()
+        {
+            Init();
+        }
+
+        public UserAgent(string userAgentString)
+        {
+            Init();
+            SetUserAgentString(userAgentString);
+        }
+
+        public UserAgent(UserAgent userAgent)
+        {
+            Clone(userAgent);
+        }
 
         public bool HasSyntaxError { get; private set; }
         public bool HasAmbiguity { get; private set; }
@@ -108,7 +206,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             SyntaxError(recognizer, null, line, charPositionInLine, msg, e);
         }
 
-
         public void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
         {
             HasAmbiguity = true;
@@ -124,15 +221,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
 
         }
-
-        // The original input value
-        private string userAgentString = null;
-
-#if VERBOSE
-        private bool debug = true; 
-#else
-        private bool debug = false;
-#endif
 
         public bool IsDebug()
         {
@@ -162,132 +250,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public override int GetHashCode()
         {
             return ValueTuple.Create(userAgentString, allFields).GetHashCode();
-        }
-
-        [Serializable]
-        public class AgentField
-        {
-            private readonly string defaultValue;
-            private string value;
-
-            internal long confidence;
-
-            internal AgentField(string defaultValue)
-            {
-                this.defaultValue = defaultValue;
-                Reset();
-            }
-
-            public void Reset()
-            {
-                value = defaultValue;
-                confidence = -1;
-            }
-
-            public string GetValue()
-            {
-                if (value == null)
-                {
-                    return defaultValue;
-                }
-                return value;
-            }
-
-            public long GetConfidence()
-            {
-                if (value == null)
-                {
-                    return -1; // Lie in case the value was wiped.
-                }
-                return confidence;
-            }
-
-
-            public bool SetValue(AgentField field)
-            {
-                return SetValue(field.value, field.confidence);
-            }
-
-            public bool SetValue(string newValue, long newConfidence)
-            {
-                if (newConfidence > confidence)
-                {
-                    confidence = newConfidence;
-
-                    if (NULL_VALUE.Equals(newValue))
-                    {
-                        value = defaultValue;
-                    }
-                    else
-                    {
-                        value = newValue;
-                    }
-                    return true;
-                }
-                return false;
-            }
-
-            public void SetValueForced(string newValue, long newConfidence)
-            {
-                this.confidence = newConfidence;
-
-                if (NULL_VALUE.Equals(newValue))
-                {
-                    value = defaultValue;
-                }
-                else
-                {
-                    value = newValue;
-                }
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (this == obj)
-                {
-                    return true;
-                }
-                if (!(obj is AgentField))
-                {
-                    return false;
-                }
-                AgentField that = (AgentField)obj;
-                return confidence == that.confidence &&
-                    Equals(defaultValue, that.defaultValue) &&
-                    Equals(value, that.value);
-            }
-
-            public override int GetHashCode()
-            {
-                return ValueTuple.Create(defaultValue, value, confidence).GetHashCode();
-            }
-
-            public override string ToString()
-            {
-                return ">" + value + "#" + confidence + "<";
-            }
-        }
-
-#if VERBOSE
-        private readonly IDictionary<string, AgentField> allFields = new SortedDictionary<string, AgentField>();
-#else
-         private readonly IDictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
-#endif
-
-        public UserAgent()
-        {
-            Init();
-        }
-
-        public UserAgent(string userAgentString)
-        {
-            Init();
-            SetUserAgentString(userAgentString);
-        }
-
-        public UserAgent(UserAgent userAgent)
-        {
-            Clone(userAgent);
         }
 
         public void Clone(UserAgent userAgent)
@@ -659,85 +621,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return resultSet;
         }
 
-        // We manually sort the list of fields to ensure the output is consistent.
-        // Any unspecified fieldnames will be appended to the end.
-        public static readonly List<string> PRE_SORTED_FIELDS_LIST = new List<string>(32);
-
-        static UserAgent()
-        {
-            PRE_SORTED_FIELDS_LIST.Add("DeviceClass");
-            PRE_SORTED_FIELDS_LIST.Add("DeviceName");
-            PRE_SORTED_FIELDS_LIST.Add("DeviceBrand");
-            PRE_SORTED_FIELDS_LIST.Add("DeviceCpu");
-            PRE_SORTED_FIELDS_LIST.Add("DeviceCpuBits");
-            PRE_SORTED_FIELDS_LIST.Add("DeviceFirmwareVersion");
-            PRE_SORTED_FIELDS_LIST.Add("DeviceVersion");
-
-            PRE_SORTED_FIELDS_LIST.Add("OperatingSystemClass");
-            PRE_SORTED_FIELDS_LIST.Add("OperatingSystemName");
-            PRE_SORTED_FIELDS_LIST.Add("OperatingSystemVersion");
-            PRE_SORTED_FIELDS_LIST.Add("OperatingSystemNameVersion");
-            PRE_SORTED_FIELDS_LIST.Add("OperatingSystemVersionBuild");
-
-            PRE_SORTED_FIELDS_LIST.Add("LayoutEngineClass");
-            PRE_SORTED_FIELDS_LIST.Add("LayoutEngineName");
-            PRE_SORTED_FIELDS_LIST.Add("LayoutEngineVersion");
-            PRE_SORTED_FIELDS_LIST.Add("LayoutEngineVersionMajor");
-            PRE_SORTED_FIELDS_LIST.Add("LayoutEngineNameVersion");
-            PRE_SORTED_FIELDS_LIST.Add("LayoutEngineNameVersionMajor");
-            PRE_SORTED_FIELDS_LIST.Add("LayoutEngineBuild");
-
-            PRE_SORTED_FIELDS_LIST.Add("AgentClass");
-            PRE_SORTED_FIELDS_LIST.Add("AgentName");
-            PRE_SORTED_FIELDS_LIST.Add("AgentVersion");
-            PRE_SORTED_FIELDS_LIST.Add("AgentVersionMajor");
-            PRE_SORTED_FIELDS_LIST.Add("AgentNameVersion");
-            PRE_SORTED_FIELDS_LIST.Add("AgentNameVersionMajor");
-            PRE_SORTED_FIELDS_LIST.Add("AgentBuild");
-            PRE_SORTED_FIELDS_LIST.Add("AgentLanguage");
-            PRE_SORTED_FIELDS_LIST.Add("AgentLanguageCode");
-            PRE_SORTED_FIELDS_LIST.Add("AgentInformationEmail");
-            PRE_SORTED_FIELDS_LIST.Add("AgentInformationUrl");
-            PRE_SORTED_FIELDS_LIST.Add("AgentSecurity");
-            PRE_SORTED_FIELDS_LIST.Add("AgentUuid");
-
-            PRE_SORTED_FIELDS_LIST.Add("WebviewAppName");
-            PRE_SORTED_FIELDS_LIST.Add("WebviewAppVersion");
-            PRE_SORTED_FIELDS_LIST.Add("WebviewAppVersionMajor");
-            PRE_SORTED_FIELDS_LIST.Add("WebviewAppNameVersionMajor");
-
-            PRE_SORTED_FIELDS_LIST.Add("FacebookCarrier");
-            PRE_SORTED_FIELDS_LIST.Add("FacebookDeviceClass");
-            PRE_SORTED_FIELDS_LIST.Add("FacebookDeviceName");
-            PRE_SORTED_FIELDS_LIST.Add("FacebookDeviceVersion");
-            PRE_SORTED_FIELDS_LIST.Add("FacebookFBOP");
-            PRE_SORTED_FIELDS_LIST.Add("FacebookFBSS");
-            PRE_SORTED_FIELDS_LIST.Add("FacebookOperatingSystemName");
-            PRE_SORTED_FIELDS_LIST.Add("FacebookOperatingSystemVersion");
-
-            PRE_SORTED_FIELDS_LIST.Add("Anonymized");
-
-            PRE_SORTED_FIELDS_LIST.Add("HackerAttackVector");
-            PRE_SORTED_FIELDS_LIST.Add("HackerToolkit");
-
-            PRE_SORTED_FIELDS_LIST.Add("KoboAffiliate");
-            PRE_SORTED_FIELDS_LIST.Add("KoboPlatformId");
-
-            PRE_SORTED_FIELDS_LIST.Add("IECompatibilityVersion");
-            PRE_SORTED_FIELDS_LIST.Add("IECompatibilityVersionMajor");
-            PRE_SORTED_FIELDS_LIST.Add("IECompatibilityNameVersion");
-            PRE_SORTED_FIELDS_LIST.Add("IECompatibilityNameVersionMajor");
-
-            PRE_SORTED_FIELDS_LIST.Add(SYNTAX_ERROR);
-        }
-    
-
         public List<string> GetAvailableFieldNamesSorted()
         {
             List<string> fieldNames = new List<string>(GetAvailableFieldNames());
 
             List<string> result = new List<string>();
-            foreach (string fieldName in PRE_SORTED_FIELDS_LIST)
+            foreach (string fieldName in PreSortedFieldList)
             {
                 if (fieldNames.Remove(fieldName))
                 {
@@ -749,6 +638,110 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             result.AddRange(fieldNames);
             return result;
 
+        }
+
+        [Serializable]
+        public class AgentField
+        {
+            private readonly string defaultValue;
+            private string value;
+
+            internal long confidence;
+
+            internal AgentField(string defaultValue)
+            {
+                this.defaultValue = defaultValue;
+                Reset();
+            }
+
+            public void Reset()
+            {
+                value = defaultValue;
+                confidence = -1;
+            }
+
+            public string GetValue()
+            {
+                if (value == null)
+                {
+                    return defaultValue;
+                }
+                return value;
+            }
+
+            public long GetConfidence()
+            {
+                if (value == null)
+                {
+                    return -1; // Lie in case the value was wiped.
+                }
+                return confidence;
+            }
+
+
+            public bool SetValue(AgentField field)
+            {
+                return SetValue(field.value, field.confidence);
+            }
+
+            public bool SetValue(string newValue, long newConfidence)
+            {
+                if (newConfidence > confidence)
+                {
+                    confidence = newConfidence;
+
+                    if (NULL_VALUE.Equals(newValue))
+                    {
+                        value = defaultValue;
+                    }
+                    else
+                    {
+                        value = newValue;
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            public void SetValueForced(string newValue, long newConfidence)
+            {
+                this.confidence = newConfidence;
+
+                if (NULL_VALUE.Equals(newValue))
+                {
+                    value = defaultValue;
+                }
+                else
+                {
+                    value = newValue;
+                }
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (this == obj)
+                {
+                    return true;
+                }
+                if (!(obj is AgentField))
+                {
+                    return false;
+                }
+                AgentField that = (AgentField)obj;
+                return confidence == that.confidence &&
+                    Equals(defaultValue, that.defaultValue) &&
+                    Equals(value, that.value);
+            }
+
+            public override int GetHashCode()
+            {
+                return ValueTuple.Create(defaultValue, value, confidence).GetHashCode();
+            }
+
+            public override string ToString()
+            {
+                return ">" + value + "#" + confidence + "<";
+            }
         }
 
     }

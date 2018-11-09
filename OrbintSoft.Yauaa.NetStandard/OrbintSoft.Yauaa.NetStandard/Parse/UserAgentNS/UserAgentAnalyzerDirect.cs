@@ -388,7 +388,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             fieldNames.Sort();
 
             List<string> result = new List<string>();
-            foreach (string fieldName in UserAgent.PRE_SORTED_FIELDS_LIST)
+            foreach (string fieldName in UserAgent.PreSortedFieldList)
             {
                 fieldNames.Remove(fieldName);
                 result.Add(fieldName);
