@@ -213,8 +213,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine(e.StackTrace);
-                return;
+                throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
             }
             doingOnlyASingleTest = false;
             int maxFilenameLength = 0;
