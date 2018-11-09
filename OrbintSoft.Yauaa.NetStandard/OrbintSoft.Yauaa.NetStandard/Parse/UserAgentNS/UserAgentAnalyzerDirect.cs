@@ -322,6 +322,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                         {
                             skippedMatchers++;
                         }
+                        catch (InvalidParserConfigurationException e)
+                        {
+                            System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                        }
                     }
                     start.Stop();
                     int stopSkipped = skippedMatchers;
