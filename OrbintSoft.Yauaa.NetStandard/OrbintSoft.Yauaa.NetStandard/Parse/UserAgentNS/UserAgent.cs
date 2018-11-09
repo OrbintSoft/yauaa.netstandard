@@ -41,6 +41,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
     public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgent));
+
         public const string DEVICE_CLASS = "DeviceClass";
         public const string DEVICE_BRAND = "DeviceBrand";
         public const string DEVICE_NAME = "DeviceName";
@@ -65,7 +66,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public const string UNKNOWN_VALUE = "Unknown";
         public const string UNKNOWN_VERSION = "??";
 
-        public static readonly string[] STANDARD_FIELDS = {
+        public static readonly string[] StandardFields = {
             DEVICE_CLASS,
             DEVICE_BRAND,
             DEVICE_NAME,
@@ -638,7 +639,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public List<string> GetAvailableFieldNames()
         {
             List<string> resultSet = new List<string>(allFields.Count + 10);
-            resultSet.AddRange(STANDARD_FIELDS);
+            resultSet.AddRange(StandardFields);
             foreach (string fieldName in allFields.Keys)
             {
                 if (!resultSet.Contains(fieldName))
