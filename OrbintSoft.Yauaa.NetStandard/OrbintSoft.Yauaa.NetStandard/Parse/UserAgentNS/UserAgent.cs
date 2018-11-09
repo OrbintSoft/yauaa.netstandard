@@ -290,12 +290,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public void Clone(UserAgent userAgent)
         {
             Init();
+            debug = userAgent.debug;
             SetUserAgentString(userAgent.userAgentString);
 
             foreach (var entry in userAgent.allFields)
             {
                 Set(entry.Key, entry.Value.GetValue(), entry.Value.confidence);
             }
+            HasSyntaxError = userAgent.HasSyntaxError;
+            HasAmbiguity = userAgent.HasAmbiguity;
+            AmbiguityCount = userAgent.AmbiguityCount;
         }
 
         private void Init()
