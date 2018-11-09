@@ -34,13 +34,14 @@ using Newtonsoft.Json;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System.Linq;
+using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
     [Serializable]
     public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgent));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public const string DEVICE_CLASS = "DeviceClass";
         public const string DEVICE_BRAND = "DeviceBrand";
