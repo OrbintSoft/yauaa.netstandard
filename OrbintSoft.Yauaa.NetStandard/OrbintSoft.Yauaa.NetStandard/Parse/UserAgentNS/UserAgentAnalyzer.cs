@@ -29,7 +29,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
     [Serializable]
     public class UserAgentAnalyzer: UserAgentAnalyzerDirect
     {
-        private static readonly int DEFAULT_PARSE_CACHE_SIZE = 10000;
+        private const int DEFAULT_PARSE_CACHE_SIZE = 10000;
 
         private int cacheSize = DEFAULT_PARSE_CACHE_SIZE;
         private Dictionary<string, UserAgent> parseCache = null;
