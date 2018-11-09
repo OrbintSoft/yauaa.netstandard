@@ -41,7 +41,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
     [Serializable]
     public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public const string DEVICE_CLASS = "DeviceClass";
         public const string DEVICE_BRAND = "DeviceBrand";
@@ -66,6 +65,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public const string NULL_VALUE = "<<<null>>>";
         public const string UNKNOWN_VALUE = "Unknown";
         public const string UNKNOWN_VERSION = "??";
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public static readonly string[] StandardFields = {
             DEVICE_CLASS,
