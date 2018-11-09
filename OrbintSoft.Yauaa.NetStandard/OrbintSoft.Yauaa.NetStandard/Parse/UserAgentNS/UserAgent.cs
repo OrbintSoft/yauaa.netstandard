@@ -40,30 +40,30 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
     [Serializable]
     public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgent));
-        public static readonly string DEVICE_CLASS = "DeviceClass";
-        public static readonly string DEVICE_BRAND = "DeviceBrand";
-        public static readonly string DEVICE_NAME = "DeviceName";
-        public static readonly string DEVICE_VERSION = "DeviceVersion";
-        public static readonly string OPERATING_SYSTEM_CLASS = "OperatingSystemClass";
-        public static readonly string OPERATING_SYSTEM_NAME = "OperatingSystemName";
-        public static readonly string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
-        public static readonly string LAYOUT_ENGINE_CLASS = "LayoutEngineClass";
-        public static readonly string LAYOUT_ENGINE_NAME = "LayoutEngineName";
-        public static readonly string LAYOUT_ENGINE_VERSION = "LayoutEngineVersion";
-        public static readonly string LAYOUT_ENGINE_VERSION_MAJOR = "LayoutEngineVersionMajor";
-        public static readonly string AGENT_CLASS = "AgentClass";
-        public static readonly string AGENT_NAME = "AgentName";
-        public static readonly string AGENT_VERSION = "AgentVersion";
-        public static readonly string AGENT_VERSION_MAJOR = "AgentVersionMajor";
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgent));
+        public const string DEVICE_CLASS = "DeviceClass";
+        public const string DEVICE_BRAND = "DeviceBrand";
+        public const string DEVICE_NAME = "DeviceName";
+        public const string DEVICE_VERSION = "DeviceVersion";
+        public const string OPERATING_SYSTEM_CLASS = "OperatingSystemClass";
+        public const string OPERATING_SYSTEM_NAME = "OperatingSystemName";
+        public const string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
+        public const string LAYOUT_ENGINE_CLASS = "LayoutEngineClass";
+        public const string LAYOUT_ENGINE_NAME = "LayoutEngineName";
+        public const string LAYOUT_ENGINE_VERSION = "LayoutEngineVersion";
+        public const string LAYOUT_ENGINE_VERSION_MAJOR = "LayoutEngineVersionMajor";
+        public const string AGENT_CLASS = "AgentClass";
+        public const string AGENT_NAME = "AgentName";
+        public const string AGENT_VERSION = "AgentVersion";
+        public const string AGENT_VERSION_MAJOR = "AgentVersionMajor";
 
-        public static readonly string SYNTAX_ERROR = "__SyntaxError__";
-        public static readonly string USERAGENT = "Useragent";
+        public const string SYNTAX_ERROR = "__SyntaxError__";
+        public const string USERAGENT = "Useragent";
 
-        public static readonly string SET_ALL_FIELDS = "__Set_ALL_Fields__";
-        public static readonly string NULL_VALUE = "<<<null>>>";
-        public static readonly string UNKNOWN_VALUE = "Unknown";
-        public static readonly string UNKNOWN_VERSION = "??";
+        public const string SET_ALL_FIELDS = "__Set_ALL_Fields__";
+        public const string NULL_VALUE = "<<<null>>>";
+        public const string UNKNOWN_VALUE = "Unknown";
+        public const string UNKNOWN_VERSION = "??";
 
         public static readonly string[] STANDARD_FIELDS = {
             DEVICE_CLASS,
@@ -90,9 +90,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
             if (debug)
             {
-                LOG.Error("Syntax error");
-                LOG.Error(string.Format("Source : {0}", userAgentString));
-                LOG.Error(string.Format("Message: {0}", msg));
+                Log.Error("Syntax error");
+                Log.Error(string.Format("Source : {0}", userAgentString));
+                Log.Error(string.Format("Message: {0}", msg));
             }
             HasSyntaxError = true;
             AgentField syntaxError = new AgentField("false");
@@ -389,11 +389,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 if (updated)
                 {
-                    LOG.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
+                    Log.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
                 else
                 {
-                    LOG.Info(string.Format(" SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
+                    Log.Info(string.Format(" SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
             }
             allFields[attribute] = field;
@@ -411,7 +411,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             field.SetValueForced(value, confidence);
             if (debug && !wasEmpty)
             {
-                LOG.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
+                Log.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
             }
             allFields[attribute] = field;
         }
