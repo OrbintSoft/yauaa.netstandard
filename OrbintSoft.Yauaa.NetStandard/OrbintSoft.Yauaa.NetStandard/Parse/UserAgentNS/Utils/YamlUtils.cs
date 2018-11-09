@@ -26,12 +26,31 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System.Collections.Generic;
 using YamlDotNet.RepresentationModel;
 using System.Linq;
+using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
     public sealed class YamlUtils
     {
         private YamlUtils() { }
+
+        public static void RequireNodeInstanceOf(Type clazz, YamlNode node, string filename, string error)
+        {
+            if (!clazz.IsInstanceOfType(node))
+            {
+                throw new InvalidParserConfigurationException(
+                    CreateErrorString(node, filename, error));
+            }
+        }
+
+        public static void Require(bool condition, YamlNode node, string filename, string error)
+        {
+            if (!condition)
+            {
+                throw new InvalidParserConfigurationException(
+                    CreateErrorString(node, filename, error));
+            }
+        }
 
         public static void Fail(YamlNode node, string filename, string error)
         {
@@ -101,10 +120,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             {
                 if (!(node is YamlScalarNode)) {
                     Fail(node, filename, "The value should be a string but it is a " + node.NodeType.ToString());
+                }
+                values.Add(((YamlScalarNode)node).Value);
             }
-            values.Add(((YamlScalarNode)node).Value);
+            return values;
         }
-        return values;
     }
-}
 }
