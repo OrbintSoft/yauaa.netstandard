@@ -22,9 +22,6 @@
  * All rights should be reserved to the original author Niels Basjes
  */
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Dfa;
@@ -33,8 +30,11 @@ using log4net;
 using Newtonsoft.Json;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
