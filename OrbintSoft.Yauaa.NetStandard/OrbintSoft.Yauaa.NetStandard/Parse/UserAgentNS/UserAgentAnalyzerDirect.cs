@@ -553,8 +553,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                         break;
                     case "values":
                         YamlSequenceNode node = YamlUtils.GetValueAsSequenceNode(tuple, filename);
-                        List<string> values = YamlUtils.GetStringValues(node, filename);
-                        foreach (string value in values)
+                        foreach (string value in YamlUtils.GetStringValues(node, filename))
                         {
                             lookupSet.Add(value.ToLower(CultureInfo.InvariantCulture));
                         }
