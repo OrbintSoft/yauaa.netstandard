@@ -824,6 +824,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
                 catch (NullReferenceException)
                 {
+                    // If this occurs then someone has found a previously undetected problem.
+                    // So this is a safety for something that 'can' but 'should not' occur.
+                    // I guess this exploit can work only in Java, but better to keep the code as safety measure
                     userAgent.Reset();
                     userAgent = SetAsHacker(userAgent, 10000);
                     userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
