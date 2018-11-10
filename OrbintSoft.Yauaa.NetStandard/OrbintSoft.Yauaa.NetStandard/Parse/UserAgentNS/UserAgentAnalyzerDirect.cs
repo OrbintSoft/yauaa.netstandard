@@ -593,7 +593,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
                 Dictionary<string, string> input = null;
                 List<string> options = null;
-                Dictionary<string, string> expected = null;
+                Dictionary<string, string> expected = new Dictionary<string, string>();
                 foreach (KeyValuePair<YamlNode, YamlNode> tuple in entry)
                 {
                     string name = YamlUtils.GetKeyAsString(tuple, filename);
@@ -601,13 +601,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     {
                         case "options":
                             options = YamlUtils.GetStringValues(tuple.Value, filename);
-                            if (options != null)
+                            if (options.Contains("only"))
                             {
-                                if (options.Contains("only"))
-                                {
-                                    doingOnlyASingleTest = true;
-                                    testCases.Clear();
-                                }
+                                doingOnlyASingleTest = true;
+                                testCases.Clear();
                             }
                             break;
                         case "input":
@@ -628,19 +625,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             break;
                         case "expected":
                             List<KeyValuePair<YamlNode, YamlNode>> mappings = YamlUtils.GetValueAsMappingNode(tuple, filename).ToList();
-                            if (mappings != null)
+                            foreach (KeyValuePair<YamlNode, YamlNode> mapping in mappings)
                             {
-                                if (expected == null)
-                                {
-                                    expected = new Dictionary<string, string>();
-                                }
-                                foreach (KeyValuePair<YamlNode, YamlNode> mapping in mappings)
-                                {
-                                    string key = YamlUtils.GetKeyAsString(mapping, filename);
-                                    string value = YamlUtils.GetValueAsString(mapping, filename);
-                                    expected[key] = value;
-                                }
-                            }
+                                string key = YamlUtils.GetKeyAsString(mapping, filename);
+                                string value = YamlUtils.GetValueAsString(mapping, filename);
+                                expected[key] = value;
+                            }                            
                             break;
                         default:
                             //                        fail(tuple.getKeyNode(), filename, "Unexpected: " + name);
@@ -650,7 +640,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
                 YamlUtils.Require(input != null, entry, filename, "Test is missing input");
 
-                if (expected == null || expected.Count == 0)
+                if (expected.Count == 0)
                 {
                     doingOnlyASingleTest = true;
                     testCases.Clear();
@@ -660,7 +650,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 {
                     ["input"] = input
                 };
-                if (expected != null)
+                if (expected.Count > 0)
                 {
                     testCase["expected"] = expected;
                 }
