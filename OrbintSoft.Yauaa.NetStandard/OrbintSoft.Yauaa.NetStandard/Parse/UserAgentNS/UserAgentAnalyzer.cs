@@ -75,33 +75,36 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public override UserAgent Parse(UserAgent userAgent)
         {
-            if (userAgent == null)
+            lock (this)
             {
-                return null;
-            }
-            userAgent.Reset();
-
-            if (parseCache == null)
-            {
-                return base.Parse(userAgent);
-            }
-
-            string userAgentString = userAgent.GetUserAgentString();
-            if (userAgentString != null)
-            {
-                UserAgent cachedValue = parseCache.ContainsKey(userAgentString) ? parseCache[userAgentString] : null;
-                if (cachedValue != null)
+                if (userAgent == null)
                 {
-                    userAgent.Clone(cachedValue);
+                    return null;
                 }
-                else
+                userAgent.Reset();
+
+                if (parseCache == null)
                 {
-                    cachedValue = new UserAgent(base.Parse(userAgent));
-                    parseCache[userAgentString] = cachedValue;
+                    return base.Parse(userAgent);
                 }
-            }            
-            // We have our answer.
-            return userAgent;
+
+                string userAgentString = userAgent.GetUserAgentString();
+                if (userAgentString != null)
+                {
+                    UserAgent cachedValue = parseCache.ContainsKey(userAgentString) ? parseCache[userAgentString] : null;
+                    if (cachedValue != null)
+                    {
+                        userAgent.Clone(cachedValue);
+                    }
+                    else
+                    {
+                        cachedValue = new UserAgent(base.Parse(userAgent));
+                        parseCache[userAgentString] = cachedValue;
+                    }
+                }
+                // We have our answer.
+                return userAgent;
+            }
         }
 
         public static UserAgentAnalyzerBuilder NewBuilder()           

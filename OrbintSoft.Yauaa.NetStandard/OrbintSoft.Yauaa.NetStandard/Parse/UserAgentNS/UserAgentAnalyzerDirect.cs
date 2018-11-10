@@ -784,48 +784,51 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public virtual UserAgent Parse(UserAgent userAgent)
         {
-            InitializeMatchers();
-            string useragentString = userAgent.GetUserAgentString();
-            if (useragentString != null && useragentString.Length > userAgentMaxLength)
+            lock (this)
             {
-                userAgent = SetAsHacker(userAgent, 100);
-                userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
-                return HardCodedPostProcessing(userAgent);
-            }
-
-            // Reset all Matchers
-            foreach (Matcher matcher in allMatchers)
-            {
-                matcher.Reset();
-            }
-
-            if (userAgent.IsDebug())
-            {
-                foreach (Matcher matcher in allMatchers)
+                InitializeMatchers();
+                string useragentString = userAgent.GetUserAgentString();
+                if (useragentString != null && useragentString.Length > userAgentMaxLength)
                 {
-                    matcher.SetVerboseTemporarily(true);
-                }
-            }
-
-            try
-            {
-                userAgent = flattener.Parse(userAgent);
-
-                // Fire all Analyzers
-                foreach (Matcher matcher in allMatchers)
-                {
-                    matcher.Analyze(userAgent);
+                    userAgent = SetAsHacker(userAgent, 100);
+                    userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
+                    return HardCodedPostProcessing(userAgent);
                 }
 
-                userAgent.ProcessSetAll();
-                return HardCodedPostProcessing(userAgent);
-            }
-            catch (NullReferenceException)
-            {
-                userAgent.Reset();
-                userAgent = SetAsHacker(userAgent, 10000);
-                userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
-                return HardCodedPostProcessing(userAgent);
+                // Reset all Matchers
+                foreach (Matcher matcher in allMatchers)
+                {
+                    matcher.Reset();
+                }
+
+                if (userAgent.IsDebug())
+                {
+                    foreach (Matcher matcher in allMatchers)
+                    {
+                        matcher.SetVerboseTemporarily(true);
+                    }
+                }
+
+                try
+                {
+                    userAgent = flattener.Parse(userAgent);
+
+                    // Fire all Analyzers
+                    foreach (Matcher matcher in allMatchers)
+                    {
+                        matcher.Analyze(userAgent);
+                    }
+
+                    userAgent.ProcessSetAll();
+                    return HardCodedPostProcessing(userAgent);
+                }
+                catch (NullReferenceException)
+                {
+                    userAgent.Reset();
+                    userAgent = SetAsHacker(userAgent, 10000);
+                    userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
+                    return HardCodedPostProcessing(userAgent);
+                }
             }
         }
 
