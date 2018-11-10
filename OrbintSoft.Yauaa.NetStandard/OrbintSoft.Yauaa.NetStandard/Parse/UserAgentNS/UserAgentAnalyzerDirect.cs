@@ -444,11 +444,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 throw new InvalidParserConfigurationException("The file " + filename + " is empty");
             }
 
-            // Get and check top level config
-            if (!(loadedYaml is YamlMappingNode)) {
-                YamlUtils.Fail(loadedYaml, filename, "File must be a Map");
-            }
-
+            // Get and check top level config            
+            YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), loadedYaml, filename, "File must be a Map");
             YamlMappingNode rootNode = (YamlMappingNode)loadedYaml;
 
             KeyValuePair<YamlNode, YamlNode> configNodeTuple = new KeyValuePair<YamlNode, YamlNode>(null, null);
@@ -468,19 +465,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
             }
 
-            if (configNodeTuple.Key == null && configNodeTuple.Value == null)
-            {
-                YamlUtils.Fail(loadedYaml, filename, "The top level entry MUST be 'config'.");
-            }
+            YamlUtils.Require(configNodeTuple.Key != null, loadedYaml, filename, "The top level entry MUST be 'config'.");
 
             YamlSequenceNode configNode = YamlUtils.GetValueAsSequenceNode(configNodeTuple, filename);
             IList<YamlNode> configList = configNode.Children;
 
             foreach (YamlNode configEntry in configList)
             {
-                if (!(configEntry is YamlMappingNode)) {
-                    YamlUtils.Fail(loadedYaml, filename, "The entry MUST be a mapping");
-                }
+                YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), loadedYaml, filename, "The entry MUST be a mapping");
 
                 KeyValuePair<YamlNode, YamlNode> entry = YamlUtils.GetExactlyOneNodeTuple((YamlMappingNode)configEntry, filename);
                 YamlMappingNode actualEntry = YamlUtils.GetValueAsMappingNode(entry, filename);
