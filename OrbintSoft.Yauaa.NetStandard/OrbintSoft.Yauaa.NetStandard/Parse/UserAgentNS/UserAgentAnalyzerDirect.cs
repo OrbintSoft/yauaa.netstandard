@@ -533,10 +533,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
             }
 
-            if (name == null && map == null)
-            {
-                YamlUtils.Fail(entry, filename, "Invalid lookup specified");
-            }
+            YamlUtils.Require(name != null && map != null, entry, filename, "Invalid lookup specified");
 
             lookups[name] = map;
         }
@@ -652,10 +649,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     }
                 }
 
-                if (input == null)
-                {
-                    YamlUtils.Fail(entry, filename, "Test is missing input");
-                }
+                YamlUtils.Require(input != null, entry, filename, "Test is missing input");
 
                 if (expected == null || expected.Count == 0)
                 {
