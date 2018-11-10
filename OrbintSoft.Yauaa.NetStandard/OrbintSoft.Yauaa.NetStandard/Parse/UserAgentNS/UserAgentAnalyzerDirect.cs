@@ -1019,7 +1019,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return null;
         }
 
-        private void ConcatFieldValuesNONDuplicated(UserAgent userAgent, string targetName, string firstName, string secondName)
+        internal void ConcatFieldValuesNONDuplicated(UserAgent userAgent, string targetName, string firstName, string secondName)
         {
             if (!IsWantedField(targetName))
             {
