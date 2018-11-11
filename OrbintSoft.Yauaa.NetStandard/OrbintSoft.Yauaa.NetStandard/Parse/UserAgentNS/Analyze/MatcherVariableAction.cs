@@ -11,7 +11,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -28,18 +28,20 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
     [Serializable]
     public class MatcherVariableAction :MatcherAction
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(MatcherVariableAction));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly string variableName;
-        private WalkList.WalkResult foundValue = null;
         private readonly string expression;
-        private ISet<MatcherAction> interestedActions;
+
+        private WalkList.WalkResult foundValue = null;       
+        private ISet<MatcherAction> interestedActions = null;
 
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
@@ -90,13 +92,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                     {
                         action.Inform(variableName, newlyFoundValue.GetValue(), newlyFoundValue.GetTree());
                     }
-                }
-            }
-            else
-            {
-                if (verbose)
-                {
-                    LOG.Info((string.Format("IGNORE: VARIABLE ({0}): {1}", variableName, key)));
                 }
             }
         }
