@@ -33,7 +33,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
     [Serializable]
     public class MatcherRequireAction : MatcherAction
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(MatcherRequireAction));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public MatcherRequireAction(string config, Matcher matcher)
         {
@@ -58,9 +58,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             foundRequiredValue = true;
             if (verbose)
             {
-                LOG.Info(string.Format("Info REQUIRE: {0}", key));
-                LOG.Info(string.Format("NEED REQUIRE: {0}", GetMatchExpression()));
-                LOG.Info(string.Format("KEPT REQUIRE: {0}", key));
+                Log.Info(string.Format("Info REQUIRE: {0}", key));
+                Log.Info(string.Format("NEED REQUIRE: {0}", GetMatchExpression()));
+                Log.Info(string.Format("KEPT REQUIRE: {0}", key));
             }
         }
 
