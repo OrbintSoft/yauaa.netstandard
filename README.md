@@ -35,7 +35,7 @@ However you can consider the code of 5.2-beta.2 stable even if not perfect.
 
 **5.3-alpha.1**
 
-All code has been upgrated to target 5.3 Java version, but the library is not yet covered by unit testings, so I can't tell if stable, but all tests with all predefiniote browsers works correctly. 
+All code has been upgrated to target 5.3 Java version, but the library is not yet fully covered by unit testings, so I can't tell if stable, but all tests with common predefinite browsers works correctly. 
 
 Example output
 ==============
