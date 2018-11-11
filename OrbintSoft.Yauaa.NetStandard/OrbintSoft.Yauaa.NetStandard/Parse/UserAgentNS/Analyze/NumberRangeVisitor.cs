@@ -31,30 +31,32 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
     public sealed class NumberRangeVisitor: UserAgentTreeWalkerBaseVisitor<NumberRangeList>
     {
-        private static readonly int DEFAULT_MIN = 1;
-        private static readonly int DEFAULT_MAX = 10;
+        private const int DEFAULT_MIN = 1;
+        private const int DEFAULT_MAX = 10;
 
-        private static readonly Dictionary<string, int> MAX_RANGE = new Dictionary<string, int>();
+        internal static readonly NumberRangeVisitor Instance = new NumberRangeVisitor();
+
+        private static readonly Dictionary<string, int> MaxRange = new Dictionary<string, int>();
 
         static NumberRangeVisitor() {
             // Hardcoded maximum values because of the parsing rules
-            MAX_RANGE["agent"] = 1;
-            MAX_RANGE["name"] = 1;
-            MAX_RANGE["key"] = 1;
+            MaxRange["agent"] = 1;
+            MaxRange["name"] = 1;
+            MaxRange["key"] = 1;
 
             // Did statistics on over 200K real useragents from 2015.
             // These are the maximum values from that test set (+ a little margin)
-            MAX_RANGE["value"] = 2; // Max was 2
-            MAX_RANGE["version"] = 5; // Max was 4
-            MAX_RANGE["comments"] = 2; // Max was 2
-            MAX_RANGE["entry"] = 20; // Max was much higher
-            MAX_RANGE["product"] = 10; // Max was much higher
+            MaxRange["value"] = 2; // Max was 2
+            MaxRange["version"] = 5; // Max was 4
+            MaxRange["comments"] = 2; // Max was 2
+            MaxRange["entry"] = 20; // Max was much higher
+            MaxRange["product"] = 10; // Max was much higher
 
-            MAX_RANGE["email"] = 2;
-            MAX_RANGE["keyvalue"] = 3;
-            MAX_RANGE["text"] = 8;
-            MAX_RANGE["url"] = 3;
-            MAX_RANGE["uuid"] = 4;
+            MaxRange["email"] = 2;
+            MaxRange["keyvalue"] = 3;
+            MaxRange["text"] = 8;
+            MaxRange["url"] = 3;
+            MaxRange["uuid"] = 4;
         }
 
         private NumberRangeVisitor()
@@ -69,19 +71,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             //    return DEFAULT_MAX;
             //}
             string name = ((UserAgentTreeWalkerParser.StepDownContext)parent).name.Text;
-            int? maxRange = MAX_RANGE.ContainsKey(name) ? (int?) MAX_RANGE[name] : null;
+            int? maxRange = MaxRange.ContainsKey(name) ? (int?) MaxRange[name] : null;
             if (maxRange == null)
             {
                 return DEFAULT_MAX;
             }
             return maxRange ?? 0;
         }
-
-        internal static readonly NumberRangeVisitor NUMBER_RANGE_VISITOR = new NumberRangeVisitor();
-
+       
         public static NumberRangeList GetList(UserAgentTreeWalkerParser.NumberRangeContext ctx)
         {
-            return NUMBER_RANGE_VISITOR.Visit(ctx);
+            return Instance.Visit(ctx);
         }
 
         public override NumberRangeList VisitNumberRangeStartToEnd([NotNull] UserAgentTreeWalkerParser.NumberRangeStartToEndContext context)

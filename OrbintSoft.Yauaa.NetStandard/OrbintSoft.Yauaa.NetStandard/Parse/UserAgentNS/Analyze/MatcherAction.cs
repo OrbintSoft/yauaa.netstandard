@@ -332,7 +332,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepDownContext tree)
         {
             int informs = 0;
-            foreach (int? number in NumberRangeVisitor.NUMBER_RANGE_VISITOR.Visit(tree.numberRange()))
+            foreach (int? number in NumberRangeVisitor.Instance.Visit(tree.numberRange()))
             {
                 informs += CalculateInformPath(treeName + '.' + "(" + number + ")" + tree.name.Text, tree.nextStep);
             }

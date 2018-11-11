@@ -70,8 +70,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             if (verbose)
             {
-                LOG.Info(string.Format("INFO  : VARIABLE ({0}): {1}", variableName, key));
-                LOG.Info(string.Format("NEED  : VARIABLE ({0}): {1}", variableName, GetMatchExpression()));
+                Log.Info(string.Format("INFO  : VARIABLE ({0}): {1}", variableName, key));
+                Log.Info(string.Format("NEED  : VARIABLE ({0}): {1}", variableName, GetMatchExpression()));
             }
             /*
              * We know the tree is parsed from left to right.
@@ -83,7 +83,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 foundValue = newlyFoundValue;
                 if (verbose)
                 {
-                    LOG.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", variableName, key));
+                    Log.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", variableName, key));
                 }
 
                 if (interestedActions != null && interestedActions.Count != 0)
