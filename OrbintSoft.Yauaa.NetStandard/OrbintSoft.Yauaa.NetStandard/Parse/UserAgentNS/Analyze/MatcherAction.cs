@@ -134,11 +134,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             //        parser.setTrace(true);
             ParserRuleContext requiredPattern = ParseWalkerExpression(parser);
 
-            if (requiredPattern == null)
-            {
-                throw new InvalidParserConfigurationException("NO pattern ?!?!?");
-            }
-
             // We couldn't ditch the double quotes around the fixed values in the parsing phase.
             // So we ditch them here. We simply walk the tree and modify some of the tokens.
             new UnQuoteValues().Visit(requiredPattern);
