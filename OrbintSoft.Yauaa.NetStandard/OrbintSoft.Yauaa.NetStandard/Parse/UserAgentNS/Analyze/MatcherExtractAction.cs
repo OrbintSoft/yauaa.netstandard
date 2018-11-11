@@ -99,13 +99,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                     LOG.Info(string.Format("KEPT  : EXTRACT ({0}): {1}", attribute, key));
                 }
             }
-            else
-            {
-                if (verbose)
-                {
-                    LOG.Info(string.Format("IGNORE: EXTRACT ({0}): {1}", attribute, key));
-                }
-            }
         }
 
         public override bool ObtainResult()
