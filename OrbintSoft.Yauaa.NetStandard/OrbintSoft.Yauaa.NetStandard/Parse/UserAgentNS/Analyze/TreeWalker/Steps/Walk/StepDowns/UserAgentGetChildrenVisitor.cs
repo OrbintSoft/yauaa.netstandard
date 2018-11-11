@@ -34,10 +34,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
 {
     [Serializable]
     public class UserAgentGetChildrenVisitor: UserAgentBaseVisitor<IEnumerator<ParserRuleContext>>, ISerializable
-    { 
+    {
+        private static readonly IEnumerator<ParserRuleContext> Empty = null;
+
         private readonly string name;
         private readonly int start;
         private readonly int end;
+
         private ChildIterable childIterable;
 
         public UserAgentGetChildrenVisitor(SerializationInfo info, StreamingContext context)
@@ -148,16 +151,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                     childIterable = new ChildIterable(false, start, end, clazz => (false));
                     break;
             }
-        }
-
-
-        private static readonly IEnumerator<ParserRuleContext> EMPTY = null;
+        }       
 
         protected override IEnumerator<ParserRuleContext> DefaultResult
         {
             get
             {
-                return EMPTY;
+                return Empty;
             }            
         }
 
@@ -275,8 +275,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             info.AddValue("name", name, typeof(string));
             info.AddValue("start", start, typeof(int));
             info.AddValue("end", end, typeof(int));
-        }
-
-        
+        }        
     }
 }
