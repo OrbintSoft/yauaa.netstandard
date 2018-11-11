@@ -32,44 +32,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
     [Serializable]
     public sealed class MatchesList: ICollection<MatchesList.Match>
     {
-        [Serializable]
-        public class Match
-        {
-            private string key;
-            private string value;
-            private IParseTree result;
+        private const int CAPACITY_INCREASE = 3;
 
-            public Match(string key, string value, IParseTree result)
-            {
-                Fill(key, value, result);
-            }
+        private int maxSize = 0;
+        private Match[] allElements = null;
 
-            public void Fill(string nKey, string nValue, IParseTree nResult)
-            {
-                key = nKey;
-                value = nValue;
-                result = nResult;
-            }
-
-            public string GetKey()
-            {
-                return key;
-            }
-
-            public string GetValue()
-            {
-                return value;
-            }
-
-            public IParseTree GetResult()
-            {
-                return result;
-            }
-        }
-
-        private int maxSize;
-
-        private Match[] allElements;
 
         public MatchesList(int newMaxSize)
         {
@@ -106,45 +73,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return true;
         }
 
-        public class MatchEnumerator : IEnumerator<Match>
-        {
-            private int offset = -1;
-            private readonly int count = 0;
-
-            private readonly Match[] matches;
-
-            public Match Current => matches[offset];
-
-            object IEnumerator.Current => matches[offset];
-
-            public MatchEnumerator(Match[] matches, int count)
-            {
-                this.matches = matches;
-                this.count = count;
-            }
-
-            public void Dispose()
-            {
-            }
-
-            public bool MoveNext()
-            {
-                if (offset < count - 1)
-                {
-                    offset++;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-
-            public void Reset()
-            {
-                offset = -1;
-            }
-        }
+        
 
         public IEnumerator<Match> GetEnumerator()
         {
@@ -156,7 +85,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return new MatchEnumerator(allElements, Count);
         }
 
-        private static readonly int CAPACITY_INCREASE = 3;
+        
 
         private void IncreaseCapacity()
         {
@@ -192,17 +121,92 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         public void Add(Match item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool Contains(Match item)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool Remove(Match item)
         {
-            throw new System.NotImplementedException();
-        }  
+            throw new NotImplementedException();
+        }
+
+        public class MatchEnumerator : IEnumerator<Match>
+        {
+            private readonly int count = 0;
+            private readonly Match[] matches;
+
+            private int offset = -1;
+            
+            public Match Current => matches[offset];
+
+            object IEnumerator.Current => matches[offset];
+
+            public MatchEnumerator(Match[] matches, int count)
+            {
+                this.matches = matches;
+                this.count = count;
+            }
+
+            public void Dispose()
+            {
+            }
+
+            public bool MoveNext()
+            {
+                if (offset < count - 1)
+                {
+                    offset++;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public void Reset()
+            {
+                offset = -1;
+            }
+        }
+
+        [Serializable]
+        public class Match
+        {
+            private string key = null;
+            private string value = null;
+            private IParseTree result = null;
+
+            public Match(string key, string value, IParseTree result)
+            {
+                Fill(key, value, result);
+            }
+
+            public void Fill(string nKey, string nValue, IParseTree nResult)
+            {
+                key = nKey;
+                value = nValue;
+                result = nResult;
+            }
+
+            public string GetKey()
+            {
+                return key;
+            }
+
+            public string GetValue()
+            {
+                return value;
+            }
+
+            public IParseTree GetResult()
+            {
+                return result;
+            }
+        }
     }
 }
