@@ -30,12 +30,14 @@ using System.Web;
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 {
     public sealed class EvilManualUseragentStringHacks
-    {
-        private EvilManualUseragentStringHacks() { }
+    {       
+        private static readonly Regex MissingProductAtStart = new Regex("^\\(( |;|null|compatible|windows|android|linux).*", RegexOptions.IgnoreCase);
+        private static readonly Regex MissingSpace = new Regex("(/[0-9]+\\.[0-9]+)([A-Z][a-z][a-z][a-z]+ )");
+        private static readonly Regex MultipleSpaces = new Regex("(?: {2,})");
 
-        private static readonly Regex MISSING_PRODUCT_AT_START = new Regex("^\\(( |;|null|compatible|windows|android|linux).*", RegexOptions.IgnoreCase);
-        private static readonly Regex MISSING_SPACE = new Regex("(/[0-9]+\\.[0-9]+)([A-Z][a-z][a-z][a-z]+ )");
-        private static readonly Regex MULTIPLE_SPACES = new Regex("(?: {2,})");
+        private EvilManualUseragentStringHacks()
+        {
+        }
 
         /// <summary>
         /// There are a few situations where in order to parse the useragent we need to 'fix it'.
@@ -51,7 +53,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             }
             string result = useragent;
 
-            result = MULTIPLE_SPACES.Replace(result, " ");
+            result = MultipleSpaces.Replace(result, " ");
 
             if (result[0] == ' ')
             {
@@ -59,7 +61,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             }
 
             // We have seen problems causes by " Version/4.0Mobile Safari/530.17"
-            result = MISSING_SPACE.Replace(result, "$1 $2");
+            result = MissingSpace.Replace(result, "$1 $2");
 
             // This one is a single useragent that hold significant traffic
             result = ReplaceString(result, " (Macintosh); ", " (Macintosh; ");
@@ -75,7 +77,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             result = ReplaceString(result, "; /", "; Unknown/");
             
             // Repair certain cases of broken useragents (like we see for the Facebook app a lot)
-            if (MISSING_PRODUCT_AT_START.IsMatch(result))
+            if (MissingProductAtStart.IsMatch(result))
             {
                 // We simply prefix a fake product name to continue parsing.
                 result = "Mozilla/5.0 " + result;
@@ -139,7 +141,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             result.Append(input.Substring(startIdx));
             return result.ToString();
         }
-
-
     }
 }
