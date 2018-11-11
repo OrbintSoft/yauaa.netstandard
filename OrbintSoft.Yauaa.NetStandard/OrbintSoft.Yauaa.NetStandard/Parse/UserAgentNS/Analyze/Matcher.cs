@@ -212,11 +212,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return lookupSets;
         }
 
-        
-
-        
-
-
         public void Initialize()
         {
             try
