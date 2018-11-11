@@ -39,16 +39,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             this.outputStream = outputStream;
         }
 
-        public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
-        {
-            return new HashSet<WordRangeVisitor.Range>();
-        }
-
-        public ISet<int?> GetRequiredPrefixLengths(string treeName)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Inform(string path, string value, IParseTree ctx)
         {
             outputStream.WriteLine(path);
@@ -56,17 +46,34 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
         public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
-           
-        }
 
-        public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
-        {
-            
         }
 
         public void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
-           
+            // Never called
         }
+
+        public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
+        {
+            // Never called
+            return new HashSet<WordRangeVisitor.Range>();
+        }
+
+        public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
+        {
+            // Never called
+        }
+
+        public ISet<int?> GetRequiredPrefixLengths(string treeName)
+        {
+            // Never called
+            return new HashSet<int?>();
+        }
+
+        
+
+
+
     }
 }
