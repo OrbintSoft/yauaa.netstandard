@@ -11,7 +11,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -31,62 +31,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
     [Serializable]
     public sealed class WordRangeVisitor: UserAgentTreeWalkerBaseVisitor<WordRangeVisitor.Range>
     {
-        [Serializable]
-        public class Range
-        {
-            public Range(int first, int last)
-            {
-                this.first = first;
-                this.last = last;
-            }
-
-            public int GetFirst()
-            {
-                return first;
-            }
-
-            public int GetLast()
-            {
-                return last;
-            }
-
-            private readonly int first;
-            private readonly int last;
-
-            private string rangeString = null;
-
-            public override string ToString()
-            {
-                if (rangeString == null)
-                {
-                    if (last == -1)
-                    {
-                        rangeString = "[" + first + "-]";
-                    }
-                    else
-                    {
-                        rangeString = "[" + first + "-" + last + "]";
-                    }
-                }
-                return rangeString;
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (!(obj is Range)) {
-                    return false;
-                }
-                Range range = (Range)obj;
-                return first == range.first && last == range.last;
-            }
-
-            public override int GetHashCode()
-            {
-                return ValueTuple.Create(first, last).GetHashCode();
-            }
-        }
-
-        private static readonly WordRangeVisitor WORD_RANGE_VISITOR = new WordRangeVisitor();
+        private static readonly WordRangeVisitor Instance = new WordRangeVisitor();
 
         private WordRangeVisitor()
         {
@@ -94,7 +39,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         public static Range GetRange(UserAgentTreeWalkerParser.WordRangeContext ctx)
         {
-            return WORD_RANGE_VISITOR.Visit(ctx);
+            return Instance.Visit(ctx);
         }
 
         public override Range VisitWordRangeStartToEnd([NotNull] UserAgentTreeWalkerParser.WordRangeStartToEndContext context)
@@ -116,6 +61,62 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             int wordNumber = int.Parse(context.singleWord.Text);
             return new Range(wordNumber, wordNumber);
+        }
+
+        [Serializable]
+        public class Range
+        {
+            private readonly int first;
+            private readonly int last;
+
+            private string rangeString = null;
+
+            public Range(int first, int last)
+            {
+                this.first = first;
+                this.last = last;
+            }
+
+            public int GetFirst()
+            {
+                return first;
+            }
+
+            public int GetLast()
+            {
+                return last;
+            }
+
+            public override string ToString()
+            {
+                if (rangeString == null)
+                {
+                    if (last == -1)
+                    {
+                        rangeString = "[" + first + "-]";
+                    }
+                    else
+                    {
+                        rangeString = "[" + first + "-" + last + "]";
+                    }
+                }
+                return rangeString;
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (!(obj is Range))
+                {
+                    return false;
+                }
+                Range range = (Range)obj;
+                return first == range.first && last == range.last;
+            }
+
+            public override int GetHashCode()
+            {
+                return ValueTuple.Create(first, last).GetHashCode();
+            }
         }
     }
 }
