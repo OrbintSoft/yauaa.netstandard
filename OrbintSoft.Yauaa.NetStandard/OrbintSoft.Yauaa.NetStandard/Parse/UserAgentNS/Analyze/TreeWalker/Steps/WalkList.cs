@@ -1,4 +1,28 @@
-﻿using Antlr4.Runtime;
+﻿/*
+ * Yet Another UserAgent Analyzer .NET Standard
+ * Porting realized by Balzarotti Stefano, Copyright (C) OrbintSoft
+ * 
+ * Original Author and License:
+ * 
+ * Yet Another UserAgent Analyzer
+ * Copyright (C) 2013-2018 Niels Basjes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * All rights should be reserved to the original author Niels Basjes
+ */
+
+using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using log4net;
@@ -9,6 +33,7 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
@@ -20,48 +45,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
     [Serializable]
     public class WalkList
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(WalkList));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly Dictionary<string, Dictionary<string, string>> lookups;
         private readonly Dictionary<string, HashSet<string>> lookupSets;
         private readonly List<Step> steps = new List<Step>();
-
         private readonly bool verbose;
 
-        [Serializable]
-        public sealed class WalkResult
-        {
-            private readonly IParseTree tree;
-            private readonly string value;
-
-            public WalkResult(IParseTree tree, string value)
-            {
-                this.tree = tree;
-                this.value = value;
-                //            if (value == null || tree == null ) {
-                //                throw new IllegalStateException("An invalid WalkResult was created :" + this.toString());
-                //            }
-            }
-
-            public IParseTree GetTree()
-            {
-                return tree;
-            }
-
-            public string GetValue()
-            {
-                return value;
-            }
-
-
-            public override string ToString()
-            {
-                return "WalkResult{" +
-                    "tree=" + (tree == null ? ">>>NULL<<<" : tree.GetText()) +
-                    ", value=" + (value == null ? ">>>NULL<<<" : '\'' + value + '\'') +
-                    '}';
-            }
-        }
+        private bool? usesIsNull = null;
 
         public WalkList(ParserRuleContext requiredPattern, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets, bool verbose)
         {
@@ -75,53 +66,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             int i = 1;
             if (verbose)
             {
-                LOG.Info("------------------------------------");
-                LOG.Info("Required: " + requiredPattern.GetText());
+                Log.Info("------------------------------------");
+                Log.Info("Required: " + requiredPattern.GetText());
                 foreach (Step step in steps)
                 {
                     step.SetVerbose(true);
-                    LOG.Info(string.Format("{0}: {1}", i++, step));
+                    Log.Info(string.Format("{0}: {1}", i++, step));
                 }
             }
         }
-
-        private void LinkSteps()
-        {
-            Step nextStep = null;
-            for (int i = steps.Count - 1; i >= 0; i--)
-            {
-                Step current = steps[i];
-                current.SetNextStep(i, nextStep);
-                nextStep = current;
-            }
-        }
-
-        public WalkResult Walk(IParseTree tree, String value)
-        {
-            if (steps.Count == 0)
-            {
-                return new WalkResult(tree, value);
-            }
-            Step firstStep = steps[0];
-            if (verbose)
-            {
-                Step.LOG.Info(string.Format("Tree: >>>{0}<<<", tree.GetText()));
-                Step.LOG.Info(string.Format("Enter step: {0}", firstStep));
-            }
-            WalkResult result = firstStep.Walk(tree, value);
-            if (verbose)
-            {
-                Step.LOG.Info(string.Format("Leave step ({0}): {1}", result == null ? "-" : "+", firstStep));
-            }
-            return result;
-        }
-
-        public Step GetFirstStep()
-        {
-            return steps == null || steps.Count == 0 ? null : steps[0];
-        }
-
-        private bool? usesIsNull = null;
 
         public bool UsesIsNull
         {
@@ -146,6 +99,42 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 return false;
             }
         }
+
+        private void LinkSteps()
+        {
+            Step nextStep = null;
+            for (int i = steps.Count - 1; i >= 0; i--)
+            {
+                Step current = steps[i];
+                current.SetNextStep(i, nextStep);
+                nextStep = current;
+            }
+        }
+
+        public WalkResult Walk(IParseTree tree, string value)
+        {
+            if (steps.Count == 0)
+            {
+                return new WalkResult(tree, value);
+            }
+            Step firstStep = steps[0];
+            if (verbose)
+            {
+                Step.Log.Info(string.Format("Tree: >>>{0}<<<", tree.GetText()));
+                Step.Log.Info(string.Format("Enter step: {0}", firstStep));
+            }
+            WalkResult result = firstStep.Walk(tree, value);
+            if (verbose)
+            {
+                Step.Log.Info(string.Format("Leave step ({0}): {1}", result == null ? "-" : "+", firstStep));
+            }
+            return result;
+        }
+
+        public Step GetFirstStep()
+        {
+            return steps == null || steps.Count == 0 ? null : steps[0];
+        }             
 
         public override string ToString()
         {
@@ -469,6 +458,41 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 Add(new StepBackToFull());
                 VisitNext(context.nextStep);
                 return null; // Void
+            }
+        }
+
+        [Serializable]
+        public sealed class WalkResult
+        {
+            private readonly IParseTree tree;
+            private readonly string value;
+
+            public WalkResult(IParseTree tree, string value)
+            {
+                this.tree = tree;
+                this.value = value;
+                //            if (value == null || tree == null ) {
+                //                throw new IllegalStateException("An invalid WalkResult was created :" + this.toString());
+                //            }
+            }
+
+            public IParseTree GetTree()
+            {
+                return tree;
+            }
+
+            public string GetValue()
+            {
+                return value;
+            }
+
+
+            public override string ToString()
+            {
+                return "WalkResult{" +
+                    "tree=" + (tree == null ? ">>>NULL<<<" : tree.GetText()) +
+                    ", value=" + (value == null ? ">>>NULL<<<" : '\'' + value + '\'') +
+                    '}';
             }
         }
     }
