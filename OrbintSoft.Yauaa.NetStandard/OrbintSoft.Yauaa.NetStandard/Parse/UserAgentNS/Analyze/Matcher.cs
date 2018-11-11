@@ -26,9 +26,9 @@ using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using YamlDotNet.RepresentationModel;
-using System.Linq;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
@@ -38,16 +38,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private static readonly ILog LOG = LogManager.GetLogger(typeof(Matcher));
 
         private readonly IAnalyzer analyzer;
-        private readonly List<MatcherVariableAction> variableActions;
-        private List<MatcherAction> dynamicActions;
+        private readonly List<MatcherVariableAction> variableActions;        
         private readonly List<MatcherAction> fixedStringActions;
-
         private readonly UserAgent newValuesUserAgent = new UserAgent();
-
-        private long actionsThatRequireInput;
         private readonly Dictionary<string, Dictionary<string, string>> lookups;
         private readonly Dictionary<string, HashSet<string>> lookupSets;
+        // Used for error reporting: The filename and line number where the config was located.
+        private readonly string matcherSourceLocation;
 
+        private long actionsThatRequireInput;
+        private List<MatcherAction> dynamicActions;
 #if VERBOSE
         private bool verbose = true;
         private readonly bool permanentVerbose = true;
@@ -55,53 +55,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private bool verbose = false;
         private readonly bool permanentVerbose = false;
 #endif
-
-
-        // Used for error reporting: The filename and line number where the config was located.
-        private readonly string matcherSourceLocation;
-
-        // Package private constructor for testing purposes only
-        internal Matcher(IAnalyzer analyzer, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets)
-        {
-            this.lookups = lookups;
-            this.lookupSets = lookupSets;
-            this.analyzer = analyzer;
-            fixedStringActions = new List<MatcherAction>();
-            variableActions = new List<MatcherVariableAction>();
-            dynamicActions = new List<MatcherAction>();
-        }
-
-        public Dictionary<string, Dictionary<string, string>> GetLookups()
-        {
-            return lookups;
-        }
-
-        public Dictionary<string, HashSet<string>> GetLookupSets()
-        {
-            return lookupSets;
-        }
-
-        internal class ConfigLine
-        {
-            public enum Type
-            {
-                VARIABLE = 2,
-                REQUIRE = 1,
-                EXTRACT = 0
-            }
-            public readonly Type type;
-            public readonly string attribute;
-            public readonly long? confidence;
-            public readonly string expression;
-
-            public ConfigLine(Type type, string attribute, long? confidence, string expression)
-            {
-                this.type = type;
-                this.attribute = attribute;
-                this.confidence = confidence;
-                this.expression = expression;
-            }
-        }
 
         public Matcher(IAnalyzer analyzer, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets, List<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
@@ -123,37 +76,44 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             bool hasDefinedExtractConfigs = false;
 
             // List of 'attribute', 'confidence', 'expression'
-            List<ConfigLine> configLines = new List<ConfigLine>(16);           
-            foreach (KeyValuePair<YamlNode,YamlNode> nodeTuple in matcherConfig) {
+            List<ConfigLine> configLines = new List<ConfigLine>(16);
+            foreach (KeyValuePair<YamlNode, YamlNode> nodeTuple in matcherConfig)
+            {
                 string name = YamlUtils.GetKeyAsString(nodeTuple, matcherSourceLocation);
-                switch (name) {
+                switch (name)
+                {
                     case "options":
                         List<string> options = YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation);
-                        verbose = options.Contains("verbose");                        
+                        verbose = options.Contains("verbose");
                         break;
                     case "variable":
-                        foreach (string variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation)) {
+                        foreach (string variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation))
+                        {
                             string[] configParts = variableConfig.Split(new Char[] { ':' }, 2);
 
-                            if (configParts.Length != 2) {
+                            if (configParts.Length != 2)
+                            {
                                 throw new InvalidParserConfigurationException("Invalid variable config line: " + variableConfig);
-                        }
-                        string variableName = configParts[0].Trim();
-                        string config = configParts[1].Trim();
+                            }
+                            string variableName = configParts[0].Trim();
+                            string config = configParts[1].Trim();
 
-                        configLines.Add(new ConfigLine(ConfigLine.Type.VARIABLE, variableName, null, config));
+                            configLines.Add(new ConfigLine(ConfigLine.Type.VARIABLE, variableName, null, config));
                         }
                         break;
                     case "require":
-                        foreach (string requireConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation)) {
+                        foreach (string requireConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation))
+                        {
                             configLines.Add(new ConfigLine(ConfigLine.Type.REQUIRE, null, null, requireConfig));
                         }
                         break;
                     case "extract":
-                        foreach (string extractConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation)) {
+                        foreach (string extractConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation))
+                        {
                             string[] configParts = extractConfig.Split(new char[] { ':' }, 3);
 
-                            if (configParts.Length != 3) {
+                            if (configParts.Length != 3)
+                            {
                                 throw new InvalidParserConfigurationException("Invalid extract config line: " + extractConfig);
                             }
                             string attribute = configParts[0].Trim();
@@ -165,10 +125,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                             string config = configParts[2].Trim();
                             hasDefinedExtractConfigs = true;
                             // If we have a restriction on the wanted fields we check if this one is needed at all
-                            if (wantedFieldNames == null || wantedFieldNames.Contains(attribute)) {
+                            if (wantedFieldNames == null || wantedFieldNames.Contains(attribute))
+                            {
                                 configLines.Add(new ConfigLine(ConfigLine.Type.EXTRACT, attribute, confidence, config));
                                 hasActiveExtractConfigs = true;
-                            } else {
+                            }
+                            else
+                            {
                                 configLines.Add(new ConfigLine(ConfigLine.Type.REQUIRE, null, null, config));
                             }
                         }
@@ -182,26 +145,32 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             permanentVerbose = verbose;
 
-            if (verbose) {
+            if (verbose)
+            {
                 LOG.Info("---------------------------");
                 LOG.Info("- MATCHER -");
             }
 
-            if (!hasDefinedExtractConfigs) {
+            if (!hasDefinedExtractConfigs)
+            {
                 throw new InvalidParserConfigurationException("Matcher does not extract anything");
             }
 
-            if (!hasActiveExtractConfigs) {
+            if (!hasActiveExtractConfigs)
+            {
                 throw new UselessMatcherException("Does not extract any wanted fields");
             }
 #if VERBOSE
             configLines = configLines.OrderBy(c => c.type).ThenBy(n => n.attribute, StringComparer.Ordinal).ThenBy(n => n?.expression, StringComparer.Ordinal).ToList();
 #endif
-            foreach (ConfigLine configLine in configLines) {
-                if (verbose) {
+            foreach (ConfigLine configLine in configLines)
+            {
+                if (verbose)
+                {
                     LOG.Info(string.Format("{0}: {1}", configLine.type, configLine.expression));
                 }
-                switch (configLine.type) {
+                switch (configLine.type)
+                {
                     case ConfigLine.Type.VARIABLE:
                         variableActions.Add(new MatcherVariableAction(configLine.attribute, configLine.expression, this));
                         break;
@@ -221,6 +190,31 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 }
             }
         }
+
+        // Internal private constructor for testing purposes only
+        internal Matcher(IAnalyzer analyzer, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets)
+        {
+            this.lookups = lookups;
+            this.lookupSets = lookupSets;
+            this.analyzer = analyzer;
+            fixedStringActions = new List<MatcherAction>();
+            variableActions = new List<MatcherVariableAction>();
+            dynamicActions = new List<MatcherAction>();
+        }
+
+        public Dictionary<string, Dictionary<string, string>> GetLookups()
+        {
+            return lookups;
+        }
+
+        public Dictionary<string, HashSet<string>> GetLookupSets()
+        {
+            return lookupSets;
+        }
+
+        
+
+        
 
 
         public void Initialize()
@@ -525,6 +519,28 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 sb.Append("        ").Append(action.ToString()).Append('\n');
             }
             return sb.ToString();
+        }
+
+        internal class ConfigLine
+        {
+            public enum Type
+            {
+                VARIABLE = 2,
+                REQUIRE = 1,
+                EXTRACT = 0
+            }
+            public readonly Type type;
+            public readonly string attribute;
+            public readonly long? confidence;
+            public readonly string expression;
+
+            public ConfigLine(Type type, string attribute, long? confidence, string expression)
+            {
+                this.type = type;
+                this.attribute = attribute;
+                this.confidence = confidence;
+                this.expression = expression;
+            }
         }
     }
 }
