@@ -26,13 +26,14 @@ using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 {
     public class DebugUserAgent: UserAgent
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(DebugUserAgent));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         internal readonly List<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
 
@@ -113,13 +114,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                             {
                                 if (passed)
                                 {
-                                    LOG.Error("***********************************************************");
-                                    LOG.Error("***        REALLY IMPORTANT ERRORS IN THE RULESET       ***");
-                                    LOG.Error("*** YOU MUST CHANGE THE CONFIDENCE LEVELS OF YOUR RULES ***");
-                                    LOG.Error("***********************************************************");
+                                    Log.Error("***********************************************************");
+                                    Log.Error("***        REALLY IMPORTANT ERRORS IN THE RULESET       ***");
+                                    Log.Error("*** YOU MUST CHANGE THE CONFIDENCE LEVELS OF YOUR RULES ***");
+                                    Log.Error("***********************************************************");
                                 }
                                 passed = false;
-                                LOG.Error(string.Format("Found different value for \"{0}\" with SAME confidence {1}: \"{2}\" and \"{3}\"",
+                                Log.Error(string.Format("Found different value for \"{0}\" with SAME confidence {1}: \"{2}\" and \"{3}\"",
                                     fieldName, partialField.GetConfidence(), previousValue, partialField.GetValue()));
                             }
                         }
