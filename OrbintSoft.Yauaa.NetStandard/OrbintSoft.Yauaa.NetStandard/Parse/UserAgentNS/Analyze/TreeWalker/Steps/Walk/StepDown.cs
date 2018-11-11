@@ -40,6 +40,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         private readonly string name;
         private UserAgentGetChildrenVisitor userAgentGetChildrenVisitor;
 
+        public StepDown(UserAgentTreeWalkerParser.NumberRangeContext numberRange, string name) : this(NumberRangeVisitor.GetList(numberRange), name)
+        {
+
+        }
+
+        private StepDown(NumberRangeList numberRange, string name)
+        {
+            this.name = name;
+            start = numberRange.GetStart();
+            end = numberRange.GetEnd();
+            SetDefaultFieldValues();
+        }
+
         /// <summary>
         /// Initialize the transient default values
         /// </summary>
@@ -51,20 +64,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         private void ReadObject(Stream stream)
         {
             SetDefaultFieldValues();
-        }
-
-        public StepDown(UserAgentTreeWalkerParser.NumberRangeContext numberRange, string name): this(NumberRangeVisitor.GetList(numberRange), name)
-        {
-            
-        }
-
-        private StepDown(NumberRangeList numberRange, string name)
-        {
-            this.name = name;
-            start = numberRange.GetStart();
-            end = numberRange.GetEnd();
-            SetDefaultFieldValues();
-        }
+        }        
 
         public override string ToString()
         {
