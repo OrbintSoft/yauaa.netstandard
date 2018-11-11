@@ -34,7 +34,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         private EvilManualUseragentStringHacks() { }
 
         private static readonly Regex MISSING_PRODUCT_AT_START = new Regex("^\\(( |;|null|compatible|windows|android|linux).*", RegexOptions.IgnoreCase);
-        private static readonly Regex MISSING_SPACE = new Regex("(/[0-9]+\\.[0-9]+)([A-Z][a-z][a-z][a-z]+ )", RegexOptions.IgnoreCase);
+        private static readonly Regex MISSING_SPACE = new Regex("(/[0-9]+\\.[0-9]+)([A-Z][a-z][a-z][a-z]+ )");
+        private static readonly Regex MULTIPLE_SPACES = new Regex("(?: {2,})");
 
         /// <summary>
         /// There are a few situations where in order to parse the useragent we need to 'fix it'.
@@ -49,6 +50,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
                 return useragent;
             }
             string result = useragent;
+
+            result = MULTIPLE_SPACES.Replace(result, " ");
 
             if (result[0] == ' ')
             {
