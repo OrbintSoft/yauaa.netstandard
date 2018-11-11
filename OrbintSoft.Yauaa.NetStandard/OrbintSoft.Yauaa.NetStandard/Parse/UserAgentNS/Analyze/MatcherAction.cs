@@ -307,10 +307,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             if (tree is UserAgentTreeWalkerParser.MatcherRequireContext) {
                 return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherRequireContext) tree));
              }
-            if (tree is UserAgentTreeWalkerParser.MatcherContext) {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherContext) tree));
-            }
-            return 0;
+            //if (tree is UserAgentTreeWalkerParser.MatcherContext) {
+            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherContext) tree));
+            // Should never get here: The antlr definitions only allow one of the above options.
+            //}
+            //return 0;
         }
 
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherRequireContext tree)
@@ -318,11 +319,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             if (tree is UserAgentTreeWalkerParser.MatcherBaseContext) {
                 return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext)tree).matcher());
             }
-            if (tree is UserAgentTreeWalkerParser.MatcherPathIsNullContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext)tree).matcher());
-            }
-            return 0;
+            //if (tree is UserAgentTreeWalkerParser.MatcherPathIsNullContext)
+            //{
+            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext)tree).matcher());
+            // Should never get here: The antlr definitions only allow one of the above options.
+            //}
+            //return 0;
         }
 
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherContext tree)
@@ -354,25 +356,26 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext)tree).matcher());
             }
-            if (tree is UserAgentTreeWalkerParser.MatcherConcatPostfixContext)
-            {
+            //if (tree is UserAgentTreeWalkerParser.MatcherConcatPostfixContext)
+            //{
                 return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext)tree).matcher());
-            }
-            return 0;
+            //}
+            //return 0;
         }
 
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.BasePathContext tree)
         {
-            // Useless to register a fixed value
-            //             case "PathFixedValueContext"         : calculateInformPath(treeName, (PathFixedValueContext)         tree); break;
+            // The tree can theoretically be an instance of PathFixedValueContext.
+            // These cases are handled in a different way so they cannot occur here.
             if (tree is UserAgentTreeWalkerParser.PathVariableContext) {
                 matcher.InformMeAboutVariable(this, ((UserAgentTreeWalkerParser.PathVariableContext)tree).variable.Text);
                 return 0;
             }
-            if (tree is UserAgentTreeWalkerParser.PathWalkContext) {
+            //if (tree is UserAgentTreeWalkerParser.PathWalkContext) {
                 return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.PathWalkContext)tree).nextStep);
-            }
-            return 0;
+            //}
+            // Should never get here: The antlr definitions only allow one of the above options.
+            //return 0;
         }
 
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.PathContext tree)
@@ -401,11 +404,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepDownContext tree)
         {
-            if (treeName.Length == 0)
-            {
-                return CalculateInformPath(treeName + '.' + tree.name.Text, tree.nextStep);
-            }
-
             int informs = 0;
             foreach (int? number in NumberRangeVisitor.NUMBER_RANGE_VISITOR.Visit(tree.numberRange()))
             {
