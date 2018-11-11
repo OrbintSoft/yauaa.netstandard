@@ -35,32 +35,32 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.L
         private readonly Dictionary<string, string> lookup;
         private readonly string defaultValue;
 
-    public StepLookup(string lookupName, Dictionary<string, string> lookup, string defaultValue)
-    {
-        this.lookupName = lookupName;
-        this.lookup = lookup;
-        this.defaultValue = defaultValue;
-    }
-
-    public override WalkList.WalkResult Walk(IParseTree tree, string value)
-    {
-        string input = GetActualValue(tree, value).ToLower();
-
-        string result = lookup.ContainsKey(input) ? lookup[input] : null;
-
-        if (result == null)
+        public StepLookup(string lookupName, Dictionary<string, string> lookup, string defaultValue)
         {
-            if (defaultValue == null)
-            {
-                return null;
-            }
-            else
-            {
-                return WalkNextStep(tree, defaultValue);
-            }
+            this.lookupName = lookupName;
+            this.lookup = lookup;
+            this.defaultValue = defaultValue;
         }
-        return WalkNextStep(tree, result);
-    }
+
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            string input = GetActualValue(tree, value).ToLower();
+
+            string result = lookup.ContainsKey(input) ? lookup[input] : null;
+
+            if (result == null)
+            {
+                if (defaultValue == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return WalkNextStep(tree, defaultValue);
+                }
+            }
+            return WalkNextStep(tree, result);
+        }
 
 
         public override string ToString()
@@ -68,5 +68,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.L
             return string.Format("Lookup(@{0} ; default={1})", lookupName, defaultValue ?? "null");
         }
 
-}
+    }
 }
