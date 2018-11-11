@@ -30,8 +30,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
     [Serializable]
     public class StepPrevN: Step
     {
-        private static readonly int SIZE = 20;
-        readonly IParseTree[] children = new IParseTree[SIZE];
+        private const int SIZE = 20;
+
+        internal readonly IParseTree[] children = new IParseTree[SIZE];
 
         private readonly int steps;
 
