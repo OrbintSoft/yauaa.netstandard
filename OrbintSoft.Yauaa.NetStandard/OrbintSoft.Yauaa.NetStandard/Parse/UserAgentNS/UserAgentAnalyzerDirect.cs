@@ -22,6 +22,8 @@
  * All rights should be reserved to the original author Niels Basjes
  */
 
+using Antlr4.Runtime.Tree;
+using DomainParser.Library;
 using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse;
@@ -29,71 +31,84 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using YamlDotNet.RepresentationModel;
-using System.Linq;
 using System.Globalization;
-using Antlr4.Runtime.Tree;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
-using DomainParser.Library;
+using YamlDotNet.RepresentationModel;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
     [Serializable]
     public class UserAgentAnalyzerDirect: IAnalyzer
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
-        protected readonly List<Matcher> allMatchers = new List<Matcher>();
-        private readonly Dictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
-        private Dictionary<string, List<YamlMappingNode>> matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
+        public const int DEFAULT_USER_AGENT_MAX_LENGTH = 2048;
+        // We do not want to put ALL lengths in the hashmap for performance reasons
+        public const int MAX_PREFIX_HASH_MATCH = 3;
 
-        private bool showMatcherStats = false;
-        private bool doingOnlyASingleTest = false;
+        private const long MAX_PRE_HEAT_ITERATIONS = 1_000_000L;
+
+        protected readonly List<Matcher> allMatchers = new List<Matcher>();
+        protected readonly List<Dictionary<string, Dictionary<string, string>>> testCases = new List<Dictionary<string, Dictionary<string, string>>>();
 
         // If we want ALL fields this is null. If we only want specific fields this is a list of names.
         protected List<string> wantedFieldNames = null;
+        protected UserAgentTreeFlattener flattener = null;
 
-        protected readonly List<Dictionary<string, Dictionary<string, string>>> testCases = new List<Dictionary<string, Dictionary<string, string>>>();
-        private Dictionary<string, Dictionary<string, string>> lookups = new Dictionary<string, Dictionary<string, string>>();
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ResourcesPath DefaultResources = new ResourcesPath(@"YamlResources\UserAgents", "*.yaml");
+        private static readonly List<string> HardCodedGeneratedFields = new List<string>();
+
+        private readonly Dictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
         private readonly Dictionary<string, HashSet<string>> lookupSets = new Dictionary<string, HashSet<string>>();
+        // These are the actual subrange we need for the paths.
+        private readonly Dictionary<string, HashSet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, HashSet<WordRangeVisitor.Range>>();
+        // These are the paths for which we have prefix requests.
+        private readonly Dictionary<string, HashSet<int?>> informMatcherActionPrefixesLengths = new Dictionary<string, HashSet<int?>>();
 
-        protected UserAgentTreeFlattener flattener;
-
-        public static readonly int DEFAULT_USER_AGENT_MAX_LENGTH = 2048;
+        private Dictionary<string, List<YamlMappingNode>> matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
+        private bool showMatcherStats = false;
+        private bool doingOnlyASingleTest = false;
+        private Dictionary<string, Dictionary<string, string>> lookups = new Dictionary<string, Dictionary<string, string>>();
+        private bool matchersHaveBeenInitialized = false;
         private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
         private bool loadTests = false;
+        private bool delayInitialization = true;
+        private bool verbose = false;
 
-        private static readonly ResourcesPath DEFAULT_RESOURCES = new ResourcesPath(@"YamlResources\UserAgents", "*.yaml");
 
-        private void InitTransientFields()
+        static UserAgentAnalyzerDirect()
         {
-            matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
-        }
-
-        private void ReadObject(Stream stream)
-        {
-            InitTransientFields();
-
-            List<string> lines = new List<string>
-            {
-                "This Analyzer instance was deserialized.",
-                "",
-                "Lookups      : " + ((lookups == null) ? 0 : lookups.Count),
-                "LookupSets   : " + lookupSets.Count,
-                "Matchers     : " + allMatchers.Count,
-                "Hashmap size : " + informMatcherActions.Count,
-                "Testcases    : " + testCases.Count
-            };
-
-            string[] x = { };
-            YauaaVersion.LogVersion(lines.ToArray());
+            HardCodedGeneratedFields.Add(UserAgent.SYNTAX_ERROR);
+            HardCodedGeneratedFields.Add(UserAgent.AGENT_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add("AgentNameVersion");
+            HardCodedGeneratedFields.Add("AgentNameVersionMajor");
+            HardCodedGeneratedFields.Add("LayoutEngineNameVersion");
+            HardCodedGeneratedFields.Add("LayoutEngineNameVersionMajor");
+            HardCodedGeneratedFields.Add("OperatingSystemNameVersion");
+            HardCodedGeneratedFields.Add("WebviewAppVersionMajor");
+            HardCodedGeneratedFields.Add("WebviewAppNameVersionMajor");
         }
 
         protected UserAgentAnalyzerDirect()
         {
         }
 
-        private bool delayInitialization = true;
+
+        // Calculate the max length we will put in the hashmap.
+        public static int FirstCharactersForPrefixHashLength(string input, int maxChars)
+        {
+            return Math.Min(maxChars, Math.Min(MAX_PREFIX_HASH_MATCH, input.Length));
+        }
+
+        public static string FirstCharactersForPrefixHash(string input, int maxChars)
+        {
+            return input.Substring(0, FirstCharactersForPrefixHashLength(input, maxChars));
+        }
+
+
         public void DelayInitialization()
         {
             delayInitialization = true;
@@ -106,7 +121,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public UserAgentAnalyzerDirect SetShowMatcherStats(bool newShowMatcherStats)
         {
-            this.showMatcherStats = newShowMatcherStats;
+            showMatcherStats = newShowMatcherStats;
             return this;
         }
 
@@ -133,10 +148,455 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return testCases.Count;
         }
 
+        public void LoadResources(string resourceString, string pattern = "*.yaml")
+        {
+            if (matchersHaveBeenInitialized)
+            {
+                throw new Exception("Refusing to load additional resources after the datastructures have been initialized.");
+            }
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            Log.Info(string.Format("Loading from: \"{0}\": \"{1}\"", resourceString, pattern));
+            long startFiles = DateTime.Now.Ticks;
+
+            flattener = new UserAgentTreeFlattener(this);
+            YamlDocument yaml;
+
+#if VERBOSE
+            IDictionary<string, FileInfo> resources = new SortedDictionary<string, FileInfo>(StringComparer.Ordinal);
+#else
+            IDictionary<string, FileInfo> resources = new Dictionary<string, FileInfo>();
+#endif
+            try
+            {
+                string[] filePaths = Directory.GetFiles(resourceString, pattern, SearchOption.TopDirectoryOnly);
+
+                foreach (string filePath in filePaths)
+                {
+                    resources[Path.GetFileName(filePath)] = new FileInfo(filePath);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
+            }
+            doingOnlyASingleTest = false;
+            int maxFilenameLength = 0;
+
+            if (resources.Count == 0)
+            {
+                throw new InvalidParserConfigurationException("Unable to find ANY config files");
+            }
+
+            // We need to determine if we are trying to load the yaml files TWICE.
+            // This can happen if the library is loaded twice (perhaps even two different versions).
+
+            string[] alreadyLoadedResourceBasenames = matcherConfigs.Keys.Where(r => resources.Keys.Contains(r)).ToArray();
+
+            //alreadyLoadedResourceBasenames.retainAll(resourceBasenames);
+
+            if (alreadyLoadedResourceBasenames.Length > 0)
+            {
+                Log.Error(string.Format("Trying to load these {0} resources for the second time: {1}", alreadyLoadedResourceBasenames.Length, alreadyLoadedResourceBasenames.ToString()));
+                throw new InvalidParserConfigurationException("Trying to load " + alreadyLoadedResourceBasenames.Length + " resources for the second time");
+            }
+
+
+            foreach (KeyValuePair<string, FileInfo> resourceEntry in resources)
+            {
+                try
+                {
+                    using (var reader = new StreamReader(resourceEntry.Value.FullName))
+                    {
+                        // Load the stream
+                        var yamlStream = new YamlStream();
+                        yamlStream.Load(reader);
+                        yaml = yamlStream.Documents.FirstOrDefault();
+                    }
+
+
+                    string filename = resourceEntry.Value.Name;
+                    maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
+                    LoadResource(yaml, filename);
+                }
+                catch (Exception e)
+                {
+                    throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
+                }
+            }
+
+            stopwatch.Stop();
+            Log.Info(string.Format("Loaded {0} files in {1} msec", resources.Count, stopwatch.ElapsedMilliseconds));
+
+            if (lookups != null && lookups.Count != 0)
+            {
+                // All compares are done in a case insensitive way. So we lowercase ALL keys of the lookups beforehand.
+                Dictionary<string, Dictionary<string, string>> cleanedLookups = new Dictionary<string, Dictionary<string, string>>();
+                foreach (var lookupsEntry in lookups)
+                {
+                    Dictionary<string, string> cleanedLookup = new Dictionary<string, string>();
+                    foreach (var entry in lookupsEntry.Value)
+                    {
+                        cleanedLookup[entry.Key.ToLower()] = entry.Value;
+                    }
+                    cleanedLookups[lookupsEntry.Key] = cleanedLookup;
+                }
+                lookups = cleanedLookups;
+            }
+
+            if (wantedFieldNames != null)
+            {
+                int wantedSize = wantedFieldNames.Count;
+                if (wantedFieldNames.Contains(UserAgent.SET_ALL_FIELDS))
+                {
+                    wantedSize--;
+                }
+                Log.Info(string.Format("Building all needed matchers for the requested {0} fields.", wantedSize));
+            }
+            else
+            {
+                Log.Info("Building all matchers for all possible fields.");
+            }
+
+            int totalNumberOfMatchers = 0;
+            int skippedMatchers = 0;
+
+            if (matcherConfigs != null)
+            {
+                Stopwatch fullStopwatch = Stopwatch.StartNew();
+                foreach (var resourceEntry in resources)
+                {
+                    FileInfo resource = resourceEntry.Value;
+                    string configFilename = resource.Name;
+                    List<YamlMappingNode> matcherConfig = matcherConfigs.ContainsKey(configFilename) ? matcherConfigs[configFilename] : null;
+                    if (matcherConfig == null)
+                    {
+                        continue; // No matchers in this file (probably only lookups and/or tests)
+                    }
+
+                    Stopwatch start = Stopwatch.StartNew();
+                    int startSkipped = skippedMatchers;
+                    foreach (YamlMappingNode map in matcherConfig)
+                    {
+                        try
+                        {
+                            allMatchers.Add(new Matcher(this, lookups, lookupSets, wantedFieldNames, map, configFilename));
+                            totalNumberOfMatchers++;
+                        }
+                        catch (UselessMatcherException)
+                        {
+                            skippedMatchers++;
+                        }
+                        catch (InvalidParserConfigurationException e)
+                        {
+                            System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                        }
+                    }
+                    start.Stop();
+                    int stopSkipped = skippedMatchers;
+
+                    if (showMatcherStats)
+                    {
+                        Log.Info(string.Format("Loading {0} (dropped {1}) matchers from {2} took {3} msec",
+                            matcherConfig.Count - (stopSkipped - startSkipped),
+                            stopSkipped - startSkipped,
+                            configFilename,
+                            start.ElapsedMilliseconds));
+                    }
+                }
+                fullStopwatch.Stop();
+
+                Log.Info(string.Format("Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
+                    totalNumberOfMatchers,
+                    skippedMatchers,
+                    (lookups == null) ? 0 : lookups.Count(),
+                    lookupSets.Count(),
+                    testCases.Count,
+                    matcherConfigs.Count,
+                    fullStopwatch.ElapsedMilliseconds
+                ));
+            }
+        }
+
+        public void InitializeMatchers()
+        {
+            if (matchersHaveBeenInitialized)
+            {
+                return;
+            }
+            Log.Info("Initializing Analyzer data structures");
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            allMatchers.ForEach(m => m.Initialize());
+            stopwatch.Stop();
+            matchersHaveBeenInitialized = true;
+            Log.Info(string.Format("Built in {0} msec : Hashmap {1}, Ranges map:{2}",
+                stopwatch.ElapsedMilliseconds,
+                informMatcherActions.Count,
+                informMatcherActionRanges.Count));
+        }
+
+        public SortedSet<string> GetAllPossibleFieldNames()
+        {
+            SortedSet<string> results = new SortedSet<string>(HardCodedGeneratedFields);
+            foreach (Matcher matcher in allMatchers)
+            {
+                results.UnionWith(matcher.GetAllPossibleFieldNames());
+            }
+            return results;
+        }
+
+        public List<string> GetAllPossibleFieldNamesSorted()
+        {
+            List<string> fieldNames = new List<string>(GetAllPossibleFieldNames());
+            fieldNames.Sort();
+
+            List<string> result = new List<string>();
+            foreach (string fieldName in UserAgent.PreSortedFieldList)
+            {
+                fieldNames.Remove(fieldName);
+                result.Add(fieldName);
+            }
+            result.AddRange(fieldNames);
+
+            return result;
+        }
+
+        public void LookingForRange(string treeName, WordRangeVisitor.Range range)
+        {
+            if (!informMatcherActionRanges.Keys.Contains(treeName))
+            {
+                informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
+            }
+
+            informMatcherActionRanges[treeName].Add(range);
+        }
+
+        public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
+        {
+            InformMeAbout(matcherAction, treeName + "{\"" + FirstCharactersForPrefixHash(prefix, MAX_PREFIX_HASH_MATCH) + "\"");
+
+            if (!informMatcherActionPrefixesLengths.Keys.Contains(treeName))
+            {
+                informMatcherActionPrefixesLengths[treeName] = new HashSet<int?>();
+            }
+
+            HashSet<int?> lengths = informMatcherActionPrefixesLengths[treeName];
+            lengths.Add(FirstCharactersForPrefixHashLength(prefix, MAX_PREFIX_HASH_MATCH));
+        }
+
+        public ISet<int?> GetRequiredPrefixLengths(string treeName)
+        {
+            return informMatcherActionPrefixesLengths.ContainsKey(treeName) ? informMatcherActionPrefixesLengths[treeName] : null;
+        }
+
+        public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
+        {
+            string hashKey = keyPattern.ToLower();
+            if (!informMatcherActions.Keys.Contains(hashKey))
+            {
+                informMatcherActions[hashKey] = new HashSet<MatcherAction>();
+            }
+
+            ISet<MatcherAction> analyzerSet = informMatcherActions[hashKey];
+            analyzerSet.Add(matcherAction);
+        }
+
+        public void SetVerbose(bool newVerbose)
+        {
+            verbose = newVerbose;
+            flattener.SetVerbose(newVerbose);
+        }
+
+        public void SetUserAgentMaxLength(int newUserAgentMaxLength)
+        {
+            if (newUserAgentMaxLength <= 0)
+            {
+                userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
+            }
+            else
+            {
+                userAgentMaxLength = newUserAgentMaxLength;
+            }
+        }
+
+        public int GetUserAgentMaxLength()
+        {
+            return userAgentMaxLength;
+        }
+
+        public virtual UserAgent Parse(string userAgentString)
+        {
+            UserAgent userAgent = new UserAgent(userAgentString);
+            return Parse(userAgent);
+        }
+
+        public virtual UserAgent Parse(UserAgent userAgent)
+        {
+            lock (this)
+            {
+                InitializeMatchers();
+                string useragentString = userAgent.GetUserAgentString();
+                if (useragentString != null && useragentString.Length > userAgentMaxLength)
+                {
+                    userAgent = SetAsHacker(userAgent, 100);
+                    userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
+                    return HardCodedPostProcessing(userAgent);
+                }
+
+                // Reset all Matchers
+                foreach (Matcher matcher in allMatchers)
+                {
+                    matcher.Reset();
+                }
+
+                if (userAgent.IsDebug())
+                {
+                    foreach (Matcher matcher in allMatchers)
+                    {
+                        matcher.SetVerboseTemporarily(true);
+                    }
+                }
+
+                try
+                {
+                    userAgent = flattener.Parse(userAgent);
+
+                    // Fire all Analyzers
+                    foreach (Matcher matcher in allMatchers)
+                    {
+                        matcher.Analyze(userAgent);
+                    }
+
+                    userAgent.ProcessSetAll();
+                    return HardCodedPostProcessing(userAgent);
+                }
+                catch (NullReferenceException)
+                {
+                    // If this occurs then someone has found a previously undetected problem.
+                    // So this is a safety for something that 'can' but 'should not' occur.
+                    // I guess this exploit can work only in Java, but better to keep the code as safety measure
+                    userAgent.Reset();
+                    userAgent = SetAsHacker(userAgent, 10000);
+                    userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
+                    return HardCodedPostProcessing(userAgent);
+                }
+            }
+        }
+
+        public bool IsWantedField(string fieldName)
+        {
+            if (wantedFieldNames == null)
+            {
+                return true;
+            }
+            return wantedFieldNames.Contains(fieldName);
+        }
+
+
+        public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
+        {
+            if (!informMatcherActionRanges.Keys.Contains(treeName))
+            {
+                informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
+            }
+
+            return informMatcherActionRanges[treeName];
+        }
+
+        public void Inform(string key, string value, IParseTree ctx)
+        {
+            Inform(key, key, value, ctx);
+            Inform(key + "=\"" + value + '"', key, value, ctx);
+
+            ISet<int?> lengths = GetRequiredPrefixLengths(key);
+            if (lengths != null)
+            {
+                int valueLength = value.Length;
+                foreach (int? prefixLength in lengths)
+                {
+                    if (valueLength >= prefixLength)
+                    {
+                        Inform(key + "{\"" + FirstCharactersForPrefixHash(value, prefixLength.Value) + '"', key, value, ctx);
+                    }
+                }
+            }
+        }
+
+
+        internal void ConcatFieldValuesNONDuplicated(UserAgent userAgent, string targetName, string firstName, string secondName)
+        {
+            if (!IsWantedField(targetName))
+            {
+                return;
+            }
+            UserAgent.AgentField firstField = userAgent.Get(firstName);
+            UserAgent.AgentField secondField = userAgent.Get(secondName);
+
+            string first = null;
+            long firstConfidence = -1;
+            string second = null;
+            long secondConfidence = -1;
+
+            if (firstField != null)
+            {
+                first = firstField.GetValue();
+                firstConfidence = firstField.GetConfidence();
+            }
+            if (secondField != null)
+            {
+                second = secondField.GetValue();
+                secondConfidence = secondField.GetConfidence();
+            }
+
+            if (first == null && second == null)
+            {
+                return; // Nothing to do
+            }
+
+            if (second == null)
+            {
+                if (firstConfidence >= 0)
+                {
+                    userAgent.Set(targetName, first, firstConfidence);
+                    return;
+                }
+                return; // Nothing to do
+            }
+            else
+            {
+                if (first == null)
+                {
+                    if (secondConfidence >= 0)
+                    {
+                        userAgent.Set(targetName, second, secondConfidence);
+                    }
+                    return;
+                }
+            }
+
+            if (first.Equals(second))
+            {
+                userAgent.Set(targetName, first, firstConfidence);
+            }
+            else
+            {
+                if (second.StartsWith(first))
+                {
+                    userAgent.Set(targetName, second, secondConfidence);
+                }
+                else
+                {
+                    userAgent.Set(targetName, first + " " + second, Math.Max(firstField.GetConfidence(), secondField.GetConfidence()));
+                }
+            }
+        }
+
+
         protected internal void Initialize()
         {
-            Initialize(new List<ResourcesPath>() {DEFAULT_RESOURCES});
+            Initialize(new List<ResourcesPath>() { DefaultResources });
         }
+
 
         protected void Initialize(List<ResourcesPath> resources)
         {
@@ -181,220 +641,29 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             throw new InvalidParserConfigurationException("We cannot provide these fields:" + bd.ToString());
         }
 
-        // --------------------------------------------
 
-        public void LoadResources(string resourceString, string pattern = "*.yaml")
+        private void InitTransientFields()
         {
-            if (matchersHaveBeenInitialized)
-            {
-                throw new Exception("Refusing to load additional resources after the datastructures have been initialized.");
-            }
-
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            LOG.Info(string.Format("Loading from: \"{0}\": \"{1}\"", resourceString, pattern));
-            long startFiles = DateTime.Now.Ticks;
-
-            flattener = new UserAgentTreeFlattener(this);
-            YamlDocument yaml;
-
-#if VERBOSE
-            IDictionary<string, FileInfo> resources = new SortedDictionary<string, FileInfo>(StringComparer.Ordinal);
-#else
-            IDictionary<string, FileInfo> resources = new Dictionary<string, FileInfo>();
-#endif
-            try
-            {               
-                string[] filePaths = Directory.GetFiles(resourceString, pattern, SearchOption.TopDirectoryOnly);
-                
-                foreach (string filePath in filePaths)
-                {
-                    resources[Path.GetFileName(filePath)] = new FileInfo(filePath);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
-            }
-            doingOnlyASingleTest = false;
-            int maxFilenameLength = 0;
-
-            if (resources.Count == 0)
-            {
-                throw new InvalidParserConfigurationException("Unable to find ANY config files");
-            }
-
-            // We need to determine if we are trying to load the yaml files TWICE.
-            // This can happen if the library is loaded twice (perhaps even two different versions).
-          
-            string[] alreadyLoadedResourceBasenames = matcherConfigs.Keys.Where(r => resources.Keys.Contains(r)).ToArray();
-
-            //alreadyLoadedResourceBasenames.retainAll(resourceBasenames);
-
-            if (alreadyLoadedResourceBasenames.Length > 0)
-            {
-                LOG.Error(string.Format("Trying to load these {0} resources for the second time: {1}", alreadyLoadedResourceBasenames.Length,  alreadyLoadedResourceBasenames.ToString()));
-                throw new InvalidParserConfigurationException("Trying to load " + alreadyLoadedResourceBasenames.Length +" resources for the second time");
-            }
-
-            
-            foreach (KeyValuePair<string, FileInfo> resourceEntry in resources)
-            {
-                try
-                {
-                    using (var reader = new StreamReader(resourceEntry.Value.FullName))
-                    {
-                        // Load the stream
-                        var yamlStream = new YamlStream();
-                        yamlStream.Load(reader);
-                        yaml = yamlStream.Documents.FirstOrDefault();
-                    }
-
-                   
-                    string filename = resourceEntry.Value.Name;
-                    maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
-                    LoadResource(yaml, filename);
-                }
-                catch (Exception e)
-                {
-                    throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
-                }
-            }
-
-            stopwatch.Stop();
-            LOG.Info(string.Format("Loaded {0} files in {1} msec", resources.Count, stopwatch.ElapsedMilliseconds));
-
-            if (lookups != null && lookups.Count != 0)
-            {
-                // All compares are done in a case insensitive way. So we lowercase ALL keys of the lookups beforehand.
-                Dictionary<string, Dictionary<string, string>> cleanedLookups = new Dictionary<string, Dictionary<string, string>>();
-                foreach ( var lookupsEntry in lookups)
-                {
-                    Dictionary<string, string> cleanedLookup = new Dictionary<string, string>();
-                    foreach (var entry in lookupsEntry.Value)
-                    {
-                        cleanedLookup[entry.Key.ToLower()] = entry.Value;
-                    }
-                    cleanedLookups[lookupsEntry.Key] = cleanedLookup;
-                }
-                lookups = cleanedLookups;
-            }
-
-            if (wantedFieldNames != null)
-            {
-                int wantedSize = wantedFieldNames.Count;
-                if (wantedFieldNames.Contains(UserAgent.SET_ALL_FIELDS))
-                {
-                    wantedSize--;
-                }
-                LOG.Info(string.Format("Building all needed matchers for the requested {0} fields.", wantedSize));
-            }
-            else
-            {
-                LOG.Info("Building all matchers for all possible fields.");
-            }
-
-            int totalNumberOfMatchers = 0;
-            int skippedMatchers = 0;
-
-            if (matcherConfigs != null)
-            {
-                Stopwatch fullStopwatch = Stopwatch.StartNew();
-                 foreach (var resourceEntry in resources)
-                {
-                    FileInfo resource = resourceEntry.Value;
-                    string configFilename = resource.Name;
-                    List<YamlMappingNode> matcherConfig = matcherConfigs.ContainsKey(configFilename) ? matcherConfigs[configFilename] : null;
-                    if (matcherConfig == null)
-                    {
-                        continue; // No matchers in this file (probably only lookups and/or tests)
-                    }
-
-                    Stopwatch start = Stopwatch.StartNew();
-                    int startSkipped = skippedMatchers;
-                    foreach (YamlMappingNode map in matcherConfig)
-                    {
-                        try
-                        {
-                            allMatchers.Add(new Matcher(this, lookups, lookupSets, wantedFieldNames, map, configFilename));
-                            totalNumberOfMatchers++;
-                        }
-                        catch (UselessMatcherException)
-                        {
-                            skippedMatchers++;
-                        }
-                        catch (InvalidParserConfigurationException e)
-                        {
-                            System.Diagnostics.Debug.WriteLine(e.StackTrace);
-                        }
-                    }
-                    start.Stop();
-                    int stopSkipped = skippedMatchers;
-
-                    if (showMatcherStats)
-                    {
-                        LOG.Info(string.Format("Loading {0} (dropped {1}) matchers from {2} took {3} msec",
-                            matcherConfig.Count - (stopSkipped - startSkipped),
-                            stopSkipped - startSkipped,
-                            configFilename,
-                            start.ElapsedMilliseconds));
-                    }
-                }
-                fullStopwatch.Stop();
-
-                LOG.Info(string.Format("Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
-                    totalNumberOfMatchers,
-                    skippedMatchers,
-                    (lookups == null) ? 0 : lookups.Count(),
-                    lookupSets.Count(),
-                    testCases.Count,
-                    matcherConfigs.Count,
-                    fullStopwatch.ElapsedMilliseconds
-                ));
-            }
+            matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
         }
 
-        private bool matchersHaveBeenInitialized = false;
-        public void InitializeMatchers()
+        private void ReadObject(Stream stream)
         {
-            if (matchersHaveBeenInitialized)
+            InitTransientFields();
+
+            List<string> lines = new List<string>
             {
-                return;
-            }
-            LOG.Info("Initializing Analyzer data structures");
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            allMatchers.ForEach(m => m.Initialize());
-            stopwatch.Stop();
-            matchersHaveBeenInitialized = true;
-            LOG.Info(string.Format("Built in {0} msec : Hashmap {1}, Ranges map:{2}",
-                stopwatch.ElapsedMilliseconds,
-                informMatcherActions.Count,
-                informMatcherActionRanges.Count));
-        }
+                "This Analyzer instance was deserialized.",
+                "",
+                "Lookups      : " + ((lookups == null) ? 0 : lookups.Count),
+                "LookupSets   : " + lookupSets.Count,
+                "Matchers     : " + allMatchers.Count,
+                "Hashmap size : " + informMatcherActions.Count,
+                "Testcases    : " + testCases.Count
+            };
 
-        public SortedSet<string> GetAllPossibleFieldNames()
-        {
-            SortedSet<string> results = new SortedSet<string>();
-            foreach (Matcher matcher in allMatchers)
-            {
-                results.UnionWith(matcher.GetAllPossibleFieldNames());
-            }
-            return results;
-        }
-
-        public List<string> GetAllPossibleFieldNamesSorted()
-        {
-            List<string> fieldNames = new List<string>(GetAllPossibleFieldNames());
-            fieldNames.Sort();
-
-            List<string> result = new List<string>();
-            foreach (string fieldName in UserAgent.PreSortedFieldList)
-            {
-                fieldNames.Remove(fieldName);
-                result.Add(fieldName);
-            }
-            result.AddRange(fieldNames);
-
-            return result;
+            string[] x = { };
+            YauaaVersion.LogVersion(lines.ToArray());
         }
 
         /*
@@ -668,100 +937,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        // These are the actual subrange we need for the paths.
-        private readonly Dictionary<string, HashSet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, HashSet<WordRangeVisitor.Range>>();
-
-        public void LookingForRange(string treeName, WordRangeVisitor.Range range)
-        {
-            if (!informMatcherActionRanges.Keys.Contains(treeName))
-            {
-                informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
-            }
-
-            informMatcherActionRanges[treeName].Add(range);
-        }
-
-        // We do not want to put ALL lengths in the hashmap for performance reasons
-        public static readonly int MAX_PREFIX_HASH_MATCH = 3;
-
-
-        // Calculate the max length we will put in the hashmap.
-        public static int FirstCharactersForPrefixHashLength(string input, int maxChars)
-        {
-            return Math.Min(maxChars, Math.Min(MAX_PREFIX_HASH_MATCH, input.Length));
-        }
-
-        public static string FirstCharactersForPrefixHash(string input, int maxChars)
-        {
-            return input.Substring(0, FirstCharactersForPrefixHashLength(input, maxChars));
-        }
-
-        // These are the paths for which we have prefix requests.
-        private readonly Dictionary<string, HashSet<int?>> informMatcherActionPrefixesLengths = new Dictionary<string, HashSet<int?>>();
-
-        public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
-        {
-            this.InformMeAbout(matcherAction, treeName + "{\"" + FirstCharactersForPrefixHash(prefix, MAX_PREFIX_HASH_MATCH) + "\"");
-
-            if (!informMatcherActionPrefixesLengths.Keys.Contains(treeName))
-            {
-                informMatcherActionPrefixesLengths[treeName] = new HashSet<int?>();
-            }
-
-            HashSet<int?> lengths = informMatcherActionPrefixesLengths[treeName];
-            lengths.Add(FirstCharactersForPrefixHashLength(prefix, MAX_PREFIX_HASH_MATCH));
-        }
-
-        public ISet<int?> GetRequiredPrefixLengths(string treeName)
-        {
-            return informMatcherActionPrefixesLengths.ContainsKey(treeName) ? informMatcherActionPrefixesLengths[treeName] : null;
-        }
-
-        public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
-        {
-            string hashKey = keyPattern.ToLower();
-            if (!informMatcherActions.Keys.Contains(hashKey))
-            {
-                informMatcherActions[hashKey] = new HashSet<MatcherAction>();
-            }
-
-            ISet<MatcherAction> analyzerSet = informMatcherActions[hashKey];                
-            analyzerSet.Add(matcherAction);
-        }
-
-        private bool verbose = false;
-
-        public void SetVerbose(bool newVerbose)
-        {
-            verbose = newVerbose;
-            flattener.SetVerbose(newVerbose);
-        }
-
-        public void SetUserAgentMaxLength(int newUserAgentMaxLength)
-        {
-            if (newUserAgentMaxLength <= 0)
-            {
-                userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
-            }
-            else
-            {
-                userAgentMaxLength = newUserAgentMaxLength;
-            }
-        }
-
-        public int GetUserAgentMaxLength()
-        {
-            return userAgentMaxLength;
-        }
-
-        public virtual UserAgent Parse(string userAgentString)
-        {
-            UserAgent userAgent = new UserAgent(userAgentString);
-            return Parse(userAgent);
-        }
-
-        private UserAgent SetAsHacker(UserAgent userAgent, int confidence)
-        {
+       private UserAgent SetAsHacker(UserAgent userAgent, int confidence)
+       {
             userAgent.Set(UserAgent.DEVICE_CLASS, "Hacker", confidence);
             userAgent.Set(UserAgent.DEVICE_BRAND, "Hacker", confidence);
             userAgent.Set(UserAgent.DEVICE_NAME, "Hacker", confidence);
@@ -780,84 +957,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             userAgent.Set("HackerToolkit", "Unknown", confidence);
             userAgent.Set("HackerAttackVector", "Buffer overflow", confidence);
             return userAgent;
-        }
-
-        public virtual UserAgent Parse(UserAgent userAgent)
-        {
-            lock (this)
-            {
-                InitializeMatchers();
-                string useragentString = userAgent.GetUserAgentString();
-                if (useragentString != null && useragentString.Length > userAgentMaxLength)
-                {
-                    userAgent = SetAsHacker(userAgent, 100);
-                    userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
-                    return HardCodedPostProcessing(userAgent);
-                }
-
-                // Reset all Matchers
-                foreach (Matcher matcher in allMatchers)
-                {
-                    matcher.Reset();
-                }
-
-                if (userAgent.IsDebug())
-                {
-                    foreach (Matcher matcher in allMatchers)
-                    {
-                        matcher.SetVerboseTemporarily(true);
-                    }
-                }
-
-                try
-                {
-                    userAgent = flattener.Parse(userAgent);
-
-                    // Fire all Analyzers
-                    foreach (Matcher matcher in allMatchers)
-                    {
-                        matcher.Analyze(userAgent);
-                    }
-
-                    userAgent.ProcessSetAll();
-                    return HardCodedPostProcessing(userAgent);
-                }
-                catch (NullReferenceException)
-                {
-                    // If this occurs then someone has found a previously undetected problem.
-                    // So this is a safety for something that 'can' but 'should not' occur.
-                    // I guess this exploit can work only in Java, but better to keep the code as safety measure
-                    userAgent.Reset();
-                    userAgent = SetAsHacker(userAgent, 10000);
-                    userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
-                    return HardCodedPostProcessing(userAgent);
-                }
-            }
-        }
-
-        private static readonly List<string> HARD_CODED_GENERATED_FIELDS = new List<string>();
-
-        static void UserAgentAnalyzer()
-        {
-            HARD_CODED_GENERATED_FIELDS.Add(UserAgent.SYNTAX_ERROR);
-            HARD_CODED_GENERATED_FIELDS.Add(UserAgent.AGENT_VERSION_MAJOR);
-            HARD_CODED_GENERATED_FIELDS.Add(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-            HARD_CODED_GENERATED_FIELDS.Add("AgentNameVersion");
-            HARD_CODED_GENERATED_FIELDS.Add("AgentNameVersionMajor");
-            HARD_CODED_GENERATED_FIELDS.Add("LayoutEngineNameVersion");
-            HARD_CODED_GENERATED_FIELDS.Add("LayoutEngineNameVersionMajor");
-            HARD_CODED_GENERATED_FIELDS.Add("OperatingSystemNameVersion");
-            HARD_CODED_GENERATED_FIELDS.Add("WebviewAppVersionMajor");
-            HARD_CODED_GENERATED_FIELDS.Add("WebviewAppNameVersionMajor");
-        }
-
-        public bool IsWantedField(string fieldName)
-        {
-            if (wantedFieldNames == null)
-            {
-                return true;
-            }
-            return wantedFieldNames.Contains(fieldName);
         }
 
         private UserAgent HardCodedPostProcessing(UserAgent userAgent)
@@ -1019,74 +1118,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return null;
         }
 
-        internal void ConcatFieldValuesNONDuplicated(UserAgent userAgent, string targetName, string firstName, string secondName)
-        {
-            if (!IsWantedField(targetName))
-            {
-                return;
-            }
-            UserAgent.AgentField firstField = userAgent.Get(firstName);
-            UserAgent.AgentField secondField = userAgent.Get(secondName);
-
-            string first = null;
-            long firstConfidence = -1;
-            string second = null;
-            long secondConfidence = -1;
-
-            if (firstField != null)
-            {
-                first = firstField.GetValue();
-                firstConfidence = firstField.GetConfidence();
-            }
-            if (secondField != null)
-            {
-                second = secondField.GetValue();
-                secondConfidence = secondField.GetConfidence();
-            }
-
-            if (first == null && second == null)
-            {
-                return; // Nothing to do
-            }
-
-            if (second == null)
-            {
-                if (firstConfidence >= 0)
-                {
-                    userAgent.Set(targetName, first, firstConfidence);
-                    return;
-                }
-                return; // Nothing to do
-            }
-            else
-            {
-                if (first == null)
-                {
-                    if (secondConfidence >= 0)
-                    {
-                        userAgent.Set(targetName, second, secondConfidence);
-                    }
-                    return;
-                }
-            }
-
-            if (first.Equals(second))
-            {
-                userAgent.Set(targetName, first, firstConfidence);
-            }
-            else
-            {
-                if (second.StartsWith(first))
-                {
-                    userAgent.Set(targetName, second, secondConfidence);
-                }
-                else
-                {
-                    userAgent.Set(targetName, first + " " + second, Math.Max(firstField.GetConfidence(), secondField.GetConfidence()));
-                }
-            }
-        }
-
         private void AddMajorVersionField(UserAgent userAgent, string versionName, string majorVersionName)
         {
             if (!IsWantedField(majorVersionName))
@@ -1112,35 +1143,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
-        {
-            if (!informMatcherActionRanges.Keys.Contains(treeName))
-            {
-                informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
-            }
-            
-            return informMatcherActionRanges[treeName];
-        }
-
-        public void Inform(string key, string value, IParseTree ctx)
-        {
-            Inform(key, key, value, ctx);
-            Inform(key + "=\"" + value + '"', key, value, ctx);
-
-            ISet<int?> lengths = GetRequiredPrefixLengths(key);
-            if (lengths != null)
-            {
-                int valueLength = value.Length;
-                foreach (int? prefixLength in lengths)
-                {
-                    if (valueLength >= prefixLength)
-                    {
-                        Inform(key + "{\"" + FirstCharactersForPrefixHash(value, prefixLength.Value) + '"', key, value, ctx);
-                    }
-                }
-            }
-        }
-
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
             var _match = match.ToLower(CultureInfo.InvariantCulture);
@@ -1149,16 +1151,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 if (relevantActions == null)
                 {
-                    LOG.Info(string.Format("--- Have (0): {0}", match));
+                    Log.Info(string.Format("--- Have (0): {0}", match));
                 }
                 else
                 {
-                    LOG.Info(string.Format("+++ Have ({0}): {1}", relevantActions.Count, match));
+                    Log.Info(string.Format("+++ Have ({0}): {1}", relevantActions.Count, match));
 
                     int count = 1;
                     foreach (MatcherAction action in relevantActions)
                     {
-                        LOG.Info(string.Format("+++ -------> ({0}): {1}", count, action.ToString()));
+                        Log.Info(string.Format("+++ -------> ({0}): {1}", count, action.ToString()));
                         count++;
                     }
                 }
@@ -1199,7 +1201,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return PreHeat(preheatIterations, true);
         }
 
-        private static readonly long MAX_PRE_HEAT_ITERATIONS = 1_000_000L;
+       
 
         /// <summary>
         /// Runs the number of specified testcases to heat up the CLR.
@@ -1217,22 +1219,22 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
             if (testCases.Count == 0)
             {
-                LOG.Warn("NO PREHEAT WAS DONE. Simply because there are no test cases available.");
+                Log.Warn("NO PREHEAT WAS DONE. Simply because there are no test cases available.");
                 return 0;
             }
             if (preheatIterations <= 0)
             {
-                LOG.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for {0} to run.", preheatIterations));
+                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for {0} to run.", preheatIterations));
                 return 0;
             }
             if (preheatIterations > MAX_PRE_HEAT_ITERATIONS)
             {
-                LOG.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for too many ({0} > {1}) to run.", preheatIterations, MAX_PRE_HEAT_ITERATIONS));
+                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for too many ({0} > {1}) to run.", preheatIterations, MAX_PRE_HEAT_ITERATIONS));
                 return 0;
             }
             if (log)
             {
-                LOG.Info(string.Format("Preheating JVM by running {0} testcases.", preheatIterations));
+                Log.Info(string.Format("Preheating JVM by running {0} testcases.", preheatIterations));
             }
             long remainingIterations = preheatIterations;
             long goodResults = 0;
@@ -1255,7 +1257,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
             if (log)
             {
-                LOG.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
+                Log.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
             }
             return preheatIterations;
         }
@@ -1359,7 +1361,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 uaa = newUaa;
                 uaa.SetShowMatcherStats(false);
-                resources.Add(DEFAULT_RESOURCES);
+                resources.Add(DefaultResources);
             }
 
             /// <summary>
@@ -1369,7 +1371,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             public B DropDefaultResources()
             {
                 FailIfAlreadyBuilt();
-                resources.Remove(DEFAULT_RESOURCES);
+                resources.Remove(DefaultResources);
                 return (B)this;
             }
 
@@ -1640,7 +1642,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 uaa = a;
             }
         }
-
     }
-    
 }
