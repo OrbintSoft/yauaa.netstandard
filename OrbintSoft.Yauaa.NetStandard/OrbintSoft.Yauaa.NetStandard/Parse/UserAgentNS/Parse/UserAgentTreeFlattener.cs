@@ -38,93 +38,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
     public class UserAgentTreeFlattener: UserAgentBaseListener 
     {
         private static readonly ParseTreeWalker WALKER = new ParseTreeWalker();
+
         private readonly IAnalyzer analyzer;
+
+        private SerializableParseTreeProperty<State> state = null;
 
         public enum PathType
         {
             CHILD,
             COMMENT,
             VERSION
-        }
-
-        [Serializable]
-        public class State
-        {
-            internal long child = 0;
-            internal long version = 0;
-            internal long comment = 0;
-            internal readonly string name;
-            internal string path;
-            internal IParseTree ctx = null;
-
-            private UserAgentTreeFlattener userAgentTreeFlattener;
-
-            public State(UserAgentTreeFlattener userAgentTreeFlattener, string name)
-            {
-                this.userAgentTreeFlattener = userAgentTreeFlattener;
-                this.name = name;
-            }
-
-            public State(UserAgentTreeFlattener userAgentTreeFlattener, IParseTree ctx, string name): this(userAgentTreeFlattener, name)
-            {
-                this.ctx = ctx;
-            }
-
-            public string CalculatePath(PathType type, bool fakeChild)
-            {
-                IParseTree node = ctx;
-                path = name;
-                if (node == null)
-                {
-                    return path;
-                }
-                State parentState = null;
-
-                while (parentState == null)
-                {
-                    node = node.Parent;
-                    if (node == null)
-                    {
-                        return path;
-                    }
-                    parentState = userAgentTreeFlattener.state.Get(node);
-                }
-
-                long counter = 0;
-                switch (type)
-                {
-                    case PathType.CHILD:
-                        if (!fakeChild)
-                        {
-                            parentState.child++;
-                        }
-                        counter = parentState.child;
-                        break;
-                    case PathType.COMMENT:
-                        if (!fakeChild)
-                        {
-                            parentState.comment++;
-                        }
-                        counter = parentState.comment;
-                        break;
-                    case PathType.VERSION:
-                        if (!fakeChild)
-                        {
-                            parentState.version++;
-                        }
-                        counter = parentState.version;
-                        break;
-                    default:
-                        break;
-                }
-
-                path = parentState.path + ".(" + counter + ')' + name;
-
-                return path;
-            }
-        }
-
-        private SerializableParseTreeProperty<State> state;
+        }        
 
         public UserAgentTreeFlattener(IAnalyzer analyzer)
         {
@@ -487,5 +411,82 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         {
             Inform(context, "text", "");
         } 
+
+        [Serializable]
+        public class State
+        {
+            internal long child = 0;
+            internal long version = 0;
+            internal long comment = 0;
+            internal readonly string name;
+            internal string path;
+            internal IParseTree ctx = null;
+
+            private UserAgentTreeFlattener userAgentTreeFlattener;
+
+            public State(UserAgentTreeFlattener userAgentTreeFlattener, string name)
+            {
+                this.userAgentTreeFlattener = userAgentTreeFlattener;
+                this.name = name;
+            }
+
+            public State(UserAgentTreeFlattener userAgentTreeFlattener, IParseTree ctx, string name): this(userAgentTreeFlattener, name)
+            {
+                this.ctx = ctx;
+            }
+
+            public string CalculatePath(PathType type, bool fakeChild)
+            {
+                IParseTree node = ctx;
+                path = name;
+                if (node == null)
+                {
+                    return path;
+                }
+                State parentState = null;
+
+                while (parentState == null)
+                {
+                    node = node.Parent;
+                    if (node == null)
+                    {
+                        return path;
+                    }
+                    parentState = userAgentTreeFlattener.state.Get(node);
+                }
+
+                long counter = 0;
+                switch (type)
+                {
+                    case PathType.CHILD:
+                        if (!fakeChild)
+                        {
+                            parentState.child++;
+                        }
+                        counter = parentState.child;
+                        break;
+                    case PathType.COMMENT:
+                        if (!fakeChild)
+                        {
+                            parentState.comment++;
+                        }
+                        counter = parentState.comment;
+                        break;
+                    case PathType.VERSION:
+                        if (!fakeChild)
+                        {
+                            parentState.version++;
+                        }
+                        counter = parentState.version;
+                        break;
+                    default:
+                        break;
+                }
+
+                path = parentState.path + ".(" + counter + ')' + name;
+
+                return path;
+            }
+        }
     }
 }
