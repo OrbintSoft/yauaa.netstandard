@@ -26,11 +26,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
     public class VersionSplitter: Splitter
     {
+        private static VersionSplitter instance;
+
         private VersionSplitter()
         {
         }
-
-        private static VersionSplitter instance;
+        
         public static VersionSplitter GetInstance()
         {
             if (instance == null)
@@ -58,7 +59,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             return false;
         }
 
-        private bool looksLikeEmailOrWebaddress(string value)
+        private bool LooksLikeEmailOrWebaddress(string value)
         {
             // Simple quick and dirty way to avoid splitting email and web addresses
             return (value.StartsWith("www.") || value.StartsWith("http") || (value.Contains("@") && value.Contains(".")));
@@ -66,7 +67,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 
         public override string GetSingleSplit(string value, int split)
         {
-            if (looksLikeEmailOrWebaddress(value))
+            if (LooksLikeEmailOrWebaddress(value))
             {
                 return (split == 1) ? value : null;
             }
@@ -83,7 +84,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 
         public override string GetFirstSplits(string value, int split)
         {
-            if (looksLikeEmailOrWebaddress(value))
+            if (LooksLikeEmailOrWebaddress(value))
             {
                 return (split == 1) ? value : null;
             }
