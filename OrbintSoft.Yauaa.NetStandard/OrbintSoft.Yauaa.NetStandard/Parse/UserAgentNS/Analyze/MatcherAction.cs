@@ -33,30 +33,31 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System;
+using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
     [Serializable]
     public abstract class MatcherAction
     {
-        private string matchExpression;
-        private TreeExpressionEvaluator evaluator;
+        internal bool verbose = false;
+
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        private string matchExpression = null;
+        private TreeExpressionEvaluator evaluator = null;
+        private Matcher matcher = null;
+        private MatchesList matches = null;
+        private bool verbosePermanent = false;
+        private bool verboseTemporary = false;
+
+        internal bool MustHaveMatches { get; private set; } = false;
 
         internal TreeExpressionEvaluator GetEvaluatorForUnitTesting()
         {
             return evaluator;
         }
 
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(MatcherAction));
-
-
-        private Matcher matcher;
-        private MatchesList matches;
-        internal bool MustHaveMatches { get; private set; } = false;
-
-        public bool verbose = false;
-        private bool verbosePermanent = false;
-        private bool verboseTemporary = false;
 
         private void SetVerbose(bool newVerbose)
         {
@@ -101,9 +102,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
             {
-                LOG.Error("Syntax error");
-                LOG.Error(string.Format("Source : {0}", MatcherAction.matchExpression));
-                LOG.Error(string.Format("Message: {0}", msg));
+                Log.Error("Syntax error");
+                Log.Error(string.Format("Source : {0}", MatcherAction.matchExpression));
+                Log.Error(string.Format("Message: {0}", msg));
                 throw new InvalidParserConfigurationException("Syntax error \"" + msg + "\" caused by \"" + MatcherAction.matchExpression + "\".");
             }
         }
@@ -170,79 +171,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         }
 
         protected abstract ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser);
-
-        private class UnQuoteValues : UserAgentTreeWalkerBaseVisitor<object>
-        {
-            private void UnQuoteToken(IToken token)
-            {
-                if (token is CommonToken commonToken)
-                {
-                    commonToken.StartIndex = commonToken.StartIndex + 1;
-                    commonToken.StopIndex = commonToken.StopIndex - 1;
-                }
-            }
-
-            public override object VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
-            {
-                UnQuoteToken(context.defaultValue);
-                return base.VisitMatcherPathLookup(context);
-            }
-
-            public override object VisitPathFixedValue([NotNull] UserAgentTreeWalkerParser.PathFixedValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitPathFixedValue(context);
-            }
-
-            public override object VisitMatcherConcat([NotNull] UserAgentTreeWalkerParser.MatcherConcatContext context)
-            {
-                UnQuoteToken(context.prefix);
-                UnQuoteToken(context.postfix);
-                return base.VisitMatcherConcat(context);
-            }
-
-            public override object VisitMatcherConcatPrefix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPrefixContext context)
-            {
-                UnQuoteToken(context.prefix);
-                return base.VisitMatcherConcatPrefix(context);
-            }
-
-            public override object VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context)
-            {
-                UnQuoteToken(context.postfix);
-                return base.VisitMatcherConcatPostfix(context);
-            }
-
-            public override object VisitStepEqualsValue([NotNull] UserAgentTreeWalkerParser.StepEqualsValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepEqualsValue(context);
-            }
-
-            public override object VisitStepNotEqualsValue([NotNull] UserAgentTreeWalkerParser.StepNotEqualsValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepNotEqualsValue(context);
-            }
-
-            public override object VisitStepStartsWithValue([NotNull] UserAgentTreeWalkerParser.StepStartsWithValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepStartsWithValue(context);
-            }
-
-            public override object VisitStepEndsWithValue([NotNull] UserAgentTreeWalkerParser.StepEndsWithValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepEndsWithValue(context);
-            }
-
-            public override object VisitStepContainsValue([NotNull] UserAgentTreeWalkerParser.StepContainsValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepContainsValue(context);
-            }
-        }
 
         protected abstract void SetFixedValue(string newFixedValue);
 
@@ -443,6 +371,79 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public MatchesList GetMatches()
         {
             return matches;
+        }
+
+        private class UnQuoteValues : UserAgentTreeWalkerBaseVisitor<object>
+        {
+            private void UnQuoteToken(IToken token)
+            {
+                if (token is CommonToken commonToken)
+                {
+                    commonToken.StartIndex = commonToken.StartIndex + 1;
+                    commonToken.StopIndex = commonToken.StopIndex - 1;
+                }
+            }
+
+            public override object VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
+            {
+                UnQuoteToken(context.defaultValue);
+                return base.VisitMatcherPathLookup(context);
+            }
+
+            public override object VisitPathFixedValue([NotNull] UserAgentTreeWalkerParser.PathFixedValueContext context)
+            {
+                UnQuoteToken(context.value);
+                return base.VisitPathFixedValue(context);
+            }
+
+            public override object VisitMatcherConcat([NotNull] UserAgentTreeWalkerParser.MatcherConcatContext context)
+            {
+                UnQuoteToken(context.prefix);
+                UnQuoteToken(context.postfix);
+                return base.VisitMatcherConcat(context);
+            }
+
+            public override object VisitMatcherConcatPrefix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPrefixContext context)
+            {
+                UnQuoteToken(context.prefix);
+                return base.VisitMatcherConcatPrefix(context);
+            }
+
+            public override object VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context)
+            {
+                UnQuoteToken(context.postfix);
+                return base.VisitMatcherConcatPostfix(context);
+            }
+
+            public override object VisitStepEqualsValue([NotNull] UserAgentTreeWalkerParser.StepEqualsValueContext context)
+            {
+                UnQuoteToken(context.value);
+                return base.VisitStepEqualsValue(context);
+            }
+
+            public override object VisitStepNotEqualsValue([NotNull] UserAgentTreeWalkerParser.StepNotEqualsValueContext context)
+            {
+                UnQuoteToken(context.value);
+                return base.VisitStepNotEqualsValue(context);
+            }
+
+            public override object VisitStepStartsWithValue([NotNull] UserAgentTreeWalkerParser.StepStartsWithValueContext context)
+            {
+                UnQuoteToken(context.value);
+                return base.VisitStepStartsWithValue(context);
+            }
+
+            public override object VisitStepEndsWithValue([NotNull] UserAgentTreeWalkerParser.StepEndsWithValueContext context)
+            {
+                UnQuoteToken(context.value);
+                return base.VisitStepEndsWithValue(context);
+            }
+
+            public override object VisitStepContainsValue([NotNull] UserAgentTreeWalkerParser.StepContainsValueContext context)
+            {
+                UnQuoteToken(context.value);
+                return base.VisitStepContainsValue(context);
+            }
         }
     }
 }
