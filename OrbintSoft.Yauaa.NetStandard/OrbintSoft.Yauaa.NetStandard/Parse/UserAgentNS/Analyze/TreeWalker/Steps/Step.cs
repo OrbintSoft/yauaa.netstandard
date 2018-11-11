@@ -28,6 +28,7 @@ using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using System;
+using System.Reflection;
 using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
@@ -35,12 +36,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
     [Serializable]
     public abstract class Step
     {
-        internal static readonly ILog LOG = LogManager.GetLogger(typeof(Step));
-        private int stepNr;
-        protected string logprefix = "";
-        private Step nextStep;
+        internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        private int stepNr = 0;
+        protected string logprefix = "";
+        private Step nextStep = null;
+#if VERBOSE
+        protected bool verbose = true;
+#else
         protected bool verbose = false;
+#endif
 
         public void SetVerbose(bool newVerbose)
         {
@@ -70,20 +75,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 }
                 if (verbose)
                 {
-                    LOG.Info(string.Format("{0} Final (implicit) step: {1}", logprefix, res));
+                    Log.Info(string.Format("{0} Final (implicit) step: {1}", logprefix, res));
                 }
                 return new WalkList.WalkResult(tree, res);
             }
             if (verbose)
             {
-                LOG.Info(string.Format("{0} Tree: >>>{1}<<<", logprefix, AntlrUtils.GetSourceText((ParserRuleContext)tree)));
-                LOG.Info(string.Format("{0} Enter step({1}): {2}", logprefix, stepNr, nextStep));
+                Log.Info(string.Format("{0} Tree: >>>{1}<<<", logprefix, AntlrUtils.GetSourceText((ParserRuleContext)tree)));
+                Log.Info(string.Format("{0} Enter step({1}): {2}", logprefix, stepNr, nextStep));
             }
             WalkList.WalkResult result = nextStep.Walk(tree, value);
             if (verbose)
             {
-                LOG.Info(string.Format("{0} Result: >>>{1}<<<", logprefix, result == null ? "null" : result.ToString()));
-                LOG.Info(string.Format("{0} Leave step({1}): {2}", logprefix, result == null ? "-" : "+", nextStep));
+                Log.Info(string.Format("{0} Result: >>>{1}<<<", logprefix, result == null ? "null" : result.ToString()));
+                Log.Info(string.Format("{0} Leave step({1}): {2}", logprefix, result == null ? "-" : "+", nextStep));
             }
             return result;           
         }
