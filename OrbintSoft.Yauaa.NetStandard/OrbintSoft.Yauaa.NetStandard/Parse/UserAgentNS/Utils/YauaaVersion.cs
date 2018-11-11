@@ -115,10 +115,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             List<YamlNode> versionList = versionNode.Children.ToList();
             foreach (YamlNode versionEntry in versionList)
             {
-                if (!(versionEntry is YamlMappingNode))
-                {
-                    YamlUtils.Fail(versionEntry, filename, "The entry MUST be a mapping");
-                }
+                YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), versionEntry, filename, "The entry MUST be a mapping");
                 KeyValuePair<YamlNode, YamlNode> entry = YamlUtils.GetExactlyOneNodeTuple((YamlMappingNode)versionEntry, filename);
                 string key = YamlUtils.GetKeyAsString(entry, filename);
                 string value = YamlUtils.GetValueAsString(entry, filename);
