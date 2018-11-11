@@ -24,7 +24,6 @@
 
 using Antlr4.Runtime.Tree;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using System;
 using System.Collections.Generic;
 using System.IO;
 
