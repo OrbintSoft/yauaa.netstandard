@@ -290,12 +290,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 return null; // Void
             }
 
-            public override object VisitPathFixedValue([NotNull] UserAgentTreeWalkerParser.PathFixedValueContext context)
-            {
-                Add(new StepFixedString(context.value.Text));
-                return null; // Void
-            }
-
             public override object VisitPathWalk([NotNull] UserAgentTreeWalkerParser.PathWalkContext context)
             {
                 VisitNext(context.nextStep);
