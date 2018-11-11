@@ -22,14 +22,15 @@
  * All rights should be reserved to the original author Niels Basjes
  */
 
-using System;
-using System.Collections.Generic;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
 using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
 {
@@ -40,7 +41,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
     [Serializable]
     public class TreeExpressionEvaluator
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(TreeExpressionEvaluator));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly bool verbose;
 
         private readonly string requiredPatternText;
@@ -66,7 +67,38 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
             return fixedValue;
         }
 
-        private class DerivedUserAgentTreeWalkerBaseVisitor: UserAgentTreeWalkerBaseVisitor<string>
+        private string CalculateFixedValue(ParserRuleContext requiredPattern)
+        {
+            return new DerivedUserAgentTreeWalkerBaseVisitor(matcher).Visit(requiredPattern); 
+        }
+
+        public WalkList.WalkResult Evaluate(IParseTree tree, string key, string value)
+        {
+            if (verbose)
+            {
+                Log.Info(string.Format("Evaluate: {0} => {1}", key, value));
+                Log.Info(string.Format("Pattern : {0}", requiredPatternText));
+                Log.Info(string.Format("WalkList: {0}", walkList.ToString()));
+            }
+            WalkList.WalkResult result = walkList.Walk(tree, value);
+            if (verbose)
+            {
+                Log.Info(string.Format("Evaluate: Result = {0}", result == null ? "null" : result.GetValue()));
+            }
+            return result;
+        }
+
+        public bool UsesIsNull()
+        {
+            return walkList.UsesIsNull;            
+        }
+
+        public WalkList GetWalkListForUnitTesting()
+        {
+            return walkList;
+        }
+
+        private class DerivedUserAgentTreeWalkerBaseVisitor : UserAgentTreeWalkerBaseVisitor<string>
         {
             private readonly Matcher matcher;
             public DerivedUserAgentTreeWalkerBaseVisitor(Matcher matcher)
@@ -107,37 +139,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
             {
                 return ctx.value.Text;
             }
-        }
-
-        private string CalculateFixedValue(ParserRuleContext requiredPattern)
-        {
-            return new DerivedUserAgentTreeWalkerBaseVisitor(matcher).Visit(requiredPattern); 
-        }
-
-        public WalkList.WalkResult Evaluate(IParseTree tree, string key, string value)
-        {
-            if (verbose)
-            {
-                LOG.Info(string.Format("Evaluate: {0} => {1}", key, value));
-                LOG.Info(string.Format("Pattern : {0}", requiredPatternText));
-                LOG.Info(string.Format("WalkList: {0}", walkList.ToString()));
-            }
-            WalkList.WalkResult result = walkList.Walk(tree, value);
-            if (verbose)
-            {
-                LOG.Info(string.Format("Evaluate: Result = {0}", result == null ? "null" : result.GetValue()));
-            }
-            return result;
-        }
-
-        public bool UsesIsNull()
-        {
-            return walkList.UsesIsNull;            
-        }
-
-        public WalkList GetWalkListForUnitTesting()
-        {
-            return walkList;
         }
     }
 }

@@ -27,6 +27,7 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using YamlDotNet.RepresentationModel;
 
@@ -35,7 +36,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
     [Serializable]
     public class Matcher 
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(Matcher));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly IAnalyzer analyzer;
         private readonly List<MatcherVariableAction> variableActions;        
@@ -147,8 +148,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             if (verbose)
             {
-                LOG.Info("---------------------------");
-                LOG.Info("- MATCHER -");
+                Log.Info("---------------------------");
+                Log.Info("- MATCHER -");
             }
 
             if (!hasDefinedExtractConfigs)
@@ -167,7 +168,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 if (verbose)
                 {
-                    LOG.Info(string.Format("{0}: {1}", configLine.type, configLine.expression));
+                    Log.Info(string.Format("{0}: {1}", configLine.type, configLine.expression));
                 }
                 switch (configLine.type)
                 {
@@ -286,7 +287,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             if (verbose)
             {
-                LOG.Info("---------------------------");
+                Log.Info("---------------------------");
             }
         }
 
@@ -364,15 +365,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             if (verbose)
             {
-                LOG.Info("");
-                LOG.Info("--- Matcher ------------------------");
-                LOG.Info(" ANALYSE ----------------------------");
+                Log.Info("");
+                Log.Info("--- Matcher ------------------------");
+                Log.Info(" ANALYSE ----------------------------");
                 bool good = true;
                 foreach (MatcherAction action in dynamicActions)
                 {
                     if (action.CannotBeValid())
                     {
-                        LOG.Error(string.Format("CANNOT BE VALID : {0}", action.GetMatchExpression()));
+                        Log.Error(string.Format("CANNOT BE VALID : {0}", action.GetMatchExpression()));
                         good = false;
                     }
                 }
@@ -380,17 +381,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 {
                     if (!action.ObtainResult())
                     {
-                        LOG.Error(string.Format("FAILED : {0}", action.GetMatchExpression()));
+                        Log.Error(string.Format("FAILED : {0}", action.GetMatchExpression()));
                         good = false;
                     }
                 }
                 if (good)
                 {
-                    LOG.Info("COMPLETE ----------------------------");
+                    Log.Info("COMPLETE ----------------------------");
                 }
                 else
                 {
-                    LOG.Info("INCOMPLETE ----------------------------");
+                    Log.Info("INCOMPLETE ----------------------------");
                     return;
                 }
             }
