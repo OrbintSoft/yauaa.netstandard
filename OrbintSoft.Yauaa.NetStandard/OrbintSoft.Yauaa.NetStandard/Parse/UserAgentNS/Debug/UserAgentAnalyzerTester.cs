@@ -47,16 +47,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             LoadResources(resourceString, pattern);
         }
 
-        internal class TestResult
-        {
-            internal string field;
-            internal string expected;
-            internal string actual;
-            internal bool pass;
-            internal bool warn;
-            internal long confidence;
-        }
-
         public List<Dictionary<string, Dictionary<string, string>>> GetAllTestCases()
         {
             return testCases;
@@ -619,6 +609,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             {
                 return base.Build();
             }
+        }
+
+        internal class TestResult
+        {
+            internal string field;
+            internal string expected;
+            internal string actual;
+            internal bool pass;
+            internal bool warn;
+            internal long confidence;
         }
 
     }
