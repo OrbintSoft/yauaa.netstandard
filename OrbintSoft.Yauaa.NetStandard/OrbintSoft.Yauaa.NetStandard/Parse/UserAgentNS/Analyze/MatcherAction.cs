@@ -58,7 +58,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return evaluator;
         }
 
-
         private void SetVerbose(bool newVerbose)
         {
             SetVerbose(newVerbose, false);

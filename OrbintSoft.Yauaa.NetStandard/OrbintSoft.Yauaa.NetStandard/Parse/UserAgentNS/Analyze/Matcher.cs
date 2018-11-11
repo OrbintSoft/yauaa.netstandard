@@ -46,8 +46,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         // Used for error reporting: The filename and line number where the config was located.
         private readonly string matcherSourceLocation;
 
-        private long actionsThatRequireInput;
-        private List<MatcherAction> dynamicActions;
+        private long actionsThatRequireInput = 0;
+        private List<MatcherAction> dynamicActions = null;
 #if VERBOSE
         private bool verbose = true;
         private readonly bool permanentVerbose = true;

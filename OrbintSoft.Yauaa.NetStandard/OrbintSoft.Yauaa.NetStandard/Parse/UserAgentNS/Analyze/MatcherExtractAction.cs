@@ -22,25 +22,27 @@
  * All rights should be reserved to the original author Niels Basjes
  */
 
-using System;
 using Antlr4.Runtime;
 using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+using System;
+using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
     [Serializable]
     public class MatcherExtractAction: MatcherAction
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(MatcherExtractAction));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private readonly string attribute;
         private readonly long confidence;
+        private readonly string expression;
+
         private string foundValue = null;
         private string fixedValue = null;
-        private readonly string expression;
-        private UserAgent.AgentField resultAgentField;
+        private UserAgent.AgentField resultAgentField = null;
 
         public MatcherExtractAction(string attribute, long confidence, string config, Matcher matcher)
         {
@@ -69,7 +71,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             if (verbose)
             {
-                LOG.Info(string.Format("-- set Fixed value({0} , {1} , {2})", attribute, confidence, newFixedValue));
+                Log.Info(string.Format("-- set Fixed value({0} , {1} , {2})", attribute, confidence, newFixedValue));
             }
             fixedValue = newFixedValue;
         }
@@ -83,8 +85,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             if (verbose)
             {
-                LOG.Info(string.Format("INFO  : EXTRACT ({0}): {1}", attribute, key));
-                LOG.Info(string.Format("NEED  : EXTRACT ({0}): {1}", attribute, GetMatchExpression()));
+                Log.Info(string.Format("INFO  : EXTRACT ({0}): {1}", attribute, key));
+                Log.Info(string.Format("NEED  : EXTRACT ({0}): {1}", attribute, GetMatchExpression()));
             }
             /*
              * We know the tree is parsed from left to right.
@@ -96,7 +98,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 foundValue = newlyFoundValue.GetValue();
                 if (verbose)
                 {
-                    LOG.Info(string.Format("KEPT  : EXTRACT ({0}): {1}", attribute, key));
+                    Log.Info(string.Format("KEPT  : EXTRACT ({0}): {1}", attribute, key));
                 }
             }
         }
@@ -108,7 +110,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 if (verbose)
                 {
-                    LOG.Info(string.Format("Set fixedvalue ({0})[{1}]: {2}", attribute, confidence, fixedValue));
+                    Log.Info(string.Format("Set fixedvalue ({0})[{1}]: {2}", attribute, confidence, fixedValue));
                 }
                 resultAgentField.SetValueForced(fixedValue, confidence);
                 return true;
@@ -117,14 +119,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 if (verbose)
                 {
-                    LOG.Info(string.Format("Set parsevalue ({0})[{1}]: {2}", attribute, confidence, foundValue));
+                    Log.Info(string.Format("Set parsevalue ({0})[{1}]: {2}", attribute, confidence, foundValue));
                 }
                 resultAgentField.SetValueForced(foundValue, confidence);
                 return true;
             }
             if (verbose)
             {
-                LOG.Info(string.Format("Nothing found for {0}", attribute));
+                Log.Info(string.Format("Nothing found for {0}", attribute));
             }
             return false;
         }
