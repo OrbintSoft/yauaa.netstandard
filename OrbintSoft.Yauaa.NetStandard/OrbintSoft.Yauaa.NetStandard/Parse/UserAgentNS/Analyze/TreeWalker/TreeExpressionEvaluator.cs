@@ -81,7 +81,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
                 {
                     return null;
                 }
-                // No we know this is a fixed value. Yet we can have a problem in the lookup that was
+                // Now we know this is a fixed value. Yet we can have a problem in the lookup that was
                 // configured. If we have this then this is a FATAL error (it will fail always everywhere).
                 var lookups = matcher.GetLookups();
                 Dictionary<string, string> lookup = lookups.ContainsKey(context.lookup.Text) ? lookups[context.lookup.Text] : null;
