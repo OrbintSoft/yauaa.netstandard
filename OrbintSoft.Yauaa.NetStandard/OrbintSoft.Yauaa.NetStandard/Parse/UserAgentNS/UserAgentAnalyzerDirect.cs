@@ -1173,61 +1173,91 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        public void PreHeat()
+        /// <summary>
+        /// Runs all testcases once to heat up the JVM.
+        /// </summary>
+        /// <returns>
+        /// Number of actually done testcases.
+        /// </returns>
+        public long PreHeat()
         {
-            PreHeat(testCases.Count, true);
+            return PreHeat(testCases.Count, true);
         }
 
-        public void PreHeat(int preheatIterations)
+
+        /// <summary>
+        /// Runs the number of specified testcases to heat up the CLR.
+        /// </summary>
+        /// <param name="preheatIterations">
+        /// Number of desired tests to run.
+        /// </param>
+        /// <returns>
+        /// Number of actually done testcases.
+        /// </returns>
+        public long PreHeat(int preheatIterations)
         {
-            PreHeat(preheatIterations, true);
+            return PreHeat(preheatIterations, true);
         }
 
-        public void PreHeat(int preheatIterations, bool log)
+        private static readonly long MAX_PRE_HEAT_ITERATIONS = 1_000_000L;
+
+        /// <summary>
+        /// Runs the number of specified testcases to heat up the CLR.
+        /// </summary>
+        /// <param name="preheatIterations">
+        /// Number of desired tests to run.
+        /// </param>
+        /// <param name="log">
+        /// Enable logging?
+        /// </param>
+        /// <returns>
+        /// Number of actually done testcases.
+        /// </returns>
+        public long PreHeat(int preheatIterations, bool log)
         {
-            if (testCases.Count == 0 || preheatIterations == 0)
+            if (testCases.Count == 0)
             {
                 LOG.Warn("NO PREHEAT WAS DONE. Simply because there are no test cases available.");
+                return 0;
             }
-            else
+            if (preheatIterations <= 0)
             {
-                if (log)
+                LOG.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for {0} to run.", preheatIterations));
+                return 0;
+            }
+            if (preheatIterations > MAX_PRE_HEAT_ITERATIONS)
+            {
+                LOG.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for too many ({0} > {1}) to run.", preheatIterations, MAX_PRE_HEAT_ITERATIONS));
+                return 0;
+            }
+            if (log)
+            {
+                LOG.Info(string.Format("Preheating JVM by running {0} testcases.", preheatIterations));
+            }
+            long remainingIterations = preheatIterations;
+            long goodResults = 0;
+            while (remainingIterations > 0)
+            {
+                foreach (Dictionary<string, Dictionary<string, string>> test in testCases)
                 {
-                    LOG.Info(string.Format("Preheating CLR by running {0} testcases.", preheatIterations));
-                }
-                int remainingIterations = preheatIterations;
-                int goodResults = 0;
-                while (remainingIterations > 0)
-                {
-                    foreach (Dictionary<string, Dictionary<string, string>> test in testCases)
-                    {
-                        Dictionary<string, string> input = test["input"];
-                        if (input == null)
-                        {
-                            continue;
-                        }
-
-                        string userAgentString = input["user_agent_string"];
-                        if (userAgentString == null)
-                        {
-                            continue;
-                        }
-                        remainingIterations--;
-                        // Calculate and use result to guarantee not optimized away.
-                        if (!Parse(userAgentString).HasSyntaxError) {
-                            goodResults++;
-                        }
-                        if (remainingIterations <= 0)
-                        {
-                            break;
-                        }
+                    Dictionary<string, string> input = test["input"];
+                    string userAgentString = input["user_agent_string"];
+                    remainingIterations--;
+                    // Calculate and use result to guarantee not optimized away.
+                    if (!Parse(userAgentString).HasSyntaxError) {
+                        goodResults++;
                     }
-                }
-                if (log)
-                {
-                    LOG.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
+                    if (remainingIterations <= 0)
+                    {
+                        break;
+                    }                    
                 }
             }
+            if (log)
+            {
+                LOG.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
+            }
+            return preheatIterations;
         }
 
         // ===============================================================================================================
