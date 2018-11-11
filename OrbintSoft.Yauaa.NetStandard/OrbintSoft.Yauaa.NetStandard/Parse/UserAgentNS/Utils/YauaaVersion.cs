@@ -24,18 +24,19 @@
 
 
 using log4net;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using YamlDotNet.RepresentationModel;
-using System.Linq;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
     public sealed class YauaaVersion
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(YauaaVersion));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         private YauaaVersion()
         {
@@ -58,25 +59,25 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
                 width = Math.Max(width, line.Length);
             }
 
-            LOG.Info("");
-            LOG.Info(string.Format("/-{0}-\\", Padding('-', width)));
+            Log.Info("");
+            Log.Info(string.Format("/-{0}-\\", Padding('-', width)));
             LogLine(version, width);
-            LOG.Info(string.Format("+-{0}-+", Padding('-', width)));
+            Log.Info(string.Format("+-{0}-+", Padding('-', width)));
             foreach (string line in lines)
             {
                 LogLine(line, width);
             }
             if (extraLines.Length > 0)
             {
-                LOG.Info(string.Format("+-{0}-+", Padding('-', width)));
+                Log.Info(string.Format("+-{0}-+", Padding('-', width)));
                 foreach (string line in extraLines)
                 {
                     LogLine(line, width);
                 }
             }
 
-            LOG.Info(string.Format("\\-{0}-/", Padding('-', width)));
-            LOG.Info("");
+            Log.Info(string.Format("\\-{0}-/", Padding('-', width)));
+            Log.Info("");
         }
 
         private static string Padding(char letter, int count)
@@ -91,7 +92,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 
         private static void LogLine(string line, int width)
         {
-            LOG.Info(string.Format("| {0}{1} |", line, Padding(' ', width - line.Length)));
+            Log.Info(string.Format("| {0}{1} |", line, Padding(' ', width - line.Length)));
         }
 
         public static string GetVersion()
@@ -159,16 +160,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             string libraryVersion = GetVersion(libraryProjectVersion, libraryGitCommitIdDescribeShort, libraryBuildTimestamp);
             string rulesVersion = GetVersion(projectVersion, gitCommitIdDescribeShort, buildTimestamp);
 
-            LOG.Error("===============================================");
-            LOG.Error("==========        FATAL ERROR       ===========");
-            LOG.Error("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-            LOG.Error("");
-            LOG.Error("Two different Yauaa versions have been loaded:");
-            LOG.Error(string.Format("Runtime Library: {0}", libraryVersion));
-            LOG.Error(string.Format("Rule sets      : {0}", rulesVersion));
-            LOG.Error("");
-            LOG.Error("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-            LOG.Error("===============================================");
+            Log.Error("===============================================");
+            Log.Error("==========        FATAL ERROR       ===========");
+            Log.Error("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+            Log.Error("");
+            Log.Error("Two different Yauaa versions have been loaded:");
+            Log.Error(string.Format("Runtime Library: {0}", libraryVersion));
+            Log.Error(string.Format("Rule sets      : {0}", rulesVersion));
+            Log.Error("");
+            Log.Error("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+            Log.Error("===============================================");
 
             throw new InvalidParserConfigurationException("Two different Yauaa versions have been loaded: \n" +
                 "Runtime Library: " + libraryVersion + "\n" +
