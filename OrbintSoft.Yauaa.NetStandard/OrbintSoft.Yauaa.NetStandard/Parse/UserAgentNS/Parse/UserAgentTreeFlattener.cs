@@ -129,29 +129,35 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 
         private string Inform(IParseTree stateCtx, IParseTree ctx, string name, string value, bool fakeChild)
         {
-            State myState = new State(this, stateCtx, name);
-
-            if (!fakeChild && stateCtx != null)
+            string path = name;
+            if (stateCtx == null)
             {
-                state.Put(stateCtx, myState);
+                analyzer.Inform(path, value, ctx);
             }
-
-            PathType childType;
-            switch (name)
+            else
             {
-                case "comments":
-                    childType = PathType.COMMENT;
-                    break;
-                case "version":
-                    childType = PathType.VERSION;
-                    break;
-                default:
-                    childType = PathType.CHILD;
-                    break;
-            }
+                State myState = new State(this, stateCtx, name);
+                if (!fakeChild)
+                {
+                    state.Put(stateCtx, myState);
+                }
+                PathType childType;
+                switch (name)
+                {
+                    case "comments":
+                        childType = PathType.COMMENT;
+                        break;
+                    case "version":
+                        childType = PathType.VERSION;
+                        break;
+                    default:
+                        childType = PathType.CHILD;
+                        break;
+                }
 
-            string path = myState.CalculatePath(childType, fakeChild);
-            analyzer.Inform(path, value, ctx);
+                path = myState.CalculatePath(childType, fakeChild);
+                analyzer.Inform(path, value, ctx);
+            }
             return path;
         }
 
