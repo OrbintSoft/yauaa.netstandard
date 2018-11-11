@@ -2,20 +2,22 @@ Yauaa: Yet Another UserAgent Analyzer
 ========================================
 This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.
 
-You can see here the original project: https://github.com/nielsbasjes/yauaa
+You can see the original project at this link: https://github.com/nielsbasjes/yauaa
 
 A bit more background about this useragent parser can be found in this blog which the author Niels Basjes wrote about it: [https://techlab.bol.com/making-sense-user-agent-string/](https://partnerprogramma.bol.com/click/click?p=1&t=url&s=2171&f=TXL&url=https%3A%2F%2Ftechlab.bol.com%2Fmaking-sense-user-agent-string%2F&name=yauaa)
 
 The Java documentation can be found here https://yauaa.basjes.nl, soon will be provided a .NET documentation specific for this project
 
-STATUS: Now in Beta, let's try it
+You can download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
+
+STATUS: 5.2-beta.2 latest stable, 5.3-alpha.1 in progress
 =========
 
-The library is almost ready to target the equivalent 5.2 Java version, all tests passes.
+You can consider the version 5.2-beta.2 stable and equivalent to the same 5.2 Java version in functionalities, for all features that are covered by unit testings.
 
-You can finally download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
+I can't release the version 5.2 as stable because I am planning a major code refactoring that will break the compabilities with public API.
 
-Soon I release a beta, but a lot of work is still needed to do:
+A stable version will be relased as soon as I complete the following tasks:
 
 * Improve performance
 * Add more tests
@@ -25,6 +27,15 @@ Soon I release a beta, but a lot of work is still needed to do:
 
 Consider to contribute to the project to release soon a stable version
 
+**Why 5.3-alpha before 5.2 stable?**
+
+I am working on this project alone, and every day new user agents coming out, I don't want let be a too huge gab between Java and .NET version, so keep this library updated is a priority.
+
+However you can consider the code of 5.2-beta.2 stable even if not perfect.
+
+**5.3-alpha.1**
+
+All code has been upgrated to target 5.3 Java version, but the library is not yet covered by unit testings, so I can't tell if stable, but all tests with all predefiniote browsers works correctly. 
 
 Example output
 ==============
@@ -63,11 +74,15 @@ You can try online the Java version with your own browser here: [https://try.yau
 
 Soon will be available  a test with .NET library
 
+Meanwhile, don't forget to download the .nuget package to try by yourself:  https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
+
 **NOTES**
 
 1. This runs under a "Free quota" on Google AppEngine. If this quota is exceeded then it will simply become unavailable for that day.
 2. After a while of inactivity the instance is terminated so the first page may take 15-30 seconds to load.
 3. If you really like this then run it on your local systems. It's much faster that way.
+
+
 
 Contribute
 ===
