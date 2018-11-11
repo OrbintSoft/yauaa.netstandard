@@ -29,7 +29,7 @@ Consider to contribute to the project to release soon a stable version
 
 **Why 5.3-alpha before 5.2 stable?**
 
-I am working on this project alone, and every day new user agents coming out, I don't want let it be a too huge gap between Java and .NET version, so keep this library updated is a priority.
+I am working on this project alone, and every day new user agents come out, I don't want let it be a too huge gap between Java and .NET version, so keep this library updated is a priority.
 
 However you can consider the code of 5.2-beta.2 stable even if not perfect.
 
