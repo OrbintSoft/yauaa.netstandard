@@ -23,23 +23,23 @@
  */
 
 using log4net;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 {
     public class UserAgentAnnotationAnalyzer<T> where T: class
     {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        private readonly IDictionary<string, List<MethodInfo>> fieldSetters = new Dictionary<string, List<MethodInfo>>();
+
         private IUserAgentAnnotationMapper<T> mapper = null;
-        private UserAgentAnalyzer userAgentAnalyzer = null;
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgentAnnotationAnalyzer<T>));
-
-        private readonly Dictionary<string, List<MethodInfo>> fieldSetters = new Dictionary<string, List<MethodInfo>>();
-
-
+        private UserAgentAnalyzer userAgentAnalyzer = null;        
+        
         public void Initialize(IUserAgentAnnotationMapper<T> theMapper)
         {
             mapper = theMapper;
@@ -77,7 +77,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
                             string methodName =
                                 method.ReturnType.Name + " " +
                                     method.Name + "(" + parameters[0].Name + " ," + parameters[1].Name + ");";
-                            LOG.Warn(string.Format("Trying to make anonymous {0} {1} accessible.", theMapper.GetType().Name, methodName));
+                            Log.Warn(string.Format("Trying to make anonymous {0} {1} accessible.", theMapper.GetType().Name, methodName));
                             //method.setAccessible(true); NOT POSSIBLE IN C#
                         }
 
