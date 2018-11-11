@@ -129,9 +129,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 switch (name) {
                     case "options":
                         List<string> options = YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation);
-                        if (options != null) {
-                            verbose = options.Contains("verbose");
-                        }
+                        verbose = options.Contains("verbose");                        
                         break;
                     case "variable":
                         foreach (string variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation)) {
