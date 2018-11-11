@@ -57,6 +57,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             internal long confidence;
         }
 
+        public List<Dictionary<string, Dictionary<string, string>>> GetAllTestCases()
+        {
+            return testCases;
+        }
+
         /// <summary>
         /// Run all the test_cases available.
         /// </summary>
