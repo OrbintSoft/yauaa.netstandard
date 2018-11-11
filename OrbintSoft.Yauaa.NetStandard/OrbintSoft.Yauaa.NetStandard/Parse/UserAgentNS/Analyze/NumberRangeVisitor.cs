@@ -64,14 +64,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private static int GetMaxRange(UserAgentTreeWalkerParser.NumberRangeContext ctx)
         {
             RuleContext parent = ctx.Parent;
-            if (!(parent is UserAgentTreeWalkerParser.StepDownContext)) {
-                return DEFAULT_MAX;
-            }
+            // The antlr rules force this to always be true.
+            //if (!(parent is UserAgentTreeWalkerParser.StepDownContext)) {
+            //    return DEFAULT_MAX;
+            //}
             string name = ((UserAgentTreeWalkerParser.StepDownContext)parent).name.Text;
-            if (name == null)
-            {
-                return DEFAULT_MAX;
-            }
             int? maxRange = MAX_RANGE.ContainsKey(name) ? (int?) MAX_RANGE[name] : null;
             if (maxRange == null)
             {
