@@ -38,11 +38,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName);
 
         void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix);
-        /// <summary>
-        /// return Collections.emptySet();
-        /// </summary>
-        /// <param name="treeName"></param>
-        /// <returns></returns>
+
         ISet<int?> GetRequiredPrefixLengths(string treeName);
     }
 }
