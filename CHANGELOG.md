@@ -3,7 +3,8 @@ This is intended as an overview of the major changes
 v5.3
 ===
 - Target equivalent Java 5.3 Version
-- Refactoring of code to make more C# like, inprove readibility and performance
+
+- 
 
 
 v5.2-beta.2
