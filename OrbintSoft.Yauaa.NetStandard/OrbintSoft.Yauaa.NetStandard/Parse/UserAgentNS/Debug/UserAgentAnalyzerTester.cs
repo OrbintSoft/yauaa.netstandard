@@ -27,6 +27,7 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
@@ -34,7 +35,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
     [Serializable]
     public class UserAgentAnalyzerTester: UserAgentAnalyzer
     {
-        private static readonly ILog LOG = LogManager.GetLogger(typeof(UserAgentAnalyzerTester));
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public UserAgentAnalyzerTester():base()
         {
@@ -117,9 +118,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
             if (showPassedTests)
             {
-                LOG.Info("+===========================================================================================");
-                LOG.Info(sb.ToString());
-                LOG.Info("+-------------------------------------------------------------------------------------------");
+                Log.Info("+===========================================================================================");
+                Log.Info(sb.ToString());
+                Log.Info("+-------------------------------------------------------------------------------------------");
             }
 
             int testcount = 0;
@@ -242,17 +243,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
                 if (init)
                 {
-                    LOG.Info(testLogLine);
+                    Log.Info(testLogLine);
                     sb.Append(agent.ToYamlTestCase());
-                    LOG.Info(sb.ToString());
+                    Log.Info(sb.ToString());
                     //                return allPass;
                 }
                 else
                 {
                     if (expected == null)
                     {
-                        LOG.Info(testLogLine);
-                        LOG.Warn("| - No expectations ... ");
+                        Log.Info(testLogLine);
+                        Log.Warn("| - No expectations ... ");
                         continue;
                     }
                 }
@@ -364,24 +365,24 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                 {
                     if (showPassedTests)
                     {
-                        LOG.Info(testLogLine);
+                        Log.Info(testLogLine);
                     }
                     continue;
                 }
 
                 if (!pass)
                 {
-                    LOG.Info(testLogLine);
-                    LOG.Error("| TEST FAILED !");
+                    Log.Info(testLogLine);
+                    Log.Error("| TEST FAILED !");
                 }
 
                 if (agent.HasAmbiguity)
                 {
-                    LOG.Info(string.Format("| Parsing problem: Ambiguity {0} times. ", agent.AmbiguityCount));
+                    Log.Info(string.Format("| Parsing problem: Ambiguity {0} times. ", agent.AmbiguityCount));
                 }
                 if (agent.HasSyntaxError)
                 {
-                    LOG.Info("| Parsing problem: Syntax Error");
+                    Log.Info("| Parsing problem: Syntax Error");
                 }
 
                 if (init || !pass)
@@ -415,7 +416,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                     sb.Append("#    - 'AgentVersion                        :      1 :' \n");
                     sb.Append('\n');
                     sb.Append('\n');
-                    LOG.Info(sb.ToString());
+                    Log.Info(sb.ToString());
                 }
 
                 sb.Length = 0;
@@ -437,7 +438,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                 sb.Append("-+");
 
                 string separator = sb.ToString();
-                LOG.Info(separator);
+                Log.Info(separator);
 
                 sb.Length = 0;
                 sb.Append("| Result | Field ");
@@ -457,9 +458,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                 }
                 sb.Append(" |");
 
-                LOG.Info(sb.ToString());
+                Log.Info(sb.ToString());
 
-                LOG.Info(separator);
+                Log.Info(separator);
 
                 Dictionary<string, string> failComments = new Dictionary<string, string>();
 
@@ -508,7 +509,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                             sb.Append(' ');
                         }
                         sb.Append(" |");
-                        LOG.Info(sb.ToString());
+                        Log.Info(sb.ToString());
                     }
                     else
                     {
@@ -520,22 +521,22 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                         sb.Append(" |");
                         if (result.warn)
                         {
-                            LOG.Warn(sb.ToString());
+                            Log.Warn(sb.ToString());
                         }
                         else
                         {
-                            LOG.Error(sb.ToString());
+                            Log.Error(sb.ToString());
                         }
                     }
                 }
 
-                LOG.Info(separator);
-                LOG.Info("");
+                Log.Info(separator);
+                Log.Info("");
 
-                LOG.Info(agent.ToMatchTrace(failedFieldNames));
+                Log.Info(agent.ToMatchTrace(failedFieldNames));
 
-                LOG.Info("\n\nconfig:\n" + agent.ToYamlTestCase(!init, failComments));
-                LOG.Info(string.Format("Location of failed test.({0}:{1})", filename, linenumber));
+                Log.Info("\n\nconfig:\n" + agent.ToYamlTestCase(!init, failComments));
+                Log.Info(string.Format("Location of failed test.({0}:{1})", filename, linenumber));
                 if (!pass && !showAll)
                 {
                     //                LOG.info("+===========================================================================================");
@@ -549,11 +550,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
             if (showPassedTests)
             {
-                LOG.Info("+===========================================================================================");
+                Log.Info("+===========================================================================================");
             }
             else
             {
-                LOG.Info(string.Format("All {0} tests passed", testcount));
+                Log.Info(string.Format("All {0} tests passed", testcount));
             }
             return allPass;
         }
