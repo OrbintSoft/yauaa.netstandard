@@ -405,9 +405,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 agentField.SetValue(userAgentString, 0L);
                 return agentField;
             }
-            else
+            else if (fieldName != null)
             {
                 return allFields.ContainsKey(fieldName) ? allFields[fieldName] : null;
+            }
+            else
+            {
+                return null;
             }
         }
 
