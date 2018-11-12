@@ -1,9 +1,9 @@
-﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
-using Xunit;
-using FluentAssertions;
+﻿using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
 using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+using Xunit;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
