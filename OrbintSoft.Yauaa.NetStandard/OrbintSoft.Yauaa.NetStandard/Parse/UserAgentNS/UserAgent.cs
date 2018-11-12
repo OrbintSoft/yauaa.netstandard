@@ -366,9 +366,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         public void SetForced(string attribute, string value, long confidence)
         {
-            AgentField field = allFields[attribute];
-            if (field == null)
+            AgentField field;
+            if (allFields.ContainsKey(attribute))
             {
+                field = allFields[attribute];
+            } else {
                 field = new AgentField(null); // The fields we do not know get a 'null' default
             }
 
