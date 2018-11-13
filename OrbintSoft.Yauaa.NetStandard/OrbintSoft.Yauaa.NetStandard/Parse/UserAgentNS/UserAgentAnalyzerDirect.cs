@@ -1192,7 +1192,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>
         /// Number of actually done testcases.
         /// </returns>
-        public long PreHeat(int preheatIterations)
+        public long PreHeat(long preheatIterations)
         {
             return PreHeat(preheatIterations, true);
         }
@@ -1211,7 +1211,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>
         /// Number of actually done testcases.
         /// </returns>
-        public long PreHeat(int preheatIterations, bool log)
+        public long PreHeat(long preheatIterations, bool log)
         {
             if (testCases.Count == 0)
             {
