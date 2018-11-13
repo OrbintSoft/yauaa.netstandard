@@ -9,7 +9,7 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.3-alpha.2</Version>
+    <Version>5.3-alpha.3</Version>
 
     <AssemblyVersion>5.3.0.3</AssemblyVersion>
 
