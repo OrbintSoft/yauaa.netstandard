@@ -278,7 +278,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.PreHeat(-1).Should().Be(0);
             userAgentAnalyzer.PreHeat(1000000000L).Should().Be(0);
 
-            userAgentAnalyzer.DropTests().Should().Be(0);
+            userAgentAnalyzer.DropTests();
             userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
             userAgentAnalyzer.PreHeat().Should().Be(0);
         }
