@@ -144,10 +144,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
                     .HideMatcherLoadStats()
                     .DropDefaultResources()
                     .AddResources("YamlResources", "CompanyInternalUserAgents.yaml")
-                    .WithField("ApplicationName")
-                    .WithField("ApplicationVersion")
-                    .WithField("ApplicationInstance")
-                    .WithField("ApplicationGitCommit")
+                    .WithFields("ApplicationName", "ApplicationVersion")
+                    .WithFields("ApplicationInstance", "ApplicationGitCommit")
                     .WithField("ServerName")
                     .Build();
 
@@ -238,6 +236,27 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
                     .WithField("AgentName")
                     .Build();
             userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
+        }
+
+        [Fact]
+        public void TestPreheatNoTests()
+        {
+            UserAgentAnalyzer userAgentAnalyzer =
+                UserAgentAnalyzer
+                    .NewBuilder()
+                    .KeepTests()
+                    .HideMatcherLoadStats()
+                    .WithField("AgentName")
+                    .Build();
+
+            userAgentAnalyzer.GetNumberOfTestCases().Should().BeGreaterThan(100);
+            userAgentAnalyzer.PreHeat(0).Should().Be(0);
+            userAgentAnalyzer.PreHeat(-1).Should().Be(0);
+            userAgentAnalyzer.PreHeat(1000000000L).Should().Be(0);
+
+            userAgentAnalyzer.DropTests().Should().Be(0);
+            userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
+            userAgentAnalyzer.PreHeat().Should().Be(0);
         }
 
     }
