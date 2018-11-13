@@ -1,9 +1,33 @@
-﻿using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
-using Xunit;
+﻿/*
+ * Yet Another UserAgent Analyzer .NET Standard
+ * Porting realized by Balzarotti Stefano, Copyright (C) OrbintSoft
+ * 
+ * Original Author and License:
+ * 
+ * Yet Another UserAgent Analyzer
+ * Copyright (C) 2013-2018 Niels Basjes
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * All rights should be reserved to the original author Niels Basjes
+ */
+
 using FluentAssertions;
-using System.Collections.Generic;
-using System;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+using System;
+using System.Collections.Generic;
+using Xunit;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
@@ -14,12 +38,34 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         {
             string value = "";
             Splitter splitter = VersionSplitter.GetInstance();
+            splitter.GetSingleSplit(value, -5).Should().BeNull();
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
             splitter.GetSingleSplit(value, 0).Should().BeNull();
             splitter.GetSingleSplit(value, 1).Should().BeNull();
             splitter.GetSingleSplit(value, 2).Should().BeNull();
 
+            splitter.GetFirstSplits(value, -5).Should().BeNull();
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
             splitter.GetFirstSplits(value, 0).Should().BeNull();
             splitter.GetFirstSplits(value, 1).Should().BeNull();
+            splitter.GetFirstSplits(value, 2).Should().BeNull();
+        }
+
+        [Fact]
+        public void VersionSplitterOne()
+        {
+            string value = "123";
+            Splitter splitter = VersionSplitter.GetInstance();
+            splitter.GetSingleSplit(value, -5).Should().BeNull();
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
+            splitter.GetSingleSplit(value, 0).Should().BeNull();
+            splitter.GetSingleSplit(value, 1).Should().Be("123");
+            splitter.GetSingleSplit(value, 2).Should().BeNull();
+
+            splitter.GetFirstSplits(value, -5).Should().BeNull();
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
+            splitter.GetFirstSplits(value, 0).Should().BeNull();
+            splitter.GetFirstSplits(value, 1).Should().Be("123");
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
@@ -29,12 +75,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             string value = "1.2.3";
             Splitter splitter = VersionSplitter.GetInstance();
 
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
             splitter.GetSingleSplit(value, 0).Should().BeNull();
             splitter.GetSingleSplit(value, 1).Should().Be("1");
             splitter.GetSingleSplit(value, 2).Should().Be("2");
             splitter.GetSingleSplit(value, 3).Should().Be("3");
             splitter.GetSingleSplit(value, 4).Should().BeNull();
 
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
             splitter.GetFirstSplits(value, 0).Should().BeNull();
             splitter.GetFirstSplits(value, 1).Should().Be("1");
             splitter.GetFirstSplits(value, 2).Should().Be("1.2");
@@ -48,12 +96,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             string value = "1_2_3";
             Splitter splitter = VersionSplitter.GetInstance();
 
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
             splitter.GetSingleSplit(value, 0).Should().BeNull();
             splitter.GetSingleSplit(value, 1).Should().Be("1");
             splitter.GetSingleSplit(value, 2).Should().Be("2");
             splitter.GetSingleSplit(value, 3).Should().Be("3");
             splitter.GetSingleSplit(value, 4).Should().BeNull();
 
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
             splitter.GetFirstSplits(value, 0).Should().BeNull();
             splitter.GetFirstSplits(value, 1).Should().Be("1");
             splitter.GetFirstSplits(value, 2).Should().Be("1_2");
@@ -67,12 +117,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             string value = "1_2.3";
             Splitter splitter = VersionSplitter.GetInstance();
 
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
             splitter.GetSingleSplit(value, 0).Should().BeNull();
             splitter.GetSingleSplit(value, 1).Should().Be("1");
             splitter.GetSingleSplit(value, 2).Should().Be("2");
             splitter.GetSingleSplit(value, 3).Should().Be("3");
             splitter.GetSingleSplit(value, 4).Should().BeNull();
 
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
             splitter.GetFirstSplits(value, 0).Should().BeNull();
             splitter.GetFirstSplits(value, 1).Should().Be("1");
             splitter.GetFirstSplits(value, 2).Should().Be("1_2");
@@ -86,12 +138,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             string value = "1.2_3";
             Splitter splitter = VersionSplitter.GetInstance();
 
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
             splitter.GetSingleSplit(value, 0).Should().BeNull();
             splitter.GetSingleSplit(value, 1).Should().Be("1");
             splitter.GetSingleSplit(value, 2).Should().Be("2");
             splitter.GetSingleSplit(value, 3).Should().Be("3");
             splitter.GetSingleSplit(value, 4).Should().BeNull();
 
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
             splitter.GetFirstSplits(value, 0).Should().BeNull();
             splitter.GetFirstSplits(value, 1).Should().Be("1");
             splitter.GetFirstSplits(value, 2).Should().Be("1.2");
@@ -130,6 +184,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         {
             string value = "1.2.3.4.5";
             Splitter splitter = VersionSplitter.GetInstance();
+
+            // Bad values
+            splitter.GetSplitRange(value, 4, 2).Should().BeNull();
+            splitter.GetSplitRange(null, 2, 3).Should().BeNull();
 
             // Single version
             splitter.GetSplitRange(value, 0, 0).Should().BeNull();
@@ -172,12 +230,34 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         {
             string value = "";
             Splitter splitter = WordSplitter.GetInstance();
+            splitter.GetSingleSplit(value, -5).Should().BeNull();
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
             splitter.GetSingleSplit(value, 0).Should().BeNull();
             splitter.GetSingleSplit(value, 1).Should().BeNull();
             splitter.GetSingleSplit(value, 2).Should().BeNull();
 
+            splitter.GetFirstSplits(value, -5).Should().BeNull();
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
             splitter.GetFirstSplits(value, 0).Should().BeNull();
             splitter.GetFirstSplits(value, 1).Should().BeNull();
+            splitter.GetFirstSplits(value, 2).Should().BeNull();
+        }
+
+        [Fact]
+        public void WordSplitterOne()
+        {
+            string value = "word";
+            Splitter splitter = WordSplitter.GetInstance();
+            splitter.GetSingleSplit(value, -5).Should().BeNull();
+            splitter.GetSingleSplit(value, -1).Should().BeNull();
+            splitter.GetSingleSplit(value, 0).Should().BeNull();
+            splitter.GetSingleSplit(value, 1).Should().Be("word");
+            splitter.GetSingleSplit(value, 2).Should().BeNull();
+
+            splitter.GetFirstSplits(value, -5).Should().BeNull();
+            splitter.GetFirstSplits(value, -1).Should().BeNull();
+            splitter.GetFirstSplits(value, 0).Should().BeNull();
+            splitter.GetFirstSplits(value, 1).Should().Be("word");
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
@@ -272,6 +352,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             Splitter splitter = WordSplitter.GetInstance();
 
             List<Tuple<int, int>> splitList = splitter.CreateSplitList(value);
+
+            // Illegal values
+            splitter.GetSplitRange(value, splitList, -5, 0).Should().BeNull();
+            splitter.GetSplitRange(value, splitList, 0, -5).Should().BeNull();
+            splitter.GetSplitRange(value, splitList, -5, -5).Should().BeNull();
 
             // Single word
             splitter.GetSplitRange(value, splitList, 0, 0).Should().BeNull();
