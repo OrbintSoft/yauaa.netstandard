@@ -78,8 +78,22 @@
     <None Remove="YamlResources\SubStringVersion-tests.yaml" />
     <None Remove="YamlResources\Variable-tests.yaml" />
     <None Remove="YamlResources\Versions\BadVersion.yaml" />
+    <None Remove="YamlResources\Versions\BadVersionNotMap.yaml" />
     <None Remove="YamlResources\Versions\DifferentVersion.yaml" />
     <None Remove="YamlResources\Walking-tests.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\BadConfig1.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\BadConfig2.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\Empty.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\InputAbsent.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\InputNotString.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\KeyNotString.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\NotAMap.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\NotAMapFile.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\NotSingle.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\NotStringList1.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\NotStringList2.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\ParseError.yaml" />
+    <None Remove="YamlResources\YamlParsingTests\TopNotConfig.yaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -200,10 +214,52 @@
     <Content Include="YamlResources\Versions\BadVersion.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="YamlResources\Versions\BadVersionNotMap.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="YamlResources\Versions\DifferentVersion.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\Walking-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\BadConfig1.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\BadConfig2.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\Empty.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\InputAbsent.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\InputNotString.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\KeyNotString.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\NotAMap.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\NotAMapFile.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\NotSingle.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\NotStringList1.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\NotStringList2.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\ParseError.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\YamlParsingTests\TopNotConfig.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

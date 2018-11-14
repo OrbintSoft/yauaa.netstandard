@@ -57,7 +57,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             .Build();
 
             Action a = new Action(() => uaa.LoadResources("YamlResources/Versions", "BadVersionNotMap.yaml"));
-            a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("The value should be a string but it is a sequence"));
+            a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("The value should be a string but it is a Sequence"));
         }
 
     [Fact]
