@@ -10,12 +10,12 @@ The Java documentation can be found here https://yauaa.basjes.nl, soon will be p
 
 You can download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
 
-STATUS: 5.2-beta.2 latest stable, 5.3-alpha.x in progress
+STATUS: 5.3-beta.x latest stable
 =========
 
-You can consider the version 5.2-beta.2 stable and equivalent to the same 5.2 Java version in functionalities, for all features that are covered by unit testings.
+You can consider this version stable and equivalent to the same 5.3 Java version in features
 
-I can't release the version 5.2 as stable because I am planning a major code refactoring that will break the compabilities with public API.
+I can't release the version 5.3 as stable because I am planning a major code refactoring that will break the compabilities with public API.
 
 A stable version will be relased as soon as I complete the following tasks:
 
@@ -26,16 +26,6 @@ A stable version will be relased as soon as I complete the following tasks:
 * Add documenation
 
 Consider to contribute to the project to release soon a stable version
-
-**Why 5.3-alpha before 5.2 stable?**
-
-I am working on this project alone, and every day new user agents come out, I don't want let it be a too huge gap between Java and .NET version, so keep this library updated is a priority.
-
-However you can consider the code of 5.2-beta.2 stable even if not perfect.
-
-**5.3-alpha.x**
-
-All code has been upgrated to target 5.3 Java version, but the library is not yet fully covered by unit testings, so I can't tell if stable, but all tests with common predefinite browsers works correctly. 
 
 Example output
 ==============
