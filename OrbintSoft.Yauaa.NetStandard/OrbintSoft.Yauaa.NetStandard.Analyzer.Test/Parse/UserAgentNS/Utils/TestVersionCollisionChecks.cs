@@ -38,6 +38,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
         {
            UserAgentAnalyzer uaa = UserAgentAnalyzer
             .NewBuilder()
+            .DropDefaultResources()
             .DelayInitialization()
             .Build();
 
@@ -46,6 +47,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
         }
 
         [Fact]
+        public void TestBadVersionNotMap()
+        {
+
+            UserAgentAnalyzer uaa = UserAgentAnalyzer
+            .NewBuilder()
+            .DropDefaultResources()
+            .DelayInitialization()
+            .Build();
+
+            Action a = new Action(() => uaa.LoadResources("YamlResources/Versions", "BadVersionNotMap.yaml"));
+            a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("The value should be a string but it is a sequence"));
+        }
+
+    [Fact]
         public void TestDifferentVersion()
         {
             UserAgentAnalyzer uaa = UserAgentAnalyzer
