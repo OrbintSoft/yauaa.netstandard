@@ -36,6 +36,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
@@ -204,6 +205,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             foreach (KeyValuePair<string, FileInfo> resourceEntry in resources)
             {
+                string filename = resourceEntry.Value.Name;
                 try
                 {
                     using (var reader = new StreamReader(resourceEntry.Value.FullName))
@@ -213,11 +215,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                         yamlStream.Load(reader);
                         yaml = yamlStream.Documents.FirstOrDefault();
                     }
-
-
-                    string filename = resourceEntry.Value.Name;
+                    
                     maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
                     LoadResource(yaml, filename);
+                }
+                catch (SyntaxErrorException e)
+                {
+                    throw new InvalidParserConfigurationException("Parse error in the file " + filename + ": " + e.Message, e);
                 }
                 catch (Exception e)
                 {
@@ -737,7 +741,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             foreach (YamlNode configEntry in configList)
             {
-                YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), loadedYaml, filename, "The entry MUST be a mapping");
+                YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), configEntry, filename, "The entry MUST be a mapping");
 
                 KeyValuePair<YamlNode, YamlNode> entry = YamlUtils.GetExactlyOneNodeTuple((YamlMappingNode)configEntry, filename);
                 YamlMappingNode actualEntry = YamlUtils.GetValueAsMappingNode(entry, filename);
