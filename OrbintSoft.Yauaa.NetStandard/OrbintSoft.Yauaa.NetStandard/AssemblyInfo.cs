@@ -24,6 +24,8 @@
 //<date>2018, 10, 15, 20:12</date>
 //<summary></summary>
 
+using System;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("OrbintSoft.Yauaa.NetCore.Analyzer.Test")]
+[assembly: CLSCompliant(false)]
