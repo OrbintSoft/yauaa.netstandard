@@ -106,9 +106,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
                 {
                     result = HttpUtility.UrlDecode(result, Encoding.UTF8);
                 }
-                catch (Exception  e) {
-                    // UnsupportedEncodingException: Can't happen because the UTF-8 is hardcoded here.
-                    // IllegalArgumentException: Probably bad % encoding in there somewhere.
+                catch (Exception) {
                     // Ignore and continue.
                 }
             }

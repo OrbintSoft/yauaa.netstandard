@@ -1090,7 +1090,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     Uri url = new Uri(hostname);
                     hostname = url.Host;
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // Ignore any exception and continue.
                 }
