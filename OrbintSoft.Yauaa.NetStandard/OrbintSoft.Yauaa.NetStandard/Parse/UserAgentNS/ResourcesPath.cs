@@ -28,9 +28,25 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
     public class ResourcesPath
     {
+        /// <summary>
+        /// Relative or absolute path to the directory where resource files are stored
+        /// </summary>
         public string Directory { get; }
+        /// <summary>
+        /// A search pattern to load only files that correspond to a provided criteria, useful also to load only one file
+        /// </summary>
         public string Filter { get; }
 
+        /// <summary>
+        /// Identinfy a set of resources based on direcory and a provided filter
+        /// </summary>
+        /// <param name="directory">
+        /// Relative or absolute path to the directory where resource files are stored
+        /// </param>
+        /// <param name="filter">
+        /// A search pattern to load only files that correspond to a provided criteria, useful also to load only one file
+        /// Default = *.yaml
+        /// </param>
         public ResourcesPath(string directory, string filter = ".yaml")
         {
             Directory = directory;
