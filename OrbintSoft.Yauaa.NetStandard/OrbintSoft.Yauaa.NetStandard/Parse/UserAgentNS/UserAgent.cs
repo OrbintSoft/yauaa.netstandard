@@ -177,7 +177,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public UserAgent(string userAgentString)
         {
             Init();
-            SetUserAgentString(userAgentString);
+            UserAgentString = userAgentString;
         }
 
         public UserAgent(UserAgent userAgent)
@@ -188,6 +188,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public bool HasSyntaxError { get; private set; }
         public bool HasAmbiguity { get; private set; }
         public int AmbiguityCount { get; private set; }
+
+        public string UserAgentString
+        {
+            get
+            {
+                return userAgentString;
+            }
+            set
+            {
+                userAgentString = value;
+                Reset();
+            }
+        }
 
         public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
@@ -258,7 +271,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
             Init();
             debug = userAgent.debug;
-            SetUserAgentString(userAgent.userAgentString);
+            UserAgentString = userAgent.userAgentString;
 
             foreach (var entry in userAgent.allFields)
             {
@@ -267,42 +280,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             HasSyntaxError = userAgent.HasSyntaxError;
             HasAmbiguity = userAgent.HasAmbiguity;
             AmbiguityCount = userAgent.AmbiguityCount;
-        }
-
-        private void Init()
-        {
-            // Device : Family - Brand - Model
-            allFields[DEVICE_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Cloud / Server / Desktop / Tablet / Phone / Watch
-            allFields[DEVICE_BRAND] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
-            allFields[DEVICE_NAME] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
-
-            // Operating system
-            allFields[OPERATING_SYSTEM_CLASS] = new AgentField(UNKNOWN_VALUE); // Cloud, Desktop, Mobile, Embedded
-            allFields[OPERATING_SYSTEM_NAME] = new AgentField(UNKNOWN_VALUE); // ( Linux / Android / Windows ...)
-            allFields[OPERATING_SYSTEM_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-
-            // Engine : Class (=None/Hacker/Robot/Browser) - Name - Version
-            allFields[LAYOUT_ENGINE_CLASS] = new AgentField(UNKNOWN_VALUE); // None / Hacker / Robot / Browser /
-            allFields[LAYOUT_ENGINE_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / (Trident / Gecko / ...)
-            allFields[LAYOUT_ENGINE_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            allFields[LAYOUT_ENGINE_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
-
-            // Agent: Class (=Hacker/Robot/Browser) - Name - Version
-            allFields[AGENT_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Robot / Browser /
-            allFields[AGENT_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / ( Firefox / Chrome / ... )
-            allFields[AGENT_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            allFields[AGENT_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
-        }
-
-        public void SetUserAgentString(string newUserAgentString)
-        {
-            userAgentString = newUserAgentString;
-            Reset();
-        }
-
-        public string GetUserAgentString()
-        {
-            return userAgentString;
         }
 
         public virtual void Reset()
@@ -315,13 +292,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 field.Reset();
             }
-        }
-
-        internal static bool IsSystemField(string fieldname)
-        {
-            return SET_ALL_FIELDS.Equals(fieldname) ||
-                    SYNTAX_ERROR.Equals(fieldname) ||
-                    USERAGENT.Equals(fieldname);
         }
 
         public void ProcessSetAll()
@@ -372,7 +342,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             if (allFields.ContainsKey(attribute))
             {
                 field = allFields[attribute];
-            } else {
+            }
+            else
+            {
                 field = new AgentField(null); // The fields we do not know get a 'null' default
             }
 
@@ -392,11 +364,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 Set(fieldName, newValuesUserAgent.allFields[fieldName]);
             }
-        }
-
-        private void Set(string fieldName, AgentField agentField)
-        {
-            Set(fieldName, agentField.GetValue(), agentField.confidence);
         }
 
         public AgentField Get(string fieldName)
@@ -513,26 +480,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return sb.ToString();
         }
 
-        //    {
-        //        "agent": {
-        //            "user_agent_string": "Mozilla/5.0 (iPhone; CPU iPhone OS 9_2_1 like Mac OS X) AppleWebKit/601.1.46
-        //                                  (KHTML, like Gecko) Version/9.0 Mobile/13D15 Safari/601.1"
-        //            "AgentClass": "Browser",
-        //            "AgentName": "Safari",
-        //            "AgentVersion": "9.0",
-        //            "DeviceBrand": "Apple",
-        //            "DeviceClass": "Phone",
-        //            "DeviceFirmwareVersion": "13D15",
-        //            "DeviceName": "iPhone",
-        //            "LayoutEngineClass": "Browser",
-        //            "LayoutEngineName": "AppleWebKit",
-        //            "LayoutEngineVersion": "601.1.46",
-        //            "OperatingSystemClass": "Mobile",
-        //            "OperatingSystemName": "iOS",
-        //            "OperatingSystemVersion": "9_2_1",
-        //        }
-        //    }
-
         public string ToJson()
         {
             List<string> fields = GetAvailableFieldNames();
@@ -543,7 +490,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public string ToJson(List<string> fieldNames)
         {
             StringBuilder sb = new StringBuilder(10240);
-            sb.Append("{");            
+            sb.Append("{");
             bool addSeparator = false;
             foreach (string fieldName in fieldNames)
             {
@@ -560,7 +507,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     sb
                         .Append("\"Useragent\"")
                         .Append(':')
-                        .Append(JsonConvert.ToString(GetUserAgentString()));
+                        .Append(JsonConvert.ToString(UserAgentString));
                 }
                 else
                 {
@@ -645,16 +592,52 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             fieldNames.Sort();
             result.AddRange(fieldNames);
             return result;
+        }
 
+        internal static bool IsSystemField(string fieldname)
+        {
+            return SET_ALL_FIELDS.Equals(fieldname) ||
+                    SYNTAX_ERROR.Equals(fieldname) ||
+                    USERAGENT.Equals(fieldname);
+        }
+
+        private void Init()
+        {
+            // Device : Family - Brand - Model
+            allFields[DEVICE_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Cloud / Server / Desktop / Tablet / Phone / Watch
+            allFields[DEVICE_BRAND] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
+            allFields[DEVICE_NAME] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
+
+            // Operating system
+            allFields[OPERATING_SYSTEM_CLASS] = new AgentField(UNKNOWN_VALUE); // Cloud, Desktop, Mobile, Embedded
+            allFields[OPERATING_SYSTEM_NAME] = new AgentField(UNKNOWN_VALUE); // ( Linux / Android / Windows ...)
+            allFields[OPERATING_SYSTEM_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+
+            // Engine : Class (=None/Hacker/Robot/Browser) - Name - Version
+            allFields[LAYOUT_ENGINE_CLASS] = new AgentField(UNKNOWN_VALUE); // None / Hacker / Robot / Browser /
+            allFields[LAYOUT_ENGINE_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / (Trident / Gecko / ...)
+            allFields[LAYOUT_ENGINE_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+            allFields[LAYOUT_ENGINE_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
+
+            // Agent: Class (=Hacker/Robot/Browser) - Name - Version
+            allFields[AGENT_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Robot / Browser /
+            allFields[AGENT_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / ( Firefox / Chrome / ... )
+            allFields[AGENT_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+            allFields[AGENT_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
+        }
+
+        private void Set(string fieldName, AgentField agentField)
+        {
+            Set(fieldName, agentField.GetValue(), agentField.confidence);
         }
 
         [Serializable]
         public class AgentField
         {
-            private readonly string defaultValue;
-            private string value;
-
             internal long confidence;
+
+            private readonly string defaultValue;
+            private string value;            
 
             internal AgentField(string defaultValue)
             {
@@ -686,7 +669,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 return confidence;
             }
 
-
             public bool SetValue(AgentField field)
             {
                 return SetValue(field.value, field.confidence);
@@ -713,7 +695,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             public void SetValueForced(string newValue, long newConfidence)
             {
-                this.confidence = newConfidence;
+                confidence = newConfidence;
 
                 if (NULL_VALUE.Equals(newValue))
                 {

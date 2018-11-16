@@ -26,6 +26,9 @@
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
+    /// <summary>
+    /// Represent a set of resources based on a directory and a file filter
+    /// </summary>
     public class ResourcesPath
     {
         /// <summary>

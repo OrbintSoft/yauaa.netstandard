@@ -177,8 +177,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                     sb.Append(' ');
                 }
 
-                agent.SetUserAgentString(userAgentString);
-
+                agent.UserAgentString = userAgentString;
 
                 long measuredSpeed = -1;
                 if (measureSpeed)

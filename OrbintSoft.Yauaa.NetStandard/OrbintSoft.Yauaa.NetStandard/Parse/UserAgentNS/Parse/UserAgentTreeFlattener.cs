@@ -81,7 +81,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 
         private UserAgent ParseIntoCleanUserAgent(UserAgent userAgent)
         {
-            if (userAgent.GetUserAgentString() == null)
+            if (userAgent.UserAgentString == null)
             {
                 userAgent.Set(UserAgent.SYNTAX_ERROR, "true", 1);
                 return userAgent; // Cannot parse this
@@ -165,7 +165,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 
         private UserAgentParser.UserAgentContext ParseUserAgent(UserAgent userAgent)
         {
-            string userAgentString = EvilManualUseragentStringHacks.FixIt(userAgent.GetUserAgentString());
+            string userAgentString = EvilManualUseragentStringHacks.FixIt(userAgent.UserAgentString);
 
             AntlrInputStream input = new AntlrInputStream(userAgentString);
             UserAgentLexer lexer = new UserAgentLexer(input);

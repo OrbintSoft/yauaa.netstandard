@@ -42,6 +42,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             InitializeCache();
         }
 
+        public static UserAgentAnalyzerBuilder NewBuilder()
+        {
+            var a = new UserAgentAnalyzer();
+            var b = new UserAgentAnalyzerBuilder(a);
+            b.SetUAA(a);
+            return b;
+        }
+
         public void DisableCaching()
         {
             SetCacheSize(0);
@@ -58,23 +66,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             InitializeCache();
         }
 
-        private void InitializeCache()
-        {
-            if (cacheSize >= 1)
-            {
-                parseCache = new Dictionary<string, UserAgent>(cacheSize);
-            }
-            else
-            {
-                parseCache = null;
-            }
-        }
-
         public int GetCacheSize()
         {
             return cacheSize;
         }
-
 
         public override UserAgent Parse(UserAgent userAgent)
         {
@@ -91,7 +86,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     return base.Parse(userAgent);
                 }
 
-                string userAgentString = userAgent.GetUserAgentString();
+                string userAgentString = userAgent.UserAgentString;
                 if (userAgentString != null)
                 {
                     UserAgent cachedValue = parseCache.ContainsKey(userAgentString) ? parseCache[userAgentString] : null;
@@ -110,14 +105,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        public static UserAgentAnalyzerBuilder NewBuilder()           
+        private void InitializeCache()
         {
-            var a = new UserAgentAnalyzer();
-            var b = new UserAgentAnalyzerBuilder(a);
-            b.SetUAA(a);
-            return b;
+            if (cacheSize >= 1)
+            {
+                parseCache = new Dictionary<string, UserAgent>(cacheSize);
+            }
+            else
+            {
+                parseCache = null;
+            }
         }
-
 
         public class UserAgentAnalyzerBuilder: UserAgentAnalyzerDirectBuilder<UserAgentAnalyzer, UserAgentAnalyzerBuilder>
         {

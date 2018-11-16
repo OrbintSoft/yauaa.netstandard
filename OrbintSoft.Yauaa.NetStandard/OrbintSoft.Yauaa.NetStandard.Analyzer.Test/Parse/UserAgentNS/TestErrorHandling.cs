@@ -163,7 +163,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 
             UserAgent agent = uaa.Parse((string)null);
             agent.Should().NotBeNull();
-            agent.GetUserAgentString().Should().BeNull();
+            agent.UserAgentString.Should().BeNull();
 
             agent = uaa.Parse((UserAgent)null);
             agent.Should().BeNull();

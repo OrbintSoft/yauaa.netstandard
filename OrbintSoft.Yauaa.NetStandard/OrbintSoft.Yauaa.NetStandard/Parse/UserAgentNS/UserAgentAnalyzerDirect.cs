@@ -437,7 +437,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             lock (this)
             {
                 InitializeMatchers();
-                string useragentString = userAgent.GetUserAgentString();
+                string useragentString = userAgent.UserAgentString;
                 if (useragentString != null && useragentString.Length > userAgentMaxLength)
                 {
                     userAgent = SetAsHacker(userAgent, 100);
