@@ -352,8 +352,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Antlr4.Runtime" Version="4.6.5" />
-    <PackageReference Include="domainname-parser" Version="1.0.25" />
-    <PackageReference Include="GitInfo" Version="2.0.19">
+    <PackageReference Include="DomainParser.Library.NetStandard" Version="1.5.0" />
+    <PackageReference Include="GitInfo" Version="2.0.20">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
