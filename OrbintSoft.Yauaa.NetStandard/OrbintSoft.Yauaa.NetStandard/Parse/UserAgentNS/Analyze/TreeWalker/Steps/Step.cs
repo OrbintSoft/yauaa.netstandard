@@ -38,7 +38,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
     [Serializable]
     public abstract class Step
     {
-        internal static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        internal static readonly ILog Log = LogManager.GetLogger(typeof(Step));
 
         private int stepNr = 0;
         protected string logprefix = "";
@@ -64,6 +64,29 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 sb.Append("-->");
             }
             logprefix = sb.ToString();
+        }
+
+
+        public static bool TreeIsSeparator(IParseTree tree)
+        {
+            return tree is UserAgentParser.CommentSeparatorContext || tree is ITerminalNode;
+        }
+
+        /// <summary>
+        /// This will walk into the tree and recurse through all the remaining steps.
+        /// This must iterate of all possibilities and return the first matching result.
+        /// </summary>
+        /// <param name="tree">The tree to walk into.</param>
+        /// <param name="value">
+        /// The string representation of the previous step (needed for compare and lookup operations).
+        /// The null value means to use the implicit 'full' value (i.e. getSourceText(tree) )
+        /// </param>
+        /// <returns>Either null or the actual value that was found.</returns>
+        public abstract WalkList.WalkResult Walk(IParseTree tree, string value);
+
+        public Step GetNextStep()
+        {
+            return nextStep;
         }
 
         protected WalkList.WalkResult WalkNextStep(IParseTree tree, string value)
@@ -108,12 +131,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             return parent;
         }
 
-        public static bool TreeIsSeparator(IParseTree tree)
-        {
-            return tree is UserAgentParser.CommentSeparatorContext || tree is ITerminalNode;
-        }
 
-        protected string GetActualValue(IParseTree tree, String value)
+        protected string GetActualValue(IParseTree tree, string value)
         {
             if (value == null)
             {
@@ -121,23 +140,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             }
             return value;
         }
-
-        /// <summary>
-        /// This will walk into the tree and recurse through all the remaining steps.
-        /// This must iterate of all possibilities and return the first matching result.
-        /// </summary>
-        /// <param name="tree">The tree to walk into.</param>
-        /// <param name="value">
-        /// The string representation of the previous step (needed for compare and lookup operations).
-        /// The null value means to use the implicit 'full' value (i.e. getSourceText(tree) )
-        /// </param>
-        /// <returns>Either null or the actual value that was found.</returns>
-        public abstract WalkList.WalkResult Walk(IParseTree tree, String value);
-
-        public Step GetNextStep()
-        {
-            return nextStep;
-        }
-
     }
 }

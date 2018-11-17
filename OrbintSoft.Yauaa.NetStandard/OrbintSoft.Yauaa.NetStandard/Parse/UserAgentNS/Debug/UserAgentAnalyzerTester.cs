@@ -37,7 +37,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
     [Serializable]
     public class UserAgentAnalyzerTester: UserAgentAnalyzer
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerTester));
 
         public UserAgentAnalyzerTester():base()
         {

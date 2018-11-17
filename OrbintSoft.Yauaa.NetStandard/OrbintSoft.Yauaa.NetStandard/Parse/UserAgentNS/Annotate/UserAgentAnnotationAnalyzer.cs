@@ -35,9 +35,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 {
     public class UserAgentAnnotationAnalyzer<T> where T: class
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnnotationAnalyzer<T>));
 
-        private readonly IDictionary<string, List<MethodInfo>> fieldSetters = new Dictionary<string, List<MethodInfo>>();
+        private readonly IDictionary<string, IList<MethodInfo>> fieldSetters = new Dictionary<string, IList<MethodInfo>>();
 
         private IUserAgentAnnotationMapper<T> mapper = null;
         private UserAgentAnalyzer userAgentAnalyzer = null;        

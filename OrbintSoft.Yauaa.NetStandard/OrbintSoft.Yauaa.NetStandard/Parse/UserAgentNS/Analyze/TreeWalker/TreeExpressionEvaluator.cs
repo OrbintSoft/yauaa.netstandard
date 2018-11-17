@@ -43,7 +43,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
     [Serializable]
     public class TreeExpressionEvaluator
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(TreeExpressionEvaluator));
         private readonly bool verbose;
 
         private readonly string requiredPatternText;
@@ -67,11 +67,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
         public string GetFixedValue()
         {
             return fixedValue;
-        }
-
-        private string CalculateFixedValue(ParserRuleContext requiredPattern)
-        {
-            return new DerivedUserAgentTreeWalkerBaseVisitor(matcher).Visit(requiredPattern); 
         }
 
         public WalkList.WalkResult Evaluate(IParseTree tree, string key, string value)
@@ -98,6 +93,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
         public WalkList GetWalkListForUnitTesting()
         {
             return walkList;
+        }
+
+        private string CalculateFixedValue(ParserRuleContext requiredPattern)
+        {
+            return new DerivedUserAgentTreeWalkerBaseVisitor(matcher).Visit(requiredPattern);
         }
 
         private class DerivedUserAgentTreeWalkerBaseVisitor : UserAgentTreeWalkerBaseVisitor<string>

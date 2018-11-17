@@ -28,7 +28,7 @@ using System;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 {
-    public class YauaaFieldAttribute: Attribute
+    public sealed class YauaaFieldAttribute: Attribute
     {
         public string[] Value { get; set; }
 

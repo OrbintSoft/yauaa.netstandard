@@ -47,7 +47,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
     [Serializable]
     public class WalkList
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(WalkList));
 
         private readonly IDictionary<string, IDictionary<string, string>> lookups;
         private readonly IDictionary<string, ISet<string>> lookupSets;
@@ -102,17 +102,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             }
         }
 
-        private void LinkSteps()
-        {
-            Step nextStep = null;
-            for (int i = steps.Count - 1; i >= 0; i--)
-            {
-                Step current = steps[i];
-                current.SetNextStep(i, nextStep);
-                nextStep = current;
-            }
-        }
-
         public WalkResult Walk(IParseTree tree, string value)
         {
             if (steps.Count == 0)
@@ -136,7 +125,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
         public Step GetFirstStep()
         {
             return steps == null || steps.Count == 0 ? null : steps[0];
-        }             
+        }
 
         public override string ToString()
         {
@@ -150,6 +139,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 sb.Append(" --> ").Append(step);
             }
             return sb.ToString();
+        }
+
+        private void LinkSteps()
+        {
+            Step nextStep = null;
+            for (int i = steps.Count - 1; i >= 0; i--)
+            {
+                Step current = steps[i];
+                current.SetNextStep(i, nextStep);
+                nextStep = current;
+            }
         }
 
         private class WalkListBuilder: UserAgentTreeWalkerBaseVisitor<object> {
