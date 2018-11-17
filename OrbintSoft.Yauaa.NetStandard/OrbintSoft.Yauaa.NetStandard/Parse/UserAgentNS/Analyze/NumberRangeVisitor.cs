@@ -38,7 +38,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         internal static readonly NumberRangeVisitor Instance = new NumberRangeVisitor();
 
-        private static readonly Dictionary<string, int> MaxRange = new Dictionary<string, int>();
+        private static readonly IDictionary<string, int> MaxRange = new Dictionary<string, int>();
 
         static NumberRangeVisitor() {
             // Hardcoded maximum values because of the parsing rules
@@ -63,22 +63,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         private NumberRangeVisitor()
         {
-        }
-
-        private static int GetMaxRange(UserAgentTreeWalkerParser.NumberRangeContext ctx)
-        {
-            RuleContext parent = ctx.Parent;
-            // The antlr rules force this to always be true.
-            //if (!(parent is UserAgentTreeWalkerParser.StepDownContext)) {
-            //    return DEFAULT_MAX;
-            //}
-            string name = ((UserAgentTreeWalkerParser.StepDownContext)parent).name.Text;
-            int? maxRange = MaxRange.ContainsKey(name) ? (int?) MaxRange[name] : null;
-            if (maxRange == null)
-            {
-                return DEFAULT_MAX;
-            }
-            return maxRange ?? 0;
         }
        
         public static NumberRangeList GetList(UserAgentTreeWalkerParser.NumberRangeContext ctx)
@@ -107,6 +91,22 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public override NumberRangeList VisitNumberRangeEmpty([NotNull] UserAgentTreeWalkerParser.NumberRangeEmptyContext context)
         {
             return new NumberRangeList(DEFAULT_MIN, GetMaxRange(context));
+        }
+
+        private static int GetMaxRange(UserAgentTreeWalkerParser.NumberRangeContext ctx)
+        {
+            RuleContext parent = ctx.Parent;
+            // The antlr rules force this to always be true.
+            //if (!(parent is UserAgentTreeWalkerParser.StepDownContext)) {
+            //    return DEFAULT_MAX;
+            //}
+            string name = ((UserAgentTreeWalkerParser.StepDownContext)parent).name.Text;
+            int? maxRange = MaxRange.ContainsKey(name) ? (int?)MaxRange[name] : null;
+            if (maxRange == null)
+            {
+                return DEFAULT_MAX;
+            }
+            return maxRange ?? 0;
         }
     }
 }

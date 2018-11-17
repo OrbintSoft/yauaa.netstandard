@@ -53,11 +53,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             MatchesList.Match match2 = iterator.Current;
             next = iterator.MoveNext();
             next.Should().BeFalse();
-            match1.GetKey().Should().Be("one");
-            match1.GetValue().Should().Be("two");
+            match1.Key.Should().Be("one");
+            match1.Value.Should().Be("two");
             match1.GetResult().Should().BeNull();
-            match2.GetKey().Should().Be("three");
-            match2.GetValue().Should().Be("four");
+            match2.Key.Should().Be("three");
+            match2.Value.Should().Be("four");
             match2.GetResult().Should().BeNull();
         }
 

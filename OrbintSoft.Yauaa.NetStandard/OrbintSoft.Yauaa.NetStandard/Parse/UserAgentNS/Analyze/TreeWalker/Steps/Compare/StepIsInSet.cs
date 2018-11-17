@@ -34,9 +34,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.C
     public class StepIsInSet: Step
     {
         private readonly string listName;
-        private readonly HashSet<string> list;
+        private readonly ISet<string> list;
 
-        public StepIsInSet(string listName, HashSet<string> list)
+        public StepIsInSet(string listName, ISet<string> list)
         {
             this.listName = listName;
             this.list = list;

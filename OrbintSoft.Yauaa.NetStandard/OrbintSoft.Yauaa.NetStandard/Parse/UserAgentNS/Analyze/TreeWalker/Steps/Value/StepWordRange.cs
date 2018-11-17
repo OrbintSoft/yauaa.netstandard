@@ -39,8 +39,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
 
         public StepWordRange(WordRangeVisitor.Range range)
         {
-            firstWord = range.GetFirst();
-            lastWord = range.GetLast();
+            firstWord = range.First;
+            lastWord = range.Last;
         }
 
         public override WalkList.WalkResult Walk(IParseTree tree, string value)

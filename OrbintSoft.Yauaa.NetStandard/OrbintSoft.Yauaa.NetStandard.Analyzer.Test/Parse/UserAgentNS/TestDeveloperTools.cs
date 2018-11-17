@@ -78,9 +78,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             bool ok = false;
             foreach (MatchesList.Match match in uaa.GetMatches())
             {
-                if ("agent.(1)product.(1)comments.(3)entry[3-3]".Equals(match.GetKey()))
+                if ("agent.(1)product.(1)comments.(3)entry[3-3]".Equals(match.Key))
                 {
-                    match.GetValue().Should().Be("Build");
+                    match.Value.Should().Be("Build");
                     ok = true;
                     break;
                 }
@@ -90,9 +90,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             ok = false;
             foreach (MatchesList.Match match in uaa.GetUsedMatches(useragent))
             {
-                if ("agent.(1)product.(1)comments.(3)entry[3-3]".Equals(match.GetKey()))
+                if ("agent.(1)product.(1)comments.(3)entry[3-3]".Equals(match.Key))
                 {
-                    match.GetValue().Should().Be("Build");
+                    match.Value.Should().Be("Build");
                     ok = true;
                     break;
                 }

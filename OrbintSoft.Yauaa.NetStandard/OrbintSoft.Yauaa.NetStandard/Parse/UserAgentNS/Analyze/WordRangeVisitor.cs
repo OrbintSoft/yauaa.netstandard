@@ -68,38 +68,29 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         [Serializable]
         public class Range
         {
-            private readonly int first;
-            private readonly int last;
-
             private string rangeString = null;
 
             public Range(int first, int last)
             {
-                this.first = first;
-                this.last = last;
+                First = first;
+                Last = last;
             }
 
-            public int GetFirst()
-            {
-                return first;
-            }
+            public int First { get; }
 
-            public int GetLast()
-            {
-                return last;
-            }
+            public int Last { get; }
 
             public override string ToString()
             {
                 if (rangeString == null)
                 {
-                    if (last == -1)
+                    if (Last == -1)
                     {
-                        rangeString = "[" + first + "-]";
+                        rangeString = "[" + First + "-]";
                     }
                     else
                     {
-                        rangeString = "[" + first + "-" + last + "]";
+                        rangeString = "[" + First + "-" + Last + "]";
                     }
                 }
                 return rangeString;
@@ -112,12 +103,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                     return false;
                 }
                 Range range = (Range)obj;
-                return first == range.first && last == range.last;
+                return First == range.First && Last == range.Last;
             }
 
             public override int GetHashCode()
             {
-                return ValueTuple.Create(first, last).GetHashCode();
+                return ValueTuple.Create(First, Last).GetHashCode();
             }
         }
     }

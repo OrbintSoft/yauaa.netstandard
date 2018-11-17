@@ -35,7 +35,6 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System;
-using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
@@ -44,7 +43,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
     {
         internal bool verbose = false;
 
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherAction));
 
         private string matchExpression = null;
         private TreeExpressionEvaluator evaluator = null;
@@ -79,44 +78,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             return matchExpression;
         }
-
-        internal class InitErrorListener<T>: IAntlrErrorListener<T>
-        {
-            public MatcherAction MatcherAction { get; set; }
-
-            public InitErrorListener(MatcherAction matcherAction) :base()
-            {
-                MatcherAction = matcherAction;
-            }
-
-            public void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
-            {
-            }
-
-            public void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, SimulatorState conflictState)
-            {
-            }
-
-            public void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, SimulatorState acceptState)
-            {
-            }
-
-            public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
-            {
-                Log.Error("Syntax error");
-                Log.Error(string.Format("Source : {0}", MatcherAction.matchExpression));
-                Log.Error(string.Format("Message: {0}", msg));
-                throw new InvalidParserConfigurationException("Syntax error \"" + msg + "\" caused by \"" + MatcherAction.matchExpression + "\".");
-            }
-        }
-
-        internal void Init(string newMatchExpression, Matcher newMatcher)
-        {
-            matcher = newMatcher;
-            matchExpression = newMatchExpression;
-            SetVerbose(newMatcher.GetVerbose());
-        }
-
 
         public void Initialize()
         {
@@ -171,9 +132,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             matches = new MatchesList(listSize);
         }
 
-        protected abstract ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser);
 
-        protected abstract void SetFixedValue(string newFixedValue);
+        public virtual void Reset()
+        {
+            matches.Clear();
+            if (verboseTemporary)
+            {
+                verbose = verbosePermanent;
+            }
+        }
+
+        public MatchesList GetMatches()
+        {
+            return matches;
+        }
 
         /// <summary>
         /// For each key that this action wants to be notified for this method is called.
@@ -195,15 +167,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public abstract void Inform(string key, WalkList.WalkResult foundValue);
 
         /// <summary>
-        /// If it is impossible that this can be valid it returns true, else false.
-        /// </summary>
-        /// <returns></returns>
-        internal bool CannotBeValid()
-        {
-            return MustHaveMatches && matches.Count == 0;
-        }
-
-        /// <summary>
         /// Called after all nodes have been notified.
         /// </summary>
         /// <returns>true if the obtainResult result was valid. False will fail the entire matcher this belongs to.</returns>
@@ -215,6 +178,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         }
 
         /// <summary>
+        /// If it is impossible that this can be valid it returns true, else false.
+        /// </summary>
+        /// <returns></returns>
+        internal bool CannotBeValid()
+        {
+            return MustHaveMatches && matches.Count == 0;
+        }
+
+        /// <summary>
         /// Optimization: Only if there is a possibility that all actions for this matcher CAN be valid do we
         /// actually perform the analysis and do the(expensive) tree walking and matching.
         /// </summary>
@@ -222,14 +194,26 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             foreach (MatchesList.Match match in matches)
             {
-                WalkList.WalkResult matchedValue = evaluator.Evaluate(match.GetResult(), match.GetKey(), match.GetValue());
+                WalkList.WalkResult matchedValue = evaluator.Evaluate(match.GetResult(), match.Key, match.Value);
                 if (matchedValue != null)
                 {
-                    Inform(match.GetKey(), matchedValue);
+                    Inform(match.Key, matchedValue);
                     break; // We always stick to the first match
                 }
             }
         }
+
+
+        internal void Init(string newMatchExpression, Matcher newMatcher)
+        {
+            matcher = newMatcher;
+            matchExpression = newMatchExpression;
+            SetVerbose(newMatcher.GetVerbose());
+        }
+
+        protected abstract ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser);
+
+        protected abstract void SetFixedValue(string newFixedValue);
 
         private int CalculateInformPath(string treeName, ParserRuleContext tree)
         {
@@ -360,19 +344,38 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return CalculateInformPath(treeName + range, tree.nextStep);
         }
 
-        public virtual void Reset()
+
+
+        internal class InitErrorListener<T> : IAntlrErrorListener<T>
         {
-            matches.Clear();
-            if (verboseTemporary)
+            public MatcherAction MatcherAction { get; set; }
+
+            public InitErrorListener(MatcherAction matcherAction) : base()
             {
-                verbose = verbosePermanent;
+                MatcherAction = matcherAction;
+            }
+
+            public void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
+            {
+            }
+
+            public void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, SimulatorState conflictState)
+            {
+            }
+
+            public void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, SimulatorState acceptState)
+            {
+            }
+
+            public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+            {
+                Log.Error("Syntax error");
+                Log.Error(string.Format("Source : {0}", MatcherAction.matchExpression));
+                Log.Error(string.Format("Message: {0}", msg));
+                throw new InvalidParserConfigurationException("Syntax error \"" + msg + "\" caused by \"" + MatcherAction.matchExpression + "\".");
             }
         }
 
-        public MatchesList GetMatches()
-        {
-            return matches;
-        }
 
         private class UnQuoteValues : UserAgentTreeWalkerBaseVisitor<object>
         {

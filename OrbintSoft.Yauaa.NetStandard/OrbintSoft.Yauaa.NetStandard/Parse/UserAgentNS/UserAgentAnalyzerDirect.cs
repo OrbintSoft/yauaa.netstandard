@@ -63,7 +63,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         private static readonly IList<string> HardCodedGeneratedFields = new List<string>();
 
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
-        private readonly Dictionary<string, HashSet<string>> lookupSets = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, ISet<string>> lookupSets = new Dictionary<string, ISet<string>>();
         // These are the actual subrange we need for the paths.
         private readonly IDictionary<string, ISet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, ISet<WordRangeVisitor.Range>>();
         // These are the paths for which we have prefix requests.
@@ -72,7 +72,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         private IDictionary<string, List<YamlMappingNode>> matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
         private bool showMatcherStats = false;
         private bool doingOnlyASingleTest = false;
-        private Dictionary<string, Dictionary<string, string>> lookups = new Dictionary<string, Dictionary<string, string>>();
+        private IDictionary<string, IDictionary<string, string>> lookups = new Dictionary<string, IDictionary<string, string>>();
         private bool matchersHaveBeenInitialized = false;
         private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
         private bool loadTests = false;
@@ -236,7 +236,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             if (lookups != null && lookups.Count != 0)
             {
                 // All compares are done in a case insensitive way. So we lowercase ALL keys of the lookups beforehand.
-                Dictionary<string, Dictionary<string, string>> cleanedLookups = new Dictionary<string, Dictionary<string, string>>();
+                IDictionary<string, IDictionary<string, string>> cleanedLookups = new Dictionary<string, IDictionary<string, string>>();
                 foreach (var lookupsEntry in lookups)
                 {
                     Dictionary<string, string> cleanedLookup = new Dictionary<string, string>();

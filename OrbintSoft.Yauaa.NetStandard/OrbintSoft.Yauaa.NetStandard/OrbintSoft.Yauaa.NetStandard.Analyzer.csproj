@@ -6,6 +6,7 @@
     <Company>OrbintSoft</Company>
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <RootNamespace>OrbintSoft.Yauaa.Analyzer</RootNamespace>
+	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
     <RepositoryType>Git</RepositoryType>
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <NeutralLanguage>en</NeutralLanguage>

@@ -29,32 +29,21 @@ using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System;
-using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
     [Serializable]
     public class MatcherRequireAction : MatcherAction
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherRequireAction));
+
+        private bool foundRequiredValue = false;
+
 
         public MatcherRequireAction(string config, Matcher matcher)
         {
             Init(config, matcher);
         }
-
-        protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
-        {
-            return parser.matcherRequire();
-        }
-
-        protected override void SetFixedValue(string fixedValue)
-        {
-            throw new InvalidParserConfigurationException(
-                    "It is useless to put a fixed value \"" + fixedValue + "\" in the require section.");
-        }
-
-        private bool foundRequiredValue = false;
 
         public override void Inform(string key, WalkList.WalkResult foundValue)
         {
@@ -86,6 +75,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public override string ToString()
         {
             return "Require: " + GetMatchExpression();
+        }
+
+        protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
+        {
+            return parser.matcherRequire();
+        }
+
+        protected override void SetFixedValue(string fixedValue)
+        {
+            throw new InvalidParserConfigurationException(
+                    "It is useless to put a fixed value \"" + fixedValue + "\" in the require section.");
         }
     }
 }

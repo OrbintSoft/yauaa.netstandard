@@ -34,10 +34,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.L
     public class StepLookup: Step
     {
         private readonly string lookupName;
-        private readonly Dictionary<string, string> lookup;
+        private readonly IDictionary<string, string> lookup;
         private readonly string defaultValue;
 
-        public StepLookup(string lookupName, Dictionary<string, string> lookup, string defaultValue)
+        public StepLookup(string lookupName, IDictionary<string, string> lookup, string defaultValue)
         {
             this.lookupName = lookupName;
             this.lookup = lookup;

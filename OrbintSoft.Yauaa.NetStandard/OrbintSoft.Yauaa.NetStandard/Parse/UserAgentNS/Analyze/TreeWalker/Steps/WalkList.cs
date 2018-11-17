@@ -49,14 +49,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
     {
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        private readonly Dictionary<string, Dictionary<string, string>> lookups;
-        private readonly Dictionary<string, HashSet<string>> lookupSets;
+        private readonly IDictionary<string, IDictionary<string, string>> lookups;
+        private readonly IDictionary<string, ISet<string>> lookupSets;
         private readonly List<Step> steps = new List<Step>();
         private readonly bool verbose;
 
         private bool? usesIsNull = null;
 
-        public WalkList(ParserRuleContext requiredPattern, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets, bool verbose)
+        public WalkList(ParserRuleContext requiredPattern, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, bool verbose)
         {
             this.lookups = lookups;
             this.lookupSets = lookupSets;
@@ -202,7 +202,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 FromHereItCannotBeInHashMapAnymore();
 
                 string lookupName = context.lookup.Text;
-                Dictionary<string, string> lookup = walkList.lookups.ContainsKey(lookupName) ? walkList.lookups[lookupName] : null;
+                IDictionary<string, string> lookup = walkList.lookups.ContainsKey(lookupName) ? walkList.lookups[lookupName] : null;
                 if (lookup == null)
                 {
                     throw new InvalidParserConfigurationException("Missing lookup \"" + context.lookup.Text + "\" ");
@@ -386,10 +386,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 FromHereItCannotBeInHashMapAnymore();
 
                 string lookupSetName = context.set.Text;
-                HashSet<string> lookupSet = walkList.lookupSets.ContainsKey(lookupSetName) ? walkList.lookupSets[lookupSetName] : null;
+                ISet<string> lookupSet = walkList.lookupSets.ContainsKey(lookupSetName) ? walkList.lookupSets[lookupSetName] : null;
                 if (lookupSet == null)
                 {
-                    Dictionary<string, string> lookup = walkList.lookups.ContainsKey(lookupSetName) ? walkList.lookups[lookupSetName] : null;
+                    IDictionary<string, string> lookup = walkList.lookups.ContainsKey(lookupSetName) ? walkList.lookups[lookupSetName] : null;
                     if (lookup != null)
                     {
                         lookupSet = new HashSet<string>(lookup.Keys);

@@ -337,10 +337,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 
         private void CheckPath(string path, string[] expectedHashEntries, string[] expectedWalkList)
         {
-            Dictionary<string, Dictionary<string, string>> lookups = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, IDictionary<string, string>> lookups = new Dictionary<string, IDictionary<string, string>>();
             lookups["TridentVersions"] = new Dictionary<string, string>();
 
-            TestMatcher matcher = new TestMatcher(lookups, new Dictionary<string, HashSet<string>>());
+            TestMatcher matcher = new TestMatcher(lookups, new Dictionary<string, ISet<string>>());
             MatcherRequireAction action = new MatcherRequireAction(path, matcher);
             action.Initialize();
 
@@ -379,7 +379,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         {
             internal readonly List<string> reveicedValues = new List<string>(128);
 
-            internal TestMatcher(Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets) : base(null, lookups, lookupSets)
+            internal TestMatcher(IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets) : base(null, lookups, lookupSets)
             {
 
             }

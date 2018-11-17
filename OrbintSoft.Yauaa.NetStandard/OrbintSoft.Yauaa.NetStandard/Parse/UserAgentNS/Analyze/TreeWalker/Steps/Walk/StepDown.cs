@@ -50,8 +50,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         private StepDown(NumberRangeList numberRange, string name)
         {
             this.name = name;
-            start = numberRange.GetStart();
-            end = numberRange.GetEnd();
+            start = numberRange.Start;
+            end = numberRange.End;
             SetDefaultFieldValues();
         }
 

@@ -31,28 +31,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
     public class NumberRangeList: IReadOnlyList<int>
     {
-        private readonly int start;
-        private readonly int end;
+        public int Count => End - Start + 1;
 
-        public int Count => end - start + 1;
-
-        public int this[int index] => start + index;
+        public int this[int index] => Start + index;
 
         public NumberRangeList(int start, int end)
         {
-            this.start = start;
-            this.end = end;
+            Start = start;
+            End = end;
         }
 
-        public int GetStart()
-        {
-            return start;
-        }
+        public int Start { get; }
 
-        public int GetEnd()
-        {
-            return end;
-        }
+        public int End { get; }
 
         public class NumberRangeEnumerator : IEnumerator<int>
         {

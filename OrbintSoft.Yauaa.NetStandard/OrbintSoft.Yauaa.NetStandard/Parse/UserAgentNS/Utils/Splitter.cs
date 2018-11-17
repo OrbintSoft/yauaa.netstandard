@@ -200,12 +200,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 
         public string GetSplitRange(string value, Analyze.WordRangeVisitor.Range range)
         {
-            return GetSplitRange(value, range.GetFirst(), range.GetLast());
+            return GetSplitRange(value, range.First, range.Last);
         }
 
         public string GetSplitRange(string value, List<Tuple<int, int>> splitList, Analyze.WordRangeVisitor.Range range)
         {
-            return GetSplitRange(value, splitList, range.GetFirst(), range.GetLast());
+            return GetSplitRange(value, splitList, range.First, range.Last);
         }
 
         public string GetSplitRange(string value, List<Tuple<int, int>> splitList, int first, int last)

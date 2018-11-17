@@ -86,7 +86,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         {
             return new MatchEnumerator(allElements, Count);
         }
-
         
 
         private void IncreaseCapacity()
@@ -107,7 +106,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             List<string> result = new List<string>();
             foreach (Match match in this)
             {
-                result.Add("{ \"" + match.GetKey() + "\"=\"" + match.GetValue() + "\" }");
+                result.Add("{ \"" + match.Key + "\"=\"" + match.Value + "\" }");
             }
             return result;
         }
@@ -179,8 +178,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         [Serializable]
         public class Match
         {
-            private string key = null;
-            private string value = null;
             private IParseTree result = null;
 
             public Match(string key, string value, IParseTree result)
@@ -188,21 +185,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 Fill(key, value, result);
             }
 
+            public string Key { get; private set; } = null;
+
+            public string Value { get; private set; } = null;
+
             public void Fill(string nKey, string nValue, IParseTree nResult)
             {
-                key = nKey;
-                value = nValue;
+                Key = nKey;
+                Value = nValue;
                 result = nResult;
-            }
-
-            public string GetKey()
-            {
-                return key;
-            }
-
-            public string GetValue()
-            {
-                return value;
             }
 
             public IParseTree GetResult()

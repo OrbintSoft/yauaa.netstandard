@@ -30,16 +30,13 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
     [Serializable]
     public class MatcherVariableAction :MatcherAction
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
-        private readonly string variableName;
+        private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherVariableAction));
         private readonly string expression;
 
         private WalkList.WalkResult foundValue = null;       
@@ -47,33 +44,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
-            this.variableName = variableName;
+            VariableName = variableName;
             expression = config;
             Init(config, matcher);
         }
 
-        protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
-        {
-            return parser.matcher();
-        }
-
-        protected override void SetFixedValue(string fixedValue)
-        {
-            throw new InvalidParserConfigurationException(
-                "It is useless to put a fixed value \"" + fixedValue + "\" in the variable section.");
-        }
-
-        public string GetVariableName()
-        {
-            return variableName;
-        }
+        public string VariableName { get; }
 
         public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
             if (verbose)
             {
-                Log.Info(string.Format("INFO  : VARIABLE ({0}): {1}", variableName, key));
-                Log.Info(string.Format("NEED  : VARIABLE ({0}): {1}", variableName, GetMatchExpression()));
+                Log.Info(string.Format("INFO  : VARIABLE ({0}): {1}", VariableName, key));
+                Log.Info(string.Format("NEED  : VARIABLE ({0}): {1}", VariableName, GetMatchExpression()));
             }
             /*
              * We know the tree is parsed from left to right.
@@ -85,14 +68,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 foundValue = newlyFoundValue;
                 if (verbose)
                 {
-                    Log.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", variableName, key));
+                    Log.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", VariableName, key));
                 }
 
                 if (interestedActions != null && interestedActions.Count != 0)
                 {
                     foreach (MatcherAction action in interestedActions)
                     {
-                        action.Inform(variableName, newlyFoundValue.GetValue(), newlyFoundValue.GetTree());
+                        action.Inform(VariableName, newlyFoundValue.GetValue(), newlyFoundValue.GetTree());
                     }
                 }
             }
@@ -113,12 +96,23 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         
         public override string ToString()
         {
-            return "VARIABLE: (" + variableName + "): " + expression;
+            return "VARIABLE: (" + VariableName + "): " + expression;
         }
 
         public void SetInterestedActions(ISet<MatcherAction> newInterestedActions)
         {
             interestedActions = newInterestedActions;
+        }
+
+        protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
+        {
+            return parser.matcher();
+        }
+
+        protected override void SetFixedValue(string fixedValue)
+        {
+            throw new InvalidParserConfigurationException(
+                "It is useless to put a fixed value \"" + fixedValue + "\" in the variable section.");
         }
     }
 }

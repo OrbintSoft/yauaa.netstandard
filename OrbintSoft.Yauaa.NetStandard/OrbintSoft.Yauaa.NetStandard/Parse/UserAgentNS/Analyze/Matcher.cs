@@ -29,7 +29,6 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using YamlDotNet.RepresentationModel;
 
@@ -38,19 +37,21 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
     [Serializable]
     public class Matcher 
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Matcher));
 
         private readonly IAnalyzer analyzer;
         private readonly List<MatcherVariableAction> variableActions;        
         private readonly List<MatcherAction> fixedStringActions;
         private readonly UserAgent newValuesUserAgent = new UserAgent();
-        private readonly Dictionary<string, Dictionary<string, string>> lookups;
-        private readonly Dictionary<string, HashSet<string>> lookupSets;
+        private readonly IDictionary<string, IDictionary<string, string>> lookups;
+        private readonly IDictionary<string, ISet<string>> lookupSets;
         // Used for error reporting: The filename and line number where the config was located.
         private readonly string matcherSourceLocation;
+        private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
 
         private long actionsThatRequireInput = 0;
-        private List<MatcherAction> dynamicActions = null;
+        private IList<MatcherAction> dynamicActions = null;
+        private long actionsThatRequireInputAndReceivedInput = 0;
 #if VERBOSE
         private bool verbose = true;
         private readonly bool permanentVerbose = true;
@@ -59,7 +60,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         private readonly bool permanentVerbose = false;
 #endif
 
-        public Matcher(IAnalyzer analyzer, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets, List<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
+        public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, IList<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
             this.lookups = lookups;
             this.lookupSets = lookupSets;
@@ -79,7 +80,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             bool hasDefinedExtractConfigs = false;
 
             // List of 'attribute', 'confidence', 'expression'
-            List<ConfigLine> configLines = new List<ConfigLine>(16);
+            IList<ConfigLine> configLines = new List<ConfigLine>(16);
             foreach (KeyValuePair<YamlNode, YamlNode> nodeTuple in matcherConfig)
             {
                 string name = YamlUtils.GetKeyAsString(nodeTuple, matcherSourceLocation);
@@ -195,7 +196,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         }
 
         // Internal private constructor for testing purposes only
-        internal Matcher(IAnalyzer analyzer, Dictionary<string, Dictionary<string, string>> lookups, Dictionary<string, HashSet<string>> lookupSets)
+        internal Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets)
         {
             this.lookups = lookups;
             this.lookupSets = lookupSets;
@@ -205,12 +206,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             dynamicActions = new List<MatcherAction>();
         }
 
-        public Dictionary<string, Dictionary<string, string>> GetLookups()
+        public IDictionary<string, IDictionary<string, string>> GetLookups()
         {
             return lookups;
         }
 
-        public Dictionary<string, HashSet<string>> GetLookupSets()
+        public IDictionary<string, ISet<string>> GetLookupSets()
         {
             return lookupSets;
         }
@@ -264,17 +265,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             foreach (MatcherVariableAction variableAction in variableActions)
             {
                 seenVariables.Add(variableAction); // Add myself
-                var variableName = variableAction.GetVariableName();
-                ISet<MatcherAction> interestedActions = informMatcherActionsAboutVariables.ContainsKey(variableName) ? informMatcherActionsAboutVariables[variableName] : null;
-                if (interestedActions != null && interestedActions.Count > 0)
+                var variableName = variableAction.VariableName;
+                if (informMatcherActionsAboutVariables.ContainsKey(variableName) && informMatcherActionsAboutVariables[variableName].Count > 0)
                 {
+                    ISet<MatcherAction> interestedActions = informMatcherActionsAboutVariables[variableName];
                     variableAction.SetInterestedActions(interestedActions);
                     foreach (MatcherAction interestedAction in interestedActions)
                     {
                         if (seenVariables.Contains(interestedAction))
                         {
                             throw new InvalidParserConfigurationException("Syntax error: The line >>" + interestedAction + "<< " +
-                                "is referencing variable @" + variableAction.GetVariableName() + " which is not defined yet.");
+                                "is referencing variable @" + variableAction.VariableName + " which is not defined yet.");
                         }
                     }
                 }
@@ -293,40 +294,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
-        private long CountActionsThatMustHaveMatches(List<MatcherAction> actions)
-        {
-            long actionsThatMustHaveMatches = 0;
-            foreach (MatcherAction action in actions)
-            {
-                // If an action exists which without any data can be valid, then we must force the evaluation
-                action.Reset();
-                if (action.MustHaveMatches)
-                {
-                    actionsThatMustHaveMatches++;
-                }
-            }
-            return actionsThatMustHaveMatches;
-        }
-
         public ISet<string> GetAllPossibleFieldNames()
         {
             ISet<string> results = new SortedSet<string>();
             results.UnionWith(GetAllPossibleFieldNames(dynamicActions));
             results.UnionWith(GetAllPossibleFieldNames(fixedStringActions));
             results.Remove(UserAgent.SET_ALL_FIELDS);
-            return results;
-        }
-
-        private HashSet<string> GetAllPossibleFieldNames(List<MatcherAction> actions)
-        {
-            HashSet<string> results = new HashSet<string>();
-            foreach (MatcherAction action in actions)
-            {
-                if (action is MatcherExtractAction extractAction)
-                {
-                    results.Add(extractAction.GetAttribute());
-                }
-            }
             return results;
         }
 
@@ -343,18 +316,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public virtual void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
         {
             analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
-        }
-
-        private readonly Dictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
-
-        internal void InformMeAboutVariable(MatcherAction matcherAction, string variableName)
-        {
-            if (!informMatcherActionsAboutVariables.ContainsKey(variableName))
-            {
-                ISet<MatcherAction> analyzerSet = new HashSet<MatcherAction>();
-                informMatcherActionsAboutVariables[variableName] = analyzerSet;
-            }
-            informMatcherActionsAboutVariables[variableName].Add(matcherAction);
         }
 
         /// <summary>
@@ -420,13 +381,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return verbose;
         }
 
-        private long actionsThatRequireInputAndReceivedInput = 0;
-
-
-        internal void GotMyFirstStartingPoint()
-        {
-            actionsThatRequireInputAndReceivedInput++;
-        }
 
         public void SetVerboseTemporarily(bool newVerbose)
         {
@@ -447,7 +401,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
-        public List<MatchesList.Match> GetMatches()
+        public IList<MatchesList.Match> GetMatches()
         {
             List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
             foreach (MatcherAction action in dynamicActions)
@@ -457,7 +411,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return allMatches;
         }
 
-        public List<MatchesList.Match> GetUsedMatches()
+        public IList<MatchesList.Match> GetUsedMatches()
         {
             List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
             foreach (MatcherAction action in dynamicActions)
@@ -489,7 +443,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 if (action is MatcherVariableAction)
                 {
-                    sb.Append("        @").Append(((MatcherVariableAction)action).GetVariableName())
+                    sb.Append("        @").Append(((MatcherVariableAction)action).VariableName)
                         .Append(":    ").Append(action.GetMatchExpression()).Append('\n');
                     sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
                 }
@@ -517,6 +471,51 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 sb.Append("        ").Append(action.ToString()).Append('\n');
             }
             return sb.ToString();
+        }
+
+
+        internal void InformMeAboutVariable(MatcherAction matcherAction, string variableName)
+        {
+            if (!informMatcherActionsAboutVariables.ContainsKey(variableName))
+            {
+                ISet<MatcherAction> analyzerSet = new HashSet<MatcherAction>();
+                informMatcherActionsAboutVariables[variableName] = analyzerSet;
+            }
+            informMatcherActionsAboutVariables[variableName].Add(matcherAction);
+        }
+
+        internal void GotMyFirstStartingPoint()
+        {
+            actionsThatRequireInputAndReceivedInput++;
+        }
+
+        private long CountActionsThatMustHaveMatches(IList<MatcherAction> actions)
+        {
+            long actionsThatMustHaveMatches = 0;
+            foreach (MatcherAction action in actions)
+            {
+                // If an action exists which without any data can be valid, then we must force the evaluation
+                action.Reset();
+                if (action.MustHaveMatches)
+                {
+                    actionsThatMustHaveMatches++;
+                }
+            }
+            return actionsThatMustHaveMatches;
+        }
+
+
+        private HashSet<string> GetAllPossibleFieldNames(IList<MatcherAction> actions)
+        {
+            HashSet<string> results = new HashSet<string>();
+            foreach (MatcherAction action in actions)
+            {
+                if (action is MatcherExtractAction extractAction)
+                {
+                    results.Add(extractAction.Attribute);
+                }
+            }
+            return results;
         }
 
         internal class ConfigLine
