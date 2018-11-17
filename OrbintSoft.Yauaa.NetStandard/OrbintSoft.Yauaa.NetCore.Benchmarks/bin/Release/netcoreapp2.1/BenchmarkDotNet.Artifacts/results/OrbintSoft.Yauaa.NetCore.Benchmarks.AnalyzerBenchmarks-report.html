@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>OrbintSoft.Yauaa.NetCore.Benchmarks.AnalyzerBenchmarks</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.11.1, OS=Windows 10.0.17134.345 (1803/April2018Update/Redstone4)
+Intel Core i7-5820K CPU 3.30GHz (Broadwell), 1 CPU, 12 logical and 6 physical cores
+Frequency=3215210 Hz, Resolution=311.0217 ns, Timer=TSC
+.NET Core SDK=2.1.500
+  [Host]     : .NET Core 2.1.6 (CoreCLR 4.6.27019.06, CoreFX 4.6.27019.05), 64bit RyuJIT  [AttachedDebugger]
+  DefaultJob : .NET Core 2.1.6 (CoreCLR 4.6.27019.06, CoreFX 4.6.27019.05), 64bit RyuJIT
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>          Method</th><th>Mean</th><th>Error</th><th>StdDev</th>
+</tr>
+</thead><tbody><tr><td>Android6Chrome46</td><td>1,065.6 us</td><td>21.237 us</td><td>26.858 us</td>
+</tr><tr><td>AndroidPhone</td><td>1,750.5 us</td><td>36.633 us</td><td>98.411 us</td>
+</tr><tr><td>Googlebot</td><td>648.5 us</td><td>14.750 us</td><td>40.872 us</td>
+</tr><tr><td>GoogleBotMobileAndroid</td><td>1,534.2 us</td><td>68.634 us</td><td>198.025 us</td>
+</tr><tr><td>GoogleAdsBot</td><td>571.5 us</td><td>11.342 us</td><td>25.369 us</td>
+</tr><tr><td>GoogleAdsBotMobile</td><td>971.3 us</td><td>19.397 us</td><td>42.983 us</td>
+</tr><tr><td>IPhone</td><td>867.5 us</td><td>14.128 us</td><td>11.797 us</td>
+</tr><tr><td>IPhoneFacebookApp</td><td>1,594.6 us</td><td>36.958 us</td><td>95.401 us</td>
+</tr><tr><td>IPad</td><td>862.4 us</td><td>16.916 us</td><td>35.681 us</td>
+</tr><tr><td>Win7ie11</td><td>826.4 us</td><td>16.057 us</td><td>19.719 us</td>
+</tr><tr><td>Win10Edge13</td><td>934.0 us</td><td>20.133 us</td><td>48.238 us</td>
+</tr><tr><td>Win10Chrome51</td><td>834.9 us</td><td>15.642 us</td><td>13.866 us</td>
+</tr><tr><td>Win10IE11</td><td>869.8 us</td><td>16.628 us</td><td>16.331 us</td>
+</tr><tr><td>HackerSQL</td><td>506.9 us</td><td>6.243 us</td><td>5.839 us</td>
+</tr><tr><td>HackerShellShock</td><td>480.6 us</td><td>9.559 us</td><td>10.625 us</td>
+</tr></tbody></table>
+</body>
+</html>
