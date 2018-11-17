@@ -35,7 +35,6 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
@@ -43,7 +42,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
     [Serializable]
     public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
     {
-
         public const string DEVICE_CLASS = "DeviceClass";
         public const string DEVICE_BRAND = "DeviceBrand";
         public const string DEVICE_NAME = "DeviceName";
@@ -68,6 +66,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public const string UNKNOWN_VALUE = "Unknown";
         public const string UNKNOWN_VERSION = "??";
 
+        /// <summary>
+        /// Standard fields used during parsing
+        /// </summary>
         public static readonly string[] StandardFields = {
             DEVICE_CLASS,
             DEVICE_BRAND,
@@ -85,11 +86,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             AGENT_VERSION_MAJOR
         };
 
-        // We manually sort the list of fields to ensure the output is consistent.
-        // Any unspecified fieldnames will be appended to the end.
+        /// <summary>
+        /// We manually sort the list of fields to ensure the output is consistent.
+        /// Any unspecified fieldnames will be appended to the end.
+        /// </summary>
         public static readonly List<string> PreSortedFieldList = new List<string>(32);
 
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgent));
 
         // The original input value
         private string userAgentString = null;
@@ -185,10 +188,22 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             Clone(userAgent);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the user agent contains syntax errors
+        /// </summary>
         public bool HasSyntaxError { get; private set; }
+        /// <summary>
+        /// Gets a value indicating whether some fields are ambiguos
+        /// </summary>
         public bool HasAmbiguity { get; private set; }
+        /// <summary>
+        /// Gets the numer of ambiguities found
+        /// </summary>
         public int AmbiguityCount { get; private set; }
-
+       
+        /// <summary>
+        /// Gets or sets the user agent strings
+        /// </summary>
         public string UserAgentString
         {
             get
@@ -200,6 +215,23 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 userAgentString = value;
                 Reset();
             }
+        }
+
+        public bool IsDebug
+        {
+            get
+            {
+                return debug;
+            }
+            set
+            {
+                debug = value;
+            }
+        }
+
+        public void SetDebug(bool newDebug)
+        {
+            debug = newDebug;
         }
 
         public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
@@ -237,16 +269,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
         }
 
-        public bool IsDebug()
-        {
-            return debug;
-        }
-
-        public void SetDebug(bool newDebug)
-        {
-            debug = newDebug;
-        }
-
         public override bool Equals(object obj)
         {
             if (this == obj)
@@ -282,6 +304,44 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             AmbiguityCount = userAgent.AmbiguityCount;
         }
 
+        public void ProcessSetAll()
+        {
+            if (allFields.ContainsKey(SET_ALL_FIELDS))
+            {
+                AgentField setAllField = allFields[SET_ALL_FIELDS];
+                string value = setAllField.GetValue();
+                long confidence = setAllField.confidence;
+                foreach (var fieldEntry in allFields)
+                {
+                    if (!IsSystemField(fieldEntry.Key))
+                    {
+                        fieldEntry.Value.SetValue(value, confidence);
+                    }
+                }
+            }                          
+        }
+
+        public void SetForced(string attribute, string value, long confidence)
+        {
+            AgentField field;
+            if (allFields.ContainsKey(attribute))
+            {
+                field = allFields[attribute];
+            }
+            else
+            {
+                field = new AgentField(null); // The fields we do not know get a 'null' default
+            }
+
+            bool wasEmpty = confidence == -1;
+            field.SetValueForced(value, confidence);
+            if (debug && !wasEmpty)
+            {
+                Log.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
+            }
+            allFields[attribute] = field;
+        }
+
         public virtual void Reset()
         {
             HasSyntaxError = false;
@@ -291,24 +351,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             foreach (AgentField field in allFields.Values)
             {
                 field.Reset();
-            }
-        }
-
-        public void ProcessSetAll()
-        {
-            AgentField setAllField = allFields.ContainsKey(SET_ALL_FIELDS) ? allFields[SET_ALL_FIELDS] : null;
-            if (setAllField == null)
-            {
-                return;
-            }
-            string value = setAllField.GetValue();
-            long confidence = setAllField.confidence;
-            foreach (var fieldEntry in allFields)
-            {
-                if (!IsSystemField(fieldEntry.Key))
-                {
-                    fieldEntry.Value.SetValue(value, confidence);
-                }
             }
         }
 
@@ -332,27 +374,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 {
                     Log.Info(string.Format(" SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
-            }
-            allFields[attribute] = field;
-        }
-
-        public void SetForced(string attribute, string value, long confidence)
-        {
-            AgentField field;
-            if (allFields.ContainsKey(attribute))
-            {
-                field = allFields[attribute];
-            }
-            else
-            {
-                field = new AgentField(null); // The fields we do not know get a 'null' default
-            }
-
-            bool wasEmpty = confidence == -1;
-            field.SetValueForced(value, confidence);
-            if (debug && !wasEmpty)
-            {
-                Log.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
             }
             allFields[attribute] = field;
         }
@@ -404,12 +425,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             {
                 return 0L;
             }
-            AgentField field = allFields.ContainsKey(fieldName) ? allFields[fieldName] : null;
-            if (field == null)
+            if (allFields.ContainsKey(fieldName))
+            {
+                return allFields[fieldName].GetConfidence();
+            }
+            else
             {
                 return -1L;
             }
-            return field.GetConfidence();
         }
 
         public string ToYamlTestCase()
@@ -465,13 +488,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     }
                     sb.Append("# ").Append(string.Format("%5d", Get(fieldName).confidence));
                 }
-                if (comments != null)
+                if (comments != null && comments.ContainsKey(fieldName))
                 {
-                    string comment = comments.ContainsKey(fieldName) ? comments[fieldName] : null;
-                    if (comment != null)
-                    {
-                        sb.Append(" | ").Append(comment);
-                    }
+                    sb.Append(" | ").Append(comments[fieldName]);                    
                 }
                 sb.Append('\n');
             }
@@ -652,12 +671,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
 
             public string GetValue()
-            {
-                if (value == null)
-                {
-                    return defaultValue;
-                }
-                return value;
+            {                
+                return value ?? defaultValue;                                
             }
 
             public long GetConfidence()

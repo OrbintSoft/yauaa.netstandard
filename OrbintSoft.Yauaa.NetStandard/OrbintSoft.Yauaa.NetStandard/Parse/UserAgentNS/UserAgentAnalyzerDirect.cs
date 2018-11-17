@@ -36,7 +36,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
@@ -53,24 +52,24 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         private const long MAX_PRE_HEAT_ITERATIONS = 1_000_000L;
 
         protected readonly List<Matcher> allMatchers = new List<Matcher>();
-        protected readonly List<Dictionary<string, Dictionary<string, string>>> testCases = new List<Dictionary<string, Dictionary<string, string>>>();
+        protected readonly IList<Dictionary<string, Dictionary<string, string>>> testCases = new List<Dictionary<string, Dictionary<string, string>>>();
 
         // If we want ALL fields this is null. If we only want specific fields this is a list of names.
         protected List<string> wantedFieldNames = null;
         protected UserAgentTreeFlattener flattener = null;
 
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
         private static readonly ResourcesPath DefaultResources = new ResourcesPath(@"YamlResources\UserAgents", "*.yaml");
-        private static readonly List<string> HardCodedGeneratedFields = new List<string>();
+        private static readonly IList<string> HardCodedGeneratedFields = new List<string>();
 
-        private readonly Dictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
+        private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
         private readonly Dictionary<string, HashSet<string>> lookupSets = new Dictionary<string, HashSet<string>>();
         // These are the actual subrange we need for the paths.
-        private readonly Dictionary<string, HashSet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, HashSet<WordRangeVisitor.Range>>();
+        private readonly IDictionary<string, ISet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, ISet<WordRangeVisitor.Range>>();
         // These are the paths for which we have prefix requests.
-        private readonly Dictionary<string, HashSet<int?>> informMatcherActionPrefixesLengths = new Dictionary<string, HashSet<int?>>();
+        private readonly IDictionary<string, HashSet<int?>> informMatcherActionPrefixesLengths = new Dictionary<string, HashSet<int?>>();
 
-        private Dictionary<string, List<YamlMappingNode>> matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
+        private IDictionary<string, List<YamlMappingNode>> matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
         private bool showMatcherStats = false;
         private bool doingOnlyASingleTest = false;
         private Dictionary<string, Dictionary<string, string>> lookups = new Dictionary<string, Dictionary<string, string>>();
@@ -274,10 +273,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 {
                     FileInfo resource = resourceEntry.Value;
                     string configFilename = resource.Name;
-                    List<YamlMappingNode> matcherConfig = matcherConfigs.ContainsKey(configFilename) ? matcherConfigs[configFilename] : null;
-                    if (matcherConfig == null)
+                    List<YamlMappingNode> matcherConfig;
+                    if (matcherConfigs.ContainsKey(configFilename))
                     {
-                        continue; // No matchers in this file (probably only lookups and/or tests)
+                        matcherConfig = matcherConfigs[configFilename];
+                    }
+                    else // No matchers in this file (probably only lookups and/or tests)
+                    {
+                        continue;
                     }
 
                     Stopwatch start = Stopwatch.StartNew();
@@ -451,7 +454,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     matcher.Reset();
                 }
 
-                if (userAgent.IsDebug())
+                if (userAgent.IsDebug)
                 {
                     foreach (Matcher matcher in allMatchers)
                     {
@@ -667,36 +670,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             string[] x = { };
             YauaaVersion.LogVersion(lines.ToArray());
         }
-
-        /*
-            Example of the structure of the yaml file:
-            ----------------------------
-            config:
-                - lookup:
-                name: 'lookupname'
-                map:
-                    "From1" : "To1"
-                    "From2" : "To2"
-                    "From3" : "To3"
-                - matcher:
-                    options:
-                    - 'verbose'
-                    - 'init'
-                    require:
-                    - 'Require pattern'
-                    - 'Require pattern'
-                    extract:
-                    - 'Extract pattern'
-                    - 'Extract pattern'
-                - test:
-                    input:
-                    user_agent_string: 'Useragent'
-                    expected:
-                    FieldName     : 'ExpectedValue'
-                    FieldName     : 'ExpectedValue'
-                    FieldName     : 'ExpectedValue'
-            ----------------------------
-        */
 
         private void LoadResource(YamlDocument yaml, string filename)
         {

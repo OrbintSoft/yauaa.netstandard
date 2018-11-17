@@ -1,0 +1,2336 @@
+<stylecopresultscache>
+  <version>12</version>
+  <project key="973410553">
+    <configuration>
+    </configuration>
+  </project>
+  <sourcecode name="UserAgent.cs" parser="StyleCop.CSharp.CsParser">
+    <timestamps>
+      <styleCop>2018/11/16 16:48:30.059</styleCop>
+      <settingsFile>2018/11/16 16:48:30.030</settingsFile>
+      <sourceFile>2018/11/16 18:59:57.681</sourceFile>
+      <parser>2018/11/16 16:48:30.059</parser>
+      <StyleCop.CSharp.DocumentationRules>2018/11/16 16:48:30.059</StyleCop.CSharp.DocumentationRules>
+      <StyleCop.CSharp.DocumentationRules.FilesHashCode>0</StyleCop.CSharp.DocumentationRules.FilesHashCode>
+      <StyleCop.CSharp.LayoutRules>2018/11/16 16:48:30.059</StyleCop.CSharp.LayoutRules>
+      <StyleCop.CSharp.LayoutRules.FilesHashCode>0</StyleCop.CSharp.LayoutRules.FilesHashCode>
+      <StyleCop.CSharp.MaintainabilityRules>2018/11/16 16:48:30.059</StyleCop.CSharp.MaintainabilityRules>
+      <StyleCop.CSharp.MaintainabilityRules.FilesHashCode>0</StyleCop.CSharp.MaintainabilityRules.FilesHashCode>
+      <StyleCop.CSharp.NamingRules>2018/11/16 16:48:30.059</StyleCop.CSharp.NamingRules>
+      <StyleCop.CSharp.NamingRules.FilesHashCode>0</StyleCop.CSharp.NamingRules.FilesHashCode>
+      <StyleCop.CSharp.OrderingRules>2018/11/16 16:48:30.059</StyleCop.CSharp.OrderingRules>
+      <StyleCop.CSharp.OrderingRules.FilesHashCode>0</StyleCop.CSharp.OrderingRules.FilesHashCode>
+      <StyleCop.CSharp.ReadabilityRules>2018/11/16 16:48:30.059</StyleCop.CSharp.ReadabilityRules>
+      <StyleCop.CSharp.ReadabilityRules.FilesHashCode>0</StyleCop.CSharp.ReadabilityRules.FilesHashCode>
+      <StyleCop.CSharp.SpacingRules>2018/11/16 16:48:30.059</StyleCop.CSharp.SpacingRules>
+      <StyleCop.CSharp.SpacingRules.FilesHashCode>0</StyleCop.CSharp.SpacingRules.FilesHashCode>
+    </timestamps>
+    <violations>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
+        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>1</line>
+        <index>0</index>
+        <endIndex>53</endIndex>
+        <startLine>1</startLine>
+        <startColumn>1</startColumn>
+        <endLine>1</endLine>
+        <endColumn>54</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>2</line>
+        <index>56</index>
+        <endIndex>101</endIndex>
+        <startLine>2</startLine>
+        <startColumn>1</startColumn>
+        <endLine>2</endLine>
+        <endColumn>46</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>3</line>
+        <index>104</index>
+        <endIndex>170</endIndex>
+        <startLine>3</startLine>
+        <startColumn>1</startColumn>
+        <endLine>3</endLine>
+        <endColumn>67</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>5</line>
+        <index>177</index>
+        <endIndex>207</endIndex>
+        <startLine>5</startLine>
+        <startColumn>1</startColumn>
+        <endLine>5</endLine>
+        <endColumn>31</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>7</line>
+        <index>214</index>
+        <endIndex>246</endIndex>
+        <startLine>7</startLine>
+        <startColumn>1</startColumn>
+        <endLine>7</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>8</line>
+        <index>249</index>
+        <endIndex>286</endIndex>
+        <startLine>8</startLine>
+        <startColumn>1</startColumn>
+        <endLine>8</endLine>
+        <endColumn>38</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>10</line>
+        <index>293</index>
+        <endIndex>358</endIndex>
+        <startLine>10</startLine>
+        <startColumn>1</startColumn>
+        <endLine>10</endLine>
+        <endColumn>66</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>11</line>
+        <index>361</index>
+        <endIndex>427</endIndex>
+        <startLine>11</startLine>
+        <startColumn>1</startColumn>
+        <endLine>11</endLine>
+        <endColumn>67</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>12</line>
+        <index>430</index>
+        <endIndex>471</endIndex>
+        <startLine>12</startLine>
+        <startColumn>1</startColumn>
+        <endLine>12</endLine>
+        <endColumn>42</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>14</line>
+        <index>478</index>
+        <endIndex>523</endIndex>
+        <startLine>14</startLine>
+        <startColumn>1</startColumn>
+        <endLine>14</endLine>
+        <endColumn>46</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>16</line>
+        <index>530</index>
+        <endIndex>599</endIndex>
+        <startLine>16</startLine>
+        <startColumn>1</startColumn>
+        <endLine>16</endLine>
+        <endColumn>70</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>17</line>
+        <index>602</index>
+        <endIndex>669</endIndex>
+        <startLine>17</startLine>
+        <startColumn>1</startColumn>
+        <endLine>17</endLine>
+        <endColumn>68</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>18</line>
+        <index>672</index>
+        <endIndex>746</endIndex>
+        <startLine>18</startLine>
+        <startColumn>1</startColumn>
+        <endLine>18</endLine>
+        <endColumn>75</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>19</line>
+        <index>749</index>
+        <endIndex>818</endIndex>
+        <startLine>19</startLine>
+        <startColumn>1</startColumn>
+        <endLine>19</endLine>
+        <endColumn>70</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="TabsMustNotBeUsed" ruleCheckId="SA1027">
+        <context>Tabs are not allowed. Use spaces instead.</context>
+        <line>20</line>
+        <index>821</index>
+        <endIndex>853</endIndex>
+        <startLine>20</startLine>
+        <startColumn>1</startColumn>
+        <endLine>20</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
+        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>22</line>
+        <index>860</index>
+        <endIndex>873</endIndex>
+        <startLine>22</startLine>
+        <startColumn>1</startColumn>
+        <endLine>22</endLine>
+        <endColumn>14</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
+        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>23</line>
+        <index>876</index>
+        <endIndex>926</endIndex>
+        <startLine>23</startLine>
+        <startColumn>1</startColumn>
+        <endLine>23</endLine>
+        <endColumn>51</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
+        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>24</line>
+        <index>929</index>
+        <endIndex>961</endIndex>
+        <startLine>24</startLine>
+        <startColumn>1</startColumn>
+        <endLine>24</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
+        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>25</line>
+        <index>964</index>
+        <endIndex>984</endIndex>
+        <startLine>25</startLine>
+        <startColumn>1</startColumn>
+        <endLine>25</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>27</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>28</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>29</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>30</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>31</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>32</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>33</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>34</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>35</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="SystemUsingDirectivesMustBePlacedBeforeOtherUsingDirectives" ruleCheckId="SA1208">
+        <context>System using directives must be placed before all other using directives.</context>
+        <line>35</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>36</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>37</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>38</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="UsingDirectivesMustBePlacedWithinNamespace" ruleCheckId="SA1200">
+        <context>All using directives must be placed inside of the namespace.</context>
+        <line>39</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The class must have a documentation header.</context>
+        <line>44</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>46</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>46</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>47</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>47</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>48</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>48</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>49</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>49</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>50</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>50</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>51</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>51</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>52</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>52</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>53</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>53</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>54</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>54</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>55</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>55</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>56</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>56</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>57</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>57</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>58</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>58</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>59</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>59</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>60</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>60</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>62</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>62</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>63</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>65</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>65</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>66</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>66</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>67</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>67</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>68</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="FieldNamesMustNotContainUnderscore" ruleCheckId="SA1310">
+        <context>Field names must not contain underscores.</context>
+        <line>68</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="CurlyBracketsForMultiLineStatementsMustNotShareLine" ruleCheckId="SA1500">
+        <context>If a statement spans multiple lines, the opening curly bracket must be placed on its own line.</context>
+        <line>73</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>96</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>99</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.OrderingRules" rule="InstanceReadonlyElementsMustAppearBeforeInstanceNonReadonlyElements" ruleCheckId="SA1215">
+        <context>All non-static readonly private fields must be placed before all non-static non-readonly private fields.</context>
+        <line>106</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>105</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>106</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The constructor must have a documentation header.</context>
+        <line>108</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The constructor must have a documentation header.</context>
+        <line>176</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Init must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>178</line>
+        <index>7640</index>
+        <endIndex>7643</endIndex>
+        <startLine>178</startLine>
+        <startColumn>13</startColumn>
+        <endLine>178</endLine>
+        <endColumn>16</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The constructor must have a documentation header.</context>
+        <line>181</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Init must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>183</line>
+        <index>7735</index>
+        <endIndex>7738</endIndex>
+        <startLine>183</startLine>
+        <startColumn>13</startColumn>
+        <endLine>183</endLine>
+        <endColumn>16</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to UserAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>184</line>
+        <index>7756</index>
+        <endIndex>7770</endIndex>
+        <startLine>184</startLine>
+        <startColumn>13</startColumn>
+        <endLine>184</endLine>
+        <endColumn>27</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The constructor must have a documentation header.</context>
+        <line>187</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Clone must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>189</line>
+        <index>7875</index>
+        <endIndex>7879</endIndex>
+        <startLine>189</startLine>
+        <startColumn>13</startColumn>
+        <endLine>189</endLine>
+        <endColumn>17</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
+        <context>Adjacent elements must be separated by a blank line.</context>
+        <line>199</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementDocumentationHeaderMustBePrecededByBlankLine" ruleCheckId="SA1514">
+        <context>A documentation header must be preceded by a blank line or must be the first item in its scope.</context>
+        <line>196</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
+        <context>Adjacent elements must be separated by a blank line.</context>
+        <line>203</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementDocumentationHeaderMustBePrecededByBlankLine" ruleCheckId="SA1514">
+        <context>A documentation header must be preceded by a blank line or must be the first item in its scope.</context>
+        <line>200</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>213</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>212</line>
+        <index>8631</index>
+        <endIndex>8645</endIndex>
+        <startLine>212</startLine>
+        <startColumn>24</startColumn>
+        <endLine>212</endLine>
+        <endColumn>38</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
+        <context>Adjacent elements must be separated by a blank line.</context>
+        <line>214</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>216</line>
+        <index>8712</index>
+        <endIndex>8726</endIndex>
+        <startLine>216</startLine>
+        <startColumn>17</startColumn>
+        <endLine>216</endLine>
+        <endColumn>31</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Reset must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>217</line>
+        <index>8754</index>
+        <endIndex>8758</endIndex>
+        <startLine>217</startLine>
+        <startColumn>17</startColumn>
+        <endLine>217</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>221</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>228</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>226</line>
+        <index>9093</index>
+        <endIndex>9107</endIndex>
+        <startLine>226</startLine>
+        <startColumn>57</startColumn>
+        <endLine>226</endLine>
+        <endColumn>71</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to debug must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>223</line>
+        <index>8970</index>
+        <endIndex>8974</endIndex>
+        <startLine>223</startLine>
+        <startColumn>17</startColumn>
+        <endLine>223</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to HasSyntaxError must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>229</line>
+        <index>9204</index>
+        <endIndex>9217</endIndex>
+        <startLine>229</startLine>
+        <startColumn>13</startColumn>
+        <endLine>229</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>232</line>
+        <index>9349</index>
+        <endIndex>9357</endIndex>
+        <startLine>232</startLine>
+        <startColumn>13</startColumn>
+        <endLine>232</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>235</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to SyntaxError must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>237</line>
+        <index>9573</index>
+        <endIndex>9583</endIndex>
+        <startLine>237</startLine>
+        <startColumn>13</startColumn>
+        <endLine>237</endLine>
+        <endColumn>23</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>240</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to HasAmbiguity must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>242</line>
+        <index>9823</index>
+        <endIndex>9834</endIndex>
+        <startLine>242</startLine>
+        <startColumn>13</startColumn>
+        <endLine>242</endLine>
+        <endColumn>24</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to AmbiguityCount must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>243</line>
+        <index>9857</index>
+        <endIndex>9870</endIndex>
+        <startLine>243</startLine>
+        <startColumn>13</startColumn>
+        <endLine>243</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>246</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="OpeningCurlyBracketsMustNotBeFollowedByBlankLine" ruleCheckId="SA1505">
+        <context>An opening curly bracket must not be followed by a blank line.</context>
+        <line>247</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketsMustNotBePrecededByBlankLine" ruleCheckId="SA1508">
+        <context>A closing curly bracket must not be preceded by a blank line.</context>
+        <line>249</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>251</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="OpeningCurlyBracketsMustNotBeFollowedByBlankLine" ruleCheckId="SA1505">
+        <context>An opening curly bracket must not be followed by a blank line.</context>
+        <line>252</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketsMustNotBePrecededByBlankLine" ruleCheckId="SA1508">
+        <context>A closing curly bracket must not be preceded by a blank line.</context>
+        <line>254</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>256</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to debug must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>258</line>
+        <index>10313</index>
+        <endIndex>10317</endIndex>
+        <startLine>258</startLine>
+        <startColumn>20</startColumn>
+        <endLine>258</endLine>
+        <endColumn>24</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>261</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to debug must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>263</line>
+        <index>10402</index>
+        <endIndex>10406</endIndex>
+        <startLine>263</startLine>
+        <startColumn>13</startColumn>
+        <endLine>263</endLine>
+        <endColumn>17</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>266</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>271</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>275</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Equals must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>277</line>
+        <index>10759</index>
+        <endIndex>10764</endIndex>
+        <startLine>277</startLine>
+        <startColumn>20</startColumn>
+        <endLine>277</endLine>
+        <endColumn>25</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>277</line>
+        <index>10766</index>
+        <endIndex>10780</endIndex>
+        <startLine>277</startLine>
+        <startColumn>27</startColumn>
+        <endLine>277</endLine>
+        <endColumn>41</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>278</line>
+        <index>10830</index>
+        <endIndex>10838</endIndex>
+        <startLine>278</startLine>
+        <startColumn>21</startColumn>
+        <endLine>278</endLine>
+        <endColumn>29</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>278</line>
+        <index>10863</index>
+        <endIndex>10871</endIndex>
+        <startLine>278</startLine>
+        <startColumn>54</startColumn>
+        <endLine>278</endLine>
+        <endColumn>62</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>278</line>
+        <index>10884</index>
+        <endIndex>10892</endIndex>
+        <startLine>278</startLine>
+        <startColumn>75</startColumn>
+        <endLine>278</endLine>
+        <endColumn>83</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>281</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>283</line>
+        <index>11033</index>
+        <endIndex>11047</endIndex>
+        <startLine>283</startLine>
+        <startColumn>38</startColumn>
+        <endLine>283</endLine>
+        <endColumn>52</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>283</line>
+        <index>11050</index>
+        <endIndex>11058</endIndex>
+        <startLine>283</startLine>
+        <startColumn>55</startColumn>
+        <endLine>283</endLine>
+        <endColumn>63</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>286</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>295</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Init must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>288</line>
+        <index>11161</index>
+        <endIndex>11164</endIndex>
+        <startLine>288</startLine>
+        <startColumn>13</startColumn>
+        <endLine>288</endLine>
+        <endColumn>16</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to debug must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>289</line>
+        <index>11182</index>
+        <endIndex>11186</endIndex>
+        <startLine>289</startLine>
+        <startColumn>13</startColumn>
+        <endLine>289</endLine>
+        <endColumn>17</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to UserAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>290</line>
+        <index>11220</index>
+        <endIndex>11234</endIndex>
+        <startLine>290</startLine>
+        <startColumn>13</startColumn>
+        <endLine>290</endLine>
+        <endColumn>27</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Set must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>294</line>
+        <index>11355</index>
+        <endIndex>11357</endIndex>
+        <startLine>294</startLine>
+        <startColumn>17</startColumn>
+        <endLine>294</endLine>
+        <endColumn>19</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to HasSyntaxError must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>296</line>
+        <index>11447</index>
+        <endIndex>11460</endIndex>
+        <startLine>296</startLine>
+        <startColumn>13</startColumn>
+        <endLine>296</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to HasAmbiguity must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>297</line>
+        <index>11503</index>
+        <endIndex>11514</endIndex>
+        <startLine>297</startLine>
+        <startColumn>13</startColumn>
+        <endLine>297</endLine>
+        <endColumn>24</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to AmbiguityCount must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>298</line>
+        <index>11555</index>
+        <endIndex>11568</endIndex>
+        <startLine>298</startLine>
+        <startColumn>13</startColumn>
+        <endLine>298</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>301</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to HasSyntaxError must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>303</line>
+        <index>11672</index>
+        <endIndex>11685</endIndex>
+        <startLine>303</startLine>
+        <startColumn>13</startColumn>
+        <endLine>303</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to HasAmbiguity must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>304</line>
+        <index>11709</index>
+        <endIndex>11720</endIndex>
+        <startLine>304</startLine>
+        <startColumn>13</startColumn>
+        <endLine>304</endLine>
+        <endColumn>24</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to AmbiguityCount must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>305</line>
+        <index>11744</index>
+        <endIndex>11757</endIndex>
+        <startLine>305</startLine>
+        <startColumn>13</startColumn>
+        <endLine>305</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>307</line>
+        <index>11808</index>
+        <endIndex>11816</endIndex>
+        <startLine>307</startLine>
+        <startColumn>42</startColumn>
+        <endLine>307</endLine>
+        <endColumn>50</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>313</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>319</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>315</line>
+        <index>11987</index>
+        <endIndex>11995</endIndex>
+        <startLine>315</startLine>
+        <startColumn>38</startColumn>
+        <endLine>315</endLine>
+        <endColumn>46</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>315</line>
+        <index>12027</index>
+        <endIndex>12035</endIndex>
+        <startLine>315</startLine>
+        <startColumn>78</startColumn>
+        <endLine>315</endLine>
+        <endColumn>86</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>322</line>
+        <index>12301</index>
+        <endIndex>12309</endIndex>
+        <startLine>322</startLine>
+        <startColumn>40</startColumn>
+        <endLine>322</endLine>
+        <endColumn>48</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>331</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>351</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>333</line>
+        <index>12638</index>
+        <endIndex>12646</endIndex>
+        <startLine>333</startLine>
+        <startColumn>32</startColumn>
+        <endLine>333</endLine>
+        <endColumn>40</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>333</line>
+        <index>12673</index>
+        <endIndex>12681</endIndex>
+        <startLine>333</startLine>
+        <startColumn>67</startColumn>
+        <endLine>333</endLine>
+        <endColumn>75</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to debug must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>341</line>
+        <index>12990</index>
+        <endIndex>12994</endIndex>
+        <startLine>341</startLine>
+        <startColumn>17</startColumn>
+        <endLine>341</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>352</line>
+        <index>13402</index>
+        <endIndex>13410</endIndex>
+        <startLine>352</startLine>
+        <startColumn>13</startColumn>
+        <endLine>352</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>355</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>372</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>360</line>
+        <index>13658</index>
+        <endIndex>13666</endIndex>
+        <startLine>360</startLine>
+        <startColumn>25</startColumn>
+        <endLine>360</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>358</line>
+        <index>13584</index>
+        <endIndex>13592</endIndex>
+        <startLine>358</startLine>
+        <startColumn>17</startColumn>
+        <endLine>358</endLine>
+        <endColumn>25</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to debug must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>369</line>
+        <index>13960</index>
+        <endIndex>13964</endIndex>
+        <startLine>369</startLine>
+        <startColumn>17</startColumn>
+        <endLine>369</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>373</line>
+        <index>14119</index>
+        <endIndex>14127</endIndex>
+        <startLine>373</startLine>
+        <startColumn>13</startColumn>
+        <endLine>373</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>377</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Set must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>381</line>
+        <index>14451</index>
+        <endIndex>14453</endIndex>
+        <startLine>381</startLine>
+        <startColumn>17</startColumn>
+        <endLine>381</endLine>
+        <endColumn>19</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>385</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>389</line>
+        <index>14713</index>
+        <endIndex>14727</endIndex>
+        <startLine>389</startLine>
+        <startColumn>56</startColumn>
+        <endLine>389</endLine>
+        <endColumn>70</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>390</line>
+        <index>14768</index>
+        <endIndex>14782</endIndex>
+        <startLine>390</startLine>
+        <startColumn>37</startColumn>
+        <endLine>390</endLine>
+        <endColumn>51</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>395</line>
+        <index>14921</index>
+        <endIndex>14929</endIndex>
+        <startLine>395</startLine>
+        <startColumn>24</startColumn>
+        <endLine>395</endLine>
+        <endColumn>32</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>395</line>
+        <index>14956</index>
+        <endIndex>14964</endIndex>
+        <startLine>395</startLine>
+        <startColumn>59</startColumn>
+        <endLine>395</endLine>
+        <endColumn>67</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>403</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>408</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>413</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>407</line>
+        <index>15237</index>
+        <endIndex>15251</endIndex>
+        <startLine>407</startLine>
+        <startColumn>24</startColumn>
+        <endLine>407</endLine>
+        <endColumn>38</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>409</line>
+        <index>15301</index>
+        <endIndex>15309</endIndex>
+        <startLine>409</startLine>
+        <startColumn>32</startColumn>
+        <endLine>409</endLine>
+        <endColumn>40</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>409</line>
+        <index>15336</index>
+        <endIndex>15344</endIndex>
+        <startLine>409</startLine>
+        <startColumn>67</startColumn>
+        <endLine>409</endLine>
+        <endColumn>75</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>417</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>422</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>427</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>423</line>
+        <index>15717</index>
+        <endIndex>15725</endIndex>
+        <startLine>423</startLine>
+        <startColumn>32</startColumn>
+        <endLine>423</endLine>
+        <endColumn>40</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>423</line>
+        <index>15752</index>
+        <endIndex>15760</endIndex>
+        <startLine>423</startLine>
+        <startColumn>67</startColumn>
+        <endLine>423</endLine>
+        <endColumn>75</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>431</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>434</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to ToYamlTestCase must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>433</line>
+        <index>15999</index>
+        <endIndex>16012</endIndex>
+        <startLine>433</startLine>
+        <startColumn>20</startColumn>
+        <endLine>433</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>435</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ElementsMustBeSeparatedByBlankLine" ruleCheckId="SA1516">
+        <context>Adjacent elements must be separated by a blank line.</context>
+        <line>435</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to ToYamlTestCase must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>437</line>
+        <index>16129</index>
+        <endIndex>16142</endIndex>
+        <startLine>437</startLine>
+        <startColumn>20</startColumn>
+        <endLine>437</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>440</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="SingleLineCommentMustBePrecededByBlankLine" ruleCheckId="SA1515">
+        <context>A single-line comment must be preceded by a blank line or another single-line comment, or must be the first item in its scope. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>445</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="SingleLineCommentMustBePrecededByBlankLine" ruleCheckId="SA1515">
+        <context>A single-line comment must be preceded by a blank line or another single-line comment, or must be the first item in its scope. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>450</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>461</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>473</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>481</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>483</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>491</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>493</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>451</line>
+        <index>16815</index>
+        <endIndex>16829</endIndex>
+        <startLine>451</startLine>
+        <startColumn>60</startColumn>
+        <endLine>451</endLine>
+        <endColumn>74</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to GetAvailableFieldNamesSorted must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>454</line>
+        <index>16931</index>
+        <endIndex>16958</endIndex>
+        <startLine>454</startLine>
+        <startColumn>39</startColumn>
+        <endLine>454</endLine>
+        <endColumn>66</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>458</line>
+        <index>17081</index>
+        <endIndex>17089</endIndex>
+        <startLine>458</startLine>
+        <startColumn>42</startColumn>
+        <endLine>458</endLine>
+        <endColumn>50</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Get must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>464</line>
+        <index>17331</index>
+        <endIndex>17333</endIndex>
+        <startLine>464</startLine>
+        <startColumn>59</startColumn>
+        <endLine>464</endLine>
+        <endColumn>61</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Get must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>474</line>
+        <index>17691</index>
+        <endIndex>17693</endIndex>
+        <startLine>474</startLine>
+        <startColumn>32</startColumn>
+        <endLine>474</endLine>
+        <endColumn>34</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Get must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>482</line>
+        <index>18065</index>
+        <endIndex>18067</endIndex>
+        <startLine>482</startLine>
+        <startColumn>65</startColumn>
+        <endLine>482</endLine>
+        <endColumn>67</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
+        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>445</line>
+        <index>16425</index>
+        <endIndex>16463</endIndex>
+        <startLine>445</startLine>
+        <startColumn>13</startColumn>
+        <endLine>445</endLine>
+        <endColumn>51</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.SpacingRules" rule="SingleLineCommentsMustBeginWithSingleSpace" ruleCheckId="SA1005">
+        <context>The comment must start with a single space. To ignore this error when commenting out a line of code, begin the comment with '////' rather than '//'.</context>
+        <line>450</line>
+        <index>16680</index>
+        <endIndex>16753</endIndex>
+        <startLine>450</startLine>
+        <startColumn>13</startColumn>
+        <endLine>450</endLine>
+        <endColumn>86</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>499</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to GetAvailableFieldNames must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>501</line>
+        <index>18646</index>
+        <endIndex>18667</endIndex>
+        <startLine>501</startLine>
+        <startColumn>35</startColumn>
+        <endLine>501</endLine>
+        <endColumn>56</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to ToJson must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>503</line>
+        <index>18730</index>
+        <endIndex>18735</endIndex>
+        <startLine>503</startLine>
+        <startColumn>20</startColumn>
+        <endLine>503</endLine>
+        <endColumn>25</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>506</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>520</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to UserAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>526</line>
+        <index>19470</index>
+        <endIndex>19484</endIndex>
+        <startLine>526</startLine>
+        <startColumn>54</startColumn>
+        <endLine>526</endLine>
+        <endColumn>68</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to GetValue must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>533</line>
+        <index>19731</index>
+        <endIndex>19738</endIndex>
+        <startLine>533</startLine>
+        <startColumn>54</startColumn>
+        <endLine>533</endLine>
+        <endColumn>61</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>541</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to ToString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>543</line>
+        <index>19941</index>
+        <endIndex>19948</endIndex>
+        <startLine>543</startLine>
+        <startColumn>20</startColumn>
+        <endLine>543</endLine>
+        <endColumn>27</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to GetAvailableFieldNamesSorted must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>543</line>
+        <index>19950</index>
+        <endIndex>19977</endIndex>
+        <startLine>543</startLine>
+        <startColumn>29</startColumn>
+        <endLine>543</endLine>
+        <endColumn>56</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>546</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>553</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>565</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>570</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to userAgentString must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>548</line>
+        <index>20145</index>
+        <endIndex>20159</endIndex>
+        <startLine>548</startLine>
+        <startColumn>81</startColumn>
+        <endLine>548</endLine>
+        <endColumn>95</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>558</line>
+        <index>20538</index>
+        <endIndex>20546</endIndex>
+        <startLine>558</startLine>
+        <startColumn>40</startColumn>
+        <endLine>558</endLine>
+        <endColumn>48</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>574</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>576</line>
+        <index>21223</index>
+        <endIndex>21231</endIndex>
+        <startLine>576</startLine>
+        <startColumn>55</startColumn>
+        <endLine>576</endLine>
+        <endColumn>63</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>582</line>
+        <index>21480</index>
+        <endIndex>21488</endIndex>
+        <startLine>582</startLine>
+        <startColumn>40</startColumn>
+        <endLine>582</endLine>
+        <endColumn>48</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>578</line>
+        <index>21337</index>
+        <endIndex>21345</endIndex>
+        <startLine>578</startLine>
+        <startColumn>42</startColumn>
+        <endLine>578</endLine>
+        <endColumn>50</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>595</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to GetAvailableFieldNames must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>597</line>
+        <index>22011</index>
+        <endIndex>22032</endIndex>
+        <startLine>597</startLine>
+        <startColumn>56</startColumn>
+        <endLine>597</endLine>
+        <endColumn>77</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>613</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>620</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>623</line>
+        <index>22785</index>
+        <endIndex>22793</endIndex>
+        <startLine>623</startLine>
+        <startColumn>13</startColumn>
+        <endLine>623</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>624</line>
+        <index>22917</index>
+        <endIndex>22925</endIndex>
+        <startLine>624</startLine>
+        <startColumn>13</startColumn>
+        <endLine>624</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>625</line>
+        <index>23016</index>
+        <endIndex>23024</endIndex>
+        <startLine>625</startLine>
+        <startColumn>13</startColumn>
+        <endLine>625</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>628</line>
+        <index>23149</index>
+        <endIndex>23157</endIndex>
+        <startLine>628</startLine>
+        <startColumn>13</startColumn>
+        <endLine>628</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>629</line>
+        <index>23265</index>
+        <endIndex>23273</endIndex>
+        <startLine>629</startLine>
+        <startColumn>13</startColumn>
+        <endLine>629</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>630</line>
+        <index>23380</index>
+        <endIndex>23388</endIndex>
+        <startLine>630</startLine>
+        <startColumn>13</startColumn>
+        <endLine>630</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>633</line>
+        <index>23561</index>
+        <endIndex>23569</endIndex>
+        <startLine>633</startLine>
+        <startColumn>13</startColumn>
+        <endLine>633</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>634</line>
+        <index>23675</index>
+        <endIndex>23683</endIndex>
+        <startLine>634</startLine>
+        <startColumn>13</startColumn>
+        <endLine>634</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>635</line>
+        <index>23806</index>
+        <endIndex>23814</endIndex>
+        <startLine>635</startLine>
+        <startColumn>13</startColumn>
+        <endLine>635</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>636</line>
+        <index>23905</index>
+        <endIndex>23913</endIndex>
+        <startLine>636</startLine>
+        <startColumn>13</startColumn>
+        <endLine>636</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>639</line>
+        <index>24080</index>
+        <endIndex>24088</endIndex>
+        <startLine>639</startLine>
+        <startColumn>13</startColumn>
+        <endLine>639</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>640</line>
+        <index>24179</index>
+        <endIndex>24187</endIndex>
+        <startLine>640</startLine>
+        <startColumn>13</startColumn>
+        <endLine>640</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>641</line>
+        <index>24305</index>
+        <endIndex>24313</endIndex>
+        <startLine>641</startLine>
+        <startColumn>13</startColumn>
+        <endLine>641</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to allFields must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>642</line>
+        <index>24396</index>
+        <endIndex>24404</endIndex>
+        <startLine>642</startLine>
+        <startColumn>13</startColumn>
+        <endLine>642</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>645</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Set must begin with the 'this.', 'base.', 'object.' or 'UserAgent.' or 'UserAgentBaseListener.' prefix to indicate the intended method call. </context>
+        <line>647</line>
+        <index>24582</index>
+        <endIndex>24584</endIndex>
+        <startLine>647</startLine>
+        <startColumn>13</startColumn>
+        <endLine>647</endLine>
+        <endColumn>15</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The class must have a documentation header.</context>
+        <line>651</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>653</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.MaintainabilityRules" rule="FieldsMustBePrivate" ruleCheckId="SA1401">
+        <context>Fields must be declared with private access. Use properties to expose fields.</context>
+        <line>653</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.NamingRules" rule="AccessibleFieldsMustBeginWithUpperCaseLetter" ruleCheckId="SA1307">
+        <context>Public and internal fields must start with an upper-case letter: confidence.</context>
+        <line>653</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>655</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The field must have a documentation header.</context>
+        <line>656</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The constructor must have a documentation header.</context>
+        <line>658</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to Reset must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>661</line>
+        <index>25003</index>
+        <endIndex>25007</endIndex>
+        <startLine>661</startLine>
+        <startColumn>17</startColumn>
+        <endLine>661</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>664</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>666</line>
+        <index>25094</index>
+        <endIndex>25098</endIndex>
+        <startLine>666</startLine>
+        <startColumn>17</startColumn>
+        <endLine>666</endLine>
+        <endColumn>21</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to defaultValue must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>666</line>
+        <index>25102</index>
+        <endIndex>25113</endIndex>
+        <startLine>666</startLine>
+        <startColumn>25</startColumn>
+        <endLine>666</endLine>
+        <endColumn>36</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>667</line>
+        <index>25133</index>
+        <endIndex>25142</endIndex>
+        <startLine>667</startLine>
+        <startColumn>17</startColumn>
+        <endLine>667</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>670</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>675</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to defaultValue must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>674</line>
+        <index>25303</index>
+        <endIndex>25314</endIndex>
+        <startLine>674</startLine>
+        <startColumn>28</startColumn>
+        <endLine>674</endLine>
+        <endColumn>39</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>672</line>
+        <index>25241</index>
+        <endIndex>25245</endIndex>
+        <startLine>672</startLine>
+        <startColumn>21</startColumn>
+        <endLine>672</endLine>
+        <endColumn>25</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>676</line>
+        <index>25360</index>
+        <endIndex>25364</endIndex>
+        <startLine>676</startLine>
+        <startColumn>24</startColumn>
+        <endLine>676</endLine>
+        <endColumn>28</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>679</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>684</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>681</line>
+        <index>25461</index>
+        <endIndex>25465</endIndex>
+        <startLine>681</startLine>
+        <startColumn>21</startColumn>
+        <endLine>681</endLine>
+        <endColumn>25</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>685</line>
+        <index>25606</index>
+        <endIndex>25615</endIndex>
+        <startLine>685</startLine>
+        <startColumn>24</startColumn>
+        <endLine>685</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>688</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to SetValue must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>690</line>
+        <index>25726</index>
+        <endIndex>25733</endIndex>
+        <startLine>690</startLine>
+        <startColumn>24</startColumn>
+        <endLine>690</endLine>
+        <endColumn>31</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>693</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>706</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>708</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>697</line>
+        <index>25959</index>
+        <endIndex>25968</endIndex>
+        <startLine>697</startLine>
+        <startColumn>21</startColumn>
+        <endLine>697</endLine>
+        <endColumn>30</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>701</line>
+        <index>26091</index>
+        <endIndex>26095</endIndex>
+        <startLine>701</startLine>
+        <startColumn>25</startColumn>
+        <endLine>701</endLine>
+        <endColumn>29</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to defaultValue must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>701</line>
+        <index>26099</index>
+        <endIndex>26110</endIndex>
+        <startLine>701</startLine>
+        <startColumn>33</startColumn>
+        <endLine>701</endLine>
+        <endColumn>44</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>705</line>
+        <index>26210</index>
+        <endIndex>26214</endIndex>
+        <startLine>705</startLine>
+        <startColumn>25</startColumn>
+        <endLine>705</endLine>
+        <endColumn>29</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>695</line>
+        <index>25907</index>
+        <endIndex>25916</endIndex>
+        <startLine>695</startLine>
+        <startColumn>37</startColumn>
+        <endLine>695</endLine>
+        <endColumn>46</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>712</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>714</line>
+        <index>26461</index>
+        <endIndex>26470</endIndex>
+        <startLine>714</startLine>
+        <startColumn>17</startColumn>
+        <endLine>714</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>718</line>
+        <index>26581</index>
+        <endIndex>26585</endIndex>
+        <startLine>718</startLine>
+        <startColumn>21</startColumn>
+        <endLine>718</endLine>
+        <endColumn>25</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to defaultValue must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>718</line>
+        <index>26589</index>
+        <endIndex>26600</endIndex>
+        <startLine>718</startLine>
+        <startColumn>29</startColumn>
+        <endLine>718</endLine>
+        <endColumn>40</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>722</line>
+        <index>26684</index>
+        <endIndex>26688</endIndex>
+        <startLine>722</startLine>
+        <startColumn>21</startColumn>
+        <endLine>722</endLine>
+        <endColumn>25</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>726</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>731</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.LayoutRules" rule="ClosingCurlyBracketMustBeFollowedByBlankLine" ruleCheckId="SA1513">
+        <context>Statements or elements wrapped in curly brackets must be followed by a blank line.</context>
+        <line>735</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>737</line>
+        <index>27104</index>
+        <endIndex>27113</endIndex>
+        <startLine>737</startLine>
+        <startColumn>24</startColumn>
+        <endLine>737</endLine>
+        <endColumn>33</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Equals must begin with the 'this.', 'base.', 'object.' or 'AgentField.' prefix to indicate the intended method call. </context>
+        <line>738</line>
+        <index>27158</index>
+        <endIndex>27163</endIndex>
+        <startLine>738</startLine>
+        <startColumn>21</startColumn>
+        <endLine>738</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to defaultValue must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>738</line>
+        <index>27165</index>
+        <endIndex>27176</endIndex>
+        <startLine>738</startLine>
+        <startColumn>28</startColumn>
+        <endLine>738</endLine>
+        <endColumn>39</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixCallsCorrectly" ruleCheckId="SA1126">
+        <context>The call to Equals must begin with the 'this.', 'base.', 'object.' or 'AgentField.' prefix to indicate the intended method call. </context>
+        <line>739</line>
+        <index>27222</index>
+        <endIndex>27227</endIndex>
+        <startLine>739</startLine>
+        <startColumn>21</startColumn>
+        <endLine>739</endLine>
+        <endColumn>26</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>739</line>
+        <index>27229</index>
+        <endIndex>27233</endIndex>
+        <startLine>739</startLine>
+        <startColumn>28</startColumn>
+        <endLine>739</endLine>
+        <endColumn>32</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>742</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to defaultValue must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>744</line>
+        <index>27370</index>
+        <endIndex>27381</endIndex>
+        <startLine>744</startLine>
+        <startColumn>42</startColumn>
+        <endLine>744</endLine>
+        <endColumn>53</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>744</line>
+        <index>27384</index>
+        <endIndex>27388</endIndex>
+        <startLine>744</startLine>
+        <startColumn>56</startColumn>
+        <endLine>744</endLine>
+        <endColumn>60</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>744</line>
+        <index>27391</index>
+        <endIndex>27400</endIndex>
+        <startLine>744</startLine>
+        <startColumn>63</startColumn>
+        <endLine>744</endLine>
+        <endColumn>72</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.DocumentationRules" rule="ElementsMustBeDocumented" ruleCheckId="SA1600">
+        <context>The method must have a documentation header.</context>
+        <line>747</line>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to value must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>749</line>
+        <index>27527</index>
+        <endIndex>27531</endIndex>
+        <startLine>749</startLine>
+        <startColumn>30</startColumn>
+        <endLine>749</endLine>
+        <endColumn>34</endColumn>
+        <warning>False</warning>
+      </violation>
+      <violation namespace="StyleCop.CSharp.ReadabilityRules" rule="PrefixLocalCallsWithThis" ruleCheckId="SA1101">
+        <context>The call to confidence must begin with the 'this.' prefix to indicate that the item is a member of the class.</context>
+        <line>749</line>
+        <index>27541</index>
+        <endIndex>27550</endIndex>
+        <startLine>749</startLine>
+        <startColumn>44</startColumn>
+        <endLine>749</endLine>
+        <endColumn>53</endColumn>
+        <warning>False</warning>
+      </violation>
+    </violations>
+  </sourcecode>
+</stylecopresultscache>

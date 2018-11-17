@@ -49,7 +49,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             LoadResources(resourceString, pattern);
         }
 
-        public List<Dictionary<string, Dictionary<string, string>>> GetAllTestCases()
+        public IList<Dictionary<string, Dictionary<string, string>>> GetAllTestCases()
         {
             return testCases;
         }
