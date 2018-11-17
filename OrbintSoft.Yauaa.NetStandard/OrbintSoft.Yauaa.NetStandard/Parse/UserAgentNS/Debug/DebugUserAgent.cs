@@ -28,7 +28,6 @@ using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug

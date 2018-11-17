@@ -29,7 +29,6 @@ using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using YamlDotNet.RepresentationModel;
 
