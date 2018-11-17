@@ -30,7 +30,6 @@ using log4net;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
 using System;
-using System.Reflection;
 using System.Text;
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
