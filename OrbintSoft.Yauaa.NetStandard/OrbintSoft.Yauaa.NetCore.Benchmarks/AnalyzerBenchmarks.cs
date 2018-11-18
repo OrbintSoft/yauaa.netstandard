@@ -1,6 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using System;
 
 namespace OrbintSoft.Yauaa.NetCore.Benchmarks
 {
