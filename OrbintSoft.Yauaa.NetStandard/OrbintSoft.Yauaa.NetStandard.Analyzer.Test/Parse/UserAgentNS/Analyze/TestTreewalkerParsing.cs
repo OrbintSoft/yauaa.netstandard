@@ -381,8 +381,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 
             internal TestMatcher(IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets) : base(null, lookups, lookupSets)
             {
-
+                
             }
+
 
             public override void InformMeAbout(MatcherAction matcherAction, string keyPattern)
             {

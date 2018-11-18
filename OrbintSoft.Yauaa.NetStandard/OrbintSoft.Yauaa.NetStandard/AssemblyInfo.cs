@@ -24,8 +24,9 @@
 //<date>2018, 10, 15, 20:12</date>
 //<summary></summary>
 
+
 using System;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("OrbintSoft.Yauaa.NetCore.Analyzer.Test")]
+[assembly: InternalsVisibleTo("OrbintSoft.Yauaa.NetCore.Analyzer.Test, PublicKey=00240000048000009400000006020000002400005253413100040000010001001da7ed2aac4ff100180d06b0fff5a3c4ebfe9e5a1e6c4550f3e6b0efa73090fb8f5aba93b27c16c420bf7fd598573b7aa97cce3cd6c57756dd8d2676a24cce1c400512de19d38b92e139b2191cbadaae155f1cc4d202d16030a1351d3a9b431a4edc2a4cd3a4cd0646785d078c1150aadda412c00bc9377ec8f76940674a1dca")]
 [assembly: CLSCompliant(false)]

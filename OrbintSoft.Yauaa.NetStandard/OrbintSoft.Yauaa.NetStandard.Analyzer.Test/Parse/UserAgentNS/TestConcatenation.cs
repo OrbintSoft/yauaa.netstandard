@@ -77,7 +77,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 
             uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", null, "One");
             userAgent.GetValue("Combined3").Should().Be("One");
-            
+
             uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined4", "One", null);
             userAgent.GetValue("Combined4").Should().Be("One");
         }

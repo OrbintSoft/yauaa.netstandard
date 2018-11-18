@@ -53,7 +53,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             {
                 uaa.ImmediateInitialization();
             }
-           
+
             uaa.Initialize();
 
             LOG.Info("--------------------------------------------------------------");

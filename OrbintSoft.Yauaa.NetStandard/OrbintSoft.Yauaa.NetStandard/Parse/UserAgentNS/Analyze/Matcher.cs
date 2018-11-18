@@ -195,7 +195,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
-        // Internal private constructor for testing purposes only
+        // Internal private constructor for testing purposes only        
         internal Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets)
         {
             this.lookups = lookups;
