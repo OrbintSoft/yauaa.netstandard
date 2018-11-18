@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetStandard.Analyzer", "OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.csproj", "{7946B4BC-AF19-4D5D-8DA8-56858E674777}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetCore.Analyzer.Test", "OrbintSoft.Yauaa.NetStandard.Analyzer.Test\OrbintSoft.Yauaa.NetCore.Analyzer.Test.csproj", "{BC03094C-6023-4931-A842-7B5257CBB447}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetCore.Benchmarks", "OrbintSoft.Yauaa.NetCore.Benchmarks\OrbintSoft.Yauaa.NetCore.Benchmarks.csproj", "{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbintSoft.Yauaa.NetCore.Benchmarks", "OrbintSoft.Yauaa.NetCore.Benchmarks\OrbintSoft.Yauaa.NetCore.Benchmarks.csproj", "{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetCore.Analyzer.Test", "OrbintSoft.Yauaa.NetCore.Analyzer.Test\OrbintSoft.Yauaa.NetCore.Analyzer.Test.csproj", "{F00F6CDE-E35F-4841-B056-C6FE8292CC38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,18 +22,18 @@ Global
 		{7946B4BC-AF19-4D5D-8DA8-56858E674777}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7946B4BC-AF19-4D5D-8DA8-56858E674777}.Verbose|Any CPU.ActiveCfg = Verbose|Any CPU
 		{7946B4BC-AF19-4D5D-8DA8-56858E674777}.Verbose|Any CPU.Build.0 = Verbose|Any CPU
-		{BC03094C-6023-4931-A842-7B5257CBB447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BC03094C-6023-4931-A842-7B5257CBB447}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BC03094C-6023-4931-A842-7B5257CBB447}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BC03094C-6023-4931-A842-7B5257CBB447}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BC03094C-6023-4931-A842-7B5257CBB447}.Verbose|Any CPU.ActiveCfg = Verbose|Any CPU
-		{BC03094C-6023-4931-A842-7B5257CBB447}.Verbose|Any CPU.Build.0 = Verbose|Any CPU
 		{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}.Verbose|Any CPU.ActiveCfg = Debug|Any CPU
 		{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}.Verbose|Any CPU.Build.0 = Debug|Any CPU
+		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Verbose|Any CPU.ActiveCfg = Verbose|Any CPU
+		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Verbose|Any CPU.Build.0 = Verbose|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
