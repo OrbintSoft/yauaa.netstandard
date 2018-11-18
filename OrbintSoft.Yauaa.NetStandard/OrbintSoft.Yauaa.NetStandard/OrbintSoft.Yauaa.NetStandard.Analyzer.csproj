@@ -12,11 +12,11 @@
     <NeutralLanguage>en</NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>5.3-beta.2</Version>
-    <AssemblyVersion>5.3.1.2</AssemblyVersion>
-    <FileVersion>5.3.1.2</FileVersion>
+    <Version>5.3-beta.3</Version>
+    <AssemblyVersion>5.3.1.3</AssemblyVersion>
+    <FileVersion>5.3.1.3</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
-    <Description>This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
+    <Description>This is a .NET porting of a Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
@@ -24,6 +24,13 @@
     <PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
     <Product>Yauaa: Yet Another User Agent Analyzer</Product>
     <PackageId>OrbintSoft.Yauaa.NetStandard.Analyzer</PackageId>
+	<Summary>
+		This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.
+		The library provides a reliable and extensible user agent parsing, browser and device detection.
+	</Summary>
+	<SignAssembly>true</SignAssembly>
+	<AssemblyOriginatorKeyFile>OrbintSoft.Yauaa.NetStandard.Analyzer.pfx</AssemblyOriginatorKeyFile>
+	<DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

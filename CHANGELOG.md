@@ -7,6 +7,8 @@ v5.3
 - Detect Iron, Quark and Otter browsers
 - Handle the 'too many spaces' effect.
 - Major code refactoring
+- Add benchmarking project
+- Add strong name signing
 
 v5.2
 ===

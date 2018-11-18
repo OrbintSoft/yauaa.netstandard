@@ -2,12 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>5.3-beta.2</Version>
+    <Version>5.3-beta.3</Version>
     <Authors>Stefano Balzarotti, Niels Basjes</Authors>
-    <AssemblyVersion>5.3.1.2</AssemblyVersion>
+    <AssemblyVersion>5.3.1.3</AssemblyVersion>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject />
+    <FileVersion>5.3.1.3</FileVersion>
+    <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
