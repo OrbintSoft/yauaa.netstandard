@@ -16,9 +16,9 @@
     <AssemblyVersion>5.3.1.3</AssemblyVersion>
     <FileVersion>5.3.1.3</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
-    <Description>
-		This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
-		The library provides a reliable and extensible user agent parsing, browser and device detection.
+    <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
+
+The library provides a reliable and extensible user agent parsing, browser and device detection.
 	</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <Configurations>Debug;Release;Verbose</Configurations>
@@ -34,6 +34,9 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Verbose|AnyCPU'">
@@ -41,7 +44,13 @@
     <Optimize>false</Optimize>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
