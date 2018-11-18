@@ -24,19 +24,35 @@
 //<date>2018, 8, 14, 12:52</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Value
 {
-    public class StepConcatPrefix: Step
+    using Antlr4.Runtime.Tree;
+
+    /// <summary>
+    /// Defines the <see cref="StepConcatPrefix" />
+    /// </summary>
+    public class StepConcatPrefix : Step
     {
+        /// <summary>
+        /// Defines the prefix
+        /// </summary>
         private readonly string prefix;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepConcatPrefix"/> class.
+        /// </summary>
+        /// <param name="prefix">The prefix<see cref="string"/></param>
         public StepConcatPrefix(string prefix)
         {
             this.prefix = prefix;
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             string actualValue = GetActualValue(tree, value);
@@ -44,6 +60,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
             return WalkNextStep(tree, filteredValue);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "StepConcatPrefix(" + prefix + ")";

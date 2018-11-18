@@ -24,13 +24,16 @@
 //<date>2018, 10, 9, 13:16</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestYamlBasedExpressions" />
+    /// </summary>
     public class TestYamlBasedExpressions : IClassFixture<LogFixture>
     {
         //    @Test
@@ -38,7 +41,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         //        UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("classpath*:**/Linux.yaml");
         //        Assert.assertTrue(uaa.runTests(true, false));
         //    }
-
+        /// <summary>
+        /// The RunMatcherTests
+        /// </summary>
         [Fact]
         public void RunMatcherTests()
         {
@@ -46,6 +51,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunMatcherNestedFunctionsTests
+        /// </summary>
         [Fact]
         public void RunMatcherNestedFunctionsTests()
         {
@@ -53,6 +61,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunMatcherIsNullTests
+        /// </summary>
         [Fact]
         public void RunMatcherIsNullTests()
         {
@@ -60,6 +71,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunSubstringTests
+        /// </summary>
         [Fact]
         public void RunSubstringTests()
         {
@@ -67,6 +81,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunSubstringVersionTests
+        /// </summary>
         [Fact]
         public void RunSubstringVersionTests()
         {
@@ -74,6 +91,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunLookupTests
+        /// </summary>
         [Fact]
         public void RunLookupTests()
         {
@@ -81,6 +101,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunVariableTests
+        /// </summary>
         [Fact]
         public void RunVariableTests()
         {
@@ -88,6 +111,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunPositionalTests
+        /// </summary>
         [Fact]
         public void RunPositionalTests()
         {
@@ -95,6 +121,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunWalkingTests
+        /// </summary>
         [Fact]
         public void RunWalkingTests()
         {
@@ -103,6 +132,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunAllFieldsTests
+        /// </summary>
         [Fact]
         public void RunAllFieldsTests()
         {
@@ -110,6 +142,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunDebugOutputTest
+        /// </summary>
         [Fact]
         public void RunDebugOutputTest()
         {
@@ -117,6 +152,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(true, true).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunEdgecasesTest
+        /// </summary>
         [Fact]
         public void RunEdgecasesTest()
         {
@@ -124,6 +162,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The RunAllPossibleSteps
+        /// </summary>
         [Fact]
         public void RunAllPossibleSteps()
         {

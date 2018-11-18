@@ -24,27 +24,45 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using System.Diagnostics;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
 {
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using System.Diagnostics;
+    using Xunit;
 
+    /// <summary>
+    /// Defines the <see cref="TestMemoryFootprint" />
+    /// </summary>
     public class TestMemoryFootprint : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// Defines the LOG
+        /// </summary>
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestMemoryFootprint));
 
+        /// <summary>
+        /// Defines the MEGABYTE
+        /// </summary>
         private static readonly long MEGABYTE = 1024L * 1024L;
 
+        /// <summary>
+        /// The BytesToMegabytes
+        /// </summary>
+        /// <param name="bytes">The bytes<see cref="long"/></param>
+        /// <returns>The <see cref="long"/></returns>
         public static long BytesToMegabytes(long bytes)
         {
             return bytes / MEGABYTE;
         }
 
+        /// <summary>
+        /// The PrintMemoryUsage
+        /// </summary>
+        /// <param name="iterationsDone">The iterationsDone<see cref="int"/></param>
+        /// <param name="averageNanos">The averageNanos<see cref="long"/></param>
         private void PrintMemoryUsage(int iterationsDone, long averageNanos)
         {
             // Calculate the used memory
@@ -55,6 +73,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
                 iterationsDone, memory, BytesToMegabytes(memory), averageNanos, averageNanos));
         }
 
+        /// <summary>
+        /// The CheckForMemoryLeaks
+        /// </summary>
         [SkippableFact]
         public void CheckForMemoryLeaks()
         {
@@ -83,6 +104,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
             }
         }
 
+        /// <summary>
+        /// The AssesMemoryImpactPerFieldName
+        /// </summary>
         [SkippableFact]
         public void AssesMemoryImpactPerFieldName()
         {
@@ -128,6 +152,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
             }
         }
 
+        /// <summary>
+        /// The PrintCurrentMemoryProfile
+        /// </summary>
+        /// <param name="label">The label<see cref="string"/></param>
         private void PrintCurrentMemoryProfile(string label)
         {
             GC.Collect();
@@ -139,6 +167,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
                 label, memory, BytesToMegabytes(memory), BytesToMegabytes(currentProcess.PeakWorkingSet64)));
         }
 
+        /// <summary>
+        /// The ProfileMemoryFootprint
+        /// </summary>
         [SkippableFact]
         public void ProfileMemoryFootprint()
         {
@@ -171,8 +202,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
             uaa.DropTests();
             GC.Collect();
             PrintCurrentMemoryProfile("NoTest ");
-
         }
-
     }
 }

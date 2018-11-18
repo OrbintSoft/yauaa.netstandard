@@ -24,62 +24,117 @@
 //<date>2018, 7, 26, 23:01</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Misc;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    using Antlr4.Runtime.Misc;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="WordRangeVisitor" />
+    /// </summary>
     [Serializable]
-    public sealed class WordRangeVisitor: UserAgentTreeWalkerBaseVisitor<WordRangeVisitor.Range>
+    public sealed class WordRangeVisitor : UserAgentTreeWalkerBaseVisitor<WordRangeVisitor.Range>
     {
+        /// <summary>
+        /// Defines the Instance
+        /// </summary>
         private static readonly WordRangeVisitor Instance = new WordRangeVisitor();
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="WordRangeVisitor"/> class from being created.
+        /// </summary>
         private WordRangeVisitor()
         {
         }
 
+        /// <summary>
+        /// The GetRange
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.WordRangeContext"/></param>
+        /// <returns>The <see cref="Range"/></returns>
         public static Range GetRange(UserAgentTreeWalkerParser.WordRangeContext ctx)
         {
             return Instance.Visit(ctx);
         }
 
+        /// <summary>
+        /// The VisitWordRangeStartToEnd
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.WordRangeStartToEndContext"/></param>
+        /// <returns>The <see cref="Range"/></returns>
         public override Range VisitWordRangeStartToEnd([NotNull] UserAgentTreeWalkerParser.WordRangeStartToEndContext context)
         {
             return new Range(int.Parse(context.firstWord.Text), int.Parse(context.lastWord.Text));
         }
 
+        /// <summary>
+        /// The VisitWordRangeFirstWords
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.WordRangeFirstWordsContext"/></param>
+        /// <returns>The <see cref="Range"/></returns>
         public override Range VisitWordRangeFirstWords([NotNull] UserAgentTreeWalkerParser.WordRangeFirstWordsContext context)
         {
             return new Range(1, int.Parse(context.lastWord.Text));
         }
 
+        /// <summary>
+        /// The VisitWordRangeLastWords
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.WordRangeLastWordsContext"/></param>
+        /// <returns>The <see cref="Range"/></returns>
         public override Range VisitWordRangeLastWords([NotNull] UserAgentTreeWalkerParser.WordRangeLastWordsContext context)
         {
-            return new Range(int.Parse(context.firstWord.Text),-1);
+            return new Range(int.Parse(context.firstWord.Text), -1);
         }
 
+        /// <summary>
+        /// The VisitWordRangeSingleWord
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.WordRangeSingleWordContext"/></param>
+        /// <returns>The <see cref="Range"/></returns>
         public override Range VisitWordRangeSingleWord([NotNull] UserAgentTreeWalkerParser.WordRangeSingleWordContext context)
         {
             int wordNumber = int.Parse(context.singleWord.Text);
             return new Range(wordNumber, wordNumber);
         }
 
+        /// <summary>
+        /// Defines the <see cref="Range" />
+        /// </summary>
         [Serializable]
         public class Range
         {
+            /// <summary>
+            /// Defines the rangeString
+            /// </summary>
             private string rangeString = null;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Range"/> class.
+            /// </summary>
+            /// <param name="first">The first<see cref="int"/></param>
+            /// <param name="last">The last<see cref="int"/></param>
             public Range(int first, int last)
             {
                 First = first;
                 Last = last;
             }
 
+            /// <summary>
+            /// Gets the First
+            /// </summary>
             public int First { get; }
 
+            /// <summary>
+            /// Gets the Last
+            /// </summary>
             public int Last { get; }
 
+            /// <summary>
+            /// The ToString
+            /// </summary>
+            /// <returns>The <see cref="string"/></returns>
             public override string ToString()
             {
                 if (rangeString == null)
@@ -96,6 +151,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 return rangeString;
             }
 
+            /// <summary>
+            /// The Equals
+            /// </summary>
+            /// <param name="obj">The obj<see cref="object"/></param>
+            /// <returns>The <see cref="bool"/></returns>
             public override bool Equals(object obj)
             {
                 if (!(obj is Range))
@@ -106,6 +166,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 return First == range.First && Last == range.Last;
             }
 
+            /// <summary>
+            /// The GetHashCode
+            /// </summary>
+            /// <returns>The <see cref="int"/></returns>
             public override int GetHashCode()
             {
                 return ValueTuple.Create(First, Last).GetHashCode();

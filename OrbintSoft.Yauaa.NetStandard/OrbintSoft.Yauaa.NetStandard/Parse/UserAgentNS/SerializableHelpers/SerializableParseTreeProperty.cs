@@ -24,27 +24,43 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System.Collections.Concurrent;
-using System.Runtime.Serialization;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.SerializableHelpers
 {
+    using Antlr4.Runtime.Tree;
+    using System.Collections.Concurrent;
+    using System.Runtime.Serialization;
+
+    /// <summary>
+    /// Defines the <see cref="SerializableParseTreeProperty{T}" />
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class SerializableParseTreeProperty<T> : ParseTreeProperty<T>, ISerializable
     {
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("annotations", annotations, typeof(ConcurrentDictionary<IParseTree, T>));            
+            info.AddValue("annotations", annotations, typeof(ConcurrentDictionary<IParseTree, T>));
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializableParseTreeProperty{T}"/> class.
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
         public SerializableParseTreeProperty(SerializationInfo info, StreamingContext context)
         {
             annotations = (ConcurrentDictionary<IParseTree, T>)info.GetValue("annotations", typeof(ConcurrentDictionary<IParseTree, T>));
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SerializableParseTreeProperty{T}"/> class.
+        /// </summary>
         public SerializableParseTreeProperty()
         {
-
         }
     }
 }

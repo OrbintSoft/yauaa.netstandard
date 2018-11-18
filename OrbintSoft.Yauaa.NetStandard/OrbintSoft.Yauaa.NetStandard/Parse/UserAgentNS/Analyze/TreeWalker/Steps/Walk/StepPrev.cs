@@ -24,14 +24,22 @@
 //<date>2018, 8, 16, 02:43</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepPrev" />
+    /// </summary>
     [Serializable]
-    public class StepPrev: Step
+    public class StepPrev : Step
     {
+        /// <summary>
+        /// The Prev
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="IParseTree"/></returns>
         private IParseTree Prev(IParseTree tree)
         {
             IParseTree parent = Up(tree);
@@ -54,6 +62,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             return null; // This should never happen
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             IParseTree nextTree = Prev(tree);
@@ -65,6 +79,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             return WalkNextStep(nextTree, null);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "Prev(1)";

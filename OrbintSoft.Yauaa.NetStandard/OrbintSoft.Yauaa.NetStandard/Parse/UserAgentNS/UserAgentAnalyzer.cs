@@ -24,24 +24,44 @@
 //<date>2018, 8, 16, 11:42</date>
 //<summary></summary>
 
-using System;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 {
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="UserAgentAnalyzer" />
+    /// </summary>
     [Serializable]
-    public class UserAgentAnalyzer: UserAgentAnalyzerDirect
+    public class UserAgentAnalyzer : UserAgentAnalyzerDirect
     {
+        /// <summary>
+        /// Defines the DEFAULT_PARSE_CACHE_SIZE
+        /// </summary>
         private const int DEFAULT_PARSE_CACHE_SIZE = 10000;
 
+        /// <summary>
+        /// Defines the cacheSize
+        /// </summary>
         private int cacheSize = DEFAULT_PARSE_CACHE_SIZE;
+
+        /// <summary>
+        /// Defines the parseCache
+        /// </summary>
         private Dictionary<string, UserAgent> parseCache = null;
 
-        protected UserAgentAnalyzer(): base()
-        { 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserAgentAnalyzer"/> class.
+        /// </summary>
+        protected UserAgentAnalyzer() : base()
+        {
             InitializeCache();
         }
 
+        /// <summary>
+        /// The NewBuilder
+        /// </summary>
+        /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
         public static UserAgentAnalyzerBuilder NewBuilder()
         {
             var a = new UserAgentAnalyzer();
@@ -50,6 +70,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return b;
         }
 
+        /// <summary>
+        /// The DisableCaching
+        /// </summary>
         public void DisableCaching()
         {
             SetCacheSize(0);
@@ -66,11 +89,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             InitializeCache();
         }
 
+        /// <summary>
+        /// The GetCacheSize
+        /// </summary>
+        /// <returns>The <see cref="int"/></returns>
         public int GetCacheSize()
         {
             return cacheSize;
         }
 
+        /// <summary>
+        /// The Parse
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <returns>The <see cref="UserAgent"/></returns>
         public override UserAgent Parse(UserAgent userAgent)
         {
             lock (this)
@@ -105,6 +137,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
+        /// <summary>
+        /// The InitializeCache
+        /// </summary>
         private void InitializeCache()
         {
             if (cacheSize >= 1)
@@ -117,12 +152,22 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
         }
 
-        public class UserAgentAnalyzerBuilder: UserAgentAnalyzerDirectBuilder<UserAgentAnalyzer, UserAgentAnalyzerBuilder>
+        /// <summary>
+        /// Defines the <see cref="UserAgentAnalyzerBuilder" />
+        /// </summary>
+        public class UserAgentAnalyzerBuilder : UserAgentAnalyzerDirectBuilder<UserAgentAnalyzer, UserAgentAnalyzerBuilder>
         {
+            /// <summary>
+            /// Defines the uaa
+            /// </summary>
             private readonly UserAgentAnalyzer uaa;
 
-            public UserAgentAnalyzerBuilder(UserAgentAnalyzer newUaa):base(newUaa)
-            {                
+            /// <summary>
+            /// Initializes a new instance of the <see cref="UserAgentAnalyzerBuilder"/> class.
+            /// </summary>
+            /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzer"/></param>
+            public UserAgentAnalyzerBuilder(UserAgentAnalyzer newUaa) : base(newUaa)
+            {
                 uaa = newUaa;
             }
 
@@ -131,6 +176,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
              * @param newCacheSize The new cache size value
              * @return the current Builder instance.
              */
+            /// <summary>
+            /// The WithCache
+            /// </summary>
+            /// <param name="newCacheSize">The newCacheSize<see cref="int"/></param>
+            /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
             public UserAgentAnalyzerBuilder WithCache(int newCacheSize)
             {
                 FailIfAlreadyBuilt();
@@ -142,6 +192,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
              * Disable caching.
              * @return the current Builder instance.
              */
+            /// <summary>
+            /// The WithoutCache
+            /// </summary>
+            /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
             public UserAgentAnalyzerBuilder WithoutCache()
             {
                 FailIfAlreadyBuilt();
@@ -150,6 +204,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
 
             // We must override the method because of the generic return value.
+            /// <summary>
+            /// The Build
+            /// </summary>
+            /// <returns>The <see cref="UserAgentAnalyzer"/></returns>
             public override UserAgentAnalyzer Build()
             {
                 return base.Build();

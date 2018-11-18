@@ -24,27 +24,45 @@
 //<date>2018, 7, 26, 23:29</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    using Antlr4.Runtime;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="MatcherRequireAction" />
+    /// </summary>
     [Serializable]
     public class MatcherRequireAction : MatcherAction
     {
+        /// <summary>
+        /// Defines the Log
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherRequireAction));
 
+        /// <summary>
+        /// Defines the foundRequiredValue
+        /// </summary>
         private bool foundRequiredValue = false;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MatcherRequireAction"/> class.
+        /// </summary>
+        /// <param name="config">The config<see cref="string"/></param>
+        /// <param name="matcher">The matcher<see cref="Matcher"/></param>
         public MatcherRequireAction(string config, Matcher matcher)
         {
             Init(config, matcher);
         }
 
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="key">The key<see cref="string"/></param>
+        /// <param name="foundValue">The foundValue<see cref="WalkList.WalkResult"/></param>
         public override void Inform(string key, WalkList.WalkResult foundValue)
         {
             foundRequiredValue = true;
@@ -56,6 +74,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
+        /// <summary>
+        /// The ObtainResult
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         public override bool ObtainResult()
         {
             if (IsValidIsNull())
@@ -66,22 +88,38 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return foundRequiredValue;
         }
 
+        /// <summary>
+        /// The Reset
+        /// </summary>
         public override void Reset()
         {
             base.Reset();
             foundRequiredValue = false;
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "Require: " + GetMatchExpression();
         }
 
+        /// <summary>
+        /// The ParseWalkerExpression
+        /// </summary>
+        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/></param>
+        /// <returns>The <see cref="ParserRuleContext"/></returns>
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
             return parser.matcherRequire();
         }
 
+        /// <summary>
+        /// The SetFixedValue
+        /// </summary>
+        /// <param name="fixedValue">The fixedValue<see cref="string"/></param>
         protected override void SetFixedValue(string fixedValue)
         {
             throw new InvalidParserConfigurationException(

@@ -24,15 +24,24 @@
 //<date>2018, 8, 14, 01:37</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Value
 {
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepCleanVersion" />
+    /// </summary>
     [Serializable]
     public class StepCleanVersion : Step
     {
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             string actualValue = GetActualValue(tree, value);
@@ -41,6 +50,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
             return WalkNextStep(tree, cleanedValue);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "CleanVersion()";

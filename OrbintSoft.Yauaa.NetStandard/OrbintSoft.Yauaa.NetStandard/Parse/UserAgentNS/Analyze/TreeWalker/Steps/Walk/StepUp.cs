@@ -24,14 +24,23 @@
 //<date>2018, 8, 16, 03:06</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepUp" />
+    /// </summary>
     [Serializable]
-    public class StepUp: Step
+    public class StepUp : Step
     {
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             IParseTree parent = Up(tree);
@@ -43,6 +52,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             return WalkNextStep(parent, null);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "Up()";

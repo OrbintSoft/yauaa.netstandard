@@ -24,24 +24,47 @@
 //<date>2018, 7, 26, 23:01</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using System;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    using Antlr4.Runtime;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="MatcherVariableAction" />
+    /// </summary>
     [Serializable]
-    public class MatcherVariableAction :MatcherAction
+    public class MatcherVariableAction : MatcherAction
     {
+        /// <summary>
+        /// Defines the Log
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherVariableAction));
+
+        /// <summary>
+        /// Defines the expression
+        /// </summary>
         private readonly string expression;
 
-        private WalkList.WalkResult foundValue = null;       
+        /// <summary>
+        /// Defines the foundValue
+        /// </summary>
+        private WalkList.WalkResult foundValue = null;
+
+        /// <summary>
+        /// Defines the interestedActions
+        /// </summary>
         private ISet<MatcherAction> interestedActions = null;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MatcherVariableAction"/> class.
+        /// </summary>
+        /// <param name="variableName">The variableName<see cref="string"/></param>
+        /// <param name="config">The config<see cref="string"/></param>
+        /// <param name="matcher">The matcher<see cref="Matcher"/></param>
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
             VariableName = variableName;
@@ -49,8 +72,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             Init(config, matcher);
         }
 
+        /// <summary>
+        /// Gets the VariableName
+        /// </summary>
         public string VariableName { get; }
 
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="key">The key<see cref="string"/></param>
+        /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/></param>
         public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
             if (verbose)
@@ -81,34 +112,57 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
+        /// <summary>
+        /// The ObtainResult
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         public override bool ObtainResult()
         {
             ProcessInformedMatches();
             return foundValue != null;
         }
 
+        /// <summary>
+        /// The Reset
+        /// </summary>
         public override void Reset()
         {
             base.Reset();
             foundValue = null;
         }
 
-        
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "VARIABLE: (" + VariableName + "): " + expression;
         }
 
+        /// <summary>
+        /// The SetInterestedActions
+        /// </summary>
+        /// <param name="newInterestedActions">The newInterestedActions<see cref="ISet{MatcherAction}"/></param>
         public void SetInterestedActions(ISet<MatcherAction> newInterestedActions)
         {
             interestedActions = newInterestedActions;
         }
 
+        /// <summary>
+        /// The ParseWalkerExpression
+        /// </summary>
+        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/></param>
+        /// <returns>The <see cref="ParserRuleContext"/></returns>
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
             return parser.matcher();
         }
 
+        /// <summary>
+        /// The SetFixedValue
+        /// </summary>
+        /// <param name="fixedValue">The fixedValue<see cref="string"/></param>
         protected override void SetFixedValue(string fixedValue)
         {
             throw new InvalidParserConfigurationException(

@@ -24,27 +24,36 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using FluentAssertions;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
+    using FluentAssertions;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System.Collections.Generic;
+    using System.Text;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestPredefinedBrowsers" />
+    /// </summary>
     public class TestPredefinedBrowsers : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// Defines the LOG
+        /// </summary>
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestPredefinedBrowsers));
 
+        /// <summary>
+        /// The ValidateAllPredefinedBrowsers
+        /// </summary>
         [Fact]
         public void ValidateAllPredefinedBrowsers()
         {
             UserAgentAnalyzerTester uaa;
             uaa = UserAgentAnalyzerTester
                 .NewBuilder()
-                .ImmediateInitialization()                
+                .ImmediateInitialization()
                 .Build() as UserAgentAnalyzerTester;
             LOG.Info("==============================================================");
             LOG.Info("Validating when getting all fields");
@@ -52,6 +61,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             uaa.RunTests(false, true, null, false, true).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The ValidateAllPredefinedBrowsersMultipleFields
+        /// </summary>
+        /// <param name="fields">The fields<see cref="ICollection{string}"/></param>
         private void ValidateAllPredefinedBrowsersMultipleFields(ICollection<string> fields)
         {
             LOG.Info("==============================================================");
@@ -69,6 +82,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             userAgentAnalyzer.RunTests(false, true, fields, false, false).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The Validate_DeviceClass_AgentNameVersionMajor
+        /// </summary>
         [Fact]
         public void Validate_DeviceClass_AgentNameVersionMajor()
         {
@@ -80,6 +96,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             ValidateAllPredefinedBrowsersMultipleFields(fields);
         }
 
+        /// <summary>
+        /// The Validate_DeviceClass_AgentNameVersionMajor_OperatingSystemVersionBuild
+        /// </summary>
         [Fact]
         public void Validate_DeviceClass_AgentNameVersionMajor_OperatingSystemVersionBuild()
         {
@@ -92,6 +111,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             ValidateAllPredefinedBrowsersMultipleFields(fields);
         }
 
+        /// <summary>
+        /// The MakeSureWeDoNotHaveDuplicateTests
+        /// </summary>
         [Fact]
         public void MakeSureWeDoNotHaveDuplicateTests()
         {
@@ -109,7 +131,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
                     locations = allTestInputs[input];
                 }
                 else
-                { 
+                {
                     locations = new List<string>();
                 }
                 locations.Add(location);

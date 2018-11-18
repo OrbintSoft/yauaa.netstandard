@@ -26,14 +26,27 @@
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
-    public sealed class WordSplitter: Splitter
+    /// <summary>
+    /// Defines the <see cref="WordSplitter" />
+    /// </summary>
+    public sealed class WordSplitter : Splitter
     {
+        /// <summary>
+        /// Defines the instance
+        /// </summary>
         private static WordSplitter instance = null;
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="WordSplitter"/> class from being created.
+        /// </summary>
         private WordSplitter()
         {
-        }       
+        }
 
+        /// <summary>
+        /// The GetInstance
+        /// </summary>
+        /// <returns>The <see cref="WordSplitter"/></returns>
         public static WordSplitter GetInstance()
         {
             if (instance == null)
@@ -43,6 +56,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             return instance;
         }
 
+        /// <summary>
+        /// The IsSeparator
+        /// </summary>
+        /// <param name="c">The c<see cref="char"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public override bool IsSeparator(char c)
         {
             switch (c)
@@ -67,6 +85,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
                     return false;
             }
         }
+
+        /// <summary>
+        /// The IsEndOfStringSeparator
+        /// </summary>
+        /// <param name="c">The c<see cref="char"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public override bool IsEndOfStringSeparator(char c)
         {
             return c == '(' || c == ')';

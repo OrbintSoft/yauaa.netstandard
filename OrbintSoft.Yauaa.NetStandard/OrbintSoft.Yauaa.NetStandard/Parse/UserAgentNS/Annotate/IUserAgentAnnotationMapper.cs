@@ -26,8 +26,17 @@
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 {
+    /// <summary>
+    /// Defines the <see cref="IUserAgentAnnotationMapper{T}" />
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IUserAgentAnnotationMapper<T>
     {
+        /// <summary>
+        /// The GetUserAgentString
+        /// </summary>
+        /// <param name="record">The record<see cref="T"/></param>
+        /// <returns>The <see cref="string"/></returns>
         string GetUserAgentString(T record);
     }
 }

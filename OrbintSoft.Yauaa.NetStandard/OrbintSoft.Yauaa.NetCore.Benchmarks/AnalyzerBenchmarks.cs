@@ -24,15 +24,24 @@
 //<date>2018, 11, 17, 18:29</date>
 //<summary></summary>
 
-using BenchmarkDotNet.Attributes;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-
 namespace OrbintSoft.Yauaa.NetCore.Benchmarks
 {
+    using BenchmarkDotNet.Attributes;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+
+    /// <summary>
+    /// Defines the <see cref="AnalyzerBenchmarks" />
+    /// </summary>
     public class AnalyzerBenchmarks
     {
+        /// <summary>
+        /// Defines the uaa
+        /// </summary>
         private UserAgentAnalyzer uaa;
 
+        /// <summary>
+        /// The GlobalSetup
+        /// </summary>
         [GlobalSetup]
         public void GlobalSetup()
         {
@@ -43,6 +52,10 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
             uaa.Parse((string)null);
         }
 
+        /// <summary>
+        /// The Android6Chrome46
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent Android6Chrome46()
         {
@@ -50,6 +63,10 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Chrome/46.0.2490.76 Mobile Safari/537.36");
         }
 
+        /// <summary>
+        /// The AndroidPhone
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent AndroidPhone()
         {
@@ -57,12 +74,20 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36");
         }
 
+        /// <summary>
+        /// The Googlebot
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent Googlebot()
         {
             return uaa.Parse("Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
         }
 
+        /// <summary>
+        /// The GoogleBotMobileAndroid
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent GoogleBotMobileAndroid()
         {
@@ -70,12 +95,20 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Chrome/41.0.2272.96 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)");
         }
 
+        /// <summary>
+        /// The GoogleAdsBot
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent GoogleAdsBot()
         {
             return uaa.Parse("AdsBot-Google (+http://www.google.com/adsbot.html)");
         }
 
+        /// <summary>
+        /// The GoogleAdsBotMobile
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent GoogleAdsBotMobile()
         {
@@ -83,6 +116,10 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Version/9.0 Mobile/13B143 Safari/601.1 (compatible; AdsBot-Google-Mobile; +http://www.google.com/mobile/adsbot.html)");
         }
 
+        /// <summary>
+        /// The IPhone
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent IPhone()
         {
@@ -90,6 +127,10 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Version/9.0 Mobile/13F69 Safari/601.1");
         }
 
+        /// <summary>
+        /// The IPhoneFacebookApp
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent IPhoneFacebookApp()
         {
@@ -98,6 +139,10 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "FBSV/9.3.3;FBSS/2;FBCR/vfnl;FBID/phone;FBLC/nl_NL;FBOP/5]");
         }
 
+        /// <summary>
+        /// The IPad
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent IPad()
         {
@@ -105,12 +150,20 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Version/9.0 Mobile/13F69 Safari/601.1");
         }
 
+        /// <summary>
+        /// The Win7ie11
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent Win7ie11()
         {
             return uaa.Parse("Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko");
         }
 
+        /// <summary>
+        /// The Win10Edge13
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent Win10Edge13()
         {
@@ -118,6 +171,10 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586");
         }
 
+        /// <summary>
+        /// The Win10Chrome51
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent Win10Chrome51()
         {
@@ -125,12 +182,20 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "Chrome/51.0.2704.103 Safari/537.36");
         }
 
+        /// <summary>
+        /// The Win10IE11
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent Win10IE11()
         {
             return uaa.Parse("Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko");
         }
 
+        /// <summary>
+        /// The HackerSQL
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent HackerSQL()
         {
@@ -138,6 +203,10 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
                 "(CASE WHEN (9695=9695) THEN CHAR(49) ELSE CHAR(48) END))+CHAR(113)+CHAR(122)+CHAR(118)+CHAR(118)+CHAR(113))) AND (((4283=4283");
         }
 
+        /// <summary>
+        /// The HackerShellShock
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         [Benchmark]
         public UserAgent HackerShellShock()
         {

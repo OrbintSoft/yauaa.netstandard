@@ -24,21 +24,36 @@
 //<date>2018, 8, 16, 01:59</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepNextN" />
+    /// </summary>
     [Serializable]
-    public class StepNextN: Step
+    public class StepNextN : Step
     {
+        /// <summary>
+        /// Defines the steps
+        /// </summary>
         private readonly int steps;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepNextN"/> class.
+        /// </summary>
+        /// <param name="steps">The steps<see cref="int"/></param>
         public StepNextN(int steps)
         {
             this.steps = steps;
         }
 
+        /// <summary>
+        /// The Next
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="IParseTree"/></returns>
         private IParseTree Next(IParseTree tree)
         {
             IParseTree parent = Up(tree);
@@ -69,7 +84,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             return null; // There is no next
         }
 
-
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             IParseTree nextTree = Next(tree);
@@ -81,6 +101,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             return WalkNextStep(nextTree, null);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "Next(" + steps + ")";

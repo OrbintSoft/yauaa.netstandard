@@ -24,17 +24,23 @@
 //<date>2018, 10, 8, 19:35</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using System.Collections.Generic;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using System.Collections.Generic;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestWordSplitter" />
+    /// </summary>
     public class TestWordSplitter : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The VersionSplitterEmpty
+        /// </summary>
         [Fact]
         public void VersionSplitterEmpty()
         {
@@ -53,6 +59,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterOne
+        /// </summary>
         [Fact]
         public void VersionSplitterOne()
         {
@@ -71,6 +80,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterDOT
+        /// </summary>
         [Fact]
         public void VersionSplitterDOT()
         {
@@ -92,6 +104,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 4).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterUS
+        /// </summary>
         [Fact]
         public void VersionSplitterUS()
         {
@@ -113,6 +128,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 4).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterMIX1
+        /// </summary>
         [Fact]
         public void VersionSplitterMIX1()
         {
@@ -134,6 +152,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 4).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterMIX2
+        /// </summary>
         [Fact]
         public void VersionSplitterMIX2()
         {
@@ -155,6 +176,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 4).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterWWW1
+        /// </summary>
         [Fact]
         public void VersionSplitterWWW1()
         {
@@ -168,6 +192,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterEMail
+        /// </summary>
         [Fact]
         public void VersionSplitterEMail()
         {
@@ -181,6 +208,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
+        /// <summary>
+        /// The VersionSplitterRanges
+        /// </summary>
         [Fact]
         public void VersionSplitterRanges()
         {
@@ -227,6 +257,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetSplitRange(value, 5, 6).Should().BeNull();
         }
 
+        /// <summary>
+        /// The WordSplitterEmpty
+        /// </summary>
         [Fact]
         public void WordSplitterEmpty()
         {
@@ -245,6 +278,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
+        /// <summary>
+        /// The WordSplitterOne
+        /// </summary>
         [Fact]
         public void WordSplitterOne()
         {
@@ -263,6 +299,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 2).Should().BeNull();
         }
 
+        /// <summary>
+        /// The WordSplitterTest
+        /// </summary>
         [Fact]
         public void WordSplitterTest()
         {
@@ -288,6 +327,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetFirstSplits(value, 7).Should().BeNull();
         }
 
+        /// <summary>
+        /// The WordSplitterRange
+        /// </summary>
         [Fact]
         public void WordSplitterRange()
         {
@@ -347,6 +389,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetSplitRange(value, -1, -1).Should().BeNull();
         }
 
+        /// <summary>
+        /// The TestSplitList
+        /// </summary>
         [Fact]
         public void TestSplitList()
         {
@@ -411,6 +456,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetSplitRange(value, splitList, -1, -1).Should().BeNull();
         }
 
+        /// <summary>
+        /// The BadCalls
+        /// </summary>
         [Fact]
         public void BadCalls()
         {
@@ -422,6 +470,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             splitter.GetSplitRange(value, 1, -2).Should().BeNull();
             splitter.GetSplitRange(value, 3, 2).Should().BeNull();
         }
-
     }
 }

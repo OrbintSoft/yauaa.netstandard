@@ -24,17 +24,23 @@
 //<date>2018, 10, 10, 09:10</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestAnnotationBadUsages" />
+    /// </summary>
     public class TestAnnotationBadUsages : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The TestNullInitAnalyzer
+        /// </summary>
         [Fact]
         public void TestNullInitAnalyzer()
         {
@@ -42,6 +48,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             userAgentAnalyzer.Invoking(u => u.Initialize(null)).Should().Throw<InvalidParserConfigurationException>().Which.Message.Should().StartWith("[Initialize] The mapper instance is null.");
         }
 
+        /// <summary>
+        /// The TestNullInit
+        /// </summary>
         [Fact]
         public void TestNullInit()
         {
@@ -49,6 +58,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             userAgentAnalyzer.Map(null).Should().BeNull();
         }
 
+        /// <summary>
+        /// The TestNoInit
+        /// </summary>
         [Fact]
         public void TestNoInit()
         {
@@ -56,43 +68,70 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             userAgentAnalyzer.Invoking(u => u.Map("Foo")).Should().Throw<InvalidParserConfigurationException>().Which.Message.Should().StartWith("[Map] The mapper instance is null.");
         }
 
+        /// <summary>
+        /// Defines the <see cref="BaseMapperWithoutGenericType{T}" />
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public abstract class BaseMapperWithoutGenericType<T> : IUserAgentAnnotationMapper<T>
         {
+            /// <summary>
+            /// The GetUserAgentString
+            /// </summary>
+            /// <param name="record">The record<see cref="T"/></param>
+            /// <returns>The <see cref="string"/></returns>
             public abstract string GetUserAgentString(T record);
         }
 
+        /// <summary>
+        /// Defines the <see cref="MapperWithoutGenericType" />
+        /// </summary>
         public class MapperWithoutGenericType : BaseMapperWithoutGenericType<dynamic>
         {
+            /// <summary>
+            /// Defines the userAgentAnalyzer
+            /// </summary>
             private UserAgentAnnotationAnalyzer<dynamic> userAgentAnalyzer;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MapperWithoutGenericType"/> class.
+            /// </summary>
             public MapperWithoutGenericType()
             {
                 Type generic = typeof(UserAgentAnnotationAnalyzer<>);
                 Type[] typeArgs = { null };
-                
+
                 var makeme = generic.MakeGenericType(typeArgs);
                 userAgentAnalyzer = Activator.CreateInstance(makeme) as UserAgentAnnotationAnalyzer<dynamic>;
                 userAgentAnalyzer.Initialize(this);
             }
 
+            /// <summary>
+            /// The Enrich
+            /// </summary>
+            /// <param name="record">The record<see cref="object"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public object Enrich(object record)
             {
                 return record;
             }
 
+            /// <summary>
+            /// The GetUserAgentString
+            /// </summary>
+            /// <param name="record">The record<see cref="dynamic"/></param>
+            /// <returns>The <see cref="string"/></returns>
             public override string GetUserAgentString(dynamic record)
             {
                 return null;
             }
         }
 
+        /// <summary>
+        /// The TestMissingTypeParameter
+        /// </summary>
         [Fact]
         public void TestMissingTypeParameter()
         {
-            
-            //Action action = () => new MapperWithoutGenericType();
-            ////in C# is not possible
-            //action.Should().Throw<InvalidParserConfigurationException>().Which.Message.Should().StartWith("Couldn't find the used generic type of the UserAgentAnnotationMapper.");
         }
-}
+    }
 }

@@ -24,15 +24,22 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestConcatenation" />
+    /// </summary>
     public class TestConcatenation : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The CreateUserAgent
+        /// </summary>
+        /// <returns>The <see cref="UserAgent"/></returns>
         private UserAgent CreateUserAgent()
         {
             UserAgent userAgent = new UserAgent();
@@ -44,6 +51,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             return userAgent;
         }
 
+        /// <summary>
+        /// The TestFieldConcatenation
+        /// </summary>
         [Fact]
         public void TestFieldConcatenation()
         {
@@ -63,6 +73,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             userAgent.GetValue("Combined4").Should().Be("One MinusOne");
         }
 
+        /// <summary>
+        /// The TestFieldConcatenationNulls
+        /// </summary>
         [Fact]
         public void TestFieldConcatenationNulls()
         {
@@ -82,6 +95,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             userAgent.GetValue("Combined4").Should().Be("One");
         }
 
+        /// <summary>
+        /// The TestFieldConcatenationSamePrefix
+        /// </summary>
         [Fact]
         public void TestFieldConcatenationSamePrefix()
         {
@@ -98,6 +114,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             userAgent.GetValue("Combined3").Should().Be("One Two");
         }
 
+        /// <summary>
+        /// The TestFieldConcatenationNonExistent
+        /// </summary>
         [Fact]
         public void TestFieldConcatenationNonExistent()
         {
@@ -114,6 +133,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             userAgent.GetValue("Combined4").Should().Be("Unknown");
         }
 
+        /// <summary>
+        /// The TestFieldConcatenationNull
+        /// </summary>
         [Fact]
         public void TestFieldConcatenationNull()
         {
@@ -130,6 +152,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             userAgent.GetValue("Combined4").Should().Be("Unknown");
         }
 
+        /// <summary>
+        /// The TestFieldConcatenationNoConfidence
+        /// </summary>
         [Fact]
         public void TestFieldConcatenationNoConfidence()
         {
@@ -143,6 +168,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             userAgent.GetValue("Combined3").Should().Be("MinusOne Two");
         }
 
+        /// <summary>
+        /// The TestFieldConcatenationUnwanted
+        /// </summary>
         [Fact]
         public void TestFieldConcatenationUnwanted()
         {

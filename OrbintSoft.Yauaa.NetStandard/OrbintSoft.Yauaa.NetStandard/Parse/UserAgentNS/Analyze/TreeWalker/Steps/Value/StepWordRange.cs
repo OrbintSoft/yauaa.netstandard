@@ -24,34 +24,57 @@
 //<date>2018, 8, 14, 20:31</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Value
 {
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepWordRange" />
+    /// </summary>
     [Serializable]
-    public class StepWordRange: Step
+    public class StepWordRange : Step
     {
+        /// <summary>
+        /// Defines the firstWord
+        /// </summary>
         private readonly int firstWord;
+
+        /// <summary>
+        /// Defines the lastWord
+        /// </summary>
         private readonly int lastWord;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepWordRange"/> class.
+        /// </summary>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
         public StepWordRange(WordRangeVisitor.Range range)
         {
             firstWord = range.First;
             lastWord = range.Last;
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             string actualValue = GetActualValue(tree, value);
             string filteredValue;
             if (tree.ChildCount == 1 && (
                   tree.GetChild(0) is UserAgentParser.SingleVersionContext ||
-                  tree.GetChild(0) is UserAgentParser.SingleVersionWithCommasContext)) {
+                  tree.GetChild(0) is UserAgentParser.SingleVersionWithCommasContext))
+            {
                 filteredValue = VersionSplitter.GetInstance().GetSplitRange(actualValue, firstWord, lastWord);
-            } else {
+            }
+            else
+            {
                 filteredValue = WordSplitter.GetInstance().GetSplitRange(actualValue, firstWord, lastWord);
             }
             if (filteredValue == null)
@@ -61,6 +84,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
             return WalkNextStep(tree, filteredValue);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "WordRange([" + firstWord + ":" + lastWord + "])";

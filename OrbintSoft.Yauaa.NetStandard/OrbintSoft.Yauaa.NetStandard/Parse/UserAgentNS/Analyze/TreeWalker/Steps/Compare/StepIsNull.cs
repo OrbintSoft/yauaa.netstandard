@@ -24,14 +24,23 @@
 //<date>2018, 8, 13, 22:58</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Compare
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepIsNull" />
+    /// </summary>
     [Serializable]
-    public class StepIsNull: Step
+    public class StepIsNull : Step
     {
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             WalkList.WalkResult actualValue = WalkNextStep(tree, value);
@@ -42,7 +51,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.C
             }
             return null;
         }
-    
+
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "IsNull()";

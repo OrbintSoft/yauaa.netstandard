@@ -24,13 +24,20 @@
 //<date>2018, 7, 26, 23:27</date>
 //<summary></summary>
 
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="UselessMatcherException" />
+    /// </summary>
     public class UselessMatcherException : Exception
     {
-        public UselessMatcherException(string message): base(message)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UselessMatcherException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/></param>
+        public UselessMatcherException(string message) : base(message)
         {
         }
     }

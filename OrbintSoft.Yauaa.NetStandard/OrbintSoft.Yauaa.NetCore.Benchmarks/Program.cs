@@ -24,12 +24,19 @@
 //<date>2018, 11, 17, 20:10</date>
 //<summary></summary>
 
-using BenchmarkDotNet.Running;
-
 namespace OrbintSoft.Yauaa.NetCore.Benchmarks
 {
+    using BenchmarkDotNet.Running;
+
+    /// <summary>
+    /// Defines the <see cref="Program" />
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// The Main
+        /// </summary>
+        /// <param name="args">The args<see cref="string[]"/></param>
         public static void Main(string[] args)
         {
             var summary = BenchmarkRunner.Run<AnalyzerBenchmarks>();

@@ -24,21 +24,37 @@
 //<date>2018, 8, 13, 22:38</date>
 //<summary></summary>
 
-using System;
-using Antlr4.Runtime.Tree;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Compare
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepEquals" />
+    /// </summary>
     [Serializable]
     public class StepEquals : Step
     {
+        /// <summary>
+        /// Defines the desiredValue
+        /// </summary>
         private readonly string desiredValue;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepEquals"/> class.
+        /// </summary>
+        /// <param name="desiredValue">The desiredValue<see cref="string"/></param>
         public StepEquals(string desiredValue)
         {
             this.desiredValue = desiredValue.ToLower();
         }
-    
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             string actualValue = GetActualValue(tree, value);
@@ -50,7 +66,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.C
             return null;
         }
 
-        
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "Equals(" + desiredValue + ")";

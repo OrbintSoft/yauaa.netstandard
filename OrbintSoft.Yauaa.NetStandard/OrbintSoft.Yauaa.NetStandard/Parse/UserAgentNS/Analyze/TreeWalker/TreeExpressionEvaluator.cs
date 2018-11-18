@@ -24,17 +24,17 @@
 //<date>2018, 7, 27, 11:17</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using System;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
 {
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Misc;
+    using Antlr4.Runtime.Tree;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// This class gets the symbol table (1 value) uses that to evaluate
     /// the expression against the parsed user agent
@@ -42,14 +42,42 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
     [Serializable]
     public class TreeExpressionEvaluator
     {
+        /// <summary>
+        /// Defines the Log
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(TreeExpressionEvaluator));
+
+        /// <summary>
+        /// Defines the verbose
+        /// </summary>
         private readonly bool verbose;
 
+        /// <summary>
+        /// Defines the requiredPatternText
+        /// </summary>
         private readonly string requiredPatternText;
+
+        /// <summary>
+        /// Defines the matcher
+        /// </summary>
         private readonly Matcher matcher;
+
+        /// <summary>
+        /// Defines the walkList
+        /// </summary>
         private readonly WalkList walkList;
+
+        /// <summary>
+        /// Defines the fixedValue
+        /// </summary>
         private readonly string fixedValue;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeExpressionEvaluator"/> class.
+        /// </summary>
+        /// <param name="requiredPattern">The requiredPattern<see cref="ParserRuleContext"/></param>
+        /// <param name="matcher">The matcher<see cref="Matcher"/></param>
+        /// <param name="verbose">The verbose<see cref="bool"/></param>
         public TreeExpressionEvaluator(ParserRuleContext requiredPattern, Matcher matcher, bool verbose)
         {
             requiredPatternText = requiredPattern.GetText();
@@ -60,7 +88,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
         }
 
         /// <summary>
-        /// 
+        /// The GetFixedValue
         /// </summary>
         /// <returns>The fixed value in case of a fixed value. NULL if a dynamic value</returns>
         public string GetFixedValue()
@@ -68,6 +96,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
             return fixedValue;
         }
 
+        /// <summary>
+        /// The Evaluate
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="key">The key<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public WalkList.WalkResult Evaluate(IParseTree tree, string key, string value)
         {
             if (verbose)
@@ -84,29 +119,58 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
             return result;
         }
 
+        /// <summary>
+        /// The UsesIsNull
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         public bool UsesIsNull()
         {
-            return walkList.UsesIsNull;            
+            return walkList.UsesIsNull;
         }
 
+        /// <summary>
+        /// The GetWalkListForUnitTesting
+        /// </summary>
+        /// <returns>The <see cref="WalkList"/></returns>
         public WalkList GetWalkListForUnitTesting()
         {
             return walkList;
         }
 
+        /// <summary>
+        /// The CalculateFixedValue
+        /// </summary>
+        /// <param name="requiredPattern">The requiredPattern<see cref="ParserRuleContext"/></param>
+        /// <returns>The <see cref="string"/></returns>
         private string CalculateFixedValue(ParserRuleContext requiredPattern)
         {
             return new DerivedUserAgentTreeWalkerBaseVisitor(matcher).Visit(requiredPattern);
         }
 
+        /// <summary>
+        /// Defines the <see cref="DerivedUserAgentTreeWalkerBaseVisitor" />
+        /// </summary>
         private class DerivedUserAgentTreeWalkerBaseVisitor : UserAgentTreeWalkerBaseVisitor<string>
         {
+            /// <summary>
+            /// Defines the matcher
+            /// </summary>
             private readonly Matcher matcher;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DerivedUserAgentTreeWalkerBaseVisitor"/> class.
+            /// </summary>
+            /// <param name="matcher">The matcher<see cref="Matcher"/></param>
             public DerivedUserAgentTreeWalkerBaseVisitor(Matcher matcher)
             {
                 this.matcher = matcher;
             }
 
+            /// <summary>
+            /// The VisitMatcherPathLookup
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupContext"/></param>
+            /// <returns>The <see cref="string"/></returns>
             public override string VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
             {
                 string value = Visit(context.matcher());
@@ -136,6 +200,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
                 return resultingValue;
             }
 
+            /// <summary>
+            /// The VisitPathFixedValue
+            /// </summary>
+            /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.PathFixedValueContext"/></param>
+            /// <returns>The <see cref="string"/></returns>
             public override string VisitPathFixedValue(UserAgentTreeWalkerParser.PathFixedValueContext ctx)
             {
                 return ctx.value.Text;
@@ -143,4 +212,3 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
         }
     }
 }
-

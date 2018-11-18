@@ -24,30 +24,82 @@
 //<date>2018, 11, 18, 09:36</date>
 //<summary></summary>
 
-using BenchmarkDotNet.Attributes;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
-using System;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.NetCore.Benchmarks
 {
+    using BenchmarkDotNet.Attributes;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="SplitterBenchmarks" />
+    /// </summary>
     public class SplitterBenchmarks
     {
+        /// <summary>
+        /// Defines the TEXT
+        /// </summary>
         private const string TEXT = "one two/3 four-4 five(some more)";
 
+        /// <summary>
+        /// Defines the splitter
+        /// </summary>
         private WordSplitter splitter;
+
+        /// <summary>
+        /// Defines the allRanges
+        /// </summary>
         private List<WordRangeVisitor.Range> allRanges;
+
+        /// <summary>
+        /// Defines the ranges1
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges1;
+
+        /// <summary>
+        /// Defines the ranges2
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges2;
+
+        /// <summary>
+        /// Defines the ranges3
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges3;
+
+        /// <summary>
+        /// Defines the ranges4
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges4;
+
+        /// <summary>
+        /// Defines the ranges5
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges5;
+
+        /// <summary>
+        /// Defines the ranges6
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges6;
+
+        /// <summary>
+        /// Defines the ranges7
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges7;
+
+        /// <summary>
+        /// Defines the ranges8
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges8;
+
+        /// <summary>
+        /// Defines the ranges9
+        /// </summary>
         private List<WordRangeVisitor.Range> ranges9;
 
+        /// <summary>
+        /// The GlobalSetup
+        /// </summary>
         [GlobalSetup]
         public void GlobalSetup()
         {
@@ -77,7 +129,11 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
             ranges9 = allRanges.GetRange(1, 9);
         }
 
-
+        /// <summary>
+        /// The RunDirect
+        /// </summary>
+        /// <param name="splitter">The splitter<see cref="Splitter"/></param>
+        /// <param name="ranges">The ranges<see cref="List{WordRangeVisitor.Range}"/></param>
         public void RunDirect(Splitter splitter, List<WordRangeVisitor.Range> ranges)
         {
             foreach (WordRangeVisitor.Range range in ranges)
@@ -86,6 +142,11 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
             }
         }
 
+        /// <summary>
+        /// The RunSplitList
+        /// </summary>
+        /// <param name="splitter">The splitter<see cref="Splitter"/></param>
+        /// <param name="ranges">The ranges<see cref="List{WordRangeVisitor.Range}"/></param>
         public void RunSplitList(Splitter splitter, List<WordRangeVisitor.Range> ranges)
         {
             List<Tuple<int, int>> splitList = splitter.CreateSplitList(TEXT);
@@ -95,108 +156,162 @@ namespace OrbintSoft.Yauaa.NetCore.Benchmarks
             }
         }
 
+        /// <summary>
+        /// The DirectRange1
+        /// </summary>
         [Benchmark]
         public void DirectRange1()
         {
             RunDirect(splitter, ranges1);
         }
 
+        /// <summary>
+        /// The SplitLRange1
+        /// </summary>
         [Benchmark]
         public void SplitLRange1()
         {
             RunSplitList(splitter, ranges1);
         }
 
+        /// <summary>
+        /// The DirectRange2
+        /// </summary>
         [Benchmark]
         public void DirectRange2()
         {
             RunDirect(splitter, ranges2);
         }
 
+        /// <summary>
+        /// The SplitLRange2
+        /// </summary>
         [Benchmark]
         public void SplitLRange2()
         {
             RunSplitList(splitter, ranges2);
         }
 
+        /// <summary>
+        /// The DirectRange3
+        /// </summary>
         [Benchmark]
         public void DirectRange3()
         {
             RunDirect(splitter, ranges3);
         }
 
+        /// <summary>
+        /// The SplitLRange3
+        /// </summary>
         [Benchmark]
         public void SplitLRange3()
         {
             RunSplitList(splitter, ranges3);
         }
 
+        /// <summary>
+        /// The DirectRange4
+        /// </summary>
         [Benchmark]
         public void DirectRange4()
         {
             RunDirect(splitter, ranges4);
         }
 
+        /// <summary>
+        /// The SplitLRange4
+        /// </summary>
         [Benchmark]
         public void SplitLRange4()
         {
             RunSplitList(splitter, ranges4);
         }
 
+        /// <summary>
+        /// The DirectRange5
+        /// </summary>
         [Benchmark]
         public void DirectRange5()
         {
             RunDirect(splitter, ranges5);
         }
 
+        /// <summary>
+        /// The SplitLRange5
+        /// </summary>
         [Benchmark]
         public void SplitLRange5()
         {
             RunSplitList(splitter, ranges5);
         }
 
+        /// <summary>
+        /// The DirectRange6
+        /// </summary>
         [Benchmark]
         public void DirectRange6()
         {
             RunDirect(splitter, ranges6);
         }
 
+        /// <summary>
+        /// The SplitLRange6
+        /// </summary>
         [Benchmark]
         public void SplitLRange6()
         {
             RunSplitList(splitter, ranges6);
         }
 
+        /// <summary>
+        /// The DirectRange7
+        /// </summary>
         [Benchmark]
         public void DirectRange7()
         {
             RunDirect(splitter, ranges7);
         }
 
+        /// <summary>
+        /// The SplitLRange7
+        /// </summary>
         [Benchmark]
         public void SplitLRange7()
         {
             RunSplitList(splitter, ranges7);
         }
 
+        /// <summary>
+        /// The DirectRange8
+        /// </summary>
         [Benchmark]
         public void DirectRange8()
         {
             RunDirect(splitter, ranges8);
         }
 
+        /// <summary>
+        /// The SplitLRange8
+        /// </summary>
         [Benchmark]
         public void SplitLRange8()
         {
             RunSplitList(splitter, ranges8);
         }
 
+        /// <summary>
+        /// The DirectRange9
+        /// </summary>
         [Benchmark]
         public void DirectRange9()
         {
             RunDirect(splitter, ranges9);
         }
 
+        /// <summary>
+        /// The SplitLRange9
+        /// </summary>
         [Benchmark]
         public void SplitLRange9()
         {

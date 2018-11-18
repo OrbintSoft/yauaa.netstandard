@@ -24,16 +24,22 @@
 //<date>2018, 10, 12, 21:11</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Classify
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestClassifier" />
+    /// </summary>
     public class TestClassifier : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The TestEnumCreation
+        /// </summary>
         [Fact]
         public void TestEnumCreation()
         {
@@ -56,6 +62,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Classify
             VerifyEnum("Unknown");
         }
 
+        /// <summary>
+        /// The VerifyEnum
+        /// </summary>
+        /// <param name="deviceClass">The deviceClass<see cref="string"/></param>
         private void VerifyEnum(string deviceClass)
         {
             UserAgent userAgent = new UserAgent();
@@ -63,6 +73,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Classify
             deviceClass.Should().Be(UserAgentClassifier.GetDeviceClass(userAgent).GetValue());
         }
 
+        /// <summary>
+        /// The ClassifierTest
+        /// </summary>
         [Fact]
         public void ClassifierTest()
         {
@@ -87,7 +100,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Classify
             VerifyDeviceClass(DeviceClass.Unclassified, false, false, false, false);
         }
 
-
+        /// <summary>
+        /// The VerifyDeviceClass
+        /// </summary>
+        /// <param name="deviceClass">The deviceClass<see cref="DeviceClass"/></param>
+        /// <param name="human">The human<see cref="bool"/></param>
+        /// <param name="mobile">The mobile<see cref="bool"/></param>
+        /// <param name="normal">The normal<see cref="bool"/></param>
+        /// <param name="misuse">The misuse<see cref="bool"/></param>
         private void VerifyDeviceClass(DeviceClass deviceClass, bool human, bool mobile, bool normal, bool misuse)
         {
             UserAgent userAgent = new UserAgent();

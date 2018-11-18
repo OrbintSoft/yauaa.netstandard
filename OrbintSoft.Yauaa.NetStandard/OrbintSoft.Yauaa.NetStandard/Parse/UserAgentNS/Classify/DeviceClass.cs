@@ -24,10 +24,13 @@
 //<date>2018, 10, 1, 19:03</date>
 //<summary></summary>
 
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
 {
+    using System;
+
+    /// <summary>
+    /// Defines the DeviceClass
+    /// </summary>
     public enum DeviceClass
     {
         /// <summary>
@@ -104,8 +107,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
         Unclassified
     }
 
+    /// <summary>
+    /// Defines the <see cref="DeviceClassExtension" />
+    /// </summary>
     public static class DeviceClassExtension
     {
+        /// <summary>
+        /// The GetValue
+        /// </summary>
+        /// <param name="deviceClass">The deviceClass<see cref="DeviceClass"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetValue(this DeviceClass deviceClass)
         {
             switch (deviceClass)

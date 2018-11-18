@@ -24,21 +24,42 @@
 //<date>2018, 8, 14, 03:26</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Value
 {
-    public class StepConcat: Step
+    using Antlr4.Runtime.Tree;
+
+    /// <summary>
+    /// Defines the <see cref="StepConcat" />
+    /// </summary>
+    public class StepConcat : Step
     {
+        /// <summary>
+        /// Defines the prefix
+        /// </summary>
         private readonly string prefix;
+
+        /// <summary>
+        /// Defines the postfix
+        /// </summary>
         private readonly string postfix;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepConcat"/> class.
+        /// </summary>
+        /// <param name="prefix">The prefix<see cref="string"/></param>
+        /// <param name="postfix">The postfix<see cref="string"/></param>
         public StepConcat(string prefix, string postfix)
         {
             this.prefix = prefix;
             this.postfix = postfix;
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             string actualValue = GetActualValue(tree, value);
@@ -46,6 +67,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
             return WalkNextStep(tree, filteredValue);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "StepConcat(" + prefix + ";" + postfix + ")";

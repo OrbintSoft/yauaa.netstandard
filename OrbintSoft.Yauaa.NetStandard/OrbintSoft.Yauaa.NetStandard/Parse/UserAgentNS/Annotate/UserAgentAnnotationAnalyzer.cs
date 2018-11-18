@@ -24,24 +24,45 @@
 //<date>2018, 8, 16, 11:26</date>
 //<summary></summary>
 
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 {
-    public class UserAgentAnnotationAnalyzer<T> where T: class
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
+    /// <summary>
+    /// Defines the <see cref="UserAgentAnnotationAnalyzer{T}" />
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class UserAgentAnnotationAnalyzer<T> where T : class
     {
+        /// <summary>
+        /// Defines the Log
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnnotationAnalyzer<T>));
 
+        /// <summary>
+        /// Defines the fieldSetters
+        /// </summary>
         private readonly IDictionary<string, IList<MethodInfo>> fieldSetters = new Dictionary<string, IList<MethodInfo>>();
 
+        /// <summary>
+        /// Defines the mapper
+        /// </summary>
         private IUserAgentAnnotationMapper<T> mapper = null;
-        private UserAgentAnalyzer userAgentAnalyzer = null;        
-        
+
+        /// <summary>
+        /// Defines the userAgentAnalyzer
+        /// </summary>
+        private UserAgentAnalyzer userAgentAnalyzer = null;
+
+        /// <summary>
+        /// The Initialize
+        /// </summary>
+        /// <param name="theMapper">The theMapper<see cref="IUserAgentAnnotationMapper{T}"/></param>
         public void Initialize(IUserAgentAnnotationMapper<T> theMapper)
         {
             mapper = theMapper;
@@ -116,6 +137,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
             userAgentAnalyzer = builder.Build();
         }
 
+        /// <summary>
+        /// The Map
+        /// </summary>
+        /// <param name="record">The record<see cref="T"/></param>
+        /// <returns>The <see cref="T"/></returns>
         public T Map(T record)
         {
             if (record == null)
@@ -146,7 +172,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
             }
             return record;
         }
-        
     }
-    
 }

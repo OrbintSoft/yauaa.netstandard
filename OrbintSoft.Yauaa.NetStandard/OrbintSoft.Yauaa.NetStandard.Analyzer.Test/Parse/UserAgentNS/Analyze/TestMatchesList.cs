@@ -24,17 +24,23 @@
 //<date>2018, 10, 8, 07:29</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using System.Collections.Generic;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using System.Collections.Generic;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestMatchesList" />
+    /// </summary>
     public class TestMatchesList : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The TestNormalUse
+        /// </summary>
         [Fact]
         public void TestNormalUse()
         {
@@ -61,18 +67,27 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             match2.GetResult().Should().BeNull();
         }
 
+        /// <summary>
+        /// The TestUnsupportedAdd
+        /// </summary>
         [Fact]
         public void TestUnsupportedAdd()
         {
             new MatchesList(1).Invoking(m => m.Add(null)).Should().Throw<NotImplementedException>();
         }
 
+        /// <summary>
+        /// The TestUnsupportedRemove
+        /// </summary>
         [Fact]
         public void TestUnsupportedRemove()
         {
             new MatchesList(1).Invoking(m => m.Remove(null)).Should().Throw<NotImplementedException>();
         }
 
+        /// <summary>
+        /// The TestUnsupportedContains
+        /// </summary>
         [Fact]
         public void TestUnsupportedContains()
         {

@@ -24,20 +24,30 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using FluentAssertions;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System.Collections.Generic;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
+    using FluentAssertions;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System.Collections.Generic;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestPredefinedBrowsersPerField" />
+    /// </summary>
     public class TestPredefinedBrowsersPerField : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// Defines the LOG
+        /// </summary>
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestPredefinedBrowsersPerField));
 
+        /// <summary>
+        /// The Data
+        /// </summary>
+        /// <returns>The <see cref="IEnumerable{object[]}"/></returns>
         public static IEnumerable<object[]> Data()
         {
             var fieldNames = UserAgentAnalyzer
@@ -52,6 +62,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             }
         }
 
+        /// <summary>
+        /// The ValidateAllPredefinedBrowsersForField
+        /// </summary>
+        /// <param name="fieldName">The fieldName<see cref="string"/></param>
         [Theory]
         [MemberData(nameof(Data))]
         public void ValidateAllPredefinedBrowsersForField(string fieldName)

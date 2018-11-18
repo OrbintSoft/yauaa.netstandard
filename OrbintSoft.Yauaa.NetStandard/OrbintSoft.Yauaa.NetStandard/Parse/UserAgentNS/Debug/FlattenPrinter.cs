@@ -24,48 +24,87 @@
 //<date>2018, 10, 2, 06:13</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using System.Collections.Generic;
-using System.IO;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 {
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using System.Collections.Generic;
+    using System.IO;
+
+    /// <summary>
+    /// Defines the <see cref="FlattenPrinter" />
+    /// </summary>
     public class FlattenPrinter : IAnalyzer
     {
+        /// <summary>
+        /// Defines the outputStream
+        /// </summary>
         internal readonly StreamWriter outputStream;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FlattenPrinter"/> class.
+        /// </summary>
+        /// <param name="outputStream">The outputStream<see cref="StreamWriter"/></param>
         public FlattenPrinter(StreamWriter outputStream)
         {
             this.outputStream = outputStream;
         }
 
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="path">The path<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
         public void Inform(string path, string value, IParseTree ctx)
         {
             outputStream.WriteLine(path);
         }
 
+        /// <summary>
+        /// The InformMeAbout
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
         public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
-
         }
 
+        /// <summary>
+        /// The LookingForRange
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
         public void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
-            // Never called
         }
 
+        /// <summary>
+        /// The GetRequiredInformRanges
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
         public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
         {
             // Never called
             return new HashSet<WordRangeVisitor.Range>();
         }
 
+        /// <summary>
+        /// The InformMeAboutPrefix
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="prefix">The prefix<see cref="string"/></param>
         public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
         {
-            // Never called
         }
 
+        /// <summary>
+        /// The GetRequiredPrefixLengths
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <returns>The <see cref="ISet{int?}"/></returns>
         public ISet<int?> GetRequiredPrefixLengths(string treeName)
         {
             // Never called

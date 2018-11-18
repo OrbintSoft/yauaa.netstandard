@@ -24,45 +24,89 @@
 //<date>2018, 8, 13, 14:56</date>
 //<summary></summary>
 
-using System.Collections;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
-    public class NumberRangeList: IReadOnlyList<int>
+    using System.Collections;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="NumberRangeList" />
+    /// </summary>
+    public class NumberRangeList : IReadOnlyList<int>
     {
+        /// <summary>
+        /// Gets the Count
+        /// </summary>
         public int Count => End - Start + 1;
 
-        public int this[int index] => Start + index;
 
+        public int this[int index] => Start + index;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NumberRangeList"/> class.
+        /// </summary>
+        /// <param name="start">The start<see cref="int"/></param>
+        /// <param name="end">The end<see cref="int"/></param>
         public NumberRangeList(int start, int end)
         {
             Start = start;
             End = end;
         }
 
+        /// <summary>
+        /// Gets the Start
+        /// </summary>
         public int Start { get; }
 
+        /// <summary>
+        /// Gets the End
+        /// </summary>
         public int End { get; }
 
+        /// <summary>
+        /// Defines the <see cref="NumberRangeEnumerator" />
+        /// </summary>
         public class NumberRangeEnumerator : IEnumerator<int>
         {
-            readonly NumberRangeList list;
-            int offset = -1;
+            /// <summary>
+            /// Defines the list
+            /// </summary>
+            internal readonly NumberRangeList list;
+
+            /// <summary>
+            /// Defines the offset
+            /// </summary>
+            internal int offset = -1;
+
+            /// <summary>
+            /// Gets the Current
+            /// </summary>
             public int Current => list[offset];
 
+            /// <summary>
+            /// Gets the Current
+            /// </summary>
             object IEnumerator.Current => list[offset];
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="NumberRangeEnumerator"/> class.
+            /// </summary>
+            /// <param name="list">The list<see cref="NumberRangeList"/></param>
             public NumberRangeEnumerator(NumberRangeList list)
             {
                 this.list = list;
             }
 
+            /// <summary>
+            /// The Dispose
+            /// </summary>
             public void Dispose()
             {
-                
             }
 
+            /// <summary>
+            /// The MoveNext
+            /// </summary>
+            /// <returns>The <see cref="bool"/></returns>
             public bool MoveNext()
             {
                 if (offset < list.Count - 1)
@@ -76,17 +120,28 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 }
             }
 
+            /// <summary>
+            /// The Reset
+            /// </summary>
             public void Reset()
             {
                 offset = -1;
             }
         }
 
+        /// <summary>
+        /// The GetEnumerator
+        /// </summary>
+        /// <returns>The <see cref="IEnumerator{int}"/></returns>
         public IEnumerator<int> GetEnumerator()
         {
             return new NumberRangeEnumerator(this);
         }
 
+        /// <summary>
+        /// The GetEnumerator
+        /// </summary>
+        /// <returns>The <see cref="IEnumerator"/></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

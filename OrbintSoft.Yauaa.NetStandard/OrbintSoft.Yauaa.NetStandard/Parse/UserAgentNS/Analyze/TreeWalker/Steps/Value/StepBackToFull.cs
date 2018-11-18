@@ -24,19 +24,32 @@
 //<date>2018, 8, 14, 01:20</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Value
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepBackToFull" />
+    /// </summary>
     [Serializable]
-    public class StepBackToFull: Step
+    public class StepBackToFull : Step
     {
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             return WalkNextStep(tree, null);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "BackToFull()";

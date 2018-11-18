@@ -24,46 +24,94 @@
 //<date>2018, 7, 26, 23:01</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using Antlr4.Runtime.Atn;
-using Antlr4.Runtime.Dfa;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Sharpen;
-using Antlr4.Runtime.Tree;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Atn;
+    using Antlr4.Runtime.Dfa;
+    using Antlr4.Runtime.Misc;
+    using Antlr4.Runtime.Sharpen;
+    using Antlr4.Runtime.Tree;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="MatcherAction" />
+    /// </summary>
     [Serializable]
     public abstract class MatcherAction
     {
+        /// <summary>
+        /// Defines the verbose
+        /// </summary>
         internal bool verbose = false;
 
+        /// <summary>
+        /// Defines the Log
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherAction));
 
+        /// <summary>
+        /// Defines the matchExpression
+        /// </summary>
         private string matchExpression = null;
+
+        /// <summary>
+        /// Defines the evaluator
+        /// </summary>
         private TreeExpressionEvaluator evaluator = null;
+
+        /// <summary>
+        /// Defines the matcher
+        /// </summary>
         private Matcher matcher = null;
+
+        /// <summary>
+        /// Defines the matches
+        /// </summary>
         private MatchesList matches = null;
+
+        /// <summary>
+        /// Defines the verbosePermanent
+        /// </summary>
         private bool verbosePermanent = false;
+
+        /// <summary>
+        /// Defines the verboseTemporary
+        /// </summary>
         private bool verboseTemporary = false;
 
+        /// <summary>
+        /// Gets a value indicating whether MustHaveMatches
+        /// </summary>
         internal bool MustHaveMatches { get; private set; } = false;
 
+        /// <summary>
+        /// The GetEvaluatorForUnitTesting
+        /// </summary>
+        /// <returns>The <see cref="TreeExpressionEvaluator"/></returns>
         internal TreeExpressionEvaluator GetEvaluatorForUnitTesting()
         {
             return evaluator;
         }
 
+        /// <summary>
+        /// The SetVerbose
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
         private void SetVerbose(bool newVerbose)
         {
             SetVerbose(newVerbose, false);
         }
 
+        /// <summary>
+        /// The SetVerbose
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        /// <param name="temporary">The temporary<see cref="bool"/></param>
         public void SetVerbose(bool newVerbose, bool temporary)
         {
             verbose = newVerbose;
@@ -74,11 +122,18 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             verboseTemporary = temporary;
         }
 
+        /// <summary>
+        /// The GetMatchExpression
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public string GetMatchExpression()
         {
             return matchExpression;
         }
 
+        /// <summary>
+        /// The Initialize
+        /// </summary>
         public void Initialize()
         {
             InitErrorListener<int> lexerErrorListener = new InitErrorListener<int>(this);
@@ -132,7 +187,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             matches = new MatchesList(listSize);
         }
 
-
+        /// <summary>
+        /// The Reset
+        /// </summary>
         public virtual void Reset()
         {
             matches.Clear();
@@ -142,6 +199,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
+        /// <summary>
+        /// The GetMatches
+        /// </summary>
+        /// <returns>The <see cref="MatchesList"/></returns>
         public MatchesList GetMatches()
         {
             return matches;
@@ -164,6 +225,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             matches.Add(key, value, result);
         }
 
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="key">The key<see cref="string"/></param>
+        /// <param name="foundValue">The foundValue<see cref="WalkList.WalkResult"/></param>
         public abstract void Inform(string key, WalkList.WalkResult foundValue);
 
         /// <summary>
@@ -172,6 +238,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// <returns>true if the obtainResult result was valid. False will fail the entire matcher this belongs to.</returns>
         public abstract bool ObtainResult();
 
+        /// <summary>
+        /// The IsValidIsNull
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         internal bool IsValidIsNull()
         {
             return matches.Count == 0 && evaluator.UsesIsNull();
@@ -203,7 +273,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
-
+        /// <summary>
+        /// The Init
+        /// </summary>
+        /// <param name="newMatchExpression">The newMatchExpression<see cref="string"/></param>
+        /// <param name="newMatcher">The newMatcher<see cref="Matcher"/></param>
         internal void Init(string newMatchExpression, Matcher newMatcher)
         {
             matcher = newMatcher;
@@ -211,38 +285,62 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             SetVerbose(newMatcher.GetVerbose());
         }
 
+        /// <summary>
+        /// The ParseWalkerExpression
+        /// </summary>
+        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/></param>
+        /// <returns>The <see cref="ParserRuleContext"/></returns>
         protected abstract ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser);
 
+        /// <summary>
+        /// The SetFixedValue
+        /// </summary>
+        /// <param name="newFixedValue">The newFixedValue<see cref="string"/></param>
         protected abstract void SetFixedValue(string newFixedValue);
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="ParserRuleContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, ParserRuleContext tree)
         {
-            if (tree is UserAgentTreeWalkerParser.MatcherRequireContext) {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherRequireContext) tree));
-             }
+            if (tree is UserAgentTreeWalkerParser.MatcherRequireContext)
+            {
+                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherRequireContext)tree));
+            }
             //if (tree is UserAgentTreeWalkerParser.MatcherContext) {
-            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherContext) tree));
-            // Should never get here: The antlr definitions only allow one of the above options.
-            //}
-            //return 0;
+            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherContext)tree));
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.MatcherRequireContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherRequireContext tree)
         {
-            if (tree is UserAgentTreeWalkerParser.MatcherBaseContext) {
+            if (tree is UserAgentTreeWalkerParser.MatcherBaseContext)
+            {
                 return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext)tree).matcher());
             }
             //if (tree is UserAgentTreeWalkerParser.MatcherPathIsNullContext)
             //{
             return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext)tree).matcher());
-            // Should never get here: The antlr definitions only allow one of the above options.
-            //}
-            //return 0;
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.MatcherContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherContext tree)
         {
-            if (tree is UserAgentTreeWalkerParser.MatcherPathContext) {
+            if (tree is UserAgentTreeWalkerParser.MatcherPathContext)
+            {
                 return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathContext)tree).basePath());
             }
             if (tree is UserAgentTreeWalkerParser.MatcherCleanVersionContext)
@@ -271,26 +369,34 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
             //if (tree is UserAgentTreeWalkerParser.MatcherConcatPostfixContext)
             //{
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext)tree).matcher());
-            //}
-            //return 0;
+            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext)tree).matcher());
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.BasePathContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.BasePathContext tree)
         {
             // The tree can theoretically be an instance of PathFixedValueContext.
             // These cases are handled in a different way so they cannot occur here.
-            if (tree is UserAgentTreeWalkerParser.PathVariableContext) {
+            if (tree is UserAgentTreeWalkerParser.PathVariableContext)
+            {
                 matcher.InformMeAboutVariable(this, ((UserAgentTreeWalkerParser.PathVariableContext)tree).variable.Text);
                 return 0;
             }
             //if (tree is UserAgentTreeWalkerParser.PathWalkContext) {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.PathWalkContext)tree).nextStep);
-            //}
-            // Should never get here: The antlr definitions only allow one of the above options.
-            //return 0;
+            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.PathWalkContext)tree).nextStep);
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.PathContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.PathContext tree)
         {
             if (tree != null)
@@ -307,7 +413,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 {
                     return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepStartsWithValueContext)tree);
                 }
-                if (tree is UserAgentTreeWalkerParser.StepWordRangeContext) {
+                if (tree is UserAgentTreeWalkerParser.StepWordRangeContext)
+                {
                     return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepWordRangeContext)tree);
                 }
             }
@@ -315,6 +422,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return 1;
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepDownContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepDownContext tree)
         {
             int informs = 0;
@@ -325,18 +438,36 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return informs;
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepEqualsValueContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepEqualsValueContext tree)
         {
             matcher.InformMeAbout(this, treeName + "=\"" + tree.value.Text + "\"");
             return 1;
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepStartsWithValueContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepStartsWithValueContext tree)
         {
             matcher.InformMeAboutPrefix(this, treeName, tree.value.Text);
             return 1;
         }
 
+        /// <summary>
+        /// The CalculateInformPath
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepWordRangeContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepWordRangeContext tree)
         {
             WordRangeVisitor.Range range = WordRangeVisitor.GetRange(tree.wordRange());
@@ -344,29 +475,75 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return CalculateInformPath(treeName + range, tree.nextStep);
         }
 
-
-
+        /// <summary>
+        /// Defines the <see cref="InitErrorListener{T}" />
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         internal class InitErrorListener<T> : IAntlrErrorListener<T>
         {
+            /// <summary>
+            /// Gets or sets the MatcherAction
+            /// </summary>
             public MatcherAction MatcherAction { get; set; }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="InitErrorListener{T}"/> class.
+            /// </summary>
+            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
             public InitErrorListener(MatcherAction matcherAction) : base()
             {
                 MatcherAction = matcherAction;
             }
 
+            /// <summary>
+            /// The ReportAmbiguity
+            /// </summary>
+            /// <param name="recognizer">The recognizer<see cref="Parser"/></param>
+            /// <param name="dfa">The dfa<see cref="DFA"/></param>
+            /// <param name="startIndex">The startIndex<see cref="int"/></param>
+            /// <param name="stopIndex">The stopIndex<see cref="int"/></param>
+            /// <param name="exact">The exact<see cref="bool"/></param>
+            /// <param name="ambigAlts">The ambigAlts<see cref="BitSet"/></param>
+            /// <param name="configs">The configs<see cref="ATNConfigSet"/></param>
             public void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
             {
             }
 
+            /// <summary>
+            /// The ReportAttemptingFullContext
+            /// </summary>
+            /// <param name="recognizer">The recognizer<see cref="Parser"/></param>
+            /// <param name="dfa">The dfa<see cref="DFA"/></param>
+            /// <param name="startIndex">The startIndex<see cref="int"/></param>
+            /// <param name="stopIndex">The stopIndex<see cref="int"/></param>
+            /// <param name="conflictingAlts">The conflictingAlts<see cref="BitSet"/></param>
+            /// <param name="conflictState">The conflictState<see cref="SimulatorState"/></param>
             public void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, SimulatorState conflictState)
             {
             }
 
+            /// <summary>
+            /// The ReportContextSensitivity
+            /// </summary>
+            /// <param name="recognizer">The recognizer<see cref="Parser"/></param>
+            /// <param name="dfa">The dfa<see cref="DFA"/></param>
+            /// <param name="startIndex">The startIndex<see cref="int"/></param>
+            /// <param name="stopIndex">The stopIndex<see cref="int"/></param>
+            /// <param name="prediction">The prediction<see cref="int"/></param>
+            /// <param name="acceptState">The acceptState<see cref="SimulatorState"/></param>
             public void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, SimulatorState acceptState)
             {
             }
 
+            /// <summary>
+            /// The SyntaxError
+            /// </summary>
+            /// <param name="recognizer">The recognizer<see cref="IRecognizer"/></param>
+            /// <param name="offendingSymbol">The offendingSymbol<see cref="T"/></param>
+            /// <param name="line">The line<see cref="int"/></param>
+            /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
+            /// <param name="msg">The msg<see cref="string"/></param>
+            /// <param name="e">The e<see cref="RecognitionException"/></param>
             public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
             {
                 Log.Error("Syntax error");
@@ -376,9 +553,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
-
+        /// <summary>
+        /// Defines the <see cref="UnQuoteValues" />
+        /// </summary>
         private class UnQuoteValues : UserAgentTreeWalkerBaseVisitor<object>
         {
+            /// <summary>
+            /// The UnQuoteToken
+            /// </summary>
+            /// <param name="token">The token<see cref="IToken"/></param>
             private void UnQuoteToken(IToken token)
             {
                 if (token is CommonToken commonToken)
@@ -388,18 +571,33 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 }
             }
 
+            /// <summary>
+            /// The VisitMatcherPathLookup
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
             {
                 UnQuoteToken(context.defaultValue);
                 return base.VisitMatcherPathLookup(context);
             }
 
+            /// <summary>
+            /// The VisitPathFixedValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.PathFixedValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitPathFixedValue([NotNull] UserAgentTreeWalkerParser.PathFixedValueContext context)
             {
                 UnQuoteToken(context.value);
                 return base.VisitPathFixedValue(context);
             }
 
+            /// <summary>
+            /// The VisitMatcherConcat
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitMatcherConcat([NotNull] UserAgentTreeWalkerParser.MatcherConcatContext context)
             {
                 UnQuoteToken(context.prefix);
@@ -407,42 +605,77 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 return base.VisitMatcherConcat(context);
             }
 
+            /// <summary>
+            /// The VisitMatcherConcatPrefix
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPrefixContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitMatcherConcatPrefix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPrefixContext context)
             {
                 UnQuoteToken(context.prefix);
                 return base.VisitMatcherConcatPrefix(context);
             }
 
+            /// <summary>
+            /// The VisitMatcherConcatPostfix
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPostfixContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context)
             {
                 UnQuoteToken(context.postfix);
                 return base.VisitMatcherConcatPostfix(context);
             }
 
+            /// <summary>
+            /// The VisitStepEqualsValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEqualsValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitStepEqualsValue([NotNull] UserAgentTreeWalkerParser.StepEqualsValueContext context)
             {
                 UnQuoteToken(context.value);
                 return base.VisitStepEqualsValue(context);
             }
 
+            /// <summary>
+            /// The VisitStepNotEqualsValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepNotEqualsValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitStepNotEqualsValue([NotNull] UserAgentTreeWalkerParser.StepNotEqualsValueContext context)
             {
                 UnQuoteToken(context.value);
                 return base.VisitStepNotEqualsValue(context);
             }
 
+            /// <summary>
+            /// The VisitStepStartsWithValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepStartsWithValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitStepStartsWithValue([NotNull] UserAgentTreeWalkerParser.StepStartsWithValueContext context)
             {
                 UnQuoteToken(context.value);
                 return base.VisitStepStartsWithValue(context);
             }
 
+            /// <summary>
+            /// The VisitStepEndsWithValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEndsWithValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitStepEndsWithValue([NotNull] UserAgentTreeWalkerParser.StepEndsWithValueContext context)
             {
                 UnQuoteToken(context.value);
                 return base.VisitStepEndsWithValue(context);
             }
 
+            /// <summary>
+            /// The VisitStepContainsValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepContainsValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitStepContainsValue([NotNull] UserAgentTreeWalkerParser.StepContainsValueContext context)
             {
                 UnQuoteToken(context.value);

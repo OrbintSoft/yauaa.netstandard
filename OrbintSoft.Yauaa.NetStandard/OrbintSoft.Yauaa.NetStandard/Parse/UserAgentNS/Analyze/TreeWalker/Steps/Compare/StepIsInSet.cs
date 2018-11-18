@@ -24,24 +24,45 @@
 //<date>2018, 8, 13, 22:45</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Compare
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="StepIsInSet" />
+    /// </summary>
     [Serializable]
-    public class StepIsInSet: Step
+    public class StepIsInSet : Step
     {
+        /// <summary>
+        /// Defines the listName
+        /// </summary>
         private readonly string listName;
+
+        /// <summary>
+        /// Defines the list
+        /// </summary>
         private readonly ISet<string> list;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepIsInSet"/> class.
+        /// </summary>
+        /// <param name="listName">The listName<see cref="string"/></param>
+        /// <param name="list">The list<see cref="ISet{string}"/></param>
         public StepIsInSet(string listName, ISet<string> list)
         {
             this.listName = listName;
             this.list = list;
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             string actualValue = GetActualValue(tree, value);
@@ -53,6 +74,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.C
             return null;
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "StepIsInSet(@" + listName + ")";

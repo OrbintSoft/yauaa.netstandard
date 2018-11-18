@@ -24,17 +24,23 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestDeveloperTools" />
+    /// </summary>
     public class TestDeveloperTools : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The ValidateErrorSituationOutput
+        /// </summary>
         [Fact]
         public void ValidateErrorSituationOutput()
         {
@@ -50,6 +56,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             uaa.RunTests(false, true).Should().BeFalse();  // This test must return an error state
         }
 
+        /// <summary>
+        /// The ValidateNewTestcaseSituationOutput
+        /// </summary>
         [Fact]
         public void ValidateNewTestcaseSituationOutput()
         {
@@ -65,6 +74,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             uaa.RunTests(false, true).Should().BeTrue();  // This test must return an error state
         }
 
+        /// <summary>
+        /// The ValidateStringOutputsAndMatches
+        /// </summary>
         [Fact]
         public void ValidateStringOutputsAndMatches()
         {

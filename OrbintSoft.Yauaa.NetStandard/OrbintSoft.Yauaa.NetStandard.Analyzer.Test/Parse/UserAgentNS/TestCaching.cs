@@ -24,17 +24,23 @@
 //<date>2018, 10, 4, 16:57</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System.Collections.Generic;
-using System.Reflection;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestCaching" />
+    /// </summary>
     public class TestCaching : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The TestSettingCaching
+        /// </summary>
         [Fact]
         public void TestSettingCaching()
         {
@@ -57,7 +63,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             GetAllocatedCacheSize(uaa).Should().BeGreaterOrEqualTo(42);
         }
 
-
+        /// <summary>
+        /// The TestSettingNoCaching
+        /// </summary>
         [Fact]
         public void TestSettingNoCaching()
         {
@@ -80,6 +88,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             GetAllocatedCacheSize(uaa).Should().BeGreaterOrEqualTo(0);
         }
 
+        /// <summary>
+        /// The TestCache
+        /// </summary>
         [Fact]
         public void TestCache()
         {
@@ -117,7 +128,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             GetCache(uaa).Should().BeNull();
         }
 
-
+        /// <summary>
+        /// The GetCache
+        /// </summary>
+        /// <param name="uaa">The uaa<see cref="UserAgentAnalyzer"/></param>
+        /// <returns>The <see cref="Dictionary{string, UserAgent}"/></returns>
         private Dictionary<string, UserAgent> GetCache(UserAgentAnalyzer uaa)
         {
             Dictionary<string, UserAgent> actualCache = null;
@@ -131,6 +146,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
             return actualCache;
         }
 
+        /// <summary>
+        /// The GetAllocatedCacheSize
+        /// </summary>
+        /// <param name="uaa">The uaa<see cref="UserAgentAnalyzer"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private int GetAllocatedCacheSize(UserAgentAnalyzer uaa)
         {
             var cache = GetCache(uaa);

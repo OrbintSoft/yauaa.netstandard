@@ -24,61 +24,111 @@
 //<date>2018, 8, 25, 21:00</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.SerializableHelpers;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
-using System;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 {
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Misc;
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.SerializableHelpers;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="UserAgentTreeFlattener" />
+    /// </summary>
     [Serializable]
-    public class UserAgentTreeFlattener: UserAgentBaseListener 
+    public class UserAgentTreeFlattener : UserAgentBaseListener
     {
+        /// <summary>
+        /// Defines the WALKER
+        /// </summary>
         private static readonly ParseTreeWalker WALKER = new ParseTreeWalker();
 
+        /// <summary>
+        /// Defines the analyzer
+        /// </summary>
         private readonly IAnalyzer analyzer;
 
+        /// <summary>
+        /// Defines the state
+        /// </summary>
         private SerializableParseTreeProperty<State> state = null;
+
 #if VERBOSE
         private bool verbose = true;
 #else
+        /// <summary>
+        /// Defines the verbose
+        /// </summary>
         private bool verbose = false;
-#endif
 
+#endif
         public enum PathType
         {
+            /// <summary>
+            /// Defines the CHILD
+            /// </summary>
             CHILD,
-            COMMENT,
-            VERSION
-        }        
 
+            /// <summary>
+            /// Defines the COMMENT
+            /// </summary>
+            COMMENT,
+
+            /// <summary>
+            /// Defines the VERSION
+            /// </summary>
+            VERSION
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserAgentTreeFlattener"/> class.
+        /// </summary>
+        /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/></param>
         public UserAgentTreeFlattener(IAnalyzer analyzer)
         {
             this.analyzer = analyzer;
         }
 
+        /// <summary>
+        /// The SetVerbose
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
         public void SetVerbose(bool newVerbose)
         {
             verbose = newVerbose;
         }
 
+        /// <summary>
+        /// The Parse
+        /// </summary>
+        /// <param name="userAgentString">The userAgentString<see cref="string"/></param>
+        /// <returns>The <see cref="UserAgent"/></returns>
         public UserAgent Parse(string userAgentString)
         {
             UserAgent userAgent = new UserAgent(userAgentString);
             return ParseIntoCleanUserAgent(userAgent);
         }
 
+        /// <summary>
+        /// The Parse
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <returns>The <see cref="UserAgent"/></returns>
         public UserAgent Parse(UserAgent userAgent)
         {
             userAgent.Reset();
             return ParseIntoCleanUserAgent(userAgent);
         }
 
+        /// <summary>
+        /// The ParseIntoCleanUserAgent
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <returns>The <see cref="UserAgent"/></returns>
         private UserAgent ParseIntoCleanUserAgent(UserAgent userAgent)
         {
             if (userAgent.UserAgentString == null)
@@ -111,22 +161,51 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         }
 
         // =================================================================================
-
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+        /// <param name="path">The path<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         private string Inform(IParseTree ctx, string path)
         {
             return Inform(ctx, path, AntlrUtils.GetSourceText((ParserRuleContext)ctx));
         }
 
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         private string Inform(IParseTree ctx, string name, string value)
         {
             return Inform(ctx, ctx, name, value, false);
         }
 
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="fakeChild">The fakeChild<see cref="bool"/></param>
+        /// <returns>The <see cref="string"/></returns>
         private string Inform(IParseTree ctx, string name, string value, bool fakeChild)
         {
             return Inform(ctx, ctx, name, value, fakeChild);
         }
 
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="stateCtx">The stateCtx<see cref="IParseTree"/></param>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="fakeChild">The fakeChild<see cref="bool"/></param>
+        /// <returns>The <see cref="string"/></returns>
         private string Inform(IParseTree stateCtx, IParseTree ctx, string name, string value, bool fakeChild)
         {
             string path = name;
@@ -162,7 +241,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         }
 
         //  =================================================================================
-
+        /// <summary>
+        /// The ParseUserAgent
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <returns>The <see cref="UserAgentParser.UserAgentContext"/></returns>
         private UserAgentParser.UserAgentContext ParseUserAgent(UserAgent userAgent)
         {
             string userAgentString = EvilManualUseragentStringHacks.FixIt(userAgent.UserAgentString);
@@ -185,73 +268,129 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             return parser.userAgent();
         }
 
+        /// <summary>
+        /// The EnterUserAgent
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.UserAgentContext"/></param>
         public override void EnterUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
             // In case of a parse error the 'parsed' version of agent can be incomplete
             Inform(context, "agent", context.start.TokenSource.InputStream.ToString());
         }
 
+        /// <summary>
+        /// The EnterRootText
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.RootTextContext"/></param>
         public override void EnterRootText([NotNull] UserAgentParser.RootTextContext context)
         {
             InformSubstrings(context, "text");
         }
 
+        /// <summary>
+        /// The EnterProduct
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/></param>
         public override void EnterProduct([NotNull] UserAgentParser.ProductContext context)
         {
             InformSubstrings(context, "product");
         }
 
+        /// <summary>
+        /// The EnterCommentProduct
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/></param>
         public override void EnterCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
         {
             InformSubstrings(context, "product");
         }
 
+        /// <summary>
+        /// The EnterProductNameNoVersion
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/></param>
         public override void EnterProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
         {
             InformSubstrings(context, "product");
         }
 
+        /// <summary>
+        /// The EnterProductNameEmail
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameEmailContext"/></param>
         public override void EnterProductNameEmail([NotNull] UserAgentParser.ProductNameEmailContext context)
         {
             Inform(context, "name");
         }
 
+        /// <summary>
+        /// The EnterProductNameUrl
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameUrlContext"/></param>
         public override void EnterProductNameUrl([NotNull] UserAgentParser.ProductNameUrlContext context)
         {
             Inform(context, "name");
         }
 
+        /// <summary>
+        /// The EnterProductNameWords
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameWordsContext"/></param>
         public override void EnterProductNameWords([NotNull] UserAgentParser.ProductNameWordsContext context)
         {
             InformSubstrings(context, "name");
         }
 
+        /// <summary>
+        /// The EnterProductNameKeyValue
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameKeyValueContext"/></param>
         public override void EnterProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
         {
             Inform(context, "name.(1)keyvalue", context.GetText(), false);
             InformSubstrings(context, "name", true);
         }
 
+        /// <summary>
+        /// The EnterProductNameVersion
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameVersionContext"/></param>
         public override void EnterProductNameVersion([NotNull] UserAgentParser.ProductNameVersionContext context)
         {
             InformSubstrings(context, "name");
         }
 
+        /// <summary>
+        /// The EnterProductNameUuid
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameUuidContext"/></param>
         public override void EnterProductNameUuid([NotNull] UserAgentParser.ProductNameUuidContext context)
         {
             Inform(context, "name");
         }
 
+        /// <summary>
+        /// The EnterProductVersion
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionContext"/></param>
         public override void EnterProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
         {
             EnterProductVersion(context);
         }
 
+        /// <summary>
+        /// The EnterProductVersionWithCommas
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWithCommasContext"/></param>
         public override void EnterProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
         {
             EnterProductVersion(context);
         }
 
+        /// <summary>
+        /// The EnterProductVersion
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
         private void EnterProductVersion(IParseTree ctx)
         {
             if (ctx.ChildCount != 1)
@@ -263,63 +402,115 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 
             IParseTree child = ctx.GetChild(0);
             // Only for the SingleVersion edition we want to have splits of the version.
-            if (child is UserAgentParser.SingleVersionContext || child is UserAgentParser.SingleVersionWithCommasContext) {
+            if (child is UserAgentParser.SingleVersionContext || child is UserAgentParser.SingleVersionWithCommasContext)
+            {
                 return;
             }
 
             Inform(ctx, "version");
         }
 
+        /// <summary>
+        /// The EnterProductVersionSingleWord
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionSingleWordContext"/></param>
         public override void EnterProductVersionSingleWord([NotNull] UserAgentParser.ProductVersionSingleWordContext context)
         {
             Inform(context, "version");
         }
 
+        /// <summary>
+        /// The EnterSingleVersion
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.SingleVersionContext"/></param>
         public override void EnterSingleVersion([NotNull] UserAgentParser.SingleVersionContext context)
         {
             InformSubVersions(context, "version");
         }
 
+        /// <summary>
+        /// The EnterSingleVersionWithCommas
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.SingleVersionWithCommasContext"/></param>
         public override void EnterSingleVersionWithCommas([NotNull] UserAgentParser.SingleVersionWithCommasContext context)
         {
             InformSubVersions(context, "version");
         }
 
+        /// <summary>
+        /// The EnterProductVersionWords
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWordsContext"/></param>
         public override void EnterProductVersionWords([NotNull] UserAgentParser.ProductVersionWordsContext context)
         {
             InformSubstrings(context, "version");
         }
 
+        /// <summary>
+        /// The EnterKeyValueProductVersionName
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyValueProductVersionNameContext"/></param>
         public override void EnterKeyValueProductVersionName([NotNull] UserAgentParser.KeyValueProductVersionNameContext context)
         {
             InformSubstrings(context, "version");
         }
 
+        /// <summary>
+        /// The EnterCommentBlock
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/></param>
         public override void EnterCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
         {
             Inform(context, "comments");
         }
 
+        /// <summary>
+        /// The EnterCommentEntry
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentEntryContext"/></param>
         public override void EnterCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
         {
             InformSubstrings(context, "entry");
         }
 
+        /// <summary>
+        /// The InformSubstrings
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
         private void InformSubstrings(ParserRuleContext ctx, string name)
         {
             InformSubstrings(ctx, name, false);
         }
 
+        /// <summary>
+        /// The InformSubstrings
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
+        /// <param name="fakeChild">The fakeChild<see cref="bool"/></param>
         private void InformSubstrings(ParserRuleContext ctx, string name, bool fakeChild)
         {
             InformSubstrings(ctx, name, fakeChild, WordSplitter.GetInstance());
         }
 
+        /// <summary>
+        /// The InformSubVersions
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
         private void InformSubVersions(ParserRuleContext ctx, string name)
         {
             InformSubstrings(ctx, name, false, VersionSplitter.GetInstance());
         }
 
+        /// <summary>
+        /// The InformSubstrings
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
+        /// <param name="fakeChild">The fakeChild<see cref="bool"/></param>
+        /// <param name="splitter">The splitter<see cref="Splitter"/></param>
         private void InformSubstrings(ParserRuleContext ctx, string name, bool fakeChild, Splitter splitter)
         {
             string text = AntlrUtils.GetSourceText(ctx);
@@ -361,86 +552,174 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         // 7        |  446.930 ± 3.329  ns/op  |   215.499 ± 3.410  ns/op
         // 8        |  533.153 ± 2.250  ns/op  |   233.241 ± 5.311  ns/op
         // 9        |  519.130 ± 3.495  ns/op  |   250.921 ± 6.107  ns/op
-
-
+        /// <summary>
+        /// The EnterMultipleWords
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.MultipleWordsContext"/></param>
         public override void EnterMultipleWords([NotNull] UserAgentParser.MultipleWordsContext context)
         {
             InformSubstrings(context, "text");
         }
 
+        /// <summary>
+        /// The EnterKeyValue
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/></param>
         public override void EnterKeyValue([NotNull] UserAgentParser.KeyValueContext context)
         {
             Inform(context, "keyvalue");
         }
 
+        /// <summary>
+        /// The EnterKeyWithoutValue
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/></param>
         public override void EnterKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
         {
-            Inform(context, "keyvalue");            
+            Inform(context, "keyvalue");
         }
 
+        /// <summary>
+        /// The EnterKeyName
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyNameContext"/></param>
         public override void EnterKeyName([NotNull] UserAgentParser.KeyNameContext context)
         {
             InformSubstrings(context, "key");
         }
 
+        /// <summary>
+        /// The EnterKeyValueVersionName
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyValueVersionNameContext"/></param>
         public override void EnterKeyValueVersionName([NotNull] UserAgentParser.KeyValueVersionNameContext context)
         {
             InformSubstrings(context, "version");
         }
 
+        /// <summary>
+        /// The EnterVersionWords
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.VersionWordsContext"/></param>
         public override void EnterVersionWords([NotNull] UserAgentParser.VersionWordsContext context)
         {
             InformSubstrings(context, "text");
         }
 
+        /// <summary>
+        /// The EnterSiteUrl
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.SiteUrlContext"/></param>
         public override void EnterSiteUrl([NotNull] UserAgentParser.SiteUrlContext context)
         {
             Inform(context, "url", context.url.Text);
         }
 
+        /// <summary>
+        /// The EnterUuId
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.UuIdContext"/></param>
         public override void EnterUuId([NotNull] UserAgentParser.UuIdContext context)
         {
             Inform(context, "uuid", context.uuid.Text);
         }
 
+        /// <summary>
+        /// The EnterEmailAddress
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.EmailAddressContext"/></param>
         public override void EnterEmailAddress([NotNull] UserAgentParser.EmailAddressContext context)
         {
             Inform(context, "email", context.email.Text);
         }
 
+        /// <summary>
+        /// The EnterBase64
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.Base64Context"/></param>
         public override void EnterBase64([NotNull] UserAgentParser.Base64Context context)
         {
             Inform(context, "base64", context.value.Text);
         }
 
+        /// <summary>
+        /// The EnterEmptyWord
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.EmptyWordContext"/></param>
         public override void EnterEmptyWord([NotNull] UserAgentParser.EmptyWordContext context)
         {
             Inform(context, "text", "");
-        } 
+        }
 
+        /// <summary>
+        /// Defines the <see cref="State" />
+        /// </summary>
         [Serializable]
         public class State
         {
+            /// <summary>
+            /// Defines the child
+            /// </summary>
             internal long child = 0;
+
+            /// <summary>
+            /// Defines the version
+            /// </summary>
             internal long version = 0;
+
+            /// <summary>
+            /// Defines the comment
+            /// </summary>
             internal long comment = 0;
+
+            /// <summary>
+            /// Defines the name
+            /// </summary>
             internal readonly string name;
+
+            /// <summary>
+            /// Defines the path
+            /// </summary>
             internal string path;
+
+            /// <summary>
+            /// Defines the ctx
+            /// </summary>
             internal IParseTree ctx = null;
 
+            /// <summary>
+            /// Defines the userAgentTreeFlattener
+            /// </summary>
             private UserAgentTreeFlattener userAgentTreeFlattener;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="State"/> class.
+            /// </summary>
+            /// <param name="userAgentTreeFlattener">The userAgentTreeFlattener<see cref="UserAgentTreeFlattener"/></param>
+            /// <param name="name">The name<see cref="string"/></param>
             public State(UserAgentTreeFlattener userAgentTreeFlattener, string name)
             {
                 this.userAgentTreeFlattener = userAgentTreeFlattener;
                 this.name = name;
             }
 
-            public State(UserAgentTreeFlattener userAgentTreeFlattener, IParseTree ctx, string name): this(userAgentTreeFlattener, name)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="State"/> class.
+            /// </summary>
+            /// <param name="userAgentTreeFlattener">The userAgentTreeFlattener<see cref="UserAgentTreeFlattener"/></param>
+            /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+            /// <param name="name">The name<see cref="string"/></param>
+            public State(UserAgentTreeFlattener userAgentTreeFlattener, IParseTree ctx, string name) : this(userAgentTreeFlattener, name)
             {
                 this.ctx = ctx;
             }
 
+            /// <summary>
+            /// The CalculatePath
+            /// </summary>
+            /// <param name="type">The type<see cref="PathType"/></param>
+            /// <param name="fakeChild">The fakeChild<see cref="bool"/></param>
+            /// <returns>The <see cref="string"/></returns>
             public string CalculatePath(PathType type, bool fakeChild)
             {
                 IParseTree node = ctx;

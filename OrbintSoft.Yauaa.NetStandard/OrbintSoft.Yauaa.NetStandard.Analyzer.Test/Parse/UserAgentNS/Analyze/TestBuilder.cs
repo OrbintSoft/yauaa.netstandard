@@ -24,18 +24,24 @@
 //<date>2018, 10, 4, 07:53</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using Xunit;
-
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestBuilder" />
+    /// </summary>
     public class TestBuilder : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The RunTestCase
+        /// </summary>
+        /// <param name="userAgentAnalyzer">The userAgentAnalyzer<see cref="UserAgentAnalyzerDirect"/></param>
         private void RunTestCase(UserAgentAnalyzerDirect userAgentAnalyzer)
         {
             UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) " +
@@ -50,7 +56,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             parsedAgent.GetValue("AgentVersion").Should().Be("53.0.2785.124"); // 53.0.2785.124
             parsedAgent.GetValue("AgentVersionMajor").Should().Be("53"); // 53
 
-             long min1 = -1;
+            long min1 = -1;
 
             // The rest must be at confidence -1 (i.e. no rules fired)
             parsedAgent.GetConfidence("DeviceName").Should().Be(min1); // Nexus 6
@@ -70,6 +76,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             parsedAgent.GetConfidence("AgentNameVersion").Should().Be(min1); // Chrome 53.0.2785.124
         }
 
+        /// <summary>
+        /// The TestLimitedFieldsDirect
+        /// </summary>
         [Fact]
         public void TestLimitedFieldsDirect()
         {
@@ -91,6 +100,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             RunTestCase(userAgentAnalyzer);
         }
 
+        /// <summary>
+        /// The TestLimitedFields
+        /// </summary>
         [Fact]
         public void TestLimitedFields()
         {
@@ -114,16 +126,19 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             RunTestCase(userAgentAnalyzer);
         }
 
+        /// <summary>
+        /// The TestLoadAdditionalRules
+        /// </summary>
         [Fact]
         public void TestLoadAdditionalRules()
-        { 
+        {
             UserAgentAnalyzer userAgentAnalyzer =
                 UserAgentAnalyzer
                     .NewBuilder()
                     .WithField("DeviceClass")
                     .WithoutCache()
                     .HideMatcherLoadStats()
-                    .AddResources("YamlResources","ExtraLoadedRule1.yaml")
+                    .AddResources("YamlResources", "ExtraLoadedRule1.yaml")
                     .WithField("ExtraValue2")
                     .WithField("ExtraValue1")
                     .AddResources("YamlResources", "ExtraLoadedRule2.yaml")
@@ -138,6 +153,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             parsedAgent.GetValue("ExtraValue2").Should().Be("Two");
         }
 
+        /// <summary>
+        /// The TestLoadOnlyCustomRules
+        /// </summary>
         [Fact]
         public void TestLoadOnlyCustomRules()
         {
@@ -160,6 +178,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             parsedAgent.GetValue("ExtraValue2").Should().Be("Two");
         }
 
+        /// <summary>
+        /// The TestLoadOnlyCompanyCustomFormatRules
+        /// </summary>
         [Fact]
         public void TestLoadOnlyCompanyCustomFormatRules()
         {
@@ -186,6 +207,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             parsedAgent.GetValue("ServerName").Should().Be("node123.datacenter.example.nl");
         }
 
+        /// <summary>
+        /// The TestAskingForImpossibleField
+        /// </summary>
         [Fact]
         public void TestAskingForImpossibleField()
         {
@@ -198,9 +222,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             .WithField("DeviceClass")
             .WithField("SecondNonexistentField");
             Action a = new Action(() => uaa.Build());
-            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("We cannot provide these fields: [FirstNonexistentField] [SecondNonexistentField]");            
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("We cannot provide these fields: [FirstNonexistentField] [SecondNonexistentField]");
         }
 
+        /// <summary>
+        /// The TestDualBuilderUsageNoSecondInstance
+        /// </summary>
         [Fact]
         public void TestDualBuilderUsageNoSecondInstance()
         {
@@ -212,6 +239,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             a.Should().Throw<Exception>();
         }
 
+        /// <summary>
+        /// The TestDualBuilderUsageUseSetterAfterBuild
+        /// </summary>
         [Fact]
         public void TestDualBuilderUsageUseSetterAfterBuild()
         {
@@ -224,7 +254,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             a.Should().Throw<Exception>();
         }
 
-
+        /// <summary>
+        /// The TestLoadMoreResources
+        /// </summary>
         [Fact]
         public void TestLoadMoreResources()
         {
@@ -235,9 +267,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 
             uaa.InitializeMatchers();
             Action a = new Action(() => uaa.LoadResources("Something extra"));
-            a.Should().Throw<Exception>();            
+            a.Should().Throw<Exception>();
         }
 
+        /// <summary>
+        /// The TestPostPreheatDroptests
+        /// </summary>
         [Fact]
         public void TestPostPreheatDroptests()
         {
@@ -264,6 +299,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
         }
 
+        /// <summary>
+        /// The TestPreheatNoTests
+        /// </summary>
         [Fact]
         public void TestPreheatNoTests()
         {
@@ -284,6 +322,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
             userAgentAnalyzer.PreHeat().Should().Be(0);
         }
-
     }
 }

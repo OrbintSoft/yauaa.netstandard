@@ -24,22 +24,38 @@
 //<date>2018, 7, 27, 11:20</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="MatchesList" />
+    /// </summary>
     [Serializable]
-    public sealed class MatchesList: ICollection<MatchesList.Match>
+    public sealed class MatchesList : ICollection<MatchesList.Match>
     {
+        /// <summary>
+        /// Defines the CAPACITY_INCREASE
+        /// </summary>
         private const int CAPACITY_INCREASE = 3;
 
+        /// <summary>
+        /// Defines the maxSize
+        /// </summary>
         private int maxSize = 0;
+
+        /// <summary>
+        /// Defines the allElements
+        /// </summary>
         private Match[] allElements = null;
 
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MatchesList"/> class.
+        /// </summary>
+        /// <param name="newMaxSize">The newMaxSize<see cref="int"/></param>
         public MatchesList(int newMaxSize)
         {
             maxSize = newMaxSize;
@@ -52,22 +68,36 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
+        /// <summary>
+        /// Gets the Count
+        /// </summary>
         public int Count { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether IsReadOnly
+        /// </summary>
         public bool IsReadOnly => true;
 
-
-
+        /// <summary>
+        /// The Clear
+        /// </summary>
         public void Clear()
         {
             Count = 0;
         }
 
+        /// <summary>
+        /// The Add
+        /// </summary>
+        /// <param name="key">The key<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="result">The result<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public bool Add(string key, string value, IParseTree result)
         {
             if (Count >= maxSize)
             {
-               IncreaseCapacity();               
+                IncreaseCapacity();
             }
 
             allElements[Count].Fill(key, value, result);
@@ -75,19 +105,27 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return true;
         }
 
-        
-
+        /// <summary>
+        /// The GetEnumerator
+        /// </summary>
+        /// <returns>The <see cref="IEnumerator{Match}"/></returns>
         public IEnumerator<Match> GetEnumerator()
         {
             return new MatchEnumerator(allElements, Count);
         }
 
+        /// <summary>
+        /// The GetEnumerator
+        /// </summary>
+        /// <returns>The <see cref="IEnumerator"/></returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return new MatchEnumerator(allElements, Count);
         }
-        
 
+        /// <summary>
+        /// The IncreaseCapacity
+        /// </summary>
         private void IncreaseCapacity()
         {
             int newMaxSize = maxSize + CAPACITY_INCREASE;
@@ -101,6 +139,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             maxSize = newMaxSize;
         }
 
+        /// <summary>
+        /// The ToStrings
+        /// </summary>
+        /// <returns>The <see cref="List{string}"/></returns>
         public List<string> ToStrings()
         {
             List<string> result = new List<string>();
@@ -111,6 +153,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             return result;
         }
 
+        /// <summary>
+        /// The CopyTo
+        /// </summary>
+        /// <param name="array">The array<see cref="Match[]"/></param>
+        /// <param name="arrayIndex">The arrayIndex<see cref="int"/></param>
         public void CopyTo(Match[] array, int arrayIndex)
         {
             for (int i = 0; i < Count; i++)
@@ -120,42 +167,87 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
         }
 
+        /// <summary>
+        /// The Add
+        /// </summary>
+        /// <param name="item">The item<see cref="Match"/></param>
         public void Add(Match item)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The Contains
+        /// </summary>
+        /// <param name="item">The item<see cref="Match"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public bool Contains(Match item)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// The Remove
+        /// </summary>
+        /// <param name="item">The item<see cref="Match"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         public bool Remove(Match item)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Defines the <see cref="MatchEnumerator" />
+        /// </summary>
         public class MatchEnumerator : IEnumerator<Match>
         {
+            /// <summary>
+            /// Defines the count
+            /// </summary>
             private readonly int count = 0;
+
+            /// <summary>
+            /// Defines the matches
+            /// </summary>
             private readonly Match[] matches;
 
+            /// <summary>
+            /// Defines the offset
+            /// </summary>
             private int offset = -1;
-            
+
+            /// <summary>
+            /// Gets the Current
+            /// </summary>
             public Match Current => matches[offset];
 
+            /// <summary>
+            /// Gets the Current
+            /// </summary>
             object IEnumerator.Current => matches[offset];
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MatchEnumerator"/> class.
+            /// </summary>
+            /// <param name="matches">The matches<see cref="Match[]"/></param>
+            /// <param name="count">The count<see cref="int"/></param>
             public MatchEnumerator(Match[] matches, int count)
             {
                 this.matches = matches;
                 this.count = count;
             }
 
+            /// <summary>
+            /// The Dispose
+            /// </summary>
             public void Dispose()
             {
             }
 
+            /// <summary>
+            /// The MoveNext
+            /// </summary>
+            /// <returns>The <see cref="bool"/></returns>
             public bool MoveNext()
             {
                 if (offset < count - 1)
@@ -169,26 +261,53 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 }
             }
 
+            /// <summary>
+            /// The Reset
+            /// </summary>
             public void Reset()
             {
                 offset = -1;
             }
         }
 
+        /// <summary>
+        /// Defines the <see cref="Match" />
+        /// </summary>
         [Serializable]
         public class Match
         {
+            /// <summary>
+            /// Defines the result
+            /// </summary>
             private IParseTree result = null;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Match"/> class.
+            /// </summary>
+            /// <param name="key">The key<see cref="string"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
+            /// <param name="result">The result<see cref="IParseTree"/></param>
             public Match(string key, string value, IParseTree result)
             {
                 Fill(key, value, result);
             }
 
+            /// <summary>
+            /// Gets the Key
+            /// </summary>
             public string Key { get; private set; } = null;
 
+            /// <summary>
+            /// Gets the Value
+            /// </summary>
             public string Value { get; private set; } = null;
 
+            /// <summary>
+            /// The Fill
+            /// </summary>
+            /// <param name="nKey">The nKey<see cref="string"/></param>
+            /// <param name="nValue">The nValue<see cref="string"/></param>
+            /// <param name="nResult">The nResult<see cref="IParseTree"/></param>
             public void Fill(string nKey, string nValue, IParseTree nResult)
             {
                 Key = nKey;
@@ -196,6 +315,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 result = nResult;
             }
 
+            /// <summary>
+            /// The GetResult
+            /// </summary>
+            /// <returns>The <see cref="IParseTree"/></returns>
             public IParseTree GetResult()
             {
                 return result;

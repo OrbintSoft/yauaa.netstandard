@@ -24,19 +24,30 @@
 //<date>2018, 7, 26, 23:01</date>
 //<summary></summary>
 
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
-    public class InvalidParserConfigurationException: Exception
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="InvalidParserConfigurationException" />
+    /// </summary>
+    public class InvalidParserConfigurationException : Exception
     {
-        public InvalidParserConfigurationException(string message): base(message)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvalidParserConfigurationException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/></param>
+        public InvalidParserConfigurationException(string message) : base(message)
         {
-           
         }
-        public InvalidParserConfigurationException(string message, Exception e):base(message, e)
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InvalidParserConfigurationException"/> class.
+        /// </summary>
+        /// <param name="message">The message<see cref="string"/></param>
+        /// <param name="e">The e<see cref="Exception"/></param>
+        public InvalidParserConfigurationException(string message, Exception e) : base(message, e)
         {
-           
         }
     }
 }

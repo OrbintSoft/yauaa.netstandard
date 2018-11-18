@@ -24,23 +24,43 @@
 //<date>2018, 8, 13, 15:17</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
-    public sealed class NumberRangeVisitor: UserAgentTreeWalkerBaseVisitor<NumberRangeList>
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Misc;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="NumberRangeVisitor" />
+    /// </summary>
+    public sealed class NumberRangeVisitor : UserAgentTreeWalkerBaseVisitor<NumberRangeList>
     {
+        /// <summary>
+        /// Defines the DEFAULT_MIN
+        /// </summary>
         private const int DEFAULT_MIN = 1;
+
+        /// <summary>
+        /// Defines the DEFAULT_MAX
+        /// </summary>
         private const int DEFAULT_MAX = 10;
 
+        /// <summary>
+        /// Defines the Instance
+        /// </summary>
         internal static readonly NumberRangeVisitor Instance = new NumberRangeVisitor();
 
+        /// <summary>
+        /// Defines the MaxRange
+        /// </summary>
         private static readonly IDictionary<string, int> MaxRange = new Dictionary<string, int>();
 
-        static NumberRangeVisitor() {
+        /// <summary>
+        /// Initializes static members of the <see cref="NumberRangeVisitor"/> class.
+        /// </summary>
+        static NumberRangeVisitor()
+        {
             // Hardcoded maximum values because of the parsing rules
             MaxRange["agent"] = 1;
             MaxRange["name"] = 1;
@@ -61,15 +81,28 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             MaxRange["uuid"] = 4;
         }
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="NumberRangeVisitor"/> class from being created.
+        /// </summary>
         private NumberRangeVisitor()
         {
         }
-       
+
+        /// <summary>
+        /// The GetList
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/></param>
+        /// <returns>The <see cref="NumberRangeList"/></returns>
         public static NumberRangeList GetList(UserAgentTreeWalkerParser.NumberRangeContext ctx)
         {
             return Instance.Visit(ctx);
         }
 
+        /// <summary>
+        /// The VisitNumberRangeStartToEnd
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeStartToEndContext"/></param>
+        /// <returns>The <see cref="NumberRangeList"/></returns>
         public override NumberRangeList VisitNumberRangeStartToEnd([NotNull] UserAgentTreeWalkerParser.NumberRangeStartToEndContext context)
         {
             return new NumberRangeList(
@@ -77,22 +110,42 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 int.Parse(context.rangeEnd.Text));
         }
 
+        /// <summary>
+        /// The VisitNumberRangeSingleValue
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeSingleValueContext"/></param>
+        /// <returns>The <see cref="NumberRangeList"/></returns>
         public override NumberRangeList VisitNumberRangeSingleValue([NotNull] UserAgentTreeWalkerParser.NumberRangeSingleValueContext context)
         {
             int value = int.Parse(context.count.Text);
             return new NumberRangeList(value, value);
         }
 
+        /// <summary>
+        /// The VisitNumberRangeAll
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeAllContext"/></param>
+        /// <returns>The <see cref="NumberRangeList"/></returns>
         public override NumberRangeList VisitNumberRangeAll([NotNull] UserAgentTreeWalkerParser.NumberRangeAllContext context)
         {
             return new NumberRangeList(DEFAULT_MIN, GetMaxRange(context));
         }
 
+        /// <summary>
+        /// The VisitNumberRangeEmpty
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeEmptyContext"/></param>
+        /// <returns>The <see cref="NumberRangeList"/></returns>
         public override NumberRangeList VisitNumberRangeEmpty([NotNull] UserAgentTreeWalkerParser.NumberRangeEmptyContext context)
         {
             return new NumberRangeList(DEFAULT_MIN, GetMaxRange(context));
         }
 
+        /// <summary>
+        /// The GetMaxRange
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
         private static int GetMaxRange(UserAgentTreeWalkerParser.NumberRangeContext ctx)
         {
             RuleContext parent = ctx.Parent;

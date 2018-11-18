@@ -24,17 +24,27 @@
 //<date>2018, 8, 24, 17:28</date>
 //<summary></summary>
 
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 {
-    public sealed class YauaaFieldAttribute: Attribute
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="YauaaFieldAttribute" />
+    /// </summary>
+    public sealed class YauaaFieldAttribute : Attribute
     {
+        /// <summary>
+        /// Gets or sets the Value
+        /// </summary>
         public string[] Value { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="YauaaFieldAttribute"/> class.
+        /// </summary>
+        /// <param name="value">The value<see cref="string[]"/></param>
         public YauaaFieldAttribute(params string[] value)
         {
             Value = value;
-        }        
+        }
     }
 }

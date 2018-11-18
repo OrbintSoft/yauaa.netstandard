@@ -24,15 +24,21 @@
 //<date>2018, 10, 13, 17:40</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestNormalize" />
+    /// </summary>
     public class TestNormalize : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The CheckBrandOne
+        /// </summary>
         [Fact]
         public void CheckBrandOne()
         {
@@ -40,6 +46,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             Normalize.Brand("N").Should().Be("N");
         }
 
+        /// <summary>
+        /// The CheckBrandTwo
+        /// </summary>
         [Fact]
         public void CheckBrandTwo()
         {
@@ -49,6 +58,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             Normalize.Brand("NB").Should().Be("NB");
         }
 
+        /// <summary>
+        /// The CheckBrandThree
+        /// </summary>
         [Fact]
         public void CheckBrandThree()
         {
@@ -58,6 +70,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             Normalize.Brand("NBA").Should().Be("NBA");
         }
 
+        /// <summary>
+        /// The CheckBrandNormalizationWord
+        /// </summary>
         [Fact]
         public void CheckBrandNormalizationWord()
         {
@@ -68,6 +83,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             Normalize.Brand("NIELS").Should().Be("Niels");
         }
 
+        /// <summary>
+        /// The CheckBrandNormalizationExamples
+        /// </summary>
         [Fact]
         public void CheckBrandNormalizationExamples()
         {
@@ -88,6 +106,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             Normalize.Brand("aSuS").Should().Be("Asus");
         }
 
+        /// <summary>
+        /// The CheckCombiningDeviceNameAndBrand
+        /// </summary>
         [Fact]
         public void CheckCombiningDeviceNameAndBrand()
         {
@@ -99,6 +120,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             Normalize.CleanupDeviceBrandName("Samsung", "GT - 1234").Should().Be("Samsung GT-1234");
         }
 
+        /// <summary>
+        /// The CheckEmailNormalization
+        /// </summary>
         [Fact]
         public void CheckEmailNormalization()
         {
@@ -116,6 +140,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             Normalize.Email("mms dash mmaudvidcrawler dash support at yahoo dash inc dot com").Should().Be("mms-mmaudvidcrawler-support@yahoo-inc.com");
         }
 
+        /// <summary>
+        /// The CheckBadInputData
+        /// </summary>
         [Fact]
         public void CheckBadInputData()
         {

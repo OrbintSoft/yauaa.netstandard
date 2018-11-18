@@ -24,30 +24,39 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestVersionCollisionChecks" />
+    /// </summary>
     public class TestVersionCollisionChecks : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The TestBadVersion
+        /// </summary>
         [Fact]
         public void TestBadVersion()
         {
-           UserAgentAnalyzer uaa = UserAgentAnalyzer
-            .NewBuilder()
-            .DropDefaultResources()
-            .DelayInitialization()
-            .Build();
+            UserAgentAnalyzer uaa = UserAgentAnalyzer
+             .NewBuilder()
+             .DropDefaultResources()
+             .DelayInitialization()
+             .Build();
 
             Action a = new Action(() => uaa.LoadResources("YamlResources/Versions", "BadVersion.yaml"));
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("Found unexpected config entry: bad"));
         }
 
+        /// <summary>
+        /// The TestBadVersionNotMap
+        /// </summary>
         [Fact]
         public void TestBadVersionNotMap()
         {
@@ -62,7 +71,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("The value should be a string but it is a Sequence"));
         }
 
-    [Fact]
+        /// <summary>
+        /// The TestDifferentVersion
+        /// </summary>
+        [Fact]
         public void TestDifferentVersion()
         {
             UserAgentAnalyzer uaa = UserAgentAnalyzer
@@ -74,6 +86,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Utils
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("Two different Yauaa versions have been loaded:"));
         }
 
+        /// <summary>
+        /// The TestDoubleLoadedResources
+        /// </summary>
         [Fact]
         public void TestDoubleLoadedResources()
         {

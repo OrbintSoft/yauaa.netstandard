@@ -24,21 +24,29 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using FluentAssertions;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System.Diagnostics;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
 {
+    using FluentAssertions;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System.Diagnostics;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestPerformance" />
+    /// </summary>
     public class TestPerformance : IClassFixture<LogFixture>
     {
-
+        /// <summary>
+        /// Defines the LOG
+        /// </summary>
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestMemoryFootprint));
 
+        /// <summary>
+        /// The ValidateAllPredefinedBrowsersPerformance
+        /// </summary>
         [SkippableFact]
         public void ValidateAllPredefinedBrowsersPerformance()
         {
@@ -50,6 +58,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
             uaa.RunTests(false, false, null, true, true).Should().BeTrue();
         }
 
+        /// <summary>
+        /// The CheckAllPossibleFieldsFastSpeed
+        /// </summary>
         [SkippableFact]
         public void CheckAllPossibleFieldsFastSpeed()
         {
@@ -84,7 +95,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Profile
             stopwatch.Restart();
             uaa.PreHeat();
             stopwatch.Stop();
-            long preheatMsecs = stopwatch.ElapsedMilliseconds; 
+            long preheatMsecs = stopwatch.ElapsedMilliseconds;
             LOG.Info(string.Format("-- Preheat : {0}ms", preheatMsecs));
         }
     }

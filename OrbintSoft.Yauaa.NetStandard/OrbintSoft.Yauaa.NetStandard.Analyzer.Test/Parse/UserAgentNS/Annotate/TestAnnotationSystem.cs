@@ -24,59 +24,111 @@
 //<date>2018, 10, 13, 20:51</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestAnnotationSystem" />
+    /// </summary>
     public class TestAnnotationSystem : IClassFixture<LogFixture>
     {
-
+        /// <summary>
+        /// Defines the <see cref="TestRecord" />
+        /// </summary>
         public class TestRecord
         {
+            /// <summary>
+            /// Defines the useragent
+            /// </summary>
             internal readonly string useragent;
+
+            /// <summary>
+            /// Defines the deviceClass
+            /// </summary>
             internal string deviceClass;
+
+            /// <summary>
+            /// Defines the agentNameVersion
+            /// </summary>
             internal string agentNameVersion;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TestRecord"/> class.
+            /// </summary>
+            /// <param name="useragent">The useragent<see cref="string"/></param>
             public TestRecord(string useragent)
             {
                 this.useragent = useragent;
             }
         }
 
-        public class MyBaseMapper: IUserAgentAnnotationMapper<TestRecord>
+        /// <summary>
+        /// Defines the <see cref="MyBaseMapper" />
+        /// </summary>
+        public class MyBaseMapper : IUserAgentAnnotationMapper<TestRecord>
         {
+            /// <summary>
+            /// Defines the userAgentAnalyzer
+            /// </summary>
             private readonly UserAgentAnnotationAnalyzer<TestRecord> userAgentAnalyzer;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MyBaseMapper"/> class.
+            /// </summary>
             public MyBaseMapper()
             {
                 userAgentAnalyzer = new UserAgentAnnotationAnalyzer<TestRecord>();
                 userAgentAnalyzer.Initialize(this);
             }
 
+            /// <summary>
+            /// The Enrich
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <returns>The <see cref="TestRecord"/></returns>
             public TestRecord Enrich(TestRecord record)
             {
                 return userAgentAnalyzer.Map(record);
             }
-        
+
+            /// <summary>
+            /// The GetUserAgentString
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <returns>The <see cref="string"/></returns>
             public string GetUserAgentString(TestRecord record)
             {
                 return record.useragent;
             }
         }
 
-        public class MyMapper: MyBaseMapper
+        /// <summary>
+        /// Defines the <see cref="MyMapper" />
+        /// </summary>
+        public class MyMapper : MyBaseMapper
         {
+            /// <summary>
+            /// The SetDeviceClass
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
             [YauaaField("DeviceClass")]
             public void SetDeviceClass(TestRecord record, string value)
             {
                 record.deviceClass = value;
             }
 
+            /// <summary>
+            /// The SetAgentNameVersion
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
             [YauaaField("AgentNameVersion")]
             public void SetAgentNameVersion(TestRecord record, string value)
             {
@@ -84,6 +136,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             }
         }
 
+        /// <summary>
+        /// The TestAnnotationBasedParser
+        /// </summary>
         [Fact]
         public void TestAnnotationBasedParser()
         {
@@ -97,8 +152,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             record.agentNameVersion.Should().Be("Chrome 48.0.2564.82");
         }
 
+        /// <summary>
+        /// Defines the <see cref="ImpossibleFieldMapper" />
+        /// </summary>
         public class ImpossibleFieldMapper : MyBaseMapper
         {
+            /// <summary>
+            /// The SetImpossibleField
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
             [YauaaField("NielsBasjes")]
             public void SetImpossibleField(TestRecord record, string value)
             {
@@ -106,6 +169,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             }
         }
 
+        /// <summary>
+        /// The TestImpossibleField
+        /// </summary>
         [Fact]
         public void TestImpossibleField()
         {
@@ -113,9 +179,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("We cannot provide these fields: [NielsBasjes]");
         }
 
-
+        /// <summary>
+        /// Defines the <see cref="InaccessibleSetterMapper" />
+        /// </summary>
         public class InaccessibleSetterMapper : MyBaseMapper
         {
+            /// <summary>
+            /// The InaccessibleSetter
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
             [YauaaField("DeviceClass")]
             private void InaccessibleSetter(TestRecord record, string value)
             {
@@ -123,6 +196,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             }
         }
 
+        /// <summary>
+        /// The TestInaccessibleSetter
+        /// </summary>
         [Fact]
         public void TestInaccessibleSetter()
         {
@@ -130,8 +206,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("Method annotated with YauaaField is not public: inaccessibleSetter");
         }
 
+        /// <summary>
+        /// Defines the <see cref="TooManyParameters" />
+        /// </summary>
         public class TooManyParameters : MyBaseMapper
         {
+            /// <summary>
+            /// The WrongSetter
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
+            /// <param name="extra">The extra<see cref="string"/></param>
             [YauaaField("DeviceClass")]
             public void WrongSetter(TestRecord record, string value, string extra)
             {
@@ -139,6 +224,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             }
         }
 
+        /// <summary>
+        /// The TestTooManyParameters
+        /// </summary>
         [Fact]
         public void TestTooManyParameters()
         {
@@ -146,8 +234,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("In class [TooManyParameters] the method [WrongSetter] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void WrongSetter(TestRecord record, String value) ]");
         }
 
-        public class WrongTypeParameters1: MyBaseMapper
+        /// <summary>
+        /// Defines the <see cref="WrongTypeParameters1" />
+        /// </summary>
+        public class WrongTypeParameters1 : MyBaseMapper
         {
+            /// <summary>
+            /// The WrongSetter
+            /// </summary>
+            /// <param name="record">The record<see cref="string"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
             [YauaaField("DeviceClass")]
             public void WrongSetter(string record, string value)
             {
@@ -155,6 +251,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             }
         }
 
+        /// <summary>
+        /// The TestWrongTypeParameters1
+        /// </summary>
         [Fact]
         public void TestWrongTypeParameters1()
         {
@@ -162,8 +261,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("In class [WrongTypeParameters1] the method [WrongSetter] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void WrongSetter(TestRecord record, String value) ]");
         }
 
+        /// <summary>
+        /// Defines the <see cref="WrongTypeParameters2" />
+        /// </summary>
         public class WrongTypeParameters2 : MyBaseMapper
         {
+            /// <summary>
+            /// The WrongSetter
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <param name="value">The value<see cref="double"/></param>
             [YauaaField("DeviceClass")]
             public void WrongSetter(TestRecord record, double value)
             {
@@ -171,6 +278,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             }
         }
 
+        /// <summary>
+        /// The TestWrongTypeParameters2
+        /// </summary>
         [Fact]
         public void TestWrongTypeParameters2()
         {
@@ -178,14 +288,25 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("In class [WrongTypeParameters2] the method [WrongSetter] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void WrongSetter(TestRecord record, String value) ]");
         }
 
+        /// <summary>
+        /// Defines the <see cref="MissingAnnotations" />
+        /// </summary>
         public class MissingAnnotations : MyBaseMapper
         {
+            /// <summary>
+            /// The SetWasNotAnnotated
+            /// </summary>
+            /// <param name="record">The record<see cref="TestRecord"/></param>
+            /// <param name="value">The value<see cref="double"/></param>
             public void SetWasNotAnnotated(TestRecord record, double value)
             {
                 throw new Xunit.Sdk.XunitException("May NEVER call this method");
             }
         }
 
+        /// <summary>
+        /// The TestMissingAnnotations
+        /// </summary>
         [Fact]
         public void TestMissingAnnotations()
         {
@@ -193,13 +314,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("You MUST specify at least 1 field to extract.");
         }
 
+        /// <summary>
+        /// The TestBadGeneric
+        /// </summary>
         [Fact]
         public void TestBadGeneric()
-        {          
+        {
             UserAgentAnnotationAnalyzer<object> userAgentAnalyzer = new UserAgentAnnotationAnalyzer<object>();
             Action a = new Action(() => userAgentAnalyzer.Map("Foo"));
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("[Map] The mapper instance is null.");
         }
-
-}
+    }
 }

@@ -24,23 +24,58 @@
 //<date>2018, 7, 26, 23:01</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
+    using Antlr4.Runtime.Tree;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="IAnalyzer" />
+    /// </summary>
     public interface IAnalyzer
     {
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="path">The path<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
         void Inform(string path, string value, IParseTree ctx);
 
+        /// <summary>
+        /// The InformMeAbout
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
         void InformMeAbout(MatcherAction matcherAction, string keyPattern);
 
+        /// <summary>
+        /// The LookingForRange
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
         void LookingForRange(string treeName, WordRangeVisitor.Range range);
 
+        /// <summary>
+        /// The GetRequiredInformRanges
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
         ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName);
 
+        /// <summary>
+        /// The InformMeAboutPrefix
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="prefix">The prefix<see cref="string"/></param>
         void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix);
 
+        /// <summary>
+        /// The GetRequiredPrefixLengths
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <returns>The <see cref="ISet{int?}"/></returns>
         ISet<int?> GetRequiredPrefixLengths(string treeName);
     }
 }

@@ -24,21 +24,30 @@
 //<date>2018, 10, 12, 21:12</date>
 //<summary></summary>
 
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
 {
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestUserAgentFlattening" />
+    /// </summary>
     public class TestUserAgentFlattening : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// Defines the LOG
+        /// </summary>
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestUserAgentFlattening));
 
+        /// <summary>
+        /// The TestFlatteningProduct
+        /// </summary>
         [Fact]
         public void TestFlatteningProduct()
         {
@@ -203,10 +212,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
             ValidateUserAgent("TextName 1 (a) Versi0nName 2 (b) em@il.name 3 (c) key=value 4 (d)"
                 , "agent=\"TextName 1 (a) Versi0nName 2 (b) em@il.name 3 (c) key=value 4 (d)\""
             );
-
         }
 
-
+        /// <summary>
+        /// The TestFlatteningComment
+        /// </summary>
         [Fact]
         public void TestFlatteningComment()
         {
@@ -255,6 +265,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
             );
         }
 
+        /// <summary>
+        /// The TestFlatteningKeyValue
+        /// </summary>
         [Fact]
         public void TestFlatteningKeyValue()
         {
@@ -450,9 +463,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
                 , "agent.(2)keyvalue.(1)key=\"Some-Thing\""
                 , "agent.(2)keyvalue.(2)text=\"true\""
             );
-
         }
-        
+
+        /// <summary>
+        /// The TestRootCases
+        /// </summary>
         [Fact]
         public void TestRootCases()
         {
@@ -510,6 +525,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
             );
         }
 
+        /// <summary>
+        /// The TestFlatteningSpecialCases
+        /// </summary>
         [Fact]
         public void TestFlatteningSpecialCases()
         {
@@ -1144,9 +1162,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
                 , "agent.(1)product.(1)comments.(5)entry.(1)product.(1)name=\"YC-3135D Build\""
                 , "agent.(1)product.(1)comments.(5)entry.(1)product.(1)version=\"JDQ39\""
             );
-
         }
 
+        /// <summary>
+        /// The TestFlatteningParsingErrorCases
+        /// </summary>
         [Fact]
         public void TestFlatteningParsingErrorCases()
         {
@@ -1314,6 +1334,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
             );
         }
 
+        /// <summary>
+        /// The TestFlatteningExtremeTestCase
+        /// </summary>
         [Fact]
         public void TestFlatteningExtremeTestCase()
         {
@@ -1351,9 +1374,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
                 , "agent.(2)product.(1)comments.(1)entry=\"Yadda\""
                 , "agent.(2)product.(1)comments.(1)entry.(1)text=\"Yadda\""
             );
-
         }
 
+        /// <summary>
+        /// The ValidateUserAgent
+        /// </summary>
+        /// <param name="useragent">The useragent<see cref="string"/></param>
+        /// <param name="requiredValues">The requiredValues<see cref="string[]"/></param>
         private void ValidateUserAgent(string useragent, params string[] requiredValues)
         {
             bool developmentMode = requiredValues.Length == 0;
@@ -1425,7 +1452,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Parse
                 throw new Exception("Not everything was found");
             }
         }
-
-       
     }
 }

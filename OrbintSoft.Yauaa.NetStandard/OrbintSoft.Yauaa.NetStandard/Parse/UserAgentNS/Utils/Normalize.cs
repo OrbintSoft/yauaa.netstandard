@@ -24,16 +24,29 @@
 //<date>2018, 8, 14, 13:12</date>
 //<summary></summary>
 
-using System.Globalization;
-using System.Text;
-using System.Text.RegularExpressions;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
+    using System.Globalization;
+    using System.Text;
+    using System.Text.RegularExpressions;
+
+    /// <summary>
+    /// Defines the <see cref="Normalize" />
+    /// </summary>
     public sealed class Normalize
     {
-        private Normalize() { }
+        /// <summary>
+        /// Prevents a default instance of the <see cref="Normalize"/> class from being created.
+        /// </summary>
+        private Normalize()
+        {
+        }
 
+        /// <summary>
+        /// The IsTokenSeparator
+        /// </summary>
+        /// <param name="letter">The letter<see cref="char"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         private static bool IsTokenSeparator(char letter)
         {
             switch (letter)
@@ -47,6 +60,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             }
         }
 
+        /// <summary>
+        /// The Brand
+        /// </summary>
+        /// <param name="brand">The brand<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string Brand(string brand)
         {
             if (brand.Length <= 3)
@@ -132,6 +150,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             return sb.ToString();
         }
 
+        /// <summary>
+        /// The CleanupDeviceBrandName
+        /// </summary>
+        /// <param name="deviceBrand">The deviceBrand<see cref="string"/></param>
+        /// <param name="deviceName">The deviceName<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string CleanupDeviceBrandName(string deviceBrand, string deviceName)
         {
             string lowerDeviceBrand = deviceBrand.ToLower(CultureInfo.InvariantCulture);
@@ -167,10 +191,15 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
             return result;
         }
 
+        /// <summary>
+        /// The Email
+        /// </summary>
+        /// <param name="email">The email<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string Email(string email)
         {
             string cleaned = email;
-            cleaned = Regex.Replace(cleaned,"\\[at]", "@");
+            cleaned = Regex.Replace(cleaned, "\\[at]", "@");
 
             cleaned = Regex.Replace(cleaned, "\\[\\\\xc3\\\\xa07]", "@");
             cleaned = Regex.Replace(cleaned, "\\[dot]", ".");

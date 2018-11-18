@@ -24,37 +24,63 @@
 //<date>2018, 10, 1, 19:34</date>
 //<summary></summary>
 
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 {
-    public class DebugUserAgent: UserAgent
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    /// <summary>
+    /// Defines the <see cref="DebugUserAgent" />
+    /// </summary>
+    public class DebugUserAgent : UserAgent
     {
+        /// <summary>
+        /// Defines the Log
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(DebugUserAgent));
 
+        /// <summary>
+        /// Defines the appliedMatcherResults
+        /// </summary>
         internal readonly List<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
 
+        /// <summary>
+        /// The Set
+        /// </summary>
+        /// <param name="newValuesUserAgent">The newValuesUserAgent<see cref="UserAgent"/></param>
+        /// <param name="appliedMatcher">The appliedMatcher<see cref="Matcher"/></param>
         public override void Set(UserAgent newValuesUserAgent, Matcher appliedMatcher)
         {
             appliedMatcherResults.Add(new Tuple<UserAgent, Matcher>(new UserAgent(newValuesUserAgent), appliedMatcher));
             base.Set(newValuesUserAgent, appliedMatcher);
         }
 
+        /// <summary>
+        /// The Reset
+        /// </summary>
         public override void Reset()
         {
             appliedMatcherResults.Clear();
             base.Reset();
         }
 
+        /// <summary>
+        /// The GetNumberOfAppliedMatches
+        /// </summary>
+        /// <returns>The <see cref="int"/></returns>
         public int GetNumberOfAppliedMatches()
         {
             return appliedMatcherResults.Count;
         }
 
+        /// <summary>
+        /// The ToMatchTrace
+        /// </summary>
+        /// <param name="highlightNames">The highlightNames<see cref="List{string}"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public string ToMatchTrace(List<string> highlightNames)
         {
             StringBuilder sb = new StringBuilder(4096);
@@ -95,6 +121,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             return sb.ToString();
         }
 
+        /// <summary>
+        /// The AnalyzeMatchersResult
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         public bool AnalyzeMatchersResult()
         {
             bool passed = true;
@@ -108,7 +138,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
                     if (partialField != null && partialField.GetConfidence() >= 0)
                     {
                         var conf = partialField.GetConfidence();
-                        string previousValue =  receivedValues.ContainsKey(conf) ? receivedValues[conf] : null;
+                        string previousValue = receivedValues.ContainsKey(conf) ? receivedValues[conf] : null;
                         if (previousValue != null)
                         {
                             if (!previousValue.Equals(partialField.GetValue()))
@@ -134,6 +164,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             }
             return passed;
         }
-
-    } 
+    }
 }

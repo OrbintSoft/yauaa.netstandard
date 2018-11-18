@@ -24,29 +24,56 @@
 //<date>2018, 8, 16, 01:17</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk.StepDowns;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-using System;
-using System.Collections.Generic;
-using System.IO;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk
 {
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk.StepDowns;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+
+    /// <summary>
+    /// Defines the <see cref="StepDown" />
+    /// </summary>
     [Serializable]
-    public class StepDown: Step
+    public class StepDown : Step
     {
+        /// <summary>
+        /// Defines the start
+        /// </summary>
         private readonly int start;
+
+        /// <summary>
+        /// Defines the end
+        /// </summary>
         private readonly int end;
+
+        /// <summary>
+        /// Defines the name
+        /// </summary>
         private readonly string name;
+
+        /// <summary>
+        /// Defines the userAgentGetChildrenVisitor
+        /// </summary>
         private UserAgentGetChildrenVisitor userAgentGetChildrenVisitor;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepDown"/> class.
+        /// </summary>
+        /// <param name="numberRange">The numberRange<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
         public StepDown(UserAgentTreeWalkerParser.NumberRangeContext numberRange, string name) : this(NumberRangeVisitor.GetList(numberRange), name)
         {
-
         }
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="StepDown"/> class from being created.
+        /// </summary>
+        /// <param name="numberRange">The numberRange<see cref="NumberRangeList"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
         private StepDown(NumberRangeList numberRange, string name)
         {
             this.name = name;
@@ -63,16 +90,30 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             userAgentGetChildrenVisitor = new UserAgentGetChildrenVisitor(name, start, end);
         }
 
+        /// <summary>
+        /// The ReadObject
+        /// </summary>
+        /// <param name="stream">The stream<see cref="Stream"/></param>
         private void ReadObject(Stream stream)
         {
             SetDefaultFieldValues();
-        }        
+        }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "Down([" + start + ":" + end + "]" + name + ")";
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             IEnumerator<ParserRuleContext> children = userAgentGetChildrenVisitor.Visit(tree);
@@ -90,7 +131,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                         }
                     }
                 } while (children.MoveNext());
-            }           
+            }
             return null;
         }
     }

@@ -24,20 +24,31 @@
 //<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-using FluentAssertions;
-using log4net;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 {
+    using FluentAssertions;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System.IO;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestSerialization" />
+    /// </summary>
     public class TestSerialization : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// Defines the LOG
+        /// </summary>
         private static readonly ILog LOG = LogManager.GetLogger(typeof(TestPredefinedBrowsersPerField));
 
+        /// <summary>
+        /// The SerializeAndDeserializeUAA
+        /// </summary>
+        /// <param name="delay">The delay<see cref="bool"/></param>
+        /// <returns>The <see cref="UserAgentAnalyzerTester"/></returns>
         public UserAgentAnalyzerTester SerializeAndDeserializeUAA(bool delay)
         {
             LOG.Info("==============================================================");
@@ -65,7 +76,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(memoryStream, uaa);
                 bytes = memoryStream.ToArray();
-            }              
+            }
 
             LOG.Info(string.Format("The UserAgentAnalyzer was serialized into {0} bytes", bytes.LongLength));
             LOG.Info("--------------------------------------------------------------");
@@ -77,15 +88,18 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
                 object obj = formatter.Deserialize(memoryStream);
                 obj.Should().BeOfType<UserAgentAnalyzerTester>();
                 uaa = obj as UserAgentAnalyzerTester;
-            }           
-            
+            }
+
             LOG.Info("Done");
             LOG.Info("==============================================================");
 
             return uaa;
         }
 
-
+        /// <summary>
+        /// The ValidateAllPredefinedBrowsers
+        /// </summary>
+        /// <param name="delay">The delay<see cref="bool"/></param>
         [Theory]
         [InlineData(true)]
         [InlineData(false)]

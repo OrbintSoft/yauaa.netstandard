@@ -24,15 +24,21 @@
 //<date>2018, 10, 3, 14:47</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestBasics: IClassFixture<LogFixture>
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestBasics" />
+    /// </summary>
+    public class TestBasics : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The TestCacheSetter
+        /// </summary>
         [Fact]
         public void TestCacheSetter()
         {
@@ -60,6 +66,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(555, "I set that size");
         }
 
+        /// <summary>
+        /// The TestUserAgentMaxLengthSetter
+        /// </summary>
         [Fact]
         public void TestUserAgentMaxLengthSetter()
         {
@@ -75,6 +84,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(UserAgentAnalyzerDirect.DEFAULT_USER_AGENT_MAX_LENGTH, "I set incorrect cache size"); ;
         }
 
+        /// <summary>
+        /// The TestUseragent
+        /// </summary>
         [Fact]
         public void TestUseragent()
         {
@@ -83,6 +95,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             agent.Get(UserAgent.USERAGENT).GetValue().Should().Be(uaString);
             agent.Get(UserAgent.USERAGENT).GetConfidence().Should().Be(0);
         }
-
     }
 }

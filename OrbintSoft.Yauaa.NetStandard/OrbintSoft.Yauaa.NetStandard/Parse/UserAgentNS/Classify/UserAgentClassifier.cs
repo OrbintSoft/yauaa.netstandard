@@ -26,10 +26,23 @@
 
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
 {
+    /// <summary>
+    /// Defines the <see cref="UserAgentClassifier" />
+    /// </summary>
     public class UserAgentClassifier
     {
-        private UserAgentClassifier() { } // Utility class
+        /// <summary>
+        /// Prevents a default instance of the <see cref="UserAgentClassifier"/> class from being created.
+        /// </summary>
+        private UserAgentClassifier()
+        {
+        }
 
+        /// <summary>
+        /// The GetDeviceClass
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <returns>The <see cref="DeviceClass"/></returns>
         public static DeviceClass GetDeviceClass(UserAgent userAgent)
         {
             switch (userAgent.GetValue(UserAgent.DEVICE_CLASS))
@@ -52,12 +65,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
                 case "Hacker": return DeviceClass.Hacker;
                 case "Unknown": return DeviceClass.Unknown;
                 default: return DeviceClass.Unclassified;
-            }            
+            }
         }
 
-
         /// <summary>
-        /// 
+        /// The IsNormalConsumerDevice
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
         /// <returns>Is this a 'normal' consumer device that can simply be bought/downloaded and used as intended.</returns>
@@ -91,7 +103,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
         }
 
         /// <summary>
-        /// 
+        /// The IsMobile
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
         /// <returns>Is this a 'mobile' device. (includes robots that want to be treated as mobile)</returns>
@@ -125,7 +137,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
         }
 
         /// <summary>
-        /// 
+        /// The IsHuman
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
         /// <returns>If this is probably a human using the device.</returns>
@@ -159,7 +171,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Classify
         }
 
         /// <summary>
-        /// 
+        /// The IsDeliberateMisuse
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
         /// <returns>Do we see this as deliberate misuse?</returns>

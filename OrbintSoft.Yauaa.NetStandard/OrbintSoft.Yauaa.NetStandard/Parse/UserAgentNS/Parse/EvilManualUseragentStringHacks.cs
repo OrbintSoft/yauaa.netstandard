@@ -24,19 +24,36 @@
 //<date>2018, 8, 14, 01:40</date>
 //<summary></summary>
 
-using System;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Web;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
 {
+    using System;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Web;
+
+    /// <summary>
+    /// Defines the <see cref="EvilManualUseragentStringHacks" />
+    /// </summary>
     public sealed class EvilManualUseragentStringHacks
-    {       
+    {
+        /// <summary>
+        /// Defines the MissingProductAtStart
+        /// </summary>
         private static readonly Regex MissingProductAtStart = new Regex("^\\(( |;|null|compatible|windows|android|linux).*", RegexOptions.IgnoreCase);
+
+        /// <summary>
+        /// Defines the MissingSpace
+        /// </summary>
         private static readonly Regex MissingSpace = new Regex("(/[0-9]+\\.[0-9]+)([A-Z][a-z][a-z][a-z]+ )");
+
+        /// <summary>
+        /// Defines the MultipleSpaces
+        /// </summary>
         private static readonly Regex MultipleSpaces = new Regex("(?: {2,})");
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="EvilManualUseragentStringHacks"/> class from being created.
+        /// </summary>
         private EvilManualUseragentStringHacks()
         {
         }
@@ -77,7 +94,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             // Some agents are providing comment values that are ONLY a version
             result = ReplaceString(result, "(/", "(Unknown/");
             result = ReplaceString(result, "; /", "; Unknown/");
-            
+
             // Repair certain cases of broken useragents (like we see for the Facebook app a lot)
             if (MissingProductAtStart.IsMatch(result))
             {
@@ -106,13 +123,21 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
                 {
                     result = HttpUtility.UrlDecode(result, Encoding.UTF8);
                 }
-                catch (Exception) {
+                catch (Exception)
+                {
                     // Ignore and continue.
                 }
             }
             return result; // 99.99% of the cases nothing will have changed.
         }
 
+        /// <summary>
+        /// The ReplaceString
+        /// </summary>
+        /// <param name="input">The input<see cref="string"/></param>
+        /// <param name="searchFor">The searchFor<see cref="string"/></param>
+        /// <param name="replaceWith">The replaceWith<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string ReplaceString(string input, string searchFor, string replaceWith)
         {
             //startIdx and idxSearchFor delimit various chunks of input; these

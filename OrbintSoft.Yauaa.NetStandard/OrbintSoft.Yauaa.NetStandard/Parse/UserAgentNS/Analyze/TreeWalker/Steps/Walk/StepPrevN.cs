@@ -24,25 +24,46 @@
 //<date>2018, 8, 16, 03:00</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+
+    /// <summary>
+    /// Defines the <see cref="StepPrevN" />
+    /// </summary>
     [Serializable]
-    public class StepPrevN: Step
+    public class StepPrevN : Step
     {
+        /// <summary>
+        /// Defines the SIZE
+        /// </summary>
         private const int SIZE = 20;
 
+        /// <summary>
+        /// Defines the children
+        /// </summary>
         internal readonly IParseTree[] children = new IParseTree[SIZE];
 
+        /// <summary>
+        /// Defines the steps
+        /// </summary>
         private readonly int steps;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepPrevN"/> class.
+        /// </summary>
+        /// <param name="steps">The steps<see cref="int"/></param>
         public StepPrevN(int steps)
         {
             this.steps = steps;
         }
 
+        /// <summary>
+        /// The Prev
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="IParseTree"/></returns>
         private IParseTree Prev(IParseTree tree)
         {
             IParseTree parent = Up(tree);
@@ -70,6 +91,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             return null; // There is no previous
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             IParseTree nextTree = Prev(tree);
@@ -81,6 +108,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             return WalkNextStep(nextTree, null);
         }
 
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return "Prev(" + steps + ")";

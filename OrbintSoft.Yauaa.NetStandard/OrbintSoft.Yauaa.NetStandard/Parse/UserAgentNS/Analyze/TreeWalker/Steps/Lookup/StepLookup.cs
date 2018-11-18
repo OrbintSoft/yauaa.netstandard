@@ -24,19 +24,39 @@
 //<date>2018, 8, 13, 23:45</date>
 //<summary></summary>
 
-using Antlr4.Runtime.Tree;
-using System;
-using System.Collections.Generic;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Lookup
 {
+    using Antlr4.Runtime.Tree;
+    using System;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// Defines the <see cref="StepLookup" />
+    /// </summary>
     [Serializable]
-    public class StepLookup: Step
+    public class StepLookup : Step
     {
+        /// <summary>
+        /// Defines the lookupName
+        /// </summary>
         private readonly string lookupName;
+
+        /// <summary>
+        /// Defines the lookup
+        /// </summary>
         private readonly IDictionary<string, string> lookup;
+
+        /// <summary>
+        /// Defines the defaultValue
+        /// </summary>
         private readonly string defaultValue;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepLookup"/> class.
+        /// </summary>
+        /// <param name="lookupName">The lookupName<see cref="string"/></param>
+        /// <param name="lookup">The lookup<see cref="IDictionary{string, string}"/></param>
+        /// <param name="defaultValue">The defaultValue<see cref="string"/></param>
         public StepLookup(string lookupName, IDictionary<string, string> lookup, string defaultValue)
         {
             this.lookupName = lookupName;
@@ -44,6 +64,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.L
             this.defaultValue = defaultValue;
         }
 
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             string input = GetActualValue(tree, value).ToLower();
@@ -64,11 +90,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.L
             return WalkNextStep(tree, result);
         }
 
-
+        /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
             return string.Format("Lookup(@{0} ; default={1})", lookupName, defaultValue ?? "null");
         }
-
     }
 }

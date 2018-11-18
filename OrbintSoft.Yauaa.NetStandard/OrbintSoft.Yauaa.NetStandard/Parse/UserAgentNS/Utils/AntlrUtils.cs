@@ -24,15 +24,28 @@
 //<date>2018, 8, 12, 15:52</date>
 //<summary></summary>
 
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Misc;
+
+    /// <summary>
+    /// Defines the <see cref="AntlrUtils" />
+    /// </summary>
     public sealed class AntlrUtils
     {
-        private AntlrUtils() { }
+        /// <summary>
+        /// Prevents a default instance of the <see cref="AntlrUtils"/> class from being created.
+        /// </summary>
+        private AntlrUtils()
+        {
+        }
 
+        /// <summary>
+        /// The GetSourceText
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetSourceText(ParserRuleContext ctx)
         {
             if (ctx.start == null || ctx.stop == null)

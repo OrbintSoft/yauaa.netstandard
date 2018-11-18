@@ -24,42 +24,73 @@
 //<date>2018, 10, 2, 18:32</date>
 //<summary></summary>
 
-using System;
-using System.IO;
-using System.Reflection;
-
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils
 {
+    using System;
+    using System.IO;
+    using System.Reflection;
+
+    /// <summary>
+    /// Defines the <see cref="ThisVersion" />
+    /// </summary>
     public class ThisVersion
     {
+        /// <summary>
+        /// Defines the fi
+        /// </summary>
         private static readonly FileInfo fi;
+
+        /// <summary>
+        /// Initializes static members of the <see cref="ThisVersion"/> class.
+        /// </summary>
         static ThisVersion()
         {
-            
+
             Assembly asm = Assembly.GetExecutingAssembly();
             fi = new FileInfo(asm.Location);
         }
+
+        /// <summary>
+        /// The GetGitCommitIdDescribeShort
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetGitCommitIdDescribeShort()
         {
             return ThisAssembly.Git.Commit;
         }
 
+        /// <summary>
+        /// The GetBuildTimestamp
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetBuildTimestamp()
         {
 
             return fi.LastWriteTime.Ticks.ToString();
         }
 
+        /// <summary>
+        /// The GetProjectVersion
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetProjectVersion()
         {
             return new Version(Convert.ToInt16(ThisAssembly.Git.SemVer.Major), Convert.ToInt16(ThisAssembly.Git.SemVer.Minor), Convert.ToInt16(ThisAssembly.Git.SemVer.Patch)).ToString();
         }
 
+        /// <summary>
+        /// The GetCopyright
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetCopyright()
         {
             return "Copyright (C) 2013-" + DateTime.Now.Year + " Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft)";
         }
 
+        /// <summary>
+        /// The GetLicense
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
         public static string GetLicense()
         {
             return "License Apache 2.0";

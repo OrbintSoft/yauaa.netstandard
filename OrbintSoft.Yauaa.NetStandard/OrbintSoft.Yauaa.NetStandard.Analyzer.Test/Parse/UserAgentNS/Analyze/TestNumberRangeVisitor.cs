@@ -24,18 +24,24 @@
 //<date>2018, 10, 8, 08:31</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestNumberRangeVisitor" />
+    /// </summary>
     public class TestNumberRangeVisitor : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The RangeSingleValue
+        /// </summary>
         [Fact]
         public void RangeSingleValue()
         {
@@ -54,6 +60,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             values.Contains(9).Should().BeFalse();
         }
 
+        /// <summary>
+        /// The RangeMultipleValues
+        /// </summary>
         [Fact]
         public void RangeMultipleValues()
         {
@@ -72,6 +81,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             values.Contains(9).Should().BeFalse();
         }
 
+        /// <summary>
+        /// The TestRangeCompare
+        /// </summary>
         [Fact]
         public void TestRangeCompare()
         {

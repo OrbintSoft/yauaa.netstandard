@@ -24,21 +24,27 @@
 //<date>2018, 10, 8, 11:06</date>
 //<summary></summary>
 
-using FluentAssertions;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker;
-using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
-using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
-
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker;
+    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
+    using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using Xunit;
+
+    /// <summary>
+    /// Defines the <see cref="TestTreewalkerParsing" />
+    /// </summary>
     public class TestTreewalkerParsing : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// The ValidateWalkPathParsing
+        /// </summary>
         [Fact]
         public void ValidateWalkPathParsing()
         {
@@ -92,6 +98,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// The ValidateWalkPathParsingRange
+        /// </summary>
         [Fact]
         public void ValidateWalkPathParsingRange()
         {
@@ -145,6 +154,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// The ValidateStartsWithLength
+        /// </summary>
         [Fact]
         public void ValidateStartsWithLength()
         {
@@ -183,6 +195,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             }
         }
 
+        /// <summary>
+        /// The ValidateWalkPathSimpleName
+        /// </summary>
         [Fact]
         public void ValidateWalkPathSimpleName()
         {
@@ -192,11 +207,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
                 "agent.(1)product.(1)name",
             };
 
-            string[] expectedWalkList = {};
+            string[] expectedWalkList = { };
 
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// The ValidateWalkPathSimpleNameEquals
+        /// </summary>
         [Fact]
         public void ValidateWalkPathSimpleNameEquals()
         {
@@ -214,6 +232,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// The ValidateWalkPathNameSubstring
+        /// </summary>
         [Fact]
         public void ValidateWalkPathNameSubstring()
         {
@@ -231,6 +252,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// The ValidateWalkPathNameSubstring2
+        /// </summary>
         [Fact]
         public void ValidateWalkPathNameSubstring2()
         {
@@ -248,6 +272,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// The ValidateWalkAroundTheWorld
+        /// </summary>
         [Fact]
         public void ValidateWalkAroundTheWorld()
         {
@@ -282,6 +309,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// The ValidateWalkPathParsingCleanVersion
+        /// </summary>
         [Fact]
         public void ValidateWalkPathParsingCleanVersion()
         {
@@ -334,7 +364,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
-
+        /// <summary>
+        /// The CheckPath
+        /// </summary>
+        /// <param name="path">The path<see cref="string"/></param>
+        /// <param name="expectedHashEntries">The expectedHashEntries<see cref="string[]"/></param>
+        /// <param name="expectedWalkList">The expectedWalkList<see cref="string[]"/></param>
         private void CheckPath(string path, string[] expectedHashEntries, string[] expectedWalkList)
         {
             Dictionary<string, IDictionary<string, string>> lookups = new Dictionary<string, IDictionary<string, string>>();
@@ -375,35 +410,61 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             step.Should().Be(null);
         }
 
+        /// <summary>
+        /// Defines the <see cref="TestMatcher" />
+        /// </summary>
         private class TestMatcher : Matcher
         {
+            /// <summary>
+            /// Defines the reveicedValues
+            /// </summary>
             internal readonly List<string> reveicedValues = new List<string>(128);
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TestMatcher"/> class.
+            /// </summary>
+            /// <param name="lookups">The lookups<see cref="IDictionary{string, IDictionary{string, string}}"/></param>
+            /// <param name="lookupSets">The lookupSets<see cref="IDictionary{string, ISet{string}}"/></param>
             internal TestMatcher(IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets) : base(null, lookups, lookupSets)
             {
-                
             }
 
-
+            /// <summary>
+            /// The InformMeAbout
+            /// </summary>
+            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+            /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
             public override void InformMeAbout(MatcherAction matcherAction, string keyPattern)
             {
                 reveicedValues.Add(keyPattern);
             }
 
-
+            /// <summary>
+            /// The InformMeAboutPrefix
+            /// </summary>
+            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+            /// <param name="treeName">The treeName<see cref="string"/></param>
+            /// <param name="prefix">The prefix<see cref="string"/></param>
             public override void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
             {
                 InformMeAbout(matcherAction, treeName + "{\"" + UserAgentAnalyzerDirect.FirstCharactersForPrefixHash(prefix, UserAgentAnalyzerDirect.MAX_PREFIX_HASH_MATCH) + "\"");
             }
 
+            /// <summary>
+            /// The Analyze
+            /// </summary>
+            /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
             public override void Analyze(UserAgent userAgent)
             {
-                // Do nothing
             }
 
+            /// <summary>
+            /// The LookingForRange
+            /// </summary>
+            /// <param name="treeName">The treeName<see cref="string"/></param>
+            /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
             public override void LookingForRange(string treeName, WordRangeVisitor.Range range)
             {
-                // Do nothing
             }
         }
     }
