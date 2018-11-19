@@ -10,22 +10,18 @@ The Java documentation can be found here https://yauaa.basjes.nl, soon will be p
 
 You can download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
 
-STATUS: 5.3-beta.x latest stable
-=========
+HIGH Profile release notes:
+===========================
 
-You can consider this version stable and equivalent to the same 5.3 Java version in features
+5.3-rc-1
+--------
+This is the latest stable version before starting development of 5.4
 
-I can't release the version 5.3 as stable because I am planning a major code refactoring that will break the compabilities with public API.
+It's an RC because the library is still on development and I don't plan to keep backward compability with APIs yet, there are many aspects of library that I would like to improve.
 
-A stable version will be relased as soon as I complete the following tasks:
+But I consider this version stable and usable in production, I you find some issue, please report it.
 
-* Improve performance
-* Add more tests
-* Make more C# like
-* Clean the code
-* Add documenation
-
-Consider to contribute to the project to release soon a stable version
+For now target the last Java version is my priority to keep updated user agent definition and recognize most devices as possible.
 
 Example output
 ==============
