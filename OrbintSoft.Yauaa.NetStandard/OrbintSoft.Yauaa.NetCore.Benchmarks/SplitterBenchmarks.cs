@@ -24,7 +24,7 @@
 //<date>2018, 11, 18, 09:36</date>
 //<summary></summary>
 
-namespace OrbintSoft.Yauaa.NetCore.Benchmarks
+namespace OrbintSoft.Yauaa.Benchmarks
 {
     using BenchmarkDotNet.Attributes;
     using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
