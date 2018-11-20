@@ -58,6 +58,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             Init(config, matcher);
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            evaluator.pruneTrailingStepsThatCannotFail();
+        }
+
         /// <summary>
         /// The Inform
         /// </summary>

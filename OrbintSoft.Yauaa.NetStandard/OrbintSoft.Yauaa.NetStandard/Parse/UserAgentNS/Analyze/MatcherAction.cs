@@ -24,9 +24,11 @@
 //<date>2018, 7, 26, 23:01</date>
 //<summary></summary>
 
+using Antlr4.Runtime;
+using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
+
 namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 {
-    using Antlr4.Runtime;
     using Antlr4.Runtime.Atn;
     using Antlr4.Runtime.Dfa;
     using Antlr4.Runtime.Misc;
@@ -37,6 +39,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
     using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Defines the <see cref="MatcherAction" />
@@ -50,19 +53,22 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         internal bool verbose = false;
 
         /// <summary>
+        /// Defines the evaluator
+        /// </summary>
+        protected TreeExpressionEvaluator evaluator = null;
+
+        /// <summary>
         /// Defines the Log
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherAction));
+
+        private static readonly IDictionary<Type, CalculateInformPathFunction> CalculateInformPath = new Dictionary<Type, CalculateInformPathFunction>();
 
         /// <summary>
         /// Defines the matchExpression
         /// </summary>
         private string matchExpression = null;
 
-        /// <summary>
-        /// Defines the evaluator
-        /// </summary>
-        private TreeExpressionEvaluator evaluator = null;
 
         /// <summary>
         /// Defines the matcher
@@ -89,13 +95,87 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// </summary>
         internal bool MustHaveMatches { get; private set; } = false;
 
+        static MatcherAction()
+        {
+            // -------------
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherBaseContext)] = 
+                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext) tree).matcher());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherPathIsNullContext)] = 
+                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext) tree).matcher());
+
+            // -------------
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherExtractContext)] = 
+                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherExtractContext)tree).expression);
+
+            // -------------
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherVariableContext)] =
+                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherVariableContext)tree).expression);
+
+            // -------------
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherPathContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathContext) tree).basePath());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherConcatContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatContext) tree).matcher());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherConcatPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext) tree).matcher());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherConcatPostfixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext) tree).matcher());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext) tree).matcher());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherCleanVersionContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext) tree).matcher());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext) tree).matcher());
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherWordRangeContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext) tree).matcher());
+
+            // -------------
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.PathVariableContext)] = (action, treeName, tree) =>
+            {
+                action.matcher.InformMeAboutVariable(action, ((UserAgentTreeWalkerParser.PathVariableContext) tree).variable.Text);
+                return 0;
+            };
+
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.PathWalkContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.PathWalkContext) tree).nextStep);
+		   
+            // -------------
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepDownContext)] = (action, treeName, tree) => 
+            {
+                UserAgentTreeWalkerParser.StepDownContext thisTree = ((UserAgentTreeWalkerParser.StepDownContext)tree);
+                int informs = 0;
+                foreach (int number in NumberRangeVisitor.Instance.Visit(thisTree.numberRange())) 
+                {
+                    informs += CalculateInformPath(action, treeName + '.' + "(" + number + ")" + thisTree.name.Text, thisTree.nextStep);
+                }
+                return informs;
+            };
+
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepEqualsValueContext)] = (action, treeName, tree) => 
+            {
+                UserAgentTreeWalkerParser.StepEqualsValueContext thisTree = ((UserAgentTreeWalkerParser.StepEqualsValueContext)tree);
+                action.matcher.InformMeAbout(action, treeName + "=\"" + thisTree.value.Text + "\"");
+                return 1;
+            };
+
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepStartsWithValueContext)] = (action, treeName, tree) => 
+            {
+                UserAgentTreeWalkerParser.StepStartsWithValueContext thisTree = ((UserAgentTreeWalkerParser.StepStartsWithValueContext)tree);
+                action.matcher.InformMeAboutPrefix(action, treeName, thisTree.value.Text);
+                return 1;
+            };
+
+            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepWordRangeContext)] = (action, treeName, tree) => 
+            {
+                UserAgentTreeWalkerParser.StepWordRangeContext thisTree = ((UserAgentTreeWalkerParser.StepWordRangeContext)tree);
+                WordRangeVisitor.Range range = WordRangeVisitor.GetRange(thisTree.wordRange());
+                action.matcher.LookingForRange(treeName, range);
+											  
+                return CalculateInformPath(action, treeName + range, thisTree.nextStep);
+            };
+        }
+
+
+        delegate int CalculateInformPathFunction(MatcherAction action, string treeName, ParserRuleContext tree);
+
         /// <summary>
         /// The GetEvaluatorForUnitTesting
         /// </summary>
         /// <returns>The <see cref="TreeExpressionEvaluator"/></returns>
-        internal TreeExpressionEvaluator GetEvaluatorForUnitTesting()
+        internal TreeExpressionEvaluator EvaluatorForUnitTesting
         {
-            return evaluator;
+            get => evaluator;
         }
 
         /// <summary>
@@ -134,7 +214,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// <summary>
         /// The Initialize
         /// </summary>
-        public void Initialize()
+        public virtual void Initialize()
         {
             InitErrorListener<int> lexerErrorListener = new InitErrorListener<int>(this);
             AntlrInputStream input = new AntlrInputStream(matchExpression);
@@ -149,7 +229,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             parser.AddErrorListener(parserErrorListener);
 
-            //        parser.setTrace(true);
             ParserRuleContext requiredPattern = ParseWalkerExpression(parser);
 
             // We couldn't ditch the double quotes around the fixed values in the parsing phase.
@@ -171,7 +250,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
 
             MustHaveMatches = !evaluator.UsesIsNull();
 
-            int informs = CalculateInformPath("agent", requiredPattern);
+            int informs = CalculateInformPath(this, "agent", requiredPattern);
 
             // If this is based on a variable we do not need any matches from the hashmap.
             if (MustHaveMatches && informs == 0)
@@ -304,177 +383,25 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// <param name="treeName">The treeName<see cref="string"/></param>
         /// <param name="tree">The tree<see cref="ParserRuleContext"/></param>
         /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, ParserRuleContext tree)
+        private static int CalculateInformPath(MatcherAction action, string treeName, ParserRuleContext tree)
         {
-            if (tree is UserAgentTreeWalkerParser.MatcherRequireContext)
+            if (tree == null)
             {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherRequireContext)tree));
+                action.matcher.InformMeAbout(action, treeName);
+                return 1;
             }
-            //if (tree is UserAgentTreeWalkerParser.MatcherContext) {
-            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherContext)tree));
-        }
 
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.MatcherRequireContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherRequireContext tree)
-        {
-            if (tree is UserAgentTreeWalkerParser.MatcherBaseContext)
+            Type type = tree.GetType();
+            if (CalculateInformPath.ContainsKey(type))
             {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext)tree).matcher());
+                return CalculateInformPath[type].Invoke(action, treeName, tree);
             }
-            //if (tree is UserAgentTreeWalkerParser.MatcherPathIsNullContext)
-            //{
-            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext)tree).matcher());
-        }
 
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.MatcherContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.MatcherContext tree)
-        {
-            if (tree is UserAgentTreeWalkerParser.MatcherPathContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathContext)tree).basePath());
-            }
-            if (tree is UserAgentTreeWalkerParser.MatcherCleanVersionContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext)tree).matcher());
-            }
-            if (tree is UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)tree).matcher());
-            }
-            if (tree is UserAgentTreeWalkerParser.MatcherPathLookupContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext)tree).matcher());
-            }
-            if (tree is UserAgentTreeWalkerParser.MatcherWordRangeContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext)tree).matcher());
-            }
-            if (tree is UserAgentTreeWalkerParser.MatcherConcatContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatContext)tree).matcher());
-            }
-            if (tree is UserAgentTreeWalkerParser.MatcherConcatPrefixContext)
-            {
-                return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext)tree).matcher());
-            }
-            //if (tree is UserAgentTreeWalkerParser.MatcherConcatPostfixContext)
-            //{
-            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext)tree).matcher());
-        }
-
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.BasePathContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.BasePathContext tree)
-        {
-            // The tree can theoretically be an instance of PathFixedValueContext.
-            // These cases are handled in a different way so they cannot occur here.
-            if (tree is UserAgentTreeWalkerParser.PathVariableContext)
-            {
-                matcher.InformMeAboutVariable(this, ((UserAgentTreeWalkerParser.PathVariableContext)tree).variable.Text);
-                return 0;
-            }
-            //if (tree is UserAgentTreeWalkerParser.PathWalkContext) {
-            return CalculateInformPath(treeName, ((UserAgentTreeWalkerParser.PathWalkContext)tree).nextStep);
-        }
-
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.PathContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.PathContext tree)
-        {
-            if (tree != null)
-            {
-                if (tree is UserAgentTreeWalkerParser.StepDownContext)
-                {
-                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepDownContext)tree);
-                }
-                if (tree is UserAgentTreeWalkerParser.StepEqualsValueContext)
-                {
-                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepEqualsValueContext)tree);
-                }
-                if (tree is UserAgentTreeWalkerParser.StepStartsWithValueContext)
-                {
-                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepStartsWithValueContext)tree);
-                }
-                if (tree is UserAgentTreeWalkerParser.StepWordRangeContext)
-                {
-                    return CalculateInformPath(treeName, (UserAgentTreeWalkerParser.StepWordRangeContext)tree);
-                }
-            }
-            matcher.InformMeAbout(this, treeName);
+            action.matcher.InformMeAbout(action, treeName);
             return 1;
         }
 
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepDownContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepDownContext tree)
-        {
-            int informs = 0;
-            foreach (int? number in NumberRangeVisitor.Instance.Visit(tree.numberRange()))
-            {
-                informs += CalculateInformPath(treeName + '.' + "(" + number + ")" + tree.name.Text, tree.nextStep);
-            }
-            return informs;
-        }
-
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepEqualsValueContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepEqualsValueContext tree)
-        {
-            matcher.InformMeAbout(this, treeName + "=\"" + tree.value.Text + "\"");
-            return 1;
-        }
-
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepStartsWithValueContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepStartsWithValueContext tree)
-        {
-            matcher.InformMeAboutPrefix(this, treeName, tree.value.Text);
-            return 1;
-        }
-
-        /// <summary>
-        /// The CalculateInformPath
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="tree">The tree<see cref="UserAgentTreeWalkerParser.StepWordRangeContext"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        private int CalculateInformPath(string treeName, UserAgentTreeWalkerParser.StepWordRangeContext tree)
-        {
-            WordRangeVisitor.Range range = WordRangeVisitor.GetRange(tree.wordRange());
-            matcher.LookingForRange(treeName, range);
-            return CalculateInformPath(treeName + range, tree.nextStep);
-        }
-
+        
         /// <summary>
         /// Defines the <see cref="InitErrorListener{T}" />
         /// </summary>

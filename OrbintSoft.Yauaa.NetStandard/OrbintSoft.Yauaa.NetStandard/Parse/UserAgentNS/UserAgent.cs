@@ -126,9 +126,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public const string SYNTAX_ERROR = "__SyntaxError__";
 
         /// <summary>
-        /// Defines the USERAGENT
+        /// Defines the USERAGENT_FIELDNAME
         /// </summary>
-        public const string USERAGENT = "Useragent";
+        public const string USERAGENT_FIELDNAME = "Useragent";
 
         /// <summary>
         /// Defines the SET_ALL_FIELDS
@@ -174,7 +174,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// We manually sort the list of fields to ensure the output is consistent.
         /// Any unspecified fieldnames will be appended to the end.
         /// </summary>
-        public static readonly List<string> PreSortedFieldList = new List<string>(32);
+        protected static readonly List<string> PreSortedFieldList = new List<string>(32);
 
         /// <summary>
         /// Defines the Log
@@ -408,6 +408,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             AmbiguityCount++;
         }
 
+
         /// <summary>
         /// The ReportAttemptingFullContext
         /// </summary>
@@ -584,7 +585,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
             foreach (string fieldName in newValuesUserAgent.allFields.Keys)
             {
-                Set(fieldName, newValuesUserAgent.allFields[fieldName]);
+                AgentField field = newValuesUserAgent.allFields[fieldName];
+                Set(fieldName, field.value, field.confidence);
             }
         }
 
@@ -595,7 +597,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>The <see cref="AgentField"/></returns>
         public AgentField Get(string fieldName)
         {
-            if (USERAGENT.Equals(fieldName))
+            if (USERAGENT_FIELDNAME.Equals(fieldName))
             {
                 AgentField agentField = new AgentField(userAgentString);
                 agentField.SetValue(userAgentString, 0L);
@@ -618,7 +620,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>The <see cref="string"/></returns>
         public string GetValue(string fieldName)
         {
-            if (USERAGENT.Equals(fieldName))
+            if (USERAGENT_FIELDNAME.Equals(fieldName))
             {
                 return userAgentString;
             }
@@ -637,7 +639,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>The <see cref="long"/></returns>
         public long GetConfidence(string fieldName)
         {
-            if (USERAGENT.Equals(fieldName))
+            if (USERAGENT_FIELDNAME.Equals(fieldName))
             {
                 return 0L;
             }
@@ -681,12 +683,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             StringBuilder sb = new StringBuilder(10240);
             sb.Append("\n");
             sb.Append("- test:\n");
-            //        sb.append("#    options:\n");
-            //        sb.append("#    - 'verbose'\n");
-            //        sb.append("#    - 'init'\n");
-            //        sb.append("#    - 'only'\n");
+            sb.Append("#    options:\n");
+            sb.Append("#    - 'verbose'\n");
+            sb.Append("#    - 'init'\n");
+            sb.Append("#    - 'only'\n");
             sb.Append("    input:\n");
-            //        sb.append("#      name: 'You can give the test case a name'\n");
             sb.Append("      user_agent_string: '").Append(userAgentString).Append("'\n");
             sb.Append("    expected:\n");
 
@@ -762,7 +763,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 {
                     addSeparator = true;
                 }
-                if ("Useragent".Equals(fieldName))
+                if (USERAGENT_FIELDNAME.Equals(fieldName))
                 {
                     sb
                         .Append("\"Useragent\"")
@@ -806,7 +807,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
             foreach (string fieldName in fieldNames)
             {
-                if (!"Useragent".Equals(fieldName))
+                if (!USERAGENT_FIELDNAME.Equals(fieldName))
                 {
                     AgentField field = allFields[fieldName];
                     if (field.GetValue() != null)
@@ -880,7 +881,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
             return SET_ALL_FIELDS.Equals(fieldname) ||
                     SYNTAX_ERROR.Equals(fieldname) ||
-                    USERAGENT.Equals(fieldname);
+                    USERAGENT_FIELDNAME.Equals(fieldname);
         }
 
         /// <summary>
@@ -940,7 +941,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <summary>
             /// Defines the value
             /// </summary>
-            private string value;
+            internal string value;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="AgentField"/> class.
@@ -1073,7 +1074,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <returns>The <see cref="string"/></returns>
             public override string ToString()
             {
-                return ">" + value + "#" + confidence + "<";
+                if (defaultValue == null)
+                {
+                    return "{ value:'" + value + "', confidence:'" + confidence + "', default:null }";
+                }
+                return "{ value:'" + value + "', confidence:'" + confidence + "', default:'" + defaultValue + "' }";
             }
         }
     }

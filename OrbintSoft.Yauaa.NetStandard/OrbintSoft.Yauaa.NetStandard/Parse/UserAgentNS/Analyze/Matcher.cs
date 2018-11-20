@@ -208,7 +208,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                     default:
                         break;
                         // Ignore
-                        //fail(nodeTuple.getKeyNode(), matcherSourceLocation, "Unexpected " + name);
                 }
             }
 

@@ -92,8 +92,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
         {
             string uaString = "Foo Bar";
             UserAgent agent = new UserAgent(uaString);
-            agent.Get(UserAgent.USERAGENT).GetValue().Should().Be(uaString);
-            agent.Get(UserAgent.USERAGENT).GetConfidence().Should().Be(0);
+            agent.Get(UserAgent.USERAGENT_FIELDNAME).GetValue().Should().Be(uaString);
+            agent.Get(UserAgent.USERAGENT_FIELDNAME).GetConfidence().Should().Be(0);
         }
     }
 }

@@ -64,26 +64,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// </summary>
         private const long MAX_PRE_HEAT_ITERATIONS = 1_000_000L;
 
-        /// <summary>
-        /// Defines the allMatchers
-        /// </summary>
-        protected readonly List<Matcher> allMatchers = new List<Matcher>();
-
-        /// <summary>
-        /// Defines the testCases
-        /// </summary>
-        protected readonly IList<Dictionary<string, Dictionary<string, string>>> testCases = new List<Dictionary<string, Dictionary<string, string>>>();
-
         // If we want ALL fields this is null. If we only want specific fields this is a list of names.
         /// <summary>
         /// Defines the wantedFieldNames
         /// </summary>
-        protected List<string> wantedFieldNames = null;
+        internal List<string> wantedFieldNames = null;
 
         /// <summary>
         /// Defines the flattener
         /// </summary>
         protected UserAgentTreeFlattener flattener = null;
+
 
         /// <summary>
         /// Defines the Log
@@ -191,6 +182,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
         }
 
+        protected IList<Matcher> AllMatchers { get; } = new List<Matcher>();
+
+        public IList<IDictionary<string, IDictionary<string, string>>> TestCases { get; } = new List<IDictionary<string, IDictionary<string, string>>>();
+
         // Calculate the max length we will put in the hashmap.
         /// <summary>
         /// The FirstCharactersForPrefixHashLength
@@ -248,7 +243,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public UserAgentAnalyzerDirect DropTests()
         {
             loadTests = false;
-            testCases.Clear();
+            TestCases.Clear();
             return this;
         }
 
@@ -277,7 +272,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>The <see cref="long"/></returns>
         public long GetNumberOfTestCases()
         {
-            return testCases.Count;
+            return TestCases.Count;
         }
 
         /// <summary>
@@ -292,9 +287,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 throw new Exception("Refusing to load additional resources after the datastructures have been initialized.");
             }
 
-            Stopwatch stopwatch = Stopwatch.StartNew();
+            
             Log.Info(string.Format("Loading from: \"{0}\": \"{1}\"", resourceString, pattern));
-            long startFiles = DateTime.Now.Ticks;
+
+            Stopwatch filesStopwatch = Stopwatch.StartNew();
 
             flattener = new UserAgentTreeFlattener(this);
             YamlDocument yaml;
@@ -330,11 +326,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             string[] alreadyLoadedResourceBasenames = matcherConfigs.Keys.Where(r => resources.Keys.Contains(r)).ToArray();
 
-            //alreadyLoadedResourceBasenames.retainAll(resourceBasenames);
 
             if (alreadyLoadedResourceBasenames.Length > 0)
             {
-                Log.Error(string.Format("Trying to load these {0} resources for the second time: {1}", alreadyLoadedResourceBasenames.Length, alreadyLoadedResourceBasenames.ToString()));
+                Log.Error(
+                    string.Format("Trying to load these {0} resources for the second time: [{1}]", 
+                        alreadyLoadedResourceBasenames.Length, 
+                        string.Join("," , alreadyLoadedResourceBasenames)
+                    ));
                 throw new InvalidParserConfigurationException("Trying to load " + alreadyLoadedResourceBasenames.Length + " resources for the second time");
             }
 
@@ -365,8 +364,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
             }
 
-            stopwatch.Stop();
-            Log.Info(string.Format("Loaded {0} files in {1} msec", resources.Count, stopwatch.ElapsedMilliseconds));
+            filesStopwatch.Stop();
+            Log.Info(string.Format("Loaded {0} files in {1} msec", resources.Count, filesStopwatch.ElapsedMilliseconds));
 
             if (lookups != null && lookups.Count != 0)
             {
@@ -417,14 +416,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     {
                         continue;
                     }
-
-                    Stopwatch start = Stopwatch.StartNew();
+                    
+                    Stopwatch stopwatch = Stopwatch.StartNew();
                     int startSkipped = skippedMatchers;
                     foreach (YamlMappingNode map in matcherConfig)
                     {
                         try
                         {
-                            allMatchers.Add(new Matcher(this, lookups, lookupSets, wantedFieldNames, map, configFilename));
+                            AllMatchers.Add(new Matcher(this, lookups, lookupSets, wantedFieldNames, map, configFilename));
                             totalNumberOfMatchers++;
                         }
                         catch (UselessMatcherException)
@@ -432,7 +431,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             skippedMatchers++;
                         }
                     }
-                    start.Stop();
+                    stopwatch.Stop();
                     int stopSkipped = skippedMatchers;
 
                     if (showMatcherStats)
@@ -441,7 +440,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             matcherConfig.Count - (stopSkipped - startSkipped),
                             stopSkipped - startSkipped,
                             configFilename,
-                            start.ElapsedMilliseconds));
+                            stopwatch.ElapsedMilliseconds));
                     }
                 }
                 fullStopwatch.Stop();
@@ -451,7 +450,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     skippedMatchers,
                     (lookups == null) ? 0 : lookups.Count(),
                     lookupSets.Count(),
-                    testCases.Count,
+                    TestCases.Count,
                     matcherConfigs.Count,
                     fullStopwatch.ElapsedMilliseconds
                 ));
@@ -469,7 +468,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             }
             Log.Info("Initializing Analyzer data structures");
             Stopwatch stopwatch = Stopwatch.StartNew();
-            allMatchers.ForEach(m => m.Initialize());
+            foreach (var item in AllMatchers)
+            {
+                item.Initialize();
+            }
             stopwatch.Stop();
             matchersHaveBeenInitialized = true;
             Log.Info(string.Format("Built in {0} msec : Hashmap {1}, Ranges map:{2}",
@@ -485,7 +487,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public SortedSet<string> GetAllPossibleFieldNames()
         {
             SortedSet<string> results = new SortedSet<string>(HardCodedGeneratedFields);
-            foreach (Matcher matcher in allMatchers)
+            foreach (Matcher matcher in AllMatchers)
             {
                 results.UnionWith(matcher.GetAllPossibleFieldNames());
             }
@@ -502,11 +504,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             fieldNames.Sort();
 
             List<string> result = new List<string>();
-            foreach (string fieldName in UserAgent.PreSortedFieldList)
-            {
-                fieldNames.Remove(fieldName);
-                result.Add(fieldName);
-            }
+            //foreach (string fieldName in UserAgent.PreSortedFieldList) //todo: now protected
+            //{
+            //    fieldNames.Remove(fieldName);
+            //    result.Add(fieldName);
+            //}
             result.AddRange(fieldNames);
 
             return result;
@@ -632,20 +634,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 string useragentString = userAgent.UserAgentString;
                 if (useragentString != null && useragentString.Length > userAgentMaxLength)
                 {
-                    userAgent = SetAsHacker(userAgent, 100);
+                    SetAsHacker(userAgent, 100);
                     userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
                     return HardCodedPostProcessing(userAgent);
                 }
 
                 // Reset all Matchers
-                foreach (Matcher matcher in allMatchers)
+                foreach (Matcher matcher in AllMatchers)
                 {
                     matcher.Reset();
                 }
 
                 if (userAgent.IsDebug)
                 {
-                    foreach (Matcher matcher in allMatchers)
+                    foreach (Matcher matcher in AllMatchers)
                     {
                         matcher.SetVerboseTemporarily(true);
                     }
@@ -656,7 +658,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     userAgent = flattener.Parse(userAgent);
 
                     // Fire all Analyzers
-                    foreach (Matcher matcher in allMatchers)
+                    foreach (Matcher matcher in AllMatchers)
                     {
                         matcher.Analyze(userAgent);
                     }
@@ -773,7 +775,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 if (firstConfidence >= 0)
                 {
                     userAgent.Set(targetName, first, firstConfidence);
-                    return;
                 }
                 return; // Nothing to do
             }
@@ -886,9 +887,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 "",
                 "Lookups      : " + ((lookups == null) ? 0 : lookups.Count),
                 "LookupSets   : " + lookupSets.Count,
-                "Matchers     : " + allMatchers.Count,
+                "Matchers     : " + AllMatchers.Count,
                 "Hashmap size : " + informMatcherActions.Count,
-                "Testcases    : " + testCases.Count
+                "Testcases    : " + TestCases.Count
             };
 
             string[] x = { };
@@ -982,7 +983,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <param name="filename">The filename<see cref="string"/></param>
         private void LoadYamlLookup(YamlMappingNode entry, string filename)
         {
-            //        LOG.info("Loading lookup.({}:{})", filename, entry.getStartMark().getLine());
             string name = null;
             Dictionary<string, string> map = null;
 
@@ -1023,7 +1023,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <param name="filename">The filename<see cref="string"/></param>
         private void LoadYamlLookupSets(YamlMappingNode entry, string filename)
         {
-            //        LOG.info("Loading lookupSet.({}:{})", filename, entry.getStartMark().getLine());
             string name = null;
             HashSet<string> lookupSet = new HashSet<string>();
 
@@ -1056,7 +1055,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <param name="filename">The filename<see cref="string"/></param>
         private void LoadYamlMatcher(YamlMappingNode entry, string filename)
         {
-            //        LOG.info("Loading matcher.({}:{})", filename, entry.getStartMark().getLine());
             List<YamlMappingNode> matcherConfigList = matcherConfigs.FirstOrDefault(e => e.Key == filename).Value;
             if (matcherConfigList == null)
             {
@@ -1074,10 +1072,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         {
             if (!doingOnlyASingleTest)
             {
-                //            LOG.info("Skipping testcase.({}:{})", filename, entry.getStartMark().getLine());
-                //        } else {
-                //            LOG.info("Loading testcase.({}:{})", filename, entry.getStartMark().getLine());
-
                 Dictionary<string, string> metaData = new Dictionary<string, string>
                 {
                     ["filename"] = filename,
@@ -1097,7 +1091,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             if (options.Contains("only"))
                             {
                                 doingOnlyASingleTest = true;
-                                testCases.Clear();
+                                TestCases.Clear();
                             }
                             break;
                         case "input":
@@ -1126,7 +1120,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                             }
                             break;
                         default:
-                            //                        fail(tuple.getKeyNode(), filename, "Unexpected: " + name);
+                            //ignore
                             break; // Skip
                     }
                 }
@@ -1136,10 +1130,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 if (expected.Count == 0)
                 {
                     doingOnlyASingleTest = true;
-                    testCases.Clear();
+                    TestCases.Clear();
                 }
 
-                Dictionary<string, Dictionary<string, string>> testCase = new Dictionary<string, Dictionary<string, string>>
+                IDictionary<string, IDictionary<string, string>> testCase = new Dictionary<string, IDictionary<string, string>>
                 {
                     ["input"] = input
                 };
@@ -1157,7 +1151,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                     testCase["options"] = optionsMap;
                 }
                 testCase["metaData"] = metaData;
-                testCases.Add(testCase);
+                TestCases.Add(testCase);
             }
         }
 
@@ -1223,7 +1217,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
 
             // !!!!!!!!!! NOTE !!!!!!!!!!!!
             // IF YOU ADD ANY EXTRA FIELDS YOU MUST ADD THEM TO THE BUILDER TOO !!!!
-            // TODO: Perhaps this should be more generic. Like a "Post processor"  (Generic: Create fields from fields)?
             AddMajorVersionField(userAgent, UserAgent.AGENT_VERSION, UserAgent.AGENT_VERSION_MAJOR);
             AddMajorVersionField(userAgent, UserAgent.LAYOUT_ENGINE_VERSION, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
             AddMajorVersionField(userAgent, "WebviewAppVersion", "WebviewAppVersionMajor");
@@ -1439,7 +1432,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>The <see cref="long"/></returns>
         public long PreHeat()
         {
-            return PreHeat(testCases.Count, true);
+            return PreHeat(TestCases.Count, true);
         }
 
         /// <summary>
@@ -1460,7 +1453,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>The <see cref="long"/></returns>
         public long PreHeat(long preheatIterations, bool log)
         {
-            if (testCases.Count == 0)
+            if (TestCases.Count == 0)
             {
                 Log.Warn("NO PREHEAT WAS DONE. Simply because there are no test cases available.");
                 return 0;
@@ -1483,9 +1476,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             long goodResults = 0;
             while (remainingIterations > 0)
             {
-                foreach (Dictionary<string, Dictionary<string, string>> test in testCases)
+                foreach (IDictionary<string, IDictionary<string, string>> test in TestCases)
                 {
-                    Dictionary<string, string> input = test["input"];
+                    IDictionary<string, string> input = test["input"];
                     string userAgentString = input["user_agent_string"];
                     remainingIterations--;
                     // Calculate and use result to guarantee not optimized away.
@@ -1515,12 +1508,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <summary>
             /// Defines the values
             /// </summary>
-            internal readonly List<string> values = new List<string>();
+            private readonly List<string> values = new List<string>();
 
             /// <summary>
             /// Defines the flattener
             /// </summary>
-            internal readonly UserAgentTreeFlattener flattener;
+            private readonly UserAgentTreeFlattener flattener;
 
             /// <summary>
             /// Defines the result
@@ -1575,6 +1568,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
             public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
             {
+                // Not needed to only get all paths
             }
 
             /// <summary>
@@ -1584,6 +1578,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
             public void LookingForRange(string treeName, WordRangeVisitor.Range range)
             {
+                // Not needed to only get all paths
             }
 
             /// <summary>
@@ -1593,6 +1588,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
             public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
             {
+                // Not needed to only get all paths
                 return new HashSet<WordRangeVisitor.Range>();
             }
 
@@ -1604,6 +1600,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <param name="prefix">The prefix<see cref="string"/></param>
             public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
             {
+                // Not needed to only get all paths
             }
 
             /// <summary>
@@ -1613,6 +1610,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             /// <returns>The <see cref="ISet{int?}"/></returns>
             public ISet<int?> GetRequiredPrefixLengths(string treeName)
             {
+                // Not needed to only get all paths
                 return new HashSet<int?>();
             }
         }

@@ -67,6 +67,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
         /// </summary>
         private readonly WalkList walkList;
 
+        internal void pruneTrailingStepsThatCannotFail()
+        {
+            
+        }
+
         /// <summary>
         /// Defines the fixedValue
         /// </summary>

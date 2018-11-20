@@ -119,13 +119,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
         {
             UserAgentAnalyzerTester uaa = UserAgentAnalyzerTester.NewBuilder().Build() as UserAgentAnalyzerTester;
 
-            Dictionary<string, List<string>> allTestInputs = new Dictionary<string, List<string>>(2000);
+            IDictionary<string, IList<string>> allTestInputs = new Dictionary<string, IList<string>>(2000);
             HashSet<string> duplicates = new HashSet<string>();
-            foreach (Dictionary<string, Dictionary<string, string>> testCase in uaa.GetAllTestCases())
+            foreach (IDictionary<string, IDictionary<string, string>> testCase in uaa.AllTestCases)
             {
                 string input = testCase["input"]["user_agent_string"];
                 string location = testCase["metaData"]["filename"] + ":" + testCase["metaData"]["fileline"];
-                List<string> locations;
+                IList<string> locations;
                 if (allTestInputs.ContainsKey(input))
                 {
                     locations = allTestInputs[input];

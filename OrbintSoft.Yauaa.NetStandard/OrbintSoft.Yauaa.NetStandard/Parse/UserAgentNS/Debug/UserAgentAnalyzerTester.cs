@@ -65,10 +65,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         /// <summary>
         /// The GetAllTestCases
         /// </summary>
-        /// <returns>The <see cref="IList{Dictionary{string, Dictionary{string, string}}}"/></returns>
-        public IList<Dictionary<string, Dictionary<string, string>>> GetAllTestCases()
+        /// <returns>The <see cref="IList{Dictionary{string, IDictionary{string, string}}}"/></returns>
+        public IList<IDictionary<string, IDictionary<string, string>>> AllTestCases
         {
-            return testCases;
+            get => TestCases;
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         {
             bool allPass = true;
             InitializeMatchers();
-            if (testCases == null)
+            if (TestCases == null)
             {
                 return allPass;
             }
@@ -115,9 +115,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             string filenameHeader = "Test number and source";
             int filenameHeaderLength = filenameHeader.Length;
             int maxFilenameLength = filenameHeaderLength;
-            foreach (Dictionary<string, Dictionary<string, string>> test in testCases)
+            foreach (IDictionary<string, IDictionary<string, string>> test in TestCases)
             {
-                Dictionary<string, string> metaData = test["metaData"];
+                IDictionary<string, string> metaData = test["metaData"];
                 string filename = metaData["filename"];
                 maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
             }
@@ -151,18 +151,18 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             }
 
             int testcount = 0;
-            foreach (Dictionary<string, Dictionary<string, string>> test in testCases)
+            foreach (IDictionary<string, IDictionary<string, string>> test in TestCases)
             {
                 testcount++;
-                Dictionary<string, string> input = test.ContainsKey("input") ? test["input"] : null;
-                Dictionary<string, string> expected = test.ContainsKey("expected") ? test["expected"] : null;
+                IDictionary<string, string> input = test.ContainsKey("input") ? test["input"] : null;
+                IDictionary<string, string> expected = test.ContainsKey("expected") ? test["expected"] : null;
 
                 List<string> options = null;
                 if (test.ContainsKey("options"))
                 {
                     options = new List<string>(test["options"].Keys);
                 }
-                Dictionary<string, string> metaData = test["metaData"];
+                IDictionary<string, string> metaData = test["metaData"];
                 string filename = metaData["filename"];
                 string linenumber = metaData["fileline"];
 
@@ -593,7 +593,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         public List<MatchesList.Match> GetMatches()
         {
             List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
-            foreach (Matcher matcher in allMatchers)
+            foreach (Matcher matcher in AllMatchers)
             {
                 allMatches.AddRange(matcher.GetMatches());
             }
@@ -608,7 +608,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         public List<MatchesList.Match> GetUsedMatches(UserAgent userAgent)
         {
             // Reset all Matchers
-            foreach (Matcher matcher in allMatchers)
+            foreach (Matcher matcher in AllMatchers)
             {
                 matcher.Reset();
                 matcher.SetVerboseTemporarily(false);
@@ -617,7 +617,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             flattener.Parse(userAgent);
 
             List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
-            foreach (Matcher matcher in allMatchers)
+            foreach (Matcher matcher in AllMatchers)
             {
                 allMatches.AddRange(matcher.GetUsedMatches());
             }

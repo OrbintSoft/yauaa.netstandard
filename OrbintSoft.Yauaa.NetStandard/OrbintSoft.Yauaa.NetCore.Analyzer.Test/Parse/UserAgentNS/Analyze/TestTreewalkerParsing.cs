@@ -397,7 +397,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             expectedHashEntries.Length.Should().Be(matcher.reveicedValues.Count, "I expect that number of entries");
 
             // Validate the expected walk list entries (i.e. the dynamic part of the path)
-            TreeExpressionEvaluator evaluator = action.GetEvaluatorForUnitTesting();
+            TreeExpressionEvaluator evaluator = action.EvaluatorForUnitTesting;
             WalkList walkList = evaluator.GetWalkListForUnitTesting();
 
             Step step = walkList.GetFirstStep();
