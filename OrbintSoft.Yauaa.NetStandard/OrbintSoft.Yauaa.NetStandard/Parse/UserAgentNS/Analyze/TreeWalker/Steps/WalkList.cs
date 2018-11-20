@@ -96,7 +96,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             if (verbose)
             {
                 Log.Info("------------------------------------");
-                Log.Info("Required: " + requiredPattern.GetText());
+                Log.Info(string.Format("Required: {0}",  requiredPattern.GetText()));
                 foreach (Step step in steps)
                 {
                     step.SetVerbose(true);
@@ -104,6 +104,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                 }
             }
         }
+
+
 
         /// <summary>
         /// Gets a value indicating whether UsesIsNull
@@ -158,13 +160,42 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             return result;
         }
 
+        public void PruneTrailingStepsThatCannotFail()
+        {
+            int lastStepThatCannotFail = int.MaxValue;
+            for (int i = steps.Count - 1; i >= 0; i--)
+            {
+                Step current = steps[i];
+                if (current.CanFail())
+                {
+                    break; // We're done. We have the last step that CAN fail.
+                }
+                lastStepThatCannotFail = i;
+            }
+            if (lastStepThatCannotFail != int.MaxValue)
+            {
+                if (lastStepThatCannotFail == 0)
+                {
+                    steps.Clear();
+                }
+                else
+                {
+                    int lastRelevantStepIndex = lastStepThatCannotFail - 1;
+                    Step lastRelevantStep = steps[lastRelevantStepIndex];
+                    lastRelevantStep.SetNextStep(lastRelevantStepIndex, null);
+
+                    steps.GetRange(lastRelevantStepIndex + 1, steps.Count).Clear();
+                }
+            }
+        }
+
         /// <summary>
         /// The GetFirstStep
         /// </summary>
         /// <returns>The <see cref="Step"/></returns>
         public Step GetFirstStep()
         {
-            return steps == null || steps.Count == 0 ? null : steps[0];
+            return steps.Count == 0 ? null : steps[0];
         }
 
         /// <summary>

@@ -52,6 +52,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// <summary>
         /// Defines the foundValue
         /// </summary>
+        [NonSerialized]
         private WalkList.WalkResult foundValue = null;
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// <returns>The <see cref="ParserRuleContext"/></returns>
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
-            return parser.matcher();
+            return parser.matcherVariable();
         }
 
         /// <summary>

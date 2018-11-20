@@ -62,7 +62,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherAction));
 
-        private static readonly IDictionary<Type, CalculateInformPathFunction> CalculateInformPath = new Dictionary<Type, CalculateInformPathFunction>();
+        private static readonly IDictionary<Type, CalculateInformPathFunction> CALCULATE_INFORM_PATH = new Dictionary<Type, CalculateInformPathFunction>();
 
         /// <summary>
         /// Defines the matchExpression
@@ -98,40 +98,40 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         static MatcherAction()
         {
             // -------------
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherBaseContext)] = 
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherBaseContext)] = 
                 (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext) tree).matcher());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherPathIsNullContext)] = 
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherPathIsNullContext)] = 
                 (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext) tree).matcher());
 
             // -------------
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherExtractContext)] = 
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherExtractContext)] = 
                 (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherExtractContext)tree).expression);
 
             // -------------
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherVariableContext)] =
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherVariableContext)] =
                 (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherVariableContext)tree).expression);
 
             // -------------
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherPathContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathContext) tree).basePath());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherConcatContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatContext) tree).matcher());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherConcatPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext) tree).matcher());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherConcatPostfixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext) tree).matcher());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext) tree).matcher());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherCleanVersionContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext) tree).matcher());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext) tree).matcher());
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.MatcherWordRangeContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext) tree).matcher());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherPathContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathContext) tree).basePath());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherConcatContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatContext) tree).matcher());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherConcatPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext) tree).matcher());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherConcatPostfixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext) tree).matcher());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext) tree).matcher());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherCleanVersionContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext) tree).matcher());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext) tree).matcher());
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherWordRangeContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext) tree).matcher());
 
             // -------------
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.PathVariableContext)] = (action, treeName, tree) =>
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.PathVariableContext)] = (action, treeName, tree) =>
             {
                 action.matcher.InformMeAboutVariable(action, ((UserAgentTreeWalkerParser.PathVariableContext) tree).variable.Text);
                 return 0;
             };
 
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.PathWalkContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.PathWalkContext) tree).nextStep);
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.PathWalkContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.PathWalkContext) tree).nextStep);
 		   
             // -------------
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepDownContext)] = (action, treeName, tree) => 
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepDownContext)] = (action, treeName, tree) => 
             {
                 UserAgentTreeWalkerParser.StepDownContext thisTree = ((UserAgentTreeWalkerParser.StepDownContext)tree);
                 int informs = 0;
@@ -142,21 +142,21 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                 return informs;
             };
 
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepEqualsValueContext)] = (action, treeName, tree) => 
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepEqualsValueContext)] = (action, treeName, tree) => 
             {
                 UserAgentTreeWalkerParser.StepEqualsValueContext thisTree = ((UserAgentTreeWalkerParser.StepEqualsValueContext)tree);
                 action.matcher.InformMeAbout(action, treeName + "=\"" + thisTree.value.Text + "\"");
                 return 1;
             };
 
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepStartsWithValueContext)] = (action, treeName, tree) => 
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepStartsWithValueContext)] = (action, treeName, tree) => 
             {
                 UserAgentTreeWalkerParser.StepStartsWithValueContext thisTree = ((UserAgentTreeWalkerParser.StepStartsWithValueContext)tree);
                 action.matcher.InformMeAboutPrefix(action, treeName, thisTree.value.Text);
                 return 1;
             };
 
-            CalculateInformPath[typeof(UserAgentTreeWalkerParser.StepWordRangeContext)] = (action, treeName, tree) => 
+            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepWordRangeContext)] = (action, treeName, tree) => 
             {
                 UserAgentTreeWalkerParser.StepWordRangeContext thisTree = ((UserAgentTreeWalkerParser.StepWordRangeContext)tree);
                 WordRangeVisitor.Range range = WordRangeVisitor.GetRange(thisTree.wordRange());
@@ -392,9 +392,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             }
 
             Type type = tree.GetType();
-            if (CalculateInformPath.ContainsKey(type))
+            if (CALCULATE_INFORM_PATH.ContainsKey(type))
             {
-                return CalculateInformPath[type].Invoke(action, treeName, tree);
+                return CALCULATE_INFORM_PATH[type].Invoke(action, treeName, tree);
             }
 
             action.matcher.InformMeAbout(action, treeName);

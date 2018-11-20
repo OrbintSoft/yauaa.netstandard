@@ -159,6 +159,18 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
+        /// Some steps cannot fail.
+        /// For a require rule if the last step cannot fail then this can be removed from the require list
+        /// to improve performance at run time.
+        /// </summary>
+        /// <returns>If this specific step can or cannot fail.</returns>
+        public bool CanFail()
+        {
+            return true; // Default is to assume the step is always needed.
+        }
+
+
+        /// <summary>
         /// The Up
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/></param>
@@ -176,6 +188,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
             }
             return parent;
         }
+
+
 
         /// <summary>
         /// The GetActualValue

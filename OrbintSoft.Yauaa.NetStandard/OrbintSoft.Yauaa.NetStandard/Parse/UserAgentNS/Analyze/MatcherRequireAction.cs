@@ -61,7 +61,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
         public override void Initialize()
         {
             base.Initialize();
-            evaluator.pruneTrailingStepsThatCannotFail();
+            evaluator.PruneTrailingStepsThatCannotFail();
         }
 
         /// <summary>

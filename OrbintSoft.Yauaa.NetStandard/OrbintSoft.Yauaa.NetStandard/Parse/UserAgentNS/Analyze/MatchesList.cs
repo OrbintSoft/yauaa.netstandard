@@ -219,7 +219,20 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             /// <summary>
             /// Gets the Current
             /// </summary>
-            public Match Current => matches[offset];
+            public Match Current
+            {
+                get
+                {
+                    if (matches.Length > offset && matches[offset] != null)
+                    {
+                        return matches[offset];
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException("Array index out of bounds");
+                    }                        
+                }                
+            }
 
             /// <summary>
             /// Gets the Current

@@ -67,10 +67,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
         /// </summary>
         private readonly WalkList walkList;
 
-        internal void pruneTrailingStepsThatCannotFail()
-        {
-            
-        }
 
         /// <summary>
         /// Defines the fixedValue
@@ -90,6 +86,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
             this.verbose = verbose;
             fixedValue = CalculateFixedValue(requiredPattern);
             walkList = new WalkList(requiredPattern, matcher.GetLookups(), matcher.GetLookupSets(), verbose);
+        }
+
+        public void PruneTrailingStepsThatCannotFail()
+        {
+            walkList.PruneTrailingStepsThatCannotFail();
         }
 
         /// <summary>
@@ -213,6 +214,16 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker
             public override string VisitPathFixedValue(UserAgentTreeWalkerParser.PathFixedValueContext ctx)
             {
                 return ctx.value.Text;
+            }
+
+            protected override bool ShouldVisitNextChild([NotNull] IRuleNode node, string currentResult)
+            {
+                return currentResult == null;
+            }
+
+            protected override string AggregateResult(string aggregate, string nextResult)
+            {
+                return nextResult ?? aggregate;
             }
         }
     }
