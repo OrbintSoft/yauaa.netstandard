@@ -55,7 +55,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <summary>
         /// Defines the isWantedClassPredicate
         /// </summary>
-        private readonly Predicate<ParserRuleContext> isWantedClassPredicate;
+        private readonly Predicate<IParseTree> isWantedClassPredicate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChildIterable"/> class.
@@ -64,7 +64,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <param name="start">The start<see cref="int"/></param>
         /// <param name="end">The end<see cref="int"/></param>
         /// <param name="isWantedClassPredicate">The isWantedClassPredicate<see cref="Predicate{ParserRuleContext}"/></param>
-        public ChildIterable(bool privateNumberRange, int start, int end, Predicate<ParserRuleContext> isWantedClassPredicate)
+        public ChildIterable(bool privateNumberRange, int start, int end, Predicate<IParseTree> isWantedClassPredicate)
         {
             this.privateNumberRange = privateNumberRange;
             this.start = start;
@@ -76,8 +76,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The Iterator
         /// </summary>
         /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public IEnumerator<ParserRuleContext> Iterator(ParserRuleContext treeContext)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public IEnumerator<IParseTree> Iterator(ParserRuleContext treeContext)
         {
             return new ChildIterator(this, treeContext);
         }
@@ -85,12 +85,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <summary>
         /// Defines the <see cref="ChildIterator" />
         /// </summary>
-        internal class ChildIterator : IEnumerator<ParserRuleContext>
+        internal class ChildIterator : IEnumerator<IParseTree>
         {
             /// <summary>
             /// Defines the childIterator
             /// </summary>
-            private readonly IEnumerator<IParseTree> childIterator;
+            private readonly IEnumerator<IParseTree> childIter;
 
             /// <summary>
             /// Defines the index
@@ -105,7 +105,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             /// <summary>
             /// Gets the Current
             /// </summary>
-            public ParserRuleContext Current { get; private set; } = null;
+            public IParseTree Current { get; private set; } = null;
 
             /// <summary>
             /// Gets the Current
@@ -128,13 +128,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                 this.childIterable = childIterable;
                 if (treeContext.children == null)
                 {
-                    childIterator = null;
+                    childIter = null;
                     Current = null;
                     index = -1;
                 }
                 else
                 {
-                    childIterator = treeContext.children.GetEnumerator();
+                    childIter = treeContext.children.GetEnumerator();
                 }
             }
 
@@ -144,16 +144,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             /// <returns>If there is a next</returns>
             public bool MoveNext()
             {
-                if (childIterator != null)
+                if (childIter != null)
                 {
-                    while (childIterator.MoveNext())
+                    while (childIter.MoveNext())
                     {
-                        IParseTree nextParseTree = childIterator.Current;
+                        IParseTree nextParseTree = childIter.Current;
                         if (Step.TreeIsSeparator(nextParseTree))
-                        {
-                            continue;
-                        }
-                        if (!(nextParseTree is ParserRuleContext))
                         {
                             continue;
                         }
@@ -161,8 +157,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                         {
                             index++;
                         }
-                        ParserRuleContext possibleNextChild = (ParserRuleContext)nextParseTree;
-                        if (!childIterable.isWantedClassPredicate(possibleNextChild))
+                        if (!childIterable.isWantedClassPredicate(nextParseTree))
                         {
                             continue;
                         }
@@ -177,7 +172,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                         }
                         if (childIterable.start <= index + 1)
                         {
-                            Current = possibleNextChild;
+                            Current = nextParseTree;
                             return true;
                         }
                     }
@@ -194,7 +189,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             {
                 index = -1;
                 Current = null;
-                childIterator.Reset();
+                childIter.Reset();
             }
 
             /// <summary>
@@ -202,7 +197,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
             /// </summary>
             public void Dispose()
             {
-                childIterator.Dispose();
+                childIter.Dispose();
             }
         }
     }

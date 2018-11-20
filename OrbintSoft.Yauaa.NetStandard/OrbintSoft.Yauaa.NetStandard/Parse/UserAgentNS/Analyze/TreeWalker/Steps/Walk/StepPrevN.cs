@@ -43,7 +43,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <summary>
         /// Defines the children
         /// </summary>
-        internal readonly IParseTree[] children = new IParseTree[SIZE];
+        [NonSerialized]
+        private IParseTree[] children = null;
 
         /// <summary>
         /// Defines the steps
@@ -67,6 +68,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         private IParseTree Prev(IParseTree tree)
         {
             IParseTree parent = Up(tree);
+
+            if (children == null)
+            {
+                children = new IParseTree[SIZE];
+            }
 
             int lastChildIndex = -1;
             IParseTree child = null;
@@ -99,13 +105,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IParseTree nextTree = Prev(tree);
-            if (nextTree == null)
+            IParseTree prevTree = Prev(tree);
+            if (prevTree == null)
             {
                 return null;
             }
 
-            return WalkNextStep(nextTree, null);
+            return WalkNextStep(prevTree, null);
         }
 
         /// <summary>

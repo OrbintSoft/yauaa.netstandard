@@ -46,6 +46,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
             return WalkNextStep(tree, null);
         }
 
+        public override bool CanFail()
+        {
+            return false;
+        }
+
         /// <summary>
         /// The ToString
         /// </summary>

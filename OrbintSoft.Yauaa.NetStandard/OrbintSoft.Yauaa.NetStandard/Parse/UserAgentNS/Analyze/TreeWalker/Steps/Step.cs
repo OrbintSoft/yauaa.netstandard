@@ -164,7 +164,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
         /// to improve performance at run time.
         /// </summary>
         /// <returns>If this specific step can or cannot fail.</returns>
-        public bool CanFail()
+        public virtual bool CanFail()
         {
             return true; // Default is to assume the step is always needed.
         }

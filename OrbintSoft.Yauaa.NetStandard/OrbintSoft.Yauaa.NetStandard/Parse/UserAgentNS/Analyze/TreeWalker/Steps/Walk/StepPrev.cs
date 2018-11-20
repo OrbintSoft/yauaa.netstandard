@@ -56,10 +56,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                 child = parent.GetChild(i);
                 if (child == tree)
                 {
-                    return prevChild;
+                    break;
                 }
             }
-            return null; // This should never happen
+            return prevChild;
         }
 
         /// <summary>
@@ -70,13 +70,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IParseTree nextTree = Prev(tree);
-            if (nextTree == null)
+            IParseTree prevTree = Prev(tree);
+            if (prevTree == null)
             {
                 return null;
             }
 
-            return WalkNextStep(nextTree, null);
+            return WalkNextStep(prevTree, null);
         }
 
         /// <summary>

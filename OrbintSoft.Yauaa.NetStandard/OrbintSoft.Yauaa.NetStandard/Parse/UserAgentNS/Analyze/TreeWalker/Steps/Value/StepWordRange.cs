@@ -84,6 +84,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
             return WalkNextStep(tree, filteredValue);
         }
 
+        public override bool CanFail()
+        {
+            // If you want the first word it cannot fail.
+            // For all other numbers it can.
+            return !(firstWord == 1 && lastWord == 1);
+        }
+
         /// <summary>
         /// The ToString
         /// </summary>

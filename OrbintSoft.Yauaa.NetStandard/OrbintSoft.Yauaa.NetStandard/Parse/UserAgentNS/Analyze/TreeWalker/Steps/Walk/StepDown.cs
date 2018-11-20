@@ -116,14 +116,14 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IEnumerator<ParserRuleContext> children = userAgentGetChildrenVisitor.Visit(tree);
+            IEnumerator<IParseTree> children = userAgentGetChildrenVisitor.Visit(tree);
             if (children != null)
             {
                 do
                 {
                     if (children.Current != null || children.MoveNext())
                     {
-                        ParserRuleContext child = children.Current;
+                        IParseTree child = children.Current;
                         WalkList.WalkResult childResult = WalkNextStep(child, null);
                         if (childResult != null)
                         {

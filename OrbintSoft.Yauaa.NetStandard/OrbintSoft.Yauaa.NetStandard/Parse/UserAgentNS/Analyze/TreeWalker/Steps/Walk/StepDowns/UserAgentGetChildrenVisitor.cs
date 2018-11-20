@@ -28,6 +28,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
 {
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
+    using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
     using System;
     using System.Collections.Generic;
@@ -38,12 +39,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
     /// Defines the <see cref="UserAgentGetChildrenVisitor" />
     /// </summary>
     [Serializable]
-    public class UserAgentGetChildrenVisitor : UserAgentBaseVisitor<IEnumerator<ParserRuleContext>>, ISerializable
+    public class UserAgentGetChildrenVisitor : UserAgentBaseVisitor<IEnumerator<IParseTree>>, ISerializable
     {
         /// <summary>
         /// Defines the Empty
         /// </summary>
-        private static readonly IEnumerator<ParserRuleContext> Empty = null;
+        private static readonly IEnumerator<IParseTree> Empty = null;
 
         /// <summary>
         /// Defines the name
@@ -195,7 +196,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// <summary>
         /// Gets the DefaultResult
         /// </summary>
-        protected override IEnumerator<ParserRuleContext> DefaultResult
+        protected override IEnumerator<IParseTree> DefaultResult
         {
             get
             {
@@ -207,8 +208,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The GetChildrenByName
         /// </summary>
         /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        internal IEnumerator<ParserRuleContext> GetChildrenByName(ParserRuleContext ctx)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        internal IEnumerator<IParseTree> GetChildrenByName(ParserRuleContext ctx)
         {
             return childIterable.Iterator(ctx);
         }
@@ -217,10 +218,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitUserAgent
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.UserAgentContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
-            IEnumerator<ParserRuleContext> children = GetChildrenByName(context);
+            IEnumerator<IParseTree> children = GetChildrenByName(context);
             if (!children.MoveNext() && children.Current == null)
             {
                 return VisitChildren(context);
@@ -232,8 +233,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitRootElements
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.RootElementsContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitRootElements([NotNull] UserAgentParser.RootElementsContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitRootElements([NotNull] UserAgentParser.RootElementsContext context)
         {
             return GetChildrenByName(context);
         }
@@ -242,8 +243,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitProduct
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitProduct([NotNull] UserAgentParser.ProductContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProduct([NotNull] UserAgentParser.ProductContext context)
         {
             return GetChildrenByName(context);
         }
@@ -252,8 +253,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitProductNameNoVersion
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
         {
             return GetChildrenByName(context);
         }
@@ -262,8 +263,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitCommentProduct
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
         {
             return GetChildrenByName(context);
         }
@@ -272,8 +273,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitProductName
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitProductName([NotNull] UserAgentParser.ProductNameContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductName([NotNull] UserAgentParser.ProductNameContext context)
         {
             return GetChildrenByName(context);
         }
@@ -282,8 +283,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitProductNameKeyValue
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameKeyValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
         {
             switch (name)
             {
@@ -291,31 +292,31 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                     var list = new List<ParserRuleContext>() { context.key };
                     return list.GetEnumerator();
                 case "value":
-                    List<ParserRuleContext> children = context.multipleWords().Select(s => s as ParserRuleContext).ToList();
+                    var children = context.multipleWords().Select(s => s as IParseTree).ToList();
                     if (children.Count != 0)
                     {
                         return children.GetEnumerator();
                     }
 
-                    children = context.keyValueProductVersionName().Select(s => s as ParserRuleContext).ToList();
+                    children = context.keyValueProductVersionName().Select(s => s as IParseTree).ToList();
                     if (children.Count != 0)
                     {
                         return children.GetEnumerator();
                     }
 
-                    children = context.siteUrl().Select(s => s as ParserRuleContext).ToList();
+                    children = context.siteUrl().Select(s => s as IParseTree).ToList();
                     if (children.Count != 0)
                     {
                         return children.GetEnumerator();
                     }
 
-                    children = context.emailAddress().Select(s => s as ParserRuleContext).ToList();
+                    children = context.emailAddress().Select(s => s as IParseTree).ToList();
                     if (children.Count != 0)
                     {
                         return children.GetEnumerator();
                     }
 
-                    children = context.uuId().Select(s => s as ParserRuleContext).ToList();
+                    children = context.uuId().Select(s => s as IParseTree).ToList();
                     return children.GetEnumerator();
                 default:
                     return GetChildrenByName(context);
@@ -326,8 +327,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitProductVersion
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.ProductVersionContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
         {
             return GetChildrenByName(context);
         }
@@ -336,8 +337,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitProductVersionWithCommas
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWithCommasContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
         {
             return GetChildrenByName(context);
         }
@@ -346,8 +347,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitKeyValue
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitKeyValue([NotNull] UserAgentParser.KeyValueContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitKeyValue([NotNull] UserAgentParser.KeyValueContext context)
         {
             return GetChildrenByName(context);
         }
@@ -356,8 +357,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitKeyWithoutValue
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
         {
             return GetChildrenByName(context);
         }
@@ -366,8 +367,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitCommentBlock
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
         {
             return GetChildrenByName(context);
         }
@@ -376,8 +377,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
         /// The VisitCommentEntry
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentParser.CommentEntryContext"/></param>
-        /// <returns>The <see cref="IEnumerator{ParserRuleContext}"/></returns>
-        public override IEnumerator<ParserRuleContext> VisitCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
         {
             return GetChildrenByName(context);
         }

@@ -184,7 +184,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps
                     Step lastRelevantStep = steps[lastRelevantStepIndex];
                     lastRelevantStep.SetNextStep(lastRelevantStepIndex, null);
 
-                    steps.GetRange(lastRelevantStepIndex + 1, steps.Count).Clear();
+                    steps.GetRange(lastRelevantStepIndex + 1, steps.Count - lastRelevantStepIndex - 1).Clear();
                 }
             }
         }
