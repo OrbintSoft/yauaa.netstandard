@@ -73,7 +73,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
             }
 
             Type[] classOfTArray = typeof(IUserAgentAnnotationMapper<T>).GenericTypeArguments;
-            if (classOfTArray == null || classOfTArray.Count() == 0 || classOfTArray[0] == null)
+            if (classOfTArray == null)
             {
                 throw new InvalidParserConfigurationException("Couldn't find the used generic type of the UserAgentAnnotationMapper.");
             }
@@ -90,7 +90,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
                     Type[] parameters = method.GetParameters().Select(p => p.ParameterType).ToArray();
                     if (returnType == typeof(void) && parameters.Length == 2 && parameters[0] == classOfT && parameters[1] == typeof(string))
                     {
-                        if (!method.IsPublic || !classOfT.IsVisible)
+                        if (!classOfT.IsVisible)
+                        {
+                            throw new InvalidParserConfigurationException("The class " + classOfT.Name + " is not public.");
+                        }
+
+                        if (!method.IsPublic)
                         {
                             throw new InvalidParserConfigurationException("Method annotated with YauaaField is not public: " + method.Name);
                         }
@@ -130,10 +135,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
 
             var builder = UserAgentAnalyzer.NewBuilder();
             builder.HideMatcherLoadStats();
-            if (fieldSetters.Count != 0)
-            {
-                builder.WithFields(fieldSetters.Keys.ToList());
-            }
+            builder.WithFields(fieldSetters.Keys.ToList());
             userAgentAnalyzer = builder.Build();
         }
 
@@ -166,7 +168,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Annotate
                     }
                     catch (Exception e)
                     {
-                        throw new InvalidParserConfigurationException("Couldn't call the requested setter", e);
+                        throw new InvalidParserConfigurationException("A problem occurred while calling the requested setter", e);
                     }
                 }
             }

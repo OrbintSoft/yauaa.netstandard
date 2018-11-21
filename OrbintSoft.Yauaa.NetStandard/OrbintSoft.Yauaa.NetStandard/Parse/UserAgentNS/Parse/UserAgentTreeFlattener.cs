@@ -31,7 +31,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze;
     using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Antlr4Source;
-    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.SerializableHelpers;
     using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Utils;
     using System;
     using System.Collections.Generic;
@@ -42,10 +41,23 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
     [Serializable]
     public class UserAgentTreeFlattener : UserAgentBaseListener
     {
+        private const string AGENT    = "agent";
+        private const string PRODUCT  = "product";
+        private const string NAME     = "name";
+        private const string VERSION  = "version";
+        private const string COMMENTS = "comments";
+        private const string KEYVALUE = "keyvalue";
+        private const string KEY      = "key";
+        private const string TEXT     = "text";
+        private const string URL      = "url";
+        private const string UUID     = "uuid";
+        private const string EMAIL    = "email";
+        private const string BASE64   = "base64";
+
         /// <summary>
         /// Defines the WALKER
         /// </summary>
-        private static readonly ParseTreeWalker WALKER = new ParseTreeWalker();
+        private static readonly ParseTreeWalker Walker = new ParseTreeWalker();
 
         /// <summary>
         /// Defines the analyzer
@@ -55,7 +67,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <summary>
         /// Defines the state
         /// </summary>
-        private SerializableParseTreeProperty<State> state = null;
+        [NonSerialized]
+        private ParseTreeProperty<State> state = null;
 
 #if VERBOSE
         private bool verbose = true;
@@ -141,9 +154,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             UserAgentParser.UserAgentContext userAgentContext = ParseUserAgent(userAgent);
 
             // Walk the tree an inform the calling analyzer about all the nodes found
-            state = new SerializableParseTreeProperty<State>();
+            state = new ParseTreeProperty<State>();
 
-            State rootState = new State(this, "agent");
+            State rootState = new State(this,  AGENT);
             rootState.CalculatePath(PathType.CHILD, false);
             state.Put(userAgentContext, rootState);
 
@@ -156,7 +169,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
                 Inform(null, UserAgent.SYNTAX_ERROR, "false");
             }
 
-            WALKER.Walk(this, userAgentContext);
+            Walker.Walk(this, userAgentContext);
             return userAgent;
         }
 
@@ -223,10 +236,10 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
                 PathType childType;
                 switch (name)
                 {
-                    case "comments":
+                    case COMMENTS:
                         childType = PathType.COMMENT;
                         break;
-                    case "version":
+                    case VERSION:
                         childType = PathType.VERSION;
                         break;
                     default:
@@ -275,7 +288,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         public override void EnterUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
             // In case of a parse error the 'parsed' version of agent can be incomplete
-            Inform(context, "agent", context.start.TokenSource.InputStream.ToString());
+            Inform(context, AGENT, context.start.TokenSource.InputStream.ToString());
         }
 
         /// <summary>
@@ -284,7 +297,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.RootTextContext"/></param>
         public override void EnterRootText([NotNull] UserAgentParser.RootTextContext context)
         {
-            InformSubstrings(context, "text");
+            InformSubstrings(context, TEXT);
         }
 
         /// <summary>
@@ -293,7 +306,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/></param>
         public override void EnterProduct([NotNull] UserAgentParser.ProductContext context)
         {
-            InformSubstrings(context, "product");
+            InformSubstrings(context, PRODUCT);
         }
 
         /// <summary>
@@ -302,7 +315,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/></param>
         public override void EnterCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
         {
-            InformSubstrings(context, "product");
+            InformSubstrings(context, PRODUCT);
         }
 
         /// <summary>
@@ -311,7 +324,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/></param>
         public override void EnterProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
         {
-            InformSubstrings(context, "product");
+            InformSubstrings(context, PRODUCT);
         }
 
         /// <summary>
@@ -320,7 +333,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameEmailContext"/></param>
         public override void EnterProductNameEmail([NotNull] UserAgentParser.ProductNameEmailContext context)
         {
-            Inform(context, "name");
+            Inform(context, NAME);
         }
 
         /// <summary>
@@ -329,7 +342,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameUrlContext"/></param>
         public override void EnterProductNameUrl([NotNull] UserAgentParser.ProductNameUrlContext context)
         {
-            Inform(context, "name");
+            Inform(context, NAME);
         }
 
         /// <summary>
@@ -338,7 +351,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameWordsContext"/></param>
         public override void EnterProductNameWords([NotNull] UserAgentParser.ProductNameWordsContext context)
         {
-            InformSubstrings(context, "name");
+            InformSubstrings(context, NAME);
         }
 
         /// <summary>
@@ -348,7 +361,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         public override void EnterProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
         {
             Inform(context, "name.(1)keyvalue", context.GetText(), false);
-            InformSubstrings(context, "name", true);
+            InformSubstrings(context, NAME, true);
         }
 
         /// <summary>
@@ -357,7 +370,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameVersionContext"/></param>
         public override void EnterProductNameVersion([NotNull] UserAgentParser.ProductNameVersionContext context)
         {
-            InformSubstrings(context, "name");
+            InformSubstrings(context, NAME);
         }
 
         /// <summary>
@@ -366,7 +379,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductNameUuidContext"/></param>
         public override void EnterProductNameUuid([NotNull] UserAgentParser.ProductNameUuidContext context)
         {
-            Inform(context, "name");
+            Inform(context, NAME);
         }
 
         /// <summary>
@@ -396,7 +409,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
             if (ctx.ChildCount != 1)
             {
                 // These are the specials with multiple children like keyvalue, etc.
-                Inform(ctx, "version");
+                Inform(ctx, VERSION);
                 return;
             }
 
@@ -407,7 +420,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
                 return;
             }
 
-            Inform(ctx, "version");
+            Inform(ctx, VERSION);
         }
 
         /// <summary>
@@ -416,7 +429,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductVersionSingleWordContext"/></param>
         public override void EnterProductVersionSingleWord([NotNull] UserAgentParser.ProductVersionSingleWordContext context)
         {
-            Inform(context, "version");
+            Inform(context, VERSION);
         }
 
         /// <summary>
@@ -425,7 +438,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.SingleVersionContext"/></param>
         public override void EnterSingleVersion([NotNull] UserAgentParser.SingleVersionContext context)
         {
-            InformSubVersions(context, "version");
+            InformSubVersions(context, VERSION);
         }
 
         /// <summary>
@@ -434,7 +447,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.SingleVersionWithCommasContext"/></param>
         public override void EnterSingleVersionWithCommas([NotNull] UserAgentParser.SingleVersionWithCommasContext context)
         {
-            InformSubVersions(context, "version");
+            InformSubVersions(context, VERSION);
         }
 
         /// <summary>
@@ -443,7 +456,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWordsContext"/></param>
         public override void EnterProductVersionWords([NotNull] UserAgentParser.ProductVersionWordsContext context)
         {
-            InformSubstrings(context, "version");
+            InformSubstrings(context, VERSION);
         }
 
         /// <summary>
@@ -452,7 +465,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.KeyValueProductVersionNameContext"/></param>
         public override void EnterKeyValueProductVersionName([NotNull] UserAgentParser.KeyValueProductVersionNameContext context)
         {
-            InformSubstrings(context, "version");
+            InformSubstrings(context, VERSION);
         }
 
         /// <summary>
@@ -461,7 +474,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/></param>
         public override void EnterCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
         {
-            Inform(context, "comments");
+            Inform(context, COMMENTS);
         }
 
         /// <summary>
@@ -558,7 +571,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.MultipleWordsContext"/></param>
         public override void EnterMultipleWords([NotNull] UserAgentParser.MultipleWordsContext context)
         {
-            InformSubstrings(context, "text");
+            InformSubstrings(context, TEXT);
         }
 
         /// <summary>
@@ -567,7 +580,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/></param>
         public override void EnterKeyValue([NotNull] UserAgentParser.KeyValueContext context)
         {
-            Inform(context, "keyvalue");
+            Inform(context, KEYVALUE);
         }
 
         /// <summary>
@@ -576,7 +589,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/></param>
         public override void EnterKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
         {
-            Inform(context, "keyvalue");
+            Inform(context, KEYVALUE);
         }
 
         /// <summary>
@@ -585,7 +598,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.KeyNameContext"/></param>
         public override void EnterKeyName([NotNull] UserAgentParser.KeyNameContext context)
         {
-            InformSubstrings(context, "key");
+            InformSubstrings(context, KEY);
         }
 
         /// <summary>
@@ -594,7 +607,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.KeyValueVersionNameContext"/></param>
         public override void EnterKeyValueVersionName([NotNull] UserAgentParser.KeyValueVersionNameContext context)
         {
-            InformSubstrings(context, "version");
+            InformSubstrings(context, VERSION);
         }
 
         /// <summary>
@@ -603,7 +616,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.VersionWordsContext"/></param>
         public override void EnterVersionWords([NotNull] UserAgentParser.VersionWordsContext context)
         {
-            InformSubstrings(context, "text");
+            InformSubstrings(context, TEXT);
         }
 
         /// <summary>
@@ -612,7 +625,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.SiteUrlContext"/></param>
         public override void EnterSiteUrl([NotNull] UserAgentParser.SiteUrlContext context)
         {
-            Inform(context, "url", context.url.Text);
+            Inform(context, URL, context.url.Text);
         }
 
         /// <summary>
@@ -621,7 +634,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.UuIdContext"/></param>
         public override void EnterUuId([NotNull] UserAgentParser.UuIdContext context)
         {
-            Inform(context, "uuid", context.uuid.Text);
+            Inform(context, UUID, context.uuid.Text);
         }
 
         /// <summary>
@@ -630,7 +643,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.EmailAddressContext"/></param>
         public override void EnterEmailAddress([NotNull] UserAgentParser.EmailAddressContext context)
         {
-            Inform(context, "email", context.email.Text);
+            Inform(context, EMAIL, context.email.Text);
         }
 
         /// <summary>
@@ -639,7 +652,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.Base64Context"/></param>
         public override void EnterBase64([NotNull] UserAgentParser.Base64Context context)
         {
-            Inform(context, "base64", context.value.Text);
+            Inform(context, BASE64, context.value.Text);
         }
 
         /// <summary>
@@ -648,7 +661,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
         /// <param name="context">The context<see cref="UserAgentParser.EmptyWordContext"/></param>
         public override void EnterEmptyWord([NotNull] UserAgentParser.EmptyWordContext context)
         {
-            Inform(context, "text", "");
+            Inform(context, TEXT, "");
         }
 
         /// <summary>

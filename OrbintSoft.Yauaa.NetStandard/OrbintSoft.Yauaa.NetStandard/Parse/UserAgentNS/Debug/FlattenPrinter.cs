@@ -39,7 +39,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         /// <summary>
         /// Defines the outputStream
         /// </summary>
-        internal readonly StreamWriter outputStream;
+        private readonly StreamWriter outputStream;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FlattenPrinter"/> class.
@@ -68,6 +68,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
         public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
+            // Not needed
         }
 
         /// <summary>
@@ -77,6 +78,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
         public void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
+            // Never called
         }
 
         /// <summary>
@@ -98,6 +100,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         /// <param name="prefix">The prefix<see cref="string"/></param>
         public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
         {
+            // Never called
         }
 
         /// <summary>

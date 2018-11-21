@@ -121,7 +121,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
 
             IDictionary<string, IList<string>> allTestInputs = new Dictionary<string, IList<string>>(2000);
             HashSet<string> duplicates = new HashSet<string>();
-            foreach (IDictionary<string, IDictionary<string, string>> testCase in uaa.AllTestCases)
+            foreach (IDictionary<string, IDictionary<string, string>> testCase in uaa.TestCases)
             {
                 string input = testCase["input"]["user_agent_string"];
                 string location = testCase["metaData"]["filename"] + ":" + testCase["metaData"]["fileline"];

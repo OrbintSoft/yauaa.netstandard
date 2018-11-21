@@ -45,7 +45,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
         /// <summary>
         /// Defines the appliedMatcherResults
         /// </summary>
-        internal readonly List<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
+        [NonSerialized]
+        private readonly IList<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
 
         /// <summary>
         /// The Set

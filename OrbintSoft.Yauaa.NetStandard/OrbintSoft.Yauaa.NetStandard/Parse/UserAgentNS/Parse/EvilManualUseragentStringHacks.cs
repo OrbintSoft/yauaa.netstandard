@@ -79,6 +79,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Parse
                 result = result.Trim();
             }
 
+            result = ReplaceString(result, "SSL/TLS", "SSL TLS");
+
             // We have seen problems causes by " Version/4.0Mobile Safari/530.17"
             result = MissingSpace.Replace(result, "$1 $2");
 

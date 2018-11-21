@@ -62,14 +62,6 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
             LoadResources(resourceString, pattern);
         }
 
-        /// <summary>
-        /// The GetAllTestCases
-        /// </summary>
-        /// <returns>The <see cref="IList{Dictionary{string, IDictionary{string, string}}}"/></returns>
-        public IList<IDictionary<string, IDictionary<string, string>>> AllTestCases
-        {
-            get => TestCases;
-        }
 
         /// <summary>
         /// Run all the test_cases available.
@@ -561,7 +553,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Debug
 
                 Log.Info(agent.ToMatchTrace(failedFieldNames));
 
-                Log.Info("\n\nconfig:\n" + agent.ToYamlTestCase(!init, failComments));
+                Log.Info(string.Format("\n\nconfig:\n {0}" , agent.ToYamlTestCase(!init, failComments)));
                 Log.Info(string.Format("Location of failed test.({0}:{1})", filename, linenumber));
                 if (!pass && !showAll)
                 {
