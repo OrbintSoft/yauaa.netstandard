@@ -13,7 +13,21 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
-5.3-rc-1
+5.4-alpha.x
+--------
+This is a working in progress target to 5.4.
+
+Starting from 5.4 I don't plan to realease anymore alpha versions on Nuget, Alpha is intented for testing purpose, not usable in production.
+
+If you want test the new features, download from github.
+
+Here list of new fetures:
+
+- Detect more Iron variations
+- Major change in the Android Chrome 70 pattern --> broke DeviceBrand
+- Detect Vivo brand
+
+5.3-rc.1
 --------
 This is the latest stable version before starting development of 5.4
 
