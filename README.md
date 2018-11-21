@@ -17,11 +17,11 @@ HIGH Profile release notes:
 --------
 This is a working in progress target to 5.4.
 
-Starting from 5.4 I don't plan to realease anymore alpha versions on Nuget, Alpha is intented for testing purpose, not usable in production.
+Starting from 5.4 I don't plan to release anymore alpha versions on Nuget, Alpha is intented for testing purpose, not usable in production.
 
-If you want test the new features, download from github.
+If you want test the new features, download it from github.
 
-Here list of new fetures:
+Here a list of new features:
 
 - Detect more Iron variations
 - Major change in the Android Chrome 70 pattern --> broke DeviceBrand
