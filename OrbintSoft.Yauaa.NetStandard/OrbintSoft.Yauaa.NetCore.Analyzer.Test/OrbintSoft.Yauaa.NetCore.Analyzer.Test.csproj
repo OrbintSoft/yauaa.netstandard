@@ -82,6 +82,7 @@
     <None Remove="YamlResources\Positional-tests.yaml" />
     <None Remove="YamlResources\SubString-tests.yaml" />
     <None Remove="YamlResources\SubStringVersion-tests.yaml" />
+    <None Remove="YamlResources\TestOnlyOneTest.yaml" />
     <None Remove="YamlResources\Variable-tests.yaml" />
     <None Remove="YamlResources\Versions\BadVersion.yaml" />
     <None Remove="YamlResources\Versions\BadVersionNotMap.yaml" />
@@ -212,6 +213,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\SubStringVersion-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestOnlyOneTest.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\Variable-tests.yaml">
