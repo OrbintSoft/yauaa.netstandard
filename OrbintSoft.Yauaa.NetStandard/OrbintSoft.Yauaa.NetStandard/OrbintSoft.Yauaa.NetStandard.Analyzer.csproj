@@ -44,7 +44,7 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <Optimize>false</Optimize>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -79,6 +79,7 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <None Remove="YamlResources\UserAgents\GeckoFirefox.yaml" />
     <None Remove="YamlResources\UserAgents\GoannaPaleMoon.yaml" />
     <None Remove="YamlResources\UserAgents\GoogleChrome.yaml" />
+    <None Remove="YamlResources\UserAgents\GoogleChrome70.yaml" />
     <None Remove="YamlResources\UserAgents\GoogleFavicon.yaml" />
     <None Remove="YamlResources\UserAgents\GooglePixel.yaml" />
     <None Remove="YamlResources\UserAgents\Hackers-SQLInjections.yaml" />
@@ -205,6 +206,9 @@ The library provides a reliable and extensible user agent parsing, browser and d
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\UserAgents\GoogleChrome.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\GoogleChrome70.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\UserAgents\GoogleFavicon.yaml">

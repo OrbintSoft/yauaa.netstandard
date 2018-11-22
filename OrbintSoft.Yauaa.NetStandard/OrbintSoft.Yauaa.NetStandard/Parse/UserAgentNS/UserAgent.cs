@@ -569,7 +569,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
                 }
                 else
                 {
-                    Log.Info(string.Format(" SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
+                    Log.Info(string.Format("SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
             }
             allFields[attribute] = field;

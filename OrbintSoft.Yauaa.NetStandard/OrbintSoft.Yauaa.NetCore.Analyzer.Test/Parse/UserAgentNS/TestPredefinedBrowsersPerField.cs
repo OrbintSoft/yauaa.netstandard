@@ -50,16 +50,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS
         /// <returns>The <see cref="IEnumerable{object[]}"/></returns>
         public static IEnumerable<object[]> Data()
         {
-            var fieldNames = UserAgentAnalyzer
-                .NewBuilder()
-                .HideMatcherLoadStats()
-                .DelayInitialization()
-                .Build()
-                .GetAllPossibleFieldNamesSorted();
-            foreach (var fieldName in fieldNames)
-            {
-                yield return new object[] { fieldName };
-            }
+            //var fieldNames = UserAgentAnalyzer//todo: enable
+            //    .NewBuilder()
+            //    .HideMatcherLoadStats()
+            //    .DelayInitialization()
+            //    .Build()
+            //    .GetAllPossibleFieldNamesSorted();
+            //foreach (var fieldName in fieldNames)
+            //{
+            //    yield return new object[] { fieldName };
+            //}
+            return null;
         }
 
         /// <summary>
