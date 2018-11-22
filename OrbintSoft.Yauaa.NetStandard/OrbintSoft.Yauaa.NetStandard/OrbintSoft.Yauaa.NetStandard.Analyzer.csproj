@@ -12,9 +12,9 @@
     <NeutralLanguage>en</NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>5.4-alpha.1</Version>
-    <AssemblyVersion>5.4.0.1</AssemblyVersion>
-    <FileVersion>5.4.0.1</FileVersion>
+    <Version>5.4-alpha.2</Version>
+    <AssemblyVersion>5.4.0.2</AssemblyVersion>
+    <FileVersion>5.4.0.2</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
     <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
 
