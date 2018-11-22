@@ -158,7 +158,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
                     case "variable":
                         foreach (string variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation))
                         {
-                            string[] configParts = variableConfig.Split(new Char[] { ':' }, 2);
+                            string[] configParts = variableConfig.Split(new char[] { ':' }, 2);
 
                             if (configParts.Length != 2)
                             {

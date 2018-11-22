@@ -83,17 +83,5 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             userAgentAnalyzer.SetUserAgentMaxLength(-100);
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(UserAgentAnalyzerDirect.DEFAULT_USER_AGENT_MAX_LENGTH, "I set incorrect cache size"); ;
         }
-
-        /// <summary>
-        /// The TestUseragent
-        /// </summary>
-        [Fact]
-        public void TestUseragent()
-        {
-            string uaString = "Foo Bar";
-            UserAgent agent = new UserAgent(uaString);
-            agent.Get(UserAgent.USERAGENT_FIELDNAME).GetValue().Should().Be(uaString);
-            agent.Get(UserAgent.USERAGENT_FIELDNAME).GetConfidence().Should().Be(0);
-        }
     }
 }

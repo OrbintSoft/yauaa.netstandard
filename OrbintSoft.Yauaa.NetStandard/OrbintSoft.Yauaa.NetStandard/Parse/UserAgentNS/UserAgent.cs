@@ -174,7 +174,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// We manually sort the list of fields to ensure the output is consistent.
         /// Any unspecified fieldnames will be appended to the end.
         /// </summary>
-        protected static readonly List<string> PreSortedFieldList = new List<string>(32);
+        protected internal static readonly List<string> PreSortedFieldList = new List<string>(32);
 
         /// <summary>
         /// Defines the Log
@@ -739,7 +739,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         public string ToJson()
         {
             List<string> fields = GetAvailableFieldNames();
-            fields.Add("Useragent");
+            fields.Add(USERAGENT_FIELDNAME);
             return ToJson(fields);
         }
 
@@ -792,12 +792,17 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return ToString(GetAvailableFieldNamesSorted());
         }
 
+        public string ToString(params string[] fieldNames)
+        {
+            return ToString(fieldNames.ToList());
+        }
+
         /// <summary>
         /// The ToString
         /// </summary>
         /// <param name="fieldNames">The fieldNames<see cref="List{string}"/></param>
         /// <returns>The <see cref="string"/></returns>
-        public string ToString(List<string> fieldNames)
+        public string ToString(IList<string> fieldNames)
         {
             StringBuilder sb = new StringBuilder("  - user_agent_string: '\"" + userAgentString + "\"'\n");
             int maxLength = 0;
@@ -917,9 +922,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// </summary>
         /// <param name="fieldName">The fieldName<see cref="string"/></param>
         /// <param name="agentField">The agentField<see cref="AgentField"/></param>
-        private void Set(string fieldName, AgentField agentField)
+        internal void SetImmediateForTesting(string fieldName, AgentField agentField)
         {
-            Set(fieldName, agentField.GetValue(), agentField.confidence);
+            allFields[fieldName] = agentField;
         }
 
         /// <summary>
