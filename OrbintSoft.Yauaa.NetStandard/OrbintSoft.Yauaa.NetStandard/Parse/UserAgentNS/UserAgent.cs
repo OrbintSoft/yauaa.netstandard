@@ -461,7 +461,12 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
         /// <returns>The <see cref="int"/></returns>
         public override int GetHashCode()
         {
-            return ValueTuple.Create(userAgentString, allFields).GetHashCode();
+            int hash = 3060293; // A random number            
+            foreach (var item in allFields.Keys)
+            {
+                hash = (hash, allFields[item], item).GetHashCode();
+            }
+            return ValueTuple.Create(userAgentString, hash).GetHashCode();
         }
 
         /// <summary>
