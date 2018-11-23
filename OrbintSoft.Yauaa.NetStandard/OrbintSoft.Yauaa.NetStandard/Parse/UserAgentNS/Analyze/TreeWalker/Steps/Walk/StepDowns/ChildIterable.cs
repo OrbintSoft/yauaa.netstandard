@@ -118,6 +118,8 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.W
                 }
             }
 
+            
+
             /// <summary>
             /// Initializes a new instance of the <see cref="ChildIterator"/> class.
             /// </summary>

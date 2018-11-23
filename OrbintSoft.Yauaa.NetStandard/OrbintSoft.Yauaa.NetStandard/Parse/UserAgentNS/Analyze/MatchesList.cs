@@ -223,7 +223,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             {
                 get
                 {
-                    if (matches.Length > offset && matches[offset] != null)
+                    if (count > offset)
                     {
                         return matches[offset];
                     }
@@ -237,7 +237,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             /// <summary>
             /// Gets the Current
             /// </summary>
-            object IEnumerator.Current => matches[offset];
+            object IEnumerator.Current => Current;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="MatchEnumerator"/> class.
@@ -263,9 +263,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze
             /// <returns>The <see cref="bool"/></returns>
             public bool MoveNext()
             {
-                if (offset < count - 1)
-                {
-                    offset++;
+                offset++;
+                if (offset < count)
+                {   
                     return true;
                 }
                 else

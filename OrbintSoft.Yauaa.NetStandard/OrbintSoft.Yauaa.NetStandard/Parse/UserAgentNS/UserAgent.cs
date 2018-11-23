@@ -797,9 +797,11 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS
             return ToString(GetAvailableFieldNamesSorted());
         }
 
-        public string ToString(params string[] fieldNames)
+        public string ToString(string fieldName1, params string[] otherFieldNames)
         {
-            return ToString(fieldNames.ToList());
+            var l = new List<string> { fieldName1 };
+            l.AddRange(otherFieldNames);
+            return ToString(l);
         }
 
         /// <summary>

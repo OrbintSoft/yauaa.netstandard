@@ -95,6 +95,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             string notARange = "Range";
 
             range1.Should().BeEquivalentTo(range1b);
+            range1.Equals(null).Should().BeFalse();
             range1.Equals(range2).Should().BeFalse();
             range1.Equals(range3).Should().BeFalse();
             range1.Equals(range4).Should().BeFalse();

@@ -67,6 +67,25 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             match2.GetResult().Should().BeNull();
         }
 
+        [Fact]
+        public void TestTooMany()
+        {
+            MatchesList list = new MatchesList(5)
+            {
+                { "one", "two", null },
+                { "three", "four", null }
+            };
+            IEnumerator<MatchesList.Match> iterator = list.GetEnumerator();
+
+            iterator.MoveNext().Should().BeTrue();
+            iterator.Current.Should().NotBeNull();
+            iterator.MoveNext().Should().BeTrue();
+            iterator.Current.Should().NotBeNull();
+            iterator.MoveNext().Should().BeFalse();
+            Action a = new Action(() => { var c = iterator.Current; }); 
+            a.Should().Throw<IndexOutOfRangeException>();
+        }
+
         /// <summary>
         /// The TestUnsupportedAdd
         /// </summary>

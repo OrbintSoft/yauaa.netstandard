@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk.StepDowns;
 using System;
 using System.Collections.Generic;
@@ -19,8 +20,9 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 
             IEnumerator<IParseTree> iterator = ci.Iterator(prc);
 
-            iterator.MoveNext();
-            throw new NotImplementedException("TODO");
+            iterator.Current.Should().BeNull();
+            iterator.MoveNext().Should().BeFalse();            
+            iterator.Current.Should().BeNull();            
         }
     }
 }
