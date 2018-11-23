@@ -2,14 +2,13 @@
 using Antlr4.Runtime.Tree;
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.Walk.StepDowns;
-using System;
+using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
 {
-    public class TestChildIterable
+    public class TestChildIterable : IClassFixture<LogFixture>
     {
         [Fact]
         public void TestEdges()
