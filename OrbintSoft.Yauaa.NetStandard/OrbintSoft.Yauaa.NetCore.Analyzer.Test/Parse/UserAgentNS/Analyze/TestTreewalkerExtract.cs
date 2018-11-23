@@ -165,7 +165,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             };
 
             TestMatcher matcher = new TestMatcher(lookups, new Dictionary<string, ISet<string>>());
-            MatcherExtractAction action = new MatcherExtractAction("Dummy", 42, path, matcher);
+            var action = new MatcherExtractAction("Dummy", 42, path, matcher);
             action.Initialize();
 
             StringBuilder sb = new StringBuilder("\n---------------------------\nActual list (")
