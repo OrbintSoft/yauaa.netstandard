@@ -51,7 +51,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS.Analyze.TreeWalker.Steps.V
 
         public override bool CanFail()
         {
-            return true;
+            return false;
         }
 
         /// <summary>
