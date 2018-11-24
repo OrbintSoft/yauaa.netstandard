@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="StepEquals.cs" company="OrbintSoft">
-//    Yet Another UserAgent Analyzer.NET Standard
-//    orting realized by Stefano Balzarotti, Copyright (C) OrbintSoft
+//    Yet Another User Agent Analyzer for .NET Standard
+//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
 //
 //    Original Author and License:
 //
