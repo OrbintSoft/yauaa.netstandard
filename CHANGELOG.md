@@ -5,6 +5,7 @@ v5.4
 - Target equivalent Java 5.3 Version
 - Major change in the Android Chrome 70 pattern --> broke DeviceBrand
 - Detect Vivo brand
+- Change of namespace to be more clean
 
 v5.3
 ===

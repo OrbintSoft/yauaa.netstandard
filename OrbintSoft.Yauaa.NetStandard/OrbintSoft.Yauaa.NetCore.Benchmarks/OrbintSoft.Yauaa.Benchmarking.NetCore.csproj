@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <Version>5.4-beta.1</Version>
+    <Version>5.4-beta.2</Version>
     <Authors>Stefano Balzarotti, Niels Basjes</Authors>
-    <AssemblyVersion>5.4.1.1</AssemblyVersion>
+    <AssemblyVersion>5.4.1.2</AssemblyVersion>
     <ApplicationIcon />
     <OutputType>Exe</OutputType>
     <StartupObject />
-    <FileVersion>5.4.1.1</FileVersion>
+    <FileVersion>5.4.1.2</FileVersion>
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>OrbintSoft.Yauaa.NetCore.Benchmarks.pfx</AssemblyOriginatorKeyFile>
@@ -16,7 +16,7 @@
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <Company>OrbintSoft</Company>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
-    <PackageId>OrbintSoft.Yauaa.NetCore.Benchmarks</PackageId>
+    <PackageId>OrbintSoft.Yauaa.NetCore.Benchmarking</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

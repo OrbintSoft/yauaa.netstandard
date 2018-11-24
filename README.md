@@ -4,6 +4,8 @@ This is a .NET porting of Java library that tries to parse and analyze the usera
 
 You can see the original project at this link: https://github.com/nielsbasjes/yauaa
 
+The library has been completely rewritten in C# from scratch to be .NET  friendly and to be optimized
+
 A bit more background about this useragent parser can be found in this blog which the author Niels Basjes wrote about it: [https://techlab.bol.com/making-sense-user-agent-string/](https://partnerprogramma.bol.com/click/click?p=1&t=url&s=2171&f=TXL&url=https%3A%2F%2Ftechlab.bol.com%2Fmaking-sense-user-agent-string%2F&name=yauaa)
 
 The Java documentation can be found here https://yauaa.basjes.nl, soon will be provided a .NET documentation specific for this project
@@ -12,6 +14,11 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 
 HIGH Profile release notes:
 ===========================
+
+5.4-beta.2
+--------
+**BREAKING CHANGE:**: Namespace has been updated, the old namespace was an adaption of Java package id, but in .NET we love soimple and clean namespaces
+
 
 5.4-beta.1
 --------
