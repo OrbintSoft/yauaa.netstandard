@@ -16,6 +16,7 @@
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <Company>OrbintSoft</Company>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
+    <PackageId>OrbintSoft.Yauaa.NetCore.Benchmarks</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
