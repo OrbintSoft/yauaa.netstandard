@@ -32,6 +32,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
     using OrbintSoft.Yauaa.Analyzer.Test.Fixtures;
     using System;
     using Xunit;
+    using Xunit.Sdk;
 
     /// <summary>
     /// Defines the <see cref="TestAnnotationSystem" />
@@ -247,7 +248,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             [YauaaField("DeviceClass")]
             public void WrongSetter(string record, string value)
             {
-                throw new Xunit.Sdk.XunitException("May NEVER call this method");
+                throw new XunitException("May NEVER call this method");
             }
         }
 
@@ -300,7 +301,7 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             /// <param name="value">The value<see cref="double"/></param>
             public void SetWasNotAnnotated(TestRecord record, double value)
             {
-                throw new Xunit.Sdk.XunitException("May NEVER call this method");
+                throw new XunitException("May NEVER call this method");
             }
         }
 
@@ -324,5 +325,72 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Annotate
             Action a = new Action(() => userAgentAnalyzer.Map("Foo"));
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("[Map] The mapper instance is null.");
         }
-    }
+
+        public class WrongReturnType: MyBaseMapper
+        {
+            [YauaaField("DeviceClass")]
+            public bool NonVoidSetter(TestRecord record, string value)
+            {
+                throw new XunitException("May NEVER call this method");
+            }
+        }
+
+
+        [Fact]
+        public void TestNonVoidSetter()
+        {
+            Action a = new Action(() => new WrongReturnType());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("In class [WrongReturnType] the method [NonVoidSetter] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void NonVoidSetter(TestRecord record, String value) ]");
+        }
+
+        private sealed class PrivateTestRecord
+        {
+            internal readonly string useragent;
+            internal readonly string deviceClass;
+            internal readonly string agentNameVersion;
+
+            private PrivateTestRecord(string useragent)
+            {
+                this.useragent = useragent;
+            }
+        }
+
+        private class PrivateMyBaseMapper: IUserAgentAnnotationMapper<PrivateTestRecord>
+        {
+            private readonly UserAgentAnnotationAnalyzer<PrivateTestRecord> userAgentAnalyzer;
+
+            public PrivateMyBaseMapper()
+            {
+                userAgentAnalyzer = new UserAgentAnnotationAnalyzer<PrivateTestRecord>();
+                userAgentAnalyzer.Initialize(this);
+            }
+
+            public PrivateTestRecord Enrich(PrivateTestRecord record)
+            {
+                return userAgentAnalyzer.Map(record);
+            }
+       
+            public string GetUserAgentString(PrivateTestRecord record)
+            {
+                return record.useragent;
+            }
+        }
+
+        private class InaccessibleSetterMapperClass: PrivateMyBaseMapper
+        {
+            [YauaaField("DeviceClass")]
+            public void CorrectSetter(PrivateTestRecord record, string value)
+            {
+                throw new Exception("May NEVER call this method");
+            }
+        }
+
+        [Fact]
+        public void TestInaccessibleSetterClass()
+        {
+            Action a = new Action(() => new InaccessibleSetterMapperClass());
+            a.Should().Throw<InvalidParserConfigurationException>().WithMessage("The class PrivateTestRecord is not public.");
+        }
+
+}
 }

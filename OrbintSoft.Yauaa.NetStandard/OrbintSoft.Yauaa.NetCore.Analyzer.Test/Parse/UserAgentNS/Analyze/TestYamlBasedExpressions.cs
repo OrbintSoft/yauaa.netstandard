@@ -172,5 +172,13 @@ namespace OrbintSoft.Yauaa.Analyzer.Test.Parse.UserAgentNS.Analyze
             uaa.SetVerbose(true);
             uaa.RunTests(false, false).Should().BeTrue();
         }
+
+        [Fact]
+        public void RunOnlyOneTest()
+        {
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "TestOnlyOneTest.yaml");
+            uaa.SetVerbose(true);
+            uaa.RunTests(false, false).Should().BeTrue();
+        }
     }
 }
