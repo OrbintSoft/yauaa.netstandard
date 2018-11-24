@@ -24,10 +24,10 @@
 //<date>2018, 11, 17, 18:29</date>
 //<summary></summary>
 
-namespace OrbintSoft.Yauaa.Benchmarks
+namespace OrbintSoft.Yauaa.Benchmarking
 {
     using BenchmarkDotNet.Attributes;
-    using OrbintSoft.Yauaa.Analyzer.Parse.UserAgentNS;
+    using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
     /// Defines the <see cref="AnalyzerBenchmarks" />

@@ -12,7 +12,7 @@
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>OrbintSoft.Yauaa.NetCore.Benchmarks.pfx</AssemblyOriginatorKeyFile>
-    <RootNamespace>OrbintSoft.Yauaa.Benchmarks</RootNamespace>
+    <RootNamespace>OrbintSoft.Yauaa.Benchmarking</RootNamespace>
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <Company>OrbintSoft</Company>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
