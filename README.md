@@ -13,13 +13,17 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
+5.4-beta.1
+--------
+This version suppprts all new features of 5.4, all tests pass, so I can consider stable, download available throught Nuget
+
+A lot of improvements are still work in progress, feel free to test it.
+
 5.4-alpha.x
 --------
-This is a working in progress target to 5.4.
-
 Starting from 5.4 I don't plan to release anymore alpha versions on Nuget, Alpha is intented for testing purpose, not usable in production.
 
-If you want test the new features, download it from github.
+Alpha versions will be still available on github
 
 Here a list of new features:
 
