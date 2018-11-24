@@ -286,7 +286,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.csproj" />
+    <ProjectReference Include="..\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj" />
   </ItemGroup>
 
   <ItemGroup>

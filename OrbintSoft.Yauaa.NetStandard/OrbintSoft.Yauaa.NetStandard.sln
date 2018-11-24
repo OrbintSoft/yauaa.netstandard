@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetStandard.Analyzer", "OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.Analyzer.csproj", "{7946B4BC-AF19-4D5D-8DA8-56858E674777}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetStandard", "OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj", "{7946B4BC-AF19-4D5D-8DA8-56858E674777}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetCore.Benchmarks", "OrbintSoft.Yauaa.NetCore.Benchmarks\OrbintSoft.Yauaa.NetCore.Benchmarks.csproj", "{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}"
 EndProject
