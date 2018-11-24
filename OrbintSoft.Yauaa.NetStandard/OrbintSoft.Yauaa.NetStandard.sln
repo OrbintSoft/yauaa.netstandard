@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetStandar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetCore.Benchmarks", "OrbintSoft.Yauaa.NetCore.Benchmarks\OrbintSoft.Yauaa.NetCore.Benchmarks.csproj", "{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetCore.Analyzer.Test", "OrbintSoft.Yauaa.NetCore.Analyzer.Test\OrbintSoft.Yauaa.NetCore.Analyzer.Test.csproj", "{F00F6CDE-E35F-4841-B056-C6FE8292CC38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Testing.NetCore", "OrbintSoft.Yauaa.NetCore.Analyzer.Test\OrbintSoft.Yauaa.Testing.NetCore.csproj", "{F00F6CDE-E35F-4841-B056-C6FE8292CC38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

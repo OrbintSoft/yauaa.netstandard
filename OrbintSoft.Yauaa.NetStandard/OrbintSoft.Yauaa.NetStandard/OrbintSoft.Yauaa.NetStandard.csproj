@@ -380,7 +380,6 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="Xunit.SkippableFact" Version="1.3.12" />
     <PackageReference Include="YamlDotNet.Signed" Version="5.2.1" />
   </ItemGroup>
 </Project>

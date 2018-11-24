@@ -1,4 +1,4 @@
-﻿//<copyright file="LogFixture.cs" company="OrbintSoft">
+﻿//<copyright file="DocumentationExample.cs" company="OrbintSoft">
 //	Yet Another UserAgent Analyzer.NET Standard
 //	Porting realized by Stefano Balzarotti, Copyright (C) OrbintSoft
 //
@@ -21,28 +21,29 @@
 //
 //</copyright>
 //<author>Stefano Balzarotti, Niels Basjes</author>
-//<date>2018, 10, 17, 13:23</date>
+//<date>2018, 11, 14, 20:22</date>
 //<summary></summary>
 
-namespace OrbintSoft.Yauaa.Testing.Fixtures
+namespace OrbintSoft.Yauaa.Testing.Tests
 {
-    using log4net;
-    using log4net.Config;
-    using System.IO;
-    using System.Reflection;
+    using FluentAssertions;
+    using OrbintSoft.Yauaa.Debug;
+    using OrbintSoft.Yauaa.Testing.Fixtures;
+    using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="LogFixture" />
+    /// Defines the <see cref="DocumentationExample" />
     /// </summary>
-    public class LogFixture
+    public class DocumentationExample : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="LogFixture"/> class.
+        /// The RunDocumentationExample
         /// </summary>
-        public LogFixture()
+        [Fact]
+        public void RunDocumentationExample()
         {
-            var logRepository = LogManager.GetRepository(Assembly.GetExecutingAssembly());
-            XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "DocumentationExample.yaml");
+            uaa.RunTests(false, true).Should().BeTrue();
         }
     }
 }

@@ -1,0 +1,302 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <RootNamespace>OrbintSoft.Yauaa.Testing</RootNamespace>
+
+    <Configurations>Debug;Release;Verbose</Configurations>
+
+    <Version>5.4-beta.2</Version>
+
+    <AssemblyVersion>5.4.1.2</AssemblyVersion>
+
+    <FileVersion>5.4.1.2</FileVersion>
+
+    <NeutralLanguage>en</NeutralLanguage>
+
+    <Authors>Stefano Balzarotti, Niels Basjes</Authors>
+
+    <Company>OrbintSoft</Company>
+
+    <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
+
+    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+
+    <RepositoryType>Git</RepositoryType>
+
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
+    <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
+
+    <SignAssembly>true</SignAssembly>
+
+    <AssemblyOriginatorKeyFile>OrbintSoft.NetCore.Analyzer.Test.pfx</AssemblyOriginatorKeyFile>
+
+    <PackageId>OrbintSoft.Yauaa.Testing.NetCore</PackageId>
+
+    <AssemblyName>OrbintSoft.Yauaa.Testing.NetCore</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Verbose|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;VERBOSE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="YamlResources\AllFields-tests.yaml" />
+    <None Remove="YamlResources\AllPossibleSteps.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\BadEntry.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\BadStructure.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\EmptyFile.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\FileIsNotAMap.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\FixedStringLookupMissing.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\FixedStringLookupMissingValue.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\InvalidExtract.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\LookupMissing.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\LookupSetMissing.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\NoExtract.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\NoTestInput.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\SyntaxErrorExtract1.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\SyntaxErrorExtract2.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\SyntaxErrorRequire.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\SyntaxErrorVariable1.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\SyntaxErrorVariable2.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\Variable-BackReference.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\Variable-BadDefinition.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\Variable-FixedString.yaml" />
+    <None Remove="YamlResources\CheckErrorOutput.yaml" />
+    <None Remove="YamlResources\CheckNewTestcaseOutput.yaml" />
+    <None Remove="YamlResources\CompanyInternalUserAgents.yaml" />
+    <None Remove="YamlResources\DebugOutput-tests.yaml" />
+    <None Remove="YamlResources\DocumentationExample.yaml" />
+    <None Remove="YamlResources\Edgecases-tests.yaml" />
+    <None Remove="YamlResources\ExtraLoadedRule1.yaml" />
+    <None Remove="YamlResources\ExtraLoadedRule2.yaml" />
+    <None Remove="YamlResources\TestCases\GenerateAllPossibleSteps\AllPossibleStepsTests.yaml" />
+    <None Remove="YamlResources\Lookup-tests.yaml" />
+    <None Remove="YamlResources\Matcher-IsNull-tests.yaml" />
+    <None Remove="YamlResources\Matcher-nested-functions.yaml" />
+    <None Remove="YamlResources\Matcher-tests.yaml" />
+    <None Remove="YamlResources\Positional-tests.yaml" />
+    <None Remove="YamlResources\SubString-tests.yaml" />
+    <None Remove="YamlResources\SubStringVersion-tests.yaml" />
+    <None Remove="YamlResources\TestOnlyOneTest.yaml" />
+    <None Remove="YamlResources\Variable-tests.yaml" />
+    <None Remove="YamlResources\TestCases\Versions\BadVersion.yaml" />
+    <None Remove="YamlResources\TestCases\Versions\BadVersionNotMap.yaml" />
+    <None Remove="YamlResources\TestCases\Versions\DifferentVersion.yaml" />
+    <None Remove="YamlResources\Walking-tests.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\BadConfig1.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\BadConfig2.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\Empty.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\InputAbsent.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\InputNotString.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\KeyNotString.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\NotAMap.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\NotAMapFile.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\NotSingle.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\NotStringList1.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\NotStringList2.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\ParseError.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\TopNotConfig.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="YamlResources\TestCases\AllFields-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\AllPossibleSteps.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\BadEntry.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\BadStructure.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\EmptyFile.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\FileIsNotAMap.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\FixedStringLookupMissing.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\FixedStringLookupMissingValue.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\InvalidExtract.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\LookupMissing.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\LookupSetMissing.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\NoExtract.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\NoTestInput.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\SyntaxErrorExtract1.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\SyntaxErrorExtract2.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\SyntaxErrorRequire.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\SyntaxErrorVariable1.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\SyntaxErrorVariable2.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\Variable-BackReference.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\Variable-BadDefinition.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\Variable-FixedString.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\CheckErrorOutput.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\CheckNewTestcaseOutput.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\CompanyInternalUserAgents.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\DebugOutput-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\DocumentationExample.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Edgecases-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\ExtraLoadedRule1.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\ExtraLoadedRule2.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\GenerateAllPossibleSteps\AllPossibleStepsTests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Lookup-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Matcher-IsNull-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Matcher-nested-functions.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Matcher-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Positional-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\SubString-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\SubStringVersion-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\TestOnlyOneTest.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Variable-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Versions\BadVersion.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Versions\BadVersionNotMap.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Versions\DifferentVersion.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\Walking-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\BadConfig1.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\BadConfig2.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\Empty.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\InputAbsent.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\InputNotString.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\KeyNotString.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\NotAMap.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\NotAMapFile.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\NotSingle.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\NotStringList1.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\NotStringList2.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\ParseError.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\TopNotConfig.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.5.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
