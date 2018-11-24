@@ -29,6 +29,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
     using FluentAssertions;
     using OrbintSoft.Yauaa.Debug;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using Xunit;
 
     /// <summary>
@@ -42,7 +43,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void RunDocumentationExample()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester("YamlResources", "DocumentationExample.yaml");
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH , "DocumentationExample.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
     }

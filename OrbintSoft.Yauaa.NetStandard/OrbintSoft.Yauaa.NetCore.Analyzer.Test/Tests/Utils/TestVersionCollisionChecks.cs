@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using System;
     using Xunit;
 
@@ -50,7 +51,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
              .DelayInitialization()
              .Build();
 
-            Action a = new Action(() => uaa.LoadResources("YamlResources/Versions", "BadVersion.yaml"));
+            Action a = new Action(() => uaa.LoadResources(Config.RESOURCES_PATH + "/Versions", "BadVersion.yaml"));
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("Found unexpected config entry: bad"));
         }
 
@@ -67,7 +68,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
             .DelayInitialization()
             .Build();
 
-            Action a = new Action(() => uaa.LoadResources("YamlResources/Versions", "BadVersionNotMap.yaml"));
+            Action a = new Action(() => uaa.LoadResources(Config.RESOURCES_PATH + "/Versions", "BadVersionNotMap.yaml"));
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("The value should be a string but it is a Sequence"));
         }
 
@@ -82,7 +83,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
              .DelayInitialization()
              .Build();
 
-            Action a = new Action(() => uaa.LoadResources("YamlResources/Versions", "DifferentVersion.yaml"));
+            Action a = new Action(() => uaa.LoadResources(Config.RESOURCES_PATH + "/Versions", "DifferentVersion.yaml"));
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("Two different Yauaa versions have been loaded:"));
         }
 

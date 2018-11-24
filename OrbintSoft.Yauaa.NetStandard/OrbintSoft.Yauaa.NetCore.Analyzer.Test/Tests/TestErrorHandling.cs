@@ -32,6 +32,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
     using OrbintSoft.Yauaa.Debug;
     using OrbintSoft.Yauaa.Parse;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using System;
     using Xunit;
 
@@ -62,7 +63,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckNoFile()
         {
-            RunTest("YamlResources/BadDefinitions", "ThisOneDoesNotExist---Really.yaml", "Unable to find ANY config files");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "ThisOneDoesNotExist---Really.yaml", "Unable to find ANY config files");
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckEmptyFile()
         {
-            RunTest("YamlResources/BadDefinitions", "EmptyFile.yaml", "The file EmptyFile.yaml is empty");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "EmptyFile.yaml", "The file EmptyFile.yaml is empty");
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckFileIsNotAMap()
         {
-            RunTest("YamlResources/BadDefinitions", "FileIsNotAMap.yaml", "Yaml config problem.(FileIsNotAMap.yaml:21): The value should be a sequence but it is a Mapping");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "FileIsNotAMap.yaml", "Yaml config problem.(FileIsNotAMap.yaml:21): The value should be a sequence but it is a Mapping");
         }
 
         /// <summary>
@@ -89,7 +90,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckLookupSetMissing()
         {
-            RunTest("YamlResources/BadDefinitions", "LookupSetMissing.yaml", "Missing lookupSet");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "LookupSetMissing.yaml", "Missing lookupSet");
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckBadEntry()
         {
-            RunTest("YamlResources/BadDefinitions", "BadEntry.yaml", "Found unexpected config entry:");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "BadEntry.yaml", "Found unexpected config entry:");
         }
 
         /// <summary>
@@ -107,7 +108,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckLookupMissing()
         {
-            RunTest("YamlResources/BadDefinitions", "LookupMissing.yaml", "Missing lookup");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "LookupMissing.yaml", "Missing lookup");
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckFixedStringLookupMissing()
         {
-            RunTest("YamlResources/BadDefinitions", "FixedStringLookupMissing.yaml", "Missing lookup");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "FixedStringLookupMissing.yaml", "Missing lookup");
         }
 
         /// <summary>
@@ -125,7 +126,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckNoExtract()
         {
-            RunTest("YamlResources/BadDefinitions", "NoExtract.yaml", "Matcher does not extract anything");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "NoExtract.yaml", "Matcher does not extract anything");
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckInvalidExtract()
         {
-            RunTest("YamlResources/BadDefinitions", "InvalidExtract.yaml", "Invalid extract config line: agent.text=\"foo\"");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "InvalidExtract.yaml", "Invalid extract config line: agent.text=\"foo\"");
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckNoTestInput()
         {
-            RunTest("YamlResources/BadDefinitions", "NoTestInput.yaml", "Test is missing input");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "NoTestInput.yaml", "Test is missing input");
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorRequire()
         {
-            RunTest("YamlResources/BadDefinitions", "SyntaxErrorRequire.yaml", "Syntax error");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "SyntaxErrorRequire.yaml", "Syntax error");
         }
 
         /// <summary>
@@ -161,7 +162,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorExtract1()
         {
-            RunTest("YamlResources/BadDefinitions", "SyntaxErrorExtract1.yaml", "Syntax error");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "SyntaxErrorExtract1.yaml", "Syntax error");
         }
 
         /// <summary>
@@ -170,7 +171,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorExtract2()
         {
-            RunTest("YamlResources/BadDefinitions", "SyntaxErrorExtract2.yaml", "Invalid extract config line");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "SyntaxErrorExtract2.yaml", "Invalid extract config line");
         }
 
         /// <summary>
@@ -179,7 +180,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorVariable1()
         {
-            RunTest("YamlResources/BadDefinitions", "SyntaxErrorVariable1.yaml", "Syntax error");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "SyntaxErrorVariable1.yaml", "Syntax error");
         }
 
         /// <summary>
@@ -188,7 +189,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorVariable2()
         {
-            RunTest("YamlResources/BadDefinitions", "SyntaxErrorVariable2.yaml", "Invalid variable config line:");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "SyntaxErrorVariable2.yaml", "Invalid variable config line:");
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorVariableBackReference()
         {
-            RunTest("YamlResources/BadDefinitions", "Variable-BackReference.yaml", "Syntax error");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "Variable-BackReference.yaml", "Syntax error");
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorVariableBadDefinition()
         {
-            RunTest("YamlResources/BadDefinitions", "Variable-BadDefinition.yaml", "Invalid variable config line:");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "Variable-BadDefinition.yaml", "Invalid variable config line:");
         }
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void CheckSyntaxErrorVariableFixedString()
         {
-            RunTest("YamlResources/BadDefinitions", "Variable-FixedString.yaml", "Syntax error");
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "Variable-FixedString.yaml", "Syntax error");
         }
 
         /// <summary>

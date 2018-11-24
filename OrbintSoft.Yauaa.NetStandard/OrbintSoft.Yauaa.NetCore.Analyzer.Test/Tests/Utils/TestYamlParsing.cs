@@ -29,6 +29,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
     using FluentAssertions;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Analyzer;
+    using OrbintSoft.Yauaa.Tests;
     using System;
     using Xunit;
 
@@ -51,7 +52,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
                 .DelayInitialization()
                 .Build();
 
-            Action a = new Action(() => { uaa.LoadResources("YamlResources/YamlParsingTests", inputFilename); });
+            Action a = new Action(() => { uaa.LoadResources(Config.RESOURCES_PATH + "/YamlParsingTests", inputFilename); });
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains(message));
         }
 

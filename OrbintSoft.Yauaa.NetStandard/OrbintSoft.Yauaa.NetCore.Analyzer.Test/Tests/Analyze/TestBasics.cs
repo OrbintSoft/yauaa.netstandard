@@ -29,6 +29,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
     using FluentAssertions;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using Xunit;
 
     /// <summary>
@@ -43,7 +44,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         public void TestCacheSetter()
         {
             UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer.NewBuilder().Build();
-            userAgentAnalyzer.LoadResources("YamlResources", "*-tests.yaml");
+            userAgentAnalyzer.LoadResources(Config.RESOURCES_PATH, "*-tests.yaml");
 
             userAgentAnalyzer.GetCacheSize().Should().Be(10000, "Default cache size");
 
@@ -73,7 +74,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         public void TestUserAgentMaxLengthSetter()
         {
             UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer.NewBuilder().Build();
-            userAgentAnalyzer.LoadResources("YamlResources", "*-tests.yaml");
+            userAgentAnalyzer.LoadResources(Config.RESOURCES_PATH, "*-tests.yaml");
 
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(UserAgentAnalyzerDirect.DEFAULT_USER_AGENT_MAX_LENGTH, "Default user agent max length");
 

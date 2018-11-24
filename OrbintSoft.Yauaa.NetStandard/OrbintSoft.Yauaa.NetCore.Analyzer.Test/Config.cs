@@ -2,5 +2,6 @@
 {
     public static class Config
     {
+        public const string RESOURCES_PATH = "YamlResources/TestCases";
     }
 }

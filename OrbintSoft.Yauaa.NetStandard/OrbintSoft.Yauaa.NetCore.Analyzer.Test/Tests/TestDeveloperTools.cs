@@ -31,6 +31,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Debug;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using Xunit;
 
     /// <summary>
@@ -52,7 +53,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
                 .Build() as UserAgentAnalyzerTester;
             uaa.SetShowMatcherStats(true);
             uaa.KeepTests();
-            uaa.LoadResources("YamlResources", "CheckErrorOutput.yaml");
+            uaa.LoadResources(Config.RESOURCES_PATH , "CheckErrorOutput.yaml");
             uaa.RunTests(false, true).Should().BeFalse();  // This test must return an error state
         }
 
@@ -70,7 +71,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             .Build() as UserAgentAnalyzerTester;
             uaa.SetShowMatcherStats(true);
             uaa.KeepTests();
-            uaa.LoadResources("YamlResources", "CheckNewTestcaseOutput.yaml");
+            uaa.LoadResources(Config.RESOURCES_PATH, "CheckNewTestcaseOutput.yaml");
             uaa.RunTests(false, true).Should().BeTrue();  // This test must return an error state
         }
 

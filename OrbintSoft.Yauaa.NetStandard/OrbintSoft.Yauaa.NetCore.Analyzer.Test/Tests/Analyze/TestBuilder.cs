@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using System;
     using Xunit;
 
@@ -138,10 +139,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .WithField("DeviceClass")
                     .WithoutCache()
                     .HideMatcherLoadStats()
-                    .AddResources("YamlResources", "ExtraLoadedRule1.yaml")
+                    .AddResources(Config.RESOURCES_PATH, "ExtraLoadedRule1.yaml")
                     .WithField("ExtraValue2")
                     .WithField("ExtraValue1")
-                    .AddResources("YamlResources", "ExtraLoadedRule2.yaml")
+                    .AddResources(Config.RESOURCES_PATH, "ExtraLoadedRule2.yaml")
                     .Build();
 
             UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) " +
@@ -164,10 +165,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .NewBuilder()
                     .WithoutCache()
                     .HideMatcherLoadStats()
-                    .AddResources("YamlResources", "ExtraLoadedRule1.yaml")
+                    .AddResources(Config.RESOURCES_PATH, "ExtraLoadedRule1.yaml")
                     .WithField("ExtraValue2")
                     .WithField("ExtraValue1")
-                    .AddResources("YamlResources", "ExtraLoadedRule2.yaml")
+                    .AddResources(Config.RESOURCES_PATH, "ExtraLoadedRule2.yaml")
                     .Build();
 
             UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) " +
@@ -190,7 +191,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .WithoutCache()
                     .HideMatcherLoadStats()
                     .DropDefaultResources()
-                    .AddResources("YamlResources", "CompanyInternalUserAgents.yaml")
+                    .AddResources(Config.RESOURCES_PATH, "CompanyInternalUserAgents.yaml")
                     .WithFields("ApplicationName", "ApplicationVersion")
                     .WithFields("ApplicationInstance", "ApplicationGitCommit")
                     .WithField("ServerName")
