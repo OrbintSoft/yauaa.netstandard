@@ -17,7 +17,7 @@ HIGH Profile release notes:
 
 5.4-beta.2
 --------
-**BREAKING CHANGE:**: Namespace has been updated, the old namespace was an adaption of Java package id, but in .NET we love soimple and clean namespaces
+**BREAKING CHANGE:** Namespace has been updated, the old namespace was an adaption of Java package id, but in .NET we love simple and clean namespaces
 
 
 5.4-beta.1
