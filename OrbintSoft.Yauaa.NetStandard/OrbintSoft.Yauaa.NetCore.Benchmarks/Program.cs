@@ -40,7 +40,7 @@ namespace OrbintSoft.Yauaa.Benchmarking
         /// <param name="args">The args<see cref="string[]"/></param>
         public static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<AnalyzerBenchmarks>();
+            BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
         }
     }
 }

@@ -17,10 +17,11 @@
     <Company>OrbintSoft</Company>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <PackageId>OrbintSoft.Yauaa.NetCore.Benchmarking</PackageId>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.11.3" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.11.1" />
   </ItemGroup>
 
   <ItemGroup>
