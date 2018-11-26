@@ -1,0 +1,44 @@
+2018-11-23 11:13:44_882 UTC [INFO ] THREAD:27  | Create analyzer
+2018-11-23 11:13:44_882 UTC [INFO ] THREAD:27  | 
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | | Yauaa 0.0.274 (b54694c @ 636785719734132838)                                                                 |
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | 
+2018-11-23 11:13:44_883 UTC [INFO ] THREAD:27  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-23 11:13:46_403 UTC [INFO ] THREAD:16  | Loaded 76 files in 7284 msec
+2018-11-23 11:13:46_414 UTC [INFO ] THREAD:16  | Building all needed matchers for the requested 2 fields.
+2018-11-23 11:13:46_724 UTC [INFO ] THREAD:16  | Loading 1204 (dropped 1938) matchers, 35 lookups, 3 lookupsets, 0 testcases from 67 files took 310 msec
+2018-11-23 11:13:46_800 UTC [INFO ] THREAD:17  | Loaded 76 files in 7992 msec
+2018-11-23 11:13:46_829 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "NoExtract.yaml"
+2018-11-23 11:13:46_830 UTC [INFO ] THREAD:16  | Loaded 1 files in 0 msec
+2018-11-23 11:13:46_830 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 11:13:46_836 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "NoTestInput.yaml"
+2018-11-23 11:13:46_838 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "LookupSetMissing.yaml"
+2018-11-23 11:13:46_839 UTC [INFO ] THREAD:17  | Building all matchers for all possible fields.
+2018-11-23 11:13:46_839 UTC [INFO ] THREAD:16  | Loaded 1 files in 1 msec
+2018-11-23 11:13:46_839 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 11:13:46_839 UTC [INFO ] THREAD:16  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-23 11:13:46_840 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
+2018-11-23 11:13:46_841 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "InvalidExtract.yaml"
+2018-11-23 11:13:46_842 UTC [INFO ] THREAD:16  | Loaded 1 files in 0 msec
+2018-11-23 11:13:46_842 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 11:13:46_842 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "Variable-BackReference.yaml"
+2018-11-23 11:13:46_843 UTC [INFO ] THREAD:16  | Loaded 1 files in 0 msec
+2018-11-23 11:13:46_843 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 11:13:46_843 UTC [INFO ] THREAD:16  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-23 11:13:46_843 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
+2018-11-23 11:13:46_850 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "EmptyFile.yaml"
+2018-11-23 11:13:46_852 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "SyntaxErrorExtract1.yaml"
+2018-11-23 11:13:46_852 UTC [INFO ] THREAD:16  | Loaded 1 files in 0 msec
+2018-11-23 11:13:46_852 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 11:13:46_852 UTC [INFO ] THREAD:16  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-23 11:13:46_852 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
+2018-11-23 11:13:46_853 UTC [ERROR] THREAD:16  | Syntax error
+2018-11-23 11:13:46_853 UTC [ERROR] THREAD:16  | Source : ===
+2018-11-23 11:13:46_853 UTC [ERROR] THREAD:16  | Message: mismatched input '=' expecting {'Concat', 'NormalizeBrand', 'CleanVersion', 'LookUp', 'agent', VALUE, '@'}
+2018-11-23 11:13:46_853 UTC [INFO ] THREAD:16  | Loading from: "YamlResources/BadDefinitions": "SyntaxErrorExtract2.yaml"
+2018-11-23 11:13:46_854 UTC [INFO ] THREAD:16  | Loaded 1 files in 0 msec
+2018-11-23 11:13:46_854 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.

@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.NetStandard", "OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj", "{7946B4BC-AF19-4D5D-8DA8-56858E674777}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Benchmarking.NetCore", "OrbintSoft.Yauaa.NetCore.Benchmarks\OrbintSoft.Yauaa.Benchmarking.NetCore.csproj", "{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Benchmarking.NetCore", "OrbintSoft.Yauaa.Benchmarking.NetCore\OrbintSoft.Yauaa.Benchmarking.NetCore.csproj", "{E7B76514-DAEF-4406-ADF7-7C7427EC0B53}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Testing.NetCore", "OrbintSoft.Yauaa.NetCore.Analyzer.Test\OrbintSoft.Yauaa.Testing.NetCore.csproj", "{F00F6CDE-E35F-4841-B056-C6FE8292CC38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Testing.NetCore", "OrbintSoft.Yauaa.Testing.NetCore\OrbintSoft.Yauaa.Testing.NetCore.csproj", "{F00F6CDE-E35F-4841-B056-C6FE8292CC38}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbintSoft.Yauaa.Commandline.NetCore", "OrbintSoft.Yauaa.Commandline.NetCore\OrbintSoft.Yauaa.Commandline.NetCore.csproj", "{8B891255-0BB7-4898-8CE4-834223130F18}"
 EndProject

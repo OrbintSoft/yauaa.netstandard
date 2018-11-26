@@ -1,0 +1,46 @@
+2018-11-24 17:36:38_121 UTC [INFO ] THREAD:21  | 
+2018-11-24 17:36:38_121 UTC [INFO ] THREAD:21  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 17:36:38_121 UTC [INFO ] THREAD:21  | | Yauaa 0.0.289 (ddc7a77 @ 636786790476178254)                                                                 |
+2018-11-24 17:36:38_121 UTC [INFO ] THREAD:21  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 17:36:38_121 UTC [INFO ] THREAD:21  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 17:36:38_121 UTC [INFO ] THREAD:21  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 17:36:38_122 UTC [INFO ] THREAD:21  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 17:36:38_122 UTC [INFO ] THREAD:21  | 
+2018-11-24 17:36:38_122 UTC [INFO ] THREAD:21  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-24 17:36:38_155 UTC [INFO ] THREAD:19  | Loading 3142 (dropped 0) matchers, 35 lookups, 3 lookupsets, 1449 testcases from 67 files took 218 msec
+2018-11-24 17:36:38_155 UTC [INFO ] THREAD:24  | Loaded 76 files in 7640 msec
+2018-11-24 17:36:38_181 UTC [INFO ] THREAD:24  | Building all needed matchers for the requested 4 fields.
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | 
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | | Yauaa 0.0.289 (ddc7a77 @ 636786790476178254)                                                                 |
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | 
+2018-11-24 17:36:38_182 UTC [INFO ] THREAD:19  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-24 17:36:38_320 UTC [INFO ] THREAD:24  | Loading 2852 (dropped 290) matchers, 35 lookups, 3 lookupsets, 1449 testcases from 67 files took 139 msec
+2018-11-24 17:36:38_347 UTC [INFO ] THREAD:24  | Initializing Analyzer data structures
+2018-11-24 17:36:38_375 UTC [INFO ] THREAD:23  | Loading 1083 (dropped 2059) matchers, 35 lookups, 3 lookupsets, 0 testcases from 67 files took 424 msec
+2018-11-24 17:36:38_404 UTC [INFO ] THREAD:23  | 
+2018-11-24 17:36:38_404 UTC [INFO ] THREAD:23  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 17:36:38_404 UTC [INFO ] THREAD:23  | | Yauaa 0.0.289 (ddc7a77 @ 636786790476178254)                                                                 |
+2018-11-24 17:36:38_404 UTC [INFO ] THREAD:23  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 17:36:38_404 UTC [INFO ] THREAD:23  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 17:36:38_404 UTC [INFO ] THREAD:23  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 17:36:38_404 UTC [INFO ] THREAD:23  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 17:36:38_405 UTC [INFO ] THREAD:23  | 
+2018-11-24 17:36:38_405 UTC [INFO ] THREAD:23  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-24 17:36:38_715 UTC [INFO ] THREAD:25  | Loaded 76 files in 7488 msec
+2018-11-24 17:36:38_774 UTC [INFO ] THREAD:25  | Building all needed matchers for the requested 5 fields.
+2018-11-24 17:36:38_885 UTC [INFO ] THREAD:17  | Loaded 76 files in 6967 msec
+2018-11-24 17:36:38_895 UTC [INFO ] THREAD:17  | Building all needed matchers for the requested 2 fields.
+2018-11-24 17:36:38_930 UTC [INFO ] THREAD:25  | Loading 2880 (dropped 262) matchers, 35 lookups, 3 lookupsets, 1449 testcases from 67 files took 155 msec
+2018-11-24 17:36:38_942 UTC [INFO ] THREAD:16  | Loaded 76 files in 6959 msec
+2018-11-24 17:36:38_957 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-24 17:36:38_968 UTC [INFO ] THREAD:25  | Initializing Analyzer data structures
+2018-11-24 17:36:39_079 UTC [INFO ] THREAD:16  | Loading 3142 (dropped 0) matchers, 35 lookups, 3 lookupsets, 1449 testcases from 67 files took 121 msec
+2018-11-24 17:36:39_258 UTC [INFO ] THREAD:17  | Loading 1204 (dropped 1938) matchers, 35 lookups, 3 lookupsets, 0 testcases from 67 files took 363 msec
+2018-11-24 17:36:39_268 UTC [INFO ] THREAD:17  | Loading from: "YamlResources/TestCases/BadDefinitions": "InvalidExtract.yaml"
+2018-11-24 17:36:39_276 UTC [INFO ] THREAD:17  | Loaded 1 files in 8 msec
+2018-11-24 17:36:39_276 UTC [INFO ] THREAD:17  | Building all matchers for all possible fields.

@@ -1,0 +1,7 @@
+2018-11-24 10:42:45_702 UTC [INFO ] THREAD:27  | Loaded 1 files in 116 msec
+2018-11-24 10:42:45_722 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:45_722 UTC [ERROR] THREAD:17  | Syntax error
+2018-11-24 10:42:45_722 UTC [ERROR] THREAD:17  | Source : agent.product.(1)name[3]"Safari"
+2018-11-24 10:42:45_722 UTC [ERROR] THREAD:17  | Message: extraneous input '"Safari"' expecting <EOF>
+2018-11-24 10:42:45_724 UTC [INFO ] THREAD:27  | Loading 180 (dropped 0) matchers, 0 lookups, 0 lookupsets, 49 testcases from 1 files took 2 msec
+2018-11-24 10:42:45_724 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures

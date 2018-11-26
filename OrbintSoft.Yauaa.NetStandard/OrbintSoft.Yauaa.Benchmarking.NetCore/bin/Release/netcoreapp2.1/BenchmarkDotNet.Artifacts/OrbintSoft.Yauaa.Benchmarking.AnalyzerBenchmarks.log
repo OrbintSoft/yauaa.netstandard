@@ -1,0 +1,39 @@
+// Validating benchmarks:
+// ***** BenchmarkRunner: Start   *****
+// ***** Building 1 exe(s) in Parallel: Start   *****
+// start dotnet restore  /p:UseSharedCompilation=false in S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Benchmarks\bin\Release\netcoreapp2.1\6a6274af-08df-4352-8136-7ce7f88262c2
+// command took 3,15s and exited with 0
+// start dotnet build -c Release  /p:UseSharedCompilation=false in S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Benchmarks\bin\Release\netcoreapp2.1\6a6274af-08df-4352-8136-7ce7f88262c2
+// command took 2,85s and exited with 1
+// start dotnet build -c Release  --no-dependencies /p:UseSharedCompilation=false in S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Benchmarks\bin\Release\netcoreapp2.1\6a6274af-08df-4352-8136-7ce7f88262c2
+// command took 4,16s and exited with 0
+// ***** Done, took 00:00:25 (25.97 sec)   *****
+// Found benchmarks:
+//   AnalyzerBenchmarks.Android6Chrome46: DefaultJob
+//   AnalyzerBenchmarks.AndroidPhone: DefaultJob
+//   AnalyzerBenchmarks.Googlebot: DefaultJob
+//   AnalyzerBenchmarks.GoogleBotMobileAndroid: DefaultJob
+//   AnalyzerBenchmarks.GoogleAdsBot: DefaultJob
+//   AnalyzerBenchmarks.GoogleAdsBotMobile: DefaultJob
+//   AnalyzerBenchmarks.IPhone: DefaultJob
+//   AnalyzerBenchmarks.IPhoneFacebookApp: DefaultJob
+//   AnalyzerBenchmarks.IPad: DefaultJob
+//   AnalyzerBenchmarks.Win7ie11: DefaultJob
+//   AnalyzerBenchmarks.Win10Edge13: DefaultJob
+//   AnalyzerBenchmarks.Win10Chrome51: DefaultJob
+//   AnalyzerBenchmarks.Win10IE11: DefaultJob
+//   AnalyzerBenchmarks.HackerSQL: DefaultJob
+//   AnalyzerBenchmarks.HackerShellShock: DefaultJob
+
+// **************************
+// Benchmark: AnalyzerBenchmarks.Android6Chrome46: DefaultJob
+// *** Execute ***
+// Launch: 1 / 1
+// BeforeAnythingElse
+
+// Benchmark Process Environment Information:
+// Runtime=.NET Core 2.1.6 (CoreCLR 4.6.27019.06, CoreFX 4.6.27019.05), 64bit RyuJIT
+// GC=Concurrent Workstation
+// Job: DefaultJob
+
+Process dotnet.exe (Id:1792) is still running, will now be killed

@@ -1,0 +1,86 @@
+2018-11-24 10:42:54_761 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "BadEntry.yaml"
+2018-11-24 10:42:54_780 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "Variable-BadDefinition.yaml"
+2018-11-24 10:42:54_785 UTC [INFO ] THREAD:27  | Loaded 1 files in 4 msec
+2018-11-24 10:42:54_785 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:54_786 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "SyntaxErrorVariable1.yaml"
+2018-11-24 10:42:54_787 UTC [INFO ] THREAD:27  | Loaded 1 files in 0 msec
+2018-11-24 10:42:54_787 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:54_787 UTC [INFO ] THREAD:27  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-24 10:42:54_787 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:54_793 UTC [ERROR] THREAD:27  | Syntax error
+2018-11-24 10:42:54_793 UTC [ERROR] THREAD:27  | Source : ===
+2018-11-24 10:42:54_793 UTC [ERROR] THREAD:27  | Message: mismatched input '=' expecting {'Concat', 'NormalizeBrand', 'CleanVersion', 'LookUp', 'agent', VALUE, '@'}
+2018-11-24 10:42:54_794 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "SyntaxErrorVariable2.yaml"
+2018-11-24 10:42:54_803 UTC [INFO ] THREAD:27  | Loaded 1 files in 8 msec
+2018-11-24 10:42:54_803 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:54_804 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "SyntaxErrorRequire.yaml"
+2018-11-24 10:42:54_805 UTC [INFO ] THREAD:27  | Loaded 1 files in 0 msec
+2018-11-24 10:42:54_805 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:54_805 UTC [INFO ] THREAD:27  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-24 10:42:54_805 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:54_805 UTC [ERROR] THREAD:27  | Syntax error
+2018-11-24 10:42:54_806 UTC [ERROR] THREAD:27  | Source : ===
+2018-11-24 10:42:54_806 UTC [ERROR] THREAD:27  | Message: mismatched input '=' expecting {'IsNull', 'Concat', 'NormalizeBrand', 'CleanVersion', 'LookUp', 'agent', VALUE, '@'}
+2018-11-24 10:42:54_806 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "FileIsNotAMap.yaml"
+2018-11-24 10:42:54_812 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "ThisOneDoesNotExist---Really.yaml"
+2018-11-24 10:42:54_819 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "Variable-FixedString.yaml"
+2018-11-24 10:42:54_828 UTC [INFO ] THREAD:27  | Loaded 1 files in 9 msec
+2018-11-24 10:42:54_829 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:54_829 UTC [INFO ] THREAD:27  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-24 10:42:54_829 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:54_830 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "FixedStringLookupMissing.yaml"
+2018-11-24 10:42:54_831 UTC [INFO ] THREAD:27  | Loaded 1 files in 0 msec
+2018-11-24 10:42:54_831 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:54_831 UTC [INFO ] THREAD:27  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-24 10:42:54_831 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:54_838 UTC [INFO ] THREAD:27  | Loading from: "YamlResources/BadDefinitions": "LookupMissing.yaml"
+2018-11-24 10:42:54_839 UTC [INFO ] THREAD:27  | Loaded 1 files in 0 msec
+2018-11-24 10:42:54_839 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:54_840 UTC [INFO ] THREAD:27  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 0 testcases from 1 files took 0 msec
+2018-11-24 10:42:54_840 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:54_845 UTC [INFO ] THREAD:27  | 
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | | Yauaa 0.0.286 (650f546 @ 636786565453569783)                                                                 |
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | 
+2018-11-24 10:42:54_851 UTC [INFO ] THREAD:27  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-24 10:42:57_473 UTC [INFO ] THREAD:16  | The UserAgentAnalyzer was serialized into 14766729 bytes
+2018-11-24 10:42:57_473 UTC [INFO ] THREAD:16  | --------------------------------------------------------------
+2018-11-24 10:42:57_473 UTC [INFO ] THREAD:16  | Deserialize
+2018-11-24 10:42:59_279 UTC [INFO ] THREAD:22  | Loaded 76 files in 9038 msec
+2018-11-24 10:42:59_314 UTC [INFO ] THREAD:22  | Building all matchers for all possible fields.
+2018-11-24 10:42:59_563 UTC [INFO ] THREAD:22  | Loading 3142 (dropped 0) matchers, 35 lookups, 3 lookupsets, 0 testcases from 67 files took 249 msec
+2018-11-24 10:42:59_564 UTC [INFO ] THREAD:22  | Loading from: "YamlResources/Versions": "DifferentVersion.yaml"
+2018-11-24 10:42:59_565 UTC [INFO ] THREAD:25  | Loaded 76 files in 9197 msec
+2018-11-24 10:42:59_575 UTC [ERROR] THREAD:22  | ===============================================
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | ==========        FATAL ERROR       ===========
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | 
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | Two different Yauaa versions have been loaded:
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | Runtime Library: Yauaa 0.0.286 (650f546 @ 636786565453569783)
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | Rule sets      : Yauaa 0.1 (v0.1-dirty @ 2011-11-01T01:01:01Z)
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | 
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2018-11-24 10:42:59_576 UTC [ERROR] THREAD:22  | ===============================================
+2018-11-24 10:42:59_577 UTC [INFO ] THREAD:25  | Building all matchers for all possible fields.
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | | Yauaa 0.0.286 (650f546 @ 636786565453569783)                                                                 |
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 10:42:59_583 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:42:59_584 UTC [INFO ] THREAD:22  | Loading from: "YamlResources/Versions": "BadVersionNotMap.yaml"
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | | Yauaa 0.0.286 (650f546 @ 636786565453569783)                                                                 |
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:42:59_596 UTC [INFO ] THREAD:22  | Loading from: "YamlResources/Versions": "BadVersion.yaml"

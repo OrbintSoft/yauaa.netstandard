@@ -1,0 +1,183 @@
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | Building all matchers for all possible fields.
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | VARIABLE: agent.(1)product.(1)name
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | REQUIRE: LookUp[Dummy;@FirstProductName;"Fake"]
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | REQUIRE: IsNull[@FirstProductName^.name="Word"!="Other"^.name[1]@{"Start"}"End"@@[-1][2-3][3-]<><>><<]
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | EXTRACT: @FirstProductName^.(1)comments.(1-3)entry.(1)text[-1]="One"@[3]="Three"@[2]
+2018-11-24 10:43:00_047 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | REQUIRE: agent.(1)product.(1)name="Word"
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | EXTRACT: CleanVersion[LookUp[Dummy;agent.(1)product.(1)name^.name="Bla";"Default"]]
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | EXTRACT: CleanVersion[LookUp[Dummy;agent.(1)product.(1)name^.name="Bla"]]
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_054 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | EXTRACT: CleanVersion[LookUp[Dummy;agent.(1)product.(1)name="Bla"]]
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | REQUIRE: CleanVersion[LookUp[Dummy;agent.(1)product.(1)name^.name="Word"]]
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | EXTRACT: "Bar"
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | VARIABLE: agent.(1)product
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | REQUIRE: @Product
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | REQUIRE: @Product.(1)name?LookupSet
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | EXTRACT: Concat["-->";agent.(1)product.(1)name      ]
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | EXTRACT: Concat[      agent.(1)product.(1)name;"<--"]
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | EXTRACT: Concat["-->";agent.(1)product.(1)name;"<--"]
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | EXTRACT: NormalizeBrand [ agent.(1)product.(1)name^.name]
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | REQUIRE: agent.(1)product.(1)name="Name"
+2018-11-24 10:43:00_055 UTC [INFO ] THREAD:25  | EXTRACT: NormalizeBrand [agent.product.(1)name]
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | | Yauaa 0.0.286 (650f546 @ 636786565453569783)                                                                 |
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | EXTRACT: agent
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="One"^^^^^^^
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="One"^<
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:22  | Loading from: "YamlResources/YamlParsingTests": "InputNotString.yaml"
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_056 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="One"^><<
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Five"^>
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Five"^<>>
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^<
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^<.name
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^<<
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^<<.name
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^<<<
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^<<<.name
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^>
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_057 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^>.name
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^>>
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^>>.name
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^>>>
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^>>>.name
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^^.(2)product
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^.(3)version
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.name="Three"^>="Four/4".version
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<.product
+2018-11-24 10:43:00_058 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<.product.name
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<.product
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_067 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<.product.name
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<<.product
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<<.product.name
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<<<.product
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<<<.product.name
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<<<<.product
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^<<<<<.product.name
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>.product
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>.product.name
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>.product
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>.product.name
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>>.product
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>>.product.name
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_068 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>>>.product
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>>>.product.name
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>>>>.product
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | EXTRACT: agent.product.comments.entry.product.name="Mies"^^>>>>>.product.name
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | ---------------------------
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | - MATCHER -
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | VARIABLE: agent.(1)product.(1)comments.entry.(1)text[-1]="One"
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | REQUIRE: agent.(1)product.(1)comments
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | EXTRACT: @One@[3]="Three"@[2]
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:25  | Loading 196 (dropped 0) matchers, 51 lookups, 4 lookupsets, 0 testcases from 78 files took 22 msec
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | | Yauaa 0.0.286 (650f546 @ 636786565453569783)                                                                 |
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | 
+2018-11-24 10:43:00_069 UTC [INFO ] THREAD:22  | Loading from: "YamlResources/YamlParsingTests": "ParseError.yaml"

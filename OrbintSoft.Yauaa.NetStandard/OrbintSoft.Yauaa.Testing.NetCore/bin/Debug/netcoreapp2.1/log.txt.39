@@ -1,0 +1,21 @@
+2018-11-23 20:39:05_172 UTC [INFO ] THREAD:25  | ----- %Before : Used memory is 149860352 bytes (142 MiB / 167 MiB)
+2018-11-23 20:39:05_172 UTC [INFO ] THREAD:25  | 
+2018-11-23 20:39:05_172 UTC [INFO ] THREAD:25  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-23 20:39:05_172 UTC [INFO ] THREAD:25  | | Yauaa 0.0.281 (4986017 @ 636786059218922246)                                                                 |
+2018-11-23 20:39:05_172 UTC [INFO ] THREAD:25  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-23 20:39:05_172 UTC [INFO ] THREAD:25  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-23 20:39:05_173 UTC [INFO ] THREAD:25  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-23 20:39:05_173 UTC [INFO ] THREAD:25  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-23 20:39:05_173 UTC [INFO ] THREAD:25  | 
+2018-11-23 20:39:05_173 UTC [INFO ] THREAD:25  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-23 20:39:07_889 UTC [INFO ] THREAD:20  | Loaded 76 files in 6776 msec
+2018-11-23 20:39:07_894 UTC [INFO ] THREAD:20  | Building all needed matchers for the requested 2 fields.
+2018-11-23 20:39:08_197 UTC [INFO ] THREAD:20  | Loading 1083 (dropped 2059) matchers, 35 lookups, 3 lookupsets, 0 testcases from 67 files took 302 msec
+2018-11-23 20:39:08_203 UTC [INFO ] THREAD:20  | 
+2018-11-23 20:39:08_209 UTC [INFO ] THREAD:20  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-23 20:39:08_209 UTC [INFO ] THREAD:20  | | Yauaa 0.0.281 (4986017 @ 636786059218922246)                                                                 |
+2018-11-23 20:39:08_209 UTC [INFO ] THREAD:20  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-23 20:39:08_209 UTC [INFO ] THREAD:20  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-23 20:39:08_209 UTC [INFO ] THREAD:20  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-23 20:39:08_209 UTC [INFO ] THREAD:20  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-23 20:39:08_209 UTC [INFO ] THREAD:20  | 

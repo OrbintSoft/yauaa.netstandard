@@ -1,0 +1,4 @@
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Analyzer.Test\obj\Release\netcoreapp2.1\OrbintSoft.Yauaa.Tests.NetCore.csprojAssemblyReference.cache
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Analyzer.Test\obj\Release\netcoreapp2.1\OrbintSoft.Yauaa.Tests.NetCore.csproj.CoreCompileInputs.cache
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Analyzer.Test\obj\Release\netcoreapp2.1\OrbintSoft.Yauaa.Tests.NetCore.AssemblyInfoInputs.cache
+S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Analyzer.Test\obj\Release\netcoreapp2.1\OrbintSoft.Yauaa.Tests.NetCore.AssemblyInfo.cs

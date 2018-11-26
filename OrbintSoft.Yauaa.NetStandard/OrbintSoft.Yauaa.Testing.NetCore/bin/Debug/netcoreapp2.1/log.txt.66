@@ -1,0 +1,40 @@
+2018-11-23 19:43:46_623 UTC [INFO ] THREAD:16  | Built in 117 msec : Hashmap 154, Ranges map:0
+2018-11-23 19:43:46_639 UTC [INFO ] THREAD:24  | ----- %Before : Used memory is 137887744 bytes (131 MiB / 156 MiB)
+2018-11-23 19:43:46_639 UTC [INFO ] THREAD:24  | 
+2018-11-23 19:43:46_639 UTC [INFO ] THREAD:24  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-23 19:43:46_639 UTC [INFO ] THREAD:24  | | Yauaa 0.0.280 (98bdd48 @ 636786025695218660)                                                                 |
+2018-11-23 19:43:46_639 UTC [INFO ] THREAD:24  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-23 19:43:46_640 UTC [INFO ] THREAD:24  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-23 19:43:46_640 UTC [INFO ] THREAD:24  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-23 19:43:46_640 UTC [INFO ] THREAD:24  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-23 19:43:46_640 UTC [INFO ] THREAD:24  | 
+2018-11-23 19:43:46_640 UTC [INFO ] THREAD:24  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-23 19:43:46_675 UTC [INFO ] THREAD:16  | All 3 tests passed
+2018-11-23 19:43:46_675 UTC [INFO ] THREAD:16  | Loading from: "YamlResources": "Matcher-nested-functions.yaml"
+2018-11-23 19:43:46_694 UTC [INFO ] THREAD:16  | Loaded 1 files in 19 msec
+2018-11-23 19:43:46_694 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 19:43:46_695 UTC [INFO ] THREAD:16  | Loading 4 (dropped 0) matchers, 3 lookups, 0 lookupsets, 3 testcases from 1 files took 0 msec
+2018-11-23 19:43:46_695 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
+2018-11-23 19:43:46_697 UTC [INFO ] THREAD:16  | Built in 2 msec : Hashmap 4, Ranges map:0
+2018-11-23 19:43:46_716 UTC [INFO ] THREAD:16  | All 3 tests passed
+2018-11-23 19:43:46_716 UTC [INFO ] THREAD:16  | Loading from: "YamlResources": "SubStringVersion-tests.yaml"
+2018-11-23 19:43:46_733 UTC [INFO ] THREAD:16  | Loaded 1 files in 16 msec
+2018-11-23 19:43:46_733 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 19:43:46_733 UTC [INFO ] THREAD:16  | Loading 23 (dropped 0) matchers, 0 lookups, 0 lookupsets, 1 testcases from 1 files took 0 msec
+2018-11-23 19:43:46_733 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
+2018-11-23 19:43:46_746 UTC [INFO ] THREAD:16  | Built in 12 msec : Hashmap 1050, Ranges map:50
+2018-11-23 19:43:46_747 UTC [INFO ] THREAD:16  | All 1 tests passed
+2018-11-23 19:43:46_747 UTC [INFO ] THREAD:16  | Loading from: "YamlResources": "Matcher-IsNull-tests.yaml"
+2018-11-23 19:43:46_759 UTC [INFO ] THREAD:16  | Loaded 1 files in 11 msec
+2018-11-23 19:43:46_759 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 19:43:46_759 UTC [INFO ] THREAD:16  | Loading 3 (dropped 0) matchers, 0 lookups, 0 lookupsets, 3 testcases from 1 files took 0 msec
+2018-11-23 19:43:46_759 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
+2018-11-23 19:43:46_760 UTC [INFO ] THREAD:16  | Built in 0 msec : Hashmap 54, Ranges map:0
+2018-11-23 19:43:46_761 UTC [INFO ] THREAD:16  | All 3 tests passed
+2018-11-23 19:43:46_761 UTC [INFO ] THREAD:16  | Loading from: "YamlResources": "Edgecases-tests.yaml"
+2018-11-23 19:43:46_793 UTC [INFO ] THREAD:16  | Loaded 1 files in 31 msec
+2018-11-23 19:43:46_793 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
+2018-11-23 19:43:46_794 UTC [INFO ] THREAD:16  | Loading 6 (dropped 0) matchers, 0 lookups, 0 lookupsets, 4 testcases from 1 files took 0 msec
+2018-11-23 19:43:46_794 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
+2018-11-23 19:43:46_794 UTC [INFO ] THREAD:16  | Built in 0 msec : Hashmap 23, Ranges map:8
+2018-11-23 19:43:46_796 UTC [INFO ] THREAD:16  | All 4 tests passed

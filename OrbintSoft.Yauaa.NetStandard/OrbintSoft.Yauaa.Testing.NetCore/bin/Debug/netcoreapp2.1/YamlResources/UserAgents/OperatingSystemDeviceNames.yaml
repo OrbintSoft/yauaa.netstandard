@@ -1,0 +1,3424 @@
+# =============================================
+# THIS FILE WAS GENERATED; DO NOT EDIT MANUALLY
+# =============================================
+#
+# Yet Another UserAgent Analyzer
+# Copyright (C) 2013-2018 Niels Basjes
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+config:
+- set:
+    name: 'OSPatterns'
+    values:
+    - 'ASPLinux'
+    - 'CentOS'
+    - 'Red Hat'
+    - 'Debian'
+    - 'Debian GNU'
+    - 'Fedora'
+    - 'FoxOS'
+    - 'Joli OS'
+    - 'JoliCloud'
+    - 'Linpus'
+    - 'Linspire'
+    - 'Mandriva Linux'
+    - 'Mandriva'
+    - 'Mint'
+    - 'Linux Mint'
+    - 'Edition Linux Mint'
+    - 'Moblin'
+    - 'NaverBot'
+    - 'PCLinuxOS'
+    - 'Slackware'
+    - 'SUSE'
+    - 'Ubuntu'
+    - 'Kubuntu'
+    - 'Xubuntu'
+    - 'Ultimate Edition'
+    - 'Yoper'
+    - 'SugarLabs'
+    - 'SunOS'
+    - 'Solaris'
+    - 'illumOS'
+    - 'MeeGo'
+    - 'Symbian'
+    - 'SymbianOS'
+    - 'Symbian OS'
+    - 'PalmSource'
+    - 'DragonFly'
+    - 'FreeBSD'
+    - 'NetBSD'
+    - 'OpenBSD'
+    - 'hpwOS'
+
+
+# =======================================================================
+# ASPLinux
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"ASPLinux"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="ASPLinux"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="ASPLinux"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"ASPLinux"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="ASPLinux"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"ASPLinux"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"ASPLinux"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="ASPLinux"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="ASPLinux"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"ASPLinux"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="ASPLinux"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"ASPLinux"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="ASPLinux"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"ASPLinux"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# CentOS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"CentOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="CentOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="CentOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"CentOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="CentOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"CentOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"CentOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="CentOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="CentOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"CentOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="CentOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"CentOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="CentOS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"CentOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Red Hat
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Red Hat"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Red Hat"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Red Hat"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Red Hat"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Red Hat"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Red Hat"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Red Hat"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Red Hat"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Red Hat"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Red Hat"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Red Hat"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Red Hat"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Red Hat"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Red Hat"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Debian
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Debian"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Debian"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Debian"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Debian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Debian"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Debian"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Debian"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Debian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Debian"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Debian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Debian GNU
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Debian GNU"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Debian GNU"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Debian GNU"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Debian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Debian GNU"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Debian GNU"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Debian"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Debian GNU"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Debian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Debian GNU"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Debian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Fedora
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Fedora"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Fedora"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Fedora"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Fedora"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Fedora"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Fedora"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Fedora"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Fedora"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Fedora"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Fedora"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Fedora"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Fedora"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Fedora"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Fedora"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# FoxOS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FoxOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="FoxOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="FoxOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FoxOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="FoxOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"FoxOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FoxOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="FoxOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="FoxOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FoxOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="FoxOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"FoxOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="FoxOS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"FoxOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Joli OS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli OS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Joli OS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Joli OS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli OS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Joli OS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Joli OS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli OS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Joli OS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Joli OS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli OS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Joli OS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Joli OS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Joli OS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Joli OS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# JoliCloud
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli Cloud"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="JoliCloud"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="JoliCloud"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli Cloud"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="JoliCloud"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Joli Cloud"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli Cloud"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="JoliCloud"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="JoliCloud"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Joli Cloud"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="JoliCloud"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Joli Cloud"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="JoliCloud"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Joli Cloud"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Linpus
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linpus"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Linpus"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Linpus"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linpus"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Linpus"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Linpus"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linpus"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Linpus"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Linpus"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linpus"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Linpus"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Linpus"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Linpus"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Linpus"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Linspire
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linspire"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Linspire"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Linspire"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linspire"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Linspire"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Linspire"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linspire"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Linspire"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Linspire"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linspire"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Linspire"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Linspire"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Linspire"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Linspire"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Mandriva Linux
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva Linux"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Mandriva Linux"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Mandriva Linux"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva Linux"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Mandriva Linux"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Mandriva Linux"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva Linux"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Mandriva Linux"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Mandriva Linux"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva Linux"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Mandriva Linux"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Mandriva Linux"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Mandriva Linux"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Mandriva Linux"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Mandriva
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Mandriva"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Mandriva"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Mandriva"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Mandriva"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Mandriva"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Mandriva"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Mandriva"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Mandriva"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Mandriva"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Mandriva"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Mandriva"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Mint
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Mint"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Mint"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Mint"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Mint"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Mint"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Mint"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Mint"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Linux Mint
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Linux Mint"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Linux Mint"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Linux Mint"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Linux Mint"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Linux Mint"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Linux Mint"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Linux Mint"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Edition Linux Mint
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Edition Linux Mint"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Edition Linux Mint"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Edition Linux Mint"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Edition Linux Mint"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Edition Linux Mint"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Edition Linux Mint"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Edition Linux Mint"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Linux Mint"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Moblin
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Moblin"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Moblin"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Moblin"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Moblin"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Moblin"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Moblin"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Moblin"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Moblin"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Moblin"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Moblin"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Moblin"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Moblin"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Moblin"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Moblin"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# NaverBot
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NaverBot"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="NaverBot"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="NaverBot"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NaverBot"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="NaverBot"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"NaverBot"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NaverBot"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="NaverBot"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="NaverBot"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NaverBot"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="NaverBot"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"NaverBot"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="NaverBot"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"NaverBot"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# PCLinuxOS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"PCLinuxOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="PCLinuxOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="PCLinuxOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"PCLinuxOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="PCLinuxOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"PCLinuxOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"PCLinuxOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="PCLinuxOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="PCLinuxOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"PCLinuxOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="PCLinuxOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"PCLinuxOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="PCLinuxOS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"PCLinuxOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Slackware
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Slackware"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Slackware"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Slackware"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Slackware"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Slackware"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Slackware"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Slackware"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Slackware"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Slackware"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Slackware"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Slackware"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Slackware"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Slackware"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Slackware"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# SUSE
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SUSE"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="SUSE"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="SUSE"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SUSE"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="SUSE"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"SUSE"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SUSE"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="SUSE"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="SUSE"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SUSE"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="SUSE"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"SUSE"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="SUSE"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"SUSE"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Ubuntu
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ubuntu"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Ubuntu"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Ubuntu"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ubuntu"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Ubuntu"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Ubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ubuntu"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Ubuntu"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Ubuntu"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ubuntu"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Ubuntu"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Ubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Ubuntu"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Ubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Kubuntu
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Kubuntu"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Kubuntu"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Kubuntu"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Kubuntu"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Kubuntu"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Kubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Kubuntu"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Kubuntu"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Kubuntu"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Kubuntu"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Kubuntu"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Kubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Kubuntu"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Kubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Xubuntu
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Xubuntu"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Xubuntu"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Xubuntu"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Xubuntu"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Xubuntu"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Xubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Xubuntu"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Xubuntu"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Xubuntu"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Xubuntu"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Xubuntu"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Xubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Xubuntu"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Xubuntu"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Ultimate Edition
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ultimate Edition"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Ultimate Edition"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Ultimate Edition"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ultimate Edition"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Ultimate Edition"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Ultimate Edition"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ultimate Edition"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Ultimate Edition"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Ultimate Edition"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Ultimate Edition"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Ultimate Edition"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Ultimate Edition"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Ultimate Edition"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Ultimate Edition"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Yoper
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Yoper"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Yoper"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Yoper"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Yoper"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Yoper"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Yoper"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Yoper"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Yoper"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Yoper"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Yoper"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Yoper"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Yoper"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Yoper"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Yoper"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# SugarLabs
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SugarLabs"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="SugarLabs"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="SugarLabs"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SugarLabs"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="SugarLabs"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"SugarLabs"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SugarLabs"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="SugarLabs"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="SugarLabs"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SugarLabs"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="SugarLabs"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"SugarLabs"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="SugarLabs"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"SugarLabs"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# SunOS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"SUN Microsystems Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SunOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="SunOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="SunOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"SUN Microsystems Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SunOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="SunOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"SUN Microsystems Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"SunOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"SUN Microsystems Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SunOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="SunOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="SunOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"SUN Microsystems Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"SunOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="SunOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"SUN Microsystems Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"SunOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="SunOS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"SUN Microsystems Desktop"'
+    - 'DeviceBrand                         :    112 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"SunOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Solaris
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Solaris"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Solaris"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Solaris"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Solaris"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Solaris"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"Solaris"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Solaris"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Solaris"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Solaris"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"Solaris"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Solaris"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"Linux Desktop"'
+    - 'DeviceBrand                         :    111 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"Solaris"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Solaris"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"Linux Desktop"'
+    - 'DeviceBrand                         :    112 :"Sun Microsystems"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"Solaris"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# illumOS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenSolaris Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"illumOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="illumOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="illumOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenSolaris Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"illumOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="illumOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenSolaris Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"illumOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenSolaris Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"illumOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="illumOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="illumOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenSolaris Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"illumOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="illumOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenSolaris Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"illumOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="illumOS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"OpenSolaris Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"illumOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# MeeGo
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"MeeGo Device"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"MeeGo"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="MeeGo"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="MeeGo"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"MeeGo Device"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"MeeGo"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="MeeGo"'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"MeeGo Device"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    151 :"Mobile"'
+    - 'OperatingSystemName                 :    151 :"MeeGo"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"MeeGo Device"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"MeeGo"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="MeeGo"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="MeeGo"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"MeeGo Device"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"MeeGo"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="MeeGo"'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"MeeGo Device"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    152 :"Mobile"'
+    - 'OperatingSystemName                 :    152 :"MeeGo"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="MeeGo"'
+    extract:
+    - 'DeviceClass                         :    112 :"Mobile"'
+    - 'DeviceName                          :    112 :"MeeGo Device"'
+    - 'DeviceBrand                         :    112 :"Nokia"'
+    - 'OperatingSystemClass                :    153 :"Mobile"'
+    - 'OperatingSystemName                 :    153 :"MeeGo"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Symbian
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"Symbian"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Symbian"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Symbian"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"Symbian"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Symbian"'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    151 :"Mobile"'
+    - 'OperatingSystemName                 :    151 :"Symbian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"Symbian"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Symbian"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Symbian"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"Symbian"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Symbian"'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    152 :"Mobile"'
+    - 'OperatingSystemName                 :    152 :"Symbian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Symbian"'
+    extract:
+    - 'DeviceClass                         :    112 :"Phone"'
+    - 'DeviceName                          :    112 :"Symbian Phone"'
+    - 'DeviceBrand                         :    112 :"Nokia"'
+    - 'OperatingSystemClass                :    153 :"Mobile"'
+    - 'OperatingSystemName                 :    153 :"Symbian"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# SymbianOS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="SymbianOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="SymbianOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="SymbianOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    151 :"Mobile"'
+    - 'OperatingSystemName                 :    151 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="SymbianOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="SymbianOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="SymbianOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    152 :"Mobile"'
+    - 'OperatingSystemName                 :    152 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="SymbianOS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Phone"'
+    - 'DeviceName                          :    112 :"Symbian Phone"'
+    - 'DeviceBrand                         :    112 :"Nokia"'
+    - 'OperatingSystemClass                :    153 :"Mobile"'
+    - 'OperatingSystemName                 :    153 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# Symbian OS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="Symbian OS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="Symbian OS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="Symbian OS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    151 :"Mobile"'
+    - 'OperatingSystemName                 :    151 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="Symbian OS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="Symbian OS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="Symbian OS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Phone"'
+    - 'DeviceName                          :    111 :"Symbian Phone"'
+    - 'DeviceBrand                         :    111 :"Nokia"'
+    - 'OperatingSystemClass                :    152 :"Mobile"'
+    - 'OperatingSystemName                 :    152 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="Symbian OS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Phone"'
+    - 'DeviceName                          :    112 :"Symbian Phone"'
+    - 'DeviceBrand                         :    112 :"Nokia"'
+    - 'OperatingSystemClass                :    153 :"Mobile"'
+    - 'OperatingSystemName                 :    153 :"SymbianOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# PalmSource
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"PalmOS PDA"'
+    - 'DeviceBrand                         :    111 :"Palm"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"PalmSource"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="PalmSource"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="PalmSource"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"PalmOS PDA"'
+    - 'DeviceBrand                         :    111 :"Palm"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"PalmSource"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="PalmSource"'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"PalmOS PDA"'
+    - 'DeviceBrand                         :    111 :"Palm"'
+    - 'OperatingSystemClass                :    151 :"Mobile"'
+    - 'OperatingSystemName                 :    151 :"PalmSource"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"PalmOS PDA"'
+    - 'DeviceBrand                         :    111 :"Palm"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"PalmSource"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="PalmSource"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="PalmSource"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"PalmOS PDA"'
+    - 'DeviceBrand                         :    111 :"Palm"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"PalmSource"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="PalmSource"'
+    extract:
+    - 'DeviceClass                         :    111 :"Mobile"'
+    - 'DeviceName                          :    111 :"PalmOS PDA"'
+    - 'DeviceBrand                         :    111 :"Palm"'
+    - 'OperatingSystemClass                :    152 :"Mobile"'
+    - 'OperatingSystemName                 :    152 :"PalmSource"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="PalmSource"'
+    extract:
+    - 'DeviceClass                         :    112 :"Mobile"'
+    - 'DeviceName                          :    112 :"PalmOS PDA"'
+    - 'DeviceBrand                         :    112 :"Palm"'
+    - 'OperatingSystemClass                :    153 :"Mobile"'
+    - 'OperatingSystemName                 :    153 :"PalmSource"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# DragonFly
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"DragonFly BSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"DragonFly BSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="DragonFly"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="DragonFly"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"DragonFly BSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"DragonFly BSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="DragonFly"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"DragonFly BSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"DragonFly BSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"DragonFly BSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"DragonFly BSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="DragonFly"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="DragonFly"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"DragonFly BSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"DragonFly BSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="DragonFly"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"DragonFly BSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"DragonFly BSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="DragonFly"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"DragonFly BSD Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"DragonFly BSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# FreeBSD
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"FreeBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FreeBSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="FreeBSD"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="FreeBSD"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"FreeBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FreeBSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="FreeBSD"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"FreeBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"FreeBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"FreeBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FreeBSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="FreeBSD"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="FreeBSD"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"FreeBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"FreeBSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="FreeBSD"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"FreeBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"FreeBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="FreeBSD"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"FreeBSD Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"FreeBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# NetBSD
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"NetBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NetBSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="NetBSD"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="NetBSD"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"NetBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NetBSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="NetBSD"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"NetBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"NetBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"NetBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NetBSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="NetBSD"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="NetBSD"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"NetBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"NetBSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="NetBSD"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"NetBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"NetBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="NetBSD"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"NetBSD Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"NetBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# OpenBSD
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"OpenBSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="OpenBSD"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="OpenBSD"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"OpenBSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="OpenBSD"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    151 :"Desktop"'
+    - 'OperatingSystemName                 :    151 :"OpenBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"OpenBSD"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="OpenBSD"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="OpenBSD"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    150 :"Desktop"'
+    - 'OperatingSystemName                 :    150 :"OpenBSD"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="OpenBSD"'
+    extract:
+    - 'DeviceClass                         :    111 :"Desktop"'
+    - 'DeviceName                          :    111 :"OpenBSD Desktop"'
+    - 'DeviceBrand                         :    111 :"Unknown"'
+    - 'OperatingSystemClass                :    152 :"Desktop"'
+    - 'OperatingSystemName                 :    152 :"OpenBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="OpenBSD"'
+    extract:
+    - 'DeviceClass                         :    112 :"Desktop"'
+    - 'DeviceName                          :    112 :"OpenBSD Desktop"'
+    - 'DeviceBrand                         :    112 :"Unknown"'
+    - 'OperatingSystemClass                :    153 :"Desktop"'
+    - 'OperatingSystemName                 :    153 :"OpenBSD"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+
+
+# =======================================================================
+# hpwOS
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Tablet"'
+    - 'DeviceName                          :    111 :"HP WebOS Tablet"'
+    - 'DeviceBrand                         :    111 :"HP"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"HP WebOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.(1)product.(1)comments.entry.product.name="hpwOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.(1)product.(1)comments.entry.product.name="hpwOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Tablet"'
+    - 'DeviceName                          :    111 :"HP WebOS Tablet"'
+    - 'DeviceBrand                         :    111 :"HP"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"HP WebOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.(1)comments.entry.text="hpwOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Tablet"'
+    - 'DeviceName                          :    111 :"HP WebOS Tablet"'
+    - 'DeviceBrand                         :    111 :"HP"'
+    - 'OperatingSystemClass                :    151 :"Mobile"'
+    - 'OperatingSystemName                 :    151 :"HP WebOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :    111 :"Tablet"'
+    - 'DeviceName                          :    111 :"HP WebOS Tablet"'
+    - 'DeviceBrand                         :    111 :"HP"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"HP WebOS"'
+    - 'OperatingSystemVersion              :    150 :CleanVersion[agent.product.name="hpwOS"^.(1)version]'
+
+# Only if the second version field is NOT a type of CPU.
+- matcher:
+    variable:
+    - 'Version: agent.product.name="hpwOS"^.(2)version'
+    require:
+    - 'IsNull[LookUp[CPUArchitectures;@Version]]'
+    extract:
+    - 'DeviceClass                         :    111 :"Tablet"'
+    - 'DeviceName                          :    111 :"HP WebOS Tablet"'
+    - 'DeviceBrand                         :    111 :"HP"'
+    - 'OperatingSystemClass                :    150 :"Mobile"'
+    - 'OperatingSystemName                 :    150 :"HP WebOS"'
+    - 'OperatingSystemVersion              :    151 :CleanVersion[@Version]'
+
+- matcher:
+    require:
+    - 'agent.product.name[-1]="hpwOS"'
+    extract:
+    - 'DeviceClass                         :    111 :"Tablet"'
+    - 'DeviceName                          :    111 :"HP WebOS Tablet"'
+    - 'DeviceBrand                         :    111 :"HP"'
+    - 'OperatingSystemClass                :    152 :"Mobile"'
+    - 'OperatingSystemName                 :    152 :"HP WebOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+- matcher:
+    require:
+    - 'agent.product.name[-2]="hpwOS"'
+    extract:
+    - 'DeviceClass                         :    112 :"Tablet"'
+    - 'DeviceName                          :    112 :"HP WebOS Tablet"'
+    - 'DeviceBrand                         :    112 :"HP"'
+    - 'OperatingSystemClass                :    153 :"Mobile"'
+    - 'OperatingSystemName                 :    153 :"HP WebOS"'
+    - 'OperatingSystemVersion              :    149 :"??"'
+
+

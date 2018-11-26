@@ -1,0 +1,337 @@
+#
+# Yet Another UserAgent Analyzer
+# Copyright (C) 2013-2018 Niels Basjes
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an AS IS BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config:
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      1 :agent.(1)product.(1)comments.entry.(1)product.name.(1)uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      1 :agent.(1)product.(1)comments.entry.(1)product.version.(1)uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      1 :agent.(1)product.(1)comments.entry.(1)product.(1)uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      2 :agent.(1)product.(1)comments.entry.(1)keyvalue.(2)uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      3 :agent.product.(1)comments.entry.(1)uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      4 :agent.product.name.uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      5 :agent.product.version.uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      6 :agent.product.uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      7 :agent.(1-20)keyvalue.uuid'
+
+- matcher:
+    extract:
+    - 'AgentUuid                           :      8 :agent.(1-20)uuid'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; U; Trident/4.0; SIMBAR={BA7D96A3-49DB-48AF-9166-F7043A8866A7}; BTRS111608; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .NET4.0C; .NET4.0E; Zune 4.7)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP'
+      OperatingSystemNameVersion           : 'Windows XP'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '4.0'
+      LayoutEngineVersionMajor             : '4'
+      LayoutEngineNameVersion              : 'Trident 4.0'
+      LayoutEngineNameVersionMajor         : 'Trident 4'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '8.0'
+      AgentVersionMajor                    : '8'
+      AgentNameVersion                     : 'Internet Explorer 8.0'
+      AgentNameVersionMajor                : 'Internet Explorer 8'
+      AgentSecurity                        : 'Strong security'
+      AgentUuid                            : 'BA7D96A3-49DB-48AF-9166-F7043A8866A7'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; {57F5F0C1-E226-11D8-A9B2-00C04F5BBF26})'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows 9x'
+      OperatingSystemVersion               : '98'
+      OperatingSystemNameVersion           : 'Windows 98'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineVersion                  : '6.0'
+      LayoutEngineVersionMajor             : '6'
+      LayoutEngineNameVersion              : 'Internet Explorer 6.0'
+      LayoutEngineNameVersionMajor         : 'Internet Explorer 6'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '6.0'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'Internet Explorer 6.0'
+      AgentNameVersionMajor                : 'Internet Explorer 6'
+      AgentUuid                            : '57F5F0C1-E226-11D8-A9B2-00C04F5BBF26'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 6.0; Windows 98; 57F5F0C1-E226-11D8-A9B2-00C04F5BBF26)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows 9x'
+      OperatingSystemVersion               : '98'
+      OperatingSystemNameVersion           : 'Windows 98'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineVersion                  : '6.0'
+      LayoutEngineVersionMajor             : '6'
+      LayoutEngineNameVersion              : 'Internet Explorer 6.0'
+      LayoutEngineNameVersionMajor         : 'Internet Explorer 6'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '6.0'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'Internet Explorer 6.0'
+      AgentNameVersionMajor                : 'Internet Explorer 6'
+      AgentUuid                            : '57F5F0C1-E226-11D8-A9B2-00C04F5BBF26'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; ESB/ADA09EE9-2082-4E60-A551-973A98214068)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP'
+      OperatingSystemNameVersion           : 'Windows XP'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineVersion                  : '6.0'
+      LayoutEngineVersionMajor             : '6'
+      LayoutEngineNameVersion              : 'Internet Explorer 6.0'
+      LayoutEngineNameVersionMajor         : 'Internet Explorer 6'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '6.0'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'Internet Explorer 6.0'
+      AgentNameVersionMajor                : 'Internet Explorer 6'
+      AgentUuid                            : 'ADA09EE9-2082-4E60-A551-973A98214068'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; ESB{ADA09EE9-2082-4E60-A551-973A98214068})'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP'
+      OperatingSystemNameVersion           : 'Windows XP'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineVersion                  : '6.0'
+      LayoutEngineVersionMajor             : '6'
+      LayoutEngineNameVersion              : 'Internet Explorer 6.0'
+      LayoutEngineNameVersionMajor         : 'Internet Explorer 6'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '6.0'
+      AgentVersionMajor                    : '6'
+      AgentNameVersion                     : 'Internet Explorer 6.0'
+      AgentNameVersionMajor                : 'Internet Explorer 6'
+      AgentUuid                            : 'ADA09EE9-2082-4E60-A551-973A98214068'
+
+# Just a UUID (yes, this really happens)
+- test:
+    input:
+      user_agent_string: '{265b75c0-4158-11d0-90f6-00c04fd497ea}'
+    expected:
+      DeviceClass                          : 'Hacker'
+      DeviceName                           : 'Hacker'
+      DeviceBrand                          : 'Hacker'
+      DeviceVersion                        : 'Hacker'
+      OperatingSystemClass                 : 'Hacker'
+      OperatingSystemName                  : 'Hacker'
+      OperatingSystemVersion               : 'Hacker'
+      OperatingSystemNameVersion           : 'Hacker'
+      LayoutEngineClass                    : 'Hacker'
+      LayoutEngineName                     : 'Hacker'
+      LayoutEngineVersion                  : 'Hacker'
+      LayoutEngineVersionMajor             : 'Hacker'
+      LayoutEngineNameVersion              : 'Hacker'
+      LayoutEngineNameVersionMajor         : 'Hacker'
+      AgentClass                           : 'Hacker'
+      AgentName                            : 'Hacker'
+      AgentVersion                         : 'Hacker'
+      AgentVersionMajor                    : 'Hacker'
+      AgentNameVersion                     : 'Hacker'
+      AgentNameVersionMajor                : 'Hacker'
+      AgentUuid                            : '265b75c0-4158-11d0-90f6-00c04fd497ea'
+      HackerAttackVector                   : 'Unknown'
+      HackerToolkit                        : 'Unknown'
+
+- test:
+    input:
+      user_agent_string: '265b75c0-4158-11d0-90f6-00c04fd497ea'
+    expected:
+      DeviceClass                          : 'Hacker'
+      DeviceName                           : 'Hacker'
+      DeviceBrand                          : 'Hacker'
+      DeviceVersion                        : 'Hacker'
+      OperatingSystemClass                 : 'Hacker'
+      OperatingSystemName                  : 'Hacker'
+      OperatingSystemVersion               : 'Hacker'
+      OperatingSystemNameVersion           : 'Hacker'
+      LayoutEngineClass                    : 'Hacker'
+      LayoutEngineName                     : 'Hacker'
+      LayoutEngineVersion                  : 'Hacker'
+      LayoutEngineVersionMajor             : 'Hacker'
+      LayoutEngineNameVersion              : 'Hacker'
+      LayoutEngineNameVersionMajor         : 'Hacker'
+      AgentClass                           : 'Hacker'
+      AgentName                            : 'Hacker'
+      AgentVersion                         : 'Hacker'
+      AgentVersionMajor                    : 'Hacker'
+      AgentNameVersion                     : 'Hacker'
+      AgentNameVersionMajor                : 'Hacker'
+      AgentUuid                            : '265b75c0-4158-11d0-90f6-00c04fd497ea'
+      HackerAttackVector                   : 'Unknown'
+      HackerToolkit                        : 'Unknown'
+
+
+# Phone classified as Unknown
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19;__CT_JOB_ID__:0171e451-c0e6-4d34-93d1-9d828a6daca7;'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 5'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.1'
+      OperatingSystemNameVersion           : 'Android 4.2.1'
+      OperatingSystemVersionBuild          : 'JOP40D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '535.19'
+      LayoutEngineVersionMajor             : '535'
+      LayoutEngineNameVersion              : 'AppleWebKit 535.19'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 535'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '18.0.1025.166'
+      AgentVersionMajor                    : '18'
+      AgentNameVersion                     : 'Chrome 18.0.1025.166'
+      AgentNameVersionMajor                : 'Chrome 18'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentUuid                            : '0171e451-c0e6-4d34-93d1-9d828a6daca7'
+
+
+# Phone classified as Unknown
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 7_0 like Mac OS X; en-us) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A465 Safari/9537.53;__CT_JOB_ID__:61e58770-4309-4c54-beac-bf9c14a794e8;'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Apple iPhone'
+      DeviceBrand                          : 'Apple'
+      DeviceFirmwareVersion                : '11A465'
+      DeviceVersion                        : 'iPhone'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'iOS'
+      OperatingSystemVersion               : '7.0'
+      OperatingSystemNameVersion           : 'iOS 7.0'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '537.51.1'
+      LayoutEngineVersionMajor             : '537'
+      LayoutEngineNameVersion              : 'AppleWebKit 537.51.1'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Safari'
+      AgentVersion                         : '7.0'
+      AgentVersionMajor                    : '7'
+      AgentNameVersion                     : 'Safari 7.0'
+      AgentNameVersionMajor                : 'Safari 7'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentUuid                            : '61e58770-4309-4c54-beac-bf9c14a794e8'
+
+
+# Phone classified as Unknown
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.2.1; en-us; Nexus 5 Build/JOP40D) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.166 Mobile Safari/535.19;__CT_JOB_ID__:75033994-b6fc-48a1-9e1b-15bf115d9292;'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 5'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.1'
+      OperatingSystemNameVersion           : 'Android 4.2.1'
+      OperatingSystemVersionBuild          : 'JOP40D'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '535.19'
+      LayoutEngineVersionMajor             : '535'
+      LayoutEngineNameVersion              : 'AppleWebKit 535.19'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 535'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '18.0.1025.166'
+      AgentVersionMajor                    : '18'
+      AgentNameVersion                     : 'Chrome 18.0.1025.166'
+      AgentNameVersionMajor                : 'Chrome 18'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentUuid                            : '75033994-b6fc-48a1-9e1b-15bf115d9292'

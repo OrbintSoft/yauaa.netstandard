@@ -1,0 +1,32 @@
+2018-11-24 10:42:46_182 UTC [INFO ] THREAD:17  | ==============================================================
+2018-11-24 10:42:46_182 UTC [INFO ] THREAD:17  | Validating when ONLY asking for IECompatibilityVersionMajor
+2018-11-24 10:42:46_182 UTC [INFO ] THREAD:17  | --------------------------------------------------------------
+2018-11-24 10:42:46_182 UTC [INFO ] THREAD:17  | 
+2018-11-24 10:42:46_182 UTC [INFO ] THREAD:17  | /--------------------------------------------------------------------------------------------------------------\
+2018-11-24 10:42:46_183 UTC [INFO ] THREAD:17  | | Yauaa 0.0.286 (650f546 @ 636786565453569783)                                                                 |
+2018-11-24 10:42:46_183 UTC [INFO ] THREAD:17  | +--------------------------------------------------------------------------------------------------------------+
+2018-11-24 10:42:46_184 UTC [INFO ] THREAD:17  | | For more information: https://github.com/OrbintSoft/yauaa.netstandard                                        |
+2018-11-24 10:42:46_185 UTC [INFO ] THREAD:17  | | Copyright (C) 2013-2018 Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft) - License Apache 2.0 |
+2018-11-24 10:42:46_185 UTC [INFO ] THREAD:17  | \--------------------------------------------------------------------------------------------------------------/
+2018-11-24 10:42:46_185 UTC [INFO ] THREAD:17  | 
+2018-11-24 10:42:46_185 UTC [INFO ] THREAD:17  | Loading from: "YamlResources\UserAgents": "*.yaml"
+2018-11-24 10:42:46_185 UTC [INFO ] THREAD:27  | Loaded 1 files in 26 msec
+2018-11-24 10:42:46_185 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:46_186 UTC [INFO ] THREAD:27  | Loading 23 (dropped 0) matchers, 0 lookups, 0 lookupsets, 1 testcases from 1 files took 0 msec
+2018-11-24 10:42:46_186 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:46_199 UTC [INFO ] THREAD:27  | Built in 13 msec : Hashmap 1050, Ranges map:50
+2018-11-24 10:42:46_200 UTC [INFO ] THREAD:27  | All 1 tests passed
+2018-11-24 10:42:46_201 UTC [INFO ] THREAD:27  | Loading from: "YamlResources": "Matcher-IsNull-tests.yaml"
+2018-11-24 10:42:46_215 UTC [INFO ] THREAD:27  | Loaded 1 files in 14 msec
+2018-11-24 10:42:46_216 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:46_216 UTC [INFO ] THREAD:27  | Loading 3 (dropped 0) matchers, 0 lookups, 0 lookupsets, 3 testcases from 1 files took 0 msec
+2018-11-24 10:42:46_216 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:46_216 UTC [INFO ] THREAD:27  | Built in 0 msec : Hashmap 54, Ranges map:0
+2018-11-24 10:42:46_217 UTC [INFO ] THREAD:27  | All 3 tests passed
+2018-11-24 10:42:46_218 UTC [INFO ] THREAD:27  | Loading from: "YamlResources": "Edgecases-tests.yaml"
+2018-11-24 10:42:46_234 UTC [INFO ] THREAD:27  | Loaded 1 files in 15 msec
+2018-11-24 10:42:46_234 UTC [INFO ] THREAD:27  | Building all matchers for all possible fields.
+2018-11-24 10:42:46_234 UTC [INFO ] THREAD:27  | Loading 6 (dropped 0) matchers, 0 lookups, 0 lookupsets, 4 testcases from 1 files took 0 msec
+2018-11-24 10:42:46_234 UTC [INFO ] THREAD:27  | Initializing Analyzer data structures
+2018-11-24 10:42:46_235 UTC [INFO ] THREAD:27  | Built in 0 msec : Hashmap 23, Ranges map:8
+2018-11-24 10:42:46_236 UTC [INFO ] THREAD:27  | All 4 tests passed

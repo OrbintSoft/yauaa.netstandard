@@ -1,0 +1,33 @@
+<Project ToolsVersion="15.0">
+  <PropertyGroup>
+    <ImportDirectoryBuildProps>false</ImportDirectoryBuildProps>
+    <ImportDirectoryBuildTargets>false</ImportDirectoryBuildTargets>
+  </PropertyGroup>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <AssemblyTitle>6a6274af-08df-4352-8136-7ce7f88262c2</AssemblyTitle>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>x64</PlatformTarget>
+    <AssemblyName>6a6274af-08df-4352-8136-7ce7f88262c2</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <OutputPath>bin\Release</OutputPath>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="6a6274af-08df-4352-8136-7ce7f88262c2.notcs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetCore.Benchmarks\OrbintSoft.Yauaa.Benchmarking.NetCore.csproj" />
+  </ItemGroup>
+  
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

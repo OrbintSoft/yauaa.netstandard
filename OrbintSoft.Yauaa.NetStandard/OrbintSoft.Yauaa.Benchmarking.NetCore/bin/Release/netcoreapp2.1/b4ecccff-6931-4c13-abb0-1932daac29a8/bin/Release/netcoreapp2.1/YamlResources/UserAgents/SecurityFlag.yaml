@@ -1,0 +1,84 @@
+#
+# Yet Another UserAgent Analyzer
+# Copyright (C) 2013-2018 Niels Basjes
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an AS IS BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config:
+
+- matcher:
+    require:
+    - 'agent.(1-2)product.comments.entry.text="N"'
+    extract:
+    - 'AgentSecurity                       :     50 :"No security"'
+- matcher:
+    require:
+    - 'agent.(1-2)product.comments.entry.text="U"'
+    extract:
+    - 'AgentSecurity                       :     50 :"Strong security"'
+- matcher:
+    require:
+    - 'agent.(1-2)product.comments.entry.text="I"'
+    extract:
+    - 'AgentSecurity                       :     50 :"Weak security"'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPad; U; Bla bla)'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Apple iPad'
+      DeviceBrand                          : 'Apple'
+      DeviceVersion                        : 'iPad'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Mozilla 5.0'
+      LayoutEngineNameVersionMajor         : 'Mozilla 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '5.0'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'Netscape 5.0'
+      AgentNameVersionMajor                : 'Netscape 5'
+      AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPad; I; Bla bla)'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Apple iPad'
+      DeviceBrand                          : 'Apple'
+      DeviceVersion                        : 'iPad'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Mozilla 5.0'
+      LayoutEngineNameVersionMajor         : 'Mozilla 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '5.0'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'Netscape 5.0'
+      AgentNameVersionMajor                : 'Netscape 5'
+      AgentSecurity                        : 'Weak security'
