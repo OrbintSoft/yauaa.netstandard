@@ -319,21 +319,11 @@ namespace OrbintSoft.Yauaa.Commandline
                 }
             } catch (Exception e )
             {
-                Log.Error(string.Format("IOException: {0}", e));
+                Log.Error(string.Format("IOException: {0}", e));               
             }
-            //catch (CmdLineException e) {
-            //    logVersion();
-            //    LOG.error("Errors: {}", e.getMessage());
-            //    LOG.error("");
-            //    System.err.println("Usage: java jar <jar containing this class> <options>");
-            //    parser.printUsage(System.err);
-            //    returnValue = 1;
-            //} catch (final Exception e) {
-            //    LOG.error("IOException: {}", e);
-            //    returnValue = 1;
-            //}
-            //System.exit(returnValue);
-            //}
+#if DEBUG
+            Console.ReadKey();
+#endif
         }
     }
 }
