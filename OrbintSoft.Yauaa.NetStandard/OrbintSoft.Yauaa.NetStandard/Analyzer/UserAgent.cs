@@ -175,7 +175,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// We manually sort the list of fields to ensure the output is consistent.
         /// Any unspecified fieldnames will be appended to the end.
         /// </summary>
-        protected internal static readonly List<string> PreSortedFieldList = new List<string>(32);
+        protected internal static readonly IList<string> PreSortedFieldList = new List<string>(32);
 
         /// <summary>
         /// Defines the Log
@@ -744,7 +744,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="string"/></returns>
         public string ToJson()
         {
-            List<string> fields = GetAvailableFieldNames();
+            var fields = GetAvailableFieldNames();
             fields.Add(USERAGENT_FIELDNAME);
             return ToJson(fields);
         }
@@ -754,7 +754,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         /// <param name="fieldNames">The fieldNames<see cref="List{string}"/></param>
         /// <returns>The <see cref="string"/></returns>
-        public string ToJson(List<string> fieldNames)
+        public string ToJson(IList<string> fieldNames)
         {
             StringBuilder sb = new StringBuilder(10240);
             sb.Append("{");
@@ -869,9 +869,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="List{string}"/></returns>
         public List<string> GetAvailableFieldNamesSorted()
         {
-            List<string> fieldNames = new List<string>(GetAvailableFieldNames());
+            var fieldNames = new List<string>(GetAvailableFieldNames());
 
-            List<string> result = new List<string>();
+            var result = new List<string>();
             foreach (string fieldName in PreSortedFieldList)
             {
                 if (fieldNames.Remove(fieldName))

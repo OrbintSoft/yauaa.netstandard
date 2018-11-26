@@ -284,7 +284,7 @@ namespace OrbintSoft.Yauaa.Debug
 
                 if (expected != null)
                 {
-                    List<string> fieldNames = agent.GetAvailableFieldNamesSorted();
+                    var fieldNames = agent.GetAvailableFieldNamesSorted();
 
                     if (onlyValidateFieldNames != null && onlyValidateFieldNames.Count == 0)
                     {

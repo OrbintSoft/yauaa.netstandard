@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Benchmarki
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Testing.NetCore", "OrbintSoft.Yauaa.NetCore.Analyzer.Test\OrbintSoft.Yauaa.Testing.NetCore.csproj", "{F00F6CDE-E35F-4841-B056-C6FE8292CC38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrbintSoft.Yauaa.Commandline.NetCore", "OrbintSoft.Yauaa.Commandline.NetCore\OrbintSoft.Yauaa.Commandline.NetCore.csproj", "{8B891255-0BB7-4898-8CE4-834223130F18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,12 @@ Global
 		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Verbose|Any CPU.ActiveCfg = Verbose|Any CPU
 		{F00F6CDE-E35F-4841-B056-C6FE8292CC38}.Verbose|Any CPU.Build.0 = Verbose|Any CPU
+		{8B891255-0BB7-4898-8CE4-834223130F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B891255-0BB7-4898-8CE4-834223130F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B891255-0BB7-4898-8CE4-834223130F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B891255-0BB7-4898-8CE4-834223130F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B891255-0BB7-4898-8CE4-834223130F18}.Verbose|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B891255-0BB7-4898-8CE4-834223130F18}.Verbose|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

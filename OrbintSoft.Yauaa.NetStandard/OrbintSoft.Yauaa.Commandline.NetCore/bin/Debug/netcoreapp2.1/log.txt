@@ -1,0 +1,13 @@
+2018-11-26 12:35:46_271 UTC [ERROR] THREAD:1   | IOException: System.ArgumentException: Object of type 'System.String[]' cannot be converted to type 'System.Collections.Generic.List`1[System.String]'.
+   at System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+   at System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
+   at System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, BindingFlags invokeAttr, Binder binder, Object[] index, CultureInfo culture)
+   at System.Reflection.RuntimePropertyInfo.SetValue(Object obj, Object value, Object[] index)
+   at CommandLine.Core.ReflectionExtensions.<>c__DisplayClass6_0`1.<SetProperties>b__0(T current, SpecificationProperty specProp)
+   at System.Linq.Enumerable.Aggregate[TSource,TAccumulate](IEnumerable`1 source, TAccumulate seed, Func`3 func)
+   at CommandLine.Core.InstanceBuilder.<>c__DisplayClass0_2`1.<Build>b__16()
+   at CommandLine.Core.InstanceBuilder.<>c__DisplayClass0_0`1.<Build>b__7()
+   at CommandLine.Parser.ParseArguments[T](IEnumerable`1 args)
+   at OrbintSoft.Yauaa.Commandline.Program.Main(String[] args) in S:\Progetti\yauaa.netstandard\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.Commandline.NetCore\Program.cs:line 89
