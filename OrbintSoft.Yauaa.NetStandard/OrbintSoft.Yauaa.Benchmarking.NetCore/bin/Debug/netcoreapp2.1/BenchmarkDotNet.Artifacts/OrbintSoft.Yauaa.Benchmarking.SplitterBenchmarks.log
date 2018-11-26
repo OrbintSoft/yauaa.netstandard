@@ -1,6 +1,0 @@
-// Validating benchmarks:
-Assembly OrbintSoft.Yauaa.Benchmarking.NetCore which defines benchmarks references non-optimized OrbintSoft.Yauaa.NetStandard
-	If you own this dependency, please, build it in RELEASE.
-	If you don't, you can create custom config with DontFailOnError to disable our custom policy and allow this benchmark to run.
-Assembly OrbintSoft.Yauaa.Benchmarking.NetCore which defines benchmarks is non-optimized
-Benchmark was built without optimization enabled (most probably a DEBUG configuration). Please, build it in RELEASE.

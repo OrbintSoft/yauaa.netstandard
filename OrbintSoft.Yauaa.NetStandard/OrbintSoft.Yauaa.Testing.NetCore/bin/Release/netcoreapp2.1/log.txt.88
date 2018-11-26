@@ -1,7 +1,0 @@
-2018-11-24 09:17:25_000 UTC [INFO ] THREAD:16  | Loading from: "YamlResources": "TestOnlyOneTest.yaml"
-2018-11-24 09:17:25_031 UTC [INFO ] THREAD:16  | Loaded 1 files in 20 msec
-2018-11-24 09:17:25_031 UTC [INFO ] THREAD:16  | Building all matchers for all possible fields.
-2018-11-24 09:17:25_031 UTC [INFO ] THREAD:16  | Loading 1 (dropped 0) matchers, 0 lookups, 0 lookupsets, 1 testcases from 1 files took 0 msec
-2018-11-24 09:17:25_044 UTC [INFO ] THREAD:16  | Initializing Analyzer data structures
-2018-11-24 09:17:25_213 UTC [INFO ] THREAD:16  | Built in 169 msec : Hashmap 1, Ranges map:0
-2018-11-24 09:17:25_274 UTC [INFO ] THREAD:16  | All 1 tests passed
