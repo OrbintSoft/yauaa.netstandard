@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze
 {
     using Antlr4.Runtime.Tree;
@@ -40,8 +41,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         /// <param name="path">The path<see cref="string"/></param>
         /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
-        void Inform(string path, string value, IParseTree ctx);
+        /// <param name="context">The context<see cref="IParseTree"/></param>
+        void Inform(string path, string value, IParseTree context);
 
         /// <summary>
         /// The InformMeAbout

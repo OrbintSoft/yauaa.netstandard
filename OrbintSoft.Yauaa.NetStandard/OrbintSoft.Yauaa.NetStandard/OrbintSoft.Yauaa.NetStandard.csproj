@@ -382,4 +382,10 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
     <PackageReference Include="YamlDotNet.Signed" Version="5.2.1" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Analyze\Matcher.cs">
+      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+  </ItemGroup>
 </Project>

@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze
 {
     using log4net;
@@ -55,12 +56,12 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Defines the variableActions
         /// </summary>
-        private readonly List<MatcherVariableAction> variableActions;
+        private readonly IList<MatcherVariableAction> variableActions;
 
         /// <summary>
         /// Defines the fixedStringActions
         /// </summary>
-        private readonly List<MatcherAction> fixedStringActions;
+        private readonly IList<MatcherAction> fixedStringActions;
 
         /// <summary>
         /// Defines the newValuesUserAgent
@@ -77,7 +78,6 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         private readonly IDictionary<string, ISet<string>> lookupSets;
 
-        // Used for error reporting: The filename and line number where the config was located.
         /// <summary>
         /// Defines the matcherSourceLocation
         /// </summary>
@@ -87,6 +87,11 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Defines the informMatcherActionsAboutVariables
         /// </summary>
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
+
+        /// <summary>
+        /// Defines the permanentVerbose
+        /// </summary>
+        private readonly bool permanentVerbose = false;
 
         /// <summary>
         /// Defines the actionsThatRequireInput
@@ -103,21 +108,11 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         private long actionsThatRequireInputAndReceivedInput = 0;
 
-#if VERBOSE
-        private bool verbose = true;
-        private readonly bool permanentVerbose = true;
-#else
         /// <summary>
         /// Defines the verbose
         /// </summary>
         private bool verbose = false;
 
-        /// <summary>
-        /// Defines the permanentVerbose
-        /// </summary>
-        private readonly bool permanentVerbose = false;
-
-#endif
         /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
@@ -132,90 +127,96 @@ namespace OrbintSoft.Yauaa.Analyze
             this.lookups = lookups;
             this.lookupSets = lookupSets;
             this.analyzer = analyzer;
-            fixedStringActions = new List<MatcherAction>();
-            variableActions = new List<MatcherVariableAction>();
-            dynamicActions = new List<MatcherAction>();
+            this.fixedStringActions = new List<MatcherAction>();
+            this.variableActions = new List<MatcherVariableAction>();
+            this.dynamicActions = new List<MatcherAction>();
 
-            matcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
+            this.matcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
 
 #if VERBOSE
-            verbose = true;
+            this.verbose = true;
 #else
-            verbose = false;
+            this.verbose = false;
 #endif
-            bool hasActiveExtractConfigs = false;
-            bool hasDefinedExtractConfigs = false;
+            var hasActiveExtractConfigs = false;
+            var hasDefinedExtractConfigs = false;
 
             // List of 'attribute', 'confidence', 'expression'
-            IList<ConfigLine> configLines = new List<ConfigLine>(16);
-            foreach (KeyValuePair<YamlNode, YamlNode> nodeTuple in matcherConfig)
+            var configLines = new List<ConfigLine>(16);
+            foreach (var nodeTuple in matcherConfig)
             {
-                string name = YamlUtils.GetKeyAsString(nodeTuple, matcherSourceLocation);
+                var name = YamlUtils.GetKeyAsString(nodeTuple, this.matcherSourceLocation);
                 switch (name)
                 {
                     case "options":
-                        List<string> options = YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation);
-                        verbose = options.Contains("verbose");
+                        var options = YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation);
+                        this.verbose = options.Contains("verbose");
                         break;
                     case "variable":
-                        foreach (string variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation))
+                        foreach (var variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation))
                         {
-                            string[] configParts = variableConfig.Split(new char[] { ':' }, 2);
+                            var configParts = variableConfig.Split(new char[] { ':' }, 2);
 
                             if (configParts.Length != 2)
                             {
                                 throw new InvalidParserConfigurationException("Invalid variable config line: " + variableConfig);
                             }
-                            string variableName = configParts[0].Trim();
-                            string config = configParts[1].Trim();
 
-                            configLines.Add(new ConfigLine(ConfigLine.Type.VARIABLE, variableName, null, config));
+                            var variableName = configParts[0].Trim();
+                            var config = configParts[1].Trim();
+
+                            configLines.Add(new ConfigLine(ConfigLine.ConfigType.VARIABLE, variableName, null, config));
                         }
+
                         break;
                     case "require":
-                        foreach (string requireConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation))
+                        foreach (var requireConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation))
                         {
-                            configLines.Add(new ConfigLine(ConfigLine.Type.REQUIRE, null, null, requireConfig));
+                            configLines.Add(new ConfigLine(ConfigLine.ConfigType.REQUIRE, null, null, requireConfig));
                         }
+
                         break;
                     case "extract":
-                        foreach (string extractConfig in YamlUtils.GetStringValues(nodeTuple.Value, matcherSourceLocation))
+                        foreach (var extractConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation))
                         {
-                            string[] configParts = extractConfig.Split(new char[] { ':' }, 3);
+                            var configParts = extractConfig.Split(new char[] { ':' }, 3);
 
                             if (configParts.Length != 3)
                             {
                                 throw new InvalidParserConfigurationException("Invalid extract config line: " + extractConfig);
                             }
-                            string attribute = configParts[0].Trim();
+
+                            var attribute = configParts[0].Trim();
                             long? confidence = null;
-                            if (long.TryParse(configParts[1].Trim(), out long tmp))
+                            if (long.TryParse(configParts[1].Trim(), out var tmp))
                             {
                                 confidence = tmp;
                             }
-                            string config = configParts[2].Trim();
+
+                            var config = configParts[2].Trim();
                             hasDefinedExtractConfigs = true;
+
                             // If we have a restriction on the wanted fields we check if this one is needed at all
                             if (wantedFieldNames == null || wantedFieldNames.Contains(attribute))
                             {
-                                configLines.Add(new ConfigLine(ConfigLine.Type.EXTRACT, attribute, confidence, config));
+                                configLines.Add(new ConfigLine(ConfigLine.ConfigType.EXTRACT, attribute, confidence, config));
                                 hasActiveExtractConfigs = true;
                             }
                             else
                             {
-                                configLines.Add(new ConfigLine(ConfigLine.Type.REQUIRE, null, null, config));
+                                configLines.Add(new ConfigLine(ConfigLine.ConfigType.REQUIRE, null, null, config));
                             }
                         }
+
                         break;
                     default:
-                        break;
-                        // Ignore
+                        break; //// Ignore
                 }
             }
 
-            permanentVerbose = verbose;
+            this.permanentVerbose = this.verbose;
 
-            if (verbose)
+            if (this.verbose)
             {
                 Log.Info("---------------------------");
                 Log.Info("- MATCHER -");
@@ -230,30 +231,29 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 throw new UselessMatcherException("Does not extract any wanted fields");
             }
-#if VERBOSE
-            //configLines = configLines.OrderBy(c => c.type).ThenBy(n => n.attribute, StringComparer.Ordinal).ThenBy(n => n?.expression, StringComparer.Ordinal).ToList();
-#endif
-            foreach (ConfigLine configLine in configLines)
+
+            foreach (var configLine in configLines)
             {
-                if (verbose)
+                if (this.verbose)
                 {
-                    Log.Info(string.Format("{0}: {1}", configLine.type, configLine.expression));
+                    Log.Info(string.Format("{0}: {1}", configLine.Type, configLine.Expression));
                 }
-                switch (configLine.type)
+
+                switch (configLine.Type)
                 {
-                    case ConfigLine.Type.VARIABLE:
-                        variableActions.Add(new MatcherVariableAction(configLine.attribute, configLine.expression, this));
+                    case ConfigLine.ConfigType.VARIABLE:
+                        this.variableActions.Add(new MatcherVariableAction(configLine.Attribute, configLine.Expression, this));
                         break;
-                    case ConfigLine.Type.REQUIRE:
-                        dynamicActions.Add(new MatcherRequireAction(configLine.expression, this));
+                    case ConfigLine.ConfigType.REQUIRE:
+                        this.dynamicActions.Add(new MatcherRequireAction(configLine.Expression, this));
                         break;
-                    case ConfigLine.Type.EXTRACT:
-                        MatcherExtractAction action = new MatcherExtractAction(configLine.attribute, configLine.confidence ?? 0, configLine.expression, this);
-                        dynamicActions.Add(action);
+                    case ConfigLine.ConfigType.EXTRACT:
+                        var action = new MatcherExtractAction(configLine.Attribute, configLine.Confidence ?? 0, configLine.Expression, this);
+                        this.dynamicActions.Add(action);
 
                         // Make sure the field actually exists
-                        newValuesUserAgent.Set(configLine.attribute, "Dummy", -9999);
-                        action.SetResultAgentField(newValuesUserAgent.Get(configLine.attribute));
+                        this.newValuesUserAgent.Set(configLine.Attribute, "Dummy", -9999);
+                        action.SetResultAgentField(this.newValuesUserAgent.Get(configLine.Attribute));
                         break;
                     default:
                         break;
@@ -261,7 +261,6 @@ namespace OrbintSoft.Yauaa.Analyze
             }
         }
 
-        // Internal private constructor for testing purposes only
         /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
@@ -273,9 +272,9 @@ namespace OrbintSoft.Yauaa.Analyze
             this.lookups = lookups;
             this.lookupSets = lookupSets;
             this.analyzer = analyzer;
-            fixedStringActions = new List<MatcherAction>();
-            variableActions = new List<MatcherVariableAction>();
-            dynamicActions = new List<MatcherAction>();
+            this.fixedStringActions = new List<MatcherAction>();
+            this.variableActions = new List<MatcherVariableAction>();
+            this.dynamicActions = new List<MatcherAction>();
         }
 
         /// <summary>
@@ -284,7 +283,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="IDictionary{string, IDictionary{string, string}}"/></returns>
         public IDictionary<string, IDictionary<string, string>> GetLookups()
         {
-            return lookups;
+            return this.lookups;
         }
 
         /// <summary>
@@ -293,7 +292,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="IDictionary{string, ISet{string}}"/></returns>
         public IDictionary<string, ISet<string>> GetLookupSets()
         {
-            return lookupSets;
+            return this.lookupSets;
         }
 
         /// <summary>
@@ -303,15 +302,18 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             try
             {
-                variableActions.ForEach(v => v.Initialize());
+                foreach (var item in this.variableActions)
+                {
+                    item.Initialize();
+                }
             }
             catch (InvalidParserConfigurationException e)
             {
-                throw new InvalidParserConfigurationException("Syntax error.(" + matcherSourceLocation + ")", e);
+                throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")", e);
             }
 
-            ISet<MatcherAction> uselessRequireActions = new HashSet<MatcherAction>();
-            foreach (MatcherAction dynamicAction in dynamicActions)
+            var uselessRequireActions = new HashSet<MatcherAction>();
+            foreach (var dynamicAction in this.dynamicActions)
             {
                 try
                 {
@@ -320,40 +322,47 @@ namespace OrbintSoft.Yauaa.Analyze
                 catch (InvalidParserConfigurationException e)
                 {
                     if (!e.Message.StartsWith("It is useless to put a fixed value"))
-                    {// Ignore fixed values in require
-                        throw new InvalidParserConfigurationException("Syntax error.(" + matcherSourceLocation + ")" + e.Message, e);
+                    {
+                        // Ignore fixed values in require
+                        throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")" + e.Message, e);
                     }
+
                     uselessRequireActions.Add(dynamicAction);
                 }
             }
 
-            foreach (MatcherAction action in dynamicActions)
+            foreach (var action in this.dynamicActions)
             {
                 if (action is MatcherExtractAction)
                 {
                     if (((MatcherExtractAction)action).IsFixedValue())
                     {
-                        fixedStringActions.Add(action);
+                        this.fixedStringActions.Add(action);
                         action.ObtainResult();
                     }
                 }
             }
 
-            fixedStringActions.ForEach(f => dynamicActions.Remove(f));
-            uselessRequireActions.ToList().ForEach(u => dynamicActions.Remove(u));
+            foreach (var item in this.fixedStringActions)
+            {
+                this.dynamicActions.Remove(item);
+            }
+
+
+            uselessRequireActions.ToList().ForEach(u => this.dynamicActions.Remove(u));
 
             // Verify that a variable only contains the variables that have been defined BEFORE it (also not referencing itself).
             // If all is ok we link them
-            ISet<MatcherAction> seenVariables = new HashSet<MatcherAction>();
-            foreach (MatcherVariableAction variableAction in variableActions)
+            var seenVariables = new HashSet<MatcherAction>();
+            foreach (var variableAction in this.variableActions)
             {
                 seenVariables.Add(variableAction); // Add myself
                 var variableName = variableAction.VariableName;
-                if (informMatcherActionsAboutVariables.ContainsKey(variableName) && informMatcherActionsAboutVariables[variableName].Count > 0)
+                if (this.informMatcherActionsAboutVariables.ContainsKey(variableName) && this.informMatcherActionsAboutVariables[variableName].Count > 0)
                 {
-                    ISet<MatcherAction> interestedActions = informMatcherActionsAboutVariables[variableName];
+                    var interestedActions = this.informMatcherActionsAboutVariables[variableName];
                     variableAction.SetInterestedActions(interestedActions);
-                    foreach (MatcherAction interestedAction in interestedActions)
+                    foreach (var interestedAction in interestedActions)
                     {
                         if (seenVariables.Contains(interestedAction))
                         {
@@ -364,14 +373,14 @@ namespace OrbintSoft.Yauaa.Analyze
                 }
             }
 
-            List<MatcherAction> allDynamicActions = new List<MatcherAction>();
-            allDynamicActions.AddRange(variableActions);
-            allDynamicActions.AddRange(dynamicActions);
-            dynamicActions = allDynamicActions;
+            var allDynamicActions = new List<MatcherAction>();
+            allDynamicActions.AddRange(this.variableActions);
+            allDynamicActions.AddRange(this.dynamicActions);
+            this.dynamicActions = allDynamicActions;
 
-            actionsThatRequireInput = CountActionsThatMustHaveMatches(dynamicActions);
+            this.actionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
 
-            if (verbose)
+            if (this.verbose)
             {
                 Log.Info("---------------------------");
             }
@@ -384,8 +393,8 @@ namespace OrbintSoft.Yauaa.Analyze
         public ISet<string> GetAllPossibleFieldNames()
         {
             ISet<string> results = new SortedSet<string>();
-            results.UnionWith(GetAllPossibleFieldNames(dynamicActions));
-            results.UnionWith(GetAllPossibleFieldNames(fixedStringActions));
+            results.UnionWith(this.GetAllPossibleFieldNames(this.dynamicActions));
+            results.UnionWith(this.GetAllPossibleFieldNames(this.fixedStringActions));
             results.Remove(UserAgent.SET_ALL_FIELDS);
             return results;
         }
@@ -397,7 +406,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
         public virtual void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
-            analyzer.LookingForRange(treeName, range);
+            this.analyzer.LookingForRange(treeName, range);
         }
 
         /// <summary>
@@ -407,7 +416,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
         public virtual void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
-            analyzer.InformMeAbout(matcherAction, keyPattern);
+            this.analyzer.InformMeAbout(matcherAction, keyPattern);
         }
 
         /// <summary>
@@ -418,24 +427,23 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="prefix">The prefix<see cref="string"/></param>
         public virtual void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
         {
-            analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
+            this.analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
         }
 
         /// <summary>
         /// Fires all matcher actions.
         /// IFF all success then we tell the userAgent
         /// </summary>
-        /// <param name="userAgent">userAgent The useragent that needs to analyzed</param>
+        /// <param name="userAgent">userAgent The UserAgent that needs to analyzed</param>
         public virtual void Analyze(UserAgent userAgent)
         {
-
-            if (verbose)
+            if (this.verbose)
             {
-                Log.Info("");
+                Log.Info(string.Empty);
                 Log.Info("--- Matcher ------------------------");
                 Log.Info(" ANALYSE ----------------------------");
-                bool good = true;
-                foreach (MatcherAction action in dynamicActions)
+                var good = true;
+                foreach (var action in this.dynamicActions)
                 {
                     if (action.CannotBeValid())
                     {
@@ -443,7 +451,8 @@ namespace OrbintSoft.Yauaa.Analyze
                         good = false;
                     }
                 }
-                foreach (MatcherAction action in dynamicActions)
+
+                foreach (var action in this.dynamicActions)
                 {
                     if (!action.ObtainResult())
                     {
@@ -451,6 +460,7 @@ namespace OrbintSoft.Yauaa.Analyze
                         good = false;
                     }
                 }
+
                 if (good)
                 {
                     Log.Info("COMPLETE ----------------------------");
@@ -463,20 +473,23 @@ namespace OrbintSoft.Yauaa.Analyze
             }
             else
             {
-                if (actionsThatRequireInput != actionsThatRequireInputAndReceivedInput)
+                if (this.actionsThatRequireInput != this.actionsThatRequireInputAndReceivedInput)
                 {
                     return;
                 }
-                foreach (MatcherAction action in dynamicActions)
+
+                foreach (var action in this.dynamicActions)
                 {
                     if (action.ObtainResult())
                     {
                         continue;
                     }
+
                     return; // If one of them is bad we skip the rest
                 }
             }
-            userAgent.Set(newValuesUserAgent, this);
+
+            userAgent.Set(this.newValuesUserAgent, this);
         }
 
         /// <summary>
@@ -485,7 +498,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/></returns>
         public bool GetVerbose()
         {
-            return verbose;
+            return this.verbose;
         }
 
         /// <summary>
@@ -494,7 +507,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
         public void SetVerboseTemporarily(bool newVerbose)
         {
-            foreach (MatcherAction action in dynamicActions)
+            foreach (var action in this.dynamicActions)
             {
                 action.SetVerbose(newVerbose, true);
             }
@@ -506,9 +519,9 @@ namespace OrbintSoft.Yauaa.Analyze
         public void Reset()
         {
             // If there are no dynamic actions we have fixed strings only
-            actionsThatRequireInputAndReceivedInput = 0;
-            verbose = permanentVerbose;
-            foreach (MatcherAction action in dynamicActions)
+            this.actionsThatRequireInputAndReceivedInput = 0;
+            this.verbose = this.permanentVerbose;
+            foreach (var action in this.dynamicActions)
             {
                 action.Reset();
             }
@@ -520,11 +533,12 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="IList{MatchesList.Match}"/></returns>
         public IList<MatchesList.Match> GetMatches()
         {
-            List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
-            foreach (MatcherAction action in dynamicActions)
+            var allMatches = new List<MatchesList.Match>();
+            foreach (var action in this.dynamicActions)
             {
                 allMatches.AddRange(action.GetMatches());
             }
+
             return allMatches;
         }
 
@@ -534,15 +548,16 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="IList{MatchesList.Match}"/></returns>
         public IList<MatchesList.Match> GetUsedMatches()
         {
-            List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
-            foreach (MatcherAction action in dynamicActions)
+            var allMatches = new List<MatchesList.Match>();
+            foreach (var action in this.dynamicActions)
             {
                 if (action.CannotBeValid())
                 {
                     return new List<MatchesList.Match>(); // There is NO way one of them is valid
                 }
             }
-            foreach (MatcherAction action in dynamicActions)
+
+            foreach (var action in this.dynamicActions)
             {
                 if (!action.ObtainResult())
                 {
@@ -553,6 +568,7 @@ namespace OrbintSoft.Yauaa.Analyze
                     allMatches.AddRange(action.GetMatches());
                 }
             }
+
             return allMatches;
         }
 
@@ -562,9 +578,9 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(512);
-            sb.Append("MATCHER.(").Append(matcherSourceLocation).Append("):\n").Append("    VARIABLE:\n");
-            foreach (MatcherAction action in dynamicActions)
+            var sb = new StringBuilder(512);
+            sb.Append("MATCHER.(").Append(this.matcherSourceLocation).Append("):\n").Append("    VARIABLE:\n");
+            foreach (var action in this.dynamicActions)
             {
                 if (action is MatcherVariableAction)
                 {
@@ -573,8 +589,9 @@ namespace OrbintSoft.Yauaa.Analyze
                     sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
                 }
             }
+
             sb.Append("    REQUIRE:\n");
-            foreach (MatcherAction action in dynamicActions)
+            foreach (var action in this.dynamicActions)
             {
                 if (action is MatcherRequireAction)
                 {
@@ -582,8 +599,9 @@ namespace OrbintSoft.Yauaa.Analyze
                     sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
                 }
             }
+
             sb.Append("    EXTRACT:\n");
-            foreach (MatcherAction action in dynamicActions)
+            foreach (var action in this.dynamicActions)
             {
                 if (action is MatcherExtractAction)
                 {
@@ -591,10 +609,12 @@ namespace OrbintSoft.Yauaa.Analyze
                     sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
                 }
             }
-            foreach (MatcherAction action in fixedStringActions)
+
+            foreach (var action in this.fixedStringActions)
             {
                 sb.Append("        ").Append(action.ToString()).Append('\n');
             }
+
             return sb.ToString();
         }
 
@@ -605,12 +625,13 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="variableName">The variableName<see cref="string"/></param>
         internal void InformMeAboutVariable(MatcherAction matcherAction, string variableName)
         {
-            if (!informMatcherActionsAboutVariables.ContainsKey(variableName))
+            if (!this.informMatcherActionsAboutVariables.ContainsKey(variableName))
             {
-                ISet<MatcherAction> analyzerSet = new HashSet<MatcherAction>();
-                informMatcherActionsAboutVariables[variableName] = analyzerSet;
+                var analyzerSet = new HashSet<MatcherAction>();
+                this.informMatcherActionsAboutVariables[variableName] = analyzerSet;
             }
-            informMatcherActionsAboutVariables[variableName].Add(matcherAction);
+
+            this.informMatcherActionsAboutVariables[variableName].Add(matcherAction);
         }
 
         /// <summary>
@@ -618,7 +639,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         internal void GotMyFirstStartingPoint()
         {
-            actionsThatRequireInputAndReceivedInput++;
+            this.actionsThatRequireInputAndReceivedInput++;
         }
 
         /// <summary>
@@ -629,7 +650,7 @@ namespace OrbintSoft.Yauaa.Analyze
         private long CountActionsThatMustHaveMatches(IList<MatcherAction> actions)
         {
             long actionsThatMustHaveMatches = 0;
-            foreach (MatcherAction action in actions)
+            foreach (var action in actions)
             {
                 // If an action exists which without any data can be valid, then we must force the evaluation
                 action.Reset();
@@ -638,6 +659,7 @@ namespace OrbintSoft.Yauaa.Analyze
                     actionsThatMustHaveMatches++;
                 }
             }
+
             return actionsThatMustHaveMatches;
         }
 
@@ -645,17 +667,18 @@ namespace OrbintSoft.Yauaa.Analyze
         /// The GetAllPossibleFieldNames
         /// </summary>
         /// <param name="actions">The actions<see cref="IList{MatcherAction}"/></param>
-        /// <returns>The <see cref="HashSet{string}"/></returns>
-        private HashSet<string> GetAllPossibleFieldNames(IList<MatcherAction> actions)
+        /// <returns>The <see cref="ISet{string}"/></returns>
+        private ISet<string> GetAllPossibleFieldNames(IList<MatcherAction> actions)
         {
-            HashSet<string> results = new HashSet<string>();
-            foreach (MatcherAction action in actions)
+            var results = new HashSet<string>();
+            foreach (var action in actions)
             {
                 if (action is MatcherExtractAction extractAction)
                 {
                     results.Add(extractAction.Attribute);
                 }
             }
+
             return results;
         }
 
@@ -667,57 +690,55 @@ namespace OrbintSoft.Yauaa.Analyze
             /// <summary>
             /// Defines the Type
             /// </summary>
-            public enum Type
+            public readonly ConfigType Type;
+
+            /// <summary>
+            /// Defines the Attribute
+            /// </summary>
+            public readonly string Attribute;
+
+            /// <summary>
+            /// Defines the Confidence
+            /// </summary>
+            public readonly long? Confidence;
+
+            /// <summary>
+            /// Defines the Expression
+            /// </summary>
+            public readonly string Expression;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ConfigLine"/> class.
+            /// </summary>
+            /// <param name="type">The type<see cref="ConfigType"/></param>
+            /// <param name="attribute">The attribute<see cref="string"/></param>
+            /// <param name="confidence">The confidence<see cref="long?"/></param>
+            /// <param name="expression">The expression<see cref="string"/></param>
+            public ConfigLine(ConfigType type, string attribute, long? confidence, string expression)
+            {
+                this.Type = type;
+                this.Attribute = attribute;
+                this.Confidence = confidence;
+                this.Expression = expression;
+            }
+
+            /// <summary>
+            /// Defines the Type
+            /// </summary>
+            public enum ConfigType
             {
                 /// <summary>
                 /// Defines the VARIABLE
                 /// </summary>
                 VARIABLE = 2,
-
                 /// <summary>
                 /// Defines the REQUIRE
                 /// </summary>
                 REQUIRE = 1,
-
                 /// <summary>
                 /// Defines the EXTRACT
                 /// </summary>
                 EXTRACT = 0
-            }
-
-            /// <summary>
-            /// Defines the type
-            /// </summary>
-            public readonly Type type;
-
-            /// <summary>
-            /// Defines the attribute
-            /// </summary>
-            public readonly string attribute;
-
-            /// <summary>
-            /// Defines the confidence
-            /// </summary>
-            public readonly long? confidence;
-
-            /// <summary>
-            /// Defines the expression
-            /// </summary>
-            public readonly string expression;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ConfigLine"/> class.
-            /// </summary>
-            /// <param name="type">The type<see cref="Type"/></param>
-            /// <param name="attribute">The attribute<see cref="string"/></param>
-            /// <param name="confidence">The confidence<see cref="long?"/></param>
-            /// <param name="expression">The expression<see cref="string"/></param>
-            public ConfigLine(Type type, string attribute, long? confidence, string expression)
-            {
-                this.type = type;
-                this.attribute = attribute;
-                this.confidence = confidence;
-                this.expression = expression;
             }
         }
     }
