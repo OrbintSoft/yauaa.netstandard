@@ -111,7 +111,7 @@ namespace OrbintSoft.Yauaa.Analyze
              */
             if (this.foundValue == null)
             {
-                this.foundValue = newlyFoundValue.GetValue();
+                this.foundValue = newlyFoundValue.Value;
                 if (this.Verbose)
                 {
                     Log.Info(string.Format("KEPT  : EXTRACT ({0}): {1}", this.Attribute, key));

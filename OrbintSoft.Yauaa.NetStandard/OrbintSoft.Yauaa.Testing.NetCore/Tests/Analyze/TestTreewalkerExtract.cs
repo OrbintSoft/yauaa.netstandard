@@ -215,14 +215,14 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 
             // Validate the expected walk list entries (i.e. the dynamic part of the path)
             TreeExpressionEvaluator evaluator = action.EvaluatorForUnitTesting;
-            WalkList walkList = evaluator.GetWalkListForUnitTesting();
+            WalkList walkList = evaluator.WalkListForUnitTesting;
 
-            Step step = walkList.GetFirstStep();
+            Step step = walkList.FirstStep;
             foreach (string walkStep in expectedWalkList)
             {
                 step.Should().NotBeNull("Step: " + walkStep);
                 walkStep.Should().Be(step.ToString(), "step(" + step.ToString() + " should be " + walkStep + ")");
-                step = step.GetNextStep();
+                step = step.NextStep;
             }
             step.Should().BeNull();
         }

@@ -240,7 +240,7 @@ namespace OrbintSoft.Yauaa.Analyze
             this.Evaluator = new TreeExpressionEvaluator(requiredPattern, this.matcher, this.Verbose);
 
             // Is a fixed value (i.e. no events will ever be fired)?
-            var fixedValue = this.Evaluator.GetFixedValue();
+            var fixedValue = this.Evaluator.FixedValue;
             if (fixedValue != null)
             {
                 this.SetFixedValue(fixedValue);
@@ -249,7 +249,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 return; // Not interested in any patterns
             }
 
-            this.MustHaveMatches = !this.Evaluator.UsesIsNull();
+            this.MustHaveMatches = !this.Evaluator.UsesIsNull;
 
             var informs = CalculateInformPath(this, "agent", requiredPattern);
 
@@ -330,7 +330,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/></returns>
         internal bool IsValidIsNull()
         {
-            return this.Matches.Count == 0 && this.Evaluator.UsesIsNull();
+            return this.Matches.Count == 0 && this.Evaluator.UsesIsNull;
         }
 
         /// <summary>

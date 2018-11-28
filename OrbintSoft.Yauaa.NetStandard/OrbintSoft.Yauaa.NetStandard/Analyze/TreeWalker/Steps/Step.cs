@@ -53,45 +53,21 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         private int stepNr = 0;
 
         /// <summary>
+        /// Gets the NextStep
+        /// </summary>
+        public Step NextStep { get; private set; } = null;
+
+        /// <summary>
+        /// Gets or sets the Logprefix
+        /// Gets the Logprefix
         /// Defines the logprefix
         /// </summary>
-        protected string logprefix = "";
+        protected string Logprefix { get; set; } = string.Empty;
 
         /// <summary>
-        /// Defines the nextStep
+        /// Gets or sets a value indicating whether Verbose
         /// </summary>
-        private Step nextStep = null;
-
-        /// <summary>
-        /// Defines the verbose
-        /// </summary>
-        protected bool verbose = false;
-
-        /// <summary>
-        /// The SetVerbose
-        /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
-        public void SetVerbose(bool newVerbose)
-        {
-            verbose = newVerbose;
-        }
-
-        /// <summary>
-        /// The SetNextStep
-        /// </summary>
-        /// <param name="newStepNr">The newStepNr<see cref="int"/></param>
-        /// <param name="newNextStep">The newNextStep<see cref="Step"/></param>
-        public void SetNextStep(int newStepNr, Step newNextStep)
-        {
-            stepNr = newStepNr;
-            nextStep = newNextStep;
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < newStepNr + 1; i++)
-            {
-                sb.Append("-->");
-            }
-            logprefix = sb.ToString();
-        }
+        protected bool Verbose { get; set; } = false;
 
         /// <summary>
         /// The TreeIsSeparator
@@ -101,59 +77,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         public static bool TreeIsSeparator(IParseTree tree)
         {
             return tree is UserAgentParser.CommentSeparatorContext || tree is ITerminalNode;
-        }
-
-        /// <summary>
-        /// This will walk into the tree and recurse through all the remaining steps.
-        /// This must iterate of all possibilities and return the first matching result.
-        /// </summary>
-        /// <param name="tree">The tree to walk into.</param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>Either null or the actual value that was found.</returns>
-        public abstract WalkList.WalkResult Walk(IParseTree tree, string value);
-
-        /// <summary>
-        /// The GetNextStep
-        /// </summary>
-        /// <returns>The <see cref="Step"/></returns>
-        public Step GetNextStep()
-        {
-            return nextStep;
-        }
-
-        /// <summary>
-        /// The WalkNextStep
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        protected WalkList.WalkResult WalkNextStep(IParseTree tree, string value)
-        {
-            if (nextStep == null)
-            {
-                string res = value;
-                if (value == null)
-                {
-                    res = AntlrUtils.GetSourceText((ParserRuleContext)tree);
-                }
-                if (verbose)
-                {
-                    Log.Info(string.Format("{0} Final (implicit) step: {1}", logprefix, res));
-                }
-                return new WalkList.WalkResult(tree, res);
-            }
-            if (verbose)
-            {
-                Log.Info(string.Format("{0} Tree: >>>{1}<<<", logprefix, AntlrUtils.GetSourceText((ParserRuleContext)tree)));
-                Log.Info(string.Format("{0} Enter step({1}): {2}", logprefix, stepNr, nextStep));
-            }
-            WalkList.WalkResult result = nextStep.Walk(tree, value);
-            if (verbose)
-            {
-                Log.Info(string.Format("{0} Result: >>>{1}<<<", logprefix, result == null ? "null" : result.ToString()));
-                Log.Info(string.Format("{0} Leave step({1}): {2}", logprefix, result == null ? "-" : "+", nextStep));
-            }
-            return result;
         }
 
         /// <summary>
@@ -168,23 +91,40 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The Up
+        /// The SetNextStep
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
-        protected IParseTree Up(IParseTree tree)
+        /// <param name="newStepNr">The newStepNr<see cref="int"/></param>
+        /// <param name="newNextStep">The newNextStep<see cref="Step"/></param>
+        public void SetNextStep(int newStepNr, Step newNextStep)
         {
-            IParseTree parent = tree.Parent;
-            // Needed because of the way the ANTLR rules have been defined.
-            if (parent is UserAgentParser.ProductNameContext ||
-                parent is UserAgentParser.ProductVersionContext ||
-                parent is UserAgentParser.ProductVersionWithCommasContext
-            )
+            this.stepNr = newStepNr;
+            this.NextStep = newNextStep;
+            var sb = new StringBuilder();
+            for (var i = 0; i < newStepNr + 1; i++)
             {
-                return Up(parent);
+                sb.Append("-->");
             }
-            return parent;
+
+            this.Logprefix = sb.ToString();
         }
+
+        /// <summary>
+        /// The SetVerbose
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        public void SetVerbose(bool newVerbose)
+        {
+            this.Verbose = newVerbose;
+        }
+
+        /// <summary>
+        /// This will walk into the tree and recurse through all the remaining steps.
+        /// This must iterate of all possibilities and return the first matching result.
+        /// </summary>
+        /// <param name="tree">The tree to walk into.</param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>Either null or the actual value that was found.</returns>
+        public abstract WalkList.WalkResult Walk(IParseTree tree, string value);
 
         /// <summary>
         /// The GetActualValue
@@ -198,7 +138,68 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             {
                 return AntlrUtils.GetSourceText((ParserRuleContext)tree);
             }
+
             return value;
+        }
+
+        /// <summary>
+        /// The Up
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="IParseTree"/></returns>
+        protected IParseTree Up(IParseTree tree)
+        {
+            var parent = tree.Parent;
+
+            // Needed because of the way the ANTLR rules have been defined.
+            if (parent is UserAgentParser.ProductNameContext ||
+                parent is UserAgentParser.ProductVersionContext ||
+                parent is UserAgentParser.ProductVersionWithCommasContext)
+            {
+                return this.Up(parent);
+            }
+
+            return parent;
+        }
+
+        /// <summary>
+        /// The WalkNextStep
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        protected WalkList.WalkResult WalkNextStep(IParseTree tree, string value)
+        {
+            if (this.NextStep == null)
+            {
+                var res = value;
+                if (value == null)
+                {
+                    res = AntlrUtils.GetSourceText((ParserRuleContext)tree);
+                }
+
+                if (this.Verbose)
+                {
+                    Log.Info(string.Format("{0} Final (implicit) step: {1}", this.Logprefix, res));
+                }
+
+                return new WalkList.WalkResult(tree, res);
+            }
+
+            if (this.Verbose)
+            {
+                Log.Info(string.Format("{0} Tree: >>>{1}<<<", this.Logprefix, AntlrUtils.GetSourceText((ParserRuleContext)tree)));
+                Log.Info(string.Format("{0} Enter step({1}): {2}", this.Logprefix, this.stepNr, this.NextStep));
+            }
+
+            var result = this.NextStep.Walk(tree, value);
+            if (this.Verbose)
+            {
+                Log.Info(string.Format("{0} Result: >>>{1}<<<", this.Logprefix, result == null ? "null" : result.ToString()));
+                Log.Info(string.Format("{0} Leave step({1}): {2}", this.Logprefix, result == null ? "-" : "+", this.NextStep));
+            }
+
+            return result;
         }
     }
 }

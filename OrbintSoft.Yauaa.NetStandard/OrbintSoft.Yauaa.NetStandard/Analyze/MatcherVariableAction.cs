@@ -109,7 +109,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     foreach (var action in this.interestedActions)
                     {
-                        action.Inform(this.VariableName, newlyFoundValue.GetValue(), newlyFoundValue.GetTree());
+                        action.Inform(this.VariableName, newlyFoundValue.Value, newlyFoundValue.Tree);
                     }
                 }
             }

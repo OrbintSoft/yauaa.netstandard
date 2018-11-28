@@ -47,7 +47,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         {
             WalkList.WalkResult actualValue = WalkNextStep(tree, value);
 
-            if (actualValue == null || actualValue.GetValue() == null)
+            if (actualValue == null || actualValue.Value == null)
             {
                 return new WalkList.WalkResult(tree, "<<<Null Value>>>");
             }
