@@ -78,7 +78,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
 
             LOG.Info("List fieldnames");
             stopwatch.Restart();
-            uaa.GetAllPossibleFieldNamesSorted().ForEach(n => LOG.Info(n));
+            foreach (var n in uaa.GetAllPossibleFieldNamesSorted())
+            {
+                LOG.Info(n);
+            }
             stopwatch.Stop();
             long listFieldNamesMsecs = stopwatch.ElapsedMilliseconds;
             LOG.Info(string.Format("-- List fieldnames: {0}ms", listFieldNamesMsecs));

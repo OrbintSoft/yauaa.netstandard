@@ -52,15 +52,15 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             .WithField("AgentUuid")
             .Build();
 
-            uaa.GetCacheSize().Should().Be(42);
+            uaa.CacheSize.Should().Be(42);
             GetAllocatedCacheSize(uaa).Should().BeGreaterOrEqualTo(42);
 
             uaa.DisableCaching();
-            uaa.GetCacheSize().Should().Be(0);
+            uaa.CacheSize.Should().Be(0);
             GetAllocatedCacheSize(uaa).Should().Be(0);
 
             uaa.SetCacheSize(42);
-            uaa.GetCacheSize().Should().Be(42);
+            uaa.CacheSize.Should().Be(42);
             GetAllocatedCacheSize(uaa).Should().BeGreaterOrEqualTo(42);
         }
 
@@ -77,15 +77,15 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             .WithField("AgentUuid")
             .Build();
 
-            uaa.GetCacheSize().Should().Be(0);
+            uaa.CacheSize.Should().Be(0);
             GetAllocatedCacheSize(uaa).Should().Be(0);
 
             uaa.SetCacheSize(42);
-            uaa.GetCacheSize().Should().Be(42);
+            uaa.CacheSize.Should().Be(42);
             GetAllocatedCacheSize(uaa).Should().BeGreaterOrEqualTo(42);
 
             uaa.DisableCaching();
-            uaa.GetCacheSize().Should().Be(0);
+            uaa.CacheSize.Should().Be(0);
             GetAllocatedCacheSize(uaa).Should().BeGreaterOrEqualTo(0);
         }
 
@@ -107,7 +107,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
 
             UserAgent agent;
 
-            uaa.GetCacheSize().Should().Be(1);
+            uaa.CacheSize.Should().Be(1);
             GetAllocatedCacheSize(uaa).Should().BeGreaterOrEqualTo(1);
 
             agent = uaa.Parse(uuid);
@@ -121,7 +121,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             GetCache(uaa)[uuid].Should().BeEquivalentTo(agent);
 
             uaa.DisableCaching();
-            uaa.GetCacheSize().Should().Be(0);
+            uaa.CacheSize.Should().Be(0);
             GetAllocatedCacheSize(uaa).Should().Be(0);
 
             agent = uaa.Parse(uuid);

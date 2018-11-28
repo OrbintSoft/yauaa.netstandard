@@ -60,7 +60,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             string name = "Attribute";
             string uaString = "Foo Bar";
             UserAgent agent = new UserAgent(uaString);
-            agent.SetDebug(debug);
+            agent.IsDebug = debug;
 
             // Setting unknown new attributes
             agent.Get("UnknownOne").Should().BeNull();

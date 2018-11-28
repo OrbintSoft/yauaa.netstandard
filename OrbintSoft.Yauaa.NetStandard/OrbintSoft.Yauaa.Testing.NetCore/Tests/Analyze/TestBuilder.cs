@@ -287,7 +287,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .HideMatcherLoadStats()
                     .WithField("AgentName")
                     .Build();
-            userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
+            userAgentAnalyzer.NumberOfTestCases.Should().Be(0);
 
             userAgentAnalyzer =
                 UserAgentAnalyzer
@@ -298,7 +298,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .HideMatcherLoadStats()
                     .WithField("AgentName")
                     .Build();
-            userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
+            userAgentAnalyzer.NumberOfTestCases.Should().Be(0);
         }
 
         /// <summary>
@@ -315,13 +315,13 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .WithField("AgentName")
                     .Build();
 
-            userAgentAnalyzer.GetNumberOfTestCases().Should().BeGreaterThan(100);
+            userAgentAnalyzer.NumberOfTestCases.Should().BeGreaterThan(100);
             userAgentAnalyzer.PreHeat(0).Should().Be(0);
             userAgentAnalyzer.PreHeat(-1).Should().Be(0);
             userAgentAnalyzer.PreHeat(1000000000L).Should().Be(0);
 
             userAgentAnalyzer.DropTests();
-            userAgentAnalyzer.GetNumberOfTestCases().Should().Be(0);
+            userAgentAnalyzer.NumberOfTestCases.Should().Be(0);
             userAgentAnalyzer.PreHeat().Should().Be(0);
         }
     }

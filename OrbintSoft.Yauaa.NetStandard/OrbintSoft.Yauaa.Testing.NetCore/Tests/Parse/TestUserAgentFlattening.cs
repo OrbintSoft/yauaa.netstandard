@@ -1402,7 +1402,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Parse
             sb.Append("|-------------------------------------- \n");
 
             UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass analyzer = UserAgentAnalyzerDirect.GetAllPathsAnalyzer(useragent);
-            UserAgent parsedUseragent = analyzer.GetResult();
+            UserAgent parsedUseragent = analyzer.Result;
 
             if (parsedUseragent.HasAmbiguity)
             {
@@ -1413,7 +1413,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Parse
                 sb.Append("| Syntax Error \n");
             }
 
-            List<string> paths = analyzer.GetValues();
+            var paths = analyzer.Values;
 
             bool ok = true;
             foreach (string value in requiredValues)

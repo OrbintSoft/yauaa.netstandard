@@ -47,22 +47,22 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             UserAgentAnalyzer userAgentAnalyzer = UserAgentAnalyzer.NewBuilder().Build();
             userAgentAnalyzer.LoadResources(Config.RESOURCES_PATH, "*-tests.yaml");
 
-            userAgentAnalyzer.GetCacheSize().Should().Be(10000, "Default cache size");
+            userAgentAnalyzer.CacheSize.Should().Be(10000, "Default cache size");
 
             userAgentAnalyzer.SetCacheSize(50);
-            userAgentAnalyzer.GetCacheSize().Should().Be(50, "I set that size");
+            userAgentAnalyzer.CacheSize.Should().Be(50, "I set that size");
 
             userAgentAnalyzer.SetCacheSize(50000);
-            userAgentAnalyzer.GetCacheSize().Should().Be(50000, "I set that size");
+            userAgentAnalyzer.CacheSize.Should().Be(50000, "I set that size");
 
             userAgentAnalyzer.SetCacheSize(-5);
-            userAgentAnalyzer.GetCacheSize().Should().Be(0, "I set incorrect cache size");
+            userAgentAnalyzer.CacheSize.Should().Be(0, "I set incorrect cache size");
 
             userAgentAnalyzer.SetCacheSize(50);
-            userAgentAnalyzer.GetCacheSize().Should().Be(50, "I set that size");
+            userAgentAnalyzer.CacheSize.Should().Be(50, "I set that size");
 
             userAgentAnalyzer.SetCacheSize(50000);
-            userAgentAnalyzer.GetCacheSize().Should().Be(50000, "I set that size");
+            userAgentAnalyzer.CacheSize.Should().Be(50000, "I set that size");
 
             userAgentAnalyzer.SetUserAgentMaxLength(555);
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(555, "I set that size");
