@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:51</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyzer
 {
     using System;
@@ -42,22 +43,22 @@ namespace OrbintSoft.Yauaa.Analyzer
         private const int DEFAULT_PARSE_CACHE_SIZE = 10000;
 
         /// <summary>
-        /// Defines the cacheSize
-        /// </summary>
-        private int cacheSize = DEFAULT_PARSE_CACHE_SIZE;
-
-        /// <summary>
         /// Defines the parseCache
         /// </summary>
-        private Dictionary<string, UserAgent> parseCache = null;
+        private IDictionary<string, UserAgent> parseCache = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAgentAnalyzer"/> class.
         /// </summary>
         protected UserAgentAnalyzer() : base()
         {
-            InitializeCache();
+            this.InitializeCache();
         }
+
+        /// <summary>
+        /// Gets the CacheSize
+        /// </summary>
+        public int CacheSize { get; private set; } = DEFAULT_PARSE_CACHE_SIZE;
 
         /// <summary>
         /// The NewBuilder
@@ -76,27 +77,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public void DisableCaching()
         {
-            SetCacheSize(0);
-        }
-
-        /// <summary>
-        /// Sets the new size of the parsing cache.
-        /// Note that this will also wipe the existing cache.
-        /// </summary>
-        /// <param name="newCacheSize">The size of the new LRU cache. As size of 0 will disable caching.</param>
-        public void SetCacheSize(int newCacheSize)
-        {
-            cacheSize = newCacheSize > 0 ? newCacheSize : 0;
-            InitializeCache();
-        }
-
-        /// <summary>
-        /// The GetCacheSize
-        /// </summary>
-        /// <returns>The <see cref="int"/></returns>
-        public int GetCacheSize()
-        {
-            return cacheSize;
+            this.SetCacheSize(0);
         }
 
         /// <summary>
@@ -112,30 +93,40 @@ namespace OrbintSoft.Yauaa.Analyzer
                 {
                     return null;
                 }
-                userAgent.Reset();
 
-                if (parseCache == null)
+                userAgent.Reset();
+                if (this.parseCache == null)
                 {
                     return base.Parse(userAgent);
                 }
 
-                string userAgentString = userAgent.UserAgentString;
+                var userAgentString = userAgent.UserAgentString;
                 if (userAgentString != null)
                 {
-                    UserAgent cachedValue = parseCache.ContainsKey(userAgentString) ? parseCache[userAgentString] : null;
-                    if (cachedValue != null)
+                    if (this.parseCache.ContainsKey(userAgentString))
                     {
-                        userAgent.Clone(cachedValue);
+                        userAgent.Clone(this.parseCache[userAgentString]);
                     }
                     else
                     {
-                        cachedValue = new UserAgent(base.Parse(userAgent));
-                        parseCache[userAgentString] = cachedValue;
+                        this.parseCache[userAgentString] = new UserAgent(base.Parse(userAgent));
                     }
                 }
+
                 // We have our answer.
                 return userAgent;
             }
+        }
+
+        /// <summary>
+        /// Sets the new size of the parsing cache.
+        /// Note that this will also wipe the existing cache.
+        /// </summary>
+        /// <param name="newCacheSize">The size of the new LRU cache. As size of 0 will disable caching.</param>
+        public void SetCacheSize(int newCacheSize)
+        {
+            this.CacheSize = newCacheSize > 0 ? newCacheSize : 0;
+            this.InitializeCache();
         }
 
         /// <summary>
@@ -143,9 +134,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         private void InitializeCache()
         {
-            if (cacheSize >= 1)
+            if (CacheSize >= 1)
             {
-                parseCache = new Dictionary<string, UserAgent>(cacheSize);
+                parseCache = new Dictionary<string, UserAgent>(CacheSize);
             }
             else
             {
@@ -172,11 +163,15 @@ namespace OrbintSoft.Yauaa.Analyzer
                 uaa = newUaa;
             }
 
-            /**
-             * Specify a new cache size (0 = disable caching).
-             * @param newCacheSize The new cache size value
-             * @return the current Builder instance.
-             */
+            /// <summary>
+            /// The Build
+            /// </summary>
+            /// <returns>The <see cref="UserAgentAnalyzer"/></returns>
+            public override UserAgentAnalyzer Build()
+            {
+                return base.Build();
+            }
+
             /// <summary>
             /// The WithCache
             /// </summary>
@@ -189,10 +184,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                 return this;
             }
 
-            /**
-             * Disable caching.
-             * @return the current Builder instance.
-             */
             /// <summary>
             /// The WithoutCache
             /// </summary>
@@ -202,16 +193,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                 FailIfAlreadyBuilt();
                 uaa.SetCacheSize(0);
                 return this;
-            }
-
-            // We must override the method because of the generic return value.
-            /// <summary>
-            /// The Build
-            /// </summary>
-            /// <returns>The <see cref="UserAgentAnalyzer"/></returns>
-            public override UserAgentAnalyzer Build()
-            {
-                return base.Build();
             }
         }
     }

@@ -347,8 +347,8 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Annotate
         private sealed class PrivateTestRecord
         {
             internal readonly string useragent;
-            internal readonly string deviceClass;
-            internal readonly string agentNameVersion;
+            internal readonly string deviceClass = null;
+            internal readonly string agentNameVersion = null;
 
             private PrivateTestRecord(string useragent)
             {

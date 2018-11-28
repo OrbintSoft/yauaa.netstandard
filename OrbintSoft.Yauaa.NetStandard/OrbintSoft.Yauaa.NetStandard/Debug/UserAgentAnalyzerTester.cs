@@ -166,17 +166,17 @@ namespace OrbintSoft.Yauaa.Debug
                 {
 #if VERBOSE
                     SetVerbose(true);            
-                    agent.SetDebug(true); 
+                    agent.IsDebug = true;
 #else
                     SetVerbose(false);
-                    agent.SetDebug(false);
+                    agent.IsDebug = false;
 #endif
                 }
                 else
                 {
                     bool newVerbose = options.Contains("verbose");
                     SetVerbose(newVerbose);
-                    agent.SetDebug(newVerbose);
+                    agent.IsDebug = newVerbose;
                     init = options.Contains("init");
                 }
                 if (expected == null || expected.Count == 0)
@@ -608,7 +608,7 @@ namespace OrbintSoft.Yauaa.Debug
                 matcher.SetVerboseTemporarily(false);
             }
 
-            flattener.Parse(userAgent);
+            Flattener.Parse(userAgent);
 
             List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
             foreach (Matcher matcher in AllMatchers)

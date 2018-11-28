@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:51</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyzer
 {
     using Antlr4.Runtime.Tree;
@@ -54,7 +55,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public const int DEFAULT_USER_AGENT_MAX_LENGTH = 2048;
 
-        // We do not want to put ALL lengths in the hashmap for performance reasons
         /// <summary>
         /// Defines the MAX_PREFIX_HASH_MATCH
         /// </summary>
@@ -64,23 +64,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// Defines the MAX_PRE_HEAT_ITERATIONS
         /// </summary>
         private const long MAX_PRE_HEAT_ITERATIONS = 1_000_000L;
-
-        // If we want ALL fields this is null. If we only want specific fields this is a list of names.
-        /// <summary>
-        /// Defines the wantedFieldNames
-        /// </summary>
-        internal List<string> wantedFieldNames = null;
-
-        /// <summary>
-        /// Defines the flattener
-        /// </summary>
-        protected UserAgentTreeFlattener flattener = null;
-
-
-        /// <summary>
-        /// Defines the Log
-        /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
 
         /// <summary>
         /// Defines the DefaultResources
@@ -93,6 +76,21 @@ namespace OrbintSoft.Yauaa.Analyzer
         private static readonly IList<string> HardCodedGeneratedFields = new List<string>();
 
         /// <summary>
+        /// Defines the Log
+        /// </summary>
+        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
+
+        /// <summary>
+        /// Defines the informMatcherActionPrefixesLengths
+        /// </summary>
+        private readonly IDictionary<string, ISet<int?>> informMatcherActionPrefixesLengths = new Dictionary<string, ISet<int?>>();
+
+        /// <summary>
+        /// Defines the informMatcherActionRanges
+        /// </summary>
+        private readonly IDictionary<string, ISet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, ISet<WordRangeVisitor.Range>>();
+
+        /// <summary>
         /// Defines the informMatcherActions
         /// </summary>
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
@@ -100,29 +98,12 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Defines the lookupSets
         /// </summary>
-        private readonly Dictionary<string, ISet<string>> lookupSets = new Dictionary<string, ISet<string>>();
-
-        // These are the actual subrange we need for the paths.
-        /// <summary>
-        /// Defines the informMatcherActionRanges
-        /// </summary>
-        private readonly IDictionary<string, ISet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, ISet<WordRangeVisitor.Range>>();
-
-        // These are the paths for which we have prefix requests.
-        /// <summary>
-        /// Defines the informMatcherActionPrefixesLengths
-        /// </summary>
-        private readonly IDictionary<string, HashSet<int?>> informMatcherActionPrefixesLengths = new Dictionary<string, HashSet<int?>>();
+        private readonly IDictionary<string, ISet<string>> lookupSets = new Dictionary<string, ISet<string>>();
 
         /// <summary>
-        /// Defines the matcherConfigs
+        /// Defines the delayInitialization
         /// </summary>
-        private IDictionary<string, List<YamlMappingNode>> matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
-
-        /// <summary>
-        /// Defines the showMatcherStats
-        /// </summary>
-        private bool showMatcherStats = false;
+        private bool delayInitialization = true;
 
         /// <summary>
         /// Defines the doingOnlyASingleTest
@@ -135,24 +116,24 @@ namespace OrbintSoft.Yauaa.Analyzer
         private IDictionary<string, IDictionary<string, string>> lookups = new Dictionary<string, IDictionary<string, string>>();
 
         /// <summary>
+        /// Defines the matcherConfigs
+        /// </summary>
+        private IDictionary<string, IList<YamlMappingNode>> matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>();
+
+        /// <summary>
         /// Defines the matchersHaveBeenInitialized
         /// </summary>
         private bool matchersHaveBeenInitialized = false;
 
         /// <summary>
+        /// Defines the showMatcherStats
+        /// </summary>
+        private bool showMatcherStats = false;
+
+        /// <summary>
         /// Defines the userAgentMaxLength
         /// </summary>
         private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
-
-        /// <summary>
-        /// Defines the loadTests
-        /// </summary>
-        private bool loadTests = false;
-
-        /// <summary>
-        /// Defines the delayInitialization
-        /// </summary>
-        private bool delayInitialization = true;
 
         /// <summary>
         /// Defines the verbose
@@ -183,21 +164,36 @@ namespace OrbintSoft.Yauaa.Analyzer
         {
         }
 
-        protected IList<Matcher> AllMatchers { get; } = new List<Matcher>();
+        /// <summary>
+        /// Gets the NumberOfTestCases
+        /// </summary>
+        public long NumberOfTestCases => this.TestCases.Count;
 
+        /// <summary>
+        /// Gets the TestCases
+        /// </summary>
         public IList<IDictionary<string, IDictionary<string, string>>> TestCases { get; } = new List<IDictionary<string, IDictionary<string, string>>>();
 
-        // Calculate the max length we will put in the hashmap.
         /// <summary>
-        /// The FirstCharactersForPrefixHashLength
+        /// Gets a value indicating whether WillKeepTests
         /// </summary>
-        /// <param name="input">The input<see cref="string"/></param>
-        /// <param name="maxChars">The maxChars<see cref="int"/></param>
-        /// <returns>The <see cref="int"/></returns>
-        public static int FirstCharactersForPrefixHashLength(string input, int maxChars)
-        {
-            return Math.Min(maxChars, Math.Min(MAX_PREFIX_HASH_MATCH, input.Length));
-        }
+        public bool WillKeepTests { get; private set; } = false;
+
+        /// <summary>
+        /// Gets or sets the WantedFieldNames
+        /// Defines the wantedFieldNames
+        /// </summary>
+        internal List<string> WantedFieldNames { get; set; } = null;
+
+        /// <summary>
+        /// Gets the AllMatchers
+        /// </summary>
+        protected IList<Matcher> AllMatchers { get; } = new List<Matcher>();
+
+        /// <summary>
+        /// Gets or sets the Flattener
+        /// </summary>
+        protected UserAgentTreeFlattener Flattener { get; set; } = null;
 
         /// <summary>
         /// The FirstCharactersForPrefixHash
@@ -211,30 +207,58 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
+        /// The FirstCharactersForPrefixHashLength
+        /// </summary>
+        /// <param name="input">The input<see cref="string"/></param>
+        /// <param name="maxChars">The maxChars<see cref="int"/></param>
+        /// <returns>The <see cref="int"/></returns>
+        public static int FirstCharactersForPrefixHashLength(string input, int maxChars)
+        {
+            return Math.Min(maxChars, Math.Min(MAX_PREFIX_HASH_MATCH, input.Length));
+        }
+
+        /// <summary>
+        /// The GetAllPaths
+        /// </summary>
+        /// <param name="agent">The agent<see cref="string"/></param>
+        /// <returns>The <see cref="List{string}"/></returns>
+        public static IList<string> GetAllPaths(string agent)
+        {
+            return new GetAllPathsAnalyzerClass(agent).Values;
+        }
+
+        /// <summary>
+        /// The GetAllPathsAnalyzer
+        /// </summary>
+        /// <param name="agent">The agent<see cref="string"/></param>
+        /// <returns>The <see cref="GetAllPathsAnalyzerClass"/></returns>
+        public static GetAllPathsAnalyzerClass GetAllPathsAnalyzer(string agent)
+        {
+            return new GetAllPathsAnalyzerClass(agent);
+        }
+
+        /// <summary>
+        /// The NewBuilder
+        /// </summary>
+        /// <typeparam name="UAA">Type of UserAgent Analyzer</typeparam>
+        /// <typeparam name="B">Type of builder</typeparam>
+        /// <returns>The <see cref="UserAgentAnalyzerDirectBuilder{UAA, B}"/></returns>
+        public static UserAgentAnalyzerDirectBuilder<UAA, B> NewBuilder<UAA, B>()
+            where UAA : UserAgentAnalyzerDirect, new()
+            where B : UserAgentAnalyzerDirectBuilder<UAA, B>, new()
+        {
+            var a = new UAA();
+            var b = new B();
+            b.SetUAA(a);
+            return b;
+        }
+
+        /// <summary>
         /// The DelayInitialization
         /// </summary>
         public void DelayInitialization()
         {
-            delayInitialization = true;
-        }
-
-        /// <summary>
-        /// The ImmediateInitialization
-        /// </summary>
-        public void ImmediateInitialization()
-        {
-            delayInitialization = false;
-        }
-
-        /// <summary>
-        /// The SetShowMatcherStats
-        /// </summary>
-        /// <param name="newShowMatcherStats">The newShowMatcherStats<see cref="bool"/></param>
-        /// <returns>The <see cref="UserAgentAnalyzerDirect"/></returns>
-        public UserAgentAnalyzerDirect SetShowMatcherStats(bool newShowMatcherStats)
-        {
-            showMatcherStats = newShowMatcherStats;
-            return this;
+            this.delayInitialization = true;
         }
 
         /// <summary>
@@ -243,9 +267,185 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="UserAgentAnalyzerDirect"/></returns>
         public UserAgentAnalyzerDirect DropTests()
         {
-            loadTests = false;
-            TestCases.Clear();
+            this.WillKeepTests = false;
+            this.TestCases.Clear();
             return this;
+        }
+
+        /// <summary>
+        /// The GetAllPossibleFieldNames
+        /// </summary>
+        /// <returns>The <see cref="SortedSet{string}"/></returns>
+        public ISet<string> GetAllPossibleFieldNames()
+        {
+            var results = new SortedSet<string>(HardCodedGeneratedFields);
+            foreach (var matcher in this.AllMatchers)
+            {
+                results.UnionWith(matcher.GetAllPossibleFieldNames());
+            }
+
+            return results;
+        }
+
+        /// <summary>
+        /// The GetAllPossibleFieldNamesSorted
+        /// </summary>
+        /// <returns>The <see cref="IList{string}"/></returns>
+        public IList<string> GetAllPossibleFieldNamesSorted()
+        {
+            var fieldNames = new List<string>(this.GetAllPossibleFieldNames());
+            fieldNames.Sort();
+
+            var result = new List<string>();
+            foreach (var fieldName in UserAgent.PreSortedFieldList)
+            {
+                fieldNames.Remove(fieldName);
+                result.Add(fieldName);
+            }
+
+            result.AddRange(fieldNames);
+
+            return result;
+        }
+
+        /// <summary>
+        /// The GetRequiredInformRanges
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
+        public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
+        {
+            if (!this.informMatcherActionRanges.Keys.Contains(treeName))
+            {
+                this.informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
+            }
+
+            return this.informMatcherActionRanges[treeName];
+        }
+
+        /// <summary>
+        /// The GetRequiredPrefixLengths
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <returns>The <see cref="ISet{int?}"/></returns>
+        public ISet<int?> GetRequiredPrefixLengths(string treeName)
+        {
+            return this.informMatcherActionPrefixesLengths.ContainsKey(treeName) ? this.informMatcherActionPrefixesLengths[treeName] : null;
+        }
+
+        /// <summary>
+        /// The GetUserAgentMaxLength
+        /// </summary>
+        /// <returns>The <see cref="int"/></returns>
+        public int GetUserAgentMaxLength()
+        {
+            return this.userAgentMaxLength;
+        }
+
+        /// <summary>
+        /// The ImmediateInitialization
+        /// </summary>
+        public void ImmediateInitialization()
+        {
+            this.delayInitialization = false;
+        }
+
+        /// <summary>
+        /// The Inform
+        /// </summary>
+        /// <param name="key">The key<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+        public void Inform(string key, string value, IParseTree ctx)
+        {
+            this.Inform(key, key, value, ctx);
+            this.Inform(key + "=\"" + value + '"', key, value, ctx);
+
+            var lengths = this.GetRequiredPrefixLengths(key);
+            if (lengths != null)
+            {
+                var valueLength = value.Length;
+                foreach (var prefixLength in lengths)
+                {
+                    if (valueLength >= prefixLength)
+                    {
+                        this.Inform(key + "{\"" + FirstCharactersForPrefixHash(value, prefixLength.Value) + '"', key, value, ctx);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The InformMeAbout
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
+        public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
+        {
+            var hashKey = keyPattern.ToLower();
+            if (!this.informMatcherActions.Keys.Contains(hashKey))
+            {
+                this.informMatcherActions[hashKey] = new HashSet<MatcherAction>();
+            }
+
+            var analyzerSet = this.informMatcherActions[hashKey];
+            analyzerSet.Add(matcherAction);
+        }
+
+        /// <summary>
+        /// The InformMeAboutPrefix
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="prefix">The prefix<see cref="string"/></param>
+        public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
+        {
+            this.InformMeAbout(matcherAction, treeName + "{\"" + FirstCharactersForPrefixHash(prefix, MAX_PREFIX_HASH_MATCH) + "\"");
+
+            if (!this.informMatcherActionPrefixesLengths.Keys.Contains(treeName))
+            {
+                this.informMatcherActionPrefixesLengths[treeName] = new HashSet<int?>();
+            }
+
+            var lengths = this.informMatcherActionPrefixesLengths[treeName];
+            lengths.Add(FirstCharactersForPrefixHashLength(prefix, MAX_PREFIX_HASH_MATCH));
+        }
+
+        /// <summary>
+        /// The InitializeMatchers
+        /// </summary>
+        public void InitializeMatchers()
+        {
+            if (this.matchersHaveBeenInitialized)
+            {
+                return;
+            }
+
+            Log.Info("Initializing Analyzer data structures");
+            var stopwatch = Stopwatch.StartNew();
+            foreach (var item in this.AllMatchers)
+            {
+                item.Initialize();
+            }
+
+            stopwatch.Stop();
+            this.matchersHaveBeenInitialized = true;
+            Log.Info(string.Format("Built in {0} msec : Hashmap {1}, Ranges map:{2}", stopwatch.ElapsedMilliseconds, this.informMatcherActions.Count, this.informMatcherActionRanges.Count));
+        }
+
+        /// <summary>
+        /// The IsWantedField
+        /// </summary>
+        /// <param name="fieldName">The fieldName<see cref="string"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        public bool IsWantedField(string fieldName)
+        {
+            if (this.WantedFieldNames == null)
+            {
+                return true;
+            }
+
+            return this.WantedFieldNames.Contains(fieldName);
         }
 
         /// <summary>
@@ -254,26 +454,8 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="UserAgentAnalyzerDirect"/></returns>
         public UserAgentAnalyzerDirect KeepTests()
         {
-            loadTests = true;
+            this.WillKeepTests = true;
             return this;
-        }
-
-        /// <summary>
-        /// The WillKeepTests
-        /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
-        public bool WillKeepTests()
-        {
-            return loadTests;
-        }
-
-        /// <summary>
-        /// The GetNumberOfTestCases
-        /// </summary>
-        /// <returns>The <see cref="long"/></returns>
-        public long GetNumberOfTestCases()
-        {
-            return TestCases.Count;
         }
 
         /// <summary>
@@ -283,17 +465,17 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="pattern">The pattern<see cref="string"/></param>
         public void LoadResources(string resourceString, string pattern = "*.yaml")
         {
-            if (matchersHaveBeenInitialized)
+            if (this.matchersHaveBeenInitialized)
             {
                 throw new Exception("Refusing to load additional resources after the datastructures have been initialized.");
             }
 
-            
+
             Log.Info(string.Format("Loading from: \"{0}\": \"{1}\"", resourceString, pattern));
 
-            Stopwatch filesStopwatch = Stopwatch.StartNew();
+            var filesStopwatch = Stopwatch.StartNew();
 
-            flattener = new UserAgentTreeFlattener(this);
+            this.Flattener = new UserAgentTreeFlattener(this);
             YamlDocument yaml;
 
 #if VERBOSE
@@ -303,9 +485,9 @@ namespace OrbintSoft.Yauaa.Analyzer
 #endif
             try
             {
-                string[] filePaths = Directory.GetFiles(resourceString, pattern, SearchOption.TopDirectoryOnly);
+                var filePaths = Directory.GetFiles(resourceString, pattern, SearchOption.TopDirectoryOnly);
 
-                foreach (string filePath in filePaths)
+                foreach (var filePath in filePaths)
                 {
                     resources[Path.GetFileName(filePath)] = new FileInfo(filePath);
                 }
@@ -314,8 +496,9 @@ namespace OrbintSoft.Yauaa.Analyzer
             {
                 throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
             }
-            doingOnlyASingleTest = false;
-            int maxFilenameLength = 0;
+
+            this.doingOnlyASingleTest = false;
+            var maxFilenameLength = 0;
 
             if (resources.Count == 0)
             {
@@ -324,24 +507,17 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             // We need to determine if we are trying to load the yaml files TWICE.
             // This can happen if the library is loaded twice (perhaps even two different versions).
-
-            string[] alreadyLoadedResourceBasenames = matcherConfigs.Keys.Where(r => resources.Keys.Contains(r)).ToArray();
-
+            var alreadyLoadedResourceBasenames = this.matcherConfigs.Keys.Where(r => resources.Keys.Contains(r)).ToArray();
 
             if (alreadyLoadedResourceBasenames.Length > 0)
             {
-                Log.Error(
-                    string.Format("Trying to load these {0} resources for the second time: [{1}]", 
-                        alreadyLoadedResourceBasenames.Length, 
-                        string.Join("," , alreadyLoadedResourceBasenames)
-                    ));
+                Log.Error(string.Format("Trying to load these {0} resources for the second time: [{1}]", alreadyLoadedResourceBasenames.Length, string.Join(",", alreadyLoadedResourceBasenames)));
                 throw new InvalidParserConfigurationException("Trying to load " + alreadyLoadedResourceBasenames.Length + " resources for the second time");
             }
 
-
-            foreach (KeyValuePair<string, FileInfo> resourceEntry in resources)
+            foreach (var resourceEntry in resources)
             {
-                string filename = resourceEntry.Value.Name;
+                var filename = resourceEntry.Value.Name;
                 try
                 {
                     using (var reader = new StreamReader(resourceEntry.Value.FullName))
@@ -353,7 +529,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                     }
 
                     maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
-                    LoadResource(yaml, filename);
+                    this.LoadResource(yaml, filename);
                 }
                 catch (SyntaxErrorException e)
                 {
@@ -368,29 +544,32 @@ namespace OrbintSoft.Yauaa.Analyzer
             filesStopwatch.Stop();
             Log.Info(string.Format("Loaded {0} files in {1} msec", resources.Count, filesStopwatch.ElapsedMilliseconds));
 
-            if (lookups != null && lookups.Count != 0)
+            if (this.lookups != null && this.lookups.Count != 0)
             {
                 // All compares are done in a case insensitive way. So we lowercase ALL keys of the lookups beforehand.
                 IDictionary<string, IDictionary<string, string>> cleanedLookups = new Dictionary<string, IDictionary<string, string>>();
-                foreach (var lookupsEntry in lookups)
+                foreach (var lookupsEntry in this.lookups)
                 {
-                    Dictionary<string, string> cleanedLookup = new Dictionary<string, string>();
+                    var cleanedLookup = new Dictionary<string, string>();
                     foreach (var entry in lookupsEntry.Value)
                     {
                         cleanedLookup[entry.Key.ToLower()] = entry.Value;
                     }
+
                     cleanedLookups[lookupsEntry.Key] = cleanedLookup;
                 }
-                lookups = cleanedLookups;
+
+                this.lookups = cleanedLookups;
             }
 
-            if (wantedFieldNames != null)
+            if (this.WantedFieldNames != null)
             {
-                int wantedSize = wantedFieldNames.Count;
-                if (wantedFieldNames.Contains(UserAgent.SET_ALL_FIELDS))
+                var wantedSize = this.WantedFieldNames.Count;
+                if (this.WantedFieldNames.Contains(UserAgent.SET_ALL_FIELDS))
                 {
                     wantedSize--;
                 }
+
                 Log.Info(string.Format("Building all needed matchers for the requested {0} fields.", wantedSize));
             }
             else
@@ -398,33 +577,34 @@ namespace OrbintSoft.Yauaa.Analyzer
                 Log.Info("Building all matchers for all possible fields.");
             }
 
-            int totalNumberOfMatchers = 0;
-            int skippedMatchers = 0;
+            var totalNumberOfMatchers = 0;
+            var skippedMatchers = 0;
 
-            if (matcherConfigs != null)
+            if (this.matcherConfigs != null)
             {
-                Stopwatch fullStopwatch = Stopwatch.StartNew();
+                var fullStopwatch = Stopwatch.StartNew();
                 foreach (var resourceEntry in resources)
                 {
-                    FileInfo resource = resourceEntry.Value;
-                    string configFilename = resource.Name;
-                    List<YamlMappingNode> matcherConfig;
-                    if (matcherConfigs.ContainsKey(configFilename))
+                    var resource = resourceEntry.Value;
+                    var configFilename = resource.Name;
+                    IList<YamlMappingNode> matcherConfig;
+                    if (this.matcherConfigs.ContainsKey(configFilename))
                     {
-                        matcherConfig = matcherConfigs[configFilename];
+                        matcherConfig = this.matcherConfigs[configFilename];
                     }
-                    else // No matchers in this file (probably only lookups and/or tests)
+                    else
                     {
+                        // No matchers in this file (probably only lookups and/or tests)
                         continue;
                     }
-                    
-                    Stopwatch stopwatch = Stopwatch.StartNew();
-                    int startSkipped = skippedMatchers;
-                    foreach (YamlMappingNode map in matcherConfig)
+
+                    var stopwatch = Stopwatch.StartNew();
+                    var startSkipped = skippedMatchers;
+                    foreach (var map in matcherConfig)
                     {
                         try
                         {
-                            AllMatchers.Add(new Matcher(this, lookups, lookupSets, wantedFieldNames, map, configFilename));
+                            this.AllMatchers.Add(new Matcher(this, this.lookups, this.lookupSets, this.WantedFieldNames, map, configFilename));
                             totalNumberOfMatchers++;
                         }
                         catch (UselessMatcherException)
@@ -432,87 +612,35 @@ namespace OrbintSoft.Yauaa.Analyzer
                             skippedMatchers++;
                         }
                     }
-                    stopwatch.Stop();
-                    int stopSkipped = skippedMatchers;
 
-                    if (showMatcherStats)
+                    stopwatch.Stop();
+                    var stopSkipped = skippedMatchers;
+
+                    if (this.showMatcherStats)
                     {
-                        Log.Info(string.Format("Loading {0} (dropped {1}) matchers from {2} took {3} msec",
-                            matcherConfig.Count - (stopSkipped - startSkipped),
-                            stopSkipped - startSkipped,
-                            configFilename,
-                            stopwatch.ElapsedMilliseconds));
+                        Log.Info(
+                            string.Format(
+                                "Loading {0} (dropped {1}) matchers from {2} took {3} msec",
+                                matcherConfig.Count - (stopSkipped - startSkipped),
+                                stopSkipped - startSkipped,
+                                configFilename,
+                                stopwatch.ElapsedMilliseconds));
                     }
                 }
+
                 fullStopwatch.Stop();
 
-                Log.Info(string.Format("Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
-                    totalNumberOfMatchers,
-                    skippedMatchers,
-                    (lookups == null) ? 0 : lookups.Count(),
-                    lookupSets.Count(),
-                    TestCases.Count,
-                    matcherConfigs.Count,
-                    fullStopwatch.ElapsedMilliseconds
-                ));
+                Log.Info(
+                    string.Format(
+                        "Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
+                        totalNumberOfMatchers,
+                        skippedMatchers,
+                        (this.lookups == null) ? 0 : this.lookups.Count(),
+                        this.lookupSets.Count(),
+                        this.TestCases.Count,
+                        this.matcherConfigs.Count,
+                        fullStopwatch.ElapsedMilliseconds));
             }
-        }
-
-        /// <summary>
-        /// The InitializeMatchers
-        /// </summary>
-        public void InitializeMatchers()
-        {
-            if (matchersHaveBeenInitialized)
-            {
-                return;
-            }
-            Log.Info("Initializing Analyzer data structures");
-            Stopwatch stopwatch = Stopwatch.StartNew();
-            foreach (var item in AllMatchers)
-            {
-                item.Initialize();
-            }
-            stopwatch.Stop();
-            matchersHaveBeenInitialized = true;
-            Log.Info(string.Format("Built in {0} msec : Hashmap {1}, Ranges map:{2}",
-                stopwatch.ElapsedMilliseconds,
-                informMatcherActions.Count,
-                informMatcherActionRanges.Count));
-        }
-
-        /// <summary>
-        /// The GetAllPossibleFieldNames
-        /// </summary>
-        /// <returns>The <see cref="SortedSet{string}"/></returns>
-        public SortedSet<string> GetAllPossibleFieldNames()
-        {
-            SortedSet<string> results = new SortedSet<string>(HardCodedGeneratedFields);
-            foreach (Matcher matcher in AllMatchers)
-            {
-                results.UnionWith(matcher.GetAllPossibleFieldNames());
-            }
-            return results;
-        }
-
-        /// <summary>
-        /// The GetAllPossibleFieldNamesSorted
-        /// </summary>
-        /// <returns>The <see cref="List{string}"/></returns>
-        public List<string> GetAllPossibleFieldNamesSorted()
-        {
-            List<string> fieldNames = new List<string>(GetAllPossibleFieldNames());
-            fieldNames.Sort();
-
-            List<string> result = new List<string>();
-            foreach (string fieldName in UserAgent.PreSortedFieldList) //todo: now protected
-            {
-                fieldNames.Remove(fieldName);
-                result.Add(fieldName);
-            }
-            result.AddRange(fieldNames);
-
-            return result;
         }
 
         /// <summary>
@@ -522,93 +650,12 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
         public void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
-            if (!informMatcherActionRanges.Keys.Contains(treeName))
+            if (!this.informMatcherActionRanges.Keys.Contains(treeName))
             {
-                informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
+                this.informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
             }
 
-            informMatcherActionRanges[treeName].Add(range);
-        }
-
-        /// <summary>
-        /// The InformMeAboutPrefix
-        /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="prefix">The prefix<see cref="string"/></param>
-        public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
-        {
-            InformMeAbout(matcherAction, treeName + "{\"" + FirstCharactersForPrefixHash(prefix, MAX_PREFIX_HASH_MATCH) + "\"");
-
-            if (!informMatcherActionPrefixesLengths.Keys.Contains(treeName))
-            {
-                informMatcherActionPrefixesLengths[treeName] = new HashSet<int?>();
-            }
-
-            HashSet<int?> lengths = informMatcherActionPrefixesLengths[treeName];
-            lengths.Add(FirstCharactersForPrefixHashLength(prefix, MAX_PREFIX_HASH_MATCH));
-        }
-
-        /// <summary>
-        /// The GetRequiredPrefixLengths
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The <see cref="ISet{int?}"/></returns>
-        public ISet<int?> GetRequiredPrefixLengths(string treeName)
-        {
-            return informMatcherActionPrefixesLengths.ContainsKey(treeName) ? informMatcherActionPrefixesLengths[treeName] : null;
-        }
-
-        /// <summary>
-        /// The InformMeAbout
-        /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
-        public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
-        {
-            string hashKey = keyPattern.ToLower();
-            if (!informMatcherActions.Keys.Contains(hashKey))
-            {
-                informMatcherActions[hashKey] = new HashSet<MatcherAction>();
-            }
-
-            ISet<MatcherAction> analyzerSet = informMatcherActions[hashKey];
-            analyzerSet.Add(matcherAction);
-        }
-
-        /// <summary>
-        /// The SetVerbose
-        /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
-        public void SetVerbose(bool newVerbose)
-        {
-            verbose = newVerbose;
-            flattener.SetVerbose(newVerbose);
-        }
-
-        /// <summary>
-        /// The SetUserAgentMaxLength
-        /// </summary>
-        /// <param name="newUserAgentMaxLength">The newUserAgentMaxLength<see cref="int"/></param>
-        public void SetUserAgentMaxLength(int newUserAgentMaxLength)
-        {
-            if (newUserAgentMaxLength <= 0)
-            {
-                userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
-            }
-            else
-            {
-                userAgentMaxLength = newUserAgentMaxLength;
-            }
-        }
-
-        /// <summary>
-        /// The GetUserAgentMaxLength
-        /// </summary>
-        /// <returns>The <see cref="int"/></returns>
-        public int GetUserAgentMaxLength()
-        {
-            return userAgentMaxLength;
+            this.informMatcherActionRanges[treeName].Add(range);
         }
 
         /// <summary>
@@ -618,8 +665,8 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="UserAgent"/></returns>
         public virtual UserAgent Parse(string userAgentString)
         {
-            UserAgent userAgent = new UserAgent(userAgentString);
-            return Parse(userAgent);
+            var userAgent = new UserAgent(userAgentString);
+            return this.Parse(userAgent);
         }
 
         /// <summary>
@@ -631,24 +678,24 @@ namespace OrbintSoft.Yauaa.Analyzer
         {
             lock (this)
             {
-                InitializeMatchers();
-                string useragentString = userAgent.UserAgentString;
-                if (useragentString != null && useragentString.Length > userAgentMaxLength)
+                this.InitializeMatchers();
+                var useragentString = userAgent.UserAgentString;
+                if (useragentString != null && useragentString.Length > this.userAgentMaxLength)
                 {
-                    SetAsHacker(userAgent, 100);
+                    this.SetAsHacker(userAgent, 100);
                     userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
-                    return HardCodedPostProcessing(userAgent);
+                    return this.HardCodedPostProcessing(userAgent);
                 }
 
                 // Reset all Matchers
-                foreach (Matcher matcher in AllMatchers)
+                foreach (var matcher in this.AllMatchers)
                 {
                     matcher.Reset();
                 }
 
                 if (userAgent.IsDebug)
                 {
-                    foreach (Matcher matcher in AllMatchers)
+                    foreach (var matcher in this.AllMatchers)
                     {
                         matcher.SetVerboseTemporarily(true);
                     }
@@ -656,16 +703,16 @@ namespace OrbintSoft.Yauaa.Analyzer
 
                 try
                 {
-                    userAgent = flattener.Parse(userAgent);
+                    userAgent = this.Flattener.Parse(userAgent);
 
                     // Fire all Analyzers
-                    foreach (Matcher matcher in AllMatchers)
+                    foreach (var matcher in this.AllMatchers)
                     {
                         matcher.Analyze(userAgent);
                     }
 
                     userAgent.ProcessSetAll();
-                    return HardCodedPostProcessing(userAgent);
+                    return this.HardCodedPostProcessing(userAgent);
                 }
                 catch (NullReferenceException)
                 {
@@ -673,65 +720,129 @@ namespace OrbintSoft.Yauaa.Analyzer
                     // So this is a safety for something that 'can' but 'should not' occur.
                     // I guess this exploit can work only in Java, but better to keep the code as safety measure
                     userAgent.Reset();
-                    userAgent = SetAsHacker(userAgent, 10000);
+                    userAgent = this.SetAsHacker(userAgent, 10000);
                     userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
-                    return HardCodedPostProcessing(userAgent);
+                    return this.HardCodedPostProcessing(userAgent);
                 }
             }
         }
 
         /// <summary>
-        /// The IsWantedField
+        /// Runs all testcases once to heat up the JVM.
         /// </summary>
-        /// <param name="fieldName">The fieldName<see cref="string"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        public bool IsWantedField(string fieldName)
+        /// <returns>The <see cref="long"/></returns>
+        public long PreHeat()
         {
-            if (wantedFieldNames == null)
-            {
-                return true;
-            }
-            return wantedFieldNames.Contains(fieldName);
+            return this.PreHeat(this.TestCases.Count, true);
         }
 
         /// <summary>
-        /// The GetRequiredInformRanges
+        /// Runs the number of specified testcases to heat up the CLR.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
-        public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
+        /// <param name="preheatIterations">The preheatIterations<see cref="long"/></param>
+        /// <returns>The <see cref="long"/></returns>
+        public long PreHeat(long preheatIterations)
         {
-            if (!informMatcherActionRanges.Keys.Contains(treeName))
-            {
-                informMatcherActionRanges[treeName] = new HashSet<WordRangeVisitor.Range>();
-            }
-
-            return informMatcherActionRanges[treeName];
+            return this.PreHeat(preheatIterations, true);
         }
 
         /// <summary>
-        /// The Inform
+        /// Runs the number of specified testcases to heat up the CLR.
         /// </summary>
-        /// <param name="key">The key<see cref="string"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
-        public void Inform(string key, string value, IParseTree ctx)
+        /// <param name="preheatIterations">The preheatIterations<see cref="long"/></param>
+        /// <param name="log">The log<see cref="bool"/></param>
+        /// <returns>The <see cref="long"/></returns>
+        public long PreHeat(long preheatIterations, bool log)
         {
-            Inform(key, key, value, ctx);
-            Inform(key + "=\"" + value + '"', key, value, ctx);
-
-            ISet<int?> lengths = GetRequiredPrefixLengths(key);
-            if (lengths != null)
+            if (this.TestCases.Count == 0)
             {
-                int valueLength = value.Length;
-                foreach (int? prefixLength in lengths)
+                Log.Warn("NO PREHEAT WAS DONE. Simply because there are no test cases available.");
+                return 0;
+            }
+
+            if (preheatIterations <= 0)
+            {
+                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for {0} to run.", preheatIterations));
+                return 0;
+            }
+
+            if (preheatIterations > MAX_PRE_HEAT_ITERATIONS)
+            {
+                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for too many ({0} > {1}) to run.", preheatIterations, MAX_PRE_HEAT_ITERATIONS));
+                return 0;
+            }
+
+            if (log)
+            {
+                Log.Info(string.Format("Preheating CLR by running {0} testcases.", preheatIterations));
+            }
+
+            var remainingIterations = preheatIterations;
+            var goodResults = 0;
+            while (remainingIterations > 0)
+            {
+                foreach (var test in this.TestCases)
                 {
-                    if (valueLength >= prefixLength)
+                    var input = test["input"];
+                    var userAgentString = input["user_agent_string"];
+                    remainingIterations--;
+
+                    // Calculate and use result to guarantee not optimized away.
+                    if (!this.Parse(userAgentString).HasSyntaxError)
                     {
-                        Inform(key + "{\"" + FirstCharactersForPrefixHash(value, prefixLength.Value) + '"', key, value, ctx);
+                        goodResults++;
+                    }
+
+                    if (remainingIterations <= 0)
+                    {
+                        break;
                     }
                 }
             }
+
+            if (log)
+            {
+                Log.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
+            }
+
+            return preheatIterations;
+        }
+
+        /// <summary>
+        /// The SetShowMatcherStats
+        /// </summary>
+        /// <param name="newShowMatcherStats">The newShowMatcherStats<see cref="bool"/></param>
+        /// <returns>The <see cref="UserAgentAnalyzerDirect"/></returns>
+        public UserAgentAnalyzerDirect SetShowMatcherStats(bool newShowMatcherStats)
+        {
+            this.showMatcherStats = newShowMatcherStats;
+            return this;
+        }
+
+        /// <summary>
+        /// The SetUserAgentMaxLength
+        /// </summary>
+        /// <param name="newUserAgentMaxLength">The newUserAgentMaxLength<see cref="int"/></param>
+        public void SetUserAgentMaxLength(int newUserAgentMaxLength)
+        {
+            if (newUserAgentMaxLength <= 0)
+            {
+                this.userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
+            }
+            else
+            {
+                this.userAgentMaxLength = newUserAgentMaxLength;
+            }
+        }
+
+        /// <summary>
+        /// The SetVerbose
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        public void SetVerbose(bool newVerbose)
+        {
+            this.verbose = newVerbose;
+            this.Flattener.SetVerbose(newVerbose);
         }
 
         /// <summary>
@@ -743,12 +854,13 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="secondName">The secondName<see cref="string"/></param>
         internal void ConcatFieldValuesNONDuplicated(UserAgent userAgent, string targetName, string firstName, string secondName)
         {
-            if (!IsWantedField(targetName))
+            if (!this.IsWantedField(targetName))
             {
                 return;
             }
-            UserAgent.AgentField firstField = userAgent.Get(firstName);
-            UserAgent.AgentField secondField = userAgent.Get(secondName);
+
+            var firstField = userAgent.Get(firstName);
+            var secondField = userAgent.Get(secondName);
 
             string first = null;
             long firstConfidence = -1;
@@ -760,6 +872,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 first = firstField.GetValue();
                 firstConfidence = firstField.GetConfidence();
             }
+
             if (secondField != null)
             {
                 second = secondField.GetValue();
@@ -777,6 +890,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 {
                     userAgent.Set(targetName, first, firstConfidence);
                 }
+
                 return; // Nothing to do
             }
             else
@@ -787,6 +901,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                     {
                         userAgent.Set(targetName, second, secondConfidence);
                     }
+
                     return;
                 }
             }
@@ -813,21 +928,25 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         protected internal void Initialize()
         {
-            Initialize(new List<ResourcesPath>() { DefaultResources });
+            this.Initialize(new List<ResourcesPath>() { DefaultResources });
         }
 
         /// <summary>
         /// The Initialize
         /// </summary>
         /// <param name="resources">The resources<see cref="List{ResourcesPath}"/></param>
-        protected void Initialize(List<ResourcesPath> resources)
+        protected void Initialize(IList<ResourcesPath> resources)
         {
             YauaaVersion.LogVersion();
-            resources.ForEach(r => LoadResources(r.Directory, r.Filter));
-            VerifyWeAreNotAskingForImpossibleFields();
-            if (!delayInitialization)
+            foreach (var r in resources)
             {
-                InitializeMatchers();
+                this.LoadResources(r.Directory, r.Filter);
+            }
+
+            this.VerifyWeAreNotAskingForImpossibleFields();
+            if (!this.delayInitialization)
+            {
+                this.InitializeMatchers();
             }
         }
 
@@ -836,352 +955,140 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         protected void VerifyWeAreNotAskingForImpossibleFields()
         {
-            if (wantedFieldNames == null)
+            if (this.WantedFieldNames == null)
             {
-                return; // Nothing to check
+                return; //// Nothing to check
             }
-            List<string> impossibleFields = new List<string>();
-            List<string> allPossibleFields = GetAllPossibleFieldNamesSorted();
 
-            foreach (string wantedFieldName in wantedFieldNames)
+            var impossibleFields = new List<string>();
+            var allPossibleFields = this.GetAllPossibleFieldNamesSorted();
+
+            foreach (var wantedFieldName in this.WantedFieldNames)
             {
                 if (UserAgent.IsSystemField(wantedFieldName))
                 {
                     continue; // These are fine
                 }
+
                 if (!allPossibleFields.Contains(wantedFieldName))
                 {
                     impossibleFields.Add(wantedFieldName);
                 }
             }
+
             if (impossibleFields.Count == 0)
             {
                 return;
             }
-            StringBuilder bd = new StringBuilder();
+
+            var bd = new StringBuilder();
             foreach (var item in impossibleFields)
             {
                 bd.AppendFormat(" [{0}]", item);
             }
+
             throw new InvalidParserConfigurationException("We cannot provide these fields:" + bd.ToString());
         }
 
         /// <summary>
-        /// The InitTransientFields
-        /// </summary>
-        private void InitTransientFields()
-        {
-            matcherConfigs = new Dictionary<string, List<YamlMappingNode>>();
-        }
-
-        /// <summary>
-        /// The ReadObject
-        /// </summary>
-        /// <param name="stream">The stream<see cref="Stream"/></param>
-        private void ReadObject(Stream stream)
-        {
-            InitTransientFields();
-
-            List<string> lines = new List<string>
-            {
-                "This Analyzer instance was deserialized.",
-                "",
-                "Lookups      : " + ((lookups == null) ? 0 : lookups.Count),
-                "LookupSets   : " + lookupSets.Count,
-                "Matchers     : " + AllMatchers.Count,
-                "Hashmap size : " + informMatcherActions.Count,
-                "Testcases    : " + TestCases.Count
-            };
-
-            string[] x = { };
-            YauaaVersion.LogVersion(lines.ToArray());
-        }
-
-        /// <summary>
-        /// The LoadResource
-        /// </summary>
-        /// <param name="yaml">The yaml<see cref="YamlDocument"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        private void LoadResource(YamlDocument yaml, string filename)
-        {
-            YamlNode loadedYaml;
-            try
-            {
-                loadedYaml = yaml?.RootNode;
-            }
-            catch (Exception e)
-            {
-                throw new InvalidParserConfigurationException("Parse error in the file " + filename + ": " + e.Message, e);
-            }
-
-            if (loadedYaml == null)
-            {
-                throw new InvalidParserConfigurationException("The file " + filename + " is empty");
-            }
-
-            // Get and check top level config            
-            YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), loadedYaml, filename, "File must be a Map");
-            YamlMappingNode rootNode = (YamlMappingNode)loadedYaml;
-
-            KeyValuePair<YamlNode, YamlNode> configNodeTuple = new KeyValuePair<YamlNode, YamlNode>(null, null);
-            foreach (KeyValuePair<YamlNode, YamlNode> tuple in rootNode)
-            {
-                string name = YamlUtils.GetKeyAsString(tuple, filename);
-                if ("config".Equals(name))
-                {
-                    configNodeTuple = tuple;
-                    break;
-                }
-                if ("version".Equals(name))
-                {
-                    // Check the version information from the Yaml files
-                    YauaaVersion.AssertSameVersion(tuple, filename);
-                    return;
-                }
-            }
-
-            YamlUtils.Require(configNodeTuple.Key != null, loadedYaml, filename, "The top level entry MUST be 'config'.");
-
-            YamlSequenceNode configNode = YamlUtils.GetValueAsSequenceNode(configNodeTuple, filename);
-            IList<YamlNode> configList = configNode.Children;
-
-            foreach (YamlNode configEntry in configList)
-            {
-                YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), configEntry, filename, "The entry MUST be a mapping");
-
-                KeyValuePair<YamlNode, YamlNode> entry = YamlUtils.GetExactlyOneNodeTuple((YamlMappingNode)configEntry, filename);
-                YamlMappingNode actualEntry = YamlUtils.GetValueAsMappingNode(entry, filename);
-                string entryType = YamlUtils.GetKeyAsString(entry, filename);
-                switch (entryType)
-                {
-                    case "lookup":
-                        LoadYamlLookup(actualEntry, filename);
-                        break;
-                    case "set":
-                        LoadYamlLookupSets(actualEntry, filename);
-                        break;
-                    case "matcher":
-                        LoadYamlMatcher(actualEntry, filename);
-                        break;
-                    case "test":
-                        if (loadTests)
-                        {
-                            LoadYamlTestcase(actualEntry, filename);
-                        }
-                        break;
-                    default:
-                        throw new InvalidParserConfigurationException(
-                            "Yaml config.(" + filename + ":" + actualEntry.Start.Line + "): " +
-                                "Found unexpected config entry: " + entryType + ", allowed are 'lookup', 'set', 'matcher' and 'test'");
-                }
-            }
-        }
-
-        /// <summary>
-        /// The LoadYamlLookup
-        /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        private void LoadYamlLookup(YamlMappingNode entry, string filename)
-        {
-            string name = null;
-            Dictionary<string, string> map = null;
-
-            foreach (KeyValuePair<YamlNode, YamlNode> tuple in entry)
-            {
-                switch (YamlUtils.GetKeyAsString(tuple, filename))
-                {
-                    case "name":
-                        name = YamlUtils.GetValueAsString(tuple, filename);
-                        break;
-                    case "map":
-                        if (map == null)
-                        {
-                            map = new Dictionary<string, string>();
-                        }
-                        List<KeyValuePair<YamlNode, YamlNode>> mappings = YamlUtils.GetValueAsMappingNode(tuple, filename).ToList();
-                        foreach (KeyValuePair<YamlNode, YamlNode> mapping in mappings)
-                        {
-                            string key = YamlUtils.GetKeyAsString(mapping, filename);
-                            string value = YamlUtils.GetValueAsString(mapping, filename);
-                            map[key] = value;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            YamlUtils.Require(name != null && map != null, entry, filename, "Invalid lookup specified");
-
-            lookups[name] = map;
-        }
-
-        /// <summary>
-        /// The LoadYamlLookupSets
-        /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        private void LoadYamlLookupSets(YamlMappingNode entry, string filename)
-        {
-            string name = null;
-            HashSet<string> lookupSet = new HashSet<string>();
-
-            foreach (KeyValuePair<YamlNode, YamlNode> tuple in entry)
-            {
-                switch (YamlUtils.GetKeyAsString(tuple, filename))
-                {
-                    case "name":
-                        name = YamlUtils.GetValueAsString(tuple, filename);
-                        break;
-                    case "values":
-                        YamlSequenceNode node = YamlUtils.GetValueAsSequenceNode(tuple, filename);
-                        foreach (string value in YamlUtils.GetStringValues(node, filename))
-                        {
-                            lookupSet.Add(value.ToLower(CultureInfo.InvariantCulture));
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            lookupSets[name] = lookupSet;
-        }
-
-        /// <summary>
-        /// The LoadYamlMatcher
-        /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        private void LoadYamlMatcher(YamlMappingNode entry, string filename)
-        {
-            List<YamlMappingNode> matcherConfigList = matcherConfigs.FirstOrDefault(e => e.Key == filename).Value;
-            if (matcherConfigList == null)
-            {
-                matcherConfigList = matcherConfigs[filename] = new List<YamlMappingNode>();
-            }
-            matcherConfigList.Add(entry);
-        }
-
-        /// <summary>
-        /// The LoadYamlTestcase
-        /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        private void LoadYamlTestcase(YamlMappingNode entry, string filename)
-        {
-            if (!doingOnlyASingleTest)
-            {
-                Dictionary<string, string> metaData = new Dictionary<string, string>
-                {
-                    ["filename"] = filename,
-                    ["fileline"] = Convert.ToString(entry.Start.Line)
-                };
-
-                Dictionary<string, string> input = null;
-                List<string> options = null;
-                Dictionary<string, string> expected = new Dictionary<string, string>();
-                foreach (KeyValuePair<YamlNode, YamlNode> tuple in entry)
-                {
-                    string name = YamlUtils.GetKeyAsString(tuple, filename);
-                    switch (name)
-                    {
-                        case "options":
-                            options = YamlUtils.GetStringValues(tuple.Value, filename);
-                            if (options.Contains("only"))
-                            {
-                                doingOnlyASingleTest = true;
-                                TestCases.Clear();
-                            }
-                            break;
-                        case "input":
-                            foreach (KeyValuePair<YamlNode, YamlNode> inputTuple in YamlUtils.GetValueAsMappingNode(tuple, filename))
-                            {
-                                string inputName = YamlUtils.GetKeyAsString(inputTuple, filename);
-                                switch (inputName)
-                                {
-                                    case "user_agent_string":
-                                        string inputString = YamlUtils.GetValueAsString(inputTuple, filename);
-                                        input = new Dictionary<string, string>();
-                                        input[inputName] = inputString;
-                                        break;
-                                    default:
-                                        break;
-                                }
-                            }
-                            break;
-                        case "expected":
-                            List<KeyValuePair<YamlNode, YamlNode>> mappings = YamlUtils.GetValueAsMappingNode(tuple, filename).ToList();
-                            foreach (KeyValuePair<YamlNode, YamlNode> mapping in mappings)
-                            {
-                                string key = YamlUtils.GetKeyAsString(mapping, filename);
-                                string value = YamlUtils.GetValueAsString(mapping, filename);
-                                expected[key] = value;
-                            }
-                            break;
-                        default:
-                            //ignore
-                            break; // Skip
-                    }
-                }
-
-                YamlUtils.Require(input != null, entry, filename, "Test is missing input");
-
-                if (expected.Count == 0)
-                {
-                    doingOnlyASingleTest = true;
-                    TestCases.Clear();
-                }
-
-                IDictionary<string, IDictionary<string, string>> testCase = new Dictionary<string, IDictionary<string, string>>
-                {
-                    ["input"] = input
-                };
-                if (expected.Count > 0)
-                {
-                    testCase["expected"] = expected;
-                }
-                if (options != null)
-                {
-                    Dictionary<string, string> optionsMap = new Dictionary<string, string>();
-                    foreach (string option in options)
-                    {
-                        optionsMap[option] = option;
-                    }
-                    testCase["options"] = optionsMap;
-                }
-                testCase["metaData"] = metaData;
-                TestCases.Add(testCase);
-            }
-        }
-
-        /// <summary>
-        /// The SetAsHacker
+        /// The AddMajorVersionField
         /// </summary>
         /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <param name="confidence">The confidence<see cref="int"/></param>
-        /// <returns>The <see cref="UserAgent"/></returns>
-        private UserAgent SetAsHacker(UserAgent userAgent, int confidence)
+        /// <param name="versionName">The versionName<see cref="string"/></param>
+        /// <param name="majorVersionName">The majorVersionName<see cref="string"/></param>
+        private void AddMajorVersionField(UserAgent userAgent, string versionName, string majorVersionName)
         {
-            userAgent.Set(UserAgent.DEVICE_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.DEVICE_BRAND, "Hacker", confidence);
-            userAgent.Set(UserAgent.DEVICE_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.DEVICE_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.OPERATING_SYSTEM_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.OPERATING_SYSTEM_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.OPERATING_SYSTEM_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_VERSION_MAJOR, "Hacker", confidence);
-            userAgent.Set("HackerToolkit", "Unknown", confidence);
-            userAgent.Set("HackerAttackVector", "Buffer overflow", confidence);
-            return userAgent;
+            if (!this.IsWantedField(majorVersionName))
+            {
+                return;
+            }
+
+            var agentVersionMajor = userAgent.Get(majorVersionName);
+            if (agentVersionMajor == null || agentVersionMajor.GetConfidence() == -1)
+            {
+                var agentVersion = userAgent.Get(versionName);
+                if (agentVersion != null)
+                {
+                    var version = agentVersion.GetValue();
+                    if (version != null)
+                    {
+                        version = VersionSplitter.GetInstance().GetSingleSplit(agentVersion.GetValue(), 1);
+                    }
+
+                    userAgent.Set(
+                        majorVersionName,
+                        version,
+                        agentVersion.GetConfidence());
+                }
+            }
+        }
+
+        /// <summary>
+        /// The DetermineDeviceBrand
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        private string DetermineDeviceBrand(UserAgent userAgent)
+        {
+            // If no brand is known but we do have a URL then we assume the hostname to be the brand.
+            // We put this AFTER the creation of the DeviceName because we choose to not have
+            // this brandname in the DeviceName.
+            var informationUrl = userAgent.Get("AgentInformationUrl");
+            if (informationUrl != null && informationUrl.GetConfidence() >= 0)
+            {
+                var hostname = informationUrl.GetValue();
+                try
+                {
+                    var url = new Uri(hostname);
+                    hostname = url.Host;
+                }
+                catch (Exception)
+                {
+                    // Ignore any exception and continue.
+                }
+
+                hostname = this.ExtractCompanyFromHostName(hostname);
+                if (hostname != null)
+                {
+                    return hostname;
+                }
+            }
+
+            var informationEmail = userAgent.Get("AgentInformationEmail");
+            if (informationEmail != null && informationEmail.GetConfidence() >= 0)
+            {
+                var hostname = informationEmail.GetValue();
+                var atOffset = hostname.IndexOf('@');
+                if (atOffset >= 0)
+                {
+                    hostname = hostname.Substring(atOffset + 1);
+                }
+
+                hostname = this.ExtractCompanyFromHostName(hostname);
+                if (hostname != null)
+                {
+                    return hostname;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// The ExtractCompanyFromHostName
+        /// </summary>
+        /// <param name="hostname">The hostname<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        private string ExtractCompanyFromHostName(string hostname)
+        {
+            if (DomainName.TryParse(hostname, out var outDomain))
+            {
+                return Normalize.Brand(outDomain.Domain);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         /// <summary>
@@ -1218,19 +1125,19 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             // !!!!!!!!!! NOTE !!!!!!!!!!!!
             // IF YOU ADD ANY EXTRA FIELDS YOU MUST ADD THEM TO THE BUILDER TOO !!!!
-            AddMajorVersionField(userAgent, UserAgent.AGENT_VERSION, UserAgent.AGENT_VERSION_MAJOR);
-            AddMajorVersionField(userAgent, UserAgent.LAYOUT_ENGINE_VERSION, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-            AddMajorVersionField(userAgent, "WebviewAppVersion", "WebviewAppVersionMajor");
+            this.AddMajorVersionField(userAgent, UserAgent.AGENT_VERSION, UserAgent.AGENT_VERSION_MAJOR);
+            this.AddMajorVersionField(userAgent, UserAgent.LAYOUT_ENGINE_VERSION, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
+            this.AddMajorVersionField(userAgent, "WebviewAppVersion", "WebviewAppVersionMajor");
 
-            ConcatFieldValuesNONDuplicated(userAgent, "AgentNameVersion", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
-            ConcatFieldValuesNONDuplicated(userAgent, "AgentNameVersionMajor", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
-            ConcatFieldValuesNONDuplicated(userAgent, "WebviewAppNameVersionMajor", "WebviewAppName", "WebviewAppVersionMajor");
-            ConcatFieldValuesNONDuplicated(userAgent, "LayoutEngineNameVersion", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
-            ConcatFieldValuesNONDuplicated(userAgent, "LayoutEngineNameVersionMajor", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-            ConcatFieldValuesNONDuplicated(userAgent, "OperatingSystemNameVersion", UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
+            this.ConcatFieldValuesNONDuplicated(userAgent, "AgentNameVersion", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
+            this.ConcatFieldValuesNONDuplicated(userAgent, "AgentNameVersionMajor", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
+            this.ConcatFieldValuesNONDuplicated(userAgent, "WebviewAppNameVersionMajor", "WebviewAppName", "WebviewAppVersionMajor");
+            this.ConcatFieldValuesNONDuplicated(userAgent, "LayoutEngineNameVersion", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
+            this.ConcatFieldValuesNONDuplicated(userAgent, "LayoutEngineNameVersionMajor", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
+            this.ConcatFieldValuesNONDuplicated(userAgent, "OperatingSystemNameVersion", UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
 
             // The device brand field is a mess.
-            UserAgent.AgentField deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
+            var deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
             if (deviceBrand.GetConfidence() >= 0)
             {
                 userAgent.SetForced(
@@ -1240,7 +1147,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             // The email address is a mess
-            UserAgent.AgentField email = userAgent.Get("AgentInformationEmail");
+            var email = userAgent.Get("AgentInformationEmail");
             if (email != null && email.GetConfidence() >= 0)
             {
                 userAgent.SetForced(
@@ -1250,12 +1157,12 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             // Make sure the DeviceName always starts with the DeviceBrand
-            UserAgent.AgentField deviceName = userAgent.Get(UserAgent.DEVICE_NAME);
+            var deviceName = userAgent.Get(UserAgent.DEVICE_NAME);
             if (deviceName.GetConfidence() >= 0)
             {
                 deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
-                string deviceNameValue = deviceName.GetValue();
-                string deviceBrandValue = deviceBrand.GetValue();
+                var deviceNameValue = deviceName.GetValue();
+                var deviceBrandValue = deviceBrand.GetValue();
                 if (deviceName.GetConfidence() >= 0 &&
                     deviceBrand.GetConfidence() >= 0 &&
                     !deviceBrandValue.Equals("Unknown"))
@@ -1277,7 +1184,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             if (deviceBrand.GetConfidence() < 0)
             {
                 // If no brand is known then try to extract something that looks like a Brand from things like URL and Email addresses.
-                string newDeviceBrand = DetermineDeviceBrand(userAgent);
+                var newDeviceBrand = this.DetermineDeviceBrand(userAgent);
                 if (newDeviceBrand != null)
                 {
                     userAgent.SetForced(
@@ -1291,104 +1198,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The ExtractCompanyFromHostName
-        /// </summary>
-        /// <param name="hostname">The hostname<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        private string ExtractCompanyFromHostName(string hostname)
-        {
-            if (DomainName.TryParse(hostname, out DomainName outDomain))
-            {
-                return Normalize.Brand(outDomain.Domain);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// The DetermineDeviceBrand
-        /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        private string DetermineDeviceBrand(UserAgent userAgent)
-        {
-            // If no brand is known but we do have a URL then we assume the hostname to be the brand.
-            // We put this AFTER the creation of the DeviceName because we choose to not have
-            // this brandname in the DeviceName.
-
-            UserAgent.AgentField informationUrl = userAgent.Get("AgentInformationUrl");
-            if (informationUrl != null && informationUrl.GetConfidence() >= 0)
-            {
-                string hostname = informationUrl.GetValue();
-                try
-                {
-                    Uri url = new Uri(hostname);
-                    hostname = url.Host;
-                }
-                catch (Exception)
-                {
-                    // Ignore any exception and continue.
-                }
-                hostname = ExtractCompanyFromHostName(hostname);
-                if (hostname != null)
-                {
-                    return hostname;
-                }
-            }
-
-            UserAgent.AgentField informationEmail = userAgent.Get("AgentInformationEmail");
-            if (informationEmail != null && informationEmail.GetConfidence() >= 0)
-            {
-                string hostname = informationEmail.GetValue();
-                int atOffset = hostname.IndexOf('@');
-                if (atOffset >= 0)
-                {
-                    hostname = hostname.Substring(atOffset + 1);
-                }
-                hostname = ExtractCompanyFromHostName(hostname);
-                if (hostname != null)
-                {
-                    return hostname;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// The AddMajorVersionField
-        /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <param name="versionName">The versionName<see cref="string"/></param>
-        /// <param name="majorVersionName">The majorVersionName<see cref="string"/></param>
-        private void AddMajorVersionField(UserAgent userAgent, string versionName, string majorVersionName)
-        {
-            if (!IsWantedField(majorVersionName))
-            {
-                return;
-            }
-            UserAgent.AgentField agentVersionMajor = userAgent.Get(majorVersionName);
-            if (agentVersionMajor == null || agentVersionMajor.GetConfidence() == -1)
-            {
-                UserAgent.AgentField agentVersion = userAgent.Get(versionName);
-                if (agentVersion != null)
-                {
-                    string version = agentVersion.GetValue();
-                    if (version != null)
-                    {
-                        version = VersionSplitter.GetInstance().GetSingleSplit(agentVersion.GetValue(), 1);
-                    }
-                    userAgent.Set(
-                        majorVersionName,
-                        version,
-                        agentVersion.GetConfidence());
-                }
-            }
-        }
-
-        /// <summary>
         /// The Inform
         /// </summary>
         /// <param name="match">The match<see cref="string"/></param>
@@ -1397,9 +1206,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
-            var _match = match.ToLower(CultureInfo.InvariantCulture);
-            ISet<MatcherAction> relevantActions = informMatcherActions.ContainsKey(_match) ? informMatcherActions[_match] : null;
-            if (verbose)
+            var cmatch = match.ToLower(CultureInfo.InvariantCulture);
+            var relevantActions = this.informMatcherActions.ContainsKey(cmatch) ? this.informMatcherActions[cmatch] : null;
+            if (this.verbose)
             {
                 if (relevantActions == null)
                 {
@@ -1409,8 +1218,8 @@ namespace OrbintSoft.Yauaa.Analyzer
                 {
                     Log.Info(string.Format("+++ Have ({0}): {1}", relevantActions.Count, match));
 
-                    int count = 1;
-                    foreach (MatcherAction action in relevantActions)
+                    var count = 1;
+                    foreach (var action in relevantActions)
                     {
                         Log.Info(string.Format("+++ -------> ({0}): {1}", count, action.ToString()));
                         count++;
@@ -1420,7 +1229,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (relevantActions != null)
             {
-                foreach (MatcherAction matcherAction in relevantActions)
+                foreach (var matcherAction in relevantActions)
                 {
                     matcherAction.Inform(key, value, ctx);
                 }
@@ -1428,89 +1237,343 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// Runs all testcases once to heat up the JVM.
+        /// The InitTransientFields
         /// </summary>
-        /// <returns>The <see cref="long"/></returns>
-        public long PreHeat()
+        private void InitTransientFields()
         {
-            return PreHeat(TestCases.Count, true);
+            this.matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>();
         }
 
         /// <summary>
-        /// Runs the number of specified testcases to heat up the CLR.
+        /// The LoadResource
         /// </summary>
-        /// <param name="preheatIterations">The preheatIterations<see cref="long"/></param>
-        /// <returns>The <see cref="long"/></returns>
-        public long PreHeat(long preheatIterations)
+        /// <param name="yaml">The yaml<see cref="YamlDocument"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        private void LoadResource(YamlDocument yaml, string filename)
         {
-            return PreHeat(preheatIterations, true);
-        }
+            YamlNode loadedYaml;
+            try
+            {
+                loadedYaml = yaml?.RootNode;
+            }
+            catch (Exception e)
+            {
+                throw new InvalidParserConfigurationException("Parse error in the file " + filename + ": " + e.Message, e);
+            }
 
-        /// <summary>
-        /// Runs the number of specified testcases to heat up the CLR.
-        /// </summary>
-        /// <param name="preheatIterations">The preheatIterations<see cref="long"/></param>
-        /// <param name="log">The log<see cref="bool"/></param>
-        /// <returns>The <see cref="long"/></returns>
-        public long PreHeat(long preheatIterations, bool log)
-        {
-            if (TestCases.Count == 0)
+            if (loadedYaml == null)
             {
-                Log.Warn("NO PREHEAT WAS DONE. Simply because there are no test cases available.");
-                return 0;
+                throw new InvalidParserConfigurationException("The file " + filename + " is empty");
             }
-            if (preheatIterations <= 0)
+
+            // Get and check top level config            
+            YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), loadedYaml, filename, "File must be a Map");
+            var rootNode = (YamlMappingNode)loadedYaml;
+
+            var configNodeTuple = new KeyValuePair<YamlNode, YamlNode>(null, null);
+            foreach (var tuple in rootNode)
             {
-                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for {0} to run.", preheatIterations));
-                return 0;
-            }
-            if (preheatIterations > MAX_PRE_HEAT_ITERATIONS)
-            {
-                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for too many ({0} > {1}) to run.", preheatIterations, MAX_PRE_HEAT_ITERATIONS));
-                return 0;
-            }
-            if (log)
-            {
-                Log.Info(string.Format("Preheating JVM by running {0} testcases.", preheatIterations));
-            }
-            long remainingIterations = preheatIterations;
-            long goodResults = 0;
-            while (remainingIterations > 0)
-            {
-                foreach (IDictionary<string, IDictionary<string, string>> test in TestCases)
+                var name = YamlUtils.GetKeyAsString(tuple, filename);
+                if ("config".Equals(name))
                 {
-                    IDictionary<string, string> input = test["input"];
-                    string userAgentString = input["user_agent_string"];
-                    remainingIterations--;
-                    // Calculate and use result to guarantee not optimized away.
-                    if (!Parse(userAgentString).HasSyntaxError)
-                    {
-                        goodResults++;
-                    }
-                    if (remainingIterations <= 0)
-                    {
-                        break;
-                    }
+                    configNodeTuple = tuple;
+                    break;
+                }
+
+                if ("version".Equals(name))
+                {
+                    // Check the version information from the Yaml files
+                    YauaaVersion.AssertSameVersion(tuple, filename);
+                    return;
                 }
             }
-            if (log)
+
+            YamlUtils.Require(configNodeTuple.Key != null, loadedYaml, filename, "The top level entry MUST be 'config'.");
+
+            var configNode = YamlUtils.GetValueAsSequenceNode(configNodeTuple, filename);
+            var configList = configNode.Children;
+
+            foreach (var configEntry in configList)
             {
-                Log.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
+                YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), configEntry, filename, "The entry MUST be a mapping");
+
+                var entry = YamlUtils.GetExactlyOneNodeTuple((YamlMappingNode)configEntry, filename);
+                var actualEntry = YamlUtils.GetValueAsMappingNode(entry, filename);
+                var entryType = YamlUtils.GetKeyAsString(entry, filename);
+                switch (entryType)
+                {
+                    case "lookup":
+                        this.LoadYamlLookup(actualEntry, filename);
+                        break;
+                    case "set":
+                        this.LoadYamlLookupSets(actualEntry, filename);
+                        break;
+                    case "matcher":
+                        this.LoadYamlMatcher(actualEntry, filename);
+                        break;
+                    case "test":
+                        if (this.WillKeepTests)
+                        {
+                            this.LoadYamlTestcase(actualEntry, filename);
+                        }
+
+                        break;
+                    default:
+                        throw new InvalidParserConfigurationException(
+                            "Yaml config.(" + filename + ":" + actualEntry.Start.Line + "): " +
+                                "Found unexpected config entry: " + entryType + ", allowed are 'lookup', 'set', 'matcher' and 'test'");
+                }
             }
-            return preheatIterations;
         }
 
-        // ===============================================================================================================
+        /// <summary>
+        /// The LoadYamlLookup
+        /// </summary>
+        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        private void LoadYamlLookup(YamlMappingNode entry, string filename)
+        {
+            string name = null;
+            IDictionary<string, string> map = null;
+
+            foreach (var tuple in entry)
+            {
+                switch (YamlUtils.GetKeyAsString(tuple, filename))
+                {
+                    case "name":
+                        name = YamlUtils.GetValueAsString(tuple, filename);
+                        break;
+                    case "map":
+                        if (map == null)
+                        {
+                            map = new Dictionary<string, string>();
+                        }
+
+                        var mappings = YamlUtils.GetValueAsMappingNode(tuple, filename).ToList();
+                        foreach (var mapping in mappings)
+                        {
+                            var key = YamlUtils.GetKeyAsString(mapping, filename);
+                            var value = YamlUtils.GetValueAsString(mapping, filename);
+                            map[key] = value;
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            YamlUtils.Require(name != null && map != null, entry, filename, "Invalid lookup specified");
+
+            this.lookups[name] = map;
+        }
+
+        /// <summary>
+        /// The LoadYamlLookupSets
+        /// </summary>
+        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        private void LoadYamlLookupSets(YamlMappingNode entry, string filename)
+        {
+            string name = null;
+            var lookupSet = new HashSet<string>();
+
+            foreach (var tuple in entry)
+            {
+                switch (YamlUtils.GetKeyAsString(tuple, filename))
+                {
+                    case "name":
+                        name = YamlUtils.GetValueAsString(tuple, filename);
+                        break;
+                    case "values":
+                        var node = YamlUtils.GetValueAsSequenceNode(tuple, filename);
+                        foreach (var value in YamlUtils.GetStringValues(node, filename))
+                        {
+                            lookupSet.Add(value.ToLower(CultureInfo.InvariantCulture));
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            this.lookupSets[name] = lookupSet;
+        }
+
+        /// <summary>
+        /// The LoadYamlMatcher
+        /// </summary>
+        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        private void LoadYamlMatcher(YamlMappingNode entry, string filename)
+        {
+            var matcherConfigList = this.matcherConfigs.FirstOrDefault(e => e.Key == filename).Value;
+            if (matcherConfigList == null)
+            {
+                matcherConfigList = this.matcherConfigs[filename] = new List<YamlMappingNode>();
+            }
+
+            matcherConfigList.Add(entry);
+        }
+
+        /// <summary>
+        /// The LoadYamlTestcase
+        /// </summary>
+        /// <param name="entry">The entry<see cref="YamlMappingNode"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        private void LoadYamlTestcase(YamlMappingNode entry, string filename)
+        {
+            if (!this.doingOnlyASingleTest)
+            {
+                var metaData = new Dictionary<string, string>
+                {
+                    ["filename"] = filename,
+                    ["fileline"] = Convert.ToString(entry.Start.Line)
+                };
+
+                IDictionary<string, string> input = null;
+                IList<string> options = null;
+                var expected = new Dictionary<string, string>();
+                foreach (var tuple in entry)
+                {
+                    var name = YamlUtils.GetKeyAsString(tuple, filename);
+                    switch (name)
+                    {
+                        case "options":
+                            options = YamlUtils.GetStringValues(tuple.Value, filename);
+                            if (options.Contains("only"))
+                            {
+                                this.doingOnlyASingleTest = true;
+                                this.TestCases.Clear();
+                            }
+
+                            break;
+                        case "input":
+                            foreach (var inputTuple in YamlUtils.GetValueAsMappingNode(tuple, filename))
+                            {
+                                var inputName = YamlUtils.GetKeyAsString(inputTuple, filename);
+                                switch (inputName)
+                                {
+                                    case "user_agent_string":
+                                        var inputString = YamlUtils.GetValueAsString(inputTuple, filename);
+                                        input = new Dictionary<string, string>
+                                        {
+                                            [inputName] = inputString
+                                        };
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            break;
+                        case "expected":
+                            var mappings = YamlUtils.GetValueAsMappingNode(tuple, filename).ToList();
+                            foreach (var mapping in mappings)
+                            {
+                                var key = YamlUtils.GetKeyAsString(mapping, filename);
+                                var value = YamlUtils.GetValueAsString(mapping, filename);
+                                expected[key] = value;
+                            }
+
+                            break;
+                        default:
+
+                            // ignore, skip
+                            break;
+                    }
+                }
+
+                YamlUtils.Require(input != null, entry, filename, "Test is missing input");
+
+                if (expected.Count == 0)
+                {
+                    this.doingOnlyASingleTest = true;
+                    this.TestCases.Clear();
+                }
+
+                IDictionary<string, IDictionary<string, string>> testCase = new Dictionary<string, IDictionary<string, string>>
+                {
+                    ["input"] = input
+                };
+                if (expected.Count > 0)
+                {
+                    testCase["expected"] = expected;
+                }
+
+                if (options != null)
+                {
+                    var optionsMap = new Dictionary<string, string>();
+                    foreach (var option in options)
+                    {
+                        optionsMap[option] = option;
+                    }
+
+                    testCase["options"] = optionsMap;
+                }
+
+                testCase["metaData"] = metaData;
+                this.TestCases.Add(testCase);
+            }
+        }
+
+        /// <summary>
+        /// The ReadObject
+        /// </summary>
+        /// <param name="stream">The stream<see cref="Stream"/></param>
+        private void ReadObject(Stream stream)
+        {
+            this.InitTransientFields();
+
+            var lines = new List<string>
+            {
+                "This Analyzer instance was deserialized.",
+                string.Empty,
+                "Lookups      : " + ((this.lookups == null) ? 0 : this.lookups.Count),
+                "LookupSets   : " + this.lookupSets.Count,
+                "Matchers     : " + this.AllMatchers.Count,
+                "Hashmap size : " + this.informMatcherActions.Count,
+                "Testcases    : " + this.TestCases.Count
+            };
+
+            string[] x = { };
+            YauaaVersion.LogVersion(lines.ToArray());
+        }
+
+        /// <summary>
+        /// The SetAsHacker
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <param name="confidence">The confidence<see cref="int"/></param>
+        /// <returns>The <see cref="UserAgent"/></returns>
+        private UserAgent SetAsHacker(UserAgent userAgent, int confidence)
+        {
+            userAgent.Set(UserAgent.DEVICE_CLASS, "Hacker", confidence);
+            userAgent.Set(UserAgent.DEVICE_BRAND, "Hacker", confidence);
+            userAgent.Set(UserAgent.DEVICE_NAME, "Hacker", confidence);
+            userAgent.Set(UserAgent.DEVICE_VERSION, "Hacker", confidence);
+            userAgent.Set(UserAgent.OPERATING_SYSTEM_CLASS, "Hacker", confidence);
+            userAgent.Set(UserAgent.OPERATING_SYSTEM_NAME, "Hacker", confidence);
+            userAgent.Set(UserAgent.OPERATING_SYSTEM_VERSION, "Hacker", confidence);
+            userAgent.Set(UserAgent.LAYOUT_ENGINE_CLASS, "Hacker", confidence);
+            userAgent.Set(UserAgent.LAYOUT_ENGINE_NAME, "Hacker", confidence);
+            userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION, "Hacker", confidence);
+            userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, "Hacker", confidence);
+            userAgent.Set(UserAgent.AGENT_CLASS, "Hacker", confidence);
+            userAgent.Set(UserAgent.AGENT_NAME, "Hacker", confidence);
+            userAgent.Set(UserAgent.AGENT_VERSION, "Hacker", confidence);
+            userAgent.Set(UserAgent.AGENT_VERSION_MAJOR, "Hacker", confidence);
+            userAgent.Set("HackerToolkit", "Unknown", confidence);
+            userAgent.Set("HackerAttackVector", "Buffer overflow", confidence);
+            return userAgent;
+        }
+
         /// <summary>
         /// Defines the <see cref="GetAllPathsAnalyzerClass" />
         /// </summary>
         public class GetAllPathsAnalyzerClass : IAnalyzer
         {
-            /// <summary>
-            /// Defines the values
-            /// </summary>
-            private readonly List<string> values = new List<string>();
-
             /// <summary>
             /// Defines the flattener
             /// </summary>
@@ -1522,65 +1585,29 @@ namespace OrbintSoft.Yauaa.Analyzer
             private readonly UserAgent result;
 
             /// <summary>
+            /// Defines the values
+            /// </summary>
+            private readonly IList<string> values = new List<string>();
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="GetAllPathsAnalyzerClass"/> class.
             /// </summary>
             /// <param name="useragent">The useragent<see cref="string"/></param>
             internal GetAllPathsAnalyzerClass(string useragent)
             {
-                flattener = new UserAgentTreeFlattener(this);
-                result = flattener.Parse(useragent);
+                this.flattener = new UserAgentTreeFlattener(this);
+                this.result = this.flattener.Parse(useragent);
             }
 
             /// <summary>
-            /// The GetValues
+            /// Gets the Result
             /// </summary>
-            /// <returns>The <see cref="List{string}"/></returns>
-            public List<string> GetValues()
-            {
-                return values;
-            }
+            public UserAgent Result => this.result;
 
             /// <summary>
-            /// The GetResult
+            /// Gets the Values
             /// </summary>
-            /// <returns>The <see cref="UserAgent"/></returns>
-            public UserAgent GetResult()
-            {
-                return result;
-            }
-
-            /// <summary>
-            /// The Inform
-            /// </summary>
-            /// <param name="path">The path<see cref="string"/></param>
-            /// <param name="value">The value<see cref="string"/></param>
-            /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
-            public void Inform(string path, string value, IParseTree ctx)
-            {
-                values.Add(path);
-                values.Add(path + "=\"" + value + "\"");
-                values.Add(path + "{\"" + FirstCharactersForPrefixHash(value, MAX_PREFIX_HASH_MATCH) + "\"");
-            }
-
-            /// <summary>
-            /// The InformMeAbout
-            /// </summary>
-            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-            /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
-            public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
-            {
-                // Not needed to only get all paths
-            }
-
-            /// <summary>
-            /// The LookingForRange
-            /// </summary>
-            /// <param name="treeName">The treeName<see cref="string"/></param>
-            /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
-            public void LookingForRange(string treeName, WordRangeVisitor.Range range)
-            {
-                // Not needed to only get all paths
-            }
+            public IList<string> Values => this.values;
 
             /// <summary>
             /// The GetRequiredInformRanges
@@ -1594,17 +1621,6 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The InformMeAboutPrefix
-            /// </summary>
-            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-            /// <param name="treeName">The treeName<see cref="string"/></param>
-            /// <param name="prefix">The prefix<see cref="string"/></param>
-            public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
-            {
-                // Not needed to only get all paths
-            }
-
-            /// <summary>
             /// The GetRequiredPrefixLengths
             /// </summary>
             /// <param name="treeName">The treeName<see cref="string"/></param>
@@ -1614,56 +1630,60 @@ namespace OrbintSoft.Yauaa.Analyzer
                 // Not needed to only get all paths
                 return new HashSet<int?>();
             }
-        }
 
-        /// <summary>
-        /// The GetAllPaths
-        /// </summary>
-        /// <param name="agent">The agent<see cref="string"/></param>
-        /// <returns>The <see cref="List{string}"/></returns>
-        public static List<string> GetAllPaths(string agent)
-        {
-            return new GetAllPathsAnalyzerClass(agent).GetValues();
-        }
+            /// <summary>
+            /// The Inform
+            /// </summary>
+            /// <param name="path">The path<see cref="string"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
+            /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+            public void Inform(string path, string value, IParseTree ctx)
+            {
+                this.values.Add(path);
+                this.values.Add(path + "=\"" + value + "\"");
+                this.values.Add(path + "{\"" + FirstCharactersForPrefixHash(value, MAX_PREFIX_HASH_MATCH) + "\"");
+            }
 
-        /// <summary>
-        /// The GetAllPathsAnalyzer
-        /// </summary>
-        /// <param name="agent">The agent<see cref="string"/></param>
-        /// <returns>The <see cref="GetAllPathsAnalyzerClass"/></returns>
-        public static GetAllPathsAnalyzerClass GetAllPathsAnalyzer(string agent)
-        {
-            return new GetAllPathsAnalyzerClass(agent);
-        }
+            /// <summary>
+            /// The InformMeAbout
+            /// </summary>
+            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+            /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
+            public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
+            {
+            }
 
-        // ===============================================================================================================
-        /// <summary>
-        /// The NewBuilder
-        /// </summary>
-        /// <typeparam name="UAA"></typeparam>
-        /// <typeparam name="B"></typeparam>
-        /// <returns>The <see cref="UserAgentAnalyzerDirectBuilder{UAA, B}"/></returns>
-        public static UserAgentAnalyzerDirectBuilder<UAA, B> NewBuilder<UAA, B>()
-            where UAA : UserAgentAnalyzerDirect, new()
-            where B : UserAgentAnalyzerDirectBuilder<UAA, B>, new()
-        {
-            var a = new UAA();
-            var b = new B();
-            b.SetUAA(a);
-            return b;
+            /// <summary>
+            /// The InformMeAboutPrefix
+            /// </summary>
+            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+            /// <param name="treeName">The treeName<see cref="string"/></param>
+            /// <param name="prefix">The prefix<see cref="string"/></param>
+            public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
+            {
+            }
+
+            /// <summary>
+            /// The LookingForRange
+            /// </summary>
+            /// <param name="treeName">The treeName<see cref="string"/></param>
+            /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
+            public void LookingForRange(string treeName, WordRangeVisitor.Range range)
+            {
+            }
         }
 
         /// <summary>
         /// Defines the <see cref="UserAgentAnalyzerDirectBuilder{UAA, B}" />
         /// </summary>
-        /// <typeparam name="UAA"></typeparam>
-        /// <typeparam name="B"></typeparam>
+        /// <typeparam name="UAA">the UserAgent Analyzer</typeparam>
+        /// <typeparam name="B">the Builder</typeparam>
         public class UserAgentAnalyzerDirectBuilder<UAA, B> where UAA : UserAgentAnalyzerDirect where B : UserAgentAnalyzerDirectBuilder<UAA, B>
         {
             /// <summary>
-            /// Defines the uaa
+            /// Defines the resources
             /// </summary>
-            private UAA uaa;
+            private readonly IList<ResourcesPath> resources = new List<ResourcesPath>();
 
             /// <summary>
             /// Defines the didBuildStep
@@ -1676,20 +1696,9 @@ namespace OrbintSoft.Yauaa.Analyzer
             private int preheatIterations = 0;
 
             /// <summary>
-            /// Defines the resources
+            /// Defines the uaa
             /// </summary>
-            private List<ResourcesPath> resources = new List<ResourcesPath>();
-
-            /// <summary>
-            /// The FailIfAlreadyBuilt
-            /// </summary>
-            protected void FailIfAlreadyBuilt()
-            {
-                if (didBuildStep)
-                {
-                    throw new Exception("A builder can provide only a single instance. It is not allowed to set values after doing build()");
-                }
-            }
+            private UAA uaa;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="UserAgentAnalyzerDirectBuilder{UAA, B}"/> class.
@@ -1697,20 +1706,9 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <param name="newUaa">The newUaa<see cref="UAA"/></param>
             protected UserAgentAnalyzerDirectBuilder(UAA newUaa)
             {
-                uaa = newUaa;
-                uaa.SetShowMatcherStats(false);
-                resources.Add(DefaultResources);
-            }
-
-            /// <summary>
-            /// Drop the default set of rules. Useful in parsing ONLY company specific useragents.
-            /// </summary>
-            /// <returns>the current Builder instance.</returns>
-            public B DropDefaultResources()
-            {
-                FailIfAlreadyBuilt();
-                resources.Remove(DefaultResources);
-                return (B)this;
+                this.uaa = newUaa;
+                this.uaa.SetShowMatcherStats(false);
+                this.resources.Add(DefaultResources);
             }
 
             /// <summary>
@@ -1721,20 +1719,133 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>the current Builder instance.</returns>
             public B AddResources(string resourceString, string filter = "*.yaml")
             {
-                FailIfAlreadyBuilt();
-                resources.Add(new ResourcesPath(resourceString, filter));
+                this.FailIfAlreadyBuilt();
+                this.resources.Add(new ResourcesPath(resourceString, filter));
                 return (B)this;
             }
 
             /// <summary>
-            /// Use the available testcases to preheat the jvm on this analyzer.
+            /// Construct the analyzer and run the preheat (if requested).
             /// </summary>
-            /// <param name="iterations">iterations How many testcases must be run</param>
-            /// <returns>the current Builder instance.</returns>
-            public B Preheat(int iterations)
+            /// <returns>The <see cref="UAA"/></returns>
+            public virtual UAA Build()
             {
-                FailIfAlreadyBuilt();
-                preheatIterations = iterations;
+                this.FailIfAlreadyBuilt();
+                if (this.uaa.WantedFieldNames != null)
+                {
+                    this.AddGeneratedFields("AgentNameVersion", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
+                    this.AddGeneratedFields("AgentNameVersionMajor", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
+                    this.AddGeneratedFields("WebviewAppNameVersionMajor", "WebviewAppName", "WebviewAppVersionMajor");
+                    this.AddGeneratedFields("LayoutEngineNameVersion", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
+                    this.AddGeneratedFields("LayoutEngineNameVersionMajor", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
+                    this.AddGeneratedFields("OperatingSystemNameVersion", UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
+                    this.AddGeneratedFields(UserAgent.DEVICE_NAME, UserAgent.DEVICE_BRAND);
+                    this.AddGeneratedFields(UserAgent.AGENT_VERSION_MAJOR, UserAgent.AGENT_VERSION);
+                    this.AddGeneratedFields(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, UserAgent.LAYOUT_ENGINE_VERSION);
+                    this.AddGeneratedFields("WebviewAppVersionMajor", "WebviewAppVersion");
+
+                    // If we do not have a Brand we try to extract it from URL/Email iff present.
+                    this.AddGeneratedFields(UserAgent.DEVICE_BRAND, "AgentInformationUrl", "AgentInformationEmail");
+
+                    // Special field that affects ALL fields.
+                    this.uaa.WantedFieldNames.Add(UserAgent.SET_ALL_FIELDS);
+
+                    // This is always needed to determine the Hacker fallback
+                    this.uaa.WantedFieldNames.Add(UserAgent.DEVICE_CLASS);
+                }
+
+                var mustDropTestsLater = !this.uaa.WillKeepTests;
+                if (this.preheatIterations != 0)
+                {
+                    this.uaa.KeepTests();
+                }
+
+                this.uaa.Initialize(this.resources);
+                if (this.preheatIterations < 0)
+                {
+                    this.uaa.PreHeat();
+                }
+                else
+                {
+                    if (this.preheatIterations > 0)
+                    {
+                        this.uaa.PreHeat(this.preheatIterations);
+                    }
+                }
+
+                if (mustDropTestsLater)
+                {
+                    this.uaa.DropTests();
+                }
+
+                this.didBuildStep = true;
+                return this.uaa;
+            }
+
+            /// <summary>
+            /// Load all patterns and rules but do not yet build the lookup hashMaps yet.
+            /// For the engine to run these lookup hashMaps are needed so they will be constructed once "just in time".
+            /// </summary>
+            /// <returns>The <see cref="B"/></returns>
+            public B DelayInitialization()
+            {
+                this.FailIfAlreadyBuilt();
+                this.uaa.DelayInitialization();
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Drop the default set of rules. Useful in parsing ONLY company specific useragents.
+            /// </summary>
+            /// <returns>the current Builder instance.</returns>
+            public B DropDefaultResources()
+            {
+                this.FailIfAlreadyBuilt();
+                this.resources.Remove(DefaultResources);
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Remove all testcases in memory after initialization.
+            /// </summary>
+            /// <returns>The <see cref="B"/></returns>
+            public B DropTests()
+            {
+                this.FailIfAlreadyBuilt();
+                this.uaa.DropTests();
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Set the stats logging during the startup of the analyzer back to the default of "minimal".
+            /// </summary>
+            /// <returns>The <see cref="B"/></returns>
+            public B HideMatcherLoadStats()
+            {
+                this.FailIfAlreadyBuilt();
+                this.uaa.SetShowMatcherStats(false);
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Load all patterns and rules and immediately build the lookup hashMaps.
+            /// </summary>
+            /// <returns>the current Builder instance.</returns>
+            public B ImmediateInitialization()
+            {
+                this.FailIfAlreadyBuilt();
+                this.uaa.ImmediateInitialization();
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Retain all testcases in memory after initialization.
+            /// </summary>
+            /// <returns>The <see cref="B"/></returns>
+            public B KeepTests()
+            {
+                this.FailIfAlreadyBuilt();
+                this.uaa.KeepTests();
                 return (B)this;
             }
 
@@ -1745,8 +1856,42 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>the current Builder instance.</returns>
             public B Preheat()
             {
-                FailIfAlreadyBuilt();
+                this.FailIfAlreadyBuilt();
                 this.preheatIterations = -1;
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Use the available testcases to preheat the jvm on this analyzer.
+            /// </summary>
+            /// <param name="iterations">iterations How many testcases must be run</param>
+            /// <returns>the current Builder instance.</returns>
+            public B Preheat(int iterations)
+            {
+                this.FailIfAlreadyBuilt();
+                this.preheatIterations = iterations;
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Log additional information during the startup of the analyzer.
+            /// </summary>
+            /// <returns>The <see cref="B"/></returns>
+            public B ShowMatcherLoadStats()
+            {
+                this.FailIfAlreadyBuilt();
+                this.uaa.SetShowMatcherStats(true);
+                return (B)this;
+            }
+
+            /// <summary>
+            /// Specify that we simply want to retrieve all possible fields.
+            /// </summary>
+            /// <returns>The <see cref="B"/></returns>
+            public B WithAllFields()
+            {
+                this.FailIfAlreadyBuilt();
+                this.uaa.WantedFieldNames = null;
                 return (B)this;
             }
 
@@ -1757,12 +1902,13 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>the current Builder instance.</returns>
             public B WithField(string fieldName)
             {
-                FailIfAlreadyBuilt();
-                if (uaa.wantedFieldNames == null)
+                this.FailIfAlreadyBuilt();
+                if (this.uaa.WantedFieldNames == null)
                 {
-                    uaa.wantedFieldNames = new List<string>();
+                    this.uaa.WantedFieldNames = new List<string>();
                 }
-                uaa.wantedFieldNames.Add(fieldName);
+
+                this.uaa.WantedFieldNames.Add(fieldName);
                 return (B)this;
             }
 
@@ -1773,10 +1919,11 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>the current Builder instance.</returns>
             public B WithFields(ICollection<string> fieldNames)
             {
-                foreach (string fieldName in fieldNames)
+                foreach (var fieldName in fieldNames)
                 {
-                    WithField(fieldName);
+                    this.WithField(fieldName);
                 }
+
                 return (B)this;
             }
 
@@ -1787,43 +1934,11 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>the current Builder instance.</returns>
             public B WithFields(params string[] fieldNames)
             {
-                foreach (string fieldName in fieldNames)
+                foreach (var fieldName in fieldNames)
                 {
-                    WithField(fieldName);
+                    this.WithField(fieldName);
                 }
-                return (B)this;
-            }
 
-            /// <summary>
-            /// Specify that we simply want to retrieve all possible fields.
-            /// </summary>
-            /// <returns>The <see cref="B"/></returns>
-            public B WithAllFields()
-            {
-                FailIfAlreadyBuilt();
-                uaa.wantedFieldNames = null;
-                return (B)this;
-            }
-
-            /// <summary>
-            /// Log additional information during the startup of the analyzer.
-            /// </summary>
-            /// <returns>The <see cref="B"/></returns>
-            public B ShowMatcherLoadStats()
-            {
-                FailIfAlreadyBuilt();
-                uaa.SetShowMatcherStats(true);
-                return (B)this;
-            }
-
-            /// <summary>
-            /// Set the stats logging during the startup of the analyzer back to the default of "minimal".
-            /// </summary>
-            /// <returns>The <see cref="B"/></returns>
-            public B HideMatcherLoadStats()
-            {
-                FailIfAlreadyBuilt();
-                uaa.SetShowMatcherStats(false);
                 return (B)this;
             }
 
@@ -1834,54 +1949,29 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>The <see cref="B"/></returns>
             public B WithUserAgentMaxLength(int newUserAgentMaxLength)
             {
-                FailIfAlreadyBuilt();
-                uaa.SetUserAgentMaxLength(newUserAgentMaxLength);
+                this.FailIfAlreadyBuilt();
+                this.uaa.SetUserAgentMaxLength(newUserAgentMaxLength);
                 return (B)this;
             }
 
             /// <summary>
-            /// Retain all testcases in memory after initialization.
+            /// The SetUAA
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
-            public B KeepTests()
+            /// <param name="a">The a<see cref="UAA"/></param>
+            internal void SetUAA(UAA a)
             {
-                FailIfAlreadyBuilt();
-                uaa.KeepTests();
-                return (B)this;
+                this.uaa = a;
             }
 
             /// <summary>
-            /// Remove all testcases in memory after initialization.
+            /// The FailIfAlreadyBuilt
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
-            public B DropTests()
+            protected void FailIfAlreadyBuilt()
             {
-                FailIfAlreadyBuilt();
-                uaa.DropTests();
-                return (B)this;
-            }
-
-            /// <summary>
-            /// Load all patterns and rules but do not yet build the lookup hashMaps yet.
-            /// For the engine to run these lookup hashMaps are needed so they will be constructed once "just in time".
-            /// </summary>
-            /// <returns>The <see cref="B"/></returns>
-            public B DelayInitialization()
-            {
-                FailIfAlreadyBuilt();
-                uaa.DelayInitialization();
-                return (B)this;
-            }
-
-            /// <summary>
-            /// Load all patterns and rules and immediately build the lookup hashMaps.
-            /// </summary>
-            /// <returns>the current Builder instance.</returns>
-            public B ImmediateInitialization()
-            {
-                FailIfAlreadyBuilt();
-                uaa.ImmediateInitialization();
-                return (B)this;
+                if (this.didBuildStep)
+                {
+                    throw new Exception("A builder can provide only a single instance. It is not allowed to set values after doing build()");
+                }
             }
 
             /// <summary>
@@ -1891,74 +1981,10 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <param name="dependencies">The dependencies<see cref="string[]"/></param>
             private void AddGeneratedFields(string result, params string[] dependencies)
             {
-                if (uaa.wantedFieldNames.Contains(result))
+                if (this.uaa.WantedFieldNames.Contains(result))
                 {
-                    uaa.wantedFieldNames.AddRange(dependencies);
+                    this.uaa.WantedFieldNames.AddRange(dependencies);
                 }
-            }
-
-            /// <summary>
-            /// Construct the analyzer and run the preheat (if requested).
-            /// </summary>
-            /// <returns>The <see cref="UAA"/></returns>
-            public virtual UAA Build()
-            {
-                FailIfAlreadyBuilt();
-                if (uaa.wantedFieldNames != null)
-                {
-                    AddGeneratedFields("AgentNameVersion", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
-                    AddGeneratedFields("AgentNameVersionMajor", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
-                    AddGeneratedFields("WebviewAppNameVersionMajor", "WebviewAppName", "WebviewAppVersionMajor");
-                    AddGeneratedFields("LayoutEngineNameVersion", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
-                    AddGeneratedFields("LayoutEngineNameVersionMajor", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-                    AddGeneratedFields("OperatingSystemNameVersion", UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
-                    AddGeneratedFields(UserAgent.DEVICE_NAME, UserAgent.DEVICE_BRAND);
-                    AddGeneratedFields(UserAgent.AGENT_VERSION_MAJOR, UserAgent.AGENT_VERSION);
-                    AddGeneratedFields(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, UserAgent.LAYOUT_ENGINE_VERSION);
-                    AddGeneratedFields("WebviewAppVersionMajor", "WebviewAppVersion");
-
-                    // If we do not have a Brand we try to extract it from URL/Email iff present.
-                    AddGeneratedFields(UserAgent.DEVICE_BRAND, "AgentInformationUrl", "AgentInformationEmail");
-
-                    // Special field that affects ALL fields.
-                    uaa.wantedFieldNames.Add(UserAgent.SET_ALL_FIELDS);
-
-                    // This is always needed to determine the Hacker fallback
-                    uaa.wantedFieldNames.Add(UserAgent.DEVICE_CLASS);
-                }
-
-                bool mustDropTestsLater = !uaa.WillKeepTests();
-                if (preheatIterations != 0)
-                {
-                    uaa.KeepTests();
-                }
-                uaa.Initialize(resources);
-                if (preheatIterations < 0)
-                {
-                    uaa.PreHeat();
-                }
-                else
-                {
-                    if (preheatIterations > 0)
-                    {
-                        uaa.PreHeat(preheatIterations);
-                    }
-                }
-                if (mustDropTestsLater)
-                {
-                    uaa.DropTests();
-                }
-                didBuildStep = true;
-                return uaa;
-            }
-
-            /// <summary>
-            /// The SetUAA
-            /// </summary>
-            /// <param name="a">The a<see cref="UAA"/></param>
-            internal void SetUAA(UAA a)
-            {
-                uaa = a;
             }
         }
     }

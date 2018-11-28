@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:51</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyzer
 {
     using Antlr4.Runtime;
@@ -47,14 +48,34 @@ namespace OrbintSoft.Yauaa.Analyzer
     public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
     {
         /// <summary>
-        /// Defines the DEVICE_CLASS
+        /// Defines the AGENT_CLASS
         /// </summary>
-        public const string DEVICE_CLASS = "DeviceClass";
+        public const string AGENT_CLASS = "AgentClass";
+
+        /// <summary>
+        /// Defines the AGENT_NAME
+        /// </summary>
+        public const string AGENT_NAME = "AgentName";
+
+        /// <summary>
+        /// Defines the AGENT_VERSION
+        /// </summary>
+        public const string AGENT_VERSION = "AgentVersion";
+
+        /// <summary>
+        /// Defines the AGENT_VERSION_MAJOR
+        /// </summary>
+        public const string AGENT_VERSION_MAJOR = "AgentVersionMajor";
 
         /// <summary>
         /// Defines the DEVICE_BRAND
         /// </summary>
         public const string DEVICE_BRAND = "DeviceBrand";
+
+        /// <summary>
+        /// Defines the DEVICE_CLASS
+        /// </summary>
+        public const string DEVICE_CLASS = "DeviceClass";
 
         /// <summary>
         /// Defines the DEVICE_NAME
@@ -65,21 +86,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// Defines the DEVICE_VERSION
         /// </summary>
         public const string DEVICE_VERSION = "DeviceVersion";
-
-        /// <summary>
-        /// Defines the OPERATING_SYSTEM_CLASS
-        /// </summary>
-        public const string OPERATING_SYSTEM_CLASS = "OperatingSystemClass";
-
-        /// <summary>
-        /// Defines the OPERATING_SYSTEM_NAME
-        /// </summary>
-        public const string OPERATING_SYSTEM_NAME = "OperatingSystemName";
-
-        /// <summary>
-        /// Defines the OPERATING_SYSTEM_VERSION
-        /// </summary>
-        public const string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_CLASS
@@ -102,34 +108,24 @@ namespace OrbintSoft.Yauaa.Analyzer
         public const string LAYOUT_ENGINE_VERSION_MAJOR = "LayoutEngineVersionMajor";
 
         /// <summary>
-        /// Defines the AGENT_CLASS
+        /// Defines the NULL_VALUE
         /// </summary>
-        public const string AGENT_CLASS = "AgentClass";
+        public const string NULL_VALUE = "<<<null>>>";
 
         /// <summary>
-        /// Defines the AGENT_NAME
+        /// Defines the OPERATING_SYSTEM_CLASS
         /// </summary>
-        public const string AGENT_NAME = "AgentName";
+        public const string OPERATING_SYSTEM_CLASS = "OperatingSystemClass";
 
         /// <summary>
-        /// Defines the AGENT_VERSION
+        /// Defines the OPERATING_SYSTEM_NAME
         /// </summary>
-        public const string AGENT_VERSION = "AgentVersion";
+        public const string OPERATING_SYSTEM_NAME = "OperatingSystemName";
 
         /// <summary>
-        /// Defines the AGENT_VERSION_MAJOR
+        /// Defines the OPERATING_SYSTEM_VERSION
         /// </summary>
-        public const string AGENT_VERSION_MAJOR = "AgentVersionMajor";
-
-        /// <summary>
-        /// Defines the SYNTAX_ERROR
-        /// </summary>
-        public const string SYNTAX_ERROR = "__SyntaxError__";
-
-        /// <summary>
-        /// Defines the USERAGENT_FIELDNAME
-        /// </summary>
-        public const string USERAGENT_FIELDNAME = "Useragent";
+        public const string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
 
         /// <summary>
         /// Defines the SET_ALL_FIELDS
@@ -137,9 +133,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         public const string SET_ALL_FIELDS = "__Set_ALL_Fields__";
 
         /// <summary>
-        /// Defines the NULL_VALUE
+        /// Defines the SYNTAX_ERROR
         /// </summary>
-        public const string NULL_VALUE = "<<<null>>>";
+        public const string SYNTAX_ERROR = "__SyntaxError__";
 
         /// <summary>
         /// Defines the UNKNOWN_VALUE
@@ -152,9 +148,15 @@ namespace OrbintSoft.Yauaa.Analyzer
         public const string UNKNOWN_VERSION = "??";
 
         /// <summary>
+        /// Defines the USERAGENT_FIELDNAME
+        /// </summary>
+        public const string USERAGENT_FIELDNAME = "Useragent";
+
+        /// <summary>
         /// Standard fields used during parsing
         /// </summary>
-        public static readonly string[] StandardFields = {
+        public static readonly string[] StandardFields =
+        {
             DEVICE_CLASS,
             DEVICE_BRAND,
             DEVICE_NAME,
@@ -182,27 +184,16 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgent));
 
-        // The original input value
-        /// <summary>
-        /// Defines the userAgentString
-        /// </summary>
-        private string userAgentString = null;
-
-#if VERBOSE
-        private bool debug = true; 
-        private readonly IDictionary<string, AgentField> allFields = new SortedDictionary<string, AgentField>();
-#else
-        /// <summary>
-        /// Defines the debug
-        /// </summary>
-        private bool debug = false;
-
         /// <summary>
         /// Defines the allFields
         /// </summary>
         private readonly IDictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
 
-#endif
+        /// <summary>
+        /// Defines the userAgentString
+        /// </summary>
+        private string userAgentString = null;
+
         /// <summary>
         /// Initializes static members of the <see cref="UserAgent"/> class.
         /// </summary>
@@ -279,7 +270,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public UserAgent()
         {
-            Init();
+            this.Init();
         }
 
         /// <summary>
@@ -288,8 +279,8 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="userAgentString">The userAgentString<see cref="string"/></param>
         public UserAgent(string userAgentString)
         {
-            Init();
-            UserAgentString = userAgentString;
+            this.Init();
+            this.UserAgentString = userAgentString;
         }
 
         /// <summary>
@@ -298,13 +289,13 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
         public UserAgent(UserAgent userAgent)
         {
-            Clone(userAgent);
+            this.Clone(userAgent);
         }
 
         /// <summary>
-        /// Gets a value indicating whether the user agent contains syntax errors
+        /// Gets the numer of ambiguities found
         /// </summary>
-        public bool HasSyntaxError { get; private set; }
+        public int AmbiguityCount { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether some fields are ambiguos
@@ -312,9 +303,14 @@ namespace OrbintSoft.Yauaa.Analyzer
         public bool HasAmbiguity { get; private set; }
 
         /// <summary>
-        /// Gets the numer of ambiguities found
+        /// Gets a value indicating whether the user agent contains syntax errors
         /// </summary>
-        public int AmbiguityCount { get; private set; }
+        public bool HasSyntaxError { get; private set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsDebug
+        /// </summary>
+        public bool IsDebug { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the user agent strings
@@ -323,74 +319,204 @@ namespace OrbintSoft.Yauaa.Analyzer
         {
             get
             {
-                return userAgentString;
+                return this.userAgentString;
             }
+
             set
             {
-                userAgentString = value;
-                Reset();
+                this.userAgentString = value;
+                this.Reset();
             }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether IsDebug
+        /// The Clone
         /// </summary>
-        public bool IsDebug
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        public void Clone(UserAgent userAgent)
         {
-            get
+            this.Init();
+            this.IsDebug = userAgent.IsDebug;
+            this.UserAgentString = userAgent.userAgentString;
+
+            foreach (var entry in userAgent.allFields)
             {
-                return debug;
+                this.Set(entry.Key, entry.Value.GetValue(), entry.Value.Confidence);
             }
-            set
+
+            this.HasSyntaxError = userAgent.HasSyntaxError;
+            this.HasAmbiguity = userAgent.HasAmbiguity;
+            this.AmbiguityCount = userAgent.AmbiguityCount;
+        }
+
+        /// <summary>
+        /// The Equals
+        /// </summary>
+        /// <param name="obj">The obj<see cref="object"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        public override bool Equals(object obj)
+        {
+            if (this == obj)
             {
-                debug = value;
+                return true;
             }
-        }
 
-        /// <summary>
-        /// The SetDebug
-        /// </summary>
-        /// <param name="newDebug">The newDebug<see cref="bool"/></param>
-        public void SetDebug(bool newDebug)
-        {
-            debug = newDebug;
-        }
-
-        /// <summary>
-        /// The SyntaxError
-        /// </summary>
-        /// <param name="recognizer">The recognizer<see cref="IRecognizer"/></param>
-        /// <param name="offendingSymbol">The offendingSymbol<see cref="IToken"/></param>
-        /// <param name="line">The line<see cref="int"/></param>
-        /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
-        /// <param name="msg">The msg<see cref="string"/></param>
-        /// <param name="e">The e<see cref="RecognitionException"/></param>
-        public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
-        {
-            if (debug)
+            if (!(obj is UserAgent))
             {
-                Log.Error("Syntax error");
-                Log.Error(string.Format("Source : {0}", userAgentString));
-                Log.Error(string.Format("Message: {0}", msg));
+                return false;
             }
-            HasSyntaxError = true;
-            AgentField syntaxError = new AgentField("false");
-            syntaxError.SetValue("true", 1);
-            allFields[SYNTAX_ERROR] = syntaxError;
+
+            var agent = (UserAgent)obj;
+            return Equals(this.userAgentString, agent.userAgentString) &&
+                   (this.allFields == agent.allFields || (this.allFields != null && this.allFields.SequenceEqual(agent.allFields)));
         }
 
         /// <summary>
-        /// The SyntaxError
+        /// The Get
         /// </summary>
-        /// <param name="recognizer">The recognizer<see cref="IRecognizer"/></param>
-        /// <param name="offendingSymbol">The offendingSymbol<see cref="int"/></param>
-        /// <param name="line">The line<see cref="int"/></param>
-        /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
-        /// <param name="msg">The msg<see cref="string"/></param>
-        /// <param name="e">The e<see cref="RecognitionException"/></param>
-        public void SyntaxError(IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        /// <param name="fieldName">The fieldName<see cref="string"/></param>
+        /// <returns>The <see cref="AgentField"/></returns>
+        public AgentField Get(string fieldName)
         {
-            SyntaxError(recognizer, null, line, charPositionInLine, msg, e);
+            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            {
+                var agentField = new AgentField(this.userAgentString);
+                agentField.SetValue(this.userAgentString, 0L);
+                return agentField;
+            }
+            else if (fieldName != null)
+            {
+                return this.allFields.ContainsKey(fieldName) ? this.allFields[fieldName] : null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// The GetAvailableFieldNames
+        /// </summary>
+        /// <returns>The <see cref="List{string}"/></returns>
+        public IList<string> GetAvailableFieldNames()
+        {
+            var resultSet = new List<string>(this.allFields.Count + 10);
+            resultSet.AddRange(StandardFields);
+            foreach (var fieldName in this.allFields.Keys)
+            {
+                if (!resultSet.Contains(fieldName))
+                {
+                    var field = this.allFields[fieldName];
+                    if (field != null && field.Confidence >= 0 && field.GetValue() != null)
+                    {
+                        resultSet.Add(fieldName);
+                    }
+                }
+            }
+
+            // This is not a field; this is a special operator.
+            resultSet.Remove(SET_ALL_FIELDS);
+            return resultSet;
+        }
+
+        /// <summary>
+        /// The GetAvailableFieldNamesSorted
+        /// </summary>
+        /// <returns>The <see cref="List{string}"/></returns>
+        public List<string> GetAvailableFieldNamesSorted()
+        {
+            var fieldNames = new List<string>(this.GetAvailableFieldNames());
+
+            var result = new List<string>();
+            foreach (var fieldName in PreSortedFieldList)
+            {
+                if (fieldNames.Remove(fieldName))
+                {
+                    result.Add(fieldName);
+                }
+            }
+
+            fieldNames.Sort();
+            result.AddRange(fieldNames);
+            return result;
+        }
+
+        /// <summary>
+        /// The GetConfidence
+        /// </summary>
+        /// <param name="fieldName">The fieldName<see cref="string"/></param>
+        /// <returns>The <see cref="long"/></returns>
+        public long GetConfidence(string fieldName)
+        {
+            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            {
+                return 0L;
+            }
+
+            if (this.allFields.ContainsKey(fieldName))
+            {
+                return this.allFields[fieldName].GetConfidence();
+            }
+            else
+            {
+                return -1L;
+            }
+        }
+
+        /// <summary>
+        /// The GetHashCode
+        /// </summary>
+        /// <returns>The <see cref="int"/></returns>
+        public override int GetHashCode()
+        {
+            var hash = 3060293; // A random number            
+            foreach (var item in this.allFields.Keys)
+            {
+                hash = (hash, this.allFields[item], item).GetHashCode();
+            }
+
+            return ValueTuple.Create(this.userAgentString, hash).GetHashCode();
+        }
+
+        /// <summary>
+        /// The GetValue
+        /// </summary>
+        /// <param name="fieldName">The fieldName<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public string GetValue(string fieldName)
+        {
+            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            {
+                return this.userAgentString;
+            }
+
+            var field = this.allFields.ContainsKey(fieldName) ? this.allFields[fieldName] : null;
+            if (field == null)
+            {
+                return UNKNOWN_VALUE;
+            }
+
+            return field.GetValue();
+        }
+
+        /// <summary>
+        /// The ProcessSetAll
+        /// </summary>
+        public void ProcessSetAll()
+        {
+            if (this.allFields.ContainsKey(SET_ALL_FIELDS))
+            {
+                var setAllField = this.allFields[SET_ALL_FIELDS];
+                var value = setAllField.GetValue();
+                var confidence = setAllField.Confidence;
+                foreach (var fieldEntry in this.allFields)
+                {
+                    if (!IsSystemField(fieldEntry.Key))
+                    {
+                        fieldEntry.Value.SetValue(value, confidence);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -405,10 +531,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="configs">The configs<see cref="ATNConfigSet"/></param>
         public void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
         {
-            HasAmbiguity = true;
-            AmbiguityCount++;
+            this.HasAmbiguity = true;
+            this.AmbiguityCount++;
         }
-
 
         /// <summary>
         /// The ReportAttemptingFullContext
@@ -437,115 +562,15 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Equals
-        /// </summary>
-        /// <param name="obj">The obj<see cref="object"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        public override bool Equals(object obj)
-        {
-            if (this == obj)
-            {
-                return true;
-            }
-            if (!(obj is UserAgent))
-            {
-                return false;
-            }
-            UserAgent agent = (UserAgent)obj;
-            return Equals(userAgentString, agent.userAgentString) &&
-                   (allFields == agent.allFields || (allFields != null && allFields.SequenceEqual(agent.allFields)));
-        }
-
-        /// <summary>
-        /// The GetHashCode
-        /// </summary>
-        /// <returns>The <see cref="int"/></returns>
-        public override int GetHashCode()
-        {
-            int hash = 3060293; // A random number            
-            foreach (var item in allFields.Keys)
-            {
-                hash = (hash, allFields[item], item).GetHashCode();
-            }
-            return ValueTuple.Create(userAgentString, hash).GetHashCode();
-        }
-
-        /// <summary>
-        /// The Clone
-        /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        public void Clone(UserAgent userAgent)
-        {
-            Init();
-            debug = userAgent.debug;
-            UserAgentString = userAgent.userAgentString;
-
-            foreach (var entry in userAgent.allFields)
-            {
-                Set(entry.Key, entry.Value.GetValue(), entry.Value.confidence);
-            }
-            HasSyntaxError = userAgent.HasSyntaxError;
-            HasAmbiguity = userAgent.HasAmbiguity;
-            AmbiguityCount = userAgent.AmbiguityCount;
-        }
-
-        /// <summary>
-        /// The ProcessSetAll
-        /// </summary>
-        public void ProcessSetAll()
-        {
-            if (allFields.ContainsKey(SET_ALL_FIELDS))
-            {
-                AgentField setAllField = allFields[SET_ALL_FIELDS];
-                string value = setAllField.GetValue();
-                long confidence = setAllField.confidence;
-                foreach (var fieldEntry in allFields)
-                {
-                    if (!IsSystemField(fieldEntry.Key))
-                    {
-                        fieldEntry.Value.SetValue(value, confidence);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// The SetForced
-        /// </summary>
-        /// <param name="attribute">The attribute<see cref="string"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="confidence">The confidence<see cref="long"/></param>
-        public void SetForced(string attribute, string value, long confidence)
-        {
-            AgentField field;
-            if (allFields.ContainsKey(attribute))
-            {
-                field = allFields[attribute];
-            }
-            else
-            {
-                field = new AgentField(null); // The fields we do not know get a 'null' default
-            }
-
-            bool wasEmpty = confidence == -1;
-            field.SetValueForced(value, confidence);
-            if (debug && !wasEmpty)
-            {
-                Log.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
-            }
-            allFields[attribute] = field;
-        }
-
-        /// <summary>
         /// The Reset
         /// </summary>
         public virtual void Reset()
         {
-            HasSyntaxError = false;
-            HasAmbiguity = false;
-            AmbiguityCount = 0;
+            this.HasSyntaxError = false;
+            this.HasAmbiguity = false;
+            this.AmbiguityCount = 0;
 
-            foreach (AgentField field in allFields.Values)
+            foreach (var field in this.allFields.Values)
             {
                 field.Reset();
             }
@@ -559,15 +584,15 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="confidence">The confidence<see cref="long"/></param>
         public virtual void Set(string attribute, string value, long confidence)
         {
-            AgentField field = allFields.ContainsKey(attribute) ? allFields[attribute] : null;
+            var field = this.allFields.ContainsKey(attribute) ? this.allFields[attribute] : null;
             if (field == null)
             {
                 field = new AgentField(null); // The fields we do not know get a 'null' default
             }
 
-            bool wasEmpty = confidence == -1;
-            bool updated = field.SetValue(value, confidence);
-            if (debug && !wasEmpty)
+            var wasEmpty = confidence == -1;
+            var updated = field.SetValue(value, confidence);
+            if (this.IsDebug && !wasEmpty)
             {
                 if (updated)
                 {
@@ -578,10 +603,10 @@ namespace OrbintSoft.Yauaa.Analyzer
                     Log.Info(string.Format("SKIP {0} ({1}) = {2}", attribute, confidence, value ?? "null"));
                 }
             }
-            allFields[attribute] = field;
+
+            this.allFields[attribute] = field;
         }
 
-        // The appliedMatcher parameter is needed for development and debugging.
         /// <summary>
         /// The Set
         /// </summary>
@@ -589,153 +614,77 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="appliedMatcher">The appliedMatcher<see cref="Matcher"/></param>
         public virtual void Set(UserAgent newValuesUserAgent, Matcher appliedMatcher)
         {
-            foreach (string fieldName in newValuesUserAgent.allFields.Keys)
+            foreach (var fieldName in newValuesUserAgent.allFields.Keys)
             {
-                AgentField field = newValuesUserAgent.allFields[fieldName];
-                Set(fieldName, field.value, field.confidence);
+                var field = newValuesUserAgent.allFields[fieldName];
+                this.Set(fieldName, field.Value, field.Confidence);
             }
         }
 
         /// <summary>
-        /// The Get
+        /// The SetForced
         /// </summary>
-        /// <param name="fieldName">The fieldName<see cref="string"/></param>
-        /// <returns>The <see cref="AgentField"/></returns>
-        public AgentField Get(string fieldName)
+        /// <param name="attribute">The attribute<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="confidence">The confidence<see cref="long"/></param>
+        public void SetForced(string attribute, string value, long confidence)
         {
-            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            AgentField field;
+            if (this.allFields.ContainsKey(attribute))
             {
-                AgentField agentField = new AgentField(userAgentString);
-                agentField.SetValue(userAgentString, 0L);
-                return agentField;
-            }
-            else if (fieldName != null)
-            {
-                return allFields.ContainsKey(fieldName) ? allFields[fieldName] : null;
+                field = this.allFields[attribute];
             }
             else
             {
-                return null;
+                field = new AgentField(null); // The fields we do not know get a 'null' default
             }
+
+            var wasEmpty = confidence == -1;
+            field.SetValueForced(value, confidence);
+            if (this.IsDebug && !wasEmpty)
+            {
+                Log.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
+            }
+
+            this.allFields[attribute] = field;
         }
 
         /// <summary>
-        /// The GetValue
+        /// The SyntaxError
         /// </summary>
-        /// <param name="fieldName">The fieldName<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public string GetValue(string fieldName)
+        /// <param name="recognizer">The recognizer<see cref="IRecognizer"/></param>
+        /// <param name="offendingSymbol">The offendingSymbol<see cref="int"/></param>
+        /// <param name="line">The line<see cref="int"/></param>
+        /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
+        /// <param name="msg">The msg<see cref="string"/></param>
+        /// <param name="e">The e<see cref="RecognitionException"/></param>
+        public void SyntaxError(IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            if (USERAGENT_FIELDNAME.Equals(fieldName))
-            {
-                return userAgentString;
-            }
-            AgentField field = allFields.ContainsKey(fieldName) ? allFields[fieldName] : null;
-            if (field == null)
-            {
-                return UNKNOWN_VALUE;
-            }
-            return field.GetValue();
+            this.SyntaxError(recognizer, null, line, charPositionInLine, msg, e);
         }
 
         /// <summary>
-        /// The GetConfidence
+        /// The SyntaxError
         /// </summary>
-        /// <param name="fieldName">The fieldName<see cref="string"/></param>
-        /// <returns>The <see cref="long"/></returns>
-        public long GetConfidence(string fieldName)
+        /// <param name="recognizer">The recognizer<see cref="IRecognizer"/></param>
+        /// <param name="offendingSymbol">The offendingSymbol<see cref="IToken"/></param>
+        /// <param name="line">The line<see cref="int"/></param>
+        /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
+        /// <param name="msg">The msg<see cref="string"/></param>
+        /// <param name="e">The e<see cref="RecognitionException"/></param>
+        public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            if (this.IsDebug)
             {
-                return 0L;
-            }
-            if (allFields.ContainsKey(fieldName))
-            {
-                return allFields[fieldName].GetConfidence();
-            }
-            else
-            {
-                return -1L;
-            }
-        }
-
-        /// <summary>
-        /// The ToYamlTestCase
-        /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public string ToYamlTestCase()
-        {
-            return ToYamlTestCase(false, null);
-        }
-
-        /// <summary>
-        /// The ToYamlTestCase
-        /// </summary>
-        /// <param name="showConfidence">The showConfidence<see cref="bool"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public string ToYamlTestCase(bool showConfidence)
-        {
-            return ToYamlTestCase(showConfidence, null);
-        }
-
-        /// <summary>
-        /// The ToYamlTestCase
-        /// </summary>
-        /// <param name="showConfidence">The showConfidence<see cref="bool"/></param>
-        /// <param name="comments">The comments<see cref="Dictionary{string, string}"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public string ToYamlTestCase(bool showConfidence, Dictionary<string, string> comments)
-        {
-            StringBuilder sb = new StringBuilder(10240);
-            sb.Append("\n");
-            sb.Append("- test:\n");
-            sb.Append("#    options:\n");
-            sb.Append("#    - 'verbose'\n");
-            sb.Append("#    - 'init'\n");
-            sb.Append("#    - 'only'\n");
-            sb.Append("    input:\n");
-            sb.Append("      user_agent_string: '").Append(userAgentString).Append("'\n");
-            sb.Append("    expected:\n");
-
-            List<string> fieldNames = GetAvailableFieldNamesSorted();
-
-            int maxNameLength = 30;
-            int maxValueLength = 0;
-            foreach (string fieldName in allFields.Keys)
-            {
-                maxNameLength = Math.Max(maxNameLength, fieldName.Length);
-            }
-            foreach (string fieldName in fieldNames)
-            {
-                maxValueLength = Math.Max(maxValueLength, Get(fieldName).GetValue().Length);
+                Log.Error("Syntax error");
+                Log.Error(string.Format("Source : {0}", this.userAgentString));
+                Log.Error(string.Format("Message: {0}", msg));
             }
 
-            foreach (string fieldName in fieldNames)
-            {
-                sb.Append("      ").Append(fieldName);
-                for (int l = fieldName.Length; l < maxNameLength + 7; l++)
-                {
-                    sb.Append(' ');
-                }
-                string value = Get(fieldName).GetValue();
-                sb.Append(": '").Append(value).Append('\'');
-                if (showConfidence)
-                {
-                    for (int l = value.Length; l < maxValueLength + 5; l++)
-                    {
-                        sb.Append(' ');
-                    }
-                    sb.Append("# ").Append(string.Format("%5d", Get(fieldName).confidence));
-                }
-                if (comments != null && comments.ContainsKey(fieldName))
-                {
-                    sb.Append(" | ").Append(comments[fieldName]);
-                }
-                sb.Append('\n');
-            }
-            sb.Append("\n\n");
-
-            return sb.ToString();
+            this.HasSyntaxError = true;
+            var syntaxError = new AgentField("false");
+            syntaxError.SetValue("true", 1);
+            this.allFields[SYNTAX_ERROR] = syntaxError;
         }
 
         /// <summary>
@@ -744,9 +693,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="string"/></returns>
         public string ToJson()
         {
-            var fields = GetAvailableFieldNames();
+            var fields = this.GetAvailableFieldNames();
             fields.Add(USERAGENT_FIELDNAME);
-            return ToJson(fields);
+            return this.ToJson(fields);
         }
 
         /// <summary>
@@ -756,10 +705,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="string"/></returns>
         public string ToJson(IList<string> fieldNames)
         {
-            StringBuilder sb = new StringBuilder(10240);
+            var sb = new StringBuilder(10240);
             sb.Append("{");
-            bool addSeparator = false;
-            foreach (string fieldName in fieldNames)
+            var addSeparator = false;
+            foreach (var fieldName in fieldNames)
             {
                 if (addSeparator)
                 {
@@ -769,19 +718,20 @@ namespace OrbintSoft.Yauaa.Analyzer
                 {
                     addSeparator = true;
                 }
+
                 if (USERAGENT_FIELDNAME.Equals(fieldName))
                 {
                     sb
                         .Append("\"Useragent\"")
                         .Append(':')
-                        .Append(JsonConvert.ToString(UserAgentString));
+                        .Append(JsonConvert.ToString(this.UserAgentString));
                 }
                 else
                 {
                     sb
                         .Append(JsonConvert.ToString(fieldName))
                         .Append(':')
-                        .Append(JsonConvert.ToString(GetValue(fieldName)));
+                        .Append(JsonConvert.ToString(this.GetValue(fieldName)));
                 }
             }
 
@@ -795,14 +745,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return ToString(GetAvailableFieldNamesSorted());
-        }
-
-        public string ToString(string fieldName1, params string[] otherFieldNames)
-        {
-            var l = new List<string> { fieldName1 };
-            l.AddRange(otherFieldNames);
-            return ToString(l);
+            return this.ToString(this.GetAvailableFieldNamesSorted());
         }
 
         /// <summary>
@@ -812,77 +755,131 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="string"/></returns>
         public string ToString(IList<string> fieldNames)
         {
-            StringBuilder sb = new StringBuilder("  - user_agent_string: '\"" + userAgentString + "\"'\n");
-            int maxLength = 0;
-            foreach (string fieldName in fieldNames)
+            var sb = new StringBuilder("  - user_agent_string: '\"" + this.userAgentString + "\"'\n");
+            var maxLength = 0;
+            foreach (var fieldName in fieldNames)
             {
                 maxLength = Math.Max(maxLength, fieldName.Length);
             }
-            foreach (string fieldName in fieldNames)
+
+            foreach (var fieldName in fieldNames)
             {
                 if (!USERAGENT_FIELDNAME.Equals(fieldName))
                 {
-                    AgentField field = allFields[fieldName];
+                    var field = this.allFields[fieldName];
                     if (field.GetValue() != null)
                     {
                         sb.Append("    ").Append(fieldName);
-                        for (int l = fieldName.Length; l < maxLength + 2; l++)
+                        for (var l = fieldName.Length; l < maxLength + 2; l++)
                         {
                             sb.Append(' ');
                         }
+
                         sb.Append(": '").Append(field.GetValue()).Append('\'');
                         sb.Append('\n');
                     }
                 }
             }
+
             return sb.ToString();
         }
 
         /// <summary>
-        /// The GetAvailableFieldNames
+        /// The ToString
         /// </summary>
-        /// <returns>The <see cref="List{string}"/></returns>
-        public List<string> GetAvailableFieldNames()
+        /// <param name="fieldName1">The fieldName1<see cref="string"/></param>
+        /// <param name="otherFieldNames">The otherFieldNames<see cref="string[]"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public string ToString(string fieldName1, params string[] otherFieldNames)
         {
-            List<string> resultSet = new List<string>(allFields.Count + 10);
-            resultSet.AddRange(StandardFields);
-            foreach (string fieldName in allFields.Keys)
-            {
-                if (!resultSet.Contains(fieldName))
-                {
-                    AgentField field = allFields[fieldName];
-                    if (field != null && field.confidence >= 0 && field.GetValue() != null)
-                    {
-                        resultSet.Add(fieldName);
-                    }
-                }
-            }
-
-            // This is not a field; this is a special operator.
-            resultSet.Remove(SET_ALL_FIELDS);
-            return resultSet;
+            var l = new List<string> { fieldName1 };
+            l.AddRange(otherFieldNames);
+            return this.ToString(l);
         }
 
         /// <summary>
-        /// The GetAvailableFieldNamesSorted
+        /// The ToYamlTestCase
         /// </summary>
-        /// <returns>The <see cref="List{string}"/></returns>
-        public List<string> GetAvailableFieldNamesSorted()
+        /// <returns>The <see cref="string"/></returns>
+        public string ToYamlTestCase()
         {
-            var fieldNames = new List<string>(GetAvailableFieldNames());
+            return this.ToYamlTestCase(false, null);
+        }
 
-            var result = new List<string>();
-            foreach (string fieldName in PreSortedFieldList)
+        /// <summary>
+        /// The ToYamlTestCase
+        /// </summary>
+        /// <param name="showConfidence">The showConfidence<see cref="bool"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public string ToYamlTestCase(bool showConfidence)
+        {
+            return this.ToYamlTestCase(showConfidence, null);
+        }
+
+        /// <summary>
+        /// The ToYamlTestCase
+        /// </summary>
+        /// <param name="showConfidence">The showConfidence<see cref="bool"/></param>
+        /// <param name="comments">The comments<see cref="Dictionary{string, string}"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public string ToYamlTestCase(bool showConfidence, Dictionary<string, string> comments)
+        {
+            var sb = new StringBuilder(10240);
+            sb.Append("\n");
+            sb.Append("- test:\n");
+            sb.Append("#    options:\n");
+            sb.Append("#    - 'verbose'\n");
+            sb.Append("#    - 'init'\n");
+            sb.Append("#    - 'only'\n");
+            sb.Append("    input:\n");
+            sb.Append("      user_agent_string: '").Append(this.userAgentString).Append("'\n");
+            sb.Append("    expected:\n");
+
+            var fieldNames = this.GetAvailableFieldNamesSorted();
+
+            var maxNameLength = 30;
+            var maxValueLength = 0;
+            foreach (var fieldName in this.allFields.Keys)
             {
-                if (fieldNames.Remove(fieldName))
-                {
-                    result.Add(fieldName);
-                }
+                maxNameLength = Math.Max(maxNameLength, fieldName.Length);
             }
 
-            fieldNames.Sort();
-            result.AddRange(fieldNames);
-            return result;
+            foreach (var fieldName in fieldNames)
+            {
+                maxValueLength = Math.Max(maxValueLength, this.Get(fieldName).GetValue().Length);
+            }
+
+            foreach (var fieldName in fieldNames)
+            {
+                sb.Append("      ").Append(fieldName);
+                for (var l = fieldName.Length; l < maxNameLength + 7; l++)
+                {
+                    sb.Append(' ');
+                }
+
+                var value = this.Get(fieldName).GetValue();
+                sb.Append(": '").Append(value).Append('\'');
+                if (showConfidence)
+                {
+                    for (var l = value.Length; l < maxValueLength + 5; l++)
+                    {
+                        sb.Append(' ');
+                    }
+
+                    sb.Append("# ").Append(string.Format("{0}", this.Get(fieldName).Confidence));
+                }
+
+                if (comments != null && comments.ContainsKey(fieldName))
+                {
+                    sb.Append(" | ").Append(comments[fieldName]);
+                }
+
+                sb.Append('\n');
+            }
+
+            sb.Append("\n\n");
+
+            return sb.ToString();
         }
 
         /// <summary>
@@ -898,41 +895,41 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Init
-        /// </summary>
-        private void Init()
-        {
-            // Device : Family - Brand - Model
-            allFields[DEVICE_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Cloud / Server / Desktop / Tablet / Phone / Watch
-            allFields[DEVICE_BRAND] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
-            allFields[DEVICE_NAME] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
-
-            // Operating system
-            allFields[OPERATING_SYSTEM_CLASS] = new AgentField(UNKNOWN_VALUE); // Cloud, Desktop, Mobile, Embedded
-            allFields[OPERATING_SYSTEM_NAME] = new AgentField(UNKNOWN_VALUE); // ( Linux / Android / Windows ...)
-            allFields[OPERATING_SYSTEM_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-
-            // Engine : Class (=None/Hacker/Robot/Browser) - Name - Version
-            allFields[LAYOUT_ENGINE_CLASS] = new AgentField(UNKNOWN_VALUE); // None / Hacker / Robot / Browser /
-            allFields[LAYOUT_ENGINE_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / (Trident / Gecko / ...)
-            allFields[LAYOUT_ENGINE_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            allFields[LAYOUT_ENGINE_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
-
-            // Agent: Class (=Hacker/Robot/Browser) - Name - Version
-            allFields[AGENT_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Robot / Browser /
-            allFields[AGENT_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / ( Firefox / Chrome / ... )
-            allFields[AGENT_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            allFields[AGENT_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
-        }
-
-        /// <summary>
         /// The Set
         /// </summary>
         /// <param name="fieldName">The fieldName<see cref="string"/></param>
         /// <param name="agentField">The agentField<see cref="AgentField"/></param>
         internal void SetImmediateForTesting(string fieldName, AgentField agentField)
         {
-            allFields[fieldName] = agentField;
+            this.allFields[fieldName] = agentField;
+        }
+
+        /// <summary>
+        /// The Init
+        /// </summary>
+        private void Init()
+        {
+            // Device : Family - Brand - Model
+            this.allFields[DEVICE_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Cloud / Server / Desktop / Tablet / Phone / Watch
+            this.allFields[DEVICE_BRAND] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
+            this.allFields[DEVICE_NAME] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
+
+            // Operating system
+            this.allFields[OPERATING_SYSTEM_CLASS] = new AgentField(UNKNOWN_VALUE); // Cloud, Desktop, Mobile, Embedded
+            this.allFields[OPERATING_SYSTEM_NAME] = new AgentField(UNKNOWN_VALUE); // ( Linux / Android / Windows ...)
+            this.allFields[OPERATING_SYSTEM_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+
+            // Engine : Class (=None/Hacker/Robot/Browser) - Name - Version
+            this.allFields[LAYOUT_ENGINE_CLASS] = new AgentField(UNKNOWN_VALUE); // None / Hacker / Robot / Browser /
+            this.allFields[LAYOUT_ENGINE_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / (Trident / Gecko / ...)
+            this.allFields[LAYOUT_ENGINE_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[LAYOUT_ENGINE_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
+
+            // Agent: Class (=Hacker/Robot/Browser) - Name - Version
+            this.allFields[AGENT_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Robot / Browser /
+            this.allFields[AGENT_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / ( Firefox / Chrome / ... )
+            this.allFields[AGENT_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[AGENT_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
         }
 
         /// <summary>
@@ -942,19 +939,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         public class AgentField
         {
             /// <summary>
-            /// Defines the confidence
-            /// </summary>
-            internal long confidence;
-
-            /// <summary>
             /// Defines the defaultValue
             /// </summary>
             private readonly string defaultValue;
-
-            /// <summary>
-            /// Defines the value
-            /// </summary>
-            internal string value;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="AgentField"/> class.
@@ -963,93 +950,18 @@ namespace OrbintSoft.Yauaa.Analyzer
             internal AgentField(string defaultValue)
             {
                 this.defaultValue = defaultValue;
-                Reset();
+                this.Reset();
             }
 
             /// <summary>
-            /// The Reset
+            /// Gets or sets the Confidence
             /// </summary>
-            public void Reset()
-            {
-                value = defaultValue;
-                confidence = -1;
-            }
+            internal long Confidence { get; set; }
 
             /// <summary>
-            /// The GetValue
+            /// Gets or sets the Value
             /// </summary>
-            /// <returns>The <see cref="string"/></returns>
-            public string GetValue()
-            {
-                return value ?? defaultValue;
-            }
-
-            /// <summary>
-            /// The GetConfidence
-            /// </summary>
-            /// <returns>The <see cref="long"/></returns>
-            public long GetConfidence()
-            {
-                if (value == null)
-                {
-                    return -1; // Lie in case the value was wiped.
-                }
-                return confidence;
-            }
-
-            /// <summary>
-            /// The SetValue
-            /// </summary>
-            /// <param name="field">The field<see cref="AgentField"/></param>
-            /// <returns>The <see cref="bool"/></returns>
-            public bool SetValue(AgentField field)
-            {
-                return SetValue(field.value, field.confidence);
-            }
-
-            /// <summary>
-            /// The SetValue
-            /// </summary>
-            /// <param name="newValue">The newValue<see cref="string"/></param>
-            /// <param name="newConfidence">The newConfidence<see cref="long"/></param>
-            /// <returns>The <see cref="bool"/></returns>
-            public bool SetValue(string newValue, long newConfidence)
-            {
-                if (newConfidence > confidence)
-                {
-                    confidence = newConfidence;
-
-                    if (NULL_VALUE.Equals(newValue))
-                    {
-                        value = defaultValue;
-                    }
-                    else
-                    {
-                        value = newValue;
-                    }
-                    return true;
-                }
-                return false;
-            }
-
-            /// <summary>
-            /// The SetValueForced
-            /// </summary>
-            /// <param name="newValue">The newValue<see cref="string"/></param>
-            /// <param name="newConfidence">The newConfidence<see cref="long"/></param>
-            public void SetValueForced(string newValue, long newConfidence)
-            {
-                confidence = newConfidence;
-
-                if (NULL_VALUE.Equals(newValue))
-                {
-                    value = defaultValue;
-                }
-                else
-                {
-                    value = newValue;
-                }
-            }
+            internal string Value { get; set; }
 
             /// <summary>
             /// The Equals
@@ -1062,14 +974,30 @@ namespace OrbintSoft.Yauaa.Analyzer
                 {
                     return true;
                 }
+
                 if (!(obj is AgentField))
                 {
                     return false;
                 }
-                AgentField that = (AgentField)obj;
-                return confidence == that.confidence &&
-                    Equals(defaultValue, that.defaultValue) &&
-                    Equals(value, that.value);
+
+                var that = (AgentField)obj;
+                return this.Confidence == that.Confidence &&
+                    Equals(this.defaultValue, that.defaultValue) &&
+                    Equals(this.Value, that.Value);
+            }
+
+            /// <summary>
+            /// The GetConfidence
+            /// </summary>
+            /// <returns>The <see cref="long"/></returns>
+            public long GetConfidence()
+            {
+                if (this.Value == null)
+                {
+                    return -1; // Lie in case the value was wiped.
+                }
+
+                return this.Confidence;
             }
 
             /// <summary>
@@ -1078,7 +1006,80 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>The <see cref="int"/></returns>
             public override int GetHashCode()
             {
-                return ValueTuple.Create(defaultValue, value, confidence).GetHashCode();
+                return ValueTuple.Create(this.defaultValue, this.Value, this.Confidence).GetHashCode();
+            }
+
+            /// <summary>
+            /// The GetValue
+            /// </summary>
+            /// <returns>The <see cref="string"/></returns>
+            public string GetValue()
+            {
+                return this.Value ?? this.defaultValue;
+            }
+
+            /// <summary>
+            /// The Reset
+            /// </summary>
+            public void Reset()
+            {
+                this.Value = this.defaultValue;
+                this.Confidence = -1;
+            }
+
+            /// <summary>
+            /// The SetValue
+            /// </summary>
+            /// <param name="field">The field<see cref="AgentField"/></param>
+            /// <returns>The <see cref="bool"/></returns>
+            public bool SetValue(AgentField field)
+            {
+                return this.SetValue(field.Value, field.Confidence);
+            }
+
+            /// <summary>
+            /// The SetValue
+            /// </summary>
+            /// <param name="newValue">The newValue<see cref="string"/></param>
+            /// <param name="newConfidence">The newConfidence<see cref="long"/></param>
+            /// <returns>The <see cref="bool"/></returns>
+            public bool SetValue(string newValue, long newConfidence)
+            {
+                if (newConfidence > this.Confidence)
+                {
+                    this.Confidence = newConfidence;
+                    if (NULL_VALUE.Equals(newValue))
+                    {
+                        this.Value = this.defaultValue;
+                    }
+                    else
+                    {
+                        this.Value = newValue;
+                    }
+
+                    return true;
+                }
+
+                return false;
+            }
+
+            /// <summary>
+            /// The SetValueForced
+            /// </summary>
+            /// <param name="newValue">The newValue<see cref="string"/></param>
+            /// <param name="newConfidence">The newConfidence<see cref="long"/></param>
+            public void SetValueForced(string newValue, long newConfidence)
+            {
+                this.Confidence = newConfidence;
+
+                if (NULL_VALUE.Equals(newValue))
+                {
+                    this.Value = this.defaultValue;
+                }
+                else
+                {
+                    this.Value = newValue;
+                }
             }
 
             /// <summary>
@@ -1087,11 +1088,12 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>The <see cref="string"/></returns>
             public override string ToString()
             {
-                if (defaultValue == null)
+                if (this.defaultValue == null)
                 {
-                    return "{ value:'" + value + "', confidence:'" + confidence + "', default:null }";
+                    return "{ value:'" + this.Value + "', confidence:'" + this.Confidence + "', default:null }";
                 }
-                return "{ value:'" + value + "', confidence:'" + confidence + "', default:'" + defaultValue + "' }";
+
+                return "{ value:'" + this.Value + "', confidence:'" + this.Confidence + "', default:'" + this.defaultValue + "' }";
             }
         }
     }
