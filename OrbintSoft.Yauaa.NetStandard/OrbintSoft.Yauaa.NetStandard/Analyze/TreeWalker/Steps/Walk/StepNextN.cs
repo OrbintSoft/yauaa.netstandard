@@ -52,17 +52,43 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
+        {
+            return "Next(" + this.steps + ")";
+        }
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            var nextTree = this.Next(tree);
+            if (nextTree == null)
+            {
+                return null;
+            }
+
+            return this.WalkNextStep(nextTree, null);
+        }
+
+        /// <summary>
         /// The Next
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/></param>
         /// <returns>The <see cref="IParseTree"/></returns>
         private IParseTree Next(IParseTree tree)
         {
-            IParseTree parent = Up(tree);
+            var parent = this.Up(tree);
             IParseTree child;
-            bool foundCurrent = false;
-            int stepsToDo = steps;
-            for (int i = 0; i < parent.ChildCount; i++)
+            var foundCurrent = false;
+            var stepsToDo = this.steps;
+            for (var i = 0; i < parent.ChildCount; i++)
             {
                 child = parent.GetChild(i);
                 if (foundCurrent)
@@ -71,6 +97,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
                     {
                         continue;
                     }
+
                     stepsToDo--;
                     if (stepsToDo == 0)
                     {
@@ -83,33 +110,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
                     foundCurrent = true;
                 }
             }
+
             return null; // There is no next
-        }
-
-        /// <summary>
-        /// The Walk
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        public override WalkList.WalkResult Walk(IParseTree tree, string value)
-        {
-            IParseTree nextTree = Next(tree);
-            if (nextTree == null)
-            {
-                return null;
-            }
-
-            return WalkNextStep(nextTree, null);
-        }
-
-        /// <summary>
-        /// The ToString
-        /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
-        {
-            return "Next(" + steps + ")";
         }
     }
 }

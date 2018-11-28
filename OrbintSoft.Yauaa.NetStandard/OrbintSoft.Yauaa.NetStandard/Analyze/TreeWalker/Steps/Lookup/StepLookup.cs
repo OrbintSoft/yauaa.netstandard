@@ -39,9 +39,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
     public class StepLookup : Step
     {
         /// <summary>
-        /// Defines the lookupName
+        /// Defines the defaultValue
         /// </summary>
-        private readonly string lookupName;
+        private readonly string defaultValue;
 
         /// <summary>
         /// Defines the lookup
@@ -49,9 +49,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         private readonly IDictionary<string, string> lookup;
 
         /// <summary>
-        /// Defines the defaultValue
+        /// Defines the lookupName
         /// </summary>
-        private readonly string defaultValue;
+        private readonly string lookupName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepLookup"/> class.
@@ -67,6 +67,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         }
 
         /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
+        {
+            return string.Format("Lookup(@{0} ; default={1})", this.lookupName, this.defaultValue ?? "null");
+        }
+
+        /// <summary>
         /// The Walk
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/></param>
@@ -74,31 +83,24 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            string input = GetActualValue(tree, value).ToLower();
+            var input = this.GetActualValue(tree, value).ToLower();
 
-            string result = lookup.ContainsKey(input) ? lookup[input] : null;
-
+            var result = this.lookup.ContainsKey(input) ? this.lookup[input] : null;
             if (result == null)
             {
-                if (defaultValue == null)
+                if (this.defaultValue == null)
                 {
                     return null;
                 }
                 else
                 {
-                    return WalkNextStep(tree, defaultValue);
+                    return this.WalkNextStep(tree, this.defaultValue);
                 }
             }
-            return WalkNextStep(tree, result);
-        }
-
-        /// <summary>
-        /// The ToString
-        /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
-        {
-            return string.Format("Lookup(@{0} ; default={1})", lookupName, defaultValue ?? "null");
+            else
+            {
+                return this.WalkNextStep(tree, result);
+            }
         }
     }
 }

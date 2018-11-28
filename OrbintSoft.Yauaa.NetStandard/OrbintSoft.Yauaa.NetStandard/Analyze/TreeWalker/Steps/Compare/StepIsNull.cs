@@ -38,6 +38,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     public class StepIsNull : Step
     {
         /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
+        {
+            return "IsNull()";
+        }
+
+        /// <summary>
         /// The Walk
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/></param>
@@ -45,22 +54,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            WalkList.WalkResult actualValue = WalkNextStep(tree, value);
+            var actualValue = this.WalkNextStep(tree, value);
 
             if (actualValue == null || actualValue.Value == null)
             {
                 return new WalkList.WalkResult(tree, "<<<Null Value>>>");
             }
-            return null;
-        }
 
-        /// <summary>
-        /// The ToString
-        /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
-        {
-            return "IsNull()";
+            return null;
         }
     }
 }

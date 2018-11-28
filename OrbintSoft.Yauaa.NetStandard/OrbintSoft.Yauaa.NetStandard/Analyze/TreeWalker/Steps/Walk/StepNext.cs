@@ -38,33 +38,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     public class StepNext : Step
     {
         /// <summary>
-        /// The Next
+        /// The ToString
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
-        private IParseTree Next(IParseTree tree)
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
         {
-            IParseTree parent = Up(tree);
-            IParseTree child;
-            bool foundCurrent = false;
-            for (int i = 0; i < parent.ChildCount; i++)
-            {
-                child = parent.GetChild(i);
-                if (foundCurrent)
-                {
-                    if (TreeIsSeparator(child))
-                    {
-                        continue;
-                    }
-                    return child;
-                }
-
-                if (child == tree)
-                {
-                    foundCurrent = true;
-                }
-            }
-            return null; // There is no next
+            return "Next(1)";
         }
 
         /// <summary>
@@ -75,22 +54,45 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IParseTree nextTree = Next(tree);
+            var nextTree = this.Next(tree);
             if (nextTree == null)
             {
                 return null;
             }
 
-            return WalkNextStep(nextTree, null);
+            return this.WalkNextStep(nextTree, null);
         }
 
         /// <summary>
-        /// The ToString
+        /// The Next
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="IParseTree"/></returns>
+        private IParseTree Next(IParseTree tree)
         {
-            return "Next(1)";
+            var parent = this.Up(tree);
+            IParseTree child;
+            var foundCurrent = false;
+            for (var i = 0; i < parent.ChildCount; i++)
+            {
+                child = parent.GetChild(i);
+                if (foundCurrent)
+                {
+                    if (TreeIsSeparator(child))
+                    {
+                        continue;
+                    }
+
+                    return child;
+                }
+
+                if (child == tree)
+                {
+                    foundCurrent = true;
+                }
+            }
+
+            return null; // There is no next
         }
     }
 }

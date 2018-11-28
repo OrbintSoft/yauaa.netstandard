@@ -43,15 +43,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         private const int SIZE = 20;
 
         /// <summary>
+        /// Defines the steps
+        /// </summary>
+        private readonly int steps;
+
+        /// <summary>
         /// Defines the children
         /// </summary>
         [NonSerialized]
         private IParseTree[] children = null;
-
-        /// <summary>
-        /// Defines the steps
-        /// </summary>
-        private readonly int steps;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepPrevN"/> class.
@@ -63,40 +63,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// The Prev
+        /// The ToString
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
-        private IParseTree Prev(IParseTree tree)
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
         {
-            IParseTree parent = Up(tree);
-
-            if (children == null)
-            {
-                children = new IParseTree[SIZE];
-            }
-
-            int lastChildIndex = -1;
-            IParseTree child = null;
-            int i;
-            for (i = 0; i < parent.ChildCount; i++)
-            {
-                if (!TreeIsSeparator(child))
-                {
-                    lastChildIndex++;
-                    children[lastChildIndex] = child;
-                }
-                child = parent.GetChild(i);
-                if (child == tree)
-                {
-                    if (lastChildIndex < steps)
-                    {
-                        break; // There is no previous
-                    }
-                    return children[lastChildIndex - steps + 1];
-                }
-            }
-            return null; // There is no previous
+            return "Prev(" + this.steps + ")";
         }
 
         /// <summary>
@@ -107,22 +79,53 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IParseTree prevTree = Prev(tree);
+            var prevTree = this.Prev(tree);
             if (prevTree == null)
             {
                 return null;
             }
 
-            return WalkNextStep(prevTree, null);
+            return this.WalkNextStep(prevTree, null);
         }
 
         /// <summary>
-        /// The ToString
+        /// The Prev
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="IParseTree"/></returns>
+        private IParseTree Prev(IParseTree tree)
         {
-            return "Prev(" + steps + ")";
+            var parent = this.Up(tree);
+
+            if (this.children == null)
+            {
+                this.children = new IParseTree[SIZE];
+            }
+
+            var lastChildIndex = -1;
+            IParseTree child = null;
+            int i;
+            for (i = 0; i < parent.ChildCount; i++)
+            {
+                if (!TreeIsSeparator(child))
+                {
+                    lastChildIndex++;
+                    this.children[lastChildIndex] = child;
+                }
+
+                child = parent.GetChild(i);
+                if (child == tree)
+                {
+                    if (lastChildIndex < this.steps)
+                    {
+                        break; // There is no previous
+                    }
+
+                    return this.children[lastChildIndex - this.steps + 1];
+                }
+            }
+
+            return null; // There is no previous
         }
     }
 }

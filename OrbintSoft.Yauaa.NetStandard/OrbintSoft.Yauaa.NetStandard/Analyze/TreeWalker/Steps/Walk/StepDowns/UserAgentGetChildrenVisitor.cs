@@ -49,6 +49,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         private static readonly IEnumerator<IParseTree> Empty = null;
 
         /// <summary>
+        /// Defines the end
+        /// </summary>
+        private readonly int end;
+
+        /// <summary>
         /// Defines the name
         /// </summary>
         private readonly string name;
@@ -57,11 +62,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// Defines the start
         /// </summary>
         private readonly int start;
-
-        /// <summary>
-        /// Defines the end
-        /// </summary>
-        private readonly int end;
 
         /// <summary>
         /// Defines the childIterable
@@ -93,6 +93,208 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             this.start = start;
             this.end = end;
             Init(name, start, end);
+        }
+
+        /// <summary>
+        /// Gets the DefaultResult
+        /// </summary>
+        protected override IEnumerator<IParseTree> DefaultResult
+        {
+            get
+            {
+                return Empty;
+            }
+        }
+
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("name", name, typeof(string));
+            info.AddValue("start", start, typeof(int));
+            info.AddValue("end", end, typeof(int));
+        }
+
+        /// <summary>
+        /// The VisitCommentBlock
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitCommentEntry
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentEntryContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitCommentProduct
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitKeyValue
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitKeyValue([NotNull] UserAgentParser.KeyValueContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitKeyWithoutValue
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitProduct
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProduct([NotNull] UserAgentParser.ProductContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitProductName
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductName([NotNull] UserAgentParser.ProductNameContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitProductNameKeyValue
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameKeyValueContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
+        {
+            switch (name)
+            {
+                case "key":
+                    var list = new List<ParserRuleContext>() { context.key };
+                    return list.GetEnumerator();
+                case "value":
+                    var children = context.multipleWords().Select(s => s as IParseTree).ToList();
+                    if (children.Count != 0)
+                    {
+                        return children.GetEnumerator();
+                    }
+
+                    children = context.keyValueProductVersionName().Select(s => s as IParseTree).ToList();
+                    if (children.Count != 0)
+                    {
+                        return children.GetEnumerator();
+                    }
+
+                    children = context.siteUrl().Select(s => s as IParseTree).ToList();
+                    if (children.Count != 0)
+                    {
+                        return children.GetEnumerator();
+                    }
+
+                    children = context.emailAddress().Select(s => s as IParseTree).ToList();
+                    if (children.Count != 0)
+                    {
+                        return children.GetEnumerator();
+                    }
+
+                    children = context.uuId().Select(s => s as IParseTree).ToList();
+                    return children.GetEnumerator();
+                default:
+                    return GetChildrenByName(context);
+            }
+        }
+
+        /// <summary>
+        /// The VisitProductNameNoVersion
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitProductVersion
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitProductVersionWithCommas
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWithCommasContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitRootElements
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.RootElementsContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitRootElements([NotNull] UserAgentParser.RootElementsContext context)
+        {
+            return GetChildrenByName(context);
+        }
+
+        /// <summary>
+        /// The VisitUserAgent
+        /// </summary>
+        /// <param name="context">The context<see cref="UserAgentParser.UserAgentContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        public override IEnumerator<IParseTree> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
+        {
+            IEnumerator<IParseTree> children = GetChildrenByName(context);
+            if (!children.MoveNext() && children.Current == null)
+            {
+                return VisitChildren(context);
+            }
+            return children;
+        }
+
+        /// <summary>
+        /// The GetChildrenByName
+        /// </summary>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        internal IEnumerator<IParseTree> GetChildrenByName(ParserRuleContext ctx)
+        {
+            return childIterable.Iterator(ctx);
         }
 
         /// <summary>
@@ -193,208 +395,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                     childIterable = new ChildIterable(false, start, end, clazz => (false));
                     break;
             }
-        }
-
-        /// <summary>
-        /// Gets the DefaultResult
-        /// </summary>
-        protected override IEnumerator<IParseTree> DefaultResult
-        {
-            get
-            {
-                return Empty;
-            }
-        }
-
-        /// <summary>
-        /// The GetChildrenByName
-        /// </summary>
-        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        internal IEnumerator<IParseTree> GetChildrenByName(ParserRuleContext ctx)
-        {
-            return childIterable.Iterator(ctx);
-        }
-
-        /// <summary>
-        /// The VisitUserAgent
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.UserAgentContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
-        {
-            IEnumerator<IParseTree> children = GetChildrenByName(context);
-            if (!children.MoveNext() && children.Current == null)
-            {
-                return VisitChildren(context);
-            }
-            return children;
-        }
-
-        /// <summary>
-        /// The VisitRootElements
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.RootElementsContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitRootElements([NotNull] UserAgentParser.RootElementsContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitProduct
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitProduct([NotNull] UserAgentParser.ProductContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitProductNameNoVersion
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitCommentProduct
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitProductName
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitProductName([NotNull] UserAgentParser.ProductNameContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitProductNameKeyValue
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameKeyValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
-        {
-            switch (name)
-            {
-                case "key":
-                    var list = new List<ParserRuleContext>() { context.key };
-                    return list.GetEnumerator();
-                case "value":
-                    var children = context.multipleWords().Select(s => s as IParseTree).ToList();
-                    if (children.Count != 0)
-                    {
-                        return children.GetEnumerator();
-                    }
-
-                    children = context.keyValueProductVersionName().Select(s => s as IParseTree).ToList();
-                    if (children.Count != 0)
-                    {
-                        return children.GetEnumerator();
-                    }
-
-                    children = context.siteUrl().Select(s => s as IParseTree).ToList();
-                    if (children.Count != 0)
-                    {
-                        return children.GetEnumerator();
-                    }
-
-                    children = context.emailAddress().Select(s => s as IParseTree).ToList();
-                    if (children.Count != 0)
-                    {
-                        return children.GetEnumerator();
-                    }
-
-                    children = context.uuId().Select(s => s as IParseTree).ToList();
-                    return children.GetEnumerator();
-                default:
-                    return GetChildrenByName(context);
-            }
-        }
-
-        /// <summary>
-        /// The VisitProductVersion
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitProductVersionWithCommas
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWithCommasContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitKeyValue
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitKeyValue([NotNull] UserAgentParser.KeyValueContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitKeyWithoutValue
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitCommentBlock
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The VisitCommentEntry
-        /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentEntryContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
-        public override IEnumerator<IParseTree> VisitCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
-        {
-            return GetChildrenByName(context);
-        }
-
-        /// <summary>
-        /// The GetObjectData
-        /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("name", name, typeof(string));
-            info.AddValue("start", start, typeof(int));
-            info.AddValue("end", end, typeof(int));
         }
     }
 }

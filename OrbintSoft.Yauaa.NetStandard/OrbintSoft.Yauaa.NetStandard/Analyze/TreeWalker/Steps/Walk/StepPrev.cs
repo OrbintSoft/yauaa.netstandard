@@ -38,30 +38,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     public class StepPrev : Step
     {
         /// <summary>
-        /// The Prev
+        /// The ToString
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
-        private IParseTree Prev(IParseTree tree)
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
         {
-            IParseTree parent = Up(tree);
-
-            IParseTree prevChild = null;
-            IParseTree child = null;
-            int i;
-            for (i = 0; i < parent.ChildCount; i++)
-            {
-                if (!TreeIsSeparator(child))
-                {
-                    prevChild = child;
-                }
-                child = parent.GetChild(i);
-                if (child == tree)
-                {
-                    break;
-                }
-            }
-            return prevChild;
+            return "Prev(1)";
         }
 
         /// <summary>
@@ -72,22 +54,42 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IParseTree prevTree = Prev(tree);
+            var prevTree = this.Prev(tree);
             if (prevTree == null)
             {
                 return null;
             }
 
-            return WalkNextStep(prevTree, null);
+            return this.WalkNextStep(prevTree, null);
         }
 
         /// <summary>
-        /// The ToString
+        /// The Prev
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <returns>The <see cref="IParseTree"/></returns>
+        private IParseTree Prev(IParseTree tree)
         {
-            return "Prev(1)";
+            var parent = this.Up(tree);
+
+            IParseTree prevChild = null;
+            IParseTree child = null;
+            int i;
+            for (i = 0; i < parent.ChildCount; i++)
+            {
+                if (!TreeIsSeparator(child))
+                {
+                    prevChild = child;
+                }
+
+                child = parent.GetChild(i);
+                if (child == tree)
+                {
+                    break;
+                }
+            }
+
+            return prevChild;
         }
     }
 }

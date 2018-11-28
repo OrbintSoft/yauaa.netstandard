@@ -39,19 +39,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     public class StepNormalizeBrand : Step
     {
         /// <summary>
-        /// The Walk
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        public override WalkList.WalkResult Walk(IParseTree tree, string value)
-        {
-            string actualValue = GetActualValue(tree, value);
-            string filteredValue = Normalize.Brand(actualValue);
-            return WalkNextStep(tree, filteredValue);
-        }
-
-        /// <summary>
         /// The CanFail
         /// </summary>
         /// <returns>The <see cref="bool"/></returns>
@@ -67,6 +54,19 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         public override string ToString()
         {
             return "StepNormalizeBrand()";
+        }
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            var actualValue = this.GetActualValue(tree, value);
+            var filteredValue = Normalize.Brand(actualValue);
+            return this.WalkNextStep(tree, filteredValue);
         }
     }
 }

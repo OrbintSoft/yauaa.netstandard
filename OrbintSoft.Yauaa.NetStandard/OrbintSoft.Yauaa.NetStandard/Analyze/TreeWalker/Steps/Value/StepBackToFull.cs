@@ -38,17 +38,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     public class StepBackToFull : Step
     {
         /// <summary>
-        /// The Walk
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        public override WalkList.WalkResult Walk(IParseTree tree, string value)
-        {
-            return WalkNextStep(tree, null);
-        }
-
-        /// <summary>
         /// The CanFail
         /// </summary>
         /// <returns>The <see cref="bool"/></returns>
@@ -64,6 +53,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         public override string ToString()
         {
             return "BackToFull()";
+        }
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            return this.WalkNextStep(tree, null);
         }
     }
 }

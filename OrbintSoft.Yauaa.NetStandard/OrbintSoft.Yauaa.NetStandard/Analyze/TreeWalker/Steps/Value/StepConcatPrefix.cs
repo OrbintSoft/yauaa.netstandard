@@ -50,19 +50,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         }
 
         /// <summary>
-        /// The Walk
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        public override WalkList.WalkResult Walk(IParseTree tree, string value)
-        {
-            string actualValue = GetActualValue(tree, value);
-            string filteredValue = prefix + actualValue;
-            return WalkNextStep(tree, filteredValue);
-        }
-
-        /// <summary>
         /// The CanFail
         /// </summary>
         /// <returns>The <see cref="bool"/></returns>
@@ -77,7 +64,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "StepConcatPrefix(" + prefix + ")";
+            return "StepConcatPrefix(" + this.prefix + ")";
+        }
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            var actualValue = this.GetActualValue(tree, value);
+            var filteredValue = this.prefix + actualValue;
+            return this.WalkNextStep(tree, filteredValue);
         }
     }
 }

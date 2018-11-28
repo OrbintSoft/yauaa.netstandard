@@ -38,6 +38,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     public class StepUp : Step
     {
         /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
+        {
+            return "Up()";
+        }
+
+        /// <summary>
         /// The Walk
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/></param>
@@ -45,22 +54,13 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IParseTree parent = Up(tree);
+            var parent = this.Up(tree);
             if (parent == null)
             {
                 return null;
             }
 
-            return WalkNextStep(parent, null);
-        }
-
-        /// <summary>
-        /// The ToString
-        /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
-        {
-            return "Up()";
+            return this.WalkNextStep(parent, null);
         }
     }
 }

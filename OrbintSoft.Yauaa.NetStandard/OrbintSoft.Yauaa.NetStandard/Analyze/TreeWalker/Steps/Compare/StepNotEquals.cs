@@ -52,6 +52,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         }
 
         /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
+        {
+            return "NotEquals(" + this.desiredValue + ")";
+        }
+
+        /// <summary>
         /// The Walk
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/></param>
@@ -59,22 +68,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            string actualValue = GetActualValue(tree, value);
+            var actualValue = this.GetActualValue(tree, value);
 
-            if (!actualValue.Equals(desiredValue, StringComparison.InvariantCultureIgnoreCase))
+            if (!actualValue.Equals(this.desiredValue, StringComparison.InvariantCultureIgnoreCase))
             {
-                return WalkNextStep(tree, actualValue);
+                return this.WalkNextStep(tree, actualValue);
             }
-            return null;
-        }
 
-        /// <summary>
-        /// The ToString
-        /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
-        {
-            return "NotEquals(" + desiredValue + ")";
+            return null;
         }
     }
 }

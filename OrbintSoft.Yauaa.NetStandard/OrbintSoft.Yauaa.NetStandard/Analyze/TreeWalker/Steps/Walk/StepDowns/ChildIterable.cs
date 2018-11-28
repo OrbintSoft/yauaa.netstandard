@@ -40,16 +40,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
     public class ChildIterable
     {
         /// <summary>
-        /// Defines the privateNumberRange
-        /// </summary>
-        private readonly bool privateNumberRange;
-
-        /// <summary>
-        /// Defines the start
-        /// </summary>
-        private readonly int start;
-
-        /// <summary>
         /// Defines the end
         /// </summary>
         private readonly int end;
@@ -58,6 +48,16 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// Defines the isWantedClassPredicate
         /// </summary>
         private readonly Predicate<IParseTree> isWantedClassPredicate;
+
+        /// <summary>
+        /// Defines the privateNumberRange
+        /// </summary>
+        private readonly bool privateNumberRange;
+
+        /// <summary>
+        /// Defines the start
+        /// </summary>
+        private readonly int start;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChildIterable"/> class.
@@ -95,14 +95,34 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             private readonly IEnumerator<IParseTree> childIter;
 
             /// <summary>
+            /// Defines the childIterable
+            /// </summary>
+            private readonly ChildIterable childIterable;
+
+            /// <summary>
             /// Defines the index
             /// </summary>
             private int index = -1;
 
             /// <summary>
-            /// Defines the childIterable
+            /// Initializes a new instance of the <see cref="ChildIterator"/> class.
             /// </summary>
-            private readonly ChildIterable childIterable;
+            /// <param name="childIterable">The childIterable<see cref="ChildIterable"/></param>
+            /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/></param>
+            internal ChildIterator(ChildIterable childIterable, ParserRuleContext treeContext)
+            {
+                this.childIterable = childIterable;
+                if (treeContext.children == null)
+                {
+                    this.childIter = null;
+                    this.Current = null;
+                    this.index = -1;
+                }
+                else
+                {
+                    this.childIter = treeContext.children.GetEnumerator();
+                }
+            }
 
             /// <summary>
             /// Gets the Current
@@ -116,28 +136,16 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             {
                 get
                 {
-                    return Current;
+                    return this.Current;
                 }
             }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ChildIterator"/> class.
+            /// The Dispose
             /// </summary>
-            /// <param name="childIterable">The childIterable<see cref="ChildIterable"/></param>
-            /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/></param>
-            internal ChildIterator(ChildIterable childIterable, ParserRuleContext treeContext)
+            public void Dispose()
             {
-                this.childIterable = childIterable;
-                if (treeContext.children == null)
-                {
-                    childIter = null;
-                    Current = null;
-                    index = -1;
-                }
-                else
-                {
-                    childIter = treeContext.children.GetEnumerator();
-                }
+                this.childIter.Dispose();
             }
 
             /// <summary>
@@ -146,41 +154,41 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             /// <returns>If there is a next</returns>
             public bool MoveNext()
             {
-                if (childIter != null)
+                if (this.childIter != null)
                 {
-                    while (childIter.MoveNext())
+                    while (this.childIter.MoveNext())
                     {
-                        IParseTree nextParseTree = childIter.Current;
+                        var nextParseTree = this.childIter.Current;
                         if (Step.TreeIsSeparator(nextParseTree))
                         {
                             continue;
                         }
-                        if (!childIterable.privateNumberRange)
+                        if (!this.childIterable.privateNumberRange)
                         {
-                            index++;
+                            this.index++;
                         }
-                        if (!childIterable.isWantedClassPredicate(nextParseTree))
+                        if (!this.childIterable.isWantedClassPredicate(nextParseTree))
                         {
                             continue;
                         }
-                        if (childIterable.privateNumberRange)
+                        if (this.childIterable.privateNumberRange)
                         {
-                            index++;
+                            this.index++;
                         }
-                        if (index + 1 > childIterable.end)
+                        if (this.index + 1 > this.childIterable.end)
                         {
-                            Current = null;
+                            this.Current = null;
                             return false;
                         }
-                        if (childIterable.start <= index + 1)
+                        if (this.childIterable.start <= this.index + 1)
                         {
-                            Current = nextParseTree;
+                            this.Current = nextParseTree;
                             return true;
                         }
                     }
                 }
                 // We found nothing
-                Current = null;
+                this.Current = null;
                 return false;
             }
 
@@ -189,17 +197,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             /// </summary>
             public void Reset()
             {
-                index = -1;
-                Current = null;
-                childIter.Reset();
-            }
-
-            /// <summary>
-            /// The Dispose
-            /// </summary>
-            public void Dispose()
-            {
-                childIter.Dispose();
+                this.index = -1;
+                this.Current = null;
+                this.childIter.Reset();
             }
         }
     }

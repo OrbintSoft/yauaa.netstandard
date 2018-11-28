@@ -39,14 +39,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     public class StepIsInSet : Step
     {
         /// <summary>
-        /// Defines the listName
-        /// </summary>
-        private readonly string listName;
-
-        /// <summary>
         /// Defines the list
         /// </summary>
         private readonly ISet<string> list;
+
+        /// <summary>
+        /// Defines the listName
+        /// </summary>
+        private readonly string listName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepIsInSet"/> class.
@@ -60,6 +60,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         }
 
         /// <summary>
+        /// The ToString
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public override string ToString()
+        {
+            return "StepIsInSet(@" + this.listName + ")";
+        }
+
+        /// <summary>
         /// The Walk
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/></param>
@@ -67,22 +76,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            string actualValue = GetActualValue(tree, value);
+            var actualValue = this.GetActualValue(tree, value);
 
-            if (list.Contains(actualValue.ToLower()))
+            if (this.list.Contains(actualValue.ToLower()))
             {
-                return WalkNextStep(tree, actualValue);
+                return this.WalkNextStep(tree, actualValue);
             }
-            return null;
-        }
 
-        /// <summary>
-        /// The ToString
-        /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public override string ToString()
-        {
-            return "StepIsInSet(@" + listName + ")";
+            return null;
         }
     }
 }

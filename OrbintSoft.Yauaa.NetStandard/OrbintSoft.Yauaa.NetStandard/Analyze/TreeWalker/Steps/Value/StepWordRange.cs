@@ -55,35 +55,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
         public StepWordRange(WordRangeVisitor.Range range)
         {
-            firstWord = range.First;
-            lastWord = range.Last;
-        }
-
-        /// <summary>
-        /// The Walk
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        public override WalkList.WalkResult Walk(IParseTree tree, string value)
-        {
-            string actualValue = GetActualValue(tree, value);
-            string filteredValue;
-            if (tree.ChildCount == 1 && (
-                  tree.GetChild(0) is UserAgentParser.SingleVersionContext ||
-                  tree.GetChild(0) is UserAgentParser.SingleVersionWithCommasContext))
-            {
-                filteredValue = VersionSplitter.GetInstance().GetSplitRange(actualValue, firstWord, lastWord);
-            }
-            else
-            {
-                filteredValue = WordSplitter.GetInstance().GetSplitRange(actualValue, firstWord, lastWord);
-            }
-            if (filteredValue == null)
-            {
-                return null;
-            }
-            return WalkNextStep(tree, filteredValue);
+            this.firstWord = range.First;
+            this.lastWord = range.Last;
         }
 
         /// <summary>
@@ -94,7 +67,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         {
             // If you want the first word it cannot fail.
             // For all other numbers it can.
-            return !(firstWord == 1 && lastWord == 1);
+            return !(this.firstWord == 1 && this.lastWord == 1);
         }
 
         /// <summary>
@@ -103,7 +76,36 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "WordRange([" + firstWord + ":" + lastWord + "])";
+            return "WordRange([" + this.firstWord + ":" + this.lastWord + "])";
+        }
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            var actualValue = this.GetActualValue(tree, value);
+            string filteredValue;
+            if (tree.ChildCount == 1 && (
+                  tree.GetChild(0) is UserAgentParser.SingleVersionContext ||
+                  tree.GetChild(0) is UserAgentParser.SingleVersionWithCommasContext))
+            {
+                filteredValue = VersionSplitter.GetInstance().GetSplitRange(actualValue, this.firstWord, this.lastWord);
+            }
+            else
+            {
+                filteredValue = WordSplitter.GetInstance().GetSplitRange(actualValue, this.firstWord, this.lastWord);
+            }
+
+            if (filteredValue == null)
+            {
+                return null;
+            }
+
+            return this.WalkNextStep(tree, filteredValue);
         }
     }
 }

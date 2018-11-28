@@ -42,11 +42,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     public class StepDown : Step
     {
         /// <summary>
-        /// Defines the start
-        /// </summary>
-        private readonly int start;
-
-        /// <summary>
         /// Defines the end
         /// </summary>
         private readonly int end;
@@ -55,6 +50,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// Defines the name
         /// </summary>
         private readonly string name;
+
+        /// <summary>
+        /// Defines the start
+        /// </summary>
+        private readonly int start;
 
         /// <summary>
         /// Defines the userAgentGetChildrenVisitor
@@ -71,33 +71,16 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="StepDown"/> class from being created.
+        /// Initializes a new instance of the <see cref="StepDown"/> class.
         /// </summary>
         /// <param name="numberRange">The numberRange<see cref="NumberRangeList"/></param>
         /// <param name="name">The name<see cref="string"/></param>
         private StepDown(NumberRangeList numberRange, string name)
         {
             this.name = name;
-            start = numberRange.Start;
-            end = numberRange.End;
-            SetDefaultFieldValues();
-        }
-
-        /// <summary>
-        /// Initialize the transient default values
-        /// </summary>
-        private void SetDefaultFieldValues()
-        {
-            userAgentGetChildrenVisitor = new UserAgentGetChildrenVisitor(name, start, end);
-        }
-
-        /// <summary>
-        /// The ReadObject
-        /// </summary>
-        /// <param name="stream">The stream<see cref="Stream"/></param>
-        private void ReadObject(Stream stream)
-        {
-            SetDefaultFieldValues();
+            this.start = numberRange.Start;
+            this.end = numberRange.End;
+            this.SetDefaultFieldValues();
         }
 
         /// <summary>
@@ -106,7 +89,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "Down([" + start + ":" + end + "]" + name + ")";
+            return "Down([" + this.start + ":" + this.end + "]" + this.name + ")";
         }
 
         /// <summary>
@@ -117,23 +100,42 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <returns>The <see cref="WalkList.WalkResult"/></returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            IEnumerator<IParseTree> children = userAgentGetChildrenVisitor.Visit(tree);
+            var children = this.userAgentGetChildrenVisitor.Visit(tree);
             if (children != null)
             {
                 do
                 {
                     if (children.Current != null || children.MoveNext())
                     {
-                        IParseTree child = children.Current;
-                        WalkList.WalkResult childResult = WalkNextStep(child, null);
+                        var child = children.Current;
+                        var childResult = this.WalkNextStep(child, null);
                         if (childResult != null)
                         {
                             return childResult;
                         }
                     }
-                } while (children.MoveNext());
+                }
+                while (children.MoveNext());
             }
+
             return null;
+        }
+
+        /// <summary>
+        /// The ReadObject
+        /// </summary>
+        /// <param name="stream">The stream<see cref="Stream"/></param>
+        private void ReadObject(Stream stream)
+        {
+            this.SetDefaultFieldValues();
+        }
+
+        /// <summary>
+        /// Initialize the transient default values
+        /// </summary>
+        private void SetDefaultFieldValues()
+        {
+            this.userAgentGetChildrenVisitor = new UserAgentGetChildrenVisitor(this.name, this.start, this.end);
         }
     }
 }

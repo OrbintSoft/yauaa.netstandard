@@ -36,14 +36,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     public class StepConcat : Step
     {
         /// <summary>
-        /// Defines the prefix
-        /// </summary>
-        private readonly string prefix;
-
-        /// <summary>
         /// Defines the postfix
         /// </summary>
         private readonly string postfix;
+
+        /// <summary>
+        /// Defines the prefix
+        /// </summary>
+        private readonly string prefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepConcat"/> class.
@@ -54,19 +54,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         {
             this.prefix = prefix;
             this.postfix = postfix;
-        }
-
-        /// <summary>
-        /// The Walk
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        public override WalkList.WalkResult Walk(IParseTree tree, string value)
-        {
-            string actualValue = GetActualValue(tree, value);
-            string filteredValue = prefix + actualValue + postfix;
-            return WalkNextStep(tree, filteredValue);
         }
 
         /// <summary>
@@ -84,7 +71,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "StepConcat(" + prefix + ";" + postfix + ")";
+            return "StepConcat(" + this.prefix + ";" + this.postfix + ")";
+        }
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            var actualValue = this.GetActualValue(tree, value);
+            var filteredValue = this.prefix + actualValue + this.postfix;
+            return this.WalkNextStep(tree, filteredValue);
         }
     }
 }

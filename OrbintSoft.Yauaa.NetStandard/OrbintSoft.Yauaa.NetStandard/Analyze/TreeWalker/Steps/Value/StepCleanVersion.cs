@@ -39,20 +39,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     public class StepCleanVersion : Step
     {
         /// <summary>
-        /// The Walk
-        /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
-        public override WalkList.WalkResult Walk(IParseTree tree, string value)
-        {
-            string actualValue = GetActualValue(tree, value);
-
-            string cleanedValue = EvilManualUseragentStringHacks.ReplaceString(actualValue, "_", ".");
-            return WalkNextStep(tree, cleanedValue);
-        }
-
-        /// <summary>
         /// The CanFail
         /// </summary>
         /// <returns>The <see cref="bool"/></returns>
@@ -68,6 +54,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         public override string ToString()
         {
             return "CleanVersion()";
+        }
+
+        /// <summary>
+        /// The Walk
+        /// </summary>
+        /// <param name="tree">The tree<see cref="IParseTree"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        public override WalkList.WalkResult Walk(IParseTree tree, string value)
+        {
+            var actualValue = this.GetActualValue(tree, value);
+
+            var cleanedValue = EvilManualUseragentStringHacks.ReplaceString(actualValue, "_", ".");
+            return this.WalkNextStep(tree, cleanedValue);
         }
     }
 }
