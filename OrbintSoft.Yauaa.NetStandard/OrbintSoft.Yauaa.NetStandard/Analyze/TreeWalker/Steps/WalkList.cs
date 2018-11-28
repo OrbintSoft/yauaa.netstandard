@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
 {
     using Antlr4.Runtime;
@@ -98,7 +99,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             if (verbose)
             {
                 Log.Info("------------------------------------");
-                Log.Info(string.Format("Required: {0}",  requiredPattern.GetText()));
+                Log.Info(string.Format("Required: {0}", requiredPattern.GetText()));
                 foreach (Step step in steps)
                 {
                     step.SetVerbose(true);
@@ -106,8 +107,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 }
             }
         }
-
-
 
         /// <summary>
         /// Gets a value indicating whether UsesIsNull
@@ -162,6 +161,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             return result;
         }
 
+        /// <summary>
+        /// The PruneTrailingStepsThatCannotFail
+        /// </summary>
         public void PruneTrailingStepsThatCannotFail()
         {
             int lastStepThatCannotFail = int.MaxValue;
@@ -237,7 +239,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// </summary>
         private class WalkListBuilder : UserAgentTreeWalkerBaseVisitor<object>
         {
-            // Because we are jumping in 'mid way' we need to skip creating steps until that point.
             /// <summary>
             /// Defines the foundHashEntryPoint
             /// </summary>

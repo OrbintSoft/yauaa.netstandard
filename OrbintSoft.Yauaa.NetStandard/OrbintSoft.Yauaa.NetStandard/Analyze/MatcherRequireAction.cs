@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze
 {
     using Antlr4.Runtime;
@@ -56,13 +57,16 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="matcher">The matcher<see cref="Matcher"/></param>
         public MatcherRequireAction(string config, Matcher matcher)
         {
-            Init(config, matcher);
+            this.Init(config, matcher);
         }
 
+        /// <summary>
+        /// The Initialize
+        /// </summary>
         public override void Initialize()
         {
             base.Initialize();
-            evaluator.PruneTrailingStepsThatCannotFail();
+            this.Evaluator.PruneTrailingStepsThatCannotFail();
         }
 
         /// <summary>
@@ -72,11 +76,11 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="foundValue">The foundValue<see cref="WalkList.WalkResult"/></param>
         public override void Inform(string key, WalkList.WalkResult foundValue)
         {
-            foundRequiredValue = true;
-            if (verbose)
+            this.foundRequiredValue = true;
+            if (this.Verbose)
             {
                 Log.Info(string.Format("Info REQUIRE: {0}", key));
-                Log.Info(string.Format("NEED REQUIRE: {0}", GetMatchExpression()));
+                Log.Info(string.Format("NEED REQUIRE: {0}", this.MatchExpression));
                 Log.Info(string.Format("KEPT REQUIRE: {0}", key));
             }
         }
@@ -87,12 +91,13 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/></returns>
         public override bool ObtainResult()
         {
-            if (IsValidIsNull())
+            if (this.IsValidIsNull())
             {
-                foundRequiredValue = true;
+                this.foundRequiredValue = true;
             }
-            ProcessInformedMatches();
-            return foundRequiredValue;
+
+            this.ProcessInformedMatches();
+            return this.foundRequiredValue;
         }
 
         /// <summary>
@@ -101,7 +106,7 @@ namespace OrbintSoft.Yauaa.Analyze
         public override void Reset()
         {
             base.Reset();
-            foundRequiredValue = false;
+            this.foundRequiredValue = false;
         }
 
         /// <summary>
@@ -110,7 +115,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "Require: " + GetMatchExpression();
+            return "Require: " + this.MatchExpression;
         }
 
         /// <summary>

@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze
 {
     using Antlr4.Runtime;
@@ -56,24 +57,19 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly string expression;
 
         /// <summary>
-        /// Defines the foundValue
-        /// </summary>
-        private string foundValue = null;
-
-        /// <summary>
         /// Defines the fixedValue
         /// </summary>
         private string fixedValue = null;
 
         /// <summary>
+        /// Defines the foundValue
+        /// </summary>
+        private string foundValue = null;
+
+        /// <summary>
         /// Defines the resultAgentField
         /// </summary>
         private UserAgent.AgentField resultAgentField = null;
-
-        /// <summary>
-        /// Gets the Attribute
-        /// </summary>
-        public string Attribute { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatcherExtractAction"/> class.
@@ -84,29 +80,16 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="matcher">The matcher<see cref="Matcher"/></param>
         public MatcherExtractAction(string attribute, long confidence, string config, Matcher matcher)
         {
-            Attribute = attribute;
+            this.Attribute = attribute;
             this.confidence = confidence;
-            expression = config;
-            Init(config, matcher);
+            this.expression = config;
+            this.Init(config, matcher);
         }
 
         /// <summary>
-        /// The SetResultAgentField
+        /// Gets the Attribute
         /// </summary>
-        /// <param name="newResultAgentField">The newResultAgentField<see cref="UserAgent.AgentField"/></param>
-        public void SetResultAgentField(UserAgent.AgentField newResultAgentField)
-        {
-            resultAgentField = newResultAgentField;
-        }
-
-        /// <summary>
-        /// The IsFixedValue
-        /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
-        public bool IsFixedValue()
-        {
-            return fixedValue != null;
-        }
+        public string Attribute { get; }
 
         /// <summary>
         /// The Inform
@@ -115,24 +98,34 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/></param>
         public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
-            if (verbose)
+            if (this.Verbose)
             {
-                Log.Info(string.Format("INFO  : EXTRACT ({0}): {1}", Attribute, key));
-                Log.Info(string.Format("NEED  : EXTRACT ({0}): {1}", Attribute, GetMatchExpression()));
+                Log.Info(string.Format("INFO  : EXTRACT ({0}): {1}", this.Attribute, key));
+                Log.Info(string.Format("NEED  : EXTRACT ({0}): {1}", this.Attribute, this.MatchExpression));
             }
+
             /*
              * We know the tree is parsed from left to right.
              * This is also the priority in the fields.
              * So we always use the first value we find.
              */
-            if (foundValue == null)
+            if (this.foundValue == null)
             {
-                foundValue = newlyFoundValue.GetValue();
-                if (verbose)
+                this.foundValue = newlyFoundValue.GetValue();
+                if (this.Verbose)
                 {
-                    Log.Info(string.Format("KEPT  : EXTRACT ({0}): {1}", Attribute, key));
+                    Log.Info(string.Format("KEPT  : EXTRACT ({0}): {1}", this.Attribute, key));
                 }
             }
+        }
+
+        /// <summary>
+        /// The IsFixedValue
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
+        public bool IsFixedValue()
+        {
+            return this.fixedValue != null;
         }
 
         /// <summary>
@@ -141,29 +134,34 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/></returns>
         public override bool ObtainResult()
         {
-            ProcessInformedMatches();
-            if (fixedValue != null)
+            this.ProcessInformedMatches();
+            if (this.fixedValue != null)
             {
-                if (verbose)
+                if (this.Verbose)
                 {
-                    Log.Info(string.Format("Set fixedvalue ({0})[{1}]: {2}", Attribute, confidence, fixedValue));
+                    Log.Info(string.Format("Set fixedvalue ({0})[{1}]: {2}", this.Attribute, this.confidence, this.fixedValue));
                 }
-                resultAgentField.SetValueForced(fixedValue, confidence);
+
+                this.resultAgentField.SetValueForced(this.fixedValue, this.confidence);
                 return true;
             }
-            if (foundValue != null)
+
+            if (this.foundValue != null)
             {
-                if (verbose)
+                if (this.Verbose)
                 {
-                    Log.Info(string.Format("Set parsevalue ({0})[{1}]: {2}", Attribute, confidence, foundValue));
+                    Log.Info(string.Format("Set parsevalue ({0})[{1}]: {2}", this.Attribute, this.confidence, this.foundValue));
                 }
-                resultAgentField.SetValueForced(foundValue, confidence);
+
+                this.resultAgentField.SetValueForced(this.foundValue, this.confidence);
                 return true;
             }
-            if (verbose)
+
+            if (this.Verbose)
             {
-                Log.Info(string.Format("Nothing found for {0}", Attribute));
+                Log.Info(string.Format("Nothing found for {0}", this.Attribute));
             }
+
             return false;
         }
 
@@ -173,7 +171,16 @@ namespace OrbintSoft.Yauaa.Analyze
         public override void Reset()
         {
             base.Reset();
-            foundValue = null;
+            this.foundValue = null;
+        }
+
+        /// <summary>
+        /// The SetResultAgentField
+        /// </summary>
+        /// <param name="newResultAgentField">The newResultAgentField<see cref="UserAgent.AgentField"/></param>
+        public void SetResultAgentField(UserAgent.AgentField newResultAgentField)
+        {
+            this.resultAgentField = newResultAgentField;
         }
 
         /// <summary>
@@ -182,27 +189,14 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            if (IsFixedValue())
+            if (this.IsFixedValue())
             {
-                return "FIXED  : (" + Attribute + ", " + confidence + ") =   \"" + fixedValue + "\"";
+                return "FIXED  : (" + this.Attribute + ", " + this.confidence + ") =   \"" + this.fixedValue + "\"";
             }
             else
             {
-                return "DYNAMIC: (" + Attribute + ", " + confidence + "):    " + expression;
+                return "DYNAMIC: (" + this.Attribute + ", " + this.confidence + "):    " + this.expression;
             }
-        }
-
-        /// <summary>
-        /// The SetFixedValue
-        /// </summary>
-        /// <param name="newFixedValue">The newFixedValue<see cref="string"/></param>
-        protected override void SetFixedValue(string newFixedValue)
-        {
-            if (verbose)
-            {
-                Log.Info(string.Format("-- set Fixed value({0} , {1} , {2})", Attribute, confidence, newFixedValue));
-            }
-            fixedValue = newFixedValue;
         }
 
         /// <summary>
@@ -213,6 +207,20 @@ namespace OrbintSoft.Yauaa.Analyze
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
             return parser.matcherExtract();
+        }
+
+        /// <summary>
+        /// The SetFixedValue
+        /// </summary>
+        /// <param name="newFixedValue">The newFixedValue<see cref="string"/></param>
+        protected override void SetFixedValue(string newFixedValue)
+        {
+            if (this.Verbose)
+            {
+                Log.Info(string.Format("-- set Fixed value({0} , {1} , {2})", this.Attribute, this.confidence, newFixedValue));
+            }
+
+            this.fixedValue = newFixedValue;
         }
     }
 }

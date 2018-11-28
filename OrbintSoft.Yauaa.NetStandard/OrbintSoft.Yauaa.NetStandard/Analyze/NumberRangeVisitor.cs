@@ -38,6 +38,11 @@ namespace OrbintSoft.Yauaa.Analyze
     public sealed class NumberRangeVisitor : UserAgentTreeWalkerBaseVisitor<NumberRangeList>
     {
         /// <summary>
+        /// Defines the Instance
+        /// </summary>
+        internal static readonly NumberRangeVisitor Instance = new NumberRangeVisitor();
+
+        /// <summary>
         /// Defines the DEFAULT_MIN
         /// </summary>
         private const int DEFAULT_MIN = 1;
@@ -48,14 +53,11 @@ namespace OrbintSoft.Yauaa.Analyze
         private const int DEFAULT_MAX = 10;
 
         /// <summary>
-        /// Defines the Instance
-        /// </summary>
-        internal static readonly NumberRangeVisitor Instance = new NumberRangeVisitor();
-
-        /// <summary>
         /// Defines the MaxRange
         /// </summary>
         private static readonly IDictionary<string, int> MaxRange = new Dictionary<string, int>();
+
+
 
         /// <summary>
         /// Initializes static members of the <see cref="NumberRangeVisitor"/> class.
@@ -149,13 +151,14 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="int"/></returns>
         private static int GetMaxRange(UserAgentTreeWalkerParser.NumberRangeContext ctx)
         {
-            RuleContext parent = ctx.Parent;
-            string name = ((UserAgentTreeWalkerParser.StepDownContext)parent).name.Text;
-            int? maxRange = MaxRange.ContainsKey(name) ? (int?)MaxRange[name] : null;
+            var parent = ctx.Parent;
+            var name = ((UserAgentTreeWalkerParser.StepDownContext)parent).name.Text;
+            var maxRange = MaxRange.ContainsKey(name) ? (int?)MaxRange[name] : null;
             if (maxRange == null)
             {
                 return DEFAULT_MAX;
             }
+
             return maxRange ?? 0;
         }
     }

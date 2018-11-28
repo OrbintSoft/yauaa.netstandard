@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
 {
     using Antlr4.Runtime.Tree;
@@ -47,6 +48,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
             return WalkNextStep(tree, null);
         }
 
+        /// <summary>
+        /// The CanFail
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
         public override bool CanFail()
         {
             return false;

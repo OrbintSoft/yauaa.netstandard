@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
 {
     using Antlr4.Runtime;
@@ -89,7 +90,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         internal class ChildIterator : IEnumerator<IParseTree>
         {
             /// <summary>
-            /// Defines the childIterator
+            /// Defines the childIter
             /// </summary>
             private readonly IEnumerator<IParseTree> childIter;
 
@@ -118,8 +119,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                     return Current;
                 }
             }
-
-            
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ChildIterator"/> class.

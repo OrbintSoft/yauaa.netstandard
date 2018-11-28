@@ -25,10 +25,10 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
-using Antlr4.Runtime;
 
 namespace OrbintSoft.Yauaa.Analyze
 {
+    using Antlr4.Runtime;
     using Antlr4.Runtime.Atn;
     using Antlr4.Runtime.Dfa;
     using Antlr4.Runtime.Misc;
@@ -48,37 +48,19 @@ namespace OrbintSoft.Yauaa.Analyze
     public abstract class MatcherAction
     {
         /// <summary>
-        /// Defines the verbose
+        /// Defines the CalculateInformPaths
         /// </summary>
-        internal bool verbose = false;
-
-        /// <summary>
-        /// Defines the evaluator
-        /// </summary>
-        protected TreeExpressionEvaluator evaluator = null;
+        private static readonly IDictionary<Type, CalculateInformPathFunction> CalculateInformPaths = new Dictionary<Type, CalculateInformPathFunction>();
 
         /// <summary>
         /// Defines the Log
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherAction));
 
-        private static readonly IDictionary<Type, CalculateInformPathFunction> CALCULATE_INFORM_PATH = new Dictionary<Type, CalculateInformPathFunction>();
-
-        /// <summary>
-        /// Defines the matchExpression
-        /// </summary>
-        private string matchExpression = null;
-
-
         /// <summary>
         /// Defines the matcher
         /// </summary>
         private Matcher matcher = null;
-
-        /// <summary>
-        /// Defines the matches
-        /// </summary>
-        private MatchesList matches = null;
 
         /// <summary>
         /// Defines the verbosePermanent
@@ -91,217 +73,136 @@ namespace OrbintSoft.Yauaa.Analyze
         private bool verboseTemporary = false;
 
         /// <summary>
-        /// Gets a value indicating whether MustHaveMatches
+        /// Initializes static members of the <see cref="MatcherAction"/> class.
         /// </summary>
-        internal bool MustHaveMatches { get; private set; } = false;
-
         static MatcherAction()
         {
             // -------------
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherBaseContext)] = 
-                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext) tree).matcher());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherPathIsNullContext)] = 
-                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext) tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherBaseContext)] =
+                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherBaseContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathIsNullContext)] =
+                (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathIsNullContext)tree).matcher());
 
             // -------------
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherExtractContext)] = 
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherExtractContext)] =
                 (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherExtractContext)tree).expression);
 
             // -------------
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherVariableContext)] =
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherVariableContext)] =
                 (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherVariableContext)tree).expression);
 
             // -------------
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherPathContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathContext) tree).basePath());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherConcatContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatContext) tree).matcher());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherConcatPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext) tree).matcher());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherConcatPostfixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext) tree).matcher());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext) tree).matcher());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherCleanVersionContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext) tree).matcher());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext) tree).matcher());
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.MatcherWordRangeContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext) tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathContext)tree).basePath());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherConcatContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherConcatPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPrefixContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherConcatPostfixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherConcatPostfixContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherCleanVersionContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherWordRangeContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext)tree).matcher());
 
             // -------------
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.PathVariableContext)] = (action, treeName, tree) =>
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.PathVariableContext)] = (action, treeName, tree) =>
             {
-                action.matcher.InformMeAboutVariable(action, ((UserAgentTreeWalkerParser.PathVariableContext) tree).variable.Text);
+                action.matcher.InformMeAboutVariable(action, ((UserAgentTreeWalkerParser.PathVariableContext)tree).variable.Text);
                 return 0;
             };
 
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.PathWalkContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.PathWalkContext) tree).nextStep);
-		   
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.PathWalkContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.PathWalkContext)tree).nextStep);
+
             // -------------
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepDownContext)] = (action, treeName, tree) => 
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.StepDownContext)] = (action, treeName, tree) =>
             {
-                UserAgentTreeWalkerParser.StepDownContext thisTree = ((UserAgentTreeWalkerParser.StepDownContext)tree);
-                int informs = 0;
-                foreach (int number in NumberRangeVisitor.Instance.Visit(thisTree.numberRange())) 
+                var thisTree = (UserAgentTreeWalkerParser.StepDownContext)tree;
+                var informs = 0;
+                foreach (var number in NumberRangeVisitor.Instance.Visit(thisTree.numberRange()))
                 {
                     informs += CalculateInformPath(action, treeName + '.' + "(" + number + ")" + thisTree.name.Text, thisTree.nextStep);
                 }
+
                 return informs;
             };
 
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepEqualsValueContext)] = (action, treeName, tree) => 
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.StepEqualsValueContext)] = (action, treeName, tree) =>
             {
-                UserAgentTreeWalkerParser.StepEqualsValueContext thisTree = ((UserAgentTreeWalkerParser.StepEqualsValueContext)tree);
+                var thisTree = (UserAgentTreeWalkerParser.StepEqualsValueContext)tree;
                 action.matcher.InformMeAbout(action, treeName + "=\"" + thisTree.value.Text + "\"");
                 return 1;
             };
 
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepStartsWithValueContext)] = (action, treeName, tree) => 
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.StepStartsWithValueContext)] = (action, treeName, tree) =>
             {
-                UserAgentTreeWalkerParser.StepStartsWithValueContext thisTree = ((UserAgentTreeWalkerParser.StepStartsWithValueContext)tree);
+                var thisTree = (UserAgentTreeWalkerParser.StepStartsWithValueContext)tree;
                 action.matcher.InformMeAboutPrefix(action, treeName, thisTree.value.Text);
                 return 1;
             };
 
-            CALCULATE_INFORM_PATH[typeof(UserAgentTreeWalkerParser.StepWordRangeContext)] = (action, treeName, tree) => 
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.StepWordRangeContext)] = (action, treeName, tree) =>
             {
-                UserAgentTreeWalkerParser.StepWordRangeContext thisTree = ((UserAgentTreeWalkerParser.StepWordRangeContext)tree);
-                WordRangeVisitor.Range range = WordRangeVisitor.GetRange(thisTree.wordRange());
+                var thisTree = (UserAgentTreeWalkerParser.StepWordRangeContext)tree;
+                var range = WordRangeVisitor.GetRange(thisTree.wordRange());
                 action.matcher.LookingForRange(treeName, range);
-											  
+
                 return CalculateInformPath(action, treeName + range, thisTree.nextStep);
             };
         }
 
-
-        delegate int CalculateInformPathFunction(MatcherAction action, string treeName, ParserRuleContext tree);
+        /// <summary>
+        /// The CalculateInformPathFunction
+        /// </summary>
+        /// <param name="action">The action<see cref="MatcherAction"/></param>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="tree">The tree<see cref="ParserRuleContext"/></param>
+        /// <returns>The <see cref="int"/></returns>
+        internal delegate int CalculateInformPathFunction(MatcherAction action, string treeName, ParserRuleContext tree);
 
         /// <summary>
+        /// Gets the Matches
+        /// </summary>
+        public MatchesList Matches { get; private set; } = null;
+
+        /// <summary>
+        /// Gets the MatchExpression
+        /// </summary>
+        public string MatchExpression { get; private set; } = null;
+
+        /// <summary>
+        /// Gets the EvaluatorForUnitTesting
         /// The GetEvaluatorForUnitTesting
         /// </summary>
-        /// <returns>The <see cref="TreeExpressionEvaluator"/></returns>
-        internal TreeExpressionEvaluator EvaluatorForUnitTesting
-        {
-            get => evaluator;
-        }
+        internal TreeExpressionEvaluator EvaluatorForUnitTesting { get => this.Evaluator; }
 
         /// <summary>
-        /// The SetVerbose
+        /// Gets a value indicating whether MustHaveMatches
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
-        private void SetVerbose(bool newVerbose)
-        {
-            SetVerbose(newVerbose, false);
-        }
+        internal bool MustHaveMatches { get; private set; } = false;
 
         /// <summary>
-        /// The SetVerbose
+        /// Gets a value indicating whether Verbose
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
-        /// <param name="temporary">The temporary<see cref="bool"/></param>
-        public void SetVerbose(bool newVerbose, bool temporary)
-        {
-            verbose = newVerbose;
-            if (!temporary)
-            {
-                verbosePermanent = newVerbose;
-            }
-            verboseTemporary = temporary;
-        }
+        internal bool Verbose { get; private set; } = false;
 
         /// <summary>
-        /// The GetMatchExpression
+        /// Gets or sets the Evaluator
+        /// Defines the evaluator
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public string GetMatchExpression()
-        {
-            return matchExpression;
-        }
+        protected TreeExpressionEvaluator Evaluator { get; set; } = null;
 
         /// <summary>
-        /// The Initialize
+        /// The Inform
         /// </summary>
-        public virtual void Initialize()
-        {
-            InitErrorListener<int> lexerErrorListener = new InitErrorListener<int>(this);
-            AntlrInputStream input = new AntlrInputStream(matchExpression);
-
-            UserAgentTreeWalkerLexer lexer = new UserAgentTreeWalkerLexer(input);
-
-            lexer.AddErrorListener(lexerErrorListener);
-
-            InitErrorListener<IToken> parserErrorListener = new InitErrorListener<IToken>(this);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            UserAgentTreeWalkerParser parser = new UserAgentTreeWalkerParser(tokens);
-
-            parser.AddErrorListener(parserErrorListener);
-
-            ParserRuleContext requiredPattern = ParseWalkerExpression(parser);
-
-            // We couldn't ditch the double quotes around the fixed values in the parsing phase.
-            // So we ditch them here. We simply walk the tree and modify some of the tokens.
-            new UnQuoteValues().Visit(requiredPattern);
-
-            // Now we create an evaluator instance
-            evaluator = new TreeExpressionEvaluator(requiredPattern, matcher, verbose);
-
-            // Is a fixed value (i.e. no events will ever be fired)?
-            string fixedValue = evaluator.GetFixedValue();
-            if (fixedValue != null)
-            {
-                SetFixedValue(fixedValue);
-                MustHaveMatches = false;
-                matches = new MatchesList(0);
-                return; // Not interested in any patterns
-            }
-
-            MustHaveMatches = !evaluator.UsesIsNull();
-
-            int informs = CalculateInformPath(this, "agent", requiredPattern);
-
-            // If this is based on a variable we do not need any matches from the hashmap.
-            if (MustHaveMatches && informs == 0)
-            {
-                MustHaveMatches = false;
-            }
-
-            int listSize = 0;
-            if (informs > 0)
-            {
-                listSize = 1;
-            }
-            matches = new MatchesList(listSize);
-        }
-
-        /// <summary>
-        /// The Reset
-        /// </summary>
-        public virtual void Reset()
-        {
-            matches.Clear();
-            if (verboseTemporary)
-            {
-                verbose = verbosePermanent;
-            }
-        }
-
-        /// <summary>
-        /// The GetMatches
-        /// </summary>
-        /// <returns>The <see cref="MatchesList"/></returns>
-        public MatchesList GetMatches()
-        {
-            return matches;
-        }
-
-        /// <summary>
-        /// For each key that this action wants to be notified for this method is called.
-        /// Note that on a single parse event the same name CAN be called multiple times!!
-        /// </summary>
-        /// <param name="key">The key of the node</param>
-        /// <param name="value"></param>
-        /// <param name="result"> The node in the parser tree where the match occurred</param>
+        /// <param name="key">The key<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="result">The result<see cref="IParseTree"/></param>
         public void Inform(string key, string value, IParseTree result)
         {
             // Only if this needs input we tell the matcher on the first one.
-            if (MustHaveMatches && matches.Count == 0)
+            if (this.MustHaveMatches && this.Matches.Count == 0)
             {
-                matcher.GotMyFirstStartingPoint();
+                this.matcher.GotMyFirstStartingPoint();
             }
-            matches.Add(key, value, result);
+
+            this.Matches.Add(key, value, result);
         }
 
         /// <summary>
@@ -312,10 +213,116 @@ namespace OrbintSoft.Yauaa.Analyze
         public abstract void Inform(string key, WalkList.WalkResult foundValue);
 
         /// <summary>
+        /// The Initialize
+        /// </summary>
+        public virtual void Initialize()
+        {
+            var lexerErrorListener = new InitErrorListener<int>(this);
+            var input = new AntlrInputStream(this.MatchExpression);
+
+            var lexer = new UserAgentTreeWalkerLexer(input);
+
+            lexer.AddErrorListener(lexerErrorListener);
+
+            var parserErrorListener = new InitErrorListener<IToken>(this);
+            var tokens = new CommonTokenStream(lexer);
+            var parser = new UserAgentTreeWalkerParser(tokens);
+
+            parser.AddErrorListener(parserErrorListener);
+
+            var requiredPattern = this.ParseWalkerExpression(parser);
+
+            // We couldn't ditch the double quotes around the fixed values in the parsing phase.
+            // So we ditch them here. We simply walk the tree and modify some of the tokens.
+            new UnQuoteValues().Visit(requiredPattern);
+
+            // Now we create an evaluator instance
+            this.Evaluator = new TreeExpressionEvaluator(requiredPattern, this.matcher, this.Verbose);
+
+            // Is a fixed value (i.e. no events will ever be fired)?
+            var fixedValue = this.Evaluator.GetFixedValue();
+            if (fixedValue != null)
+            {
+                this.SetFixedValue(fixedValue);
+                this.MustHaveMatches = false;
+                this.Matches = new MatchesList(0);
+                return; // Not interested in any patterns
+            }
+
+            this.MustHaveMatches = !this.Evaluator.UsesIsNull();
+
+            var informs = CalculateInformPath(this, "agent", requiredPattern);
+
+            // If this is based on a variable we do not need any matches from the hashmap.
+            if (this.MustHaveMatches && informs == 0)
+            {
+                this.MustHaveMatches = false;
+            }
+
+            var listSize = 0;
+            if (informs > 0)
+            {
+                listSize = 1;
+            }
+
+            this.Matches = new MatchesList(listSize);
+        }
+
+        /// <summary>
         /// Called after all nodes have been notified.
         /// </summary>
         /// <returns>true if the obtainResult result was valid. False will fail the entire matcher this belongs to.</returns>
         public abstract bool ObtainResult();
+
+        /// <summary>
+        /// The Reset
+        /// </summary>
+        public virtual void Reset()
+        {
+            this.Matches.Clear();
+            if (this.verboseTemporary)
+            {
+                this.Verbose = this.verbosePermanent;
+            }
+        }
+
+        /// <summary>
+        /// The SetVerbose
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        /// <param name="temporary">The temporary<see cref="bool"/></param>
+        public void SetVerbose(bool newVerbose, bool temporary)
+        {
+            this.Verbose = newVerbose;
+            if (!temporary)
+            {
+                this.verbosePermanent = newVerbose;
+            }
+
+            this.verboseTemporary = temporary;
+        }
+
+        /// <summary>
+        /// The CannotBeValid 
+        /// If it is impossible that this can be valid it returns true, else false.
+        /// </summary>
+        /// <returns>The <see cref="bool"/></returns>
+        internal bool CannotBeValid()
+        {
+            return this.MustHaveMatches && this.Matches.Count == 0;
+        }
+
+        /// <summary>
+        /// Initialize the matcher
+        /// </summary>
+        /// <param name="newMatchExpression">The newMatchExpression<see cref="string"/></param>
+        /// <param name="newMatcher">The newMatcher<see cref="Matcher"/></param>
+        internal void Init(string newMatchExpression, Matcher newMatcher)
+        {
+            this.matcher = newMatcher;
+            this.MatchExpression = newMatchExpression;
+            this.SetVerbose(newMatcher.Verbose);
+        }
 
         /// <summary>
         /// The IsValidIsNull
@@ -323,16 +330,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/></returns>
         internal bool IsValidIsNull()
         {
-            return matches.Count == 0 && evaluator.UsesIsNull();
-        }
-
-        /// <summary>
-        /// If it is impossible that this can be valid it returns true, else false.
-        /// </summary>
-        /// <returns></returns>
-        internal bool CannotBeValid()
-        {
-            return MustHaveMatches && matches.Count == 0;
+            return this.Matches.Count == 0 && this.Evaluator.UsesIsNull();
         }
 
         /// <summary>
@@ -341,27 +339,15 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         internal void ProcessInformedMatches()
         {
-            foreach (MatchesList.Match match in matches)
+            foreach (var match in this.Matches)
             {
-                WalkList.WalkResult matchedValue = evaluator.Evaluate(match.GetResult(), match.Key, match.Value);
+                var matchedValue = this.Evaluator.Evaluate(match.GetResult(), match.Key, match.Value);
                 if (matchedValue != null)
                 {
-                    Inform(match.Key, matchedValue);
+                    this.Inform(match.Key, matchedValue);
                     break; // We always stick to the first match
                 }
             }
-        }
-
-        /// <summary>
-        /// The Init
-        /// </summary>
-        /// <param name="newMatchExpression">The newMatchExpression<see cref="string"/></param>
-        /// <param name="newMatcher">The newMatcher<see cref="Matcher"/></param>
-        internal void Init(string newMatchExpression, Matcher newMatcher)
-        {
-            matcher = newMatcher;
-            matchExpression = newMatchExpression;
-            SetVerbose(newMatcher.GetVerbose());
         }
 
         /// <summary>
@@ -380,6 +366,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// The CalculateInformPath
         /// </summary>
+        /// <param name="action">The action<see cref="MatcherAction"/></param>
         /// <param name="treeName">The treeName<see cref="string"/></param>
         /// <param name="tree">The tree<see cref="ParserRuleContext"/></param>
         /// <returns>The <see cref="int"/></returns>
@@ -391,36 +378,44 @@ namespace OrbintSoft.Yauaa.Analyze
                 return 1;
             }
 
-            Type type = tree.GetType();
-            if (CALCULATE_INFORM_PATH.ContainsKey(type))
+            var type = tree.GetType();
+            if (CalculateInformPaths.ContainsKey(type))
             {
-                return CALCULATE_INFORM_PATH[type].Invoke(action, treeName, tree);
+                return CalculateInformPaths[type].Invoke(action, treeName, tree);
             }
 
             action.matcher.InformMeAbout(action, treeName);
             return 1;
         }
 
-        
+        /// <summary>
+        /// The SetVerbose
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        private void SetVerbose(bool newVerbose)
+        {
+            this.SetVerbose(newVerbose, false);
+        }
+
         /// <summary>
         /// Defines the <see cref="InitErrorListener{T}" />
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type if listener</typeparam>
         internal class InitErrorListener<T> : IAntlrErrorListener<T>
         {
-            /// <summary>
-            /// Gets or sets the MatcherAction
-            /// </summary>
-            public MatcherAction MatcherAction { get; set; }
-
             /// <summary>
             /// Initializes a new instance of the <see cref="InitErrorListener{T}"/> class.
             /// </summary>
             /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
             public InitErrorListener(MatcherAction matcherAction) : base()
             {
-                MatcherAction = matcherAction;
+                this.MatcherAction = matcherAction;
             }
+
+            /// <summary>
+            /// Gets or sets the MatcherAction
+            /// </summary>
+            public MatcherAction MatcherAction { get; set; }
 
             /// <summary>
             /// The ReportAmbiguity
@@ -474,9 +469,9 @@ namespace OrbintSoft.Yauaa.Analyze
             public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
             {
                 Log.Error("Syntax error");
-                Log.Error(string.Format("Source : {0}", MatcherAction.matchExpression));
+                Log.Error(string.Format("Source : {0}", this.MatcherAction.MatchExpression));
                 Log.Error(string.Format("Message: {0}", msg));
-                throw new InvalidParserConfigurationException("Syntax error \"" + msg + "\" caused by \"" + MatcherAction.matchExpression + "\".");
+                throw new InvalidParserConfigurationException("Syntax error \"" + msg + "\" caused by \"" + this.MatcherAction.MatchExpression + "\".");
             }
         }
 
@@ -485,6 +480,117 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         private class UnQuoteValues : UserAgentTreeWalkerBaseVisitor<object>
         {
+            /// <summary>
+            /// The VisitMatcherConcat
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitMatcherConcat([NotNull] UserAgentTreeWalkerParser.MatcherConcatContext context)
+            {
+                this.UnQuoteToken(context.prefix);
+                this.UnQuoteToken(context.postfix);
+                return base.VisitMatcherConcat(context);
+            }
+
+            /// <summary>
+            /// The VisitMatcherConcatPostfix
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPostfixContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context)
+            {
+                this.UnQuoteToken(context.postfix);
+                return base.VisitMatcherConcatPostfix(context);
+            }
+
+            /// <summary>
+            /// The VisitMatcherConcatPrefix
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPrefixContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitMatcherConcatPrefix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPrefixContext context)
+            {
+                this.UnQuoteToken(context.prefix);
+                return base.VisitMatcherConcatPrefix(context);
+            }
+
+            /// <summary>
+            /// The VisitMatcherPathLookup
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
+            {
+                this.UnQuoteToken(context.defaultValue);
+                return base.VisitMatcherPathLookup(context);
+            }
+
+            /// <summary>
+            /// The VisitPathFixedValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.PathFixedValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitPathFixedValue([NotNull] UserAgentTreeWalkerParser.PathFixedValueContext context)
+            {
+                this.UnQuoteToken(context.value);
+                return base.VisitPathFixedValue(context);
+            }
+
+            /// <summary>
+            /// The VisitStepContainsValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepContainsValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitStepContainsValue([NotNull] UserAgentTreeWalkerParser.StepContainsValueContext context)
+            {
+                this.UnQuoteToken(context.value);
+                return base.VisitStepContainsValue(context);
+            }
+
+            /// <summary>
+            /// The VisitStepEndsWithValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEndsWithValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitStepEndsWithValue([NotNull] UserAgentTreeWalkerParser.StepEndsWithValueContext context)
+            {
+                this.UnQuoteToken(context.value);
+                return base.VisitStepEndsWithValue(context);
+            }
+
+            /// <summary>
+            /// The VisitStepEqualsValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEqualsValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitStepEqualsValue([NotNull] UserAgentTreeWalkerParser.StepEqualsValueContext context)
+            {
+                this.UnQuoteToken(context.value);
+                return base.VisitStepEqualsValue(context);
+            }
+
+            /// <summary>
+            /// The VisitStepNotEqualsValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepNotEqualsValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitStepNotEqualsValue([NotNull] UserAgentTreeWalkerParser.StepNotEqualsValueContext context)
+            {
+                this.UnQuoteToken(context.value);
+                return base.VisitStepNotEqualsValue(context);
+            }
+
+            /// <summary>
+            /// The VisitStepStartsWithValue
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepStartsWithValueContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitStepStartsWithValue([NotNull] UserAgentTreeWalkerParser.StepStartsWithValueContext context)
+            {
+                this.UnQuoteToken(context.value);
+                return base.VisitStepStartsWithValue(context);
+            }
+
             /// <summary>
             /// The UnQuoteToken
             /// </summary>
@@ -496,117 +602,6 @@ namespace OrbintSoft.Yauaa.Analyze
                     commonToken.StartIndex = commonToken.StartIndex + 1;
                     commonToken.StopIndex = commonToken.StopIndex - 1;
                 }
-            }
-
-            /// <summary>
-            /// The VisitMatcherPathLookup
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
-            {
-                UnQuoteToken(context.defaultValue);
-                return base.VisitMatcherPathLookup(context);
-            }
-
-            /// <summary>
-            /// The VisitPathFixedValue
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.PathFixedValueContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitPathFixedValue([NotNull] UserAgentTreeWalkerParser.PathFixedValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitPathFixedValue(context);
-            }
-
-            /// <summary>
-            /// The VisitMatcherConcat
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitMatcherConcat([NotNull] UserAgentTreeWalkerParser.MatcherConcatContext context)
-            {
-                UnQuoteToken(context.prefix);
-                UnQuoteToken(context.postfix);
-                return base.VisitMatcherConcat(context);
-            }
-
-            /// <summary>
-            /// The VisitMatcherConcatPrefix
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPrefixContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitMatcherConcatPrefix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPrefixContext context)
-            {
-                UnQuoteToken(context.prefix);
-                return base.VisitMatcherConcatPrefix(context);
-            }
-
-            /// <summary>
-            /// The VisitMatcherConcatPostfix
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPostfixContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context)
-            {
-                UnQuoteToken(context.postfix);
-                return base.VisitMatcherConcatPostfix(context);
-            }
-
-            /// <summary>
-            /// The VisitStepEqualsValue
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEqualsValueContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitStepEqualsValue([NotNull] UserAgentTreeWalkerParser.StepEqualsValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepEqualsValue(context);
-            }
-
-            /// <summary>
-            /// The VisitStepNotEqualsValue
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepNotEqualsValueContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitStepNotEqualsValue([NotNull] UserAgentTreeWalkerParser.StepNotEqualsValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepNotEqualsValue(context);
-            }
-
-            /// <summary>
-            /// The VisitStepStartsWithValue
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepStartsWithValueContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitStepStartsWithValue([NotNull] UserAgentTreeWalkerParser.StepStartsWithValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepStartsWithValue(context);
-            }
-
-            /// <summary>
-            /// The VisitStepEndsWithValue
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEndsWithValueContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitStepEndsWithValue([NotNull] UserAgentTreeWalkerParser.StepEndsWithValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepEndsWithValue(context);
-            }
-
-            /// <summary>
-            /// The VisitStepContainsValue
-            /// </summary>
-            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepContainsValueContext"/></param>
-            /// <returns>The <see cref="object"/></returns>
-            public override object VisitStepContainsValue([NotNull] UserAgentTreeWalkerParser.StepContainsValueContext context)
-            {
-                UnQuoteToken(context.value);
-                return base.VisitStepContainsValue(context);
             }
         }
     }

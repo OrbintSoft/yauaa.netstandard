@@ -69,16 +69,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly UserAgent newValuesUserAgent = new UserAgent();
 
         /// <summary>
-        /// Defines the lookups
-        /// </summary>
-        private readonly IDictionary<string, IDictionary<string, string>> lookups;
-
-        /// <summary>
-        /// Defines the lookupSets
-        /// </summary>
-        private readonly IDictionary<string, ISet<string>> lookupSets;
-
-        /// <summary>
         /// Defines the matcherSourceLocation
         /// </summary>
         private readonly string matcherSourceLocation;
@@ -109,11 +99,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private long actionsThatRequireInputAndReceivedInput = 0;
 
         /// <summary>
-        /// Defines the verbose
-        /// </summary>
-        private bool verbose = false;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
         /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/></param>
@@ -124,8 +109,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="filename">The filename<see cref="string"/></param>
         public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, IList<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
-            this.lookups = lookups;
-            this.lookupSets = lookupSets;
+            this.Lookups = lookups;
+            this.LookupSets = lookupSets;
             this.analyzer = analyzer;
             this.fixedStringActions = new List<MatcherAction>();
             this.variableActions = new List<MatcherVariableAction>();
@@ -136,7 +121,7 @@ namespace OrbintSoft.Yauaa.Analyze
 #if VERBOSE
             this.verbose = true;
 #else
-            this.verbose = false;
+            this.Verbose = false;
 #endif
             var hasActiveExtractConfigs = false;
             var hasDefinedExtractConfigs = false;
@@ -150,7 +135,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     case "options":
                         var options = YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation);
-                        this.verbose = options.Contains("verbose");
+                        this.Verbose = options.Contains("verbose");
                         break;
                     case "variable":
                         foreach (var variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation))
@@ -214,9 +199,9 @@ namespace OrbintSoft.Yauaa.Analyze
                 }
             }
 
-            this.permanentVerbose = this.verbose;
+            this.permanentVerbose = this.Verbose;
 
-            if (this.verbose)
+            if (this.Verbose)
             {
                 Log.Info("---------------------------");
                 Log.Info("- MATCHER -");
@@ -234,7 +219,7 @@ namespace OrbintSoft.Yauaa.Analyze
 
             foreach (var configLine in configLines)
             {
-                if (this.verbose)
+                if (this.Verbose)
                 {
                     Log.Info(string.Format("{0}: {1}", configLine.Type, configLine.Expression));
                 }
@@ -269,8 +254,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="lookupSets">The lookupSets<see cref="IDictionary{string, ISet{string}}"/></param>
         internal Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets)
         {
-            this.lookups = lookups;
-            this.lookupSets = lookupSets;
+            this.Lookups = lookups;
+            this.LookupSets = lookupSets;
             this.analyzer = analyzer;
             this.fixedStringActions = new List<MatcherAction>();
             this.variableActions = new List<MatcherVariableAction>();
@@ -278,22 +263,19 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetLookups
+        /// Gets the Lookups
         /// </summary>
-        /// <returns>The <see cref="IDictionary{string, IDictionary{string, string}}"/></returns>
-        public IDictionary<string, IDictionary<string, string>> GetLookups()
-        {
-            return this.lookups;
-        }
+        public IDictionary<string, IDictionary<string, string>> Lookups { get; }
 
         /// <summary>
-        /// The GetLookupSets
+        /// Gets the LookupSets
         /// </summary>
-        /// <returns>The <see cref="IDictionary{string, ISet{string}}"/></returns>
-        public IDictionary<string, ISet<string>> GetLookupSets()
-        {
-            return this.lookupSets;
-        }
+        public IDictionary<string, ISet<string>> LookupSets { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether Verbose
+        /// </summary>
+        public bool Verbose { get; private set; } = false;
 
         /// <summary>
         /// The Initialize
@@ -380,7 +362,7 @@ namespace OrbintSoft.Yauaa.Analyze
 
             this.actionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
 
-            if (this.verbose)
+            if (this.Verbose)
             {
                 Log.Info("---------------------------");
             }
@@ -392,7 +374,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="ISet{string}"/></returns>
         public ISet<string> GetAllPossibleFieldNames()
         {
-            ISet<string> results = new SortedSet<string>();
+            var results = new SortedSet<string>();
             results.UnionWith(this.GetAllPossibleFieldNames(this.dynamicActions));
             results.UnionWith(this.GetAllPossibleFieldNames(this.fixedStringActions));
             results.Remove(UserAgent.SET_ALL_FIELDS);
@@ -437,7 +419,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="userAgent">userAgent The UserAgent that needs to analyzed</param>
         public virtual void Analyze(UserAgent userAgent)
         {
-            if (this.verbose)
+            if (this.Verbose)
             {
                 Log.Info(string.Empty);
                 Log.Info("--- Matcher ------------------------");
@@ -447,7 +429,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     if (action.CannotBeValid())
                     {
-                        Log.Error(string.Format("CANNOT BE VALID : {0}", action.GetMatchExpression()));
+                        Log.Error(string.Format("CANNOT BE VALID : {0}", action.MatchExpression));
                         good = false;
                     }
                 }
@@ -456,7 +438,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     if (!action.ObtainResult())
                     {
-                        Log.Error(string.Format("FAILED : {0}", action.GetMatchExpression()));
+                        Log.Error(string.Format("FAILED : {0}", action.MatchExpression));
                         good = false;
                     }
                 }
@@ -493,15 +475,6 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetVerbose
-        /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
-        public bool GetVerbose()
-        {
-            return this.verbose;
-        }
-
-        /// <summary>
         /// The SetVerboseTemporarily
         /// </summary>
         /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
@@ -520,7 +493,7 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             // If there are no dynamic actions we have fixed strings only
             this.actionsThatRequireInputAndReceivedInput = 0;
-            this.verbose = this.permanentVerbose;
+            this.Verbose = this.permanentVerbose;
             foreach (var action in this.dynamicActions)
             {
                 action.Reset();
@@ -536,7 +509,7 @@ namespace OrbintSoft.Yauaa.Analyze
             var allMatches = new List<MatchesList.Match>();
             foreach (var action in this.dynamicActions)
             {
-                allMatches.AddRange(action.GetMatches());
+                allMatches.AddRange(action.Matches);
             }
 
             return allMatches;
@@ -565,7 +538,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 }
                 else
                 {
-                    allMatches.AddRange(action.GetMatches());
+                    allMatches.AddRange(action.Matches);
                 }
             }
 
@@ -585,8 +558,8 @@ namespace OrbintSoft.Yauaa.Analyze
                 if (action is MatcherVariableAction)
                 {
                     sb.Append("        @").Append(((MatcherVariableAction)action).VariableName)
-                        .Append(":    ").Append(action.GetMatchExpression()).Append('\n');
-                    sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
+                        .Append(":    ").Append(action.MatchExpression).Append('\n');
+                    sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
                 }
             }
 
@@ -595,8 +568,8 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 if (action is MatcherRequireAction)
                 {
-                    sb.Append("        ").Append(action.GetMatchExpression()).Append('\n');
-                    sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
+                    sb.Append("        ").Append(action.MatchExpression).Append('\n');
+                    sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
                 }
             }
 
@@ -606,7 +579,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 if (action is MatcherExtractAction)
                 {
                     sb.Append("        ").Append(action.ToString()).Append('\n');
-                    sb.Append("        -->[").Append(string.Join(",", action.GetMatches().ToStrings().ToArray())).Append("]\n");
+                    sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
                 }
             }
 

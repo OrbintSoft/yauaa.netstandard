@@ -96,7 +96,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="Range"/></returns>
         public override Range VisitWordRangeSingleWord([NotNull] UserAgentTreeWalkerParser.WordRangeSingleWordContext context)
         {
-            int wordNumber = int.Parse(context.singleWord.Text);
+            var wordNumber = int.Parse(context.singleWord.Text);
             return new Range(wordNumber, wordNumber);
         }
 
@@ -118,8 +118,8 @@ namespace OrbintSoft.Yauaa.Analyze
             /// <param name="last">The last<see cref="int"/></param>
             public Range(int first, int last)
             {
-                First = first;
-                Last = last;
+                this.First = first;
+                this.Last = last;
             }
 
             /// <summary>
@@ -138,18 +138,19 @@ namespace OrbintSoft.Yauaa.Analyze
             /// <returns>The <see cref="string"/></returns>
             public override string ToString()
             {
-                if (rangeString == null)
+                if (this.rangeString == null)
                 {
-                    if (Last == -1)
+                    if (this.Last == -1)
                     {
-                        rangeString = "[" + First + "-]";
+                        this.rangeString = "[" + this.First + "-]";
                     }
                     else
                     {
-                        rangeString = "[" + First + "-" + Last + "]";
+                        this.rangeString = "[" + this.First + "-" + this.Last + "]";
                     }
                 }
-                return rangeString;
+
+                return this.rangeString;
             }
 
             /// <summary>
@@ -163,8 +164,9 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     return false;
                 }
-                Range range = (Range)obj;
-                return First == range.First && Last == range.Last;
+
+                var range = (Range)obj;
+                return this.First == range.First && this.Last == range.Last;
             }
 
             /// <summary>
@@ -173,7 +175,7 @@ namespace OrbintSoft.Yauaa.Analyze
             /// <returns>The <see cref="int"/></returns>
             public override int GetHashCode()
             {
-                return ValueTuple.Create(First, Last).GetHashCode();
+                return ValueTuple.Create(this.First, this.Last).GetHashCode();
             }
         }
     }

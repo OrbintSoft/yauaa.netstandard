@@ -69,9 +69,9 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="matcher">The matcher<see cref="Matcher"/></param>
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
-            VariableName = variableName;
-            expression = config;
-            Init(config, matcher);
+            this.VariableName = variableName;
+            this.expression = config;
+            this.Init(config, matcher);
         }
 
         /// <summary>
@@ -86,29 +86,30 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/></param>
         public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
-            if (verbose)
+            if (this.Verbose)
             {
-                Log.Info(string.Format("INFO  : VARIABLE ({0}): {1}", VariableName, key));
-                Log.Info(string.Format("NEED  : VARIABLE ({0}): {1}", VariableName, GetMatchExpression()));
+                Log.Info(string.Format("INFO  : VARIABLE ({0}): {1}", this.VariableName, key));
+                Log.Info(string.Format("NEED  : VARIABLE ({0}): {1}", this.VariableName, this.MatchExpression));
             }
+
             /*
              * We know the tree is parsed from left to right.
              * This is also the priority in the fields.
              * So we always use the first value we find.
              */
-            if (foundValue == null)
+            if (this.foundValue == null)
             {
-                foundValue = newlyFoundValue;
-                if (verbose)
+                this.foundValue = newlyFoundValue;
+                if (this.Verbose)
                 {
-                    Log.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", VariableName, key));
+                    Log.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", this.VariableName, key));
                 }
 
-                if (interestedActions != null && interestedActions.Count != 0)
+                if (this.interestedActions != null && this.interestedActions.Count != 0)
                 {
-                    foreach (MatcherAction action in interestedActions)
+                    foreach (var action in this.interestedActions)
                     {
-                        action.Inform(VariableName, newlyFoundValue.GetValue(), newlyFoundValue.GetTree());
+                        action.Inform(this.VariableName, newlyFoundValue.GetValue(), newlyFoundValue.GetTree());
                     }
                 }
             }
@@ -120,8 +121,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/></returns>
         public override bool ObtainResult()
         {
-            ProcessInformedMatches();
-            return foundValue != null;
+            this.ProcessInformedMatches();
+            return this.foundValue != null;
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace OrbintSoft.Yauaa.Analyze
         public override void Reset()
         {
             base.Reset();
-            foundValue = null;
+            this.foundValue = null;
         }
 
         /// <summary>
@@ -139,7 +140,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "VARIABLE: (" + VariableName + "): " + expression;
+            return "VARIABLE: (" + this.VariableName + "): " + this.expression;
         }
 
         /// <summary>
@@ -148,7 +149,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="newInterestedActions">The newInterestedActions<see cref="ISet{MatcherAction}"/></param>
         public void SetInterestedActions(ISet<MatcherAction> newInterestedActions)
         {
-            interestedActions = newInterestedActions;
+            this.interestedActions = newInterestedActions;
         }
 
         /// <summary>

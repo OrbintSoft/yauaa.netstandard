@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze
 {
     using Antlr4.Runtime.Tree;
@@ -44,14 +45,14 @@ namespace OrbintSoft.Yauaa.Analyze
         private const int CAPACITY_INCREASE = 3;
 
         /// <summary>
-        /// Defines the maxSize
-        /// </summary>
-        private int maxSize = 0;
-
-        /// <summary>
         /// Defines the allElements
         /// </summary>
         private Match[] allElements = null;
+
+        /// <summary>
+        /// Defines the maxSize
+        /// </summary>
+        private int maxSize = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatchesList"/> class.
@@ -59,13 +60,13 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="newMaxSize">The newMaxSize<see cref="int"/></param>
         public MatchesList(int newMaxSize)
         {
-            maxSize = newMaxSize;
+            this.maxSize = newMaxSize;
 
-            Count = 0;
-            allElements = new Match[maxSize];
-            for (int i = 0; i < maxSize; i++)
+            this.Count = 0;
+            this.allElements = new Match[this.maxSize];
+            for (var i = 0; i < this.maxSize; i++)
             {
-                allElements[i] = new Match(null, null, null);
+                this.allElements[i] = new Match(null, null, null);
             }
         }
 
@@ -80,11 +81,12 @@ namespace OrbintSoft.Yauaa.Analyze
         public bool IsReadOnly => true;
 
         /// <summary>
-        /// The Clear
+        /// The Add
         /// </summary>
-        public void Clear()
+        /// <param name="item">The item<see cref="Match"/></param>
+        public void Add(Match item)
         {
-            Count = 0;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -96,85 +98,22 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/></returns>
         public bool Add(string key, string value, IParseTree result)
         {
-            if (Count >= maxSize)
+            if (this.Count >= this.maxSize)
             {
-                IncreaseCapacity();
+                this.IncreaseCapacity();
             }
 
-            allElements[Count].Fill(key, value, result);
-            Count++;
+            this.allElements[this.Count].Fill(key, value, result);
+            this.Count++;
             return true;
         }
 
         /// <summary>
-        /// The GetEnumerator
+        /// The Clear
         /// </summary>
-        /// <returns>The <see cref="IEnumerator{Match}"/></returns>
-        public IEnumerator<Match> GetEnumerator()
+        public void Clear()
         {
-            return new MatchEnumerator(allElements, Count);
-        }
-
-        /// <summary>
-        /// The GetEnumerator
-        /// </summary>
-        /// <returns>The <see cref="IEnumerator"/></returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new MatchEnumerator(allElements, Count);
-        }
-
-        /// <summary>
-        /// The IncreaseCapacity
-        /// </summary>
-        private void IncreaseCapacity()
-        {
-            int newMaxSize = maxSize + CAPACITY_INCREASE;
-            Match[] newAllElements = new Match[newMaxSize];
-            allElements.CopyTo(newAllElements, 0);
-            for (int i = maxSize; i < newMaxSize; i++)
-            {
-                newAllElements[i] = new Match(null, null, null);
-            }
-            allElements = newAllElements;
-            maxSize = newMaxSize;
-        }
-
-        /// <summary>
-        /// The ToStrings
-        /// </summary>
-        /// <returns>The <see cref="List{string}"/></returns>
-        public List<string> ToStrings()
-        {
-            List<string> result = new List<string>();
-            foreach (Match match in this)
-            {
-                result.Add("{ \"" + match.Key + "\"=\"" + match.Value + "\" }");
-            }
-            return result;
-        }
-
-        /// <summary>
-        /// The CopyTo
-        /// </summary>
-        /// <param name="array">The array<see cref="Match[]"/></param>
-        /// <param name="arrayIndex">The arrayIndex<see cref="int"/></param>
-        public void CopyTo(Match[] array, int arrayIndex)
-        {
-            for (int i = 0; i < Count; i++)
-            {
-                array.SetValue(allElements[i], arrayIndex);
-                arrayIndex = arrayIndex + 1;
-            }
-        }
-
-        /// <summary>
-        /// The Add
-        /// </summary>
-        /// <param name="item">The item<see cref="Match"/></param>
-        public void Add(Match item)
-        {
-            throw new NotImplementedException();
+            this.Count = 0;
         }
 
         /// <summary>
@@ -188,6 +127,29 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
+        /// The CopyTo
+        /// </summary>
+        /// <param name="array">The array<see cref="Match[]"/></param>
+        /// <param name="arrayIndex">The arrayIndex<see cref="int"/></param>
+        public void CopyTo(Match[] array, int arrayIndex)
+        {
+            for (var i = 0; i < this.Count; i++)
+            {
+                array.SetValue(this.allElements[i], arrayIndex);
+                arrayIndex = arrayIndex + 1;
+            }
+        }
+
+        /// <summary>
+        /// The GetEnumerator
+        /// </summary>
+        /// <returns>The <see cref="IEnumerator{Match}"/></returns>
+        public IEnumerator<Match> GetEnumerator()
+        {
+            return new MatchEnumerator(this.allElements, this.Count);
+        }
+
+        /// <summary>
         /// The Remove
         /// </summary>
         /// <param name="item">The item<see cref="Match"/></param>
@@ -195,6 +157,102 @@ namespace OrbintSoft.Yauaa.Analyze
         public bool Remove(Match item)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// The ToStrings
+        /// </summary>
+        /// <returns>The <see cref="List{string}"/></returns>
+        public IList<string> ToStrings()
+        {
+            var result = new List<string>();
+            foreach (var match in this)
+            {
+                result.Add("{ \"" + match.Key + "\"=\"" + match.Value + "\" }");
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// The GetEnumerator
+        /// </summary>
+        /// <returns>The <see cref="IEnumerator"/></returns>
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new MatchEnumerator(this.allElements, this.Count);
+        }
+
+        /// <summary>
+        /// The IncreaseCapacity
+        /// </summary>
+        private void IncreaseCapacity()
+        {
+            var newMaxSize = this.maxSize + CAPACITY_INCREASE;
+            var newAllElements = new Match[newMaxSize];
+            this.allElements.CopyTo(newAllElements, 0);
+            for (var i = this.maxSize; i < newMaxSize; i++)
+            {
+                newAllElements[i] = new Match(null, null, null);
+            }
+
+            this.allElements = newAllElements;
+            this.maxSize = newMaxSize;
+        }
+
+        /// <summary>
+        /// Defines the <see cref="Match" />
+        /// </summary>
+        [Serializable]
+        public class Match
+        {
+            /// <summary>
+            /// Defines the result
+            /// </summary>
+            private IParseTree result = null;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Match"/> class.
+            /// </summary>
+            /// <param name="key">The key<see cref="string"/></param>
+            /// <param name="value">The value<see cref="string"/></param>
+            /// <param name="result">The result<see cref="IParseTree"/></param>
+            public Match(string key, string value, IParseTree result)
+            {
+                this.Fill(key, value, result);
+            }
+
+            /// <summary>
+            /// Gets the Key
+            /// </summary>
+            public string Key { get; private set; } = null;
+
+            /// <summary>
+            /// Gets the Value
+            /// </summary>
+            public string Value { get; private set; } = null;
+
+            /// <summary>
+            /// The Fill
+            /// </summary>
+            /// <param name="key">The nKey<see cref="string"/></param>
+            /// <param name="value">The nValue<see cref="string"/></param>
+            /// <param name="result">The nResult<see cref="IParseTree"/></param>
+            public void Fill(string key, string value, IParseTree result)
+            {
+                this.Key = key;
+                this.Value = value;
+                this.result = result;
+            }
+
+            /// <summary>
+            /// The GetResult
+            /// </summary>
+            /// <returns>The <see cref="IParseTree"/></returns>
+            public IParseTree GetResult()
+            {
+                return this.result;
+            }
         }
 
         /// <summary>
@@ -218,29 +276,6 @@ namespace OrbintSoft.Yauaa.Analyze
             private int offset = -1;
 
             /// <summary>
-            /// Gets the Current
-            /// </summary>
-            public Match Current
-            {
-                get
-                {
-                    if (count > offset)
-                    {
-                        return matches[offset];
-                    }
-                    else
-                    {
-                        throw new IndexOutOfRangeException("Array index out of bounds");
-                    }                        
-                }                
-            }
-
-            /// <summary>
-            /// Gets the Current
-            /// </summary>
-            object IEnumerator.Current => Current;
-
-            /// <summary>
             /// Initializes a new instance of the <see cref="MatchEnumerator"/> class.
             /// </summary>
             /// <param name="matches">The matches<see cref="Match[]"/></param>
@@ -250,6 +285,29 @@ namespace OrbintSoft.Yauaa.Analyze
                 this.matches = matches;
                 this.count = count;
             }
+
+            /// <summary>
+            /// Gets the Current
+            /// </summary>
+            public Match Current
+            {
+                get
+                {
+                    if (this.count > this.offset)
+                    {
+                        return this.matches[this.offset];
+                    }
+                    else
+                    {
+                        throw new IndexOutOfRangeException("Array index out of bounds");
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Gets the Current
+            /// </summary>
+            object IEnumerator.Current => this.Current;
 
             /// <summary>
             /// The Dispose
@@ -264,9 +322,9 @@ namespace OrbintSoft.Yauaa.Analyze
             /// <returns>The <see cref="bool"/></returns>
             public bool MoveNext()
             {
-                offset++;
-                if (offset < count)
-                {   
+                this.offset++;
+                if (this.offset < this.count)
+                {
                     return true;
                 }
                 else
@@ -280,62 +338,7 @@ namespace OrbintSoft.Yauaa.Analyze
             /// </summary>
             public void Reset()
             {
-                offset = -1;
-            }
-        }
-
-        /// <summary>
-        /// Defines the <see cref="Match" />
-        /// </summary>
-        [Serializable]
-        public class Match
-        {
-            /// <summary>
-            /// Defines the result
-            /// </summary>
-            private IParseTree result = null;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Match"/> class.
-            /// </summary>
-            /// <param name="key">The key<see cref="string"/></param>
-            /// <param name="value">The value<see cref="string"/></param>
-            /// <param name="result">The result<see cref="IParseTree"/></param>
-            public Match(string key, string value, IParseTree result)
-            {
-                Fill(key, value, result);
-            }
-
-            /// <summary>
-            /// Gets the Key
-            /// </summary>
-            public string Key { get; private set; } = null;
-
-            /// <summary>
-            /// Gets the Value
-            /// </summary>
-            public string Value { get; private set; } = null;
-
-            /// <summary>
-            /// The Fill
-            /// </summary>
-            /// <param name="nKey">The nKey<see cref="string"/></param>
-            /// <param name="nValue">The nValue<see cref="string"/></param>
-            /// <param name="nResult">The nResult<see cref="IParseTree"/></param>
-            public void Fill(string nKey, string nValue, IParseTree nResult)
-            {
-                Key = nKey;
-                Value = nValue;
-                result = nResult;
-            }
-
-            /// <summary>
-            /// The GetResult
-            /// </summary>
-            /// <returns>The <see cref="IParseTree"/></returns>
-            public IParseTree GetResult()
-            {
-                return result;
+                this.offset = -1;
             }
         }
     }

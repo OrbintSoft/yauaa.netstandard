@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
 {
     using Antlr4.Runtime;
@@ -61,15 +62,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// </summary>
         private Step nextStep = null;
 
-#if VERBOSE
-        protected bool verbose = true;
-#else
         /// <summary>
         /// Defines the verbose
         /// </summary>
         protected bool verbose = false;
 
-#endif
         /// <summary>
         /// The SetVerbose
         /// </summary>
@@ -170,7 +167,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             return true; // Default is to assume the step is always needed.
         }
 
-
         /// <summary>
         /// The Up
         /// </summary>
@@ -189,8 +185,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
             return parent;
         }
-
-
 
         /// <summary>
         /// The GetActualValue

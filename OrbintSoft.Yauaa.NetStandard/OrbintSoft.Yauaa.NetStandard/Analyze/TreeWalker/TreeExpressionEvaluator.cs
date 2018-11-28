@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:48</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker
 {
     using Antlr4.Runtime;
@@ -68,7 +69,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         /// </summary>
         private readonly WalkList walkList;
 
-
         /// <summary>
         /// Defines the fixedValue
         /// </summary>
@@ -86,9 +86,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
             this.matcher = matcher;
             this.verbose = verbose;
             fixedValue = CalculateFixedValue(requiredPattern);
-            walkList = new WalkList(requiredPattern, matcher.GetLookups(), matcher.GetLookupSets(), verbose);
+            walkList = new WalkList(requiredPattern, matcher.Lookups, matcher.LookupSets, verbose);
         }
 
+        /// <summary>
+        /// The PruneTrailingStepsThatCannotFail
+        /// </summary>
         public void PruneTrailingStepsThatCannotFail()
         {
             walkList.PruneTrailingStepsThatCannotFail();
@@ -180,14 +183,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
             /// <returns>The <see cref="string"/></returns>
             public override string VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
             {
-                string value = Visit(context.matcher());
+                var value = this.Visit(context.matcher());
                 if (value == null)
                 {
                     return null;
                 }
                 // Now we know this is a fixed value. Yet we can have a problem in the lookup that was
                 // configured. If we have this then this is a FATAL error (it will fail always everywhere).
-                var lookups = matcher.GetLookups();
+                var lookups = this.matcher.Lookups;
                 IDictionary<string, string> lookup = lookups.ContainsKey(context.lookup.Text) ? lookups[context.lookup.Text] : null;
                 if (lookup == null)
                 {
@@ -217,11 +220,23 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
                 return ctx.value.Text;
             }
 
+            /// <summary>
+            /// The ShouldVisitNextChild
+            /// </summary>
+            /// <param name="node">The node<see cref="IRuleNode"/></param>
+            /// <param name="currentResult">The currentResult<see cref="string"/></param>
+            /// <returns>The <see cref="bool"/></returns>
             protected override bool ShouldVisitNextChild([NotNull] IRuleNode node, string currentResult)
             {
                 return currentResult == null;
             }
 
+            /// <summary>
+            /// The AggregateResult
+            /// </summary>
+            /// <param name="aggregate">The aggregate<see cref="string"/></param>
+            /// <param name="nextResult">The nextResult<see cref="string"/></param>
+            /// <returns>The <see cref="string"/></returns>
             protected override string AggregateResult(string aggregate, string nextResult)
             {
                 return nextResult ?? aggregate;
