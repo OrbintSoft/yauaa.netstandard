@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Utils
 {
     /// <summary>
@@ -54,7 +55,66 @@ namespace OrbintSoft.Yauaa.Utils
             {
                 instance = new VersionSplitter();
             }
+
             return instance;
+        }
+
+        /// <summary>
+        /// The GetFirstSplits
+        /// </summary>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="split">The split<see cref="int"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public override string GetFirstSplits(string value, int split)
+        {
+            if (this.LooksLikeEmailOrWebaddress(value))
+            {
+                return (split == 1) ? value : null;
+            }
+
+            var characters = value.ToCharArray();
+            var start = this.FindSplitStart(characters, split);
+            if (start == -1)
+            {
+                return null;
+            }
+
+            var end = this.FindSplitEnd(characters, start);
+            return value.Substring(0, end);
+        }
+
+        /// <summary>
+        /// The GetSingleSplit
+        /// </summary>
+        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="split">The split<see cref="int"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public override string GetSingleSplit(string value, int split)
+        {
+            if (this.LooksLikeEmailOrWebaddress(value))
+            {
+                return (split == 1) ? value : null;
+            }
+
+            var characters = value.ToCharArray();
+            var start = this.FindSplitStart(characters, split);
+            if (start == -1)
+            {
+                return null;
+            }
+
+            var end = this.FindSplitEnd(characters, start);
+            return value.Substring(start, end - start);
+        }
+
+        /// <summary>
+        /// The IsEndOfStringSeparator
+        /// </summary>
+        /// <param name="c">The c<see cref="char"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        public override bool IsEndOfStringSeparator(char c)
+        {
+            return false;
         }
 
         /// <summary>
@@ -76,16 +136,6 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsEndOfStringSeparator
-        /// </summary>
-        /// <param name="c">The c<see cref="char"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        public override bool IsEndOfStringSeparator(char c)
-        {
-            return false;
-        }
-
-        /// <summary>
         /// The LooksLikeEmailOrWebaddress
         /// </summary>
         /// <param name="value">The value<see cref="string"/></param>
@@ -93,53 +143,7 @@ namespace OrbintSoft.Yauaa.Utils
         private bool LooksLikeEmailOrWebaddress(string value)
         {
             // Simple quick and dirty way to avoid splitting email and web addresses
-            return (value.StartsWith("www.") || value.StartsWith("http") || (value.Contains("@") && value.Contains(".")));
-        }
-
-        /// <summary>
-        /// The GetSingleSplit
-        /// </summary>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="split">The split<see cref="int"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public override string GetSingleSplit(string value, int split)
-        {
-            if (LooksLikeEmailOrWebaddress(value))
-            {
-                return (split == 1) ? value : null;
-            }
-
-            char[] characters = value.ToCharArray();
-            int start = FindSplitStart(characters, split);
-            if (start == -1)
-            {
-                return null;
-            }
-            int end = FindSplitEnd(characters, start);
-            return value.Substring(start, end - start);
-        }
-
-        /// <summary>
-        /// The GetFirstSplits
-        /// </summary>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="split">The split<see cref="int"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public override string GetFirstSplits(string value, int split)
-        {
-            if (LooksLikeEmailOrWebaddress(value))
-            {
-                return (split == 1) ? value : null;
-            }
-
-            char[] characters = value.ToCharArray();
-            int start = FindSplitStart(characters, split);
-            if (start == -1)
-            {
-                return null;
-            }
-            int end = FindSplitEnd(characters, start);
-            return value.Substring(0, end);
+            return value.StartsWith("www.") || value.StartsWith("http") || (value.Contains("@") && value.Contains("."));
         }
     }
 }

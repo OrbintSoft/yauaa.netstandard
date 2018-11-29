@@ -25,102 +25,54 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
-using log4net;
-using OrbintSoft.Yauaa.Analyze;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using YamlDotNet.RepresentationModel;
 
 namespace OrbintSoft.Yauaa.Utils
 {
+    using log4net;
+    using OrbintSoft.Yauaa.Analyze;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using YamlDotNet.RepresentationModel;
+
+    /// <summary>
+    /// Defines the <see cref="YauaaVersion" />
+    /// </summary>
     public sealed class YauaaVersion
     {
+        /// <summary>
+        /// Defines the Log
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(YauaaVersion));
 
+        /// <summary>
+        /// Prevents a default instance of the <see cref="YauaaVersion"/> class from being created.
+        /// </summary>
         private YauaaVersion()
         {
         }
 
-        public static void LogVersion(params string[] extraLines)
-        {
-            string[] lines = {
-                "For more information: https://github.com/OrbintSoft/yauaa.netstandard",
-                ThisVersion.Copyright + " - " + ThisVersion.License
-            };
-            string version = GetVersion();
-            int width = version.Length;
-            foreach (string line in lines)
-            {
-                width = Math.Max(width, line.Length);
-            }
-            foreach (string line in extraLines)
-            {
-                width = Math.Max(width, line.Length);
-            }
-
-            Log.Info("");
-            Log.Info(string.Format("/-{0}-\\", Padding('-', width)));
-            LogLine(version, width);
-            Log.Info(string.Format("+-{0}-+", Padding('-', width)));
-            foreach (string line in lines)
-            {
-                LogLine(line, width);
-            }
-            if (extraLines.Length > 0)
-            {
-                Log.Info(string.Format("+-{0}-+", Padding('-', width)));
-                foreach (string line in extraLines)
-                {
-                    LogLine(line, width);
-                }
-            }
-
-            Log.Info(string.Format("\\-{0}-/", Padding('-', width)));
-            Log.Info("");
-        }
-
-        private static string Padding(char letter, int count)
-        {
-            StringBuilder sb = new StringBuilder(128);
-            for (int i = 0; i < count; i++)
-            {
-                sb.Append(letter);
-            }
-            return sb.ToString();
-        }
-
-        private static void LogLine(string line, int width)
-        {
-            Log.Info(string.Format("| {0}{1} |", line, Padding(' ', width - line.Length)));
-        }
-
-        public static string GetVersion()
-        {
-            return GetVersion(ThisVersion.ProjectVersion, ThisVersion.GitCommitIdDescribeShort, ThisVersion.BuildTimestamp);
-        }
-
-        public static string GetVersion(string projectVersion, string gitCommitIdDescribeShort, string buildTimestamp)
-        {
-            return "Yauaa " + projectVersion + " (" + gitCommitIdDescribeShort + " @ " + buildTimestamp + ")";
-        }
-
+        /// <summary>
+        /// The AssertSameVersion
+        /// </summary>
+        /// <param name="versionNodeTuple">The versionNodeTuple<see cref="KeyValuePair{YamlNode, YamlNode}"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
         public static void AssertSameVersion(KeyValuePair<YamlNode, YamlNode> versionNodeTuple, string filename)
         {
             // Check the version information from the Yaml files
-            YamlSequenceNode versionNode = YamlUtils.GetValueAsSequenceNode(versionNodeTuple, filename);
+            var versionNode = YamlUtils.GetValueAsSequenceNode(versionNodeTuple, filename);
             string gitCommitIdDescribeShort = null;
             string buildTimestamp = null;
             string projectVersion = null;
 
-            List<YamlNode> versionList = versionNode.Children.ToList();
-            foreach (YamlNode versionEntry in versionList)
+            var versionList = versionNode.Children.ToList();
+            foreach (var versionEntry in versionList)
             {
                 YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), versionEntry, filename, "The entry MUST be a mapping");
-                KeyValuePair<YamlNode, YamlNode> entry = YamlUtils.GetExactlyOneNodeTuple((YamlMappingNode)versionEntry, filename);
-                string key = YamlUtils.GetKeyAsString(entry, filename);
-                string value = YamlUtils.GetValueAsString(entry, filename);
+                var entry = YamlUtils.GetExactlyOneNodeTuple((YamlMappingNode)versionEntry, filename);
+                var key = YamlUtils.GetKeyAsString(entry, filename);
+                var value = YamlUtils.GetValueAsString(entry, filename);
                 switch (key)
                 {
                     case "git_commit_id_describe_short":
@@ -143,14 +95,21 @@ namespace OrbintSoft.Yauaa.Utils
                                 "'git_commit_id_describe_short', 'build_timestamp' and 'project_version'");
                 }
             }
+
             AssertSameVersion(gitCommitIdDescribeShort, buildTimestamp, projectVersion);
         }
 
+        /// <summary>
+        /// The AssertSameVersion
+        /// </summary>
+        /// <param name="gitCommitIdDescribeShort">The gitCommitIdDescribeShort<see cref="string"/></param>
+        /// <param name="buildTimestamp">The buildTimestamp<see cref="string"/></param>
+        /// <param name="projectVersion">The projectVersion<see cref="string"/></param>
         public static void AssertSameVersion(string gitCommitIdDescribeShort, string buildTimestamp, string projectVersion)
         {
-            string libraryGitCommitIdDescribeShort = ThisVersion.GitCommitIdDescribeShort;
-            string libraryBuildTimestamp = ThisVersion.BuildTimestamp;
-            string libraryProjectVersion = ThisVersion.ProjectVersion;
+            var libraryGitCommitIdDescribeShort = ThisVersion.GitCommitIdDescribeShort;
+            var libraryBuildTimestamp = ThisVersion.BuildTimestamp;
+            var libraryProjectVersion = ThisVersion.ProjectVersion;
             if (libraryGitCommitIdDescribeShort.Equals(gitCommitIdDescribeShort) &&
                 libraryBuildTimestamp.Equals(buildTimestamp) &&
                 libraryProjectVersion.Equals(projectVersion))
@@ -158,23 +117,117 @@ namespace OrbintSoft.Yauaa.Utils
                 return;
             }
 
-            string libraryVersion = GetVersion(libraryProjectVersion, libraryGitCommitIdDescribeShort, libraryBuildTimestamp);
-            string rulesVersion = GetVersion(projectVersion, gitCommitIdDescribeShort, buildTimestamp);
+            var libraryVersion = GetVersion(libraryProjectVersion, libraryGitCommitIdDescribeShort, libraryBuildTimestamp);
+            var rulesVersion = GetVersion(projectVersion, gitCommitIdDescribeShort, buildTimestamp);
 
             Log.Error("===============================================");
             Log.Error("==========        FATAL ERROR       ===========");
             Log.Error("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-            Log.Error("");
+            Log.Error(string.Empty);
             Log.Error("Two different Yauaa versions have been loaded:");
             Log.Error(string.Format("Runtime Library: {0}", libraryVersion));
             Log.Error(string.Format("Rule sets      : {0}", rulesVersion));
-            Log.Error("");
+            Log.Error(string.Empty);
             Log.Error("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
             Log.Error("===============================================");
 
             throw new InvalidParserConfigurationException("Two different Yauaa versions have been loaded: \n" +
                 "Runtime Library: " + libraryVersion + "\n" +
                 "Rule sets      : " + rulesVersion + "\n");
+        }
+
+        /// <summary>
+        /// The GetVersion
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public static string GetVersion()
+        {
+            return GetVersion(ThisVersion.ProjectVersion, ThisVersion.GitCommitIdDescribeShort, ThisVersion.BuildTimestamp);
+        }
+
+        /// <summary>
+        /// The GetVersion
+        /// </summary>
+        /// <param name="projectVersion">The projectVersion<see cref="string"/></param>
+        /// <param name="gitCommitIdDescribeShort">The gitCommitIdDescribeShort<see cref="string"/></param>
+        /// <param name="buildTimestamp">The buildTimestamp<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public static string GetVersion(string projectVersion, string gitCommitIdDescribeShort, string buildTimestamp)
+        {
+            return "Yauaa " + projectVersion + " (" + gitCommitIdDescribeShort + " @ " + buildTimestamp + ")";
+        }
+
+        /// <summary>
+        /// The LogVersion
+        /// </summary>
+        /// <param name="extraLines">The extraLines<see cref="string[]"/></param>
+        public static void LogVersion(params string[] extraLines)
+        {
+            string[] lines = 
+            {
+                "For more information: https://github.com/OrbintSoft/yauaa.netstandard",
+                ThisVersion.Copyright + " - " + ThisVersion.License
+            };
+
+            var version = GetVersion();
+            var width = version.Length;
+            foreach (var line in lines)
+            {
+                width = Math.Max(width, line.Length);
+            }
+
+            foreach (var line in extraLines)
+            {
+                width = Math.Max(width, line.Length);
+            }
+
+            Log.Info(string.Empty);
+            Log.Info(string.Format("/-{0}-\\", Padding('-', width)));
+            LogLine(version, width);
+            Log.Info(string.Format("+-{0}-+", Padding('-', width)));
+            foreach (var line in lines)
+            {
+                LogLine(line, width);
+            }
+
+            if (extraLines.Length > 0)
+            {
+                Log.Info(string.Format("+-{0}-+", Padding('-', width)));
+                foreach (var line in extraLines)
+                {
+                    LogLine(line, width);
+                }
+            }
+
+            Log.Info(string.Format("\\-{0}-/", Padding('-', width)));
+            Log.Info(string.Empty);
+        }
+
+        /// <summary>
+        /// The LogLine
+        /// </summary>
+        /// <param name="line">The line<see cref="string"/></param>
+        /// <param name="width">The width<see cref="int"/></param>
+        private static void LogLine(string line, int width)
+        {
+            Log.Info(string.Format("| {0}{1} |", line, Padding(' ', width - line.Length)));
+        }
+
+        /// <summary>
+        /// The Padding
+        /// </summary>
+        /// <param name="letter">The letter<see cref="char"/></param>
+        /// <param name="count">The count<see cref="int"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        private static string Padding(char letter, int count)
+        {
+            var sb = new StringBuilder(128);
+            for (var i = 0; i < count; i++)
+            {
+                sb.Append(letter);
+            }
+
+            return sb.ToString();
         }
     }
 }

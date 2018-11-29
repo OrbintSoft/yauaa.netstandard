@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Utils
 {
     using OrbintSoft.Yauaa.Analyze;
@@ -43,50 +44,6 @@ namespace OrbintSoft.Yauaa.Utils
         /// </summary>
         private YamlUtils()
         {
-        }
-
-        /// <summary>
-        /// The RequireNodeInstanceOf
-        /// </summary>
-        /// <param name="clazz">The clazz<see cref="Type"/></param>
-        /// <param name="node">The node<see cref="YamlNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        /// <param name="error">The error<see cref="string"/></param>
-        public static void RequireNodeInstanceOf(Type clazz, YamlNode node, string filename, string error)
-        {
-            if (!clazz.IsInstanceOfType(node))
-            {
-                throw new InvalidParserConfigurationException(
-                    CreateErrorString(node, filename, error));
-            }
-        }
-
-        /// <summary>
-        /// The Require
-        /// </summary>
-        /// <param name="condition">The condition<see cref="bool"/></param>
-        /// <param name="node">The node<see cref="YamlNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        /// <param name="error">The error<see cref="string"/></param>
-        public static void Require(bool condition, YamlNode node, string filename, string error)
-        {
-            if (!condition)
-            {
-                throw new InvalidParserConfigurationException(
-                    CreateErrorString(node, filename, error));
-            }
-        }
-
-        /// <summary>
-        /// The CreateErrorString
-        /// </summary>
-        /// <param name="node">The node<see cref="YamlNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
-        /// <param name="error">The error<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        private static string CreateErrorString(YamlNode node, string filename, string error)
-        {
-            return "Yaml config problem.(" + filename + ":" + node.Start.Line + "): " + error;
         }
 
         /// <summary>
@@ -110,22 +67,29 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="string"/></returns>
         public static string GetKeyAsString(KeyValuePair<YamlNode, YamlNode> tuple, string filename)
         {
-            YamlNode keyNode = tuple.Key;
+            var keyNode = tuple.Key;
             RequireNodeInstanceOf(typeof(YamlScalarNode), tuple.Key, filename, "The key should be a string but it is a " + keyNode.NodeType.ToString());
             return ((YamlScalarNode)keyNode).Value;
         }
 
         /// <summary>
-        /// The GetValueAsString
+        /// The GetStringValues
         /// </summary>
-        /// <param name="tuple">The tuple<see cref="KeyValuePair{YamlNode, YamlNode}"/></param>
+        /// <param name="sequenceNode">The sequenceNode<see cref="YamlNode"/></param>
         /// <param name="filename">The filename<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public static string GetValueAsString(KeyValuePair<YamlNode, YamlNode> tuple, string filename)
+        /// <returns>The <see cref="IList{string}"/></returns>
+        public static IList<string> GetStringValues(YamlNode sequenceNode, string filename)
         {
-            YamlNode valueNode = tuple.Value;
-            RequireNodeInstanceOf(typeof(YamlScalarNode), tuple.Value, filename, "The value should be a string but it is a " + valueNode.NodeType.ToString());
-            return ((YamlScalarNode)valueNode).Value;
+            RequireNodeInstanceOf(typeof(YamlSequenceNode), sequenceNode, filename, "The provided node must be a sequence but it is a " + sequenceNode.NodeType.ToString());
+            var valueNodes = ((YamlSequenceNode)sequenceNode).ToList();
+            var values = new List<string>();
+            foreach (var node in valueNodes)
+            {
+                RequireNodeInstanceOf(typeof(YamlScalarNode), node, filename, "The value should be a string but it is a " + node.NodeType.ToString());
+                values.Add(((YamlScalarNode)node).Value);
+            }
+
+            return values;
         }
 
         /// <summary>
@@ -136,9 +100,9 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="YamlMappingNode"/></returns>
         public static YamlMappingNode GetValueAsMappingNode(KeyValuePair<YamlNode, YamlNode> tuple, string filename)
         {
-            YamlNode valueNode = tuple.Value;
+            var valueNode = tuple.Value;
             RequireNodeInstanceOf(typeof(YamlMappingNode), tuple.Value, filename, "The value should be a map but it is a " + valueNode.NodeType.ToString());
-            return ((YamlMappingNode)valueNode);
+            return (YamlMappingNode)valueNode;
         }
 
         /// <summary>
@@ -149,28 +113,66 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="YamlSequenceNode"/></returns>
         public static YamlSequenceNode GetValueAsSequenceNode(KeyValuePair<YamlNode, YamlNode> tuple, string filename)
         {
-            YamlNode valueNode = tuple.Value;
+            var valueNode = tuple.Value;
             RequireNodeInstanceOf(typeof(YamlSequenceNode), tuple.Value, filename, "The value should be a sequence but it is a " + valueNode.NodeType.ToString());
-            return ((YamlSequenceNode)valueNode);
+            return (YamlSequenceNode)valueNode;
         }
 
         /// <summary>
-        /// The GetStringValues
+        /// The GetValueAsString
         /// </summary>
-        /// <param name="sequenceNode">The sequenceNode<see cref="YamlNode"/></param>
+        /// <param name="tuple">The tuple<see cref="KeyValuePair{YamlNode, YamlNode}"/></param>
         /// <param name="filename">The filename<see cref="string"/></param>
-        /// <returns>The <see cref="List{string}"/></returns>
-        public static List<string> GetStringValues(YamlNode sequenceNode, string filename)
+        /// <returns>The <see cref="string"/></returns>
+        public static string GetValueAsString(KeyValuePair<YamlNode, YamlNode> tuple, string filename)
         {
-            RequireNodeInstanceOf(typeof(YamlSequenceNode), sequenceNode, filename, "The provided node must be a sequence but it is a " + sequenceNode.NodeType.ToString());
-            List<YamlNode> valueNodes = ((YamlSequenceNode)sequenceNode).ToList();
-            List<string> values = new List<string>();
-            foreach (YamlNode node in valueNodes)
+            var valueNode = tuple.Value;
+            RequireNodeInstanceOf(typeof(YamlScalarNode), tuple.Value, filename, "The value should be a string but it is a " + valueNode.NodeType.ToString());
+            return ((YamlScalarNode)valueNode).Value;
+        }
+
+        /// <summary>
+        /// The Require
+        /// </summary>
+        /// <param name="condition">The condition<see cref="bool"/></param>
+        /// <param name="node">The node<see cref="YamlNode"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        /// <param name="error">The error<see cref="string"/></param>
+        public static void Require(bool condition, YamlNode node, string filename, string error)
+        {
+            if (!condition)
             {
-                RequireNodeInstanceOf(typeof(YamlScalarNode), node, filename, "The value should be a string but it is a " + node.NodeType.ToString());
-                values.Add(((YamlScalarNode)node).Value);
+                throw new InvalidParserConfigurationException(
+                    CreateErrorString(node, filename, error));
             }
-            return values;
+        }
+
+        /// <summary>
+        /// The RequireNodeInstanceOf
+        /// </summary>
+        /// <param name="clazz">The clazz<see cref="Type"/></param>
+        /// <param name="node">The node<see cref="YamlNode"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        /// <param name="error">The error<see cref="string"/></param>
+        public static void RequireNodeInstanceOf(Type clazz, YamlNode node, string filename, string error)
+        {
+            if (!clazz.IsInstanceOfType(node))
+            {
+                throw new InvalidParserConfigurationException(
+                    CreateErrorString(node, filename, error));
+            }
+        }
+
+        /// <summary>
+        /// The CreateErrorString
+        /// </summary>
+        /// <param name="node">The node<see cref="YamlNode"/></param>
+        /// <param name="filename">The filename<see cref="string"/></param>
+        /// <param name="error">The error<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        private static string CreateErrorString(YamlNode node, string filename, string error)
+        {
+            return "Yaml config problem.(" + filename + ":" + node.Start.Line + "): " + error;
         }
     }
 }

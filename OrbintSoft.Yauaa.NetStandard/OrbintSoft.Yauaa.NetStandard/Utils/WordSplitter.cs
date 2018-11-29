@@ -54,6 +54,7 @@ namespace OrbintSoft.Yauaa.Utils
             {
                 instance = new WordSplitter();
             }
+
             return instance;
         }
 
