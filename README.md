@@ -15,14 +15,18 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
+5.4-beta.3
+--------
+- Created a new commandline application
+- Major code refactoring, with some breaking changes
+
 5.4-beta.2
 --------
 **BREAKING CHANGE:** Namespace has been updated, the old namespace was an adaption of Java package id, but in .NET we love simple and clean namespaces
 
-
 5.4-beta.1
 --------
-This version suppprts all new features of 5.4, all tests pass, so I can consider stable, download available throught Nuget
+This version supppots all new features of 5.4, all tests pass, so I can consider stable, download available throught Nuget
 
 A lot of improvements are still work in progress, feel free to test it.
 

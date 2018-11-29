@@ -6,6 +6,8 @@ v5.4
 - Major change in the Android Chrome 70 pattern --> broke DeviceBrand
 - Detect Vivo brand
 - Change of namespace to be more clean
+- Add of commandline application
+- Major code refactoring
 
 v5.3
 ===
