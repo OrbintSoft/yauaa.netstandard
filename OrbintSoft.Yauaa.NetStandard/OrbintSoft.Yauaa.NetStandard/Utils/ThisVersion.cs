@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Utils
 {
     using System;
@@ -37,64 +38,42 @@ namespace OrbintSoft.Yauaa.Utils
     public class ThisVersion
     {
         /// <summary>
-        /// Defines the fi
+        /// Defines the Fi
         /// </summary>
-        private static readonly FileInfo fi;
+        private static readonly FileInfo Fi;
 
         /// <summary>
         /// Initializes static members of the <see cref="ThisVersion"/> class.
         /// </summary>
         static ThisVersion()
         {
-
-            Assembly asm = Assembly.GetExecutingAssembly();
-            fi = new FileInfo(asm.Location);
+            var asm = Assembly.GetExecutingAssembly();
+            Fi = new FileInfo(asm.Location);
         }
 
         /// <summary>
-        /// The GetGitCommitIdDescribeShort
+        /// Gets the BuildTimestamp
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public static string GetGitCommitIdDescribeShort()
-        {
-            return ThisAssembly.Git.Commit;
-        }
+        public static string BuildTimestamp => Fi.LastWriteTime.Ticks.ToString();
 
         /// <summary>
-        /// The GetBuildTimestamp
+        /// Gets the Copyright
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public static string GetBuildTimestamp()
-        {
-
-            return fi.LastWriteTime.Ticks.ToString();
-        }
+        public static string Copyright => "Copyright (C) 2013-" + DateTime.Now.Year + " Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft)";
 
         /// <summary>
-        /// The GetProjectVersion
+        /// Gets the GitCommitIdDescribeShort
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public static string GetProjectVersion()
-        {
-            return new Version(Convert.ToInt16(ThisAssembly.Git.SemVer.Major), Convert.ToInt16(ThisAssembly.Git.SemVer.Minor), Convert.ToInt16(ThisAssembly.Git.SemVer.Patch)).ToString();
-        }
+        public static string GitCommitIdDescribeShort => ThisAssembly.Git.Commit;
 
         /// <summary>
-        /// The GetCopyright
+        /// Gets the License
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public static string GetCopyright()
-        {
-            return "Copyright (C) 2013-" + DateTime.Now.Year + " Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft)";
-        }
+        public static string License => "License Apache 2.0";
 
         /// <summary>
-        /// The GetLicense
+        /// Gets the ProjectVersion
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
-        public static string GetLicense()
-        {
-            return "License Apache 2.0";
-        }
+        public static string ProjectVersion => new Version(Convert.ToInt16(ThisAssembly.Git.SemVer.Major), Convert.ToInt16(ThisAssembly.Git.SemVer.Minor), Convert.ToInt16(ThisAssembly.Git.SemVer.Patch)).ToString();
     }
 }

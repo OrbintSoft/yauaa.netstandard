@@ -59,7 +59,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
         public void Inform(string path, string value, IParseTree ctx)
         {
-            outputStream.WriteLine(path);
+            this.outputStream.WriteLine(path);
         }
 
         /// <summary>

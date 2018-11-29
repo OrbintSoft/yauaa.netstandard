@@ -45,7 +45,7 @@ namespace OrbintSoft.Yauaa.Annotate
         /// <param name="value">The value<see cref="string[]"/></param>
         public YauaaFieldAttribute(params string[] value)
         {
-            Value = value;
+            this.Value = value;
         }
     }
 }

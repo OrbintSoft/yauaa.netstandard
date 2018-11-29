@@ -67,29 +67,29 @@ namespace OrbintSoft.Yauaa.Annotate
         /// <param name="theMapper">The theMapper<see cref="IUserAgentAnnotationMapper{T}"/></param>
         public void Initialize(IUserAgentAnnotationMapper<T> theMapper)
         {
-            mapper = theMapper;
+            this.mapper = theMapper;
 
-            if (mapper == null)
+            if (this.mapper == null)
             {
                 throw new InvalidParserConfigurationException("[Initialize] The mapper instance is null.");
             }
 
-            Type[] classOfTArray = typeof(IUserAgentAnnotationMapper<T>).GenericTypeArguments;
+            var classOfTArray = typeof(IUserAgentAnnotationMapper<T>).GenericTypeArguments;
             if (classOfTArray == null)
             {
                 throw new InvalidParserConfigurationException("Couldn't find the used generic type of the UserAgentAnnotationMapper.");
             }
 
-            Type classOfT = classOfTArray[0];
+            var classOfT = classOfTArray[0];
 
             var anonymous = false;
             // Get all methods of the correct signature that have been annotated with YauaaField
-            foreach (MethodInfo method in theMapper.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            foreach (var method in theMapper.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
                 if (method.GetCustomAttribute(typeof(YauaaFieldAttribute)) is YauaaFieldAttribute field)
                 {
-                    Type returnType = method.ReturnType;
-                    Type[] parameters = method.GetParameters().Select(p => p.ParameterType).ToArray();
+                    var returnType = method.ReturnType;
+                    var parameters = method.GetParameters().Select(p => p.ParameterType).ToArray();
                     if (returnType == typeof(void) && parameters.Length == 2 && parameters[0] == classOfT && parameters[1] == typeof(string))
                     {
                         if (!classOfT.IsVisible)
@@ -104,41 +104,40 @@ namespace OrbintSoft.Yauaa.Annotate
 
                         if (anonymous)
                         {
-                            string methodName =
-                                method.ReturnType.Name + " " +
-                                    method.Name + "(" + parameters[0].Name + " ," + parameters[1].Name + ");";
+                            var methodName = method.ReturnType.Name + " " + method.Name + "(" + parameters[0].Name + " ," + parameters[1].Name + ");";
                             Log.Warn(string.Format("Trying to make anonymous {0} {1} accessible.", theMapper.GetType().Name, methodName));
                             //method.setAccessible(true); NOT POSSIBLE IN C#
                         }
 
-                        foreach (string fieldName in field.Value)
+                        foreach (var fieldName in field.Value)
                         {
-                            if (!fieldSetters.ContainsKey(fieldName))
+                            if (!this.fieldSetters.ContainsKey(fieldName))
                             {
-                                fieldSetters[fieldName] = new List<MethodInfo>();
+                                this.fieldSetters[fieldName] = new List<MethodInfo>();
                             }
-                            fieldSetters[fieldName].Add(method);
+
+                            this.fieldSetters[fieldName].Add(method);
                         }
                     }
                     else
                     {
                         throw new InvalidParserConfigurationException(
-                            "In class [" + mapper.GetType().Name + "] the method [" + method.Name + "] " +
+                            "In class [" + this.mapper.GetType().Name + "] the method [" + method.Name + "] " +
                             "has been annotated with YauaaField but it has the wrong method signature. " +
                             "It must look like [ public void " + method.Name + "(" + classOfT.Name + " record, String value) ]");
                     }
                 }
             }
 
-            if (fieldSetters.Count == 0)
+            if (this.fieldSetters.Count == 0)
             {
                 throw new InvalidParserConfigurationException("You MUST specify at least 1 field to extract.");
             }
 
             var builder = UserAgentAnalyzer.NewBuilder();
             builder.HideMatcherLoadStats();
-            builder.WithFields(fieldSetters.Keys.ToList());
-            userAgentAnalyzer = builder.Build();
+            builder.WithFields(this.fieldSetters.Keys.ToList());
+            this.userAgentAnalyzer = builder.Build();
         }
 
         /// <summary>
@@ -152,21 +151,21 @@ namespace OrbintSoft.Yauaa.Annotate
             {
                 return null;
             }
-            if (mapper == null)
+            if (this.mapper == null)
             {
                 throw new InvalidParserConfigurationException("[Map] The mapper instance is null.");
             }
 
-            UserAgent userAgent = userAgentAnalyzer.Parse(mapper.GetUserAgentString(record));
+            var userAgent = this.userAgentAnalyzer.Parse(this.mapper.GetUserAgentString(record));
 
-            foreach (var fieldSetter in fieldSetters)
+            foreach (var fieldSetter in this.fieldSetters)
             {
-                string value = userAgent.GetValue(fieldSetter.Key);
-                foreach (MethodInfo method in fieldSetter.Value)
+                var value = userAgent.GetValue(fieldSetter.Key);
+                foreach (var method in fieldSetter.Value)
                 {
                     try
                     {
-                        method.Invoke(mapper, new object[] { record, value });
+                        method.Invoke(this.mapper, new object[] { record, value });
                     }
                     catch (Exception e)
                     {

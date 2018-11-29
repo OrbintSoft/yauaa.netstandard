@@ -47,7 +47,7 @@ namespace OrbintSoft.Yauaa.Utils
         {
             string[] lines = {
                 "For more information: https://github.com/OrbintSoft/yauaa.netstandard",
-                ThisVersion.GetCopyright() + " - " + ThisVersion.GetLicense()
+                ThisVersion.Copyright + " - " + ThisVersion.License
             };
             string version = GetVersion();
             int width = version.Length;
@@ -98,7 +98,7 @@ namespace OrbintSoft.Yauaa.Utils
 
         public static string GetVersion()
         {
-            return GetVersion(ThisVersion.GetProjectVersion(), ThisVersion.GetGitCommitIdDescribeShort(), ThisVersion.GetBuildTimestamp());
+            return GetVersion(ThisVersion.ProjectVersion, ThisVersion.GitCommitIdDescribeShort, ThisVersion.BuildTimestamp);
         }
 
         public static string GetVersion(string projectVersion, string gitCommitIdDescribeShort, string buildTimestamp)
@@ -148,9 +148,9 @@ namespace OrbintSoft.Yauaa.Utils
 
         public static void AssertSameVersion(string gitCommitIdDescribeShort, string buildTimestamp, string projectVersion)
         {
-            string libraryGitCommitIdDescribeShort = ThisVersion.GetGitCommitIdDescribeShort();
-            string libraryBuildTimestamp = ThisVersion.GetBuildTimestamp();
-            string libraryProjectVersion = ThisVersion.GetProjectVersion();
+            string libraryGitCommitIdDescribeShort = ThisVersion.GitCommitIdDescribeShort;
+            string libraryBuildTimestamp = ThisVersion.BuildTimestamp;
+            string libraryProjectVersion = ThisVersion.ProjectVersion;
             if (libraryGitCommitIdDescribeShort.Equals(gitCommitIdDescribeShort) &&
                 libraryBuildTimestamp.Equals(buildTimestamp) &&
                 libraryProjectVersion.Equals(projectVersion))

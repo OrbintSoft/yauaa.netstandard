@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Debug
 {
     using log4net;
@@ -51,7 +52,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// </summary>
         public UserAgentAnalyzerTester() : base()
         {
-            KeepTests();
+            this.KeepTests();
         }
 
         /// <summary>
@@ -61,9 +62,61 @@ namespace OrbintSoft.Yauaa.Debug
         /// <param name="pattern">The pattern<see cref="string"/></param>
         public UserAgentAnalyzerTester(string resourceString, string pattern = "*.yaml") : this()
         {
-            LoadResources(resourceString, pattern);
+            this.LoadResources(resourceString, pattern);
         }
 
+        /// <summary>
+        /// The NewBuilder
+        /// </summary>
+        /// <returns>The <see cref="UserAgentAnalyzerTesterBuilder"/></returns>
+        public static new UserAgentAnalyzerTesterBuilder NewBuilder()
+        {
+            var a = new UserAgentAnalyzerTester();
+            var b = new UserAgentAnalyzerTesterBuilder(a);
+            b.SetUAA(a);
+            return b;
+        }
+
+        /// <summary>
+        /// This function is used only for analyzing which patterns that could possibly be relevant
+        /// were actually relevant for the matcher actions.
+        /// </summary>
+        /// <returns>The <see cref="List{MatchesList.Match}"/></returns>
+        public IList<MatchesList.Match> GetMatches()
+        {
+            var allMatches = new List<MatchesList.Match>();
+            foreach (var matcher in this.AllMatchers)
+            {
+                allMatches.AddRange(matcher.GetMatches());
+            }
+
+            return allMatches;
+        }
+
+        /// <summary>
+        /// The GetUsedMatches
+        /// </summary>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
+        /// <returns>The <see cref="List{MatchesList.Match}"/></returns>
+        public IList<MatchesList.Match> GetUsedMatches(UserAgent userAgent)
+        {
+            // Reset all Matchers
+            foreach (var matcher in this.AllMatchers)
+            {
+                matcher.Reset();
+                matcher.SetVerboseTemporarily(false);
+            }
+
+            this.Flattener.Parse(userAgent);
+
+            var allMatches = new List<MatchesList.Match>();
+            foreach (var matcher in this.AllMatchers)
+            {
+                allMatches.AddRange(matcher.GetUsedMatches());
+            }
+
+            return allMatches;
+        }
 
         /// <summary>
         /// Run all the test_cases available.
@@ -71,7 +124,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// <returns>The <see cref="bool"/></returns>
         public bool RunTests()
         {
-            return RunTests(false, true);
+            return this.RunTests(false, true);
         }
 
         /// <summary>
@@ -82,7 +135,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// <returns>The <see cref="bool"/></returns>
         public bool RunTests(bool showAll, bool failOnUnexpected)
         {
-            return RunTests(showAll, failOnUnexpected, null, false, false);
+            return this.RunTests(showAll, failOnUnexpected, null, false, false);
         }
 
         /// <summary>
@@ -96,32 +149,33 @@ namespace OrbintSoft.Yauaa.Debug
         /// <returns>The <see cref="bool"/></returns>
         public bool RunTests(bool showAll, bool failOnUnexpected, ICollection<string> onlyValidateFieldNames, bool measureSpeed, bool showPassedTests)
         {
-            bool allPass = true;
-            InitializeMatchers();
-            if (TestCases == null)
+            var allPass = true;
+            this.InitializeMatchers();
+            if (this.TestCases == null)
             {
                 return allPass;
             }
+
             var agent = new DebugUserAgent();
 
             var results = new List<TestResult>();
 
-            string filenameHeader = "Test number and source";
-            int filenameHeaderLength = filenameHeader.Length;
-            int maxFilenameLength = filenameHeaderLength;
-            foreach (IDictionary<string, IDictionary<string, string>> test in TestCases)
+            var filenameHeader = "Test number and source";
+            var filenameHeaderLength = filenameHeader.Length;
+            var maxFilenameLength = filenameHeaderLength;
+            foreach (var test in this.TestCases)
             {
-                IDictionary<string, string> metaData = test["metaData"];
-                string filename = metaData["filename"];
+                var metaData = test["metaData"];
+                var filename = metaData["filename"];
                 maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
             }
 
             maxFilenameLength += 11;
 
-            StringBuilder sb = new StringBuilder(1024);
+            var sb = new StringBuilder(1024);
 
             sb.Append("| ").Append(filenameHeader);
-            for (int i = filenameHeaderLength; i < maxFilenameLength; i++)
+            for (var i = filenameHeaderLength; i < maxFilenameLength; i++)
             {
                 sb.Append(' ');
             }
@@ -131,6 +185,7 @@ namespace OrbintSoft.Yauaa.Debug
             {
                 sb.Append("  PPS| msPP|");
             }
+
             sb.Append("--> S=Syntax Error, AA=Number of ambiguities during parse, MF=Matches Found");
             if (measureSpeed)
             {
@@ -144,23 +199,24 @@ namespace OrbintSoft.Yauaa.Debug
                 Log.Info("+-------------------------------------------------------------------------------------------");
             }
 
-            int testcount = 0;
-            foreach (IDictionary<string, IDictionary<string, string>> test in TestCases)
+            var testcount = 0;
+            foreach (var test in this.TestCases)
             {
                 testcount++;
-                IDictionary<string, string> input = test.ContainsKey("input") ? test["input"] : null;
-                IDictionary<string, string> expected = test.ContainsKey("expected") ? test["expected"] : null;
+                var input = test.ContainsKey("input") ? test["input"] : null;
+                var expected = test.ContainsKey("expected") ? test["expected"] : null;
 
-                List<string> options = null;
+                IList<string> options = null;
                 if (test.ContainsKey("options"))
                 {
                     options = new List<string>(test["options"].Keys);
                 }
-                IDictionary<string, string> metaData = test["metaData"];
-                string filename = metaData["filename"];
-                string linenumber = metaData["fileline"];
 
-                bool init = false;
+                var metaData = test["metaData"];
+                var filename = metaData["filename"];
+                var linenumber = metaData["fileline"];
+
+                var init = false;
 
                 if (options == null)
                 {
@@ -168,24 +224,25 @@ namespace OrbintSoft.Yauaa.Debug
                     SetVerbose(true);            
                     agent.IsDebug = true;
 #else
-                    SetVerbose(false);
+                    this.SetVerbose(false);
                     agent.IsDebug = false;
 #endif
                 }
                 else
                 {
-                    bool newVerbose = options.Contains("verbose");
-                    SetVerbose(newVerbose);
+                    var newVerbose = options.Contains("verbose");
+                    this.SetVerbose(newVerbose);
                     agent.IsDebug = newVerbose;
                     init = options.Contains("init");
                 }
+
                 if (expected == null || expected.Count == 0)
                 {
                     init = true;
                 }
 
-                string testName = input.ContainsKey("name") ? input["name"] : null;
-                string userAgentString = input["user_agent_string"];
+                var testName = input.ContainsKey("name") ? input["name"] : null;
+                var userAgentString = input["user_agent_string"];
 
                 if (testName == null)
                 {
@@ -196,7 +253,7 @@ namespace OrbintSoft.Yauaa.Debug
 
                 sb.Append("|").Append(string.Format("{0}", testcount))
                   .Append(".(").Append(filename).Append(':').Append(linenumber).Append(')');
-                for (int i = filename.Length + linenumber.Length + 7; i < maxFilenameLength; i++)
+                for (var i = filename.Length + linenumber.Length + 7; i < maxFilenameLength; i++)
                 {
                     sb.Append(' ');
                 }
@@ -206,23 +263,26 @@ namespace OrbintSoft.Yauaa.Debug
                 long measuredSpeed = -1;
                 if (measureSpeed)
                 {
-                    DisableCaching();
+                    this.DisableCaching();
+
                     // Preheat
-                    for (int i = 0; i < 100; i++)
+                    for (var i = 0; i < 100; i++)
                     {
-                        Parse(agent);
+                        this.Parse(agent);
                     }
-                    Stopwatch stopwatch = Stopwatch.StartNew();
-                    for (int i = 0; i < 1000; i++)
+
+                    var stopwatch = Stopwatch.StartNew();
+                    for (var i = 0; i < 1000; i++)
                     {
-                        Parse(agent);
+                        this.Parse(agent);
                     }
+
                     stopwatch.Stop();
                     measuredSpeed = stopwatch.ElapsedMilliseconds;
                 }
                 else
                 {
-                    Parse(agent);
+                    this.Parse(agent);
                 }
 
                 sb.Append('|');
@@ -234,6 +294,7 @@ namespace OrbintSoft.Yauaa.Debug
                 {
                     sb.Append(' ');
                 }
+
                 if (agent.HasAmbiguity)
                 {
                     sb.Append(string.Format("|{0}", agent.AmbiguityCount));
@@ -243,7 +304,7 @@ namespace OrbintSoft.Yauaa.Debug
                     sb.Append("|  ");
                 }
 
-                sb.Append(string.Format("|{0}", agent.GetNumberOfAppliedMatches()));
+                sb.Append(string.Format("|{0}", agent.NumberOfAppliedMatches));
 
                 if (measureSpeed)
                 {
@@ -254,11 +315,11 @@ namespace OrbintSoft.Yauaa.Debug
                 sb.Append("| ").Append(testName);
 
                 // We create the log line but we keep it until we know it actually must be output to the screen
-                string testLogLine = sb.ToString();
+                var testLogLine = sb.ToString();
 
                 sb.Length = 0;
 
-                bool pass = true;
+                var pass = true;
                 results.Clear();
 
                 if (init)
@@ -266,7 +327,6 @@ namespace OrbintSoft.Yauaa.Debug
                     Log.Info(testLogLine);
                     sb.Append(agent.ToYamlTestCase());
                     Log.Info(sb.ToString());
-                    //                return allPass;
                 }
                 else
                 {
@@ -278,9 +338,9 @@ namespace OrbintSoft.Yauaa.Debug
                     }
                 }
 
-                int maxNameLength = 6; // "Field".length()+1;
-                int maxActualLength = 7; // "Actual".length()+1;
-                int maxExpectedLength = 9; // "Expected".length()+1;
+                var maxNameLength = 6; // "Field".length()+1;
+                var maxActualLength = 7; // "Actual".length()+1;
+                var maxExpectedLength = 9; // "Expected".length()+1;
 
                 if (expected != null)
                 {
@@ -296,7 +356,7 @@ namespace OrbintSoft.Yauaa.Debug
                         fieldNames.AddRange(onlyValidateFieldNames);
                     }
 
-                    foreach (string newFieldName in expected.Keys)
+                    foreach (var newFieldName in expected.Keys)
                     {
                         if (!fieldNames.Contains(newFieldName))
                         {
@@ -304,51 +364,54 @@ namespace OrbintSoft.Yauaa.Debug
                         }
                     }
 
-                    foreach (string fieldName in fieldNames)
+                    foreach (var fieldName in fieldNames)
                     {
                         // Only check the desired fieldnames
-                        if (onlyValidateFieldNames != null &&
-                            !onlyValidateFieldNames.Contains(fieldName))
+                        if (onlyValidateFieldNames != null && !onlyValidateFieldNames.Contains(fieldName))
                         {
                             continue;
                         }
 
-                        TestResult result = new TestResult();
-                        result.field = fieldName;
+                        var result = new TestResult
+                        {
+                            Field = fieldName
+                        };
+
                         bool expectedSomething;
 
                         // Actual value
-                        result.actual = agent.GetValue(result.field);
-                        result.confidence = agent.GetConfidence(result.field);
-                        if (result.actual == null)
+                        result.Actual = agent.GetValue(result.Field);
+                        result.Confidence = agent.GetConfidence(result.Field);
+                        if (result.Actual == null)
                         {
-                            result.actual = UserAgent.NULL_VALUE;
+                            result.Actual = UserAgent.NULL_VALUE;
                         }
 
                         // Expected value
-                        string expectedValue = expected.ContainsKey(fieldName) ? expected[fieldName] : null;
+                        var expectedValue = expected.ContainsKey(fieldName) ? expected[fieldName] : null;
                         if (expectedValue == null)
                         {
                             expectedSomething = false;
-                            if (result.confidence < 0)
+                            if (result.Confidence < 0)
                             {
                                 continue; // A negative value really means 'absent'
                             }
-                            result.expected = "<<absent>>";
+
+                            result.Expected = "<<absent>>";
                         }
                         else
                         {
                             expectedSomething = true;
-                            result.expected = expectedValue;
+                            result.Expected = expectedValue;
                         }
 
-                        result.pass = result.actual.Equals(result.expected);
-                        if (!result.pass)
+                        result.Pass = result.Actual.Equals(result.Expected);
+                        if (!result.Pass)
                         {
-                            result.warn = true;
+                            result.Warn = true;
                             if (expectedSomething)
                             {
-                                result.warn = false;
+                                result.Warn = false;
                                 pass = false;
                                 allPass = false;
                             }
@@ -357,9 +420,9 @@ namespace OrbintSoft.Yauaa.Debug
                                 if (failOnUnexpected)
                                 {
                                     // We ignore this special field
-                                    if (!UserAgent.SYNTAX_ERROR.Equals(result.field))
+                                    if (!UserAgent.SYNTAX_ERROR.Equals(result.Field))
                                     {
-                                        result.warn = false;
+                                        result.Warn = false;
                                         pass = false;
                                         allPass = false;
                                     }
@@ -369,9 +432,9 @@ namespace OrbintSoft.Yauaa.Debug
 
                         results.Add(result);
 
-                        maxNameLength = Math.Max(maxNameLength, result.field.Length);
-                        maxActualLength = Math.Max(maxActualLength, result.actual.Length);
-                        maxExpectedLength = Math.Max(maxExpectedLength, result.expected.Length);
+                        maxNameLength = Math.Max(maxNameLength, result.Field.Length);
+                        maxActualLength = Math.Max(maxActualLength, result.Actual.Length);
+                        maxExpectedLength = Math.Max(maxExpectedLength, result.Expected.Length);
                     }
 
                     if (!agent.AnalyzeMatchersResult())
@@ -387,6 +450,7 @@ namespace OrbintSoft.Yauaa.Debug
                     {
                         Log.Info(testLogLine);
                     }
+
                     continue;
                 }
 
@@ -400,6 +464,7 @@ namespace OrbintSoft.Yauaa.Debug
                 {
                     Log.Info(string.Format("| Parsing problem: Ambiguity {0} times. ", agent.AmbiguityCount));
                 }
+
                 if (agent.HasSyntaxError)
                 {
                     Log.Info("| Parsing problem: Syntax Error");
@@ -414,13 +479,14 @@ namespace OrbintSoft.Yauaa.Debug
                     sb.Append("#    options:\n");
                     sb.Append("#    - 'verbose'\n");
                     sb.Append("    require:\n");
-                    foreach (string path in GetAllPaths(userAgentString))
+                    foreach (var path in GetAllPaths(userAgentString))
                     {
                         if (path.Contains("=\""))
                         {
                             sb.Append("#    - '").Append(path).Append("'\n");
                         }
                     }
+
                     sb.Append("    extract:\n");
                     sb.Append("#    - 'DeviceClass                         :      1 :' \n");
                     sb.Append("#    - 'DeviceBrand                         :      1 :' \n");
@@ -441,105 +507,117 @@ namespace OrbintSoft.Yauaa.Debug
 
                 sb.Length = 0;
                 sb.Append("+--------+-");
-                for (int i = 0; i < maxNameLength; i++)
+                for (var i = 0; i < maxNameLength; i++)
                 {
                     sb.Append('-');
                 }
+
                 sb.Append("-+-");
-                for (int i = 0; i < maxActualLength; i++)
+                for (var i = 0; i < maxActualLength; i++)
                 {
                     sb.Append('-');
                 }
+
                 sb.Append("-+------------+-");
-                for (int i = 0; i < maxExpectedLength; i++)
+                for (var i = 0; i < maxExpectedLength; i++)
                 {
                     sb.Append('-');
                 }
+
                 sb.Append("-+");
 
-                string separator = sb.ToString();
+                var separator = sb.ToString();
                 Log.Info(separator);
 
                 sb.Length = 0;
                 sb.Append("| Result | Field ");
-                for (int i = 6; i < maxNameLength; i++)
+                for (var i = 6; i < maxNameLength; i++)
                 {
                     sb.Append(' ');
                 }
+
                 sb.Append(" | Actual ");
-                for (int i = 7; i < maxActualLength; i++)
+
+                for (var i = 7; i < maxActualLength; i++)
                 {
                     sb.Append(' ');
                 }
+
                 sb.Append(" | Confidence | Expected ");
-                for (int i = 9; i < maxExpectedLength; i++)
+                for (var i = 9; i < maxExpectedLength; i++)
                 {
                     sb.Append(' ');
                 }
+
                 sb.Append(" |");
 
                 Log.Info(sb.ToString());
 
                 Log.Info(separator);
 
-                Dictionary<string, string> failComments = new Dictionary<string, string>();
+                var failComments = new Dictionary<string, string>();
 
-                List<string> failedFieldNames = new List<string>();
-                foreach (TestResult result in results)
+                var failedFieldNames = new List<string>();
+                foreach (var result in results)
                 {
                     sb.Length = 0;
-                    if (result.pass)
+                    if (result.Pass)
                     {
                         sb.Append("|        | ");
                     }
                     else
                     {
-                        if (result.warn)
+                        if (result.Warn)
                         {
                             sb.Append("| ~warn~ | ");
-                            failComments[result.field] = "~~ Unexpected result ~~";
+                            failComments[result.Field] = "~~ Unexpected result ~~";
                         }
                         else
                         {
                             sb.Append("| -FAIL- | ");
-                            failComments[result.field] = "FAILED; Should be '" + result.expected + "'";
-                            failedFieldNames.Add(result.field);
+                            failComments[result.Field] = "FAILED; Should be '" + result.Expected + "'";
+                            failedFieldNames.Add(result.Field);
                         }
                     }
-                    sb.Append(result.field);
-                    for (int i = result.field.Length; i < maxNameLength; i++)
+
+                    sb.Append(result.Field);
+                    for (var i = result.Field.Length; i < maxNameLength; i++)
                     {
                         sb.Append(' ');
                     }
-                    sb.Append(" | ");
-                    sb.Append(result.actual);
 
-                    for (int i = result.actual.Length; i < maxActualLength; i++)
+                    sb.Append(" | ");
+                    sb.Append(result.Actual);
+
+                    for (var i = result.Actual.Length; i < maxActualLength; i++)
                     {
                         sb.Append(' ');
                     }
+
                     sb.Append(" | ");
-                    sb.Append(string.Format("{0}", result.confidence));
+                    sb.Append(string.Format("{0}", result.Confidence));
                     sb.Append(" | ");
 
-                    if (result.pass)
+                    if (result.Pass)
                     {
-                        for (int i = 0; i < maxExpectedLength; i++)
+                        for (var i = 0; i < maxExpectedLength; i++)
                         {
                             sb.Append(' ');
                         }
+
                         sb.Append(" |");
                         Log.Info(sb.ToString());
                     }
                     else
                     {
-                        sb.Append(result.expected);
-                        for (int i = result.expected.Length; i < maxExpectedLength; i++)
+                        sb.Append(result.Expected);
+                        for (var i = result.Expected.Length; i < maxExpectedLength; i++)
                         {
                             sb.Append(' ');
                         }
+
                         sb.Append(" |");
-                        if (result.warn)
+                        if (result.Warn)
                         {
                             Log.Warn(sb.ToString());
                         }
@@ -551,17 +629,17 @@ namespace OrbintSoft.Yauaa.Debug
                 }
 
                 Log.Info(separator);
-                Log.Info("");
+                Log.Info(string.Empty);
 
                 Log.Info(agent.ToMatchTrace(failedFieldNames));
 
-                Log.Info(string.Format("\n\nconfig:\n {0}" , agent.ToYamlTestCase(!init, failComments)));
+                Log.Info(string.Format("\n\nconfig:\n {0}", agent.ToYamlTestCase(!init, failComments)));
                 Log.Info(string.Format("Location of failed test.({0}:{1})", filename, linenumber));
                 if (!pass && !showAll)
                 {
-                    //                LOG.info("+===========================================================================================");
                     return false;
                 }
+
                 if (init)
                 {
                     return allPass;
@@ -576,58 +654,8 @@ namespace OrbintSoft.Yauaa.Debug
             {
                 Log.Info(string.Format("All {0} tests passed", testcount));
             }
+
             return allPass;
-        }
-
-        /// <summary>
-        /// This function is used only for analyzing which patterns that could possibly be relevant
-        /// were actually relevant for the matcher actions.
-        /// </summary>
-        /// <returns>The <see cref="List{MatchesList.Match}"/></returns>
-        public List<MatchesList.Match> GetMatches()
-        {
-            List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
-            foreach (Matcher matcher in AllMatchers)
-            {
-                allMatches.AddRange(matcher.GetMatches());
-            }
-            return allMatches;
-        }
-
-        /// <summary>
-        /// The GetUsedMatches
-        /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <returns>The <see cref="List{MatchesList.Match}"/></returns>
-        public List<MatchesList.Match> GetUsedMatches(UserAgent userAgent)
-        {
-            // Reset all Matchers
-            foreach (Matcher matcher in AllMatchers)
-            {
-                matcher.Reset();
-                matcher.SetVerboseTemporarily(false);
-            }
-
-            Flattener.Parse(userAgent);
-
-            List<MatchesList.Match> allMatches = new List<MatchesList.Match>();
-            foreach (Matcher matcher in AllMatchers)
-            {
-                allMatches.AddRange(matcher.GetUsedMatches());
-            }
-            return allMatches;
-        }
-
-        /// <summary>
-        /// The NewBuilder
-        /// </summary>
-        /// <returns>The <see cref="UserAgentAnalyzerTesterBuilder"/></returns>
-        public static new UserAgentAnalyzerTesterBuilder NewBuilder()
-        {
-            var a = new UserAgentAnalyzerTester();
-            var b = new UserAgentAnalyzerTesterBuilder(a);
-            b.SetUAA(a);
-            return b;
         }
 
         /// <summary>
@@ -659,34 +687,34 @@ namespace OrbintSoft.Yauaa.Debug
         internal class TestResult
         {
             /// <summary>
-            /// Defines the field
+            /// Gets or sets the Actual
             /// </summary>
-            internal string field;
+            internal string Actual { get; set; }
 
             /// <summary>
-            /// Defines the expected
+            /// Gets or sets the Confidence
             /// </summary>
-            internal string expected;
+            internal long Confidence { get; set; }
 
             /// <summary>
-            /// Defines the actual
+            /// Gets or sets the Expected
             /// </summary>
-            internal string actual;
+            internal string Expected { get; set; }
 
             /// <summary>
-            /// Defines the pass
+            /// Gets or sets the Field
             /// </summary>
-            internal bool pass;
+            internal string Field { get; set; }
 
             /// <summary>
-            /// Defines the warn
+            /// Gets or sets a value indicating whether Pass
             /// </summary>
-            internal bool warn;
+            internal bool Pass { get; set; }
 
             /// <summary>
-            /// Defines the confidence
+            /// Gets or sets a value indicating whether Warn
             /// </summary>
-            internal long confidence;
+            internal bool Warn { get; set; }
         }
     }
 }

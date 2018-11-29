@@ -64,18 +64,20 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="int"/></returns>
         public int FindNextSplitStart(char[] chars, int offset)
         {
-            for (int charNr = offset; charNr < chars.Length; charNr++)
+            for (var charNr = offset; charNr < chars.Length; charNr++)
             {
-                char theChar = chars[charNr];
-                if (IsEndOfStringSeparator(theChar))
+                var theChar = chars[charNr];
+                if (this.IsEndOfStringSeparator(theChar))
                 {
                     return -1;
                 }
-                if (!IsSeparator(theChar))
+
+                if (!this.IsSeparator(theChar))
                 {
                     return charNr;
                 }
             }
+
             return -1;
         }
 
@@ -94,14 +96,15 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="int"/></returns>
         public int FindEndOfString(char[] chars, int offset)
         {
-            for (int charNr = offset; charNr < chars.Length; charNr++)
+            for (var charNr = offset; charNr < chars.Length; charNr++)
             {
-                char theChar = chars[charNr];
-                if (IsEndOfStringSeparator(theChar))
+                var theChar = chars[charNr];
+                if (this.IsEndOfStringSeparator(theChar))
                 {
                     return charNr;
                 }
             }
+
             return chars.Length;
         }
 
@@ -124,18 +127,19 @@ namespace OrbintSoft.Yauaa.Utils
             {
                 return -1;
             }
+
             // We expect the chars to start with a split.
-            int charNr = 0;
-            bool inSplit = false;
-            int currentSplit = 0;
-            foreach (char theChar in chars)
+            var charNr = 0;
+            var inSplit = false;
+            var currentSplit = 0;
+            foreach (var theChar in chars)
             {
-                if (IsEndOfStringSeparator(theChar))
+                if (this.IsEndOfStringSeparator(theChar))
                 {
                     return -1;
                 }
 
-                if (IsSeparator(theChar))
+                if (this.IsSeparator(theChar))
                 {
                     if (inSplit)
                     {
@@ -154,8 +158,10 @@ namespace OrbintSoft.Yauaa.Utils
                         }
                     }
                 }
+
                 charNr++;
             }
+
             return -1;
         }
 
@@ -167,15 +173,17 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="int"/></returns>
         public int FindSplitEnd(char[] chars, int startOffset)
         {
-            int i = startOffset;
+            var i = startOffset;
             while (i < chars.Length)
             {
-                if (IsSeparator(chars[i]))
+                if (this.IsSeparator(chars[i]))
                 {
                     return i;
                 }
+
                 i++;
             }
+
             return chars.Length; // == The end of the string
         }
 
@@ -187,13 +195,14 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="string"/></returns>
         public virtual string GetSingleSplit(string value, int split)
         {
-            char[] characters = value.ToCharArray();
-            int start = FindSplitStart(characters, split);
+            var characters = value.ToCharArray();
+            var start = this.FindSplitStart(characters, split);
             if (start == -1)
             {
                 return null;
             }
-            int end = FindSplitEnd(characters, start);
+
+            var end = this.FindSplitEnd(characters, start);
             return value.Substring(start, end - start);
         }
 
@@ -205,13 +214,14 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="string"/></returns>
         public virtual string GetFirstSplits(string value, int split)
         {
-            char[] characters = value.ToCharArray();
-            int start = FindSplitStart(characters, split);
+            var characters = value.ToCharArray();
+            var start = this.FindSplitStart(characters, split);
             if (start == -1)
             {
                 return null;
             }
-            int end = FindSplitEnd(characters, start);
+
+            var end = this.FindSplitEnd(characters, start);
             return value.Substring(0, end);
         }
 
@@ -228,8 +238,9 @@ namespace OrbintSoft.Yauaa.Utils
             {
                 return null;
             }
-            char[] characters = value.ToCharArray();
-            int firstCharOfFirstSplit = FindSplitStart(characters, firstSplit);
+
+            var characters = value.ToCharArray();
+            var firstCharOfFirstSplit = this.FindSplitStart(characters, firstSplit);
             if (firstCharOfFirstSplit == -1)
             {
                 return null;
@@ -237,19 +248,20 @@ namespace OrbintSoft.Yauaa.Utils
 
             if (lastSplit == -1)
             {
-                return value.Substring(firstCharOfFirstSplit, FindEndOfString(characters, firstCharOfFirstSplit) - firstCharOfFirstSplit);
+                return value.Substring(firstCharOfFirstSplit, this.FindEndOfString(characters, firstCharOfFirstSplit) - firstCharOfFirstSplit);
             }
-            int firstCharOfLastSplit = firstCharOfFirstSplit;
+
+            var firstCharOfLastSplit = firstCharOfFirstSplit;
             if (lastSplit != firstSplit)
             {
-                firstCharOfLastSplit = FindSplitStart(characters, lastSplit);
+                firstCharOfLastSplit = this.FindSplitStart(characters, lastSplit);
                 if (firstCharOfLastSplit == -1)
                 {
                     return null;
                 }
             }
 
-            int lastCharOfLastSplit = FindSplitEnd(characters, firstCharOfLastSplit);
+            var lastCharOfLastSplit = this.FindSplitEnd(characters, firstCharOfLastSplit);
 
             return value.Substring(firstCharOfFirstSplit, lastCharOfLastSplit - firstCharOfFirstSplit);
         }
@@ -262,43 +274,45 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="string"/></returns>
         public string GetSplitRange(string value, Analyze.WordRangeVisitor.Range range)
         {
-            return GetSplitRange(value, range.First, range.Last);
+            return this.GetSplitRange(value, range.First, range.Last);
         }
 
         /// <summary>
         /// The GetSplitRange
         /// </summary>
         /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="splitList">The splitList<see cref="List{Tuple{int, int}}"/></param>
+        /// <param name="splitList">The splitList<see cref="IList{Tuple{int, int}}"/></param>
         /// <param name="range">The range<see cref="Analyze.WordRangeVisitor.Range"/></param>
         /// <returns>The <see cref="string"/></returns>
-        public string GetSplitRange(string value, List<Tuple<int, int>> splitList, Analyze.WordRangeVisitor.Range range)
+        public string GetSplitRange(string value, IList<Tuple<int, int>> splitList, Analyze.WordRangeVisitor.Range range)
         {
-            return GetSplitRange(value, splitList, range.First, range.Last);
+            return this.GetSplitRange(value, splitList, range.First, range.Last);
         }
 
         /// <summary>
         /// The GetSplitRange
         /// </summary>
         /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="splitList">The splitList<see cref="List{Tuple{int, int}}"/></param>
+        /// <param name="splitList">The splitList<see cref="IList{Tuple{int, int}}"/></param>
         /// <param name="first">The first<see cref="int"/></param>
         /// <param name="last">The last<see cref="int"/></param>
         /// <returns>The <see cref="string"/></returns>
-        public string GetSplitRange(string value, List<Tuple<int, int>> splitList, int first, int last)
+        public string GetSplitRange(string value, IList<Tuple<int, int>> splitList, int first, int last)
         {
-            int lastIndex = last - 1;
-            int firstIndex = first - 1;
-            int splits = splitList.Count;
+            var lastIndex = last - 1;
+            var firstIndex = first - 1;
+            var splits = splitList.Count;
 
             if (last == -1)
             {
                 lastIndex = splits - 1;
             }
+
             if (firstIndex < 0 || lastIndex < 0)
             {
                 return null;
             }
+
             if (firstIndex >= splits || lastIndex >= splits)
             {
                 return null;
@@ -311,35 +325,37 @@ namespace OrbintSoft.Yauaa.Utils
         /// The CreateSplitList
         /// </summary>
         /// <param name="characters">The characters<see cref="string"/></param>
-        /// <returns>The <see cref="List{Tuple{int, int}}"/></returns>
-        public List<Tuple<int, int>> CreateSplitList(string characters)
+        /// <returns>The <see cref="IList{Tuple{int, int}}"/></returns>
+        public IList<Tuple<int, int>> CreateSplitList(string characters)
         {
-            return CreateSplitList(characters.ToCharArray());
+            return this.CreateSplitList(characters.ToCharArray());
         }
 
         /// <summary>
         /// The CreateSplitList
         /// </summary>
         /// <param name="characters">The characters<see cref="char[]"/></param>
-        /// <returns>The <see cref="List{Tuple{int, int}}"/></returns>
-        public List<Tuple<int, int>> CreateSplitList(char[] characters)
+        /// <returns>The <see cref="IList{Tuple{int, int}}"/></returns>
+        public IList<Tuple<int, int>> CreateSplitList(char[] characters)
         {
-            List<Tuple<int, int>> result = new List<Tuple<int, int>>();
+            var result = new List<Tuple<int, int>>();
 
-            int offset = FindSplitStart(characters, 1);
+            var offset = this.FindSplitStart(characters, 1);
             if (offset == -1)
             {
-                return result; // Nothing at all. So we are already done
+                // Nothing at all. So we are already done
+                return result; 
             }
+
             while (offset != -1)
             {
-
-                int start = offset;
-                int end = FindSplitEnd(characters, start);
+                var start = offset;
+                var end = this.FindSplitEnd(characters, start);
 
                 result.Add(new Tuple<int, int>(start, end));
-                offset = FindNextSplitStart(characters, end);
+                offset = this.FindNextSplitStart(characters, end);
             }
+
             return result;
         }
     }

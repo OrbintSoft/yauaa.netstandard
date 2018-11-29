@@ -71,7 +71,8 @@ namespace OrbintSoft.Yauaa.Parse
             {
                 return useragent;
             }
-            string result = useragent;
+
+            var result = useragent;
 
             result = MultipleSpaces.Replace(result, " ");
 
@@ -115,7 +116,7 @@ namespace OrbintSoft.Yauaa.Parse
             }
 
             // Kick some garbage that sometimes occurs.
-            result = ReplaceString(result, ",gzip(gfe)", "");
+            result = ReplaceString(result, ",gzip(gfe)", string.Empty);
 
             // The Weibo useragent This one is a single useragent that hold significant traffic
             result = ReplaceString(result, "__", " ");
@@ -131,6 +132,7 @@ namespace OrbintSoft.Yauaa.Parse
                     // Ignore and continue.
                 }
             }
+
             return result; // 99.99% of the cases nothing will have changed.
         }
 
@@ -143,29 +145,32 @@ namespace OrbintSoft.Yauaa.Parse
         /// <returns>The <see cref="string"/></returns>
         public static string ReplaceString(string input, string searchFor, string replaceWith)
         {
-            //startIdx and idxSearchFor delimit various chunks of input; these
-            //chunks always end where searchFor begins
-            int startIdx = 0;
-            int idxSearchFor = input.IndexOf(searchFor, startIdx);
+            // startIdx and idxSearchFor delimit various chunks of input; these
+            // chunks always end where searchFor begins
+            var startIdx = 0;
+            var idxSearchFor = input.IndexOf(searchFor, startIdx);
             if (idxSearchFor < 0)
             {
                 return input;
             }
-            StringBuilder result = new StringBuilder(input.Length + 32);
+
+            var result = new StringBuilder(input.Length + 32);
 
             while (idxSearchFor >= 0)
             {
-                //grab a part of input which does not include searchFor
+                // grab a part of input which does not include searchFor
                 result.Append(input.Substring(startIdx, idxSearchFor - startIdx));
-                //add replaceWith to take place of searchFor
+
+                // add replaceWith to take place of searchFor
                 result.Append(replaceWith);
 
-                //reset the startIdx to just after the current match, to see
-                //if there are any further matches
+                // reset the startIdx to just after the current match, to see
+                // if there are any further matches
                 startIdx = idxSearchFor + searchFor.Length;
                 idxSearchFor = input.IndexOf(searchFor, startIdx);
             }
-            //the final chunk will go to the end of input
+
+            // the final chunk will go to the end of input
             result.Append(input.Substring(startIdx));
             return result.ToString();
         }

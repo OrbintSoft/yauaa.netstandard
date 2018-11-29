@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Debug
 {
     using log4net;
@@ -51,78 +52,9 @@ namespace OrbintSoft.Yauaa.Debug
         private readonly IList<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
 
         /// <summary>
-        /// The Set
+        /// Gets the NumberOfAppliedMatches
         /// </summary>
-        /// <param name="newValuesUserAgent">The newValuesUserAgent<see cref="UserAgent"/></param>
-        /// <param name="appliedMatcher">The appliedMatcher<see cref="Matcher"/></param>
-        public override void Set(UserAgent newValuesUserAgent, Matcher appliedMatcher)
-        {
-            appliedMatcherResults.Add(new Tuple<UserAgent, Matcher>(new UserAgent(newValuesUserAgent), appliedMatcher));
-            base.Set(newValuesUserAgent, appliedMatcher);
-        }
-
-        /// <summary>
-        /// The Reset
-        /// </summary>
-        public override void Reset()
-        {
-            appliedMatcherResults.Clear();
-            base.Reset();
-        }
-
-        /// <summary>
-        /// The GetNumberOfAppliedMatches
-        /// </summary>
-        /// <returns>The <see cref="int"/></returns>
-        public int GetNumberOfAppliedMatches()
-        {
-            return appliedMatcherResults.Count;
-        }
-
-        /// <summary>
-        /// The ToMatchTrace
-        /// </summary>
-        /// <param name="highlightNames">The highlightNames<see cref="List{string}"/></param>
-        /// <returns>The <see cref="string"/></returns>
-        public string ToMatchTrace(List<string> highlightNames)
-        {
-            StringBuilder sb = new StringBuilder(4096);
-            sb.Append('\n');
-            sb.Append("+=========================================+\n");
-            sb.Append("| Matcher results that have been combined |\n");
-            sb.Append("+=========================================+\n");
-            sb.Append('\n');
-
-            foreach (Tuple<UserAgent, Matcher> pair in appliedMatcherResults)
-            {
-                sb.Append('\n');
-                sb.Append("+================\n");
-                sb.Append("+ Applied matcher\n");
-                sb.Append("+----------------\n");
-                UserAgent result = pair.Item1;
-                Matcher matcher = pair.Item2;
-                sb.Append(matcher.ToString());
-                sb.Append("+----------------\n");
-                sb.Append("+ Results\n");
-                sb.Append("+----------------\n");
-                foreach (string fieldName in result.GetAvailableFieldNamesSorted())
-                {
-                    AgentField field = result.Get(fieldName);
-                    if (field.GetConfidence() >= 0)
-                    {
-                        String marker = "";
-                        if (highlightNames.Contains(fieldName))
-                        {
-                            marker = " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
-                        }
-                        sb.Append("| ").Append(fieldName).Append('(').Append(field.GetConfidence()).Append(") = ")
-                            .Append(field.GetValue()).Append(marker).Append('\n');
-                    }
-                }
-                sb.Append("+================\n");
-            }
-            return sb.ToString();
-        }
+        public int NumberOfAppliedMatches => this.appliedMatcherResults.Count;
 
         /// <summary>
         /// The AnalyzeMatchersResult
@@ -130,18 +62,18 @@ namespace OrbintSoft.Yauaa.Debug
         /// <returns>The <see cref="bool"/></returns>
         public bool AnalyzeMatchersResult()
         {
-            bool passed = true;
-            foreach (string fieldName in GetAvailableFieldNamesSorted())
+            var passed = true;
+            foreach (var fieldName in this.GetAvailableFieldNamesSorted())
             {
-                Dictionary<long?, string> receivedValues = new Dictionary<long?, string>(32);
-                foreach (Tuple<UserAgent, Matcher> pair in appliedMatcherResults)
+                var receivedValues = new Dictionary<long?, string>(32);
+                foreach (var pair in this.appliedMatcherResults)
                 {
-                    UserAgent result = pair.Item1;
-                    AgentField partialField = result.Get(fieldName);
+                    var result = pair.Item1;
+                    var partialField = result.Get(fieldName);
                     if (partialField != null && partialField.GetConfidence() >= 0)
                     {
                         var conf = partialField.GetConfidence();
-                        string previousValue = receivedValues.ContainsKey(conf) ? receivedValues[conf] : null;
+                        var previousValue = receivedValues.ContainsKey(conf) ? receivedValues[conf] : null;
                         if (previousValue != null)
                         {
                             if (!previousValue.Equals(partialField.GetValue()))
@@ -153,9 +85,15 @@ namespace OrbintSoft.Yauaa.Debug
                                     Log.Error("*** YOU MUST CHANGE THE CONFIDENCE LEVELS OF YOUR RULES ***");
                                     Log.Error("***********************************************************");
                                 }
+
                                 passed = false;
-                                Log.Error(string.Format("Found different value for \"{0}\" with SAME confidence {1}: \"{2}\" and \"{3}\"",
-                                    fieldName, partialField.GetConfidence(), previousValue, partialField.GetValue()));
+                                Log.Error(
+                                    string.Format(
+                                        "Found different value for \"{0}\" with SAME confidence {1}: \"{2}\" and \"{3}\"",
+                                        fieldName,
+                                        partialField.GetConfidence(),
+                                        previousValue,
+                                        partialField.GetValue()));
                             }
                         }
                         else
@@ -165,7 +103,76 @@ namespace OrbintSoft.Yauaa.Debug
                     }
                 }
             }
+
             return passed;
+        }
+
+        /// <summary>
+        /// The Reset
+        /// </summary>
+        public override void Reset()
+        {
+            this.appliedMatcherResults.Clear();
+            base.Reset();
+        }
+
+        /// <summary>
+        /// The Set
+        /// </summary>
+        /// <param name="newValuesUserAgent">The newValuesUserAgent<see cref="UserAgent"/></param>
+        /// <param name="appliedMatcher">The appliedMatcher<see cref="Matcher"/></param>
+        public override void Set(UserAgent newValuesUserAgent, Matcher appliedMatcher)
+        {
+            this.appliedMatcherResults.Add(new Tuple<UserAgent, Matcher>(new UserAgent(newValuesUserAgent), appliedMatcher));
+            base.Set(newValuesUserAgent, appliedMatcher);
+        }
+
+        /// <summary>
+        /// The ToMatchTrace
+        /// </summary>
+        /// <param name="highlightNames">The highlightNames<see cref="List{string}"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public string ToMatchTrace(IList<string> highlightNames)
+        {
+            var sb = new StringBuilder(4096);
+            sb.Append('\n');
+            sb.Append("+=========================================+\n");
+            sb.Append("| Matcher results that have been combined |\n");
+            sb.Append("+=========================================+\n");
+            sb.Append('\n');
+
+            foreach (var pair in this.appliedMatcherResults)
+            {
+                sb.Append('\n');
+                sb.Append("+================\n");
+                sb.Append("+ Applied matcher\n");
+                sb.Append("+----------------\n");
+                var result = pair.Item1;
+                var matcher = pair.Item2;
+                sb.Append(matcher.ToString());
+                sb.Append("+----------------\n");
+                sb.Append("+ Results\n");
+                sb.Append("+----------------\n");
+                foreach (var fieldName in result.GetAvailableFieldNamesSorted())
+                {
+                    var field = result.Get(fieldName);
+                    if (field.GetConfidence() >= 0)
+                    {
+                        var marker = string.Empty;
+                        if (highlightNames.Contains(fieldName))
+                        {
+                            marker = " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
+                        }
+
+                        sb.Append("| ").Append(fieldName).Append('(').Append(field.GetConfidence()).Append(") = ")
+                            .Append(field.GetValue()).Append(marker).Append('\n');
+                    }
+                }
+
+                sb.Append("+================\n");
+            }
+
+            return sb.ToString();
         }
     }
 }

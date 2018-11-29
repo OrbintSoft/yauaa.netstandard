@@ -30,7 +30,7 @@ namespace OrbintSoft.Yauaa.Annotate
     /// <summary>
     /// Defines the <see cref="IUserAgentAnnotationMapper{T}" />
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The Type of mapper</typeparam>
     public interface IUserAgentAnnotationMapper<T>
     {
         /// <summary>

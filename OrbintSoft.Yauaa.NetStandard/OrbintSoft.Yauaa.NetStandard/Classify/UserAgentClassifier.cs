@@ -25,10 +25,11 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
-using OrbintSoft.Yauaa.Analyzer;
 
 namespace OrbintSoft.Yauaa.Classify
 {
+    using OrbintSoft.Yauaa.Analyzer;
+
     /// <summary>
     /// Defines the <see cref="UserAgentClassifier" />
     /// </summary>
@@ -72,11 +73,45 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsNormalConsumerDevice
+        /// The IsDeliberateMisuse
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>Is this a 'normal' consumer device that can simply be bought/downloaded and used as intended.</returns>
-        public static bool IsNormalConsumerDevice(UserAgent userAgent)
+        /// <returns>Do we see this as deliberate misuse?</returns>
+        public static bool IsDeliberateMisuse(UserAgent userAgent)
+        {
+            switch (GetDeviceClass(userAgent))
+            {
+                case DeviceClass.Anonymized:
+                case DeviceClass.Spy:
+                case DeviceClass.Hacker:
+                    return true;
+
+                case DeviceClass.Desktop:
+                case DeviceClass.Mobile:
+                case DeviceClass.Tablet:
+                case DeviceClass.Phone:
+                case DeviceClass.Watch:
+                case DeviceClass.VirtualReality:
+                case DeviceClass.eReader:
+                case DeviceClass.SetTopBox:
+                case DeviceClass.TV:
+                case DeviceClass.GameConsole:
+                case DeviceClass.HandheldGameConsole:
+                case DeviceClass.Robot:
+                case DeviceClass.RobotMobile:
+                case DeviceClass.Unknown:
+                case DeviceClass.Unclassified:
+                default:
+                    return false;
+            }
+        }
+
+        /// <summary>
+        /// The IsHuman
+        /// </summary>
+        /// <param name="userAgent">The instance that needs to be classified.</param>
+        /// <returns>If this is probably a human using the device.</returns>
+        public static bool IsHuman(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))
             {
@@ -91,9 +126,9 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.TV:
                 case DeviceClass.GameConsole:
                 case DeviceClass.HandheldGameConsole:
+                case DeviceClass.Anonymized:
                     return true;
 
-                case DeviceClass.Anonymized:
                 case DeviceClass.Robot:
                 case DeviceClass.RobotMobile:
                 case DeviceClass.Spy:
@@ -140,11 +175,11 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsHuman
+        /// The IsNormalConsumerDevice
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>If this is probably a human using the device.</returns>
-        public static bool IsHuman(UserAgent userAgent)
+        /// <returns>Is this a 'normal' consumer device that can simply be bought/downloaded and used as intended.</returns>
+        public static bool IsNormalConsumerDevice(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))
             {
@@ -159,47 +194,13 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.TV:
                 case DeviceClass.GameConsole:
                 case DeviceClass.HandheldGameConsole:
-                case DeviceClass.Anonymized:
                     return true;
 
+                case DeviceClass.Anonymized:
                 case DeviceClass.Robot:
                 case DeviceClass.RobotMobile:
                 case DeviceClass.Spy:
                 case DeviceClass.Hacker:
-                case DeviceClass.Unknown:
-                case DeviceClass.Unclassified:
-                default:
-                    return false;
-            }
-        }
-
-        /// <summary>
-        /// The IsDeliberateMisuse
-        /// </summary>
-        /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>Do we see this as deliberate misuse?</returns>
-        public static bool IsDeliberateMisuse(UserAgent userAgent)
-        {
-            switch (GetDeviceClass(userAgent))
-            {
-                case DeviceClass.Anonymized:
-                case DeviceClass.Spy:
-                case DeviceClass.Hacker:
-                    return true;
-
-                case DeviceClass.Desktop:
-                case DeviceClass.Mobile:
-                case DeviceClass.Tablet:
-                case DeviceClass.Phone:
-                case DeviceClass.Watch:
-                case DeviceClass.VirtualReality:
-                case DeviceClass.eReader:
-                case DeviceClass.SetTopBox:
-                case DeviceClass.TV:
-                case DeviceClass.GameConsole:
-                case DeviceClass.HandheldGameConsole:
-                case DeviceClass.Robot:
-                case DeviceClass.RobotMobile:
                 case DeviceClass.Unknown:
                 case DeviceClass.Unclassified:
                 default:

@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Utils
 {
     using System.Globalization;
@@ -44,24 +45,6 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsTokenSeparator
-        /// </summary>
-        /// <param name="letter">The letter<see cref="char"/></param>
-        /// <returns>The <see cref="bool"/></returns>
-        private static bool IsTokenSeparator(char letter)
-        {
-            switch (letter)
-            {
-                case ' ':
-                case '-':
-                case '_':
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        /// <summary>
         /// The Brand
         /// </summary>
         /// <param name="brand">The brand<see cref="string"/></param>
@@ -73,16 +56,16 @@ namespace OrbintSoft.Yauaa.Utils
                 return brand.ToUpper(CultureInfo.InvariantCulture);
             }
 
-            StringBuilder sb = new StringBuilder(brand.Length);
-            char[] nameChars = brand.ToCharArray();
+            var sb = new StringBuilder(brand.Length);
+            var nameChars = brand.ToCharArray();
 
-            StringBuilder wordBuilder = new StringBuilder(brand.Length);
+            var wordBuilder = new StringBuilder(brand.Length);
 
-            int lowerChars = 0;
-            bool wordHasNumbers = false;
-            for (int i = 0; i < nameChars.Length; i++)
+            var lowerChars = 0;
+            var wordHasNumbers = false;
+            for (var i = 0; i < nameChars.Length; i++)
             {
-                char thisChar = nameChars[i];
+                var thisChar = nameChars[i];
                 if (char.IsDigit(thisChar))
                 {
                     wordHasNumbers = true;
@@ -98,6 +81,7 @@ namespace OrbintSoft.Yauaa.Utils
                     {
                         sb.Append(wordBuilder);
                     }
+
                     wordBuilder.Length = 0;
                     lowerChars = 0; // Next word
                     wordHasNumbers = false;
@@ -111,7 +95,7 @@ namespace OrbintSoft.Yauaa.Utils
                     }
                     else
                     {
-                        bool isUpperCase = char.IsUpper(thisChar);
+                        var isUpperCase = char.IsUpper(thisChar);
 
                         if (isUpperCase)
                         {
@@ -123,6 +107,7 @@ namespace OrbintSoft.Yauaa.Utils
                             {
                                 wordBuilder.Append(char.ToLower(thisChar));
                             }
+
                             lowerChars = 0;
                         }
                         else
@@ -131,6 +116,7 @@ namespace OrbintSoft.Yauaa.Utils
                             lowerChars++;
                         }
                     }
+
                     // This was the last letter?
                     if (i == (nameChars.Length - 1))
                     {
@@ -142,12 +128,14 @@ namespace OrbintSoft.Yauaa.Utils
                         {
                             sb.Append(wordBuilder);
                         }
+
                         wordBuilder.Length = 0;
                         lowerChars = 0; // Next word
                         wordHasNumbers = false;
                     }
                 }
             }
+
             return sb.ToString();
         }
 
@@ -159,19 +147,20 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="string"/></returns>
         public static string CleanupDeviceBrandName(string deviceBrand, string deviceName)
         {
-            string lowerDeviceBrand = deviceBrand.ToLower(CultureInfo.InvariantCulture);
+            var lowerDeviceBrand = deviceBrand.ToLower(CultureInfo.InvariantCulture);
 
             deviceName = Regex.Replace(deviceName, "_", " ");
             deviceName = Regex.Replace(deviceName, "- +", "-");
             deviceName = Regex.Replace(deviceName, " +-", "-");
             deviceName = Regex.Replace(deviceName, " +", " ");
 
-            string lowerDeviceName = deviceName.ToLower(CultureInfo.InvariantCulture);
+            var lowerDeviceName = deviceName.ToLower(CultureInfo.InvariantCulture);
 
             // In some cases it does start with the brand but without a separator following the brand
             if (lowerDeviceName.StartsWith(lowerDeviceBrand))
             {
                 deviceName = Regex.Replace(deviceName, "_", " ");
+
                 // (?i) means: case insensitive
                 deviceName = Regex.Replace(deviceName, "(?i)^" + Regex.Escape(deviceBrand) + "([^ ].*)$", Regex.Escape(deviceBrand) + " $1");
                 deviceName = Regex.Replace(deviceName, "( -| )+", " ");
@@ -180,7 +169,8 @@ namespace OrbintSoft.Yauaa.Utils
             {
                 deviceName = deviceBrand + ' ' + deviceName;
             }
-            string result = Brand(deviceName);
+
+            var result = Brand(deviceName);
 
             if (result.Contains("I"))
             {
@@ -189,6 +179,7 @@ namespace OrbintSoft.Yauaa.Utils
                 result = Regex.Replace(result, "Iphone", "iPhone");
                 result = Regex.Replace(result, "IOS", "iOS");
             }
+
             return result;
         }
 
@@ -199,7 +190,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="string"/></returns>
         public static string Email(string email)
         {
-            string cleaned = email;
+            var cleaned = email;
             cleaned = Regex.Replace(cleaned, "\\[at]", "@");
 
             cleaned = Regex.Replace(cleaned, "\\[\\\\xc3\\\\xa07]", "@");
@@ -208,8 +199,26 @@ namespace OrbintSoft.Yauaa.Utils
             cleaned = Regex.Replace(cleaned, " at ", "@");
             cleaned = Regex.Replace(cleaned, "dot", ".");
             cleaned = Regex.Replace(cleaned, " dash ", "-");
-            cleaned = Regex.Replace(cleaned, " ", "");
+            cleaned = Regex.Replace(cleaned, " ", string.Empty);
             return cleaned;
+        }
+
+        /// <summary>
+        /// The IsTokenSeparator
+        /// </summary>
+        /// <param name="letter">The letter<see cref="char"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        private static bool IsTokenSeparator(char letter)
+        {
+            switch (letter)
+            {
+                case ' ':
+                case '-':
+                case '_':
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

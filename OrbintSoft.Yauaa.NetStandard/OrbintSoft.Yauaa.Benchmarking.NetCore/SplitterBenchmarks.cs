@@ -150,7 +150,7 @@ namespace OrbintSoft.Yauaa.Benchmarking
         /// <param name="ranges">The ranges<see cref="List{WordRangeVisitor.Range}"/></param>
         public void RunSplitList(Splitter splitter, List<WordRangeVisitor.Range> ranges)
         {
-            List<Tuple<int, int>> splitList = splitter.CreateSplitList(TEXT);
+            IList<Tuple<int, int>> splitList = splitter.CreateSplitList(TEXT);
             foreach (WordRangeVisitor.Range range in ranges)
             {
                 splitter.GetSplitRange(TEXT, splitList, range);

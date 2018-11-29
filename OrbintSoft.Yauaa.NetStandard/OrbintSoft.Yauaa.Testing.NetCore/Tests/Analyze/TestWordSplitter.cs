@@ -399,7 +399,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             string value = "one two/3 four-4 five(some more)";
             Splitter splitter = WordSplitter.GetInstance();
 
-            List<Tuple<int, int>> splitList = splitter.CreateSplitList(value);
+            IList<Tuple<int, int>> splitList = splitter.CreateSplitList(value);
 
             // Illegal values
             splitter.GetSplitRange(value, splitList, -5, 0).Should().BeNull();

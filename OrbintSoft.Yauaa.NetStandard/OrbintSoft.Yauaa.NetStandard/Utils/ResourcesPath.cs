@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:51</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Utils
 {
     /// <summary>
@@ -32,6 +33,17 @@ namespace OrbintSoft.Yauaa.Utils
     /// </summary>
     public class ResourcesPath
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResourcesPath"/> class.
+        /// </summary>
+        /// <param name="directory">The directory<see cref="string"/></param>
+        /// <param name="filter">The filter<see cref="string"/></param>
+        public ResourcesPath(string directory, string filter = ".yaml")
+        {
+            this.Directory = directory;
+            this.Filter = filter;
+        }
+
         /// <summary>
         /// Gets the Directory
         /// Relative or absolute path to the directory where resource files are stored
@@ -43,16 +55,5 @@ namespace OrbintSoft.Yauaa.Utils
         /// A search pattern to load only files that correspond to a provided criteria, useful also to load only one file
         /// </summary>
         public string Filter { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ResourcesPath"/> class.
-        /// </summary>
-        /// <param name="directory">The directory<see cref="string"/></param>
-        /// <param name="filter">The filter<see cref="string"/></param>
-        public ResourcesPath(string directory, string filter = ".yaml")
-        {
-            Directory = directory;
-            Filter = filter;
-        }
     }
 }

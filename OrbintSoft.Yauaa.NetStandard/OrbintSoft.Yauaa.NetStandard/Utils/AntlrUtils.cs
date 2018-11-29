@@ -53,13 +53,15 @@ namespace OrbintSoft.Yauaa.Utils
             {
                 return ctx.GetText();
             }
-            int startIndex = ctx.start.StartIndex;
-            int stopIndex = ctx.stop.StopIndex;
+
+            var startIndex = ctx.start.StartIndex;
+            var stopIndex = ctx.stop.StopIndex;
             if (stopIndex < startIndex)
             {
-                return ""; // Just return the empty string.
+                return string.Empty; // Just return the empty string.
             }
-            ICharStream inputStream = ctx.start.InputStream;
+
+            var inputStream = ctx.start.InputStream;
             return inputStream.GetText(new Interval(startIndex, stopIndex));
         }
     }
