@@ -32,6 +32,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Debug;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using System.Diagnostics;
     using Xunit;
 
@@ -51,7 +52,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         [SkippableFact]
         public void ValidateAllPredefinedBrowsersPerformance()
         {
-            Skip.If(!Debugger.IsAttached);
+            Skip.If(!Config.ENABLE_PROFILING);
             UserAgentAnalyzerTester uaa =
                 UserAgentAnalyzerTester.NewBuilder()
                 .ShowMatcherLoadStats()
@@ -66,7 +67,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         [SkippableFact]
         public void CheckAllPossibleFieldsFastSpeed()
         {
-            Skip.If(!Debugger.IsAttached);
+            Skip.If(!Config.ENABLE_PROFILING);
             LOG.Info("Create analyzer");
             Stopwatch stopwatch = Stopwatch.StartNew();
             UserAgentAnalyzer uaa = UserAgentAnalyzer
