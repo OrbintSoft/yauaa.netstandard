@@ -18,42 +18,19 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
-5.4-beta.3
+5.4-rc.1
 --------
-- Created a new commandline application
-- Major code refactoring, with some breaking changes
+Latest stable version, here list of changes:
 
-5.4-beta.2
---------
-**BREAKING CHANGE:** Namespace has been updated, the old namespace was an adaption of Java package id, but in .NET we love simple and clean namespaces
-
-5.4-beta.1
---------
-This version supppots all new features of 5.4, all tests pass, so I can consider stable, download available throught Nuget
-
-A lot of improvements are still work in progress, feel free to test it.
-
-5.4-alpha.x
---------
-Starting from 5.4 I don't plan to release anymore alpha versions on Nuget, Alpha is intented for testing purpose, not usable in production.
-
-Alpha versions will be still available on github
-
-Here a list of new features:
-
+- Target equivalent Java 5.4 Version
 - Detect more Iron variations
 - Major change in the Android Chrome 70 pattern --> broke DeviceBrand
 - Detect Vivo brand
-
-5.3-rc.1
---------
-This is the latest stable version before starting development of 5.4
-
-It's an RC because the library is still on development and I don't plan to keep backward compability with APIs yet, there are many aspects of library that I would like to improve.
-
-But I consider this version stable and usable in production, I you find some issue, please report it.
-
-For now target the last Java version is my priority to keep updated user agent definition and recognize most devices as possible.
+- Change of namespace to be more clean **BREAKING CHANGE:**
+- Created a new commandline application
+- Major code refactoring **BREAKING CHANGE:**
+- Implemented continuous integration with Azure Devops
+- Changing of strong name singin to use snk instead of pfx
 
 Example output
 ==============

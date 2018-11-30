@@ -2,12 +2,14 @@ This is intended as an overview of the major changes
 
 v5.4
 ===
-- Target equivalent Java 5.3 Version
+- Target equivalent Java 5.4 Version
 - Major change in the Android Chrome 70 pattern --> broke DeviceBrand
 - Detect Vivo brand
 - Change of namespace to be more clean
-- Add of commandline application
+- Created a new commandline application
 - Major code refactoring
+- Implemented continuous integration with Azure Devops
+- Changing of strong name singin to use snk instead of pfx
 
 v5.3
 ===
