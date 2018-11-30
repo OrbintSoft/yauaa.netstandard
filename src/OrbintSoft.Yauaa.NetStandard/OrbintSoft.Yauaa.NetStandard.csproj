@@ -7,14 +7,14 @@
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
 	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
-    <RepositoryType>Git</RepositoryType>
+    <RepositoryType>git</RepositoryType>
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <NeutralLanguage>en</NeutralLanguage>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>5.4-beta.3</Version>
-    <AssemblyVersion>5.4.1.3</AssemblyVersion>
-    <FileVersion>5.4.1.3</FileVersion>
+    <Version>5.4-rc.1</Version>
+    <AssemblyVersion>5.4.2.1</AssemblyVersion>
+    <FileVersion>5.4.2.1</FileVersion>
     <PackageProjectUrl></PackageProjectUrl>
     <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
 
@@ -30,6 +30,7 @@ The library provides a reliable and extensible user agent parsing, browser and d
 	<SignAssembly>true</SignAssembly>
 	<AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
 	<DelaySign>false</DelaySign>
+	<ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
