@@ -48,9 +48,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         /// <summary>
         /// The ValidateAllPredefinedBrowsersPerformance
         /// </summary>
-        [Fact]
+        [SkippableFact]
         public void ValidateAllPredefinedBrowsersPerformance()
         {
+            Skip.If(!Debugger.IsAttached);
             UserAgentAnalyzerTester uaa =
                 UserAgentAnalyzerTester.NewBuilder()
                 .ShowMatcherLoadStats()
@@ -62,9 +63,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         /// <summary>
         /// The CheckAllPossibleFieldsFastSpeed
         /// </summary>
-        [Fact]
+        [SkippableFact]
         public void CheckAllPossibleFieldsFastSpeed()
         {
+            Skip.If(!Debugger.IsAttached);
             LOG.Info("Create analyzer");
             Stopwatch stopwatch = Stopwatch.StartNew();
             UserAgentAnalyzer uaa = UserAgentAnalyzer

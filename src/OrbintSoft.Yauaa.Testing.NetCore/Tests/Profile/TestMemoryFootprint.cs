@@ -77,9 +77,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         /// <summary>
         /// The CheckForMemoryLeaks
         /// </summary>
-        [Fact]
+        [SkippableFact]
         public void CheckForMemoryLeaks()
         {
+            Skip.If(!Debugger.IsAttached);
             UserAgentAnalyzer uaa = UserAgentAnalyzer
                 .NewBuilder()
                 .WithoutCache()
@@ -108,9 +109,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         /// <summary>
         /// The AssesMemoryImpactPerFieldName
         /// </summary>
-        [Fact]
+        [SkippableFact]
         public void AssesMemoryImpactPerFieldName()
         {
+            Skip.If(!Debugger.IsAttached);
             UserAgentAnalyzer uaa = UserAgentAnalyzer
                 .NewBuilder()
                 .HideMatcherLoadStats()
@@ -171,9 +173,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         /// <summary>
         /// The ProfileMemoryFootprint
         /// </summary>
-        [Fact]
+        [SkippableFact]
         public void ProfileMemoryFootprint()
         {
+            Skip.If(!Debugger.IsAttached);
             PrintCurrentMemoryProfile("Before ");
 
             UserAgentAnalyzer uaa = UserAgentAnalyzer
