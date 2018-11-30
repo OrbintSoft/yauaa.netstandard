@@ -28,7 +28,7 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <Product>Yauaa: Yet Another User Agent Analyzer</Product>
     <PackageId>OrbintSoft.Yauaa.NetStandard.Analyzer</PackageId>
 	<SignAssembly>true</SignAssembly>
-	<AssemblyOriginatorKeyFile>OrbintSoft.Yauaa.NetStandard.Analyzer.pfx</AssemblyOriginatorKeyFile>
+	<AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
 	<DelaySign>false</DelaySign>
   </PropertyGroup>
 
