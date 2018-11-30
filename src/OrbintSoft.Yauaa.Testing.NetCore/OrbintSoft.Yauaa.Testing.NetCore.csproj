@@ -33,7 +33,7 @@
 
     <SignAssembly>true</SignAssembly>
 
-    <AssemblyOriginatorKeyFile>OrbintSoft.NetCore.Analyzer.Test.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
 
     <PackageId>OrbintSoft.Yauaa.Testing.NetCore</PackageId>
 
