@@ -26,9 +26,9 @@ Latest stable version, here list of changes:
 - Detect more Iron variations
 - Major change in the Android Chrome 70 pattern --> broke DeviceBrand
 - Detect Vivo brand
-- Change of namespace to be more clean **BREAKING CHANGE:**
+- Change of namespace to be more clean 
 - Created a new commandline application
-- Major code refactoring **BREAKING CHANGE:**
+- Major code refactoring 
 - Implemented continuous integration with Azure Devops
 - Changing of strong name singin to use snk instead of pfx
 
