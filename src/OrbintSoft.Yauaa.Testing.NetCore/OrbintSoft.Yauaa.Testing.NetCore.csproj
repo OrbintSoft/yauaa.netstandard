@@ -9,11 +9,11 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.4-rc.1</Version>
+    <Version>5.4-rc.2</Version>
 
-    <AssemblyVersion>5.4.2.1</AssemblyVersion>
+    <AssemblyVersion>5.4.2.2</AssemblyVersion>
 
-    <FileVersion>5.4.2.1</FileVersion>
+    <FileVersion>5.4.2.2</FileVersion>
 
     <NeutralLanguage>en</NeutralLanguage>
 
@@ -40,6 +40,8 @@
     <AssemblyName>OrbintSoft.Yauaa.Testing.NetCore</AssemblyName>
 
     <ApplicationIcon>icon.ico</ApplicationIcon>
+
+    <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

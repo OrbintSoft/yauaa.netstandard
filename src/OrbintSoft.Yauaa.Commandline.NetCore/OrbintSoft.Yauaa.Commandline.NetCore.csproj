@@ -4,11 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>OrbintSoft.Yauaa.Commandline</RootNamespace>
-    <Version>5.4-rc.1</Version>
+    <Version>5.4-rc.2</Version>
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>												   
-    <AssemblyVersion>5.4.2.1</AssemblyVersion>
+    <AssemblyVersion>5.4.2.2</AssemblyVersion>
 	<Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>				 
-    <FileVersion>5.4.2.1</FileVersion>
+    <FileVersion>5.4.2.2</FileVersion>
 	<SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
     <Company>OrbintSoft</Company>
@@ -17,7 +17,8 @@
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en</NeutralLanguage>
-    <ApplicationIcon>icon.ico</ApplicationIcon>																				  
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>																				  
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.3.0" />
