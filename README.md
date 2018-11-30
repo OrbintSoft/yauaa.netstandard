@@ -1,7 +1,7 @@
 Yauaa: Yet Another UserAgent Analyzer
 ========================================
 [![Build Status](https://dev.azure.com/orbintsoft/yauaa.netstandard/_apis/build/status/yauaa.netstandard-pipeline)](https://dev.azure.com/orbintsoft/yauaa.netstandard/_build/latest?definitionId=3)
-
+[![License](https://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.
 
