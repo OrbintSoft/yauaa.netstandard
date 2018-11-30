@@ -1,3 +1,0 @@
-The assembly has been strong name signed to allow the use in following scenarios: https://docs.microsoft.com/en-us/dotnet/framework/app-domains/strong-named-assemblies
-Strong-naming is a left over of past and doesn't improve security, see there: https://github.com/dotnet/corefx/blob/master/Documentation/project-docs/strong-name-signing.md
-This is an open source project, so there I release the private password: 1073741824
