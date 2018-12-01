@@ -1,38 +1,43 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Stefano Balzarotti, Niels Basjes</Authors>
     <Company>OrbintSoft</Company>
-    <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
-	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
+    <Title>Yauaa: Yet Another User Agent Analyzer</Title>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <NeutralLanguage>en</NeutralLanguage>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
     <Version>5.4-rc.2</Version>
     <AssemblyVersion>5.4.2.2</AssemblyVersion>
     <FileVersion>5.4.2.2</FileVersion>
-    <PackageProjectUrl></PackageProjectUrl>
-    <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
-
-The library provides a reliable and extensible user agent parsing, browser and device detection.
-	</Description>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
     <Product>Yauaa: Yet Another User Agent Analyzer</Product>
-    <PackageId>OrbintSoft.Yauaa.NetStandard.Analyzer</PackageId>
 	<SignAssembly>true</SignAssembly>
 	<AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
 	<DelaySign>false</DelaySign>
 	<ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageVersion>5.4-rc.2</PackageVersion>
+    <PackageId>OrbintSoft.Yauaa.NetStandard.Analyzer</PackageId>
+    <Authors>Stefano Balzarotti, Niels Basjes</Authors>
+    <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
+
+The library provides a reliable and extensible user agent parsing, browser and device detection.
+    </Description>
+    <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl></PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
+    <PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
+  </PropertyGroup>
+  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
