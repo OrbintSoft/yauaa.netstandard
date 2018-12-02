@@ -20,7 +20,7 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
-5.4-rc.1
+5.4-rc.x
 --------
 Latest stable version, here list of changes:
 
