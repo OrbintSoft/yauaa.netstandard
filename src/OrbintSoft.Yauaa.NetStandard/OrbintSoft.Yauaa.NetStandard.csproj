@@ -3,14 +3,10 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
-    <Title>Yauaa: Yet Another User Agent Analyzer</Title>
-    <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en</NeutralLanguage>
-    <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>5.4-rc.2</Version>
-    <AssemblyVersion>5.4.2.2</AssemblyVersion>
-    <FileVersion>5.4.2.2</FileVersion>
-    <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
+    <Version>5.4-rc.3</Version>
+    <AssemblyVersion>5.4.2.3</AssemblyVersion>
+    <FileVersion>5.4.2.3</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -23,8 +19,9 @@
 
   <PropertyGroup>
     <IsPackable>true</IsPackable>
-    <PackageVersion>5.4-rc.2</PackageVersion>
-    <PackageId>OrbintSoft.Yauaa.NetStandard.Analyzer</PackageId>
+    <PackageVersion>$(Version)</PackageVersion>
+    <PackageId>OrbintSoft.Yauaa.NetStandard</PackageId>
+	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
     <Authors>Stefano Balzarotti, Niels Basjes</Authors>
     <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
 
@@ -35,7 +32,23 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
-    <PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
+    <PackageReleaseNotes>Just a test for continuous integration</PackageReleaseNotes>
+	<PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
+    <PackageOutputPath>$(OutputPath)</PackageOutputPath>
+	<IncludeSymbols>true</IncludeSymbols>
+	<IncludeSource>true</IncludeSource>
+	<IsTool>false</IsTool>
+	<RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<NoPackageAnalysis>false</NoPackageAnalysis>
+	<MinClientVersion>4.3</MinClientVersion>
+	<IncludeBuildOutput>true</IncludeBuildOutput>
+	<IncludeContentInPack>true</IncludeContentInPack>
+	<BuildOutputTargetFolder></BuildOutputTargetFolder>
+	<ContentTargetFolders>content;contentFiles</ContentTargetFolders>
+	<NuspecFile></NuspecFile>
+	<NuspecBasePath></NuspecBasePath>
+	<NuspecProperties>test=test1</NuspecProperties>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

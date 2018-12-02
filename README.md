@@ -1,7 +1,9 @@
-Yauaa: Yet Another UserAgent Analyzer
+Yauaa: Yet Another User Agent Analyzer
 ========================================
 [![Build Status](https://dev.azure.com/orbintsoft/yauaa.netstandard/_apis/build/status/yauaa.netstandard-pipeline)](https://dev.azure.com/orbintsoft/yauaa.netstandard/_build/latest?definitionId=3)
 [![License](https://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![NuGet](https://img.shields.io/nuget/v/Orbintsoft.Yauaa.NetStandard.Analyzer.svg)](https://www.nuget.org/packages/Orbintsoft.Yauaa.NetStandard.Analyzer/)
+[![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/orbintsoft) 
 
 This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.
 
@@ -86,16 +88,16 @@ If you like this project or if has business value for you then don't hesitate to
 To support the original project you can make a small donation to:
 [![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/nielsbasjes) **Niels Basjes, Original Author**
 
-To support this porting, don't esitate to contribute to code sending a Pull request
+To support this porting, don't esitate to contribute to code sending a Pull request or with reporting issues
 
 Otherwise a small paypal donation can also be apreciated
 [![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/orbintsoft) **Stefano Balzarotti, Author of porting**
 
-Don't forget to be thankful to the original author Nicolaas Basjes, he did most of the effort.
+Don't forget to be thankful to the original author Nicolaas Basjes, because he did most of the effort.
 
 License
 =======
-    Yet Another UserAgent Analyzer .NET Standard
+    Yet Another UserAgent Analyzer for .NET Standard
   	Porting realized by Balzarotti Stefano, Copyright (C) OrbintSoft
   
   	Original Author and License:
@@ -114,6 +116,4 @@ License
 	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 	See the License for the specific language governing permissions and
 	limitations under the License.
-  
-	All rights should be reserved to the original author Niels Basjes
  
