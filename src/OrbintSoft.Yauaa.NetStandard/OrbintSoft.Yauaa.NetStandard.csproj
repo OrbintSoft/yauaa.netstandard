@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.4-rc.3</Version>
-    <AssemblyVersion>5.4.2.3</AssemblyVersion>
-    <FileVersion>5.4.2.3</FileVersion>
+    <Version>5.4-stable.1</Version>
+    <AssemblyVersion>5.4.3.1</AssemblyVersion>
+    <FileVersion>5.4.3.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -41,7 +41,7 @@ The library provides a reliable and extensible user agent parsing, browser and d
 	<RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<NoPackageAnalysis>false</NoPackageAnalysis>
-	<MinClientVersion>4.3</MinClientVersion>
+	<MinClientVersion></MinClientVersion>
 	<IncludeBuildOutput>true</IncludeBuildOutput>
 	<IncludeContentInPack>true</IncludeContentInPack>
 	<BuildOutputTargetFolder></BuildOutputTargetFolder>

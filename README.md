@@ -1,7 +1,7 @@
 Yauaa: Yet Another User Agent Analyzer
 ========================================
 [![Build Status](https://dev.azure.com/orbintsoft/yauaa.netstandard/_apis/build/status/yauaa.netstandard-pipeline)](https://dev.azure.com/orbintsoft/yauaa.netstandard/_build/latest?definitionId=3)
-[![NuGet](https://img.shields.io/nuget/v/Orbintsoft.Yauaa.NetStandard.Analyzer.svg)](https://www.nuget.org/packages/Orbintsoft.Yauaa.NetStandard.Analyzer/)
+[![NuGet](https://img.shields.io/nuget/v/Orbintsoft.Yauaa.NetStandard.svg)](https://www.nuget.org/packages/Orbintsoft.Yauaa.NetStandard/)
 [![License](https://img.shields.io/:license-apache-purple.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-orange.svg)](https://www.paypal.me/orbintsoft) 
 
@@ -15,14 +15,14 @@ A bit more background about this useragent parser can be found in this blog whic
 
 The Java documentation can be found here https://yauaa.basjes.nl, soon will be provided a .NET documentation specific for this project
 
-You can download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
+You can download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard
 
 HIGH Profile release notes:
 ===========================
 
-5.4-rc.x
+5.4-stable.1
 --------
-Latest stable version, here list of changes:
+This is latest stable preview, with 5.5 I plan to remove prerelease prefix
 
 - Target equivalent Java 5.4 Version
 - Detect more Iron variations
@@ -33,6 +33,7 @@ Latest stable version, here list of changes:
 - Major code refactoring 
 - Implemented continuous integration with Azure Devops
 - Changing of strong name singin to use snk instead of pfx
+- New nuget package
 
 Example output
 ==============
@@ -71,7 +72,7 @@ You can try online the Java version with your own browser here: [https://try.yau
 
 Soon will be available  a test with .NET library
 
-Meanwhile, don't forget to download the .nuget package to try by yourself:  https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard.Analyzer
+Meanwhile, don't forget to download the .nuget package to try by yourself:  https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard
 
 **NOTES**
 
