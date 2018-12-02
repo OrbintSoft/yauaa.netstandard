@@ -1,9 +1,9 @@
 Yauaa: Yet Another User Agent Analyzer
 ========================================
 [![Build Status](https://dev.azure.com/orbintsoft/yauaa.netstandard/_apis/build/status/yauaa.netstandard-pipeline)](https://dev.azure.com/orbintsoft/yauaa.netstandard/_build/latest?definitionId=3)
-[![License](https://img.shields.io/:license-apache-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![NuGet](https://img.shields.io/nuget/v/Orbintsoft.Yauaa.NetStandard.Analyzer.svg)](https://www.nuget.org/packages/Orbintsoft.Yauaa.NetStandard.Analyzer/)
-[![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-blue.svg)](https://www.paypal.me/orbintsoft) 
+[![License](https://img.shields.io/:license-apache-purple.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+[![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-orange.svg)](https://www.paypal.me/orbintsoft) 
 
 This is a .NET porting of Java library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.
 
