@@ -9,7 +9,7 @@ This is a .NET porting of Java library that tries to parse and analyze the usera
 
 You can see the original project at this link: https://github.com/nielsbasjes/yauaa
 
-The library has been completely rewritten in C# from scratch to be .NET  friendly and to be optimized
+The library has been completely rewritten in C# from scratch to be optimized and .NET friendly 
 
 A bit more background about this useragent parser can be found in this blog which the author Niels Basjes wrote about it: [https://techlab.bol.com/making-sense-user-agent-string/](https://partnerprogramma.bol.com/click/click?p=1&t=url&s=2171&f=TXL&url=https%3A%2F%2Ftechlab.bol.com%2Fmaking-sense-user-agent-string%2F&name=yauaa)
 
@@ -19,6 +19,10 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 
 HIGH Profile release notes:
 ===========================
+
+5.5-alpha.x
+--------
+With Google Chrome 70 the useragent string pattern has been changed on Android ( https://www.chromestatus.com/feature/4558585463832576 ) . As a consequence the detection of the DeviceBrand failed and you always get "Unknown". This has been fixed in Yauaa 5.5.
 
 5.4-stable.1
 --------

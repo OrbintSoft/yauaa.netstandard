@@ -1,5 +1,11 @@
 This is intended as an overview of the major changes
 
+v5.5
+===
+- Target equivalent Java 5.5 Version
+- Fixed the Chrome 70 pattern for many brands
+- Detect Alibaba Apps (like DingTalk)
+
 v5.4
 ===
 - Target equivalent Java 5.4 Version
@@ -10,6 +16,7 @@ v5.4
 - Major code refactoring
 - Implemented continuous integration with Azure Devops
 - Changing of strong name singin to use snk instead of pfx
+- New nuget package and release process
 
 v5.3
 ===
