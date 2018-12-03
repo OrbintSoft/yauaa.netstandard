@@ -118,6 +118,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Defines the matcherConfigs
         /// </summary>
+        [NonSerialized]
         private IDictionary<string, IList<YamlMappingNode>> matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>();
 
         /// <summary>

@@ -29,10 +29,12 @@
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
 {
     using Antlr4.Runtime.Tree;
+    using System;
 
     /// <summary>
     /// Defines the <see cref="StepConcatPrefix" />
     /// </summary>
+    [Serializable]
     public class StepConcatPrefix : Step
     {
         /// <summary>

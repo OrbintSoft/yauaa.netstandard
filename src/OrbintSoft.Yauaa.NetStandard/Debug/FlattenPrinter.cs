@@ -29,6 +29,7 @@ namespace OrbintSoft.Yauaa.Debug
 {
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Analyze;
+    using System;
     using System.Collections.Generic;
     using System.IO;
 
@@ -40,6 +41,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Defines the outputStream
         /// </summary>
+        [NonSerialized]
         private readonly StreamWriter outputStream;
 
         /// <summary>

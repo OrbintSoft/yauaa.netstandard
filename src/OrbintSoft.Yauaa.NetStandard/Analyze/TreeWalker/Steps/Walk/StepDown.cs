@@ -32,14 +32,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns;
     using OrbintSoft.Yauaa.Antlr4Source;
     using System;
-    using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepDown" />
     /// </summary>
     [Serializable]
-    public class StepDown : Step
+    public class StepDown : Step, ISerializable
     {
         /// <summary>
         /// Defines the end
@@ -59,6 +59,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <summary>
         /// Defines the userAgentGetChildrenVisitor
         /// </summary>
+        [NonSerialized]
         private UserAgentGetChildrenVisitor userAgentGetChildrenVisitor;
 
         /// <summary>
@@ -69,6 +70,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         public StepDown(UserAgentTreeWalkerParser.NumberRangeContext numberRange, string name) : this(NumberRangeVisitor.GetList(numberRange), name)
         {
         }
+
+        public StepDown(SerializationInfo info, StreamingContext context)
+        {
+            this.name = (string)info.GetValue("name", typeof(string));
+            this.start = (int)info.GetValue("start", typeof(int));
+            this.end = (int)info.GetValue("end", typeof(int));
+            this.SetDefaultFieldValues();
+        }
+
+
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepDown"/> class.
@@ -81,6 +93,13 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
             this.start = numberRange.Start;
             this.end = numberRange.End;
             this.SetDefaultFieldValues();
+        }
+
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("name", this.name, typeof(string));
+            info.AddValue("start", this.start, typeof(int));
+            info.AddValue("end", this.end, typeof(int));
         }
 
         /// <summary>
