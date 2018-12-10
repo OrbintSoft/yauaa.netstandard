@@ -31,6 +31,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
     using Antlr4.Runtime.Tree;
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepLookup" />
@@ -64,6 +65,21 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
             this.lookupName = lookupName;
             this.lookup = lookup;
             this.defaultValue = defaultValue;
+        }
+
+        public StepLookup(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.lookupName = (string)info.GetValue("lookupName", typeof(string));
+            this.lookup = (IDictionary<string, string>)info.GetValue("lookup", typeof(IDictionary<string, string>));
+            this.defaultValue = (string)info.GetValue("defaultValue", typeof(string));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("lookupName", this.lookupName, typeof(string));
+            info.AddValue("lookup", this.lookup, typeof(IDictionary<string, string>));
+            info.AddValue("defaultValue", this.defaultValue, typeof(string));
         }
 
         /// <summary>

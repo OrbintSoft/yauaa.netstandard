@@ -25,13 +25,51 @@
 // <date>2018, 11, 24, 17:39</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using OrbintSoft.Yauaa.Debug;
 using OrbintSoft.Yauaa.Testing.Fixtures;
 using Xunit;
+using FluentAssertions;
+using log4net;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using OrbintSoft.Yauaa.Tests;
+using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.Testing.Tests
 {
     public class DebugTest : IClassFixture<LogFixture>
     {
+
+        readonly HashSet<string> singleFieldList = new HashSet<string>() { "AgentName" };
+
+        public UserAgentAnalyzerTester SerializeAndDeserializeUAA()
+        {
+            var uaa = UserAgentAnalyzerTester.NewBuilder()
+                .HideMatcherLoadStats()
+                .DropDefaultResources()
+                .AddResources("YamlResources/UserAgents", "GoogleChrome.yaml")
+                .WithFields(singleFieldList)
+                .ImmediateInitialization()
+                .Build();
+            byte[] bytes;
+
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(memoryStream, uaa);
+                bytes = memoryStream.ToArray();
+            }
+            using (MemoryStream memoryStream = new MemoryStream(bytes))
+            {
+                var formatter = new BinaryFormatter();
+                object obj = formatter.Deserialize(memoryStream);
+                obj.Should().BeOfType<UserAgentAnalyzerTester>();
+                uaa = obj as UserAgentAnalyzerTester;
+            }
+
+            return uaa as UserAgentAnalyzerTester;
+        }
+
         //[Fact]
         //public void TestError()
         //{
@@ -43,8 +81,17 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         //        .DropTests()
         //        .AddResources("YamlResources/UserAgents", "GooglePixel.yaml")
         //        .Build() as UserAgentAnalyzerTester;
-        //    uaa.SetShowMatcherStats(false);                 
+        //    uaa.SetShowMatcherStats(false);
         //    uaa.RunTests(false, true).Should().BeFalse();  // This test must return an error state
         //}
+
+        [Fact]
+        public void TestSerialization()
+        {
+            UserAgentAnalyzerTester uaa = this.SerializeAndDeserializeUAA();
+
+            var userAgent = uaa.Parse("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13");
+            userAgent.Get("AgentName").Value.Should().Be("Chrome");
+        }
     }
 }

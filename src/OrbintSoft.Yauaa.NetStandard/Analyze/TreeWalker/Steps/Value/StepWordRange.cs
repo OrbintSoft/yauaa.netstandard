@@ -32,6 +32,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     using OrbintSoft.Yauaa.Antlr4Source;
     using OrbintSoft.Yauaa.Utils;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepWordRange" />
@@ -57,6 +58,19 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         {
             this.firstWord = range.First;
             this.lastWord = range.Last;
+        }
+
+        public StepWordRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.firstWord = (int)info.GetValue("firstWord", typeof(int));
+            this.lastWord = (int)info.GetValue("lastWord", typeof(int));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("firstWord", this.firstWord, typeof(int));
+            info.AddValue("lastWord", this.lastWord, typeof(int));
         }
 
         /// <summary>

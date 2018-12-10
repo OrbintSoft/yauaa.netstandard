@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
 {
     using Antlr4.Runtime.Tree;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepConcatPrefix" />
@@ -49,6 +50,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         public StepConcatPrefix(string prefix)
         {
             this.prefix = prefix;
+        }
+
+        public StepConcatPrefix(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.prefix = (string)info.GetValue("prefix", typeof(string));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("prefix", this.prefix, typeof(string));
         }
 
         /// <summary>

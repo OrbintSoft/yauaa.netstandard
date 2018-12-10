@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
 {
     using Antlr4.Runtime.Tree;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepBackToFull" />
@@ -37,6 +38,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     [Serializable]
     public class StepBackToFull : Step
     {
+        public StepBackToFull()
+        {
+
+        }
+
+        public StepBackToFull(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
         /// <summary>
         /// The CanFail
         /// </summary>

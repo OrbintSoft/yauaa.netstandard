@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
 {
     using Antlr4.Runtime.Tree;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepIsNull" />
@@ -37,6 +38,16 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     [Serializable]
     public class StepIsNull : Step
     {
+
+        public StepIsNull()
+        {
+
+        }
+
+        public StepIsNull(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
         /// <summary>
         /// The ToString
         /// </summary>

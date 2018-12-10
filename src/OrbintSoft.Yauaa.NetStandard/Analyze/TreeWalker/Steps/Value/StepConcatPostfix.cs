@@ -29,10 +29,13 @@
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
 {
     using Antlr4.Runtime.Tree;
+    using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepConcatPostfix" />
     /// </summary>
+    [Serializable]
     public class StepConcatPostfix : Step
     {
         /// <summary>
@@ -47,6 +50,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         public StepConcatPostfix(string postfix)
         {
             this.postfix = postfix;
+        }
+
+        public StepConcatPostfix(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.postfix = (string)info.GetValue("postfix", typeof(string));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("postfix", this.postfix, typeof(string));
         }
 
         /// <summary>

@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
 {
     using Antlr4.Runtime.Tree;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepUp" />
@@ -37,6 +38,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     [Serializable]
     public class StepUp : Step
     {
+        public StepUp()
+        {
+
+        }
+
+        public StepUp(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
         /// <summary>
         /// The ToString
         /// </summary>

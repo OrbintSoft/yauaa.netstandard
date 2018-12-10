@@ -31,6 +31,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Utils;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepNormalizeBrand" />
@@ -38,6 +39,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     [Serializable]
     public class StepNormalizeBrand : Step
     {
+        public StepNormalizeBrand()
+        {
+
+        }
+
+        public StepNormalizeBrand(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
         /// <summary>
         /// The CanFail
         /// </summary>

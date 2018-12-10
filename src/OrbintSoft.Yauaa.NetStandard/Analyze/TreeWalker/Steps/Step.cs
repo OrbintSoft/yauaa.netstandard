@@ -34,13 +34,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
     using OrbintSoft.Yauaa.Antlr4Source;
     using OrbintSoft.Yauaa.Utils;
     using System;
+    using System.Runtime.Serialization;
     using System.Text;
 
     /// <summary>
     /// Defines the <see cref="Step" />
     /// </summary>
     [Serializable]
-    public abstract class Step
+    public abstract class Step: ISerializable
     {
         /// <summary>
         /// Defines the Log
@@ -51,6 +52,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// Defines the stepNr
         /// </summary>
         private int stepNr = 0;
+
+        public Step()
+        {
+
+        }
+
+        public Step(SerializationInfo info, StreamingContext context)
+        {
+            this.Logprefix = (string)info.GetValue("Logprefix", typeof(string));
+            this.Verbose = (bool)info.GetValue("Verbose", typeof(bool));
+            this.NextStep = (Step)info.GetValue("NextStep", typeof(Step));
+            this.stepNr = (int)info.GetValue("stepNr", typeof(int));
+        }
+
 
         /// <summary>
         /// Gets the NextStep
@@ -67,8 +82,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// <summary>
         /// Gets or sets a value indicating whether Verbose
         /// </summary>
+#if VERBOSE
+        protected bool Verbose { get; set; } = true;
+#else
         protected bool Verbose { get; set; } = false;
-
+#endif
         /// <summary>
         /// The TreeIsSeparator
         /// </summary>
@@ -90,6 +108,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             return true; // Default is to assume the step is always needed.
         }
 
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("Logprefix", this.Logprefix, typeof(string));
+            info.AddValue("Verbose", this.Verbose, typeof(bool));
+            info.AddValue("NextStep", this.NextStep, typeof(Step));
+            info.AddValue("stepNr", this.stepNr, typeof(int));
+        }
+
         /// <summary>
         /// The SetNextStep
         /// </summary>
@@ -105,7 +131,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 sb.Append("-->");
             }
 
-            this.Logprefix = sb.ToString();
+            this.Logprefix = sb.ToString();           
         }
 
         /// <summary>

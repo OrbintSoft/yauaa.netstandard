@@ -31,6 +31,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Parse;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepCleanVersion" />
@@ -38,6 +39,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     [Serializable]
     public class StepCleanVersion : Step
     {
+        public StepCleanVersion()
+        {
+
+        }
+
+        public StepCleanVersion(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
         /// <summary>
         /// The CanFail
         /// </summary>

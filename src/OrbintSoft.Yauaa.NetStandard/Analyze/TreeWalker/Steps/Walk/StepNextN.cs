@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
 {
     using Antlr4.Runtime.Tree;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepNextN" />
@@ -42,6 +43,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// </summary>
         private readonly int steps;
 
+        public StepNextN(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.steps = (int)info.GetValue("steps", typeof(int));
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StepNextN"/> class.
         /// </summary>
@@ -49,6 +55,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         public StepNextN(int steps)
         {
             this.steps = steps;
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("steps", this.steps, typeof(int));
         }
 
         /// <summary>

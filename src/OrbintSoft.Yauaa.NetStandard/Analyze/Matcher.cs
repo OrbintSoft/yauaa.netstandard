@@ -119,7 +119,7 @@ namespace OrbintSoft.Yauaa.Analyze
             this.matcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
 
 #if VERBOSE
-            this.verbose = true;
+            this.Verbose = true;
 #else
             this.Verbose = false;
 #endif
@@ -423,7 +423,7 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 Log.Info(string.Empty);
                 Log.Info("--- Matcher ------------------------");
-                Log.Info(" ANALYSE ----------------------------");
+                Log.Info("ANALYSE ----------------------------");
                 var good = true;
                 foreach (var action in this.dynamicActions)
                 {

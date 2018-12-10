@@ -31,6 +31,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     using Antlr4.Runtime.Tree;
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepIsInSet" />
@@ -57,6 +58,19 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         {
             this.listName = listName;
             this.list = list;
+        }
+
+        public StepIsInSet(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.listName = (string)info.GetValue("listName", typeof(string));
+            this.list = (ISet<string>)info.GetValue("list", typeof(ISet<string>));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("listName", this.listName, typeof(string));
+            info.AddValue("list", this.list, typeof(ISet<string>));
         }
 
         /// <summary>

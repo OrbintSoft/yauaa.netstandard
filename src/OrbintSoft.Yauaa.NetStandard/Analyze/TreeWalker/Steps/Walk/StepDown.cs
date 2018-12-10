@@ -39,7 +39,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     /// Defines the <see cref="StepDown" />
     /// </summary>
     [Serializable]
-    public class StepDown : Step, ISerializable
+    public class StepDown : Step
     {
         /// <summary>
         /// Defines the end
@@ -71,16 +71,13 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         {
         }
 
-        public StepDown(SerializationInfo info, StreamingContext context)
+        public StepDown(SerializationInfo info, StreamingContext context): base(info, context)
         {
             this.name = (string)info.GetValue("name", typeof(string));
             this.start = (int)info.GetValue("start", typeof(int));
             this.end = (int)info.GetValue("end", typeof(int));
             this.SetDefaultFieldValues();
         }
-
-
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepDown"/> class.
@@ -95,11 +92,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
             this.SetDefaultFieldValues();
         }
 
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            base.GetObjectData(info, context);
             info.AddValue("name", this.name, typeof(string));
             info.AddValue("start", this.start, typeof(int));
-            info.AddValue("end", this.end, typeof(int));
+            info.AddValue("end", this.end, typeof(int));           
         }
 
         /// <summary>

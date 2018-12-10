@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
 {
     using Antlr4.Runtime.Tree;
     using System;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepEquals" />
@@ -49,6 +50,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         public StepEquals(string desiredValue)
         {
             this.desiredValue = desiredValue.ToLower();
+        }
+
+        public StepEquals(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+            this.desiredValue = (string)info.GetValue("desiredValue", typeof(string));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("desiredValue", this.desiredValue, typeof(string));
         }
 
         /// <summary>
