@@ -61,7 +61,6 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             {
                 yield return new object[] { fieldName };
             }
-            yield return new object[] { };
         }
 
         /// <summary>
