@@ -7,6 +7,11 @@
   <ItemGroup>
     <Content Remove="wwwroot\favicon.ico" />
     <Content Remove="wwwroot\humans.txt" />
+    <Content Remove="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="2.8.391" />
     <PackageReference Include="jQWidgets.AspNetCore.Mvc.Bootstrap.TagHelpers" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -23,10 +29,7 @@
 
   <ItemGroup>
     <None Include="wwwroot\favicon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
+    <None Include="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
   </ItemGroup>
 
 </Project>
