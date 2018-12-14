@@ -1,0 +1,13 @@
+﻿/* TEAM */                          
+Your title: Stefano Balzarotti      
+Site: http://orbintsoft.net/Frontend/Contacts
+Location: Italy.
+							
+/* THANKS */
+Niels Basjes for having realized and designed Yauaa           
+                            
+/* SITE */
+Last update: 2018/12/13 
+Standards: HTML5, CSS3, C#, ASP.NET Core
+Components: bootstrap, jQuery
+Software: Visual Studio 2017

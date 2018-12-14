@@ -1,37 +1,47 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
+﻿.bg-blue {
+    background-color: #A1CAF1;
+    background: linear-gradient(to bottom, #a7c7dc 0%,#85b2d3 100%);
+}
+
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    background-color: #ffffff;
+    background-image: url("../images/background.svg");
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.container {
+    background-color: white;
+    padding: 2em;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.row-striped:nth-child(even) {
+    background-color: #DDDDDD;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
+ul {
+    padding-left: 20px;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+.bd-footer {
+    background-color: #AAAAAA;
+    color: black;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+body, .main-wrapper {
+    min-height: 100vh;
+}
+
+hr {
+    page-break-before: avoid;
+    page-break-after: auto;
+}
+
+article {
+    page-break-before: auto;
+    page-break-after: auto;
+}
+
+@page {
+    @bottom-right {
+        content: counter(page) "/" counter(pages);
     }
 }

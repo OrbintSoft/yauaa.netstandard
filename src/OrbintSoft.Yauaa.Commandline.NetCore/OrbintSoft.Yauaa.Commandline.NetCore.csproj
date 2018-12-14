@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>OrbintSoft.Yauaa.Commandline</RootNamespace>
     <Version>5.5-beta.1</Version>
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>												   
