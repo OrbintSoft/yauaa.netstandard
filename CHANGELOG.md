@@ -5,6 +5,7 @@ v5.5
 - Target equivalent Java 5.5 Version
 - Fixed the Chrome 70 pattern for many brands
 - Detect Alibaba Apps (like DingTalk)
+- Fixed nuget packing problem, yaml definitions aren't copied automatically to output folder
 
 v5.4
 ===

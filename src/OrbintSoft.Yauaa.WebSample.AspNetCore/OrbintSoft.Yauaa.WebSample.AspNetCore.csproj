@@ -2,16 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Authors>Stefano Balzarotti</Authors>
+    <Company>OrbintSoft</Company>
+    <AssemblyVersion>5.5.1.2</AssemblyVersion>
+    <FileVersion>5.5.1.2</FileVersion>
+    <Version>0.0-alpha.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="wwwroot\favicon.ico" />
     <Content Remove="wwwroot\humans.txt" />
     <Content Remove="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
+    <Content Remove="wwwroot\lib\twitter-bootstrap\js\bootstrap.min.js" />
   </ItemGroup>
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\lib\twitter-bootstrap\js\bootstrap.min.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +38,7 @@
   <ItemGroup>
     <None Include="wwwroot\favicon.ico" />
     <None Include="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
+    <None Include="wwwroot\lib\twitter-bootstrap\js\bootstrap.min.js" />
   </ItemGroup>
 
 </Project>

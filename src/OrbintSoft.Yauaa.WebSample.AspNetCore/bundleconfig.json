@@ -1,6 +1,17 @@
 [
   {
     "inputFiles": [
+      "wwwroot/lib/debug/dist/debug.js"
+    ],
+    "outputFileName": "wwwroot/lib/debug/dist/debug.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": true
+  },
+  {
+    "inputFiles": [
       "wwwroot/lib/font-awesome/css/font-awesome.css"
     ],
     "outputFileName": "wwwroot/lib/font-awesome/css/font-awesome.min.css",
@@ -94,7 +105,7 @@
     "inputFiles": [
       "wwwroot/lib/twitter-bootstrap/js/bootstrap.js"
     ],
-    "outputFileName": "wwwroot/libtwitter-bootstrap/js/bootstrap.min.js",
+    "outputFileName": "wwwroot/lib/twitter-bootstrap/js/bootstrap.min.js",
     "minify": {
       "enabled": true,
       "renameLocals": true

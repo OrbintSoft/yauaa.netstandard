@@ -3,6 +3,14 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
+      "provider": "unpkg",
+      "library": "debug@4.1.0",
+      "destination": "wwwroot/lib/debug/",
+      "files": [
+        "dist/debug.js"
+      ]
+    },
+    {
       "library": "font-awesome@4.7.0",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [

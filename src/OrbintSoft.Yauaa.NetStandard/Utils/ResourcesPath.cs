@@ -26,6 +26,8 @@
 // <summary></summary>
 //-----------------------------------------------------------------------
 
+using System;
+
 namespace OrbintSoft.Yauaa.Utils
 {
     /// <summary>
@@ -33,6 +35,12 @@ namespace OrbintSoft.Yauaa.Utils
     /// </summary>
     public class ResourcesPath
     {
+
+        static ResourcesPath()
+        {
+           // var a = typeof(ResourcesPath).Assembly.GetManifestResourceNames()
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourcesPath"/> class.
         /// </summary>

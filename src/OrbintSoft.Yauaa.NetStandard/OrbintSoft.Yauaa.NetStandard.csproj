@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.5-beta.1</Version>
-    <AssemblyVersion>5.5.1.1</AssemblyVersion>
-    <FileVersion>5.5.1.1</FileVersion>
+    <Version>5.5-beta.2</Version>
+    <AssemblyVersion>5.5.1.2</AssemblyVersion>
+    <FileVersion>5.5.1.2</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -18,11 +18,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <IsPackable>true</IsPackable>
-    <PackageVersion>$(Version)</PackageVersion>
-    <PackageId>OrbintSoft.Yauaa.NetStandard</PackageId>
+	<IsPackable>true</IsPackable>
+	<PackageVersion>$(Version)</PackageVersion>    
+	<PackageId>OrbintSoft.Yauaa.NetStandard</PackageId>    
+	<Authors>Stefano Balzarotti, Niels Basjes</Authors>
 	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
-    <Authors>Stefano Balzarotti, Niels Basjes</Authors>
     <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
 
 The library provides a reliable and extensible user agent parsing, browser and device detection.
@@ -32,9 +32,8 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
-    <PackageReleaseNotes></PackageReleaseNotes>
-	<PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
-    <PackageOutputPath>$(OutputPath)</PackageOutputPath>
+    <PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
+	<PackageReleaseNotes></PackageReleaseNotes>	
 	<IncludeSymbols>true</IncludeSymbols>
 	<IncludeSource>true</IncludeSource>
 	<IsTool>false</IsTool>
@@ -45,7 +44,7 @@ The library provides a reliable and extensible user agent parsing, browser and d
 	<IncludeBuildOutput>true</IncludeBuildOutput>
 	<IncludeContentInPack>true</IncludeContentInPack>
 	<BuildOutputTargetFolder></BuildOutputTargetFolder>
-	<ContentTargetFolders>content;contentFiles</ContentTargetFolders>
+	<ContentTargetFolders>content;contentFiles;</ContentTargetFolders>
 	<NuspecFile></NuspecFile>
 	<NuspecBasePath></NuspecBasePath>
 	<NuspecProperties>test=test1</NuspecProperties>
@@ -153,232 +152,384 @@ The library provides a reliable and extensible user agent parsing, browser and d
 
   <ItemGroup>
     <Content Include="YamlResources\UserAgents\Alcatel.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Amazon.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\AmazonDevices.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Android.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\AndroidDeviceOverrides.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Anonymized.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Apple.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\AppleTypes.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\AppleTypesBasic.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\AppleWebview.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Apps.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Asus.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Bada.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\BlackBerry.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\BrokenUseragents.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\CPUTypes.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Cubot.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\eBook.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\EMailClients.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Facebook-OsMeta.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Facebook.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\GameConsoles.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\GeckoFirefox.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\GoannaPaleMoon.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\GoogleChrome.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\GoogleChrome70.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\GoogleFavicon.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\GooglePixel.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Hackers-SQLInjections.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Hackers.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Huawei.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\InternetExplorer.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\ISOLanguageCode-tests.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\ISOLanguageCode.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="YamlResources\UserAgents\Konqueror.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	<Content Include="YamlResources\UserAgents\Konqueror.yaml">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Lenovo-Tests.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\LG.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Linux.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Maxthon.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Meizu.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Mobile.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\MobileBrand-tests.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\MobileBrands.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Mozilla-Testcases.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Nokia.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Opera.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\OperatingSystemDeviceNames.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Oppo.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\OtherOS.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Otter.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Robots-Bing.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Robots-Google.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Robots.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Safari.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Samsung.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\SecurityFlag.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\SettopBox.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Sony.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\SpecialBrowsers.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Tencent.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\TV.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Ubuntu.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\UbuntuVersionLookups.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\URL.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\UUID.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Vodafone.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Watches.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Wiko.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Windows.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\WindowsCE.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\WindowsDesktopLookups.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\WindowsOEM-tests.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\WindowsOEMCodes.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\WindowsPhone.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\WindowsPhoneLookups.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Xiaomi.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -398,33 +549,11 @@ The library provides a reliable and extensible user agent parsing, browser and d
     </PackageReference>
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="4.9.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
     <PackageReference Include="YamlDotNet.Signed" Version="5.3.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Analyze\Matcher.cs">
-      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Update="Analyze\TreeWalker\Steps\Compare\StepStartsWith.cs">
-      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Update="Analyze\TreeWalker\Steps\Value\StepCleanVersion.cs">
-      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Update="Analyze\TreeWalker\Steps\Value\StepConcat.cs">
-      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Update="Parse\UserAgentTreeFlattener.cs">
-      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
-    <Compile Update="Utils\YamlUtils.cs">
-      <ExcludeFromSourceAnalysis>True</ExcludeFromSourceAnalysis>
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
-    </Compile>
   </ItemGroup>
 </Project>
