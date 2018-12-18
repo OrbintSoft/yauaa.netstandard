@@ -22,9 +22,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.3.0" />
-    <PackageReference Include="OrbintSoft.Yauaa.NetStandard" Version="5.5.0-beta.1">
-		<IncludeAssets>all</IncludeAssets>
-	</PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj" />
   </ItemGroup>
 
   <ItemGroup>

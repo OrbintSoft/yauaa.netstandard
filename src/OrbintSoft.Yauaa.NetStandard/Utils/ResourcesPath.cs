@@ -27,6 +27,7 @@
 //-----------------------------------------------------------------------
 
 using System;
+using System.IO;
 
 namespace OrbintSoft.Yauaa.Utils
 {
@@ -36,10 +37,7 @@ namespace OrbintSoft.Yauaa.Utils
     public class ResourcesPath
     {
 
-        static ResourcesPath()
-        {
-           // var a = typeof(ResourcesPath).Assembly.GetManifestResourceNames()
-        }
+        public static string BasePath { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourcesPath"/> class.
@@ -48,6 +46,11 @@ namespace OrbintSoft.Yauaa.Utils
         /// <param name="filter">The filter<see cref="string"/></param>
         public ResourcesPath(string directory, string filter = ".yaml")
         {
+            if (!Path.IsPathRooted(directory))
+            {
+                directory = Path.Combine(BasePath, directory);
+            }
+
             this.Directory = directory;
             this.Filter = filter;
         }
