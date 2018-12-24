@@ -5,9 +5,15 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Stefano Balzarotti</Authors>
     <Company>OrbintSoft</Company>
-    <AssemblyVersion>5.5.1.2</AssemblyVersion>
-    <FileVersion>5.5.1.2</FileVersion>
-    <Version>0.0-alpha.1</Version>
+    <AssemblyVersion>5.5.2.1</AssemblyVersion>
+    <FileVersion>5.5.2.1</FileVersion>
+    <Version>5.5-rc.1</Version>
+    <Description>A sample web project to test Yauaa Parser</Description>
+    <Copyright>Copyright (C) 2013-2018 OrbintSoft</Copyright>
+    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,6 +45,10 @@
     <None Include="wwwroot\favicon.ico" />
     <None Include="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
     <None Include="wwwroot\lib\twitter-bootstrap\js\bootstrap.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj" />
   </ItemGroup>
 
 </Project>

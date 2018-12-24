@@ -9,11 +9,11 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.5-beta.3</Version>
+    <Version>5.5-rc.1</Version>
 
-    <AssemblyVersion>5.5.1.3</AssemblyVersion>
+    <AssemblyVersion>5.5.2.1</AssemblyVersion>
 
-    <FileVersion>5.5.1.3</FileVersion>
+    <FileVersion>5.5.2.1</FileVersion>
 
     <NeutralLanguage>en</NeutralLanguage>
 

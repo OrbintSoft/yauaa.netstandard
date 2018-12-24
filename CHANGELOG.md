@@ -6,6 +6,7 @@ v5.5
 - Fixed the Chrome 70 pattern for many brands
 - Detect Alibaba Apps (like DingTalk)
 - Fixed nuget packing problem, yaml definitions aren't copied automatically to output folder
+- Released a sample ASP.NET Core 2.2 web app to parse the user agent
 
 v5.4
 ===

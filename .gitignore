@@ -17,3 +17,5 @@
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/bin
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/obj
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/wwwroot/lib
+/src/OrbintSoft.Yauaa.WebSample.AspNetCore/publicsuffix.txt
+/src/OrbintSoft.Yauaa.WebSample.AspNetCore/*.user
