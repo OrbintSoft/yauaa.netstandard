@@ -533,15 +533,15 @@ The library provides a reliable and extensible user agent parsing, browser and d
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr4" Version="4.6.5">
+    <PackageReference Include="Antlr4" Version="4.6.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.5">
+    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Antlr4.Runtime" Version="4.6.5" />
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
     <PackageReference Include="DomainParser.Library.NetStandard" Version="1.6.0" />
     <PackageReference Include="GitInfo" Version="2.0.20">
       <PrivateAssets>all</PrivateAssets>

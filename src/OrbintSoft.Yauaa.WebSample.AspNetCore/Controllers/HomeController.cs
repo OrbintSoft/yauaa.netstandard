@@ -12,7 +12,7 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return this.View();
         }
     }
 }
