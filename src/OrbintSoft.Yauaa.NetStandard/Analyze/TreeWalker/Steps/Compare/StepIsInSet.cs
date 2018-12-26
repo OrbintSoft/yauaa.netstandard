@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,10 +28,10 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
 {
-    using Antlr4.Runtime.Tree;
     using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Antlr4.Runtime.Tree;
 
     /// <summary>
     /// Defines the <see cref="StepIsInSet" />
@@ -52,20 +52,31 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <summary>
         /// Initializes a new instance of the <see cref="StepIsInSet"/> class.
         /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public StepIsInSet(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            this.listName = (string)info.GetValue("listName", typeof(string));
+            this.list = (ISet<string>)info.GetValue("list", typeof(ISet<string>));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepIsInSet"/> class.
+        /// </summary>
         /// <param name="listName">The listName<see cref="string"/></param>
-        /// <param name="list">The list<see cref="ISet{string}"/></param>
+        /// <param name="list">The list</param>
         public StepIsInSet(string listName, ISet<string> list)
         {
             this.listName = listName;
             this.list = list;
         }
 
-        public StepIsInSet(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-            this.listName = (string)info.GetValue("listName", typeof(string));
-            this.list = (ISet<string>)info.GetValue("list", typeof(ISet<string>));
-        }
-
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

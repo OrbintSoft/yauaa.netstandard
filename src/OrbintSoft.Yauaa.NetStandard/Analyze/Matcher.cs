@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,13 +28,13 @@
 
 namespace OrbintSoft.Yauaa.Analyze
 {
-    using log4net;
-    using OrbintSoft.Yauaa.Analyzer;
-    using OrbintSoft.Yauaa.Utils;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyzer;
+    using OrbintSoft.Yauaa.Utils;
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
@@ -54,24 +54,9 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly IAnalyzer analyzer;
 
         /// <summary>
-        /// Defines the variableActions
-        /// </summary>
-        private readonly IList<MatcherVariableAction> variableActions;
-
-        /// <summary>
         /// Defines the fixedStringActions
         /// </summary>
         private readonly IList<MatcherAction> fixedStringActions;
-
-        /// <summary>
-        /// Defines the newValuesUserAgent
-        /// </summary>
-        private readonly UserAgent newValuesUserAgent = new UserAgent();
-
-        /// <summary>
-        /// Defines the matcherSourceLocation
-        /// </summary>
-        private readonly string matcherSourceLocation;
 
         /// <summary>
         /// Defines the informMatcherActionsAboutVariables
@@ -79,9 +64,24 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
 
         /// <summary>
+        /// Defines the matcherSourceLocation
+        /// </summary>
+        private readonly string matcherSourceLocation;
+
+        /// <summary>
+        /// Defines the newValuesUserAgent
+        /// </summary>
+        private readonly UserAgent newValuesUserAgent = new UserAgent();
+
+        /// <summary>
         /// Defines the permanentVerbose
         /// </summary>
         private readonly bool permanentVerbose = false;
+
+        /// <summary>
+        /// Defines the variableActions
+        /// </summary>
+        private readonly IList<MatcherVariableAction> variableActions;
 
         /// <summary>
         /// Defines the actionsThatRequireInput
@@ -89,22 +89,22 @@ namespace OrbintSoft.Yauaa.Analyze
         private long actionsThatRequireInput = 0;
 
         /// <summary>
-        /// Defines the dynamicActions
-        /// </summary>
-        private IList<MatcherAction> dynamicActions = null;
-
-        /// <summary>
         /// Defines the actionsThatRequireInputAndReceivedInput
         /// </summary>
         private long actionsThatRequireInputAndReceivedInput = 0;
 
         /// <summary>
+        /// Defines the dynamicActions
+        /// </summary>
+        private IList<MatcherAction> dynamicActions = null;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
         /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/></param>
-        /// <param name="lookups">The lookups<see cref="IDictionary{string, IDictionary{string, string}}"/></param>
-        /// <param name="lookupSets">The lookupSets<see cref="IDictionary{string, ISet{string}}"/></param>
-        /// <param name="wantedFieldNames">The wantedFieldNames<see cref="IList{string}"/></param>
+        /// <param name="lookups">The lookups</param>
+        /// <param name="lookupSets">The lookupSets</param>
+        /// <param name="wantedFieldNames">The wantedFieldNames</param>
         /// <param name="matcherConfig">The matcherConfig<see cref="YamlMappingNode"/></param>
         /// <param name="filename">The filename<see cref="string"/></param>
         public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, IList<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
@@ -250,8 +250,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
         /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/></param>
-        /// <param name="lookups">The lookups<see cref="IDictionary{string, IDictionary{string, string}}"/></param>
-        /// <param name="lookupSets">The lookupSets<see cref="IDictionary{string, ISet{string}}"/></param>
+        /// <param name="lookups">The lookups</param>
+        /// <param name="lookupSets">The lookupSets</param>
         internal Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets)
         {
             this.Lookups = lookups;
@@ -276,141 +276,6 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Gets a value indicating whether Verbose
         /// </summary>
         public bool Verbose { get; private set; } = false;
-
-        /// <summary>
-        /// The Initialize
-        /// </summary>
-        public void Initialize()
-        {
-            try
-            {
-                foreach (var item in this.variableActions)
-                {
-                    item.Initialize();
-                }
-            }
-            catch (InvalidParserConfigurationException e)
-            {
-                throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")", e);
-            }
-
-            var uselessRequireActions = new HashSet<MatcherAction>();
-            foreach (var dynamicAction in this.dynamicActions)
-            {
-                try
-                {
-                    dynamicAction.Initialize();
-                }
-                catch (InvalidParserConfigurationException e)
-                {
-                    if (!e.Message.StartsWith("It is useless to put a fixed value"))
-                    {
-                        // Ignore fixed values in require
-                        throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")" + e.Message, e);
-                    }
-
-                    uselessRequireActions.Add(dynamicAction);
-                }
-            }
-
-            foreach (var action in this.dynamicActions)
-            {
-                if (action is MatcherExtractAction)
-                {
-                    if (((MatcherExtractAction)action).IsFixedValue())
-                    {
-                        this.fixedStringActions.Add(action);
-                        action.ObtainResult();
-                    }
-                }
-            }
-
-            foreach (var item in this.fixedStringActions)
-            {
-                this.dynamicActions.Remove(item);
-            }
-
-
-            uselessRequireActions.ToList().ForEach(u => this.dynamicActions.Remove(u));
-
-            // Verify that a variable only contains the variables that have been defined BEFORE it (also not referencing itself).
-            // If all is ok we link them
-            var seenVariables = new HashSet<MatcherAction>();
-            foreach (var variableAction in this.variableActions)
-            {
-                seenVariables.Add(variableAction); // Add myself
-                var variableName = variableAction.VariableName;
-                if (this.informMatcherActionsAboutVariables.ContainsKey(variableName) && this.informMatcherActionsAboutVariables[variableName].Count > 0)
-                {
-                    var interestedActions = this.informMatcherActionsAboutVariables[variableName];
-                    variableAction.SetInterestedActions(interestedActions);
-                    foreach (var interestedAction in interestedActions)
-                    {
-                        if (seenVariables.Contains(interestedAction))
-                        {
-                            throw new InvalidParserConfigurationException("Syntax error: The line >>" + interestedAction + "<< " +
-                                "is referencing variable @" + variableAction.VariableName + " which is not defined yet.");
-                        }
-                    }
-                }
-            }
-
-            var allDynamicActions = new List<MatcherAction>();
-            allDynamicActions.AddRange(this.variableActions);
-            allDynamicActions.AddRange(this.dynamicActions);
-            this.dynamicActions = allDynamicActions;
-
-            this.actionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
-
-            if (this.Verbose)
-            {
-                Log.Info("---------------------------");
-            }
-        }
-
-        /// <summary>
-        /// The GetAllPossibleFieldNames
-        /// </summary>
-        /// <returns>The <see cref="ISet{string}"/></returns>
-        public ISet<string> GetAllPossibleFieldNames()
-        {
-            var results = new SortedSet<string>();
-            results.UnionWith(this.GetAllPossibleFieldNames(this.dynamicActions));
-            results.UnionWith(this.GetAllPossibleFieldNames(this.fixedStringActions));
-            results.Remove(UserAgent.SET_ALL_FIELDS);
-            return results;
-        }
-
-        /// <summary>
-        /// The LookingForRange
-        /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
-        public virtual void LookingForRange(string treeName, WordRangeVisitor.Range range)
-        {
-            this.analyzer.LookingForRange(treeName, range);
-        }
-
-        /// <summary>
-        /// The InformMeAbout
-        /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
-        public virtual void InformMeAbout(MatcherAction matcherAction, string keyPattern)
-        {
-            this.analyzer.InformMeAbout(matcherAction, keyPattern);
-        }
-
-        /// <summary>
-        /// The InformMeAboutPrefix
-        /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
-        /// <param name="prefix">The prefix<see cref="string"/></param>
-        public virtual void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
-        {
-            this.analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
-        }
 
         /// <summary>
         /// Fires all matcher actions.
@@ -475,35 +340,22 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The SetVerboseTemporarily
+        /// The GetAllPossibleFieldNames
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
-        public void SetVerboseTemporarily(bool newVerbose)
+        /// <returns>All possible field names</returns>
+        public ISet<string> GetAllPossibleFieldNames()
         {
-            foreach (var action in this.dynamicActions)
-            {
-                action.SetVerbose(newVerbose, true);
-            }
-        }
-
-        /// <summary>
-        /// The Reset
-        /// </summary>
-        public void Reset()
-        {
-            // If there are no dynamic actions we have fixed strings only
-            this.actionsThatRequireInputAndReceivedInput = 0;
-            this.Verbose = this.permanentVerbose;
-            foreach (var action in this.dynamicActions)
-            {
-                action.Reset();
-            }
+            var results = new SortedSet<string>();
+            results.UnionWith(this.GetAllPossibleFieldNames(this.dynamicActions));
+            results.UnionWith(this.GetAllPossibleFieldNames(this.fixedStringActions));
+            results.Remove(UserAgent.SET_ALL_FIELDS);
+            return results;
         }
 
         /// <summary>
         /// The GetMatches
         /// </summary>
-        /// <returns>The <see cref="IList{MatchesList.Match}"/></returns>
+        /// <returns>The list of matchers/></returns>
         public IList<MatchesList.Match> GetMatches()
         {
             var allMatches = new List<MatchesList.Match>();
@@ -518,7 +370,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// The GetUsedMatches
         /// </summary>
-        /// <returns>The <see cref="IList{MatchesList.Match}"/></returns>
+        /// <returns>The list of matchers</returns>
         public IList<MatchesList.Match> GetUsedMatches()
         {
             var allMatches = new List<MatchesList.Match>();
@@ -543,6 +395,153 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             return allMatches;
+        }
+
+        /// <summary>
+        /// The InformMeAbout
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
+        public virtual void InformMeAbout(MatcherAction matcherAction, string keyPattern)
+        {
+            this.analyzer.InformMeAbout(matcherAction, keyPattern);
+        }
+
+        /// <summary>
+        /// The InformMeAboutPrefix
+        /// </summary>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
+        /// <param name="prefix">The prefix<see cref="string"/></param>
+        public virtual void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
+        {
+            this.analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
+        }
+
+        /// <summary>
+        /// The Initialize
+        /// </summary>
+        public void Initialize()
+        {
+            try
+            {
+                foreach (var item in this.variableActions)
+                {
+                    item.Initialize();
+                }
+            }
+            catch (InvalidParserConfigurationException e)
+            {
+                throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")", e);
+            }
+
+            var uselessRequireActions = new HashSet<MatcherAction>();
+            foreach (var dynamicAction in this.dynamicActions)
+            {
+                try
+                {
+                    dynamicAction.Initialize();
+                }
+                catch (InvalidParserConfigurationException e)
+                {
+                    if (!e.Message.StartsWith("It is useless to put a fixed value"))
+                    {
+                        // Ignore fixed values in require
+                        throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")" + e.Message, e);
+                    }
+
+                    uselessRequireActions.Add(dynamicAction);
+                }
+            }
+
+            foreach (var action in this.dynamicActions)
+            {
+                if (action is MatcherExtractAction)
+                {
+                    if (((MatcherExtractAction)action).IsFixedValue())
+                    {
+                        this.fixedStringActions.Add(action);
+                        action.ObtainResult();
+                    }
+                }
+            }
+
+            foreach (var item in this.fixedStringActions)
+            {
+                this.dynamicActions.Remove(item);
+            }
+
+            uselessRequireActions.ToList().ForEach(u => this.dynamicActions.Remove(u));
+
+            // Verify that a variable only contains the variables that have been defined BEFORE it (also not referencing itself).
+            // If all is ok we link them
+            var seenVariables = new HashSet<MatcherAction>();
+            foreach (var variableAction in this.variableActions)
+            {
+                seenVariables.Add(variableAction); // Add myself
+                var variableName = variableAction.VariableName;
+                if (this.informMatcherActionsAboutVariables.ContainsKey(variableName) && this.informMatcherActionsAboutVariables[variableName].Count > 0)
+                {
+                    var interestedActions = this.informMatcherActionsAboutVariables[variableName];
+                    variableAction.SetInterestedActions(interestedActions);
+                    foreach (var interestedAction in interestedActions)
+                    {
+                        if (seenVariables.Contains(interestedAction))
+                        {
+                            throw new InvalidParserConfigurationException("Syntax error: The line >>" + interestedAction + "<< " +
+                                "is referencing variable @" + variableAction.VariableName + " which is not defined yet.");
+                        }
+                    }
+                }
+            }
+
+            var allDynamicActions = new List<MatcherAction>();
+            allDynamicActions.AddRange(this.variableActions);
+            allDynamicActions.AddRange(this.dynamicActions);
+            this.dynamicActions = allDynamicActions;
+
+            this.actionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
+
+            if (this.Verbose)
+            {
+                Log.Info("---------------------------");
+            }
+        }
+
+        /// <summary>
+        /// The LookingForRange
+        /// </summary>
+        /// <param name="treeName">The treeName<see cref="string"/></param>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
+        public virtual void LookingForRange(string treeName, WordRangeVisitor.Range range)
+        {
+            this.analyzer.LookingForRange(treeName, range);
+        }
+
+        /// <summary>
+        /// The Reset
+        /// </summary>
+        public void Reset()
+        {
+            // If there are no dynamic actions we have fixed strings only
+            this.actionsThatRequireInputAndReceivedInput = 0;
+            this.Verbose = this.permanentVerbose;
+            foreach (var action in this.dynamicActions)
+            {
+                action.Reset();
+            }
+        }
+
+        /// <summary>
+        /// The SetVerboseTemporarily
+        /// </summary>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        public void SetVerboseTemporarily(bool newVerbose)
+        {
+            foreach (var action in this.dynamicActions)
+            {
+                action.SetVerbose(newVerbose, true);
+            }
         }
 
         /// <summary>
@@ -592,6 +591,14 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
+        /// The GotMyFirstStartingPoint
+        /// </summary>
+        internal void GotMyFirstStartingPoint()
+        {
+            this.actionsThatRequireInputAndReceivedInput++;
+        }
+
+        /// <summary>
         /// The InformMeAboutVariable
         /// </summary>
         /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
@@ -605,14 +612,6 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             this.informMatcherActionsAboutVariables[variableName].Add(matcherAction);
-        }
-
-        /// <summary>
-        /// The GotMyFirstStartingPoint
-        /// </summary>
-        internal void GotMyFirstStartingPoint()
-        {
-            this.actionsThatRequireInputAndReceivedInput++;
         }
 
         /// <summary>
@@ -640,7 +639,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// The GetAllPossibleFieldNames
         /// </summary>
         /// <param name="actions">The actions<see cref="IList{MatcherAction}"/></param>
-        /// <returns>The <see cref="ISet{string}"/></returns>
+        /// <returns>The possible field names</returns>
         private ISet<string> GetAllPossibleFieldNames(IList<MatcherAction> actions)
         {
             var results = new HashSet<string>();
@@ -661,32 +660,12 @@ namespace OrbintSoft.Yauaa.Analyze
         internal class ConfigLine
         {
             /// <summary>
-            /// Defines the Type
-            /// </summary>
-            public readonly ConfigType Type;
-
-            /// <summary>
-            /// Defines the Attribute
-            /// </summary>
-            public readonly string Attribute;
-
-            /// <summary>
-            /// Defines the Confidence
-            /// </summary>
-            public readonly long? Confidence;
-
-            /// <summary>
-            /// Defines the Expression
-            /// </summary>
-            public readonly string Expression;
-
-            /// <summary>
             /// Initializes a new instance of the <see cref="ConfigLine"/> class.
             /// </summary>
             /// <param name="type">The type<see cref="ConfigType"/></param>
             /// <param name="attribute">The attribute<see cref="string"/></param>
-            /// <param name="confidence">The confidence<see cref="long?"/></param>
-            /// <param name="expression">The expression<see cref="string"/></param>
+            /// <param name="confidence">The confidence/></param>
+            /// <param name="expression">The expression/></param>
             public ConfigLine(ConfigType type, string attribute, long? confidence, string expression)
             {
                 this.Type = type;
@@ -704,15 +683,37 @@ namespace OrbintSoft.Yauaa.Analyze
                 /// Defines the VARIABLE
                 /// </summary>
                 VARIABLE = 2,
+
                 /// <summary>
                 /// Defines the REQUIRE
                 /// </summary>
                 REQUIRE = 1,
+
                 /// <summary>
                 /// Defines the EXTRACT
                 /// </summary>
                 EXTRACT = 0
             }
+
+            /// <summary>
+            /// Gets the Attribute
+            /// </summary>
+            public string Attribute { get; }
+
+            /// <summary>
+            /// Gets the Confidence
+            /// </summary>
+            public long? Confidence { get; }
+
+            /// <summary>
+            /// Gets the Expression
+            /// </summary>
+            public string Expression { get; }
+
+            /// <summary>
+            /// Gets the Type
+            /// </summary>
+            public ConfigType Type { get; }
         }
     }
 }

@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,9 +28,9 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
 {
-    using Antlr4.Runtime.Tree;
     using System;
     using System.Runtime.Serialization;
+    using Antlr4.Runtime.Tree;
 
     /// <summary>
     /// Defines the <see cref="StepIsNull" />
@@ -38,13 +38,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     [Serializable]
     public class StepIsNull : Step
     {
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepIsNull"/> class.
+        /// </summary>
         public StepIsNull()
         {
-
         }
 
-        public StepIsNull(SerializationInfo info, StreamingContext context) : base(info, context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepIsNull"/> class.
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public StepIsNull(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
         }
 

@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,20 +28,20 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
 {
+    using System;
+    using System.Runtime.Serialization;
+    using System.Text;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Tree;
     using log4net;
     using OrbintSoft.Yauaa.Antlr4Source;
     using OrbintSoft.Yauaa.Utils;
-    using System;
-    using System.Runtime.Serialization;
-    using System.Text;
 
     /// <summary>
     /// Defines the <see cref="Step" />
     /// </summary>
     [Serializable]
-    public abstract class Step: ISerializable
+    public abstract class Step : ISerializable
     {
         /// <summary>
         /// Defines the Log
@@ -53,11 +53,18 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// </summary>
         private int stepNr = 0;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Step"/> class.
+        /// </summary>
         public Step()
         {
-
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Step"/> class.
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
         public Step(SerializationInfo info, StreamingContext context)
         {
             this.Logprefix = (string)info.GetValue("Logprefix", typeof(string));
@@ -65,7 +72,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             this.NextStep = (Step)info.GetValue("NextStep", typeof(Step));
             this.stepNr = (int)info.GetValue("stepNr", typeof(int));
         }
-
 
         /// <summary>
         /// Gets the NextStep
@@ -82,11 +88,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// <summary>
         /// Gets or sets a value indicating whether Verbose
         /// </summary>
-#if VERBOSE
-        protected bool Verbose { get; set; } = true;
-#else
         protected bool Verbose { get; set; } = false;
-#endif
+
         /// <summary>
         /// The TreeIsSeparator
         /// </summary>
@@ -108,6 +111,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             return true; // Default is to assume the step is always needed.
         }
 
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Logprefix", this.Logprefix, typeof(string));
@@ -131,7 +139,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 sb.Append("-->");
             }
 
-            this.Logprefix = sb.ToString();           
+            this.Logprefix = sb.ToString();
         }
 
         /// <summary>

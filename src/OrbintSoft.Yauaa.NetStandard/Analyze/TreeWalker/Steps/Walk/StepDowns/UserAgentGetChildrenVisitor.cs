@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,14 +28,14 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
 {
-    using Antlr4.Runtime;
-    using Antlr4.Runtime.Misc;
-    using Antlr4.Runtime.Tree;
-    using OrbintSoft.Yauaa.Antlr4Source;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Misc;
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
     /// Defines the <see cref="UserAgentGetChildrenVisitor" />
@@ -75,10 +75,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <param name="context">The context<see cref="StreamingContext"/></param>
         public UserAgentGetChildrenVisitor(SerializationInfo info, StreamingContext context)
         {
-            name = (string)info.GetValue("name", typeof(string));
-            start = (int)info.GetValue("start", typeof(int));
-            end = (int)info.GetValue("end", typeof(int));
-            Init(name, start, end);
+            this.name = (string)info.GetValue("name", typeof(string));
+            this.start = (int)info.GetValue("start", typeof(int));
+            this.end = (int)info.GetValue("end", typeof(int));
+            this.Init(this.name, this.start, this.end);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             this.name = name;
             this.start = start;
             this.end = end;
-            Init(name, start, end);
+            this.Init(name, start, end);
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <param name="context">The context<see cref="StreamingContext"/></param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("name", name, typeof(string));
-            info.AddValue("start", start, typeof(int));
-            info.AddValue("end", end, typeof(int));
+            info.AddValue("name", this.name, typeof(string));
+            info.AddValue("start", this.start, typeof(int));
+            info.AddValue("end", this.end, typeof(int));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitKeyValue([NotNull] UserAgentParser.KeyValueContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitProduct([NotNull] UserAgentParser.ProductContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitProductName([NotNull] UserAgentParser.ProductNameContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
         {
-            switch (name)
+            switch (this.name)
             {
                 case "key":
                     var list = new List<ParserRuleContext>() { context.key };
@@ -228,7 +228,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                     children = context.uuId().Select(s => s as IParseTree).ToList();
                     return children.GetEnumerator();
                 default:
-                    return GetChildrenByName(context);
+                    return this.GetChildrenByName(context);
             }
         }
 
@@ -239,7 +239,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitRootElements([NotNull] UserAgentParser.RootElementsContext context)
         {
-            return GetChildrenByName(context);
+            return this.GetChildrenByName(context);
         }
 
         /// <summary>
@@ -279,11 +279,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         public override IEnumerator<IParseTree> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
-            IEnumerator<IParseTree> children = GetChildrenByName(context);
+            IEnumerator<IParseTree> children = this.GetChildrenByName(context);
             if (!children.MoveNext() && children.Current == null)
             {
-                return VisitChildren(context);
+                return this.VisitChildren(context);
             }
+
             return children;
         }
 
@@ -294,7 +295,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
         internal IEnumerator<IParseTree> GetChildrenByName(ParserRuleContext ctx)
         {
-            return childIterable.Iterator(ctx);
+            return this.childIterable.Iterator(ctx);
         }
 
         /// <summary>
@@ -308,44 +309,44 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             switch (name)
             {
                 case "keyvalue":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.KeyValueContext ||
                         clazz is UserAgentParser.KeyWithoutValueContext ||
                         clazz is UserAgentParser.ProductNameKeyValueContext));
                     break;
 
                 case "product":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.ProductContext ||
                         clazz is UserAgentParser.CommentProductContext ||
                         clazz is UserAgentParser.ProductNameNoVersionContext));
                     break;
 
                 case "uuid":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.UuIdContext ||
                         clazz is UserAgentParser.ProductNameUuidContext));
                     break;
 
                 case "base64":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.Base64Context));
                     break;
 
                 case "url":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.SiteUrlContext ||
                         clazz is UserAgentParser.ProductNameUrlContext));
                     break;
 
                 case "email":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.EmailAddressContext ||
                         clazz is UserAgentParser.ProductNameEmailContext));
                     break;
 
                 case "text":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.MultipleWordsContext ||
                         clazz is UserAgentParser.VersionWordsContext ||
                         clazz is UserAgentParser.EmptyWordContext ||
@@ -354,12 +355,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                     break;
 
                 case "name":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.ProductNameContext));
                     break;
 
                 case "version":
-                    childIterable = new ChildIterable(true, start, end, clazz => (
+                    this.childIterable = new ChildIterable(true, start, end, clazz => (
                         clazz is UserAgentParser.ProductVersionContext ||
                         clazz is UserAgentParser.ProductVersionWithCommasContext ||
                         clazz is UserAgentParser.ProductVersionWordsContext ||
@@ -367,17 +368,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                     break;
 
                 case "comments":
-                    childIterable = new ChildIterable(true, start, end, clazz => (
+                    this.childIterable = new ChildIterable(true, start, end, clazz => (
                         clazz is UserAgentParser.CommentBlockContext));
                     break;
 
                 case "key":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.KeyNameContext));
                     break;
 
                 case "value":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.UuIdContext ||
                         clazz is UserAgentParser.MultipleWordsContext ||
                         clazz is UserAgentParser.SiteUrlContext ||
@@ -387,12 +388,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                     break;
 
                 case "entry":
-                    childIterable = new ChildIterable(false, start, end, clazz => (
+                    this.childIterable = new ChildIterable(false, start, end, clazz => (
                         clazz is UserAgentParser.CommentEntryContext));
                     break;
 
                 default:
-                    childIterable = new ChildIterable(false, start, end, clazz => (false));
+                    this.childIterable = new ChildIterable(false, start, end, clazz => false);
                     break;
             }
         }

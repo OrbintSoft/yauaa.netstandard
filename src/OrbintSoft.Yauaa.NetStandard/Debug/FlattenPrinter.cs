@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -27,11 +27,11 @@
 //-----------------------------------------------------------------------
 namespace OrbintSoft.Yauaa.Debug
 {
-    using Antlr4.Runtime.Tree;
-    using OrbintSoft.Yauaa.Analyze;
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Analyze;
 
     /// <summary>
     /// Defines the <see cref="FlattenPrinter" />
@@ -88,7 +88,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// The GetRequiredInformRanges
         /// </summary>
         /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
+        /// <returns>The range</returns>
         public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
         {
             // Never called
@@ -110,7 +110,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// The GetRequiredPrefixLengths
         /// </summary>
         /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The <see cref="ISet{int?}"/></returns>
+        /// <returns>The required prefix lenghts</returns>
         public ISet<int?> GetRequiredPrefixLengths(string treeName)
         {
             // Never called

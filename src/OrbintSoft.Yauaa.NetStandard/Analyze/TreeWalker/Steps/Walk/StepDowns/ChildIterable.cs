@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,11 +28,11 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
 {
-    using Antlr4.Runtime;
-    using Antlr4.Runtime.Tree;
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Antlr4.Runtime;
+    using Antlr4.Runtime.Tree;
 
     /// <summary>
     /// Defines the <see cref="ChildIterable" />
@@ -163,23 +163,28 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                         {
                             continue;
                         }
+
                         if (!this.childIterable.privateNumberRange)
                         {
                             this.index++;
                         }
+
                         if (!this.childIterable.isWantedClassPredicate(nextParseTree))
                         {
                             continue;
                         }
+
                         if (this.childIterable.privateNumberRange)
                         {
                             this.index++;
                         }
+
                         if (this.index + 1 > this.childIterable.end)
                         {
                             this.Current = null;
                             return false;
                         }
+
                         if (this.childIterable.start <= this.index + 1)
                         {
                             this.Current = nextParseTree;
@@ -187,6 +192,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
                         }
                     }
                 }
+
                 // We found nothing
                 this.Current = null;
                 return false;

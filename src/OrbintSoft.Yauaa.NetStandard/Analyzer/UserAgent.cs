@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:51</date>
@@ -28,6 +28,10 @@
 
 namespace OrbintSoft.Yauaa.Analyzer
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Atn;
     using Antlr4.Runtime.Dfa;
@@ -36,10 +40,6 @@ namespace OrbintSoft.Yauaa.Analyzer
     using Newtonsoft.Json;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Antlr4Source;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Defines the <see cref="UserAgent" />
@@ -397,7 +397,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// The GetAvailableFieldNames
         /// </summary>
-        /// <returns>The <see cref="List{string}"/></returns>
+        /// <returns>The list of available field names</returns>
         public IList<string> GetAvailableFieldNames()
         {
             var resultSet = new List<string>(this.allFields.Count + 10);
@@ -422,7 +422,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// The GetAvailableFieldNamesSorted
         /// </summary>
-        /// <returns>The <see cref="List{string}"/></returns>
+        /// <returns>The List of available field names sorted </returns>
         public List<string> GetAvailableFieldNamesSorted()
         {
             var fieldNames = new List<string>(this.GetAvailableFieldNames());
@@ -469,10 +469,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="int"/></returns>
         public override int GetHashCode()
         {
-            var hash = 3060293; // A random number            
+            var hash = 3060293; // A random number
             foreach (var item in this.allFields.Keys)
             {
-                hash = (hash, this.allFields[item], item).GetHashCode();
+                hash = new Tuple<int, AgentField, string>(hash, this.allFields[item], item).GetHashCode();
             }
 
             return ValueTuple.Create(this.userAgentString, hash).GetHashCode();
@@ -701,7 +701,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// The ToJson
         /// </summary>
-        /// <param name="fieldNames">The fieldNames<see cref="List{string}"/></param>
+        /// <param name="fieldNames">The list of fieldNames</param>
         /// <returns>The <see cref="string"/></returns>
         public string ToJson(IList<string> fieldNames)
         {
@@ -751,7 +751,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// The ToString
         /// </summary>
-        /// <param name="fieldNames">The fieldNames<see cref="List{string}"/></param>
+        /// <param name="fieldNames">The list of fieldNames</param>
         /// <returns>The <see cref="string"/></returns>
         public string ToString(IList<string> fieldNames)
         {
@@ -788,7 +788,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// The ToString
         /// </summary>
         /// <param name="fieldName1">The fieldName1<see cref="string"/></param>
-        /// <param name="otherFieldNames">The otherFieldNames<see cref="string[]"/></param>
+        /// <param name="otherFieldNames">The other foeld names"/></param>
         /// <returns>The <see cref="string"/></returns>
         public string ToString(string fieldName1, params string[] otherFieldNames)
         {
@@ -820,7 +820,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// The ToYamlTestCase
         /// </summary>
         /// <param name="showConfidence">The showConfidence<see cref="bool"/></param>
-        /// <param name="comments">The comments<see cref="Dictionary{string, string}"/></param>
+        /// <param name="comments">The comments</param>
         /// <returns>The <see cref="string"/></returns>
         public string ToYamlTestCase(bool showConfidence, Dictionary<string, string> comments)
         {

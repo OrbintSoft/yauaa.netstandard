@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,9 +28,9 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
 {
-    using Antlr4.Runtime.Tree;
     using System;
     using System.Runtime.Serialization;
+    using Antlr4.Runtime.Tree;
 
     /// <summary>
     /// Defines the <see cref="StepNextN" />
@@ -43,11 +43,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// </summary>
         private readonly int steps;
 
-        public StepNextN(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-            this.steps = (int)info.GetValue("steps", typeof(int));
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StepNextN"/> class.
         /// </summary>
@@ -57,6 +52,22 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
             this.steps = steps;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepNextN"/> class.
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public StepNextN(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            this.steps = (int)info.GetValue("steps", typeof(int));
+        }
+
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

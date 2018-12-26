@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -49,19 +49,12 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="bool"/></returns>
         public abstract bool IsEndOfStringSeparator(char c);
 
-        /**
-         * Find the start offset of next split
-         *
-         * @param chars The input in which we are seeking
-         * @param offset The start offset from where to seek
-         * @return The offset of the next split
-         */
         /// <summary>
-        /// The FindNextSplitStart
+        /// The FindNextSplitStart Find the start offset of next split
         /// </summary>
-        /// <param name="chars">The chars<see cref="char[]"/></param>
-        /// <param name="offset">The offset<see cref="int"/></param>
-        /// <returns>The <see cref="int"/></returns>
+        /// <param name="chars">The input in which we are seeking</param>
+        /// <param name="offset">The start offset from where to seek<see cref="int"/></param>
+        /// <returns>The offset of the next split <see cref="int"/></returns>
         public int FindNextSplitStart(char[] chars, int offset)
         {
             for (var charNr = offset; charNr < chars.Length; charNr++)
@@ -81,19 +74,12 @@ namespace OrbintSoft.Yauaa.Utils
             return -1;
         }
 
-        /**
-         * Find the end of the string
-         *
-         * @param chars The input in which we are seeking
-         * @param offset The start offset from where to seek
-         * @return The offset of the last character of the last split.
-         */
         /// <summary>
-        /// The FindEndOfString
+        /// The FindEndOfString find the end of the string
         /// </summary>
-        /// <param name="chars">The chars<see cref="char[]"/></param>
-        /// <param name="offset">The offset<see cref="int"/></param>
-        /// <returns>The <see cref="int"/></returns>
+        /// <param name="chars">The chars input in which we are seeking></param>
+        /// <param name="offset">The start offset from where to seek</param>
+        /// <returns>The offset of the last character of the last split.<see cref="int"/></returns>
         public int FindEndOfString(char[] chars, int offset)
         {
             for (var charNr = offset; charNr < chars.Length; charNr++)
@@ -108,19 +94,12 @@ namespace OrbintSoft.Yauaa.Utils
             return chars.Length;
         }
 
-        /**
-         * Find the start offset of split
-         *
-         * @param chars The input in which we are seeking
-         * @param split  The split number for which we are looking for the start
-         * @return The offset or -1 if it does not exist
-         */
         /// <summary>
-        /// The FindSplitStart
+        /// The FindSplitStart find the start offset of split
         /// </summary>
-        /// <param name="chars">The chars<see cref="char[]"/></param>
-        /// <param name="split">The split<see cref="int"/></param>
-        /// <returns>The <see cref="int"/></returns>
+        /// <param name="chars">The chars input in which we are seeking</param>
+        /// <param name="split">The split number for which we are looking for the start<see cref="int"/></param>
+        /// <returns>The offset or -1 if it does not exist <see cref="int"/></returns>
         public int FindSplitStart(char[] chars, int split)
         {
             if (split <= 0)
@@ -168,7 +147,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// <summary>
         /// The FindSplitEnd
         /// </summary>
-        /// <param name="chars">The chars<see cref="char[]"/></param>
+        /// <param name="chars">The chars</param>
         /// <param name="startOffset">The startOffset<see cref="int"/></param>
         /// <returns>The <see cref="int"/></returns>
         public int FindSplitEnd(char[] chars, int startOffset)
@@ -281,7 +260,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// The GetSplitRange
         /// </summary>
         /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="splitList">The splitList<see cref="IList{Tuple{int, int}}"/></param>
+        /// <param name="splitList">The splitList</param>
         /// <param name="range">The range<see cref="Analyze.WordRangeVisitor.Range"/></param>
         /// <returns>The <see cref="string"/></returns>
         public string GetSplitRange(string value, IList<Tuple<int, int>> splitList, Analyze.WordRangeVisitor.Range range)
@@ -293,7 +272,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// The GetSplitRange
         /// </summary>
         /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="splitList">The splitList<see cref="IList{Tuple{int, int}}"/></param>
+        /// <param name="splitList">The splitList</param>
         /// <param name="first">The first<see cref="int"/></param>
         /// <param name="last">The last<see cref="int"/></param>
         /// <returns>The <see cref="string"/></returns>
@@ -325,7 +304,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// The CreateSplitList
         /// </summary>
         /// <param name="characters">The characters<see cref="string"/></param>
-        /// <returns>The <see cref="IList{Tuple{int, int}}"/></returns>
+        /// <returns>The split list</returns>
         public IList<Tuple<int, int>> CreateSplitList(string characters)
         {
             return this.CreateSplitList(characters.ToCharArray());
@@ -334,8 +313,8 @@ namespace OrbintSoft.Yauaa.Utils
         /// <summary>
         /// The CreateSplitList
         /// </summary>
-        /// <param name="characters">The characters<see cref="char[]"/></param>
-        /// <returns>The <see cref="IList{Tuple{int, int}}"/></returns>
+        /// <param name="characters">The characters</param>
+        /// <returns>The split list</returns>
         public IList<Tuple<int, int>> CreateSplitList(char[] characters)
         {
             var result = new List<Tuple<int, int>>();
@@ -344,7 +323,7 @@ namespace OrbintSoft.Yauaa.Utils
             if (offset == -1)
             {
                 // Nothing at all. So we are already done
-                return result; 
+                return result;
             }
 
             while (offset != -1)

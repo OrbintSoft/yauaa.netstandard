@@ -69,9 +69,12 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
+    <DocumentationFile>S:\Progetti\yauaa.netstandard\src\OrbintSoft.Yauaa.NetStandard\Documentation.xml</DocumentationFile>
+    <NoWarn>1701;1702;SA1310</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="stylecop.json" />
     <None Remove="YamlResources\UserAgents\Alcatel.yaml" />
     <None Remove="YamlResources\UserAgents\Amazon.yaml" />
     <None Remove="YamlResources\UserAgents\AmazonDevices.yaml" />
@@ -148,6 +151,10 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <None Remove="YamlResources\UserAgents\WindowsPhone.yaml" />
     <None Remove="YamlResources\UserAgents\WindowsPhoneLookups.yaml" />
     <None Remove="YamlResources\UserAgents\Xiaomi.yaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -550,6 +557,10 @@ The library provides a reliable and extensible user agent parsing, browser and d
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="NuGet.Build.Tasks.Pack" Version="4.9.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

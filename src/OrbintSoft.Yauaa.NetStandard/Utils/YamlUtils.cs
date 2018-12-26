@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -28,10 +28,10 @@
 
 namespace OrbintSoft.Yauaa.Utils
 {
-    using OrbintSoft.Yauaa.Analyze;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using OrbintSoft.Yauaa.Analyze;
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
@@ -77,7 +77,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// </summary>
         /// <param name="sequenceNode">The sequenceNode<see cref="YamlNode"/></param>
         /// <param name="filename">The filename<see cref="string"/></param>
-        /// <returns>The <see cref="IList{string}"/></returns>
+        /// <returns>The string values</returns>
         public static IList<string> GetStringValues(YamlNode sequenceNode, string filename)
         {
             RequireNodeInstanceOf(typeof(YamlSequenceNode), sequenceNode, filename, "The provided node must be a sequence but it is a " + sequenceNode.NodeType.ToString());

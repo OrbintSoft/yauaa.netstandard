@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,12 +28,12 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
 {
-    using Antlr4.Runtime.Tree;
-    using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns;
-    using OrbintSoft.Yauaa.Antlr4Source;
     using System;
     using System.IO;
     using System.Runtime.Serialization;
+    using Antlr4.Runtime.Tree;
+    using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns;
+    using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
     /// Defines the <see cref="StepDown" />
@@ -65,13 +65,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <summary>
         /// Initializes a new instance of the <see cref="StepDown"/> class.
         /// </summary>
-        /// <param name="numberRange">The numberRange<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/></param>
-        /// <param name="name">The name<see cref="string"/></param>
-        public StepDown(UserAgentTreeWalkerParser.NumberRangeContext numberRange, string name) : this(NumberRangeVisitor.GetList(numberRange), name)
-        {
-        }
-
-        public StepDown(SerializationInfo info, StreamingContext context): base(info, context)
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public StepDown(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
             this.name = (string)info.GetValue("name", typeof(string));
             this.start = (int)info.GetValue("start", typeof(int));
@@ -81,6 +78,16 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepDown"/> class.
+        /// </summary>
+        /// <param name="numberRange">The numberRange<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/></param>
+        /// <param name="name">The name<see cref="string"/></param>
+        public StepDown(UserAgentTreeWalkerParser.NumberRangeContext numberRange, string name)
+            : this(NumberRangeVisitor.GetList(numberRange), name)
+        {
+        }
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="StepDown"/> class from being created.
         /// </summary>
         /// <param name="numberRange">The numberRange<see cref="NumberRangeList"/></param>
         /// <param name="name">The name<see cref="string"/></param>
@@ -92,12 +99,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
             this.SetDefaultFieldValues();
         }
 
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
             info.AddValue("name", this.name, typeof(string));
             info.AddValue("start", this.start, typeof(int));
-            info.AddValue("end", this.end, typeof(int));           
+            info.AddValue("end", this.end, typeof(int));
         }
 
         /// <summary>

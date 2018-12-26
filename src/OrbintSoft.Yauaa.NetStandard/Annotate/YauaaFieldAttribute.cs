@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -35,17 +35,17 @@ namespace OrbintSoft.Yauaa.Annotate
     public sealed class YauaaFieldAttribute : Attribute
     {
         /// <summary>
-        /// Gets or sets the Value
-        /// </summary>
-        public string[] Value { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="YauaaFieldAttribute"/> class.
         /// </summary>
-        /// <param name="value">The value<see cref="string[]"/></param>
+        /// <param name="value">The value</param>
         public YauaaFieldAttribute(params string[] value)
         {
             this.Value = value;
         }
+
+        /// <summary>
+        /// Gets or sets the Value
+        /// </summary>
+        public string[] Value { get; set; }
     }
 }

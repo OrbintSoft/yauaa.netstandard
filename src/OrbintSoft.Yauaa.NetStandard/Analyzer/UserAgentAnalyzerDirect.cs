@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:51</date>
@@ -28,12 +28,6 @@
 
 namespace OrbintSoft.Yauaa.Analyzer
 {
-    using Antlr4.Runtime.Tree;
-    using DomainParser.Library;
-    using log4net;
-    using OrbintSoft.Yauaa.Analyze;
-    using OrbintSoft.Yauaa.Parse;
-    using OrbintSoft.Yauaa.Utils;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -41,6 +35,12 @@ namespace OrbintSoft.Yauaa.Analyzer
     using System.IO;
     using System.Linq;
     using System.Text;
+    using Antlr4.Runtime.Tree;
+    using DomainParser.Library;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyze;
+    using OrbintSoft.Yauaa.Parse;
+    using OrbintSoft.Yauaa.Utils;
     using YamlDotNet.Core;
     using YamlDotNet.RepresentationModel;
 
@@ -222,7 +222,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// The GetAllPaths
         /// </summary>
         /// <param name="agent">The agent<see cref="string"/></param>
-        /// <returns>The <see cref="List{string}"/></returns>
+        /// <returns>The paths</returns>
         public static IList<string> GetAllPaths(string agent)
         {
             return new GetAllPathsAnalyzerClass(agent).Values;
@@ -276,7 +276,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// The GetAllPossibleFieldNames
         /// </summary>
-        /// <returns>The <see cref="SortedSet{string}"/></returns>
+        /// <returns>The field names/></returns>
         public ISet<string> GetAllPossibleFieldNames()
         {
             var results = new SortedSet<string>(HardCodedGeneratedFields);
@@ -291,7 +291,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// The GetAllPossibleFieldNamesSorted
         /// </summary>
-        /// <returns>The <see cref="IList{string}"/></returns>
+        /// <returns>The field names</returns>
         public IList<string> GetAllPossibleFieldNamesSorted()
         {
             var fieldNames = new List<string>(this.GetAllPossibleFieldNames());
@@ -313,7 +313,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// The GetRequiredInformRanges
         /// </summary>
         /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
+        /// <returns>The ranges</returns>
         public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
         {
             if (!this.informMatcherActionRanges.Keys.Contains(treeName))
@@ -328,7 +328,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// The GetRequiredPrefixLengths
         /// </summary>
         /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The <see cref="ISet{int?}"/></returns>
+        /// <returns>The required prefix lenght</returns>
         public ISet<int?> GetRequiredPrefixLengths(string treeName)
         {
             return this.informMatcherActionPrefixesLengths.ContainsKey(treeName) ? this.informMatcherActionPrefixesLengths[treeName] : null;
@@ -470,7 +470,6 @@ namespace OrbintSoft.Yauaa.Analyzer
             {
                 throw new Exception("Refusing to load additional resources after the datastructures have been initialized.");
             }
-
 
             Log.Info(string.Format("Loading from: \"{0}\": \"{1}\"", resourceString, pattern));
 
@@ -1267,7 +1266,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 throw new InvalidParserConfigurationException("The file " + filename + " is empty");
             }
 
-            // Get and check top level config            
+            // Get and check top level config
             YamlUtils.RequireNodeInstanceOf(typeof(YamlMappingNode), loadedYaml, filename, "File must be a Map");
             var rootNode = (YamlMappingNode)loadedYaml;
 
@@ -1614,7 +1613,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// The GetRequiredInformRanges
             /// </summary>
             /// <param name="treeName">The treeName<see cref="string"/></param>
-            /// <returns>The <see cref="ISet{WordRangeVisitor.Range}"/></returns>
+            /// <returns>The ranges</returns>
             public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
             {
                 // Not needed to only get all paths
@@ -1625,7 +1624,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// The GetRequiredPrefixLengths
             /// </summary>
             /// <param name="treeName">The treeName<see cref="string"/></param>
-            /// <returns>The <see cref="ISet{int?}"/></returns>
+            /// <returns>The prefix lengths</returns>
             public ISet<int?> GetRequiredPrefixLengths(string treeName)
             {
                 // Not needed to only get all paths
@@ -1679,7 +1678,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         /// <typeparam name="UAA">the UserAgent Analyzer</typeparam>
         /// <typeparam name="B">the Builder</typeparam>
-        public class UserAgentAnalyzerDirectBuilder<UAA, B> where UAA : UserAgentAnalyzerDirect where B : UserAgentAnalyzerDirectBuilder<UAA, B>
+        public class UserAgentAnalyzerDirectBuilder<UAA, B>
+            where UAA : UserAgentAnalyzerDirect
+            where B : UserAgentAnalyzerDirectBuilder<UAA, B>
         {
             /// <summary>
             /// Defines the resources
@@ -1704,7 +1705,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Initializes a new instance of the <see cref="UserAgentAnalyzerDirectBuilder{UAA, B}"/> class.
             /// </summary>
-            /// <param name="newUaa">The newUaa<see cref="UAA"/></param>
+            /// <param name="newUaa">The newUaa</param>
             protected UserAgentAnalyzerDirectBuilder(UAA newUaa)
             {
                 this.uaa = newUaa;
@@ -1728,7 +1729,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Construct the analyzer and run the preheat (if requested).
             /// </summary>
-            /// <returns>The <see cref="UAA"/></returns>
+            /// <returns>The User Agent Analyzer</returns>
             public virtual UAA Build()
             {
                 this.FailIfAlreadyBuilt();
@@ -1787,7 +1788,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// Load all patterns and rules but do not yet build the lookup hashMaps yet.
             /// For the engine to run these lookup hashMaps are needed so they will be constructed once "just in time".
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
+            /// <returns>The builder</returns>
             public B DelayInitialization()
             {
                 this.FailIfAlreadyBuilt();
@@ -1809,7 +1810,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Remove all testcases in memory after initialization.
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
+            /// <returns>The builder</returns>
             public B DropTests()
             {
                 this.FailIfAlreadyBuilt();
@@ -1820,7 +1821,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Set the stats logging during the startup of the analyzer back to the default of "minimal".
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
+            /// <returns>The builder</returns>
             public B HideMatcherLoadStats()
             {
                 this.FailIfAlreadyBuilt();
@@ -1842,7 +1843,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Retain all testcases in memory after initialization.
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
+            /// <returns>The builder</returns>
             public B KeepTests()
             {
                 this.FailIfAlreadyBuilt();
@@ -1877,7 +1878,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Log additional information during the startup of the analyzer.
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
+            /// <returns>The builder</returns>
             public B ShowMatcherLoadStats()
             {
                 this.FailIfAlreadyBuilt();
@@ -1888,7 +1889,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Specify that we simply want to retrieve all possible fields.
             /// </summary>
-            /// <returns>The <see cref="B"/></returns>
+            /// <returns>The builder</returns>
             public B WithAllFields()
             {
                 this.FailIfAlreadyBuilt();
@@ -1931,7 +1932,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// Specify a set of additional fields that we want to retrieve.
             /// </summary>
-            /// <param name="fieldNames">The fieldNames<see cref="string[]"/></param>
+            /// <param name="fieldNames">The fieldNames</param>
             /// <returns>the current Builder instance.</returns>
             public B WithFields(params string[] fieldNames)
             {
@@ -1947,7 +1948,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// Set maximum length of a useragent for it to be classified as Hacker without any analysis.
             /// </summary>
             /// <param name="newUserAgentMaxLength">The newUserAgentMaxLength<see cref="int"/></param>
-            /// <returns>The <see cref="B"/></returns>
+            /// <returns>The builder</returns>
             public B WithUserAgentMaxLength(int newUserAgentMaxLength)
             {
                 this.FailIfAlreadyBuilt();
@@ -1958,7 +1959,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <summary>
             /// The SetUAA
             /// </summary>
-            /// <param name="a">The a<see cref="UAA"/></param>
+            /// <param name="a">The User Agent Analyzer</param>
             internal void SetUAA(UAA a)
             {
                 this.uaa = a;
@@ -1979,7 +1980,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// The AddGeneratedFields
             /// </summary>
             /// <param name="result">The result<see cref="string"/></param>
-            /// <param name="dependencies">The dependencies<see cref="string[]"/></param>
+            /// <param name="dependencies">The dependencies</param>
             private void AddGeneratedFields(string result, params string[] dependencies)
             {
                 if (this.uaa.WantedFieldNames.Contains(result))

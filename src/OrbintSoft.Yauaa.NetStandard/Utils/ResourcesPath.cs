@@ -19,26 +19,23 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:51</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
 
-using System;
-using System.IO;
-
 namespace OrbintSoft.Yauaa.Utils
 {
+    using System;
+    using System.IO;
+
     /// <summary>
     /// Represent a set of resources based on a directory and a file filter
     /// </summary>
     public class ResourcesPath
     {
-
-        public static string BasePath { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourcesPath"/> class.
         /// </summary>
@@ -54,6 +51,11 @@ namespace OrbintSoft.Yauaa.Utils
             this.Directory = directory;
             this.Filter = filter;
         }
+
+        /// <summary>
+        /// Gets or sets the BasePath
+        /// </summary>
+        public static string BasePath { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
         /// Gets the Directory

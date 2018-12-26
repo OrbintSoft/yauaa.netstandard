@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -28,13 +28,13 @@
 
 namespace OrbintSoft.Yauaa.Debug
 {
-    using log4net;
-    using OrbintSoft.Yauaa.Analyze;
-    using OrbintSoft.Yauaa.Analyzer;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Text;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyze;
+    using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
     /// Defines the <see cref="UserAgentAnalyzerTester" />
@@ -50,7 +50,8 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAgentAnalyzerTester"/> class.
         /// </summary>
-        public UserAgentAnalyzerTester() : base()
+        public UserAgentAnalyzerTester()
+            : base()
         {
             this.KeepTests();
         }
@@ -60,7 +61,8 @@ namespace OrbintSoft.Yauaa.Debug
         /// </summary>
         /// <param name="resourceString">The resourceString<see cref="string"/></param>
         /// <param name="pattern">The pattern<see cref="string"/></param>
-        public UserAgentAnalyzerTester(string resourceString, string pattern = "*.yaml") : this()
+        public UserAgentAnalyzerTester(string resourceString, string pattern = "*.yaml")
+            : this()
         {
             this.LoadResources(resourceString, pattern);
         }
@@ -81,7 +83,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// This function is used only for analyzing which patterns that could possibly be relevant
         /// were actually relevant for the matcher actions.
         /// </summary>
-        /// <returns>The <see cref="List{MatchesList.Match}"/></returns>
+        /// <returns>The matches</returns>
         public IList<MatchesList.Match> GetMatches()
         {
             var allMatches = new List<MatchesList.Match>();
@@ -97,7 +99,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// The GetUsedMatches
         /// </summary>
         /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <returns>The <see cref="List{MatchesList.Match}"/></returns>
+        /// <returns>The matches</returns>
         public IList<MatchesList.Match> GetUsedMatches(UserAgent userAgent)
         {
             // Reset all Matchers
@@ -143,7 +145,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// </summary>
         /// <param name="showAll">The showAll<see cref="bool"/></param>
         /// <param name="failOnUnexpected">The failOnUnexpected<see cref="bool"/></param>
-        /// <param name="onlyValidateFieldNames">The onlyValidateFieldNames<see cref="ICollection{string}"/></param>
+        /// <param name="onlyValidateFieldNames">The onlyValidateFieldNames</param>
         /// <param name="measureSpeed">The measureSpeed<see cref="bool"/></param>
         /// <param name="showPassedTests">The showPassedTests<see cref="bool"/></param>
         /// <returns>The <see cref="bool"/></returns>
@@ -667,7 +669,8 @@ namespace OrbintSoft.Yauaa.Debug
             /// Initializes a new instance of the <see cref="UserAgentAnalyzerTesterBuilder"/> class.
             /// </summary>
             /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzerTester"/></param>
-            public UserAgentAnalyzerTesterBuilder(UserAgentAnalyzerTester newUaa) : base(newUaa)
+            public UserAgentAnalyzerTesterBuilder(UserAgentAnalyzerTester newUaa)
+                : base(newUaa)
             {
             }
 

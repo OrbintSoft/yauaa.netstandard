@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -36,7 +36,7 @@ namespace OrbintSoft.Yauaa.Annotate
         /// <summary>
         /// The GetUserAgentString
         /// </summary>
-        /// <param name="record">The record<see cref="T"/></param>
+        /// <param name="record">The record</param>
         /// <returns>The <see cref="string"/></returns>
         string GetUserAgentString(T record);
     }

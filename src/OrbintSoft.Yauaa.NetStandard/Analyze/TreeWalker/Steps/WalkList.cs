@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,6 +28,9 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
@@ -38,9 +41,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Antlr4Source;
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
 
     /// <summary>
     /// This class gets the symbol table (1 value) uses that to evaluate
@@ -83,8 +83,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// Initializes a new instance of the <see cref="WalkList"/> class.
         /// </summary>
         /// <param name="requiredPattern">The requiredPattern<see cref="ParserRuleContext"/></param>
-        /// <param name="lookups">The lookups<see cref="IDictionary{string, IDictionary{string, string}}"/></param>
-        /// <param name="lookupSets">The lookupSets<see cref="IDictionary{string, ISet{string}}"/></param>
+        /// <param name="lookups">The lookups</param>
+        /// <param name="lookupSets">The lookupSets</param>
         /// <param name="verbose">The verbose<see cref="bool"/></param>
         public WalkList(ParserRuleContext requiredPattern, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, bool verbose)
         {
@@ -299,7 +299,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             /// Initializes a new instance of the <see cref="WalkListBuilder"/> class.
             /// </summary>
             /// <param name="walkList">The walkList<see cref="WalkList"/></param>
-            public WalkListBuilder(WalkList walkList) : base()
+            public WalkListBuilder(WalkList walkList)
+                : base()
             {
                 this.walkList = walkList;
             }

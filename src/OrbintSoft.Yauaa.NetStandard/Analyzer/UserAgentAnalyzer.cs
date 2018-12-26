@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:51</date>
@@ -50,7 +50,8 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAgentAnalyzer"/> class.
         /// </summary>
-        protected UserAgentAnalyzer() : base()
+        protected UserAgentAnalyzer()
+            : base()
         {
             this.InitializeCache();
         }
@@ -134,13 +135,13 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         private void InitializeCache()
         {
-            if (CacheSize >= 1)
+            if (this.CacheSize >= 1)
             {
-                parseCache = new Dictionary<string, UserAgent>(CacheSize);
+                this.parseCache = new Dictionary<string, UserAgent>(this.CacheSize);
             }
             else
             {
-                parseCache = null;
+                this.parseCache = null;
             }
         }
 
@@ -158,9 +159,10 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// Initializes a new instance of the <see cref="UserAgentAnalyzerBuilder"/> class.
             /// </summary>
             /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzer"/></param>
-            public UserAgentAnalyzerBuilder(UserAgentAnalyzer newUaa) : base(newUaa)
+            public UserAgentAnalyzerBuilder(UserAgentAnalyzer newUaa)
+                : base(newUaa)
             {
-                uaa = newUaa;
+                this.uaa = newUaa;
             }
 
             /// <summary>
@@ -179,8 +181,8 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
             public UserAgentAnalyzerBuilder WithCache(int newCacheSize)
             {
-                FailIfAlreadyBuilt();
-                uaa.SetCacheSize(newCacheSize);
+                this.FailIfAlreadyBuilt();
+                this.uaa.SetCacheSize(newCacheSize);
                 return this;
             }
 
@@ -190,8 +192,8 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
             public UserAgentAnalyzerBuilder WithoutCache()
             {
-                FailIfAlreadyBuilt();
-                uaa.SetCacheSize(0);
+                this.FailIfAlreadyBuilt();
+                this.uaa.SetCacheSize(0);
                 return this;
             }
         }

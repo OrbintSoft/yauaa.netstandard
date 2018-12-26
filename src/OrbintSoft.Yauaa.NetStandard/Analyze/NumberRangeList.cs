@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -52,8 +52,6 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         public int Count => this.End - this.Start + 1;
 
-
-
         /// <summary>
         /// Gets the Start
         /// </summary>
@@ -74,7 +72,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// The GetEnumerator
         /// </summary>
-        /// <returns>The <see cref="IEnumerator{int}"/></returns>
+        /// <returns>The enumerator</returns>
         public IEnumerator<int> GetEnumerator()
         {
             return new NumberRangeEnumerator(this);
@@ -103,8 +101,6 @@ namespace OrbintSoft.Yauaa.Analyze
             /// Defines the offset
             /// </summary>
             private int offset = -1;
-
-
 
             /// <summary>
             /// Initializes a new instance of the <see cref="NumberRangeEnumerator"/> class.

@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -27,19 +27,20 @@
 //-----------------------------------------------------------------------
 namespace OrbintSoft.Yauaa.Annotate
 {
-    using log4net;
-    using OrbintSoft.Yauaa.Analyze;
-    using OrbintSoft.Yauaa.Analyzer;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyze;
+    using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
     /// Defines the <see cref="UserAgentAnnotationAnalyzer{T}" />
     /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public class UserAgentAnnotationAnalyzer<T> where T : class
+    /// <typeparam name="T">The type to map</typeparam>
+    public class UserAgentAnnotationAnalyzer<T>
+        where T : class
     {
         /// <summary>
         /// Defines the Log
@@ -83,6 +84,7 @@ namespace OrbintSoft.Yauaa.Annotate
             var classOfT = classOfTArray[0];
 
             var anonymous = false;
+
             // Get all methods of the correct signature that have been annotated with YauaaField
             foreach (var method in theMapper.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
             {
@@ -106,7 +108,8 @@ namespace OrbintSoft.Yauaa.Annotate
                         {
                             var methodName = method.ReturnType.Name + " " + method.Name + "(" + parameters[0].Name + " ," + parameters[1].Name + ");";
                             Log.Warn(string.Format("Trying to make anonymous {0} {1} accessible.", theMapper.GetType().Name, methodName));
-                            //method.setAccessible(true); NOT POSSIBLE IN C#
+
+                            // method.setAccessible(true); NOT POSSIBLE IN C#
                         }
 
                         foreach (var fieldName in field.Value)
@@ -143,14 +146,15 @@ namespace OrbintSoft.Yauaa.Annotate
         /// <summary>
         /// The Map
         /// </summary>
-        /// <param name="record">The record<see cref="T"/></param>
-        /// <returns>The <see cref="T"/></returns>
+        /// <param name="record">The record</param>
+        /// <returns>The mapped record</returns>
         public T Map(T record)
         {
             if (record == null)
             {
                 return null;
             }
+
             if (this.mapper == null)
             {
                 throw new InvalidParserConfigurationException("[Map] The mapper instance is null.");
@@ -173,6 +177,7 @@ namespace OrbintSoft.Yauaa.Annotate
                     }
                 }
             }
+
             return record;
         }
     }

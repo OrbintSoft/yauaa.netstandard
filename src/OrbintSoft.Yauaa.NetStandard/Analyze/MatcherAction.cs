@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,6 +28,8 @@
 
 namespace OrbintSoft.Yauaa.Analyze
 {
+    using System;
+    using System.Collections.Generic;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Atn;
     using Antlr4.Runtime.Dfa;
@@ -38,8 +40,6 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Analyze.TreeWalker;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Antlr4Source;
-    using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// Defines the <see cref="MatcherAction" />
@@ -303,7 +303,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The CannotBeValid 
+        /// The CannotBeValid
         /// If it is impossible that this can be valid it returns true, else false.
         /// </summary>
         /// <returns>The <see cref="bool"/></returns>
@@ -407,7 +407,8 @@ namespace OrbintSoft.Yauaa.Analyze
             /// Initializes a new instance of the <see cref="InitErrorListener{T}"/> class.
             /// </summary>
             /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-            public InitErrorListener(MatcherAction matcherAction) : base()
+            public InitErrorListener(MatcherAction matcherAction)
+                : base()
             {
                 this.MatcherAction = matcherAction;
             }
@@ -461,7 +462,7 @@ namespace OrbintSoft.Yauaa.Analyze
             /// The SyntaxError
             /// </summary>
             /// <param name="recognizer">The recognizer<see cref="IRecognizer"/></param>
-            /// <param name="offendingSymbol">The offendingSymbol<see cref="T"/></param>
+            /// <param name="offendingSymbol">The offendingSymbol</param>
             /// <param name="line">The line<see cref="int"/></param>
             /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
             /// <param name="msg">The msg<see cref="string"/></param>

@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -28,12 +28,12 @@
 
 namespace OrbintSoft.Yauaa.Debug
 {
-    using log4net;
-    using OrbintSoft.Yauaa.Analyze;
-    using OrbintSoft.Yauaa.Analyzer;
     using System;
     using System.Collections.Generic;
     using System.Text;
+    using log4net;
+    using OrbintSoft.Yauaa.Analyze;
+    using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
     /// Defines the <see cref="DebugUserAgent" />
@@ -130,7 +130,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// The ToMatchTrace
         /// </summary>
-        /// <param name="highlightNames">The highlightNames<see cref="List{string}"/></param>
+        /// <param name="highlightNames">The highlightNames</param>
         /// <returns>The <see cref="string"/></returns>
         public string ToMatchTrace(IList<string> highlightNames)
         {

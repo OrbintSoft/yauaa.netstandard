@@ -88,7 +88,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Classify
             VerifyDeviceClass(DeviceClass.Phone, true, true, true, false);
             VerifyDeviceClass(DeviceClass.Watch, true, true, true, false);
             VerifyDeviceClass(DeviceClass.VirtualReality, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.eReader, true, true, true, false);
+            VerifyDeviceClass(DeviceClass.EReader, true, true, true, false);
             VerifyDeviceClass(DeviceClass.SetTopBox, true, false, true, false);
             VerifyDeviceClass(DeviceClass.TV, true, false, true, false);
             VerifyDeviceClass(DeviceClass.GameConsole, true, false, true, false);

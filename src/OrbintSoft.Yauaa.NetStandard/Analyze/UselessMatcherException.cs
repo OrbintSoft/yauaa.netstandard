@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -38,7 +38,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Initializes a new instance of the <see cref="UselessMatcherException"/> class.
         /// </summary>
         /// <param name="message">The message<see cref="string"/></param>
-        public UselessMatcherException(string message) : base(message)
+        public UselessMatcherException(string message)
+            : base(message)
         {
         }
     }

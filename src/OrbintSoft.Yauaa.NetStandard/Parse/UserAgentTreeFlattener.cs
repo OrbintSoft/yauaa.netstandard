@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -28,6 +28,7 @@
 
 namespace OrbintSoft.Yauaa.Parse
 {
+    using System;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
@@ -35,7 +36,6 @@ namespace OrbintSoft.Yauaa.Parse
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Antlr4Source;
     using OrbintSoft.Yauaa.Utils;
-    using System;
 
     /// <summary>
     /// Defines the <see cref="UserAgentTreeFlattener" />
@@ -142,10 +142,12 @@ namespace OrbintSoft.Yauaa.Parse
             /// Defines the CHILD
             /// </summary>
             CHILD,
+
             /// <summary>
             /// Defines the COMMENT
             /// </summary>
             COMMENT,
+
             /// <summary>
             /// Defines the VERSION
             /// </summary>
@@ -749,7 +751,8 @@ namespace OrbintSoft.Yauaa.Parse
             /// <param name="userAgentTreeFlattener">The userAgentTreeFlattener<see cref="UserAgentTreeFlattener"/></param>
             /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
             /// <param name="name">The name<see cref="string"/></param>
-            public State(UserAgentTreeFlattener userAgentTreeFlattener, IParseTree ctx, string name) : this(userAgentTreeFlattener, name)
+            public State(UserAgentTreeFlattener userAgentTreeFlattener, IParseTree ctx, string name)
+                : this(userAgentTreeFlattener, name)
             {
                 this.ctx = ctx;
             }

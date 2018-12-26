@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
@@ -58,7 +58,7 @@ namespace OrbintSoft.Yauaa.Classify
                 case "Phone": return DeviceClass.Phone;
                 case "Watch": return DeviceClass.Watch;
                 case "Virtual Reality": return DeviceClass.VirtualReality;
-                case "eReader": return DeviceClass.eReader;
+                case "eReader": return DeviceClass.EReader;
                 case "Set-top box": return DeviceClass.SetTopBox;
                 case "TV": return DeviceClass.TV;
                 case "Game Console": return DeviceClass.GameConsole;
@@ -92,7 +92,7 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.Phone:
                 case DeviceClass.Watch:
                 case DeviceClass.VirtualReality:
-                case DeviceClass.eReader:
+                case DeviceClass.EReader:
                 case DeviceClass.SetTopBox:
                 case DeviceClass.TV:
                 case DeviceClass.GameConsole:
@@ -121,7 +121,7 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.Phone:
                 case DeviceClass.Watch:
                 case DeviceClass.VirtualReality:
-                case DeviceClass.eReader:
+                case DeviceClass.EReader:
                 case DeviceClass.SetTopBox:
                 case DeviceClass.TV:
                 case DeviceClass.GameConsole:
@@ -154,7 +154,7 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.Phone:
                 case DeviceClass.Watch:
                 case DeviceClass.VirtualReality:
-                case DeviceClass.eReader:
+                case DeviceClass.EReader:
                 case DeviceClass.HandheldGameConsole:
                 case DeviceClass.RobotMobile:
                     return true;
@@ -189,7 +189,7 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.Phone:
                 case DeviceClass.Watch:
                 case DeviceClass.VirtualReality:
-                case DeviceClass.eReader:
+                case DeviceClass.EReader:
                 case DeviceClass.SetTopBox:
                 case DeviceClass.TV:
                 case DeviceClass.GameConsole:

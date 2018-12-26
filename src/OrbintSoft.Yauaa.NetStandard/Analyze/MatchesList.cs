@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,10 +28,10 @@
 
 namespace OrbintSoft.Yauaa.Analyze
 {
-    using Antlr4.Runtime.Tree;
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using Antlr4.Runtime.Tree;
 
     /// <summary>
     /// Defines the <see cref="MatchesList" />
@@ -129,8 +129,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// The CopyTo
         /// </summary>
-        /// <param name="array">The array<see cref="Match[]"/></param>
-        /// <param name="arrayIndex">The arrayIndex<see cref="int"/></param>
+        /// <param name="array">The array</param>
+        /// <param name="arrayIndex">The arrayIndex</param>
         public void CopyTo(Match[] array, int arrayIndex)
         {
             for (var i = 0; i < this.Count; i++)
@@ -162,7 +162,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// The ToStrings
         /// </summary>
-        /// <returns>The <see cref="List{string}"/></returns>
+        /// <returns>The list of strings</returns>
         public IList<string> ToStrings()
         {
             var result = new List<string>();
@@ -278,7 +278,7 @@ namespace OrbintSoft.Yauaa.Analyze
             /// <summary>
             /// Initializes a new instance of the <see cref="MatchEnumerator"/> class.
             /// </summary>
-            /// <param name="matches">The matches<see cref="Match[]"/></param>
+            /// <param name="matches">The matches</param>
             /// <param name="count">The count<see cref="int"/></param>
             public MatchEnumerator(Match[] matches, int count)
             {

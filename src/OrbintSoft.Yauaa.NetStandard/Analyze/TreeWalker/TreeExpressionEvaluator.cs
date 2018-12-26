@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,13 +28,13 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker
 {
+    using System;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
     using log4net;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Antlr4Source;
-    using System;
 
     /// <summary>
     /// This class gets the symbol table (1 value) uses that to evaluate

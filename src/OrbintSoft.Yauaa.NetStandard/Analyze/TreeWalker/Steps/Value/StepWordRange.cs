@@ -19,7 +19,7 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
+//
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
@@ -28,11 +28,11 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
 {
+    using System;
+    using System.Runtime.Serialization;
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Antlr4Source;
     using OrbintSoft.Yauaa.Utils;
-    using System;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines the <see cref="StepWordRange" />
@@ -53,24 +53,23 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <summary>
         /// Initializes a new instance of the <see cref="StepWordRange"/> class.
         /// </summary>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
-        public StepWordRange(WordRangeVisitor.Range range)
-        {
-            this.firstWord = range.First;
-            this.lastWord = range.Last;
-        }
-
-        public StepWordRange(SerializationInfo info, StreamingContext context) : base(info, context)
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public StepWordRange(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
             this.firstWord = (int)info.GetValue("firstWord", typeof(int));
             this.lastWord = (int)info.GetValue("lastWord", typeof(int));
         }
 
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepWordRange"/> class.
+        /// </summary>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
+        public StepWordRange(WordRangeVisitor.Range range)
         {
-            base.GetObjectData(info, context);
-            info.AddValue("firstWord", this.firstWord, typeof(int));
-            info.AddValue("lastWord", this.lastWord, typeof(int));
+            this.firstWord = range.First;
+            this.lastWord = range.Last;
         }
 
         /// <summary>
@@ -82,6 +81,18 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
             // If you want the first word it cannot fail.
             // For all other numbers it can.
             return !(this.firstWord == 1 && this.lastWord == 1);
+        }
+
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("firstWord", this.firstWord, typeof(int));
+            info.AddValue("lastWord", this.lastWord, typeof(int));
         }
 
         /// <summary>
