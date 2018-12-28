@@ -7,6 +7,8 @@ v5.5
 - Detect Alibaba Apps (like DingTalk)
 - Fixed nuget packing problem, yaml definitions aren't copied automatically to output folder
 - Released a sample ASP.NET Core 2.2 web app to parse the user agent
+- Integrated Stylecop Analyzers
+- Improvements to continuous integration
 
 v5.4
 ===
