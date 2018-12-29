@@ -20,7 +20,7 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
-5.5-beta.3
+5.5.1
 --------
 With Google Chrome 70 the useragent string pattern has been changed on Android ( https://www.chromestatus.com/feature/4558585463832576 ) . As a consequence the detection of the DeviceBrand failed and you always get "Unknown". This has been fixed in Yauaa 5.5.
 
