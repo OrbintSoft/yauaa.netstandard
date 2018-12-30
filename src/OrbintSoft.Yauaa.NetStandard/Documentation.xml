@@ -1833,6 +1833,13 @@
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupContext"/></param>
             <returns>The <see cref="T:System.Object"/></returns>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.MatcherAction.UnQuoteValues.VisitMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            The VisitMatcherPathLookupPrefix
+            </summary>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext"/></param>
+            <returns>The <see cref="T:System.Object"/></returns>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatcherAction.UnQuoteValues.VisitPathFixedValue(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.PathFixedValueContext)">
             <summary>
             The VisitPathFixedValue
@@ -2422,14 +2429,14 @@
             Defines the Instance
             </summary>
         </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.DEFAULT_MIN">
-            <summary>
-            Defines the DEFAULT_MIN
-            </summary>
-        </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.DEFAULT_MAX">
             <summary>
             Defines the DEFAULT_MAX
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.DEFAULT_MIN">
+            <summary>
+            Defines the DEFAULT_MIN
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.MaxRange">
@@ -2454,20 +2461,6 @@
             <param name="ctx">The ctx<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeContext"/></param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.VisitNumberRangeStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToEndContext)">
-            <summary>
-            The VisitNumberRangeStartToEnd
-            </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToEndContext"/></param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.VisitNumberRangeSingleValue(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeSingleValueContext)">
-            <summary>
-            The VisitNumberRangeSingleValue
-            </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeSingleValueContext"/></param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
-        </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.VisitNumberRangeAll(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeAllContext)">
             <summary>
             The VisitNumberRangeAll
@@ -2480,6 +2473,34 @@
             The VisitNumberRangeEmpty
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeEmptyContext"/></param>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.VisitNumberRangeOpenStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext)">
+            <summary>
+            The VisitNumberRangeOpenStartToEnd
+            </summary>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext"/></param>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.VisitNumberRangeSingleValue(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeSingleValueContext)">
+            <summary>
+            The VisitNumberRangeSingleValue
+            </summary>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeSingleValueContext"/></param>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.VisitNumberRangeStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToEndContext)">
+            <summary>
+            The VisitNumberRangeStartToEnd
+            </summary>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToEndContext"/></param>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.VisitNumberRangeStartToOpenEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext)">
+            <summary>
+            The VisitNumberRangeStartToOpenEnd
+            </summary>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext"/></param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/></returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.NumberRangeVisitor.GetMaxRange(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeContext)">
@@ -2774,6 +2795,42 @@
             <param name="value">The value<see cref="T:System.String"/></param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/></returns>
         </member>
+        <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix">
+            <summary>
+            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix" />
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.lookupName">
+            <summary>
+            Defines the lookupName
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.prefixLookup">
+            <summary>
+            Defines the prefixLookup
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix"/> class.
+            </summary>
+            <param name="lookupName">The lookupName<see cref="T:System.String"/></param>
+            <param name="prefixList">The prefixList</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.ToString">
+            <summary>
+            The ToString
+            </summary>
+            <returns>The <see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
+            <summary>
+            The Walk
+            </summary>
+            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/></param>
+            <param name="value">The value<see cref="T:System.String"/></param>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/></returns>
+        </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup">
             <summary>
             Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup" />
@@ -2823,6 +2880,48 @@
             <returns>The <see cref="T:System.String"/></returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
+            <summary>
+            The Walk
+            </summary>
+            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/></param>
+            <param name="value">The value<see cref="T:System.String"/></param>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/></returns>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix">
+            <summary>
+            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix" />
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.defaultValue">
+            <summary>
+            Defines the defaultValue
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.lookupName">
+            <summary>
+            Defines the lookupName
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.prefixLookup">
+            <summary>
+            Defines the prefixLookup
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix"/> class.
+            </summary>
+            <param name="lookupName">The lookupName<see cref="T:System.String"/></param>
+            <param name="prefixList">The prefixList</param>
+            <param name="defaultValue">The defaultValue<see cref="T:System.String"/></param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.ToString">
+            <summary>
+            The ToString
+            </summary>
+            <returns>The <see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
             The Walk
             </summary>
@@ -4229,7 +4328,7 @@
         </member>
         <member name="P:OrbintSoft.Yauaa.Analyze.TreeWalker.TreeExpressionEvaluator.UsesIsNull">
             <summary>
-            Gets a value indicating whether UseIsNull
+            Gets a value indicating whether UsesIsNull
             </summary>
         </member>
         <member name="P:OrbintSoft.Yauaa.Analyze.TreeWalker.TreeExpressionEvaluator.WalkListForUnitTesting">
@@ -4303,6 +4402,15 @@
             <param name="node">The node<see cref="T:Antlr4.Runtime.Tree.IRuleNode"/></param>
             <param name="currentResult">The currentResult<see cref="T:System.String"/></param>
             <returns>The <see cref="T:System.Boolean"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.TreeExpressionEvaluator.DerivedUserAgentTreeWalkerBaseVisitor.VisitLookups(Antlr4.Runtime.Tree.IParseTree,Antlr4.Runtime.IToken,Antlr4.Runtime.IToken)">
+            <summary>
+            The VisitLookups
+            </summary>
+            <param name="matcherTree">The matcherTree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/></param>
+            <param name="lookup">The lookup<see cref="T:Antlr4.Runtime.IToken"/></param>
+            <param name="defaultValue">The defaultValue<see cref="T:Antlr4.Runtime.IToken"/></param>
+            <returns>The <see cref="T:System.String"/></returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.UselessMatcherException">
             <summary>
@@ -4450,6 +4558,16 @@
             Defines the userAgentAnalyzer
             </summary>
         </member>
+        <member name="P:OrbintSoft.Yauaa.Annotate.UserAgentAnnotationAnalyzer`1.CacheSize">
+            <summary>
+            Gets the CacheSize
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Annotate.UserAgentAnnotationAnalyzer`1.DisableCaching">
+            <summary>
+            The DisableCaching
+            </summary>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Annotate.UserAgentAnnotationAnalyzer`1.Initialize(OrbintSoft.Yauaa.Annotate.IUserAgentAnnotationMapper{`0})">
             <summary>
             The Initialize
@@ -4462,6 +4580,13 @@
             </summary>
             <param name="record">The record</param>
             <returns>The mapped record</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Annotate.UserAgentAnnotationAnalyzer`1.SetCacheSize(System.Int32)">
+            <summary>
+            Sets the new size of the parsing cache.
+            Note that this will also wipe the existing cache.
+            </summary>
+            <param name="newCacheSize">The size of the new LRU cache. As size of 0 will disable caching.</param>
         </member>
         <member name="T:OrbintSoft.Yauaa.Annotate.YauaaFieldAttribute">
             <summary>
@@ -6174,6 +6299,34 @@
             </summary>
             <param name="context">The parse tree.</param>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.EnterMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            Enter a parse tree produced by the <c>matcherPathLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.ExitMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            Exit a parse tree produced by the <c>matcherPathLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.EnterMatcherPathIsInLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)">
+            <summary>
+            Enter a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.ExitMatcherPathIsInLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)">
+            <summary>
+            Exit a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.EnterMatcherWordRange(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherWordRangeContext)">
             <summary>
             Enter a parse tree produced by the <c>matcherWordRange</c>
@@ -6492,6 +6645,34 @@
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.ExitNumberRangeStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToEndContext)">
             <summary>
             Exit a parse tree produced by the <c>numberRangeStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.EnterNumberRangeOpenStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext)">
+            <summary>
+            Enter a parse tree produced by the <c>numberRangeOpenStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.ExitNumberRangeOpenStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext)">
+            <summary>
+            Exit a parse tree produced by the <c>numberRangeOpenStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.EnterNumberRangeStartToOpenEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext)">
+            <summary>
+            Enter a parse tree produced by the <c>numberRangeStartToOpenEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener.ExitNumberRangeStartToOpenEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext)">
+            <summary>
+            Exit a parse tree produced by the <c>numberRangeStartToOpenEnd</c>
             labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
             </summary>
             <param name="context">The parse tree.</param>
@@ -6836,6 +7017,38 @@
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.ExitMatcherPathLookup(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupContext)">
             <summary>
             Exit a parse tree produced by the <c>matcherPathLookup</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.EnterMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            Enter a parse tree produced by the <c>matcherPathLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.ExitMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            Exit a parse tree produced by the <c>matcherPathLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.EnterMatcherPathIsInLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)">
+            <summary>
+            Enter a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.ExitMatcherPathIsInLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)">
+            <summary>
+            Exit a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
             labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
             <para>The default implementation does nothing.</para>
             </summary>
@@ -7209,6 +7422,38 @@
             </summary>
             <param name="context">The parse tree.</param>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.EnterNumberRangeOpenStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext)">
+            <summary>
+            Enter a parse tree produced by the <c>numberRangeOpenStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.ExitNumberRangeOpenStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext)">
+            <summary>
+            Exit a parse tree produced by the <c>numberRangeOpenStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.EnterNumberRangeStartToOpenEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext)">
+            <summary>
+            Enter a parse tree produced by the <c>numberRangeStartToOpenEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.ExitNumberRangeStartToOpenEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext)">
+            <summary>
+            Exit a parse tree produced by the <c>numberRangeStartToOpenEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            <para>The default implementation does nothing.</para>
+            </summary>
+            <param name="context">The parse tree.</param>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener.EnterNumberRangeSingleValue(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeSingleValueContext)">
             <summary>
             Enter a parse tree produced by the <c>numberRangeSingleValue</c>
@@ -7528,6 +7773,22 @@
             <param name="context">The parse tree.</param>
             <return>The visitor result.</return>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerVisitor`1.VisitMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            Visit a parse tree produced by the <c>matcherPathLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerVisitor`1.VisitMatcherPathIsInLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)">
+            <summary>
+            Visit a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerVisitor`1.VisitMatcherWordRange(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherWordRangeContext)">
             <summary>
             Visit a parse tree produced by the <c>matcherWordRange</c>
@@ -7707,6 +7968,22 @@
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerVisitor`1.VisitNumberRangeStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToEndContext)">
             <summary>
             Visit a parse tree produced by the <c>numberRangeStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerVisitor`1.VisitNumberRangeOpenStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext)">
+            <summary>
+            Visit a parse tree produced by the <c>numberRangeOpenStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerVisitor`1.VisitNumberRangeStartToOpenEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext)">
+            <summary>
+            Visit a parse tree produced by the <c>numberRangeStartToOpenEnd</c>
             labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
             </summary>
             <param name="context">The parse tree.</param>
@@ -7931,6 +8208,30 @@
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseVisitor`1.VisitMatcherPathLookup(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupContext)">
             <summary>
             Visit a parse tree produced by the <c>matcherPathLookup</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseVisitor`1.VisitMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            Visit a parse tree produced by the <c>matcherPathLookupPrefix</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseVisitor`1.VisitMatcherPathIsInLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)">
+            <summary>
+            Visit a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
             labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.matcher"/>.
             <para>
             The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
@@ -8207,6 +8508,30 @@
         <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseVisitor`1.VisitNumberRangeStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToEndContext)">
             <summary>
             Visit a parse tree produced by the <c>numberRangeStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseVisitor`1.VisitNumberRangeOpenStartToEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext)">
+            <summary>
+            Visit a parse tree produced by the <c>numberRangeOpenStartToEnd</c>
+            labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
+            <para>
+            The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
+            on <paramref name="context"/>.
+            </para>
+            </summary>
+            <param name="context">The parse tree.</param>
+            <return>The visitor result.</return>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseVisitor`1.VisitNumberRangeStartToOpenEnd(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext)">
+            <summary>
+            Visit a parse tree produced by the <c>numberRangeStartToOpenEnd</c>
             labeled alternative in <see cref="M:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.numberRange"/>.
             <para>
             The default implementation returns the result of calling <see cref="M:Antlr4.Runtime.Tree.AbstractParseTreeVisitor`1.VisitChildren(Antlr4.Runtime.Tree.IRuleNode)"/>
@@ -9331,6 +9656,82 @@
             <param name="letter">The letter<see cref="T:System.Char"/></param>
             <returns>The <see cref="T:System.Boolean"/></returns>
         </member>
+        <member name="T:OrbintSoft.Yauaa.Utils.PrefixLookup">
+            <summary>
+            Defines the <see cref="T:OrbintSoft.Yauaa.Utils.PrefixLookup" />
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Utils.PrefixLookup.prefixPrefixTrie">
+            <summary>
+            Defines the prefixPrefixTrie
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Utils.PrefixLookup.#ctor(System.Collections.Generic.IDictionary{System.String,System.String},System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Utils.PrefixLookup"/> class.
+            </summary>
+            <param name="prefixList">The prefixList<see cref="T:System.Collections.Generic.IDictionary`2"/></param>
+            <param name="caseSensitive">The caseSensitive<see cref="T:System.Boolean"/></param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Utils.PrefixLookup.FindLongestMatchingPrefix(System.String)">
+            <summary>
+            The FindLongestMatchingPrefix
+            </summary>
+            <param name="input">The input<see cref="T:System.String"/></param>
+            <returns>The <see cref="T:System.String"/></returns>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie">
+            <summary>
+            Defines the <see cref="T:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie" />
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.caseSensitive">
+            <summary>
+            Defines the caseSensitive
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.charIndex">
+            <summary>
+            Defines the charIndex
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.childNodes">
+            <summary>
+            Defines the childNodes
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.theValue">
+            <summary>
+            Defines the theValue
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.#ctor(System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie"/> class.
+            </summary>
+            <param name="caseSensitive">The caseSensitive<see cref="T:System.Boolean"/></param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.#ctor(System.Boolean,System.Int32)">
+            <summary>
+            Prevents a default instance of the <see cref="T:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie"/> class from being created.
+            </summary>
+            <param name="caseSensitive">The caseSensitive<see cref="T:System.Boolean"/></param>
+            <param name="charIndex">The charIndex<see cref="T:System.Int32"/></param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.Find(System.String)">
+            <summary>
+            The find
+            </summary>
+            <param name="input">The input<see cref="T:System.String"/></param>
+            <returns>The <see cref="T:System.String"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Utils.PrefixLookup.PrefixTrie.Add(System.String,System.String)">
+            <summary>
+            The Add
+            </summary>
+            <param name="prefix">The prefix<see cref="T:System.String"/></param>
+            <param name="value">The value<see cref="T:System.String"/></param>
+        </member>
         <member name="T:OrbintSoft.Yauaa.Utils.ResourcesPath">
             <summary>
             Represent a set of resources based on a directory and a file filter
@@ -9768,25 +10169,25 @@
             <summary>Provides access to the git information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirty">
-            <summary>IsDirty: false</summary>
+            <summary>IsDirty: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirtyString">
-            <summary>IsDirtyString: false</summary>
+            <summary>IsDirtyString: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: bc89dd4</summary>
+            <summary>Commit: 55ddacc</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: bc89dd4b0d6418a44483844b6dfda1fcaa052a89</summary>
+            <summary>Sha: 55ddaccf525a4393bcaf3d9ce930574034af8911</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 359</summary>
+            <summary>Commits on top of base version: 362</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.4-stable.1-21-gbc89dd4</summary>
+            <summary>Tag: 5.4-stable.1-24-g55ddacc</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.4-stable.1</summary>
@@ -9813,7 +10214,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 359</summary>
+            <summary>Patch: 362</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>

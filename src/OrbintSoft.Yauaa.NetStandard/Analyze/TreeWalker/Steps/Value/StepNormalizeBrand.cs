@@ -71,7 +71,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "StepNormalizeBrand()";
+            return "NormalizeBrand()";
         }
 
         /// <summary>

@@ -4,7 +4,7 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.5.1</Version>
+    <Version>5.5-stable.1</Version>
     <AssemblyVersion>5.5.5.1</AssemblyVersion>
     <FileVersion>5.5.5.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
@@ -20,7 +20,7 @@
   <PropertyGroup>
 	<IsPackable>true</IsPackable>
 	<PackageVersion>$(Version)</PackageVersion>    
-	<PackageId>OrbintSoft.Yauaa.NetStandard</PackageId>    
+	<PackageId>OrbintSoft.Yauaa.NetStandard.Analyzer</PackageId>    
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>
 	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
     <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		

@@ -99,6 +99,8 @@ namespace OrbintSoft.Yauaa.Analyze
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherCleanVersionContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherWordRangeContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext)tree).matcher());
 
             // -------------
@@ -524,6 +526,17 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 this.UnQuoteToken(context.defaultValue);
                 return base.VisitMatcherPathLookup(context);
+            }
+
+            /// <summary>
+            /// The VisitMatcherPathLookupPrefix
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context)
+            {
+                this.UnQuoteToken(context.defaultValue);
+                return base.VisitMatcherPathLookupPrefix(context);
             }
 
             /// <summary>

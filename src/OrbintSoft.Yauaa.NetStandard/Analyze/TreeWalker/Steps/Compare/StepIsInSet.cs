@@ -90,7 +90,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "StepIsInSet(@" + this.listName + ")";
+            return "IsInSet(@" + this.listName + ")";
         }
 
         /// <summary>

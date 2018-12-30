@@ -25,6 +25,7 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Annotate
 {
     using System;
@@ -61,6 +62,19 @@ namespace OrbintSoft.Yauaa.Annotate
         /// Defines the userAgentAnalyzer
         /// </summary>
         private UserAgentAnalyzer userAgentAnalyzer = null;
+
+        /// <summary>
+        /// Gets the CacheSize
+        /// </summary>
+        public int CacheSize { get; private set; } = UserAgentAnalyzer.DEFAULT_PARSE_CACHE_SIZE;
+
+        /// <summary>
+        /// The DisableCaching
+        /// </summary>
+        public void DisableCaching()
+        {
+            this.SetCacheSize(0);
+        }
 
         /// <summary>
         /// The Initialize
@@ -137,10 +151,14 @@ namespace OrbintSoft.Yauaa.Annotate
                 throw new InvalidParserConfigurationException("You MUST specify at least 1 field to extract.");
             }
 
-            var builder = UserAgentAnalyzer.NewBuilder();
-            builder.HideMatcherLoadStats();
-            builder.WithFields(this.fieldSetters.Keys.ToList());
-            this.userAgentAnalyzer = builder.Build();
+            this.userAgentAnalyzer = UserAgentAnalyzer
+            .NewBuilder()
+            .HideMatcherLoadStats()
+            .WithCache(this.CacheSize)
+            .WithFields(this.fieldSetters.Keys)
+            .DropTests()
+            .ImmediateInitialization()
+            .Build();
         }
 
         /// <summary>
@@ -179,6 +197,20 @@ namespace OrbintSoft.Yauaa.Annotate
             }
 
             return record;
+        }
+
+        /// <summary>
+        /// Sets the new size of the parsing cache.
+        /// Note that this will also wipe the existing cache.
+        /// </summary>
+        /// <param name="newCacheSize">The size of the new LRU cache. As size of 0 will disable caching.</param>
+        public void SetCacheSize(int newCacheSize)
+        {
+            this.CacheSize = newCacheSize > 0 ? newCacheSize : 0;
+            if (this.userAgentAnalyzer != null)
+            {
+                this.userAgentAnalyzer.SetCacheSize(this.CacheSize);
+            }
         }
     }
 }

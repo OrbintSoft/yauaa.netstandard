@@ -1354,6 +1354,12 @@ namespace OrbintSoft.Yauaa.Analyzer
                         {
                             var key = YamlUtils.GetKeyAsString(mapping, filename);
                             var value = YamlUtils.GetValueAsString(mapping, filename);
+                            if (map.ContainsKey(key))
+                            {
+                                throw new InvalidParserConfigurationException(
+                                    "In the lookup \"" + name + "\" the key \"" + key + "\" appears multiple times.");
+                            }
+
                             map[key] = value;
                         }
 

@@ -89,7 +89,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <returns>The <see cref="string"/></returns>
         public override string ToString()
         {
-            return "StepConcatPrefix(" + this.prefix + ")";
+            return "ConcatPrefix(" + this.prefix + ")";
         }
 
         /// <summary>

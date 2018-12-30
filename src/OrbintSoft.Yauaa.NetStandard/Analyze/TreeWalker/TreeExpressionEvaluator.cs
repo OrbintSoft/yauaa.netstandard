@@ -85,7 +85,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         public string FixedValue { get; }
 
         /// <summary>
-        /// Gets a value indicating whether UseIsNull
+        /// Gets a value indicating whether UsesIsNull
         /// </summary>
         public bool UsesIsNull => this.WalkListForUnitTesting.UsesIsNull;
 
@@ -163,35 +163,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
             /// <returns>The <see cref="string"/></returns>
             public override string VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
             {
-                var value = this.Visit(context.matcher());
-                if (value == null)
-                {
-                    return null;
-                }
-
-                // Now we know this is a fixed value. Yet we can have a problem in the lookup that was
-                // configured. If we have this then this is a FATAL error (it will fail always everywhere).
-                var lookups = this.matcher.Lookups;
-                var lookup = lookups.ContainsKey(context.lookup.Text) ? lookups[context.lookup.Text] : null;
-                if (lookup == null)
-                {
-                    throw new InvalidParserConfigurationException("Missing lookup \"" + context.lookup.Text + "\" ");
-                }
-
-                var l = value.ToLower();
-                var resultingValue = lookup.ContainsKey(l) ? lookup[l] : null;
-                if (resultingValue == null)
-                {
-                    if (context.defaultValue != null)
-                    {
-                        return context.defaultValue.Text;
-                    }
-
-                    throw new InvalidParserConfigurationException(
-                        "Fixed value >>" + value + "<< is missing in lookup: \"" + context.lookup.Text + "\" ");
-                }
-
-                return resultingValue;
+                return this.VisitLookups(context.matcher(), context.lookup, context.defaultValue);
             }
 
             /// <summary>
@@ -224,6 +196,44 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
             protected override bool ShouldVisitNextChild([NotNull] IRuleNode node, string currentResult)
             {
                 return currentResult == null;
+            }
+
+            /// <summary>
+            /// The VisitLookups
+            /// </summary>
+            /// <param name="matcherTree">The matcherTree<see cref="IParseTree"/></param>
+            /// <param name="lookup">The lookup<see cref="IToken"/></param>
+            /// <param name="defaultValue">The defaultValue<see cref="IToken"/></param>
+            /// <returns>The <see cref="string"/></returns>
+            private string VisitLookups(IParseTree matcherTree, IToken lookup, IToken defaultValue)
+            {
+                var value = this.Visit(matcherTree);
+                if (value == null)
+                {
+                    return null;
+                }
+
+                // Now we know this is a fixed value. Yet we can have a problem in the lookup that was
+                // configured. If we have this then this is a FATAL error (it will fail always everywhere).
+                var lookupMap = this.matcher.Lookups[lookup.Text];
+                if (lookupMap == null)
+                {
+                    throw new InvalidParserConfigurationException("Missing lookup \"" + lookup.Text + "\" ");
+                }
+
+                var resultingValue = lookupMap[value.ToLower()];
+                if (resultingValue == null)
+                {
+                    if (defaultValue != null)
+                    {
+                        return defaultValue.Text;
+                    }
+
+                    throw new InvalidParserConfigurationException(
+                        "Fixed value >>" + value + "<< is missing in lookup: \"" + lookup.Text + "\" ");
+                }
+
+                return resultingValue;
             }
         }
     }

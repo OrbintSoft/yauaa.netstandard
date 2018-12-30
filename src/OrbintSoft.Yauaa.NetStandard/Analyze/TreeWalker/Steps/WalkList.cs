@@ -406,11 +406,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 this.FromHereItCannotBeInHashMapAnymore();
 
                 var lookupName = context.lookup.Text;
-                var lookup = this.walkList.lookups.ContainsKey(lookupName) ? this.walkList.lookups[lookupName] : null;
-                if (lookup == null)
-                {
-                    throw new InvalidParserConfigurationException("Missing lookup \"" + context.lookup.Text + "\" ");
-                }
+                var lookup = this.GetLookup(lookupName);
 
                 string defaultValue = null;
                 if (context.defaultValue != null)
@@ -419,6 +415,38 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 }
 
                 this.Add(new StepLookup(lookupName, lookup, defaultValue));
+                return null; // Void
+            }
+
+            public override object VisitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context)
+            {
+                this.Visit(context.matcher());
+
+                this.FromHereItCannotBeInHashMapAnymore();
+
+                var lookupName = context.lookup.Text;
+                var lookup = this.GetLookup(lookupName);
+
+                string defaultValue = null;
+                if (context.defaultValue != null)
+                {
+                    defaultValue = context.defaultValue.Text;
+                }
+
+                this.Add(new StepLookupPrefix(lookupName, lookup, defaultValue));
+                return null; // Void
+            }
+
+            public override object VisitMatcherPathIsInLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext context)
+            {
+                this.Visit(context.matcher());
+
+                this.FromHereItCannotBeInHashMapAnymore();
+
+                var lookupName = context.lookup.Text;
+                var lookup = this.GetLookup(lookupName);
+
+                this.Add(new StepIsInLookupPrefix(lookupName, lookup));
                 return null; // Void
             }
 
@@ -716,6 +744,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 {
                     this.walkList.steps.Add(step);
                 }
+            }
+
+            private IDictionary<string, string> GetLookup(string lookupName)
+            {
+                var lookup = this.walkList.lookups[lookupName];
+                if (lookup == null)
+                {
+                    throw new InvalidParserConfigurationException("Missing lookup \"" + lookupName + "\" ");
+                }
+
+                return lookup;
             }
 
             /// <summary>

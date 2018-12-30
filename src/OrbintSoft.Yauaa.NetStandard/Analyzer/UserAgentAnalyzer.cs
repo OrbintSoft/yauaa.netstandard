@@ -40,7 +40,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Defines the DEFAULT_PARSE_CACHE_SIZE
         /// </summary>
-        private const int DEFAULT_PARSE_CACHE_SIZE = 10000;
+        public const int DEFAULT_PARSE_CACHE_SIZE = 10000;
 
         /// <summary>
         /// Defines the parseCache

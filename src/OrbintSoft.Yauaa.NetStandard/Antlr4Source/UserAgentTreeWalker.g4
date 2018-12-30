@@ -73,9 +73,11 @@ matcher         : basePath                                                      
                 | 'Concat' BLOCKOPEN prefix=VALUE SEMICOLON matcher SEMICOLON postfix=VALUE BLOCKCLOSE  #matcherConcat
                 | 'Concat' BLOCKOPEN prefix=VALUE SEMICOLON matcher                         BLOCKCLOSE  #matcherConcatPrefix
                 | 'Concat' BLOCKOPEN                        matcher SEMICOLON postfix=VALUE BLOCKCLOSE  #matcherConcatPostfix
-                | 'NormalizeBrand' BLOCKOPEN matcher BLOCKCLOSE                                         #matcherNormalizeBrand
-                | 'CleanVersion'   BLOCKOPEN matcher BLOCKCLOSE                                         #matcherCleanVersion
-                | 'LookUp'         BLOCKOPEN lookup=VALUENAME SEMICOLON matcher (SEMICOLON defaultValue=VALUE )? BLOCKCLOSE #matcherPathLookup
+                | 'NormalizeBrand'   BLOCKOPEN matcher BLOCKCLOSE                                         #matcherNormalizeBrand
+                | 'CleanVersion'     BLOCKOPEN matcher BLOCKCLOSE                                         #matcherCleanVersion
+                | 'LookUp'           BLOCKOPEN lookup=VALUENAME SEMICOLON matcher (SEMICOLON defaultValue=VALUE )? BLOCKCLOSE #matcherPathLookup
+                | 'LookUpPrefix'     BLOCKOPEN lookup=VALUENAME SEMICOLON matcher (SEMICOLON defaultValue=VALUE )? BLOCKCLOSE #matcherPathLookupPrefix
+                | 'IsInLookUpPrefix' BLOCKOPEN lookup=VALUENAME SEMICOLON matcher                                  BLOCKCLOSE #matcherPathIsInLookupPrefix
                 | matcher wordRange                                                                     #matcherWordRange
                 ;
 
@@ -105,6 +107,8 @@ path            : DOT numberRange name=VALUENAME  (nextStep=path)?  #stepDown
                 ;
 
 numberRange     : ( BRACEOPEN rangeStart=NUMBER MINUS rangeEnd=NUMBER BRACECLOSE ) #numberRangeStartToEnd
+                | ( BRACEOPEN                   MINUS rangeEnd=NUMBER BRACECLOSE ) #numberRangeOpenStartToEnd
+                | ( BRACEOPEN rangeStart=NUMBER MINUS                 BRACECLOSE ) #numberRangeStartToOpenEnd
                 | ( BRACEOPEN count=NUMBER BRACECLOSE )                            #numberRangeSingleValue
                 | ( BRACEOPEN STAR BRACECLOSE )                                    #numberRangeAll
                 | (  )                                                             #numberRangeEmpty
