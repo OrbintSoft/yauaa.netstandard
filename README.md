@@ -20,6 +20,10 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
+5.6.*
+--------
+In version 5.6 the number of detected DeviceBrands is greatly increased. The detection system for the DeviceBrand has been rewritten and as a consequence both the memory usage and the time needed for the analysis have been decreased.
+
 5.5.1
 --------
 With Google Chrome 70 the useragent string pattern has been changed on Android ( https://www.chromestatus.com/feature/4558585463832576 ) . As a consequence the detection of the DeviceBrand failed and you always get "Unknown". This has been fixed in Yauaa 5.5.
@@ -27,20 +31,6 @@ With Google Chrome 70 the useragent string pattern has been changed on Android (
 **Warning** Before 5.5-beta.3, if you use this library throught .nuget, you may experience a reference issue with .yaml definitions,
 since they aren't automatically copied to output folder.
 
-5.4-stable.1
---------
-This is latest stable preview, with 5.5 I plan to remove prerelease prefix
-
-- Target equivalent Java 5.4 Version
-- Detect more Iron variations
-- Major change in the Android Chrome 70 pattern --> broke DeviceBrand
-- Detect Vivo brand
-- Change of namespace to be more clean 
-- Created a new commandline application
-- Major code refactoring 
-- Implemented continuous integration with Azure Devops
-- Changing of strong name singin to use snk instead of pfx
-- New nuget package
 
 Example output
 ==============

@@ -1,5 +1,13 @@
 This is intended as an overview of the major changes
 
+v5.6
+===
+- Target equivalent Java 5.6 Version
+- Better extraction of NetType and Language tags as used by Tencent.
+- Detect the brand better for many more devices (Blackberry, Huawei, HiSense, HTC, OnePlus, Oppo, QMobile, Wiko)
+- Added two new functions for prefix matching lookups.
+- Rewrote DeviceBrand detection to improve speed and memory usage.
+
 v5.5
 ===
 - Target equivalent Java 5.5 Version
