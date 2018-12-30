@@ -20,7 +20,7 @@
   <PropertyGroup>
 	<IsPackable>true</IsPackable>
 	<PackageVersion>$(Version)</PackageVersion>    
-	<PackageId>OrbintSoft.Yauaa.NetStandard.Analyzer</PackageId>    
+	<PackageId>OrbintSoft.Yauaa.NetStandard</PackageId>    
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>
 	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
     <Description>This is a .NET standard library that tries to parse and analyze the useragent string and extract as many relevant attributes as possible.		
