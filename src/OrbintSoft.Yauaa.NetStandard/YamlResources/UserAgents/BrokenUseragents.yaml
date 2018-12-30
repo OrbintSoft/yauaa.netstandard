@@ -1837,13 +1837,14 @@ config:
       user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 5.1 ; pl-pl; ThinkPad Tablet Build/ThinkPadTablet_A310_02) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13'
     expected:
       DeviceClass                          : 'Tablet'
-      DeviceName                           : 'ThinkPad Tablet'
-      DeviceBrand                          : 'ThinkPad'
+      DeviceName                           : 'Lenovo ThinkPad Tablet'
+      DeviceBrand                          : 'Lenovo'
       DeviceCpuBits                        : '32'
       OperatingSystemClass                 : 'Desktop'
       OperatingSystemName                  : 'Windows NT'
       OperatingSystemVersion               : 'XP'
       OperatingSystemNameVersion           : 'Windows XP'
+      OperatingSystemVersionBuild          : 'ThinkPadTablet_A310_02'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'AppleWebKit'
       LayoutEngineVersion                  : '534.13'
@@ -2151,6 +2152,7 @@ config:
       OperatingSystemName                  : 'Android'
       OperatingSystemVersion               : '??'
       OperatingSystemNameVersion           : 'Android ??'
+      OperatingSystemVersionBuild          : 'VM'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Blink'
       LayoutEngineVersion                  : '30.0'
@@ -2199,7 +2201,7 @@ config:
       user_agent_string: 'ELEMENT10 1 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.34 Safari/534.24'
     expected:
       DeviceClass                          : 'Desktop'
-      DeviceName                           : 'Odys 1' # Current best guess without breaking everything else
+      DeviceName                           : 'Odys ELEMENT10' # Current best guess without breaking everything else
       DeviceBrand                          : 'Odys'
       DeviceCpu                            : 'Intel x86_64'
       DeviceCpuBits                        : '64'
