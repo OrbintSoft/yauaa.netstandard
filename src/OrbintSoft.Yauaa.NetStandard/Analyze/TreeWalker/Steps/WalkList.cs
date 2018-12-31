@@ -382,6 +382,24 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
+            /// The VisitMatcherPathIsInLookupPrefix
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
+            public override object VisitMatcherPathIsInLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext context)
+            {
+                this.Visit(context.matcher());
+
+                this.FromHereItCannotBeInHashMapAnymore();
+
+                var lookupName = context.lookup.Text;
+                var lookup = this.GetLookup(lookupName);
+
+                this.Add(new StepIsInLookupPrefix(lookupName, lookup));
+                return null; // Void
+            }
+
+            /// <summary>
             /// The VisitMatcherPathIsNull
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathIsNullContext"/></param>
@@ -418,6 +436,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 return null; // Void
             }
 
+            /// <summary>
+            /// The VisitMatcherPathLookupPrefix
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext"/></param>
+            /// <returns>The <see cref="object"/></returns>
             public override object VisitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context)
             {
                 this.Visit(context.matcher());
@@ -434,19 +457,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 }
 
                 this.Add(new StepLookupPrefix(lookupName, lookup, defaultValue));
-                return null; // Void
-            }
-
-            public override object VisitMatcherPathIsInLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext context)
-            {
-                this.Visit(context.matcher());
-
-                this.FromHereItCannotBeInHashMapAnymore();
-
-                var lookupName = context.lookup.Text;
-                var lookup = this.GetLookup(lookupName);
-
-                this.Add(new StepIsInLookupPrefix(lookupName, lookup));
                 return null; // Void
             }
 
@@ -746,17 +756,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 }
             }
 
-            private IDictionary<string, string> GetLookup(string lookupName)
-            {
-                var lookup = this.walkList.lookups[lookupName];
-                if (lookup == null)
-                {
-                    throw new InvalidParserConfigurationException("Missing lookup \"" + lookupName + "\" ");
-                }
-
-                return lookup;
-            }
-
             /// <summary>
             /// The DoStepNextN
             /// </summary>
@@ -791,6 +790,21 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             private void FromHereItCannotBeInHashMapAnymore()
             {
                 this.foundHashEntryPoint = true;
+            }
+
+            /// <summary>
+            /// The GetLookup
+            /// </summary>
+            /// <param name="lookupName">The lookupName<see cref="string"/></param>
+            /// <returns>The <see cref="IDictionary{string, string}"/></returns>
+            private IDictionary<string, string> GetLookup(string lookupName)
+            {
+                if (!this.walkList.lookups.ContainsKey(lookupName))
+                {
+                    throw new InvalidParserConfigurationException("Missing lookup \"" + lookupName + "\" ");
+                }
+
+                return this.walkList.lookups[lookupName];
             }
 
             /// <summary>

@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Utils;
 
@@ -52,12 +53,36 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         /// <summary>
         /// Initializes a new instance of the <see cref="StepIsInLookupPrefix"/> class.
         /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public StepIsInLookupPrefix(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            this.lookupName = (string)info.GetValue("lookupName", typeof(string));
+            this.prefixLookup = (PrefixLookup)info.GetValue("prefixLookup", typeof(PrefixLookup));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepIsInLookupPrefix"/> class.
+        /// </summary>
         /// <param name="lookupName">The lookupName<see cref="string"/></param>
         /// <param name="prefixList">The prefixList</param>
         public StepIsInLookupPrefix(string lookupName, IDictionary<string, string> prefixList)
         {
             this.lookupName = lookupName;
             this.prefixLookup = new PrefixLookup(prefixList, false);
+        }
+
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("lookupName", this.lookupName, typeof(string));
+            info.AddValue("prefixLookup", this.prefixLookup, typeof(PrefixLookup));
         }
 
         /// <summary>

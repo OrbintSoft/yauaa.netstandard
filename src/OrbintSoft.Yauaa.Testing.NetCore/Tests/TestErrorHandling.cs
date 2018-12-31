@@ -112,6 +112,25 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "LookupMissing.yaml", "Missing lookup");
         }
 
+        [Fact]
+        public void CheckLookupPrefixMissing()
+        {
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "LookupPrefixMissing.yaml", "Missing lookup");
+        }
+
+        [Fact]
+        public void CheckIsInLookupPrefixMissing()
+        {
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "IsInLookupPrefixMissing.yaml", "Missing lookup");
+        }
+
+        [Fact]
+        public void CheckLookupDuplicateKey()
+        {
+            RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "LookupDuplicateKey.yaml", "An item with the same key has already been added");
+        }
+
+
         /// <summary>
         /// The CheckFixedStringLookupMissing
         /// </summary>

@@ -103,6 +103,13 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
+        [Fact]
+        public void RunLookupPrefixTests()
+        {
+            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "LookupPrefix-tests.yaml");
+            uaa.RunTests(false, true).Should().BeTrue();
+        }
+
         /// <summary>
         /// The RunVariableTests
         /// </summary>

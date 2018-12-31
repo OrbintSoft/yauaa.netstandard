@@ -85,13 +85,13 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         //    uaa.RunTests(false, true).Should().BeFalse();  // This test must return an error state
         //}
 
-        [Fact]
-        public void TestSerialization()
-        {
-            UserAgentAnalyzerTester uaa = this.SerializeAndDeserializeUAA();
+        //[Fact]
+        //public void TestSerialization()
+        //{
+        //    UserAgentAnalyzerTester uaa = this.SerializeAndDeserializeUAA();
 
-            var userAgent = uaa.Parse("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13");
-            userAgent.Get("AgentName").Value.Should().Be("Chrome");
-        }
+        //    var userAgent = uaa.Parse("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13");
+        //    userAgent.Get("AgentName").Value.Should().Be("Chrome");
+        //}
     }
 }

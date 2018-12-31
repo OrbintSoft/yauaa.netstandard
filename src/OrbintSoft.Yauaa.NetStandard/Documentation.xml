@@ -2810,12 +2810,26 @@
             Defines the prefixLookup
             </summary>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix"/> class.
+            </summary>
+            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
+            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix"/> class.
             </summary>
             <param name="lookupName">The lookupName<see cref="T:System.String"/></param>
             <param name="prefixList">The prefixList</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            The GetObjectData
+            </summary>
+            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
+            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.ToString">
             <summary>
@@ -2907,6 +2921,13 @@
             Defines the prefixLookup
             </summary>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix"/> class.
+            </summary>
+            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
+            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix"/> class.
@@ -2914,6 +2935,13 @@
             <param name="lookupName">The lookupName<see cref="T:System.String"/></param>
             <param name="prefixList">The prefixList</param>
             <param name="defaultValue">The defaultValue<see cref="T:System.String"/></param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            The GetObjectData
+            </summary>
+            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/></param>
+            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/></param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.ToString">
             <summary>
@@ -3532,6 +3560,13 @@
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathContext"/></param>
             <returns>The <see cref="T:System.Object"/></returns>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.VisitMatcherPathIsInLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)">
+            <summary>
+            The VisitMatcherPathIsInLookupPrefix
+            </summary>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext"/></param>
+            <returns>The <see cref="T:System.Object"/></returns>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.VisitMatcherPathIsNull(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathIsNullContext)">
             <summary>
             The VisitMatcherPathIsNull
@@ -3544,6 +3579,13 @@
             The VisitMatcherPathLookup
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupContext"/></param>
+            <returns>The <see cref="T:System.Object"/></returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.VisitMatcherPathLookupPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)">
+            <summary>
+            The VisitMatcherPathLookupPrefix
+            </summary>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext"/></param>
             <returns>The <see cref="T:System.Object"/></returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.VisitMatcherWordRange(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherWordRangeContext)">
@@ -3719,6 +3761,13 @@
             <summary>
             The FromHereItCannotBeInHashMapAnymore
             </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.GetLookup(System.String)">
+            <summary>
+            The GetLookup
+            </summary>
+            <param name="lookupName">The lookupName<see cref="T:System.String"/></param>
+            <returns>The <see cref="!:IDictionary&lt;string, string&gt;"/></returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.StillGoingToHashMap">
             <summary>
@@ -10169,25 +10218,25 @@
             <summary>Provides access to the git information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirty">
-            <summary>IsDirty: false</summary>
+            <summary>IsDirty: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirtyString">
-            <summary>IsDirtyString: false</summary>
+            <summary>IsDirtyString: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 9ab03f0</summary>
+            <summary>Commit: 8525c80</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 9ab03f00c1fe8d4f21dfd7d7873bd1f520301bb0</summary>
+            <summary>Sha: 8525c800563317bbed139a1198758d83b3218fc9</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 366</summary>
+            <summary>Commits on top of base version: 367</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.4-stable.1-28-g9ab03f0</summary>
+            <summary>Tag: 5.4-stable.1-29-g8525c80</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.4-stable.1</summary>
@@ -10214,7 +10263,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 366</summary>
+            <summary>Patch: 367</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>

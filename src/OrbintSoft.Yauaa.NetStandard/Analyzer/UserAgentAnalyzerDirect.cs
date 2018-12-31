@@ -531,9 +531,16 @@ namespace OrbintSoft.Yauaa.Analyzer
                     maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
                     this.LoadResource(yaml, filename);
                 }
-                catch (SyntaxErrorException e)
+                catch (YamlException e)
                 {
-                    throw new InvalidParserConfigurationException("Parse error in the file " + filename + ": " + e.Message, e);
+                    if (e.Message.Contains("Duplicate key"))
+                    {
+                        throw new InvalidParserConfigurationException(e.InnerException.Message, e);
+                    }
+                    else
+                    {
+                        throw new InvalidParserConfigurationException("Parse error in the file " + filename + ": " + e.Message, e);
+                    }
                 }
                 catch (Exception e)
                 {
@@ -1354,12 +1361,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                         {
                             var key = YamlUtils.GetKeyAsString(mapping, filename);
                             var value = YamlUtils.GetValueAsString(mapping, filename);
-                            if (map.ContainsKey(key))
-                            {
-                                throw new InvalidParserConfigurationException(
-                                    "In the lookup \"" + name + "\" the key \"" + key + "\" appears multiple times.");
-                            }
-
                             map[key] = value;
                         }
 

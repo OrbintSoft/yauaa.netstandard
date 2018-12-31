@@ -53,6 +53,41 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         [Fact]
+        public void ValidateWalkPathSimpleNameOpenStartRange()
+        {
+            var path = "agent.(-3)product.(1)name";
+
+            string[] expectedHashEntries = {
+                "agent.(1)product.(1)name",
+                "agent.(2)product.(1)name",
+                "agent.(3)product.(1)name",
+            };
+
+            string[] expectedWalkList = {};
+
+            CheckPath(path, expectedHashEntries, expectedWalkList);
+        }
+
+        [Fact]
+        public void ValidateWalkPathSimpleNameOpenEndRange()
+        {
+            var path = "agent.(5-)product.(1)name";
+
+            string[] expectedHashEntries = {
+                "agent.(5)product.(1)name",
+                "agent.(6)product.(1)name",
+                "agent.(7)product.(1)name",
+                "agent.(8)product.(1)name",
+                "agent.(9)product.(1)name",
+                "agent.(10)product.(1)name",
+            };
+
+            string[] expectedWalkList = {};
+
+            CheckPath(path, expectedHashEntries, expectedWalkList);
+        }
+
+        [Fact]
         public void ValidateWalkPathSimpleNameEquals()
         {
             string path = "agent.(1)product.(1)name=\"Foo\"^.(1-3)version";

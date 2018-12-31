@@ -6,6 +6,7 @@
     /// <summary>
     /// Defines the <see cref="PrefixLookup" />
     /// </summary>
+    [Serializable]
     public class PrefixLookup
     {
         /// <summary>
@@ -42,6 +43,7 @@
         /// <summary>
         /// Defines the <see cref="PrefixTrie" />
         /// </summary>
+        [Serializable]
         public class PrefixTrie
         {
             /// <summary>

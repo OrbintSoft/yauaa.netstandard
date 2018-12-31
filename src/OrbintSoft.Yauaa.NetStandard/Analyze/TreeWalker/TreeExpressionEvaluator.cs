@@ -29,6 +29,7 @@
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker
 {
     using System;
+    using System.Collections;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
@@ -214,15 +215,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
                 }
 
                 // Now we know this is a fixed value. Yet we can have a problem in the lookup that was
-                // configured. If we have this then this is a FATAL error (it will fail always everywhere).
-                var lookupMap = this.matcher.Lookups[lookup.Text];
-                if (lookupMap == null)
+                // configured. If we have this then this is a FATAL error (it will fail always everywhere).                
+                if (!this.matcher.Lookups.ContainsKey(lookup.Text))
                 {
                     throw new InvalidParserConfigurationException("Missing lookup \"" + lookup.Text + "\" ");
                 }
 
-                var resultingValue = lookupMap[value.ToLower()];
-                if (resultingValue == null)
+                var lookupMap = this.matcher.Lookups[lookup.Text];
+                if (lookupMap.ContainsKey(value.ToLower()))
+                {
+                    return lookupMap[value.ToLower()];
+                } else
                 {
                     if (defaultValue != null)
                     {
@@ -232,8 +235,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
                     throw new InvalidParserConfigurationException(
                         "Fixed value >>" + value + "<< is missing in lookup: \"" + lookup.Text + "\" ");
                 }
-
-                return resultingValue;
             }
         }
     }

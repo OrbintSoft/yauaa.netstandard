@@ -28,13 +28,16 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
 {
+    using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
     /// Defines the <see cref="StepLookupPrefix" />
     /// </summary>
+    [Serializable]
     public class StepLookupPrefix : Step
     {
         /// <summary>
@@ -55,6 +58,19 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         /// <summary>
         /// Initializes a new instance of the <see cref="StepLookupPrefix"/> class.
         /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public StepLookupPrefix(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+            this.lookupName = (string)info.GetValue("lookupName", typeof(string));
+            this.prefixLookup = (PrefixLookup)info.GetValue("prefixLookup", typeof(PrefixLookup));
+            this.defaultValue = (string)info.GetValue("defaultValue", typeof(string));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StepLookupPrefix"/> class.
+        /// </summary>
         /// <param name="lookupName">The lookupName<see cref="string"/></param>
         /// <param name="prefixList">The prefixList</param>
         /// <param name="defaultValue">The defaultValue<see cref="string"/></param>
@@ -63,6 +79,19 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
             this.lookupName = lookupName;
             this.defaultValue = defaultValue;
             this.prefixLookup = new PrefixLookup(prefixList, false);
+        }
+
+        /// <summary>
+        /// The GetObjectData
+        /// </summary>
+        /// <param name="info">The info<see cref="SerializationInfo"/></param>
+        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
+            info.AddValue("lookupName", this.lookupName, typeof(string));
+            info.AddValue("prefixLookup", this.prefixLookup, typeof(PrefixLookup));
+            info.AddValue("defaultValue", this.defaultValue, typeof(string));
         }
 
         /// <summary>

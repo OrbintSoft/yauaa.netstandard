@@ -44,7 +44,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void RunDocumentationExample()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH , "DocumentationExample.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH , "DocumentationExample.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
     }

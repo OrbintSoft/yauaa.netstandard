@@ -9,11 +9,11 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.6-alpha.1</Version>
+    <Version>5.6-alpha.2</Version>
 
-    <AssemblyVersion>5.6.1.1</AssemblyVersion>
+    <AssemblyVersion>5.6.1.2</AssemblyVersion>
 
-    <FileVersion>5.6.1.1</FileVersion>
+    <FileVersion>5.6.1.2</FileVersion>
 
     <NeutralLanguage>en</NeutralLanguage>
 
@@ -64,7 +64,10 @@
     <None Remove="YamlResources\TestCases\BadDefinitions\FixedStringLookupMissing.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\FixedStringLookupMissingValue.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\InvalidExtract.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\IsInLookupPrefixMissing.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\LookupDuplicateKey.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\LookupMissing.yaml" />
+    <None Remove="YamlResources\TestCases\BadDefinitions\LookupPrefixMissing.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\LookupSetMissing.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\NoExtract.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\NoTestInput.yaml" />
@@ -92,6 +95,7 @@
     <None Remove="YamlResources\Positional-tests.yaml" />
     <None Remove="YamlResources\SubString-tests.yaml" />
     <None Remove="YamlResources\SubStringVersion-tests.yaml" />
+    <None Remove="YamlResources\TestCases\LookupPrefix-tests.yaml" />
     <None Remove="YamlResources\TestOnlyOneTest.yaml" />
     <None Remove="YamlResources\Variable-tests.yaml" />
     <None Remove="YamlResources\TestCases\Versions\BadVersion.yaml" />
@@ -141,7 +145,16 @@
     <Content Include="YamlResources\TestCases\BadDefinitions\InvalidExtract.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\IsInLookupPrefixMissing.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\LookupDuplicateKey.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="YamlResources\TestCases\BadDefinitions\LookupMissing.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\BadDefinitions\LookupPrefixMissing.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\TestCases\BadDefinitions\LookupSetMissing.yaml">
@@ -205,6 +218,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\TestCases\Lookup-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\TestCases\LookupPrefix-tests.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\TestCases\Matcher-IsNull-tests.yaml">
