@@ -10218,25 +10218,25 @@
             <summary>Provides access to the git information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirty">
-            <summary>IsDirty: true</summary>
+            <summary>IsDirty: false</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirtyString">
-            <summary>IsDirtyString: true</summary>
+            <summary>IsDirtyString: false</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 8525c80</summary>
+            <summary>Commit: f157e93</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 8525c800563317bbed139a1198758d83b3218fc9</summary>
+            <summary>Sha: f157e9368f6c10ebf996af429b96edacf0a9101b</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 367</summary>
+            <summary>Commits on top of base version: 368</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.4-stable.1-29-g8525c80</summary>
+            <summary>Tag: 5.4-stable.1-30-gf157e93</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.4-stable.1</summary>
@@ -10263,7 +10263,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 367</summary>
+            <summary>Patch: 368</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>

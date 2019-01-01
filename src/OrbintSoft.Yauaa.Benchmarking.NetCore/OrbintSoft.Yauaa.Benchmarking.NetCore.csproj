@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>5.6-alpha.2</Version>
+    <Version>5.6-beta.1</Version>
     <Authors>Stefano Balzarotti, Niels Basjes</Authors>
-    <AssemblyVersion>5.6.1.2</AssemblyVersion>
+    <AssemblyVersion>5.6.2.1</AssemblyVersion>
     <ApplicationIcon></ApplicationIcon>
     <OutputType>Exe</OutputType>
     <StartupObject />
-    <FileVersion>5.6.1.2</FileVersion>
+    <FileVersion>5.6.2.1</FileVersion>
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
@@ -18,7 +18,7 @@
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <PackageId>OrbintSoft.Yauaa.NetCore.Benchmarking</PackageId>
     <NeutralLanguage>en</NeutralLanguage>
-    <Description>A benchmarking too to test application performance</Description>
+    <Description>A benchmarking tool to test application performance</Description>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
   </PropertyGroup>

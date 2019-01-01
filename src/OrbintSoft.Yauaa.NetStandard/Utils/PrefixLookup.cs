@@ -98,7 +98,7 @@
                     return this.theValue;
                 }
 
-                char myChar = input[this.charIndex]; // This will give us the ASCII value of the char
+                var myChar = input[this.charIndex]; // This will give us the ASCII value of the char
                 if (myChar < 32 || myChar > 126)
                 {
                     return this.theValue; // Cannot store these, so this is where it ends.
