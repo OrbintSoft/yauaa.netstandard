@@ -3767,7 +3767,7 @@
             The GetLookup
             </summary>
             <param name="lookupName">The lookupName<see cref="T:System.String"/></param>
-            <returns>The <see cref="!:IDictionary&lt;string, string&gt;"/></returns>
+            <returns>The Lookup</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.StillGoingToHashMap">
             <summary>
@@ -10227,16 +10227,16 @@
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: f157e93</summary>
+            <summary>Commit: 2e31bdc</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: f157e9368f6c10ebf996af429b96edacf0a9101b</summary>
+            <summary>Sha: 2e31bdc37f8c27e755c57d805c8d15bb98f3fe42</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 368</summary>
+            <summary>Commits on top of base version: 370</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.4-stable.1-30-gf157e93</summary>
+            <summary>Tag: 5.4-stable.1-32-g2e31bdc</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.4-stable.1</summary>
@@ -10263,7 +10263,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 368</summary>
+            <summary>Patch: 370</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>

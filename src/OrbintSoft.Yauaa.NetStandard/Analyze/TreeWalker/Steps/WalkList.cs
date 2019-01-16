@@ -796,7 +796,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             /// The GetLookup
             /// </summary>
             /// <param name="lookupName">The lookupName<see cref="string"/></param>
-            /// <returns>The <see cref="IDictionary{string, string}"/></returns>
+            /// <returns>The Lookup</returns>
             private IDictionary<string, string> GetLookup(string lookupName)
             {
                 if (!this.walkList.lookups.ContainsKey(lookupName))
