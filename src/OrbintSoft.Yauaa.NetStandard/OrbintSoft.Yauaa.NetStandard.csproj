@@ -25,11 +25,11 @@
 	<Title>Yauaa: Yet Another User Agent Analyzer</Title>
     <Description>This is a .NET standard library that tries to parse and analyze the user agent string and extract as many relevant attributes as possible.		
 The library aims to provides a reliable and extensible user agent parsing, browser and device detection.
-This is an analyzer, so it doesn't rely on any database (except for some very little lookup tables), that means it is able to parse and recognize every day new kind of user agents and new patterrsns without updates.
+This is an analyzer, so it doesn't rely on any database (except for some very little lookup tables), that means it is able to parse and recognize every day new kind of user agents and new patterns without updates.
 That makes the library very fast, flexible and easy to mantain, on the contrary the library can't extract info that are not present on user agent string without a proper mapping.
 The library doesn't aim to recognize every device in the world (there are several thousands), but it is able to work, analyze and extract all attributes available in the user agent.
 For most common devices we provide a lookup table in yaml file to identify device brand/model based on the few info available in the user agent.
-The library can be easily extended thanks to yaml files and a simple syntax (we don't rely on regila expression).
+The library can be easily extended thanks to yaml files and a simple syntax (we don't rely on regular expression).
 Thanks to custom yaml definitions, you can make the library able to identify your company applications/ tools and extract your custom fields.</Description>
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
