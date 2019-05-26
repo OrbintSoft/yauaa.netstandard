@@ -65,9 +65,7 @@ is converted into this set of fields:
 
 Try it!
 =======
-You can try online the Java version with your own browser here: [https://try.yauaa.basjes.nl/](https://try.yauaa.basjes.nl/).
-
-Soon will be available  a test with .NET library
+You can try online a .NET demo at this link: https://orbintsoft.net/Yauaa/Demo
 
 Meanwhile, don't forget to download the .nuget package to try by yourself:  https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard
 
