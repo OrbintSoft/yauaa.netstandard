@@ -9,11 +9,11 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.6-beta.1</Version>
+    <Version>5.6-rc.1</Version>
 
-    <AssemblyVersion>5.6.2.1</AssemblyVersion>
+    <AssemblyVersion>5.6.3.1</AssemblyVersion>
 
-    <FileVersion>5.6.2.1</FileVersion>
+    <FileVersion>5.6.3.1</FileVersion>
 
     <NeutralLanguage>en</NeutralLanguage>
 
@@ -301,8 +301,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.5.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="FluentAssertions" Version="5.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
