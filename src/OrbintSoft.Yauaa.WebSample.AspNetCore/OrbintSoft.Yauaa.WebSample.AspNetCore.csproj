@@ -5,9 +5,9 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Stefano Balzarotti</Authors>
     <Company>OrbintSoft</Company>
-    <AssemblyVersion>5.6.5.1</AssemblyVersion>
-    <FileVersion>5.6.5.1</FileVersion>
-    <Version>5.6.1</Version>
+    <AssemblyVersion>5.6.5.2</AssemblyVersion>
+    <FileVersion>5.6.5.2</FileVersion>
+    <Version>5.6.2</Version>
     <Description>A sample web project to test Yauaa Parser</Description>
     <Copyright>Copyright (C) 2013-2018 OrbintSoft</Copyright>
     <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>

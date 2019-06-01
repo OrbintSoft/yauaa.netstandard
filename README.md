@@ -20,9 +20,11 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 HIGH Profile release notes:
 ===========================
 
-5.6.*
+5.6.1
 --------
-In version 5.6 the number of detected DeviceBrands is greatly increased. The detection system for the DeviceBrand has been rewritten and as a consequence both the memory usage and the time needed for the analysis have been decreased.
+In version 5.6 the number of detected DeviceBrands is greatly increased. 
+
+The detection system for the DeviceBrand has been rewritten and as a consequence both the memory usage and the time needed for the analysis have been decreased.
 
 5.5.1
 --------
@@ -65,7 +67,7 @@ is converted into this set of fields:
 
 Try it!
 =======
-You can try it online with an ASP.NET at this link: https://orbintsoft.net/Yauaa/Demo
+You can try it online with an ASP.NET demo at this link: https://orbintsoft.net/Yauaa/Demo
 
 Or you can download the .nuget package to it try by yourself:  https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard
 
@@ -93,7 +95,7 @@ License
   	Original Author and License:
  
 	Yet Another UserAgent Analyzer
-	Copyright (C) 2013-2018 Niels Basjes
+	Copyright (C) 2013-2019 Niels Basjes
  
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
