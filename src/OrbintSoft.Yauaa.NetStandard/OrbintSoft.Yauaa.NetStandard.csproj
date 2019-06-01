@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.6-rc.1</Version>
-    <AssemblyVersion>5.6.3.1</AssemblyVersion>
-    <FileVersion>5.6.3.1</FileVersion>
+    <Version>5.6.1</Version>
+    <AssemblyVersion>5.6.5.1</AssemblyVersion>
+    <FileVersion>5.6.5.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -33,7 +33,7 @@ The library can be easily extended thanks to yaml files and a simple syntax (we 
 Thanks to custom yaml definitions, you can make the library able to identify your company applications/ tools and extract your custom fields.</Description>
     <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
     <PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
@@ -52,6 +52,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 	<NuspecFile></NuspecFile>
 	<NuspecBasePath></NuspecBasePath>
 	<NuspecProperties>test=test1</NuspecProperties>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -156,6 +157,10 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\WindowsPhone.yaml" />
     <None Remove="YamlResources\UserAgents\WindowsPhoneLookups.yaml" />
     <None Remove="YamlResources\UserAgents\Xiaomi.yaml" />
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
