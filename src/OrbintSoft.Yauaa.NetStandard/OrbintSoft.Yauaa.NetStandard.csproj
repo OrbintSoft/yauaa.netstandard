@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.6.2</Version>
-    <AssemblyVersion>5.6.5.2</AssemblyVersion>
-    <FileVersion>5.6.5.2</FileVersion>
+    <Version>5.7-alpha.1</Version>
+    <AssemblyVersion>5.7.1.1</AssemblyVersion>
+    <FileVersion>5.7.1.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -31,7 +31,7 @@ The library doesn't aim to recognize every device in the world (there are severa
 For most common devices we provide a lookup table in yaml file to identify device brand/model based on the few info available in the user agent.
 The library can be easily extended thanks to yaml files and a simple syntax (we don't rely on regular expression).
 Thanks to custom yaml definitions, you can make the library able to identify your company applications/ tools and extract your custom fields.</Description>
-    <Copyright>Copyright (C) 2013-2018 Niels Basjes, Porting by OrbintSoft</Copyright>
+    <Copyright>Copyright (C) 2013-2019 Niels Basjes, Porting by OrbintSoft</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
@@ -555,13 +555,8 @@ Thanks to custom yaml definitions, you can make the library able to identify you
   <ItemGroup>
     <PackageReference Include="Antlr4" Version="4.6.6">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
     <PackageReference Include="DomainParser.Library.NetStandard" Version="1.6.0" />
     <PackageReference Include="GitInfo" Version="2.0.20">
       <PrivateAssets>all</PrivateAssets>
@@ -578,6 +573,6 @@ Thanks to custom yaml definitions, you can make the library able to identify you
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="YamlDotNet" Version="6.0.0" />
+    <PackageReference Include="YamlDotNet" Version="6.1.1" />
   </ItemGroup>
 </Project>

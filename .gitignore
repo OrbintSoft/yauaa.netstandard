@@ -19,3 +19,4 @@
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/wwwroot/lib
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/publicsuffix.txt
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/*.user
+/src/OrbintSoft.Yauaa.NetStandard/*.user
