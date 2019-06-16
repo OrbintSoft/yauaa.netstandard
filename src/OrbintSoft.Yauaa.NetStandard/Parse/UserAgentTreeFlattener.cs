@@ -414,7 +414,7 @@ namespace OrbintSoft.Yauaa.Parse
         public override void EnterUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
             // In case of a parse error the 'parsed' version of agent can be incomplete
-            this.Inform(context, AGENT, context.start.TokenSource.InputStream.ToString());
+            this.Inform(context, AGENT, context.Start.TokenSource.InputStream.ToString());
         }
 
         /// <summary>

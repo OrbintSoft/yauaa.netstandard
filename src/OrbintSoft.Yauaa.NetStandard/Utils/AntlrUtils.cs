@@ -49,19 +49,19 @@ namespace OrbintSoft.Yauaa.Utils
         /// <returns>The <see cref="string"/></returns>
         public static string GetSourceText(ParserRuleContext ctx)
         {
-            if (ctx.start == null || ctx.stop == null)
+            if (ctx.Start == null || ctx.Stop == null)
             {
                 return ctx.GetText();
             }
 
-            var startIndex = ctx.start.StartIndex;
-            var stopIndex = ctx.stop.StopIndex;
+            var startIndex = ctx.Start.StartIndex;
+            var stopIndex = ctx.Stop.StopIndex;
             if (stopIndex < startIndex)
             {
                 return string.Empty; // Just return the empty string.
             }
 
-            var inputStream = ctx.start.InputStream;
+            var inputStream = ctx.Start.InputStream;
             return inputStream.GetText(new Interval(startIndex, stopIndex));
         }
     }

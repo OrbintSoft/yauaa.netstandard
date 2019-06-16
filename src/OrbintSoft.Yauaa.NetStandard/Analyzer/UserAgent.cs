@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
     using Antlr4.Runtime;
@@ -45,7 +46,7 @@ namespace OrbintSoft.Yauaa.Analyzer
     /// Defines the <see cref="UserAgent" />
     /// </summary>
     [Serializable]
-    public class UserAgent : UserAgentBaseListener, IParserErrorListener, IAntlrErrorListener<int>
+    public class UserAgent : UserAgentBaseListener, IAntlrErrorListener<int>, IAntlrErrorListener<IToken>
     {
         /// <summary>
         /// Defines the AGENT_CLASS
@@ -658,9 +659,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
         /// <param name="msg">The msg<see cref="string"/></param>
         /// <param name="e">The e<see cref="RecognitionException"/></param>
-        public void SyntaxError(IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
-            this.SyntaxError(recognizer, null, line, charPositionInLine, msg, e);
+            this.SyntaxError(output, recognizer, null, line, charPositionInLine, msg, e);
         }
 
         /// <summary>
@@ -672,7 +673,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
         /// <param name="msg">The msg<see cref="string"/></param>
         /// <param name="e">The e<see cref="RecognitionException"/></param>
-        public void SyntaxError(IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
             if (this.IsDebug)
             {

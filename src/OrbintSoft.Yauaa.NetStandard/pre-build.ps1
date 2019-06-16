@@ -20,5 +20,8 @@ if (-Not (Get-Command $antlr -ErrorAction SilentlyContinue))
 	echo "antlr-4.7.2-complete.jar Not found, impossible to compile"
 	exit -4
 } else {
-	exit 0
+	java -jar ".\Dependencies\antlr-4.7.2-complete.jar" -Dlanguage=CSharp -visitor -package OrbintSoft.Yauaa.Antlr4Source -Xexact-output-dir -o ".\Antlr4Generated" ".\Antlr4Source\UserAgent.g4"
+	java -jar ".\Dependencies\antlr-4.7.2-complete.jar" -Dlanguage=CSharp -visitor -package OrbintSoft.Yauaa.Antlr4Source -Xexact-output-dir -o ".\Antlr4Generated" ".\Antlr4Source\UserAgentTreeWalker.g4"
+	exit 0;
 }
+

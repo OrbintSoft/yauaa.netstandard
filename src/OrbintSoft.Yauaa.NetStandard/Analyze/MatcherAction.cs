@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Atn;
     using Antlr4.Runtime.Dfa;
@@ -461,15 +462,16 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             /// <summary>
-            /// The SyntaxError
+            /// 
             /// </summary>
-            /// <param name="recognizer">The recognizer<see cref="IRecognizer"/></param>
-            /// <param name="offendingSymbol">The offendingSymbol</param>
-            /// <param name="line">The line<see cref="int"/></param>
-            /// <param name="charPositionInLine">The charPositionInLine<see cref="int"/></param>
-            /// <param name="msg">The msg<see cref="string"/></param>
-            /// <param name="e">The e<see cref="RecognitionException"/></param>
-            public void SyntaxError(IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+            /// <param name="output"></param>
+            /// <param name="recognizer"></param>
+            /// <param name="offendingSymbol"></param>
+            /// <param name="line"></param>
+            /// <param name="charPositionInLine"></param>
+            /// <param name="msg"></param>
+            /// <param name="e"></param>
+            public void SyntaxError(TextWriter output, IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
             {
                 Log.Error("Syntax error");
                 Log.Error(string.Format("Source : {0}", this.MatcherAction.MatchExpression));
