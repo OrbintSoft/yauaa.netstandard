@@ -557,6 +557,11 @@ Thanks to custom yaml definitions, you can make the library able to identify you
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Antlr4.CodeGenerator" Version="4.6.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Antlr4.Runtime" Version="4.6.6" />
     <PackageReference Include="DomainParser.Library.NetStandard" Version="1.6.0" />
     <PackageReference Include="GitInfo" Version="2.0.20">
       <PrivateAssets>all</PrivateAssets>
@@ -575,4 +580,12 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
     <PackageReference Include="YamlDotNet" Version="6.1.1" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="pre-build.ps1">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="powershell.exe -ExecutionPolicy Unrestricted -file $(ProjectDir)pre-build.ps1" />
+  </Target>
 </Project>

@@ -13,6 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.Commandlin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrbintSoft.Yauaa.WebSample.AspNetCore", "OrbintSoft.Yauaa.WebSample.AspNetCore\OrbintSoft.Yauaa.WebSample.AspNetCore.csproj", "{05C56A45-1331-4051-A319-DA7EE8EA002F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{10122C1C-F037-415F-8EA7-B1A49BAD2E85}"
+	ProjectSection(SolutionItems) = preProject
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
