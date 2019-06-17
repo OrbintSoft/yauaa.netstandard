@@ -1,5 +1,9 @@
 This is intended as an overview of the major changes
 
+v5.7
+===
+- Migrate to Antlr 5.7.2 Standard to be more compliant
+
 v5.6
 ===
 - Target equivalent Java 5.6 Version

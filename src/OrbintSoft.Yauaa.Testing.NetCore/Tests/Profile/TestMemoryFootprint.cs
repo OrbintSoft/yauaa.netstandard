@@ -114,7 +114,15 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
         public void AssesMemoryImpactPerFieldName()
         {
             Skip.If(!Config.ENABLE_PROFILING);
-            UserAgentAnalyzer uaa = UserAgentAnalyzer
+
+            // Calculate the used memory
+            var currentProcess = Process.GetCurrentProcess();
+            long memory = currentProcess.VirtualMemorySize64;
+            LOG.Error(string.Format(
+                "Without Yauaa present and GC --> Used memory is %10d bytes (%5d MiB)",
+                memory, BytesToMegabytes(memory)));
+
+            var uaa = UserAgentAnalyzer
                 .NewBuilder()
                 .HideMatcherLoadStats()
                 .WithoutCache()
@@ -126,9 +134,8 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
             uaa.PreHeat();
             GC.Collect();
 
-            // Calculate the used memory
-            Process currentProcess = Process.GetCurrentProcess();
-            long memory = currentProcess.VirtualMemorySize64;
+            // Calculate the used memory            
+            memory = currentProcess.VirtualMemorySize64;
             LOG.Error(string.Format(
                 "Querying for 'All fields' and GC --> Used memory is {0} bytes ({1} MiB)",
                 memory, BytesToMegabytes(memory)));
