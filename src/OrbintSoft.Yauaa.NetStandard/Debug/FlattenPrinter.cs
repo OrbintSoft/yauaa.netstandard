@@ -34,12 +34,12 @@ namespace OrbintSoft.Yauaa.Debug
     using OrbintSoft.Yauaa.Analyze;
 
     /// <summary>
-    /// Defines the <see cref="FlattenPrinter" />
+    /// Defines the <see cref="FlattenPrinter" />.
     /// </summary>
     public class FlattenPrinter : IAnalyzer
     {
         /// <summary>
-        /// Defines the outputStream
+        /// Defines the outputStream.
         /// </summary>
         [NonSerialized]
         private readonly StreamWriter outputStream;
@@ -47,48 +47,48 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Initializes a new instance of the <see cref="FlattenPrinter"/> class.
         /// </summary>
-        /// <param name="outputStream">The outputStream<see cref="StreamWriter"/></param>
+        /// <param name="outputStream">The outputStream<see cref="StreamWriter"/>.</param>
         public FlattenPrinter(StreamWriter outputStream)
         {
             this.outputStream = outputStream;
         }
 
         /// <summary>
-        /// The Inform
+        /// The Inform.
         /// </summary>
-        /// <param name="path">The path<see cref="string"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/></param>
+        /// <param name="path">The path<see cref="string"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
         public void Inform(string path, string value, IParseTree ctx)
         {
             this.outputStream.WriteLine(path);
         }
 
         /// <summary>
-        /// The InformMeAbout
+        /// The InformMeAbout.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
         public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
             // Not needed
         }
 
         /// <summary>
-        /// The LookingForRange
+        /// The LookingForRange.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
         public void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
             // Never called
         }
 
         /// <summary>
-        /// The GetRequiredInformRanges
+        /// The GetRequiredInformRanges.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The range</returns>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <returns>The range.</returns>
         public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
         {
             // Never called
@@ -96,21 +96,21 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The InformMeAboutPrefix
+        /// The InformMeAboutPrefix.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="prefix">The prefix<see cref="string"/></param>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="prefix">The prefix<see cref="string"/>.</param>
         public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
         {
             // Never called
         }
 
         /// <summary>
-        /// The GetRequiredPrefixLengths
+        /// The GetRequiredPrefixLengths.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The required prefix lenghts</returns>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <returns>The required prefix lenghts.</returns>
         public ISet<int?> GetRequiredPrefixLengths(string treeName)
         {
             // Never called

@@ -33,7 +33,7 @@ namespace OrbintSoft.Yauaa.Utils
     using System.Text.RegularExpressions;
 
     /// <summary>
-    /// Defines the <see cref="Normalize" />
+    /// Defines the <see cref="Normalize" />.
     /// </summary>
     public sealed class Normalize
     {
@@ -45,10 +45,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The Brand
+        /// The Brand.
         /// </summary>
-        /// <param name="brand">The brand<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="brand">The brand<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string Brand(string brand)
         {
             if (brand.Length <= 3)
@@ -140,11 +140,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The CleanupDeviceBrandName
+        /// The CleanupDeviceBrandName.
         /// </summary>
-        /// <param name="deviceBrand">The deviceBrand<see cref="string"/></param>
-        /// <param name="deviceName">The deviceName<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="deviceBrand">The deviceBrand<see cref="string"/>.</param>
+        /// <param name="deviceName">The deviceName<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string CleanupDeviceBrandName(string deviceBrand, string deviceName)
         {
             var lowerDeviceBrand = deviceBrand.ToLower(CultureInfo.InvariantCulture);
@@ -184,10 +184,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The Email
+        /// The Email.
         /// </summary>
-        /// <param name="email">The email<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="email">The email<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string Email(string email)
         {
             var cleaned = email;
@@ -204,10 +204,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsTokenSeparator
+        /// The IsTokenSeparator.
         /// </summary>
-        /// <param name="letter">The letter<see cref="char"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="letter">The letter<see cref="char"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         private static bool IsTokenSeparator(char letter)
         {
             switch (letter)

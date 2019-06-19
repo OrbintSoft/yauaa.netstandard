@@ -33,12 +33,12 @@ namespace OrbintSoft.Yauaa.Utils
     using System.Reflection;
 
     /// <summary>
-    /// Defines the <see cref="ThisVersion" />
+    /// Defines the <see cref="ThisVersion" />.
     /// </summary>
     public class ThisVersion
     {
         /// <summary>
-        /// Defines the Fi
+        /// Defines the Fi.
         /// </summary>
         private static readonly FileInfo Fi;
 
@@ -52,27 +52,27 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// Gets the BuildTimestamp
+        /// Gets the BuildTimestamp.
         /// </summary>
         public static string BuildTimestamp => Fi.LastWriteTime.Ticks.ToString();
 
         /// <summary>
-        /// Gets the Copyright
+        /// Gets the Copyright.
         /// </summary>
         public static string Copyright => "Copyright (C) 2013-" + DateTime.Now.Year + " Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft)";
 
         /// <summary>
-        /// Gets the GitCommitIdDescribeShort
+        /// Gets the GitCommitIdDescribeShort.
         /// </summary>
         public static string GitCommitIdDescribeShort => ThisAssembly.Git.Commit;
 
         /// <summary>
-        /// Gets the License
+        /// Gets the License.
         /// </summary>
         public static string License => "License Apache 2.0";
 
         /// <summary>
-        /// Gets the ProjectVersion
+        /// Gets the ProjectVersion.
         /// </summary>
         public static string ProjectVersion => new Version(Convert.ToInt16(ThisAssembly.Git.SemVer.Major), Convert.ToInt16(ThisAssembly.Git.SemVer.Minor), Convert.ToInt16(ThisAssembly.Git.SemVer.Patch)).ToString();
     }

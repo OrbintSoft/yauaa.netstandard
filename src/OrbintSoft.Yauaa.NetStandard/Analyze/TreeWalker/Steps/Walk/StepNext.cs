@@ -33,7 +33,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepNext" />
+    /// Defines the <see cref="StepNext" />.
     /// </summary>
     [Serializable]
     public class StepNext : Step
@@ -48,28 +48,28 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <summary>
         /// Initializes a new instance of the <see cref="StepNext"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepNext(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "Next(1)";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var nextTree = this.Next(tree);
@@ -82,10 +82,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// The Next
+        /// The Next.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <returns>The <see cref="IParseTree"/>.</returns>
         private IParseTree Next(IParseTree tree)
         {
             var parent = this.Up(tree);

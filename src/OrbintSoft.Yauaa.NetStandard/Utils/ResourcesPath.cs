@@ -32,15 +32,15 @@ namespace OrbintSoft.Yauaa.Utils
     using System.IO;
 
     /// <summary>
-    /// Represent a set of resources based on a directory and a file filter
+    /// Represent a set of resources based on a directory and a file filter.
     /// </summary>
     public class ResourcesPath
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ResourcesPath"/> class.
         /// </summary>
-        /// <param name="directory">The directory<see cref="string"/></param>
-        /// <param name="filter">The filter<see cref="string"/></param>
+        /// <param name="directory">The directory<see cref="string"/>.</param>
+        /// <param name="filter">The filter<see cref="string"/>.</param>
         public ResourcesPath(string directory, string filter = ".yaml")
         {
             if (!Path.IsPathRooted(directory))
@@ -53,19 +53,19 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// Gets or sets the BasePath
+        /// Gets or sets the BasePath.
         /// </summary>
         public static string BasePath { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
         /// Gets the Directory
-        /// Relative or absolute path to the directory where resource files are stored
+        /// Relative or absolute path to the directory where resource files are stored.
         /// </summary>
         public string Directory { get; }
 
         /// <summary>
         /// Gets the Filter
-        /// A search pattern to load only files that correspond to a provided criteria, useful also to load only one file
+        /// A search pattern to load only files that correspond to a provided criteria, useful also to load only one file.
         /// </summary>
         public string Filter { get; }
     }

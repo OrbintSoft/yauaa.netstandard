@@ -29,7 +29,7 @@
 namespace OrbintSoft.Yauaa.Antlr4Source
 {
     /// <summary>
-    /// Defines the <see cref="UserAgentLexer" />
+    /// Defines the <see cref="UserAgentLexer" />.
     /// </summary>
     public partial class UserAgentLexer
     {

@@ -35,38 +35,38 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="MatcherVariableAction" />
+    /// Defines the <see cref="MatcherVariableAction" />.
     /// </summary>
     [Serializable]
     public class MatcherVariableAction : MatcherAction
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherVariableAction));
 
         /// <summary>
-        /// Defines the expression
+        /// Defines the expression.
         /// </summary>
         private readonly string expression;
 
         /// <summary>
-        /// Defines the foundValue
+        /// Defines the foundValue.
         /// </summary>
         [NonSerialized]
         private WalkList.WalkResult foundValue = null;
 
         /// <summary>
-        /// Defines the interestedActions
+        /// Defines the interestedActions.
         /// </summary>
         private ISet<MatcherAction> interestedActions = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatcherVariableAction"/> class.
         /// </summary>
-        /// <param name="variableName">The variableName<see cref="string"/></param>
-        /// <param name="config">The config<see cref="string"/></param>
-        /// <param name="matcher">The matcher<see cref="Matcher"/></param>
+        /// <param name="variableName">The variableName<see cref="string"/>.</param>
+        /// <param name="config">The config<see cref="string"/>.</param>
+        /// <param name="matcher">The matcher<see cref="Matcher"/>.</param>
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
             this.VariableName = variableName;
@@ -75,15 +75,15 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets the VariableName
+        /// Gets the VariableName.
         /// </summary>
         public string VariableName { get; }
 
         /// <summary>
-        /// The Inform
+        /// The Inform.
         /// </summary>
-        /// <param name="key">The key<see cref="string"/></param>
-        /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/></param>
+        /// <param name="key">The key<see cref="string"/>.</param>
+        /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/>.</param>
         public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
             if (this.Verbose)
@@ -116,9 +116,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The ObtainResult
+        /// The ObtainResult.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool ObtainResult()
         {
             this.ProcessInformedMatches();
@@ -126,7 +126,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Reset
+        /// The Reset.
         /// </summary>
         public override void Reset()
         {
@@ -135,37 +135,37 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "VARIABLE: (" + this.VariableName + "): " + this.expression;
         }
 
         /// <summary>
-        /// The SetInterestedActions
+        /// The SetInterestedActions.
         /// </summary>
-        /// <param name="newInterestedActions">The newInterestedActions<see cref="ISet{MatcherAction}"/></param>
+        /// <param name="newInterestedActions">The newInterestedActions<see cref="ISet{MatcherAction}"/>.</param>
         public void SetInterestedActions(ISet<MatcherAction> newInterestedActions)
         {
             this.interestedActions = newInterestedActions;
         }
 
         /// <summary>
-        /// The ParseWalkerExpression
+        /// The ParseWalkerExpression.
         /// </summary>
-        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/></param>
-        /// <returns>The <see cref="ParserRuleContext"/></returns>
+        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/>.</param>
+        /// <returns>The <see cref="ParserRuleContext"/>.</returns>
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
             return parser.matcherVariable();
         }
 
         /// <summary>
-        /// The SetFixedValue
+        /// The SetFixedValue.
         /// </summary>
-        /// <param name="fixedValue">The fixedValue<see cref="string"/></param>
+        /// <param name="fixedValue">The fixedValue<see cref="string"/>.</param>
         protected override void SetFixedValue(string fixedValue)
         {
             throw new InvalidParserConfigurationException(

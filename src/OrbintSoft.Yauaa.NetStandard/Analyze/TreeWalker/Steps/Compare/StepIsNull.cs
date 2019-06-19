@@ -33,7 +33,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepIsNull" />
+    /// Defines the <see cref="StepIsNull" />.
     /// </summary>
     [Serializable]
     public class StepIsNull : Step
@@ -48,28 +48,28 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <summary>
         /// Initializes a new instance of the <see cref="StepIsNull"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepIsNull(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "IsNull()";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.WalkNextStep(tree, value);

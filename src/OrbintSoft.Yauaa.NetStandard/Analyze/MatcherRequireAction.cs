@@ -35,33 +35,33 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="MatcherRequireAction" />
+    /// Defines the <see cref="MatcherRequireAction" />.
     /// </summary>
     [Serializable]
     public class MatcherRequireAction : MatcherAction
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherRequireAction));
 
         /// <summary>
-        /// Defines the foundRequiredValue
+        /// Defines the foundRequiredValue.
         /// </summary>
         private bool foundRequiredValue = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatcherRequireAction"/> class.
         /// </summary>
-        /// <param name="config">The config<see cref="string"/></param>
-        /// <param name="matcher">The matcher<see cref="Matcher"/></param>
+        /// <param name="config">The config<see cref="string"/>.</param>
+        /// <param name="matcher">The matcher<see cref="Matcher"/>.</param>
         public MatcherRequireAction(string config, Matcher matcher)
         {
             this.Init(config, matcher);
         }
 
         /// <summary>
-        /// The Initialize
+        /// The Initialize.
         /// </summary>
         public override void Initialize()
         {
@@ -70,10 +70,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Inform
+        /// The Inform.
         /// </summary>
-        /// <param name="key">The key<see cref="string"/></param>
-        /// <param name="foundValue">The foundValue<see cref="WalkList.WalkResult"/></param>
+        /// <param name="key">The key<see cref="string"/>.</param>
+        /// <param name="foundValue">The foundValue<see cref="WalkList.WalkResult"/>.</param>
         public override void Inform(string key, WalkList.WalkResult foundValue)
         {
             this.foundRequiredValue = true;
@@ -86,9 +86,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The ObtainResult
+        /// The ObtainResult.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool ObtainResult()
         {
             if (this.IsValidIsNull())
@@ -101,7 +101,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Reset
+        /// The Reset.
         /// </summary>
         public override void Reset()
         {
@@ -110,28 +110,28 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "Require: " + this.MatchExpression;
         }
 
         /// <summary>
-        /// The ParseWalkerExpression
+        /// The ParseWalkerExpression.
         /// </summary>
-        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/></param>
-        /// <returns>The <see cref="ParserRuleContext"/></returns>
+        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/>.</param>
+        /// <returns>The <see cref="ParserRuleContext"/>.</returns>
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
             return parser.matcherRequire();
         }
 
         /// <summary>
-        /// The SetFixedValue
+        /// The SetFixedValue.
         /// </summary>
-        /// <param name="fixedValue">The fixedValue<see cref="string"/></param>
+        /// <param name="fixedValue">The fixedValue<see cref="string"/>.</param>
         protected override void SetFixedValue(string fixedValue)
         {
             throw new InvalidParserConfigurationException(

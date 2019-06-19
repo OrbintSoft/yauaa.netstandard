@@ -38,41 +38,41 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentGetChildrenVisitor" />
+    /// Defines the <see cref="UserAgentGetChildrenVisitor" />.
     /// </summary>
     [Serializable]
     public class UserAgentGetChildrenVisitor : UserAgentBaseVisitor<IEnumerator<IParseTree>>, ISerializable
     {
         /// <summary>
-        /// Defines the Empty
+        /// Defines the Empty.
         /// </summary>
         private static readonly IEnumerator<IParseTree> Empty = null;
 
         /// <summary>
-        /// Defines the end
+        /// Defines the end.
         /// </summary>
         private readonly int end;
 
         /// <summary>
-        /// Defines the name
+        /// Defines the name.
         /// </summary>
         private readonly string name;
 
         /// <summary>
-        /// Defines the start
+        /// Defines the start.
         /// </summary>
         private readonly int start;
 
         /// <summary>
-        /// Defines the childIterable
+        /// Defines the childIterable.
         /// </summary>
         private ChildIterable childIterable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAgentGetChildrenVisitor"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public UserAgentGetChildrenVisitor(SerializationInfo info, StreamingContext context)
         {
             this.name = (string)info.GetValue("name", typeof(string));
@@ -84,9 +84,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAgentGetChildrenVisitor"/> class.
         /// </summary>
-        /// <param name="name">The name<see cref="string"/></param>
-        /// <param name="start">The start<see cref="int"/></param>
-        /// <param name="end">The end<see cref="int"/></param>
+        /// <param name="name">The name<see cref="string"/>.</param>
+        /// <param name="start">The start<see cref="int"/>.</param>
+        /// <param name="end">The end<see cref="int"/>.</param>
         public UserAgentGetChildrenVisitor(string name, int start, int end)
         {
             this.name = name;
@@ -96,7 +96,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         }
 
         /// <summary>
-        /// Gets the DefaultResult
+        /// Gets the DefaultResult.
         /// </summary>
         protected override IEnumerator<IParseTree> DefaultResult
         {
@@ -107,10 +107,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("name", this.name, typeof(string));
@@ -119,80 +119,80 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         }
 
         /// <summary>
-        /// The VisitCommentBlock
+        /// The VisitCommentBlock.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitCommentEntry
+        /// The VisitCommentEntry.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentEntryContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentEntryContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitCommentProduct
+        /// The VisitCommentProduct.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitKeyValue
+        /// The VisitKeyValue.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitKeyValue([NotNull] UserAgentParser.KeyValueContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitKeyWithoutValue
+        /// The VisitKeyWithoutValue.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitProduct
+        /// The VisitProduct.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitProduct([NotNull] UserAgentParser.ProductContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitProductName
+        /// The VisitProductName.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitProductName([NotNull] UserAgentParser.ProductNameContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitProductNameKeyValue
+        /// The VisitProductNameKeyValue.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameKeyValueContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameKeyValueContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
         {
             switch (this.name)
@@ -233,50 +233,50 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         }
 
         /// <summary>
-        /// The VisitProductNameNoVersion
+        /// The VisitProductNameNoVersion.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitProductVersion
+        /// The VisitProductVersion.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitProductVersionWithCommas
+        /// The VisitProductVersionWithCommas.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWithCommasContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWithCommasContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitRootElements
+        /// The VisitRootElements.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.RootElementsContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.RootElementsContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitRootElements([NotNull] UserAgentParser.RootElementsContext context)
         {
             return this.GetChildrenByName(context);
         }
 
         /// <summary>
-        /// The VisitUserAgent
+        /// The VisitUserAgent.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.UserAgentContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="context">The context<see cref="UserAgentParser.UserAgentContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
             IEnumerator<IParseTree> children = this.GetChildrenByName(context);
@@ -289,21 +289,21 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         }
 
         /// <summary>
-        /// The GetChildrenByName
+        /// The GetChildrenByName.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         internal IEnumerator<IParseTree> GetChildrenByName(ParserRuleContext ctx)
         {
             return this.childIterable.Iterator(ctx);
         }
 
         /// <summary>
-        /// The Init
+        /// The Init.
         /// </summary>
-        /// <param name="name">The name<see cref="string"/></param>
-        /// <param name="start">The start<see cref="int"/></param>
-        /// <param name="end">The end<see cref="int"/></param>
+        /// <param name="name">The name<see cref="string"/>.</param>
+        /// <param name="start">The start<see cref="int"/>.</param>
+        /// <param name="end">The end<see cref="int"/>.</param>
         private void Init(string name, int start, int end)
         {
             switch (name)

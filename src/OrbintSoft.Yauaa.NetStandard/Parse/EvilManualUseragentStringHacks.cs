@@ -33,22 +33,22 @@ namespace OrbintSoft.Yauaa.Parse
     using System.Web;
 
     /// <summary>
-    /// Defines the <see cref="EvilManualUseragentStringHacks" />
+    /// Defines the <see cref="EvilManualUseragentStringHacks" />.
     /// </summary>
     public sealed class EvilManualUseragentStringHacks
     {
         /// <summary>
-        /// Defines the MissingProductAtStart
+        /// Defines the MissingProductAtStart.
         /// </summary>
         private static readonly Regex MissingProductAtStart = new Regex("^\\(( |;|null|compatible|windows|android|linux).*", RegexOptions.IgnoreCase);
 
         /// <summary>
-        /// Defines the MissingSpace
+        /// Defines the MissingSpace.
         /// </summary>
         private static readonly Regex MissingSpace = new Regex("(/[0-9]+\\.[0-9]+)([A-Z][a-z][a-z][a-z]+ )");
 
         /// <summary>
-        /// Defines the MultipleSpaces
+        /// Defines the MultipleSpaces.
         /// </summary>
         private static readonly Regex MultipleSpaces = new Regex("(?: {2,})");
 
@@ -63,8 +63,8 @@ namespace OrbintSoft.Yauaa.Parse
         /// There are a few situations where in order to parse the useragent we need to 'fix it'.
         /// Yes, all of this is pure evil but we "have to".
         /// </summary>
-        /// <param name="useragent">useragent Raw useragent</param>
-        /// <returns>Cleaned useragent</returns>
+        /// <param name="useragent">useragent Raw useragent.</param>
+        /// <returns>Cleaned useragent.</returns>
         public static string FixIt(string useragent)
         {
             if (string.IsNullOrEmpty(useragent))
@@ -137,12 +137,12 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The ReplaceString
+        /// The ReplaceString.
         /// </summary>
-        /// <param name="input">The input<see cref="string"/></param>
-        /// <param name="searchFor">The searchFor<see cref="string"/></param>
-        /// <param name="replaceWith">The replaceWith<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="input">The input<see cref="string"/>.</param>
+        /// <param name="searchFor">The searchFor<see cref="string"/>.</param>
+        /// <param name="replaceWith">The replaceWith<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string ReplaceString(string input, string searchFor, string replaceWith)
         {
             // startIdx and idxSearchFor delimit various chunks of input; these

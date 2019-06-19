@@ -32,52 +32,52 @@ namespace OrbintSoft.Yauaa.Analyze
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="IAnalyzer" />
+    /// Defines the <see cref="IAnalyzer" />.
     /// </summary>
     public interface IAnalyzer
     {
         /// <summary>
-        /// The Inform
+        /// The Inform.
         /// </summary>
-        /// <param name="path">The path<see cref="string"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="context">The context<see cref="IParseTree"/></param>
+        /// <param name="path">The path<see cref="string"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <param name="context">The context<see cref="IParseTree"/>.</param>
         void Inform(string path, string value, IParseTree context);
 
         /// <summary>
-        /// The InformMeAbout
+        /// The InformMeAbout.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
         void InformMeAbout(MatcherAction matcherAction, string keyPattern);
 
         /// <summary>
-        /// The LookingForRange
+        /// The LookingForRange.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
         void LookingForRange(string treeName, WordRangeVisitor.Range range);
 
         /// <summary>
-        /// The GetRequiredInformRanges
+        /// The GetRequiredInformRanges.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The ranges</returns>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <returns>The ranges.</returns>
         ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName);
 
         /// <summary>
-        /// The InformMeAboutPrefix
+        /// The InformMeAboutPrefix.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="prefix">The prefix<see cref="string"/></param>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="prefix">The prefix<see cref="string"/>.</param>
         void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix);
 
         /// <summary>
-        /// The GetRequiredPrefixLengths
+        /// The GetRequiredPrefixLengths.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <returns>The prefix lenghts/></returns>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <returns>The prefix lenghts/>.</returns>
         ISet<int?> GetRequiredPrefixLengths(string treeName);
     }
 }

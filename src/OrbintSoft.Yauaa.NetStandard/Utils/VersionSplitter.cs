@@ -29,12 +29,12 @@
 namespace OrbintSoft.Yauaa.Utils
 {
     /// <summary>
-    /// Defines the <see cref="VersionSplitter" />
+    /// Defines the <see cref="VersionSplitter" />.
     /// </summary>
     public class VersionSplitter : Splitter
     {
         /// <summary>
-        /// Defines the instance
+        /// Defines the instance.
         /// </summary>
         private static VersionSplitter instance;
 
@@ -46,9 +46,9 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetInstance
+        /// The GetInstance.
         /// </summary>
-        /// <returns>The <see cref="VersionSplitter"/></returns>
+        /// <returns>The <see cref="VersionSplitter"/>.</returns>
         public static VersionSplitter GetInstance()
         {
             if (instance == null)
@@ -60,11 +60,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetFirstSplits
+        /// The GetFirstSplits.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="split">The split<see cref="int"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <param name="split">The split<see cref="int"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string GetFirstSplits(string value, int split)
         {
             if (this.LooksLikeEmailOrWebaddress(value))
@@ -84,11 +84,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetSingleSplit
+        /// The GetSingleSplit.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <param name="split">The split<see cref="int"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <param name="split">The split<see cref="int"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string GetSingleSplit(string value, int split)
         {
             if (this.LooksLikeEmailOrWebaddress(value))
@@ -108,20 +108,20 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsEndOfStringSeparator
+        /// The IsEndOfStringSeparator.
         /// </summary>
-        /// <param name="c">The c<see cref="char"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="c">The c<see cref="char"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool IsEndOfStringSeparator(char c)
         {
             return false;
         }
 
         /// <summary>
-        /// The IsSeparator
+        /// The IsSeparator.
         /// </summary>
-        /// <param name="c">The c<see cref="char"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="c">The c<see cref="char"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool IsSeparator(char c)
         {
             switch (c)
@@ -136,10 +136,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The LooksLikeEmailOrWebaddress
+        /// The LooksLikeEmailOrWebaddress.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         private bool LooksLikeEmailOrWebaddress(string value)
         {
             // Simple quick and dirty way to avoid splitting email and web addresses

@@ -33,21 +33,21 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepStartsWith" />
+    /// Defines the <see cref="StepStartsWith" />.
     /// </summary>
     [Serializable]
     public class StepStartsWith : Step
     {
         /// <summary>
-        /// Defines the desiredValue
+        /// Defines the desiredValue.
         /// </summary>
         private readonly string desiredValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepStartsWith"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepStartsWith(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -57,17 +57,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <summary>
         /// Initializes a new instance of the <see cref="StepStartsWith"/> class.
         /// </summary>
-        /// <param name="desiredValue">The desiredValue<see cref="string"/></param>
+        /// <param name="desiredValue">The desiredValue<see cref="string"/>.</param>
         public StepStartsWith(string desiredValue)
         {
             this.desiredValue = desiredValue.ToLower();
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -75,20 +75,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "StartsWith(" + this.desiredValue + ")";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.GetActualValue(tree, value);

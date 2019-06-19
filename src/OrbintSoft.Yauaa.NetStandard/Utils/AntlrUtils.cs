@@ -31,7 +31,7 @@ namespace OrbintSoft.Yauaa.Utils
     using Antlr4.Runtime.Misc;
 
     /// <summary>
-    /// Defines the <see cref="AntlrUtils" />
+    /// Defines the <see cref="AntlrUtils" />.
     /// </summary>
     public sealed class AntlrUtils
     {
@@ -43,10 +43,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetSourceText
+        /// The GetSourceText.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetSourceText(ParserRuleContext ctx)
         {
             if (ctx.Start == null || ctx.Stop == null)

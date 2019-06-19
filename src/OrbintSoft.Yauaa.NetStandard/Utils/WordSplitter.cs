@@ -28,12 +28,12 @@
 namespace OrbintSoft.Yauaa.Utils
 {
     /// <summary>
-    /// Defines the <see cref="WordSplitter" />
+    /// Defines the <see cref="WordSplitter" />.
     /// </summary>
     public sealed class WordSplitter : Splitter
     {
         /// <summary>
-        /// Defines the instance
+        /// Defines the instance.
         /// </summary>
         private static WordSplitter instance = null;
 
@@ -45,9 +45,9 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetInstance
+        /// The GetInstance.
         /// </summary>
-        /// <returns>The <see cref="WordSplitter"/></returns>
+        /// <returns>The <see cref="WordSplitter"/>.</returns>
         public static WordSplitter GetInstance()
         {
             if (instance == null)
@@ -59,10 +59,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsSeparator
+        /// The IsSeparator.
         /// </summary>
-        /// <param name="c">The c<see cref="char"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="c">The c<see cref="char"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool IsSeparator(char c)
         {
             switch (c)
@@ -89,10 +89,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsEndOfStringSeparator
+        /// The IsEndOfStringSeparator.
         /// </summary>
-        /// <param name="c">The c<see cref="char"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="c">The c<see cref="char"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool IsEndOfStringSeparator(char c)
         {
             return c == '(' || c == ')';

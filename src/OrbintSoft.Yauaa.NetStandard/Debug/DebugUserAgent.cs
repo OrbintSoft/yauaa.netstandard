@@ -36,30 +36,30 @@ namespace OrbintSoft.Yauaa.Debug
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// Defines the <see cref="DebugUserAgent" />
+    /// Defines the <see cref="DebugUserAgent" />.
     /// </summary>
     public class DebugUserAgent : UserAgent
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(DebugUserAgent));
 
         /// <summary>
-        /// Defines the appliedMatcherResults
+        /// Defines the appliedMatcherResults.
         /// </summary>
         [NonSerialized]
         private readonly IList<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
 
         /// <summary>
-        /// Gets the NumberOfAppliedMatches
+        /// Gets the NumberOfAppliedMatches.
         /// </summary>
         public int NumberOfAppliedMatches => this.appliedMatcherResults.Count;
 
         /// <summary>
-        /// The AnalyzeMatchersResult
+        /// The AnalyzeMatchersResult.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public bool AnalyzeMatchersResult()
         {
             var passed = true;
@@ -108,7 +108,7 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The Reset
+        /// The Reset.
         /// </summary>
         public override void Reset()
         {
@@ -117,10 +117,10 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The Set
+        /// The Set.
         /// </summary>
-        /// <param name="newValuesUserAgent">The newValuesUserAgent<see cref="UserAgent"/></param>
-        /// <param name="appliedMatcher">The appliedMatcher<see cref="Matcher"/></param>
+        /// <param name="newValuesUserAgent">The newValuesUserAgent<see cref="UserAgent"/>.</param>
+        /// <param name="appliedMatcher">The appliedMatcher<see cref="Matcher"/>.</param>
         public override void Set(UserAgent newValuesUserAgent, Matcher appliedMatcher)
         {
             this.appliedMatcherResults.Add(new Tuple<UserAgent, Matcher>(new UserAgent(newValuesUserAgent), appliedMatcher));
@@ -128,10 +128,10 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The ToMatchTrace
+        /// The ToMatchTrace.
         /// </summary>
-        /// <param name="highlightNames">The highlightNames</param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="highlightNames">The highlightNames.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public string ToMatchTrace(IList<string> highlightNames)
         {
             var sb = new StringBuilder(4096);

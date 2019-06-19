@@ -30,14 +30,14 @@ namespace OrbintSoft.Yauaa.Analyze
     using System;
 
     /// <summary>
-    /// Defines the <see cref="UselessMatcherException" />
+    /// Defines the <see cref="UselessMatcherException" />.
     /// </summary>
     public class UselessMatcherException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UselessMatcherException"/> class.
         /// </summary>
-        /// <param name="message">The message<see cref="string"/></param>
+        /// <param name="message">The message<see cref="string"/>.</param>
         public UselessMatcherException(string message)
             : base(message)
         {

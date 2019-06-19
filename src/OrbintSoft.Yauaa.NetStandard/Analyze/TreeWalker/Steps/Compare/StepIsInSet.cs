@@ -34,26 +34,26 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepIsInSet" />
+    /// Defines the <see cref="StepIsInSet" />.
     /// </summary>
     [Serializable]
     public class StepIsInSet : Step
     {
         /// <summary>
-        /// Defines the list
+        /// Defines the list.
         /// </summary>
         private readonly ISet<string> list;
 
         /// <summary>
-        /// Defines the listName
+        /// Defines the listName.
         /// </summary>
         private readonly string listName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepIsInSet"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepIsInSet(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -64,8 +64,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// <summary>
         /// Initializes a new instance of the <see cref="StepIsInSet"/> class.
         /// </summary>
-        /// <param name="listName">The listName<see cref="string"/></param>
-        /// <param name="list">The list</param>
+        /// <param name="listName">The listName<see cref="string"/>.</param>
+        /// <param name="list">The list.</param>
         public StepIsInSet(string listName, ISet<string> list)
         {
             this.listName = listName;
@@ -73,10 +73,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -85,20 +85,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "IsInSet(@" + this.listName + ")";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.GetActualValue(tree, value);

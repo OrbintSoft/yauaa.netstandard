@@ -32,25 +32,25 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepConcat" />
+    /// Defines the <see cref="StepConcat" />.
     /// </summary>
     public class StepConcat : Step
     {
         /// <summary>
-        /// Defines the postfix
+        /// Defines the postfix.
         /// </summary>
         private readonly string postfix;
 
         /// <summary>
-        /// Defines the prefix
+        /// Defines the prefix.
         /// </summary>
         private readonly string prefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepConcat"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepConcat(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -61,8 +61,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <summary>
         /// Initializes a new instance of the <see cref="StepConcat"/> class.
         /// </summary>
-        /// <param name="prefix">The prefix<see cref="string"/></param>
-        /// <param name="postfix">The postfix<see cref="string"/></param>
+        /// <param name="prefix">The prefix<see cref="string"/>.</param>
+        /// <param name="postfix">The postfix<see cref="string"/>.</param>
         public StepConcat(string prefix, string postfix)
         {
             this.prefix = prefix;
@@ -70,19 +70,19 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         }
 
         /// <summary>
-        /// The CanFail
+        /// The CanFail.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool CanFail()
         {
             return false;
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -91,20 +91,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "Concat(" + this.prefix + ";" + this.postfix + ")";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.GetActualValue(tree, value);

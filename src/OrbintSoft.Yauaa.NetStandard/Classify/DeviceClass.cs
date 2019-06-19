@@ -28,7 +28,7 @@
 namespace OrbintSoft.Yauaa.Classify
 {
     /// <summary>
-    /// Defines the DeviceClass
+    /// Defines the DeviceClass.
     /// </summary>
     public enum DeviceClass
     {
@@ -120,6 +120,6 @@ namespace OrbintSoft.Yauaa.Classify
         /// <summary>
         ///  We found a deviceclass string that we have no enum value for.
         /// </summary>
-        Unclassified
+        Unclassified,
     }
 }

@@ -37,13 +37,13 @@ namespace OrbintSoft.Yauaa.Debug
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentAnalyzerTester" />
+    /// Defines the <see cref="UserAgentAnalyzerTester" />.
     /// </summary>
     [Serializable]
     public class UserAgentAnalyzerTester : UserAgentAnalyzer
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerTester));
 
@@ -59,8 +59,8 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAgentAnalyzerTester"/> class.
         /// </summary>
-        /// <param name="resourceString">The resourceString<see cref="string"/></param>
-        /// <param name="pattern">The pattern<see cref="string"/></param>
+        /// <param name="resourceString">The resourceString<see cref="string"/>.</param>
+        /// <param name="pattern">The pattern<see cref="string"/>.</param>
         public UserAgentAnalyzerTester(string resourceString, string pattern = "*.yaml")
             : this()
         {
@@ -68,9 +68,9 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The NewBuilder
+        /// The NewBuilder.
         /// </summary>
-        /// <returns>The <see cref="UserAgentAnalyzerTesterBuilder"/></returns>
+        /// <returns>The <see cref="UserAgentAnalyzerTesterBuilder"/>.</returns>
         public static new UserAgentAnalyzerTesterBuilder NewBuilder()
         {
             var a = new UserAgentAnalyzerTester();
@@ -83,7 +83,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// This function is used only for analyzing which patterns that could possibly be relevant
         /// were actually relevant for the matcher actions.
         /// </summary>
-        /// <returns>The matches</returns>
+        /// <returns>The matches.</returns>
         public IList<MatchesList.Match> GetMatches()
         {
             var allMatches = new List<MatchesList.Match>();
@@ -96,10 +96,10 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The GetUsedMatches
+        /// The GetUsedMatches.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <returns>The matches</returns>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
+        /// <returns>The matches.</returns>
         public IList<MatchesList.Match> GetUsedMatches(UserAgent userAgent)
         {
             // Reset all Matchers
@@ -123,32 +123,32 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Run all the test_cases available.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public bool RunTests()
         {
             return this.RunTests(false, true);
         }
 
         /// <summary>
-        /// The RunTests
+        /// The RunTests.
         /// </summary>
-        /// <param name="showAll">The showAll<see cref="bool"/></param>
-        /// <param name="failOnUnexpected">The failOnUnexpected<see cref="bool"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="showAll">The showAll<see cref="bool"/>.</param>
+        /// <param name="failOnUnexpected">The failOnUnexpected<see cref="bool"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public bool RunTests(bool showAll, bool failOnUnexpected)
         {
             return this.RunTests(showAll, failOnUnexpected, null, false, false);
         }
 
         /// <summary>
-        /// The RunTests
+        /// The RunTests.
         /// </summary>
-        /// <param name="showAll">The showAll<see cref="bool"/></param>
-        /// <param name="failOnUnexpected">The failOnUnexpected<see cref="bool"/></param>
-        /// <param name="onlyValidateFieldNames">The onlyValidateFieldNames</param>
-        /// <param name="measureSpeed">The measureSpeed<see cref="bool"/></param>
-        /// <param name="showPassedTests">The showPassedTests<see cref="bool"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="showAll">The showAll<see cref="bool"/>.</param>
+        /// <param name="failOnUnexpected">The failOnUnexpected<see cref="bool"/>.</param>
+        /// <param name="onlyValidateFieldNames">The onlyValidateFieldNames.</param>
+        /// <param name="measureSpeed">The measureSpeed<see cref="bool"/>.</param>
+        /// <param name="showPassedTests">The showPassedTests<see cref="bool"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public bool RunTests(bool showAll, bool failOnUnexpected, ICollection<string> onlyValidateFieldNames, bool measureSpeed, bool showPassedTests)
         {
             var allPass = true;
@@ -376,7 +376,7 @@ namespace OrbintSoft.Yauaa.Debug
 
                         var result = new TestResult
                         {
-                            Field = fieldName
+                            Field = fieldName,
                         };
 
                         bool expectedSomething;
@@ -661,23 +661,23 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// Defines the <see cref="UserAgentAnalyzerTesterBuilder" />
+        /// Defines the <see cref="UserAgentAnalyzerTesterBuilder" />.
         /// </summary>
         public class UserAgentAnalyzerTesterBuilder : UserAgentAnalyzerBuilder
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="UserAgentAnalyzerTesterBuilder"/> class.
             /// </summary>
-            /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzerTester"/></param>
+            /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzerTester"/>.</param>
             public UserAgentAnalyzerTesterBuilder(UserAgentAnalyzerTester newUaa)
                 : base(newUaa)
             {
             }
 
             /// <summary>
-            /// The Build
+            /// The Build.
             /// </summary>
-            /// <returns>The <see cref="UserAgentAnalyzer"/></returns>
+            /// <returns>The <see cref="UserAgentAnalyzer"/>.</returns>
             public override UserAgentAnalyzer Build()
             {
                 return base.Build();
@@ -685,37 +685,37 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// Defines the <see cref="TestResult" />
+        /// Defines the <see cref="TestResult" />.
         /// </summary>
         internal class TestResult
         {
             /// <summary>
-            /// Gets or sets the Actual
+            /// Gets or sets the Actual.
             /// </summary>
             internal string Actual { get; set; }
 
             /// <summary>
-            /// Gets or sets the Confidence
+            /// Gets or sets the Confidence.
             /// </summary>
             internal long Confidence { get; set; }
 
             /// <summary>
-            /// Gets or sets the Expected
+            /// Gets or sets the Expected.
             /// </summary>
             internal string Expected { get; set; }
 
             /// <summary>
-            /// Gets or sets the Field
+            /// Gets or sets the Field.
             /// </summary>
             internal string Field { get; set; }
 
             /// <summary>
-            /// Gets or sets a value indicating whether Pass
+            /// Gets or sets a value indicating whether Pass.
             /// </summary>
             internal bool Pass { get; set; }
 
             /// <summary>
-            /// Gets or sets a value indicating whether Warn
+            /// Gets or sets a value indicating whether Warn.
             /// </summary>
             internal bool Warn { get; set; }
         }

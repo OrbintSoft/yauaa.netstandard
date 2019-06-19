@@ -28,16 +28,16 @@
 namespace OrbintSoft.Yauaa.Annotate
 {
     /// <summary>
-    /// Defines the <see cref="IUserAgentAnnotationMapper{T}" />
+    /// Defines the <see cref="IUserAgentAnnotationMapper{T}" />.
     /// </summary>
-    /// <typeparam name="T">The Type of mapper</typeparam>
+    /// <typeparam name="T">The Type of mapper.</typeparam>
     public interface IUserAgentAnnotationMapper<T>
     {
         /// <summary>
-        /// The GetUserAgentString
+        /// The GetUserAgentString.
         /// </summary>
-        /// <param name="record">The record</param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="record">The record.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         string GetUserAgentString(T record);
     }
 }

@@ -38,18 +38,18 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// Defines the <see cref="Step" />
+    /// Defines the <see cref="Step" />.
     /// </summary>
     [Serializable]
     public abstract class Step : ISerializable
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         internal static readonly ILog Log = LogManager.GetLogger(typeof(Step));
 
         /// <summary>
-        /// Defines the stepNr
+        /// Defines the stepNr.
         /// </summary>
         private int stepNr = 0;
 
@@ -63,8 +63,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// <summary>
         /// Initializes a new instance of the <see cref="Step"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public Step(SerializationInfo info, StreamingContext context)
         {
             this.Logprefix = (string)info.GetValue("Logprefix", typeof(string));
@@ -74,27 +74,27 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// Gets the NextStep
+        /// Gets the NextStep.
         /// </summary>
         public Step NextStep { get; private set; } = null;
 
         /// <summary>
         /// Gets or sets the Logprefix
         /// Gets the Logprefix
-        /// Defines the logprefix
+        /// Defines the logprefix.
         /// </summary>
         protected string Logprefix { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets a value indicating whether Verbose
+        /// Gets or sets a value indicating whether Verbose.
         /// </summary>
         protected bool Verbose { get; set; } = false;
 
         /// <summary>
-        /// The TreeIsSeparator
+        /// The TreeIsSeparator.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
         public static bool TreeIsSeparator(IParseTree tree)
         {
             return tree is UserAgentParser.CommentSeparatorContext || tree is ITerminalNode;
@@ -112,10 +112,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("Logprefix", this.Logprefix, typeof(string));
@@ -125,10 +125,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The SetNextStep
+        /// The SetNextStep.
         /// </summary>
-        /// <param name="newStepNr">The newStepNr<see cref="int"/></param>
-        /// <param name="newNextStep">The newNextStep<see cref="Step"/></param>
+        /// <param name="newStepNr">The newStepNr<see cref="int"/>.</param>
+        /// <param name="newNextStep">The newNextStep<see cref="Step"/>.</param>
         public void SetNextStep(int newStepNr, Step newNextStep)
         {
             this.stepNr = newStepNr;
@@ -143,9 +143,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The SetVerbose
+        /// The SetVerbose.
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/>.</param>
         public void SetVerbose(bool newVerbose)
         {
             this.Verbose = newVerbose;
@@ -156,16 +156,16 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// This must iterate of all possibilities and return the first matching result.
         /// </summary>
         /// <param name="tree">The tree to walk into.</param>
-        /// <param name="value">The value<see cref="string"/></param>
+        /// <param name="value">The value<see cref="string"/>.</param>
         /// <returns>Either null or the actual value that was found.</returns>
         public abstract WalkList.WalkResult Walk(IParseTree tree, string value);
 
         /// <summary>
-        /// The GetActualValue
+        /// The GetActualValue.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         protected string GetActualValue(IParseTree tree, string value)
         {
             if (value == null)
@@ -177,10 +177,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The Up
+        /// The Up.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <returns>The <see cref="IParseTree"/>.</returns>
         protected IParseTree Up(IParseTree tree)
         {
             var parent = tree.Parent;
@@ -197,11 +197,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The WalkNextStep
+        /// The WalkNextStep.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         protected WalkList.WalkResult WalkNextStep(IParseTree tree, string value)
         {
             if (this.NextStep == null)

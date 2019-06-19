@@ -1,24 +1,46 @@
-﻿namespace OrbintSoft.Yauaa.Utils
+﻿// <copyright file="PrefixLookup.cs" company="OrbintSoft">
+// Yet Another User Agent Analyzer for .NET Standard
+//  porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//
+//  Original Author and License:
+//
+// Yet Another UserAgent Analyzer
+// Copyright(C) 2013-2018 Niels Basjes
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// </copyright>
+
+namespace OrbintSoft.Yauaa.Utils
 {
     using System;
     using System.Collections.Generic;
 
     /// <summary>
-    /// Defines the <see cref="PrefixLookup" />
+    /// Defines the <see cref="PrefixLookup" />.
     /// </summary>
     [Serializable]
     public class PrefixLookup
     {
         /// <summary>
-        /// Defines the prefixPrefixTrie
+        /// Defines the prefixPrefixTrie.
         /// </summary>
         private readonly PrefixTrie prefixPrefixTrie;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PrefixLookup"/> class.
         /// </summary>
-        /// <param name="prefixList">The prefixList<see cref="IDictionary{String, String}"/></param>
-        /// <param name="caseSensitive">The caseSensitive<see cref="bool"/></param>
+        /// <param name="prefixList">The prefixList<see cref="IDictionary{String, String}"/>.</param>
+        /// <param name="caseSensitive">The caseSensitive<see cref="bool"/>.</param>
         public PrefixLookup(IDictionary<string, string> prefixList, bool caseSensitive)
         {
             // Translate the map into a different structure.
@@ -31,45 +53,45 @@
         }
 
         /// <summary>
-        /// The FindLongestMatchingPrefix
+        /// The FindLongestMatchingPrefix.
         /// </summary>
-        /// <param name="input">The input<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="input">The input<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public string FindLongestMatchingPrefix(string input)
         {
             return this.prefixPrefixTrie.Find(input);
         }
 
         /// <summary>
-        /// Defines the <see cref="PrefixTrie" />
+        /// Defines the <see cref="PrefixTrie" />.
         /// </summary>
         [Serializable]
         public class PrefixTrie
         {
             /// <summary>
-            /// Defines the caseSensitive
+            /// Defines the caseSensitive.
             /// </summary>
             private readonly bool caseSensitive;
 
             /// <summary>
-            /// Defines the charIndex
+            /// Defines the charIndex.
             /// </summary>
             private readonly int charIndex;
 
             /// <summary>
-            /// Defines the childNodes
+            /// Defines the childNodes.
             /// </summary>
             private PrefixTrie[] childNodes;
 
             /// <summary>
-            /// Defines the theValue
+            /// Defines the theValue.
             /// </summary>
             private string theValue;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="PrefixTrie"/> class.
             /// </summary>
-            /// <param name="caseSensitive">The caseSensitive<see cref="bool"/></param>
+            /// <param name="caseSensitive">The caseSensitive<see cref="bool"/>.</param>
             public PrefixTrie(bool caseSensitive)
                 : this(caseSensitive, 0)
             {
@@ -78,8 +100,8 @@
             /// <summary>
             /// Prevents a default instance of the <see cref="PrefixTrie"/> class from being created.
             /// </summary>
-            /// <param name="caseSensitive">The caseSensitive<see cref="bool"/></param>
-            /// <param name="charIndex">The charIndex<see cref="int"/></param>
+            /// <param name="caseSensitive">The caseSensitive<see cref="bool"/>.</param>
+            /// <param name="charIndex">The charIndex<see cref="int"/>.</param>
             private PrefixTrie(bool caseSensitive, int charIndex)
             {
                 this.caseSensitive = caseSensitive;
@@ -87,10 +109,10 @@
             }
 
             /// <summary>
-            /// The find
+            /// The find.
             /// </summary>
-            /// <param name="input">The input<see cref="string"/></param>
-            /// <returns>The <see cref="string"/></returns>
+            /// <param name="input">The input<see cref="string"/>.</param>
+            /// <returns>The <see cref="string"/>.</returns>
             public string Find(string input)
             {
                 if (this.charIndex == input.Length)
@@ -120,10 +142,10 @@
             }
 
             /// <summary>
-            /// The Add
+            /// The Add.
             /// </summary>
-            /// <param name="prefix">The prefix<see cref="string"/></param>
-            /// <param name="value">The value<see cref="string"/></param>
+            /// <param name="prefix">The prefix<see cref="string"/>.</param>
+            /// <param name="value">The value<see cref="string"/>.</param>
             internal void Add(string prefix, string value)
             {
                 if (this.charIndex == prefix.Length)

@@ -30,15 +30,15 @@ namespace OrbintSoft.Yauaa.Classify
     using System;
 
     /// <summary>
-    /// Defines the <see cref="DeviceClassExtension" />
+    /// Defines the <see cref="DeviceClassExtension" />.
     /// </summary>
     public static class DeviceClassExtension
     {
         /// <summary>
-        /// The GetValue
+        /// The GetValue.
         /// </summary>
-        /// <param name="deviceClass">The deviceClass<see cref="DeviceClass"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="deviceClass">The deviceClass<see cref="DeviceClass"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetValue(this DeviceClass deviceClass)
         {
             switch (deviceClass)

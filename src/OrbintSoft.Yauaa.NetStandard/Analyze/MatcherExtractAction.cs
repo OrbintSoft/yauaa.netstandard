@@ -36,48 +36,48 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="MatcherExtractAction" />
+    /// Defines the <see cref="MatcherExtractAction" />.
     /// </summary>
     [Serializable]
     public class MatcherExtractAction : MatcherAction
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherExtractAction));
 
         /// <summary>
-        /// Defines the confidence
+        /// Defines the confidence.
         /// </summary>
         private readonly long confidence;
 
         /// <summary>
-        /// Defines the expression
+        /// Defines the expression.
         /// </summary>
         private readonly string expression;
 
         /// <summary>
-        /// Defines the fixedValue
+        /// Defines the fixedValue.
         /// </summary>
         private string fixedValue = null;
 
         /// <summary>
-        /// Defines the foundValue
+        /// Defines the foundValue.
         /// </summary>
         private string foundValue = null;
 
         /// <summary>
-        /// Defines the resultAgentField
+        /// Defines the resultAgentField.
         /// </summary>
         private UserAgent.AgentField resultAgentField = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatcherExtractAction"/> class.
         /// </summary>
-        /// <param name="attribute">The attribute<see cref="string"/></param>
-        /// <param name="confidence">The confidence<see cref="long"/></param>
-        /// <param name="config">The config<see cref="string"/></param>
-        /// <param name="matcher">The matcher<see cref="Matcher"/></param>
+        /// <param name="attribute">The attribute<see cref="string"/>.</param>
+        /// <param name="confidence">The confidence<see cref="long"/>.</param>
+        /// <param name="config">The config<see cref="string"/>.</param>
+        /// <param name="matcher">The matcher<see cref="Matcher"/>.</param>
         public MatcherExtractAction(string attribute, long confidence, string config, Matcher matcher)
         {
             this.Attribute = attribute;
@@ -87,15 +87,15 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets the Attribute
+        /// Gets the Attribute.
         /// </summary>
         public string Attribute { get; }
 
         /// <summary>
-        /// The Inform
+        /// The Inform.
         /// </summary>
-        /// <param name="key">The key<see cref="string"/></param>
-        /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/></param>
+        /// <param name="key">The key<see cref="string"/>.</param>
+        /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/>.</param>
         public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
             if (this.Verbose)
@@ -120,18 +120,18 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The IsFixedValue
+        /// The IsFixedValue.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public bool IsFixedValue()
         {
             return this.fixedValue != null;
         }
 
         /// <summary>
-        /// The ObtainResult
+        /// The ObtainResult.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool ObtainResult()
         {
             this.ProcessInformedMatches();
@@ -166,7 +166,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Reset
+        /// The Reset.
         /// </summary>
         public override void Reset()
         {
@@ -175,18 +175,18 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The SetResultAgentField
+        /// The SetResultAgentField.
         /// </summary>
-        /// <param name="newResultAgentField">The newResultAgentField<see cref="UserAgent.AgentField"/></param>
+        /// <param name="newResultAgentField">The newResultAgentField<see cref="UserAgent.AgentField"/>.</param>
         public void SetResultAgentField(UserAgent.AgentField newResultAgentField)
         {
             this.resultAgentField = newResultAgentField;
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             if (this.IsFixedValue())
@@ -200,19 +200,19 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The ParseWalkerExpression
+        /// The ParseWalkerExpression.
         /// </summary>
-        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/></param>
-        /// <returns>The <see cref="ParserRuleContext"/></returns>
+        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/>.</param>
+        /// <returns>The <see cref="ParserRuleContext"/>.</returns>
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
             return parser.matcherExtract();
         }
 
         /// <summary>
-        /// The SetFixedValue
+        /// The SetFixedValue.
         /// </summary>
-        /// <param name="newFixedValue">The newFixedValue<see cref="string"/></param>
+        /// <param name="newFixedValue">The newFixedValue<see cref="string"/>.</param>
         protected override void SetFixedValue(string newFixedValue)
         {
             if (this.Verbose)

@@ -34,31 +34,31 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepLookup" />
+    /// Defines the <see cref="StepLookup" />.
     /// </summary>
     [Serializable]
     public class StepLookup : Step
     {
         /// <summary>
-        /// Defines the defaultValue
+        /// Defines the defaultValue.
         /// </summary>
         private readonly string defaultValue;
 
         /// <summary>
-        /// Defines the lookup
+        /// Defines the lookup.
         /// </summary>
         private readonly IDictionary<string, string> lookup;
 
         /// <summary>
-        /// Defines the lookupName
+        /// Defines the lookupName.
         /// </summary>
         private readonly string lookupName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepLookup"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepLookup(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -70,9 +70,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         /// <summary>
         /// Initializes a new instance of the <see cref="StepLookup"/> class.
         /// </summary>
-        /// <param name="lookupName">The lookupName<see cref="string"/></param>
-        /// <param name="lookup">The lookup</param>
-        /// <param name="defaultValue">The defaultValue<see cref="string"/></param>
+        /// <param name="lookupName">The lookupName<see cref="string"/>.</param>
+        /// <param name="lookup">The lookup.</param>
+        /// <param name="defaultValue">The defaultValue<see cref="string"/>.</param>
         public StepLookup(string lookupName, IDictionary<string, string> lookup, string defaultValue)
         {
             this.lookupName = lookupName;
@@ -81,10 +81,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -94,20 +94,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return string.Format("Lookup(@{0} ; default={1})", this.lookupName, this.defaultValue ?? "null");
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var input = this.GetActualValue(tree, value).ToLower();

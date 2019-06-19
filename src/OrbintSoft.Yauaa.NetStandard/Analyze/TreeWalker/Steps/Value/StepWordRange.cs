@@ -35,26 +35,26 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// Defines the <see cref="StepWordRange" />
+    /// Defines the <see cref="StepWordRange" />.
     /// </summary>
     [Serializable]
     public class StepWordRange : Step
     {
         /// <summary>
-        /// Defines the firstWord
+        /// Defines the firstWord.
         /// </summary>
         private readonly int firstWord;
 
         /// <summary>
-        /// Defines the lastWord
+        /// Defines the lastWord.
         /// </summary>
         private readonly int lastWord;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepWordRange"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepWordRange(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -65,7 +65,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         /// <summary>
         /// Initializes a new instance of the <see cref="StepWordRange"/> class.
         /// </summary>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
         public StepWordRange(WordRangeVisitor.Range range)
         {
             this.firstWord = range.First;
@@ -73,9 +73,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         }
 
         /// <summary>
-        /// The CanFail
+        /// The CanFail.
         /// </summary>
-        /// <returns>The <see cref="bool"/></returns>
+        /// <returns>The <see cref="bool"/>.</returns>
         public override bool CanFail()
         {
             // If you want the first word it cannot fail.
@@ -84,10 +84,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -96,20 +96,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "WordRange([" + this.firstWord + ":" + this.lastWord + "])";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.GetActualValue(tree, value);

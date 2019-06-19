@@ -29,7 +29,7 @@
 namespace OrbintSoft.Yauaa.Antlr4Source
 {
     /// <summary>
-    /// Defines the <see cref="UserAgentTreeWalkerParser" />
+    /// Defines the <see cref="UserAgentTreeWalkerParser" />.
     /// </summary>
     public partial class UserAgentTreeWalkerParser
     {

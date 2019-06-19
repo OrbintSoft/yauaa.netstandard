@@ -37,39 +37,39 @@ namespace OrbintSoft.Yauaa.Annotate
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentAnnotationAnalyzer{T}" />
+    /// Defines the <see cref="UserAgentAnnotationAnalyzer{T}" />.
     /// </summary>
-    /// <typeparam name="T">The type to map</typeparam>
+    /// <typeparam name="T">The type to map.</typeparam>
     public class UserAgentAnnotationAnalyzer<T>
         where T : class
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnnotationAnalyzer<T>));
 
         /// <summary>
-        /// Defines the fieldSetters
+        /// Defines the fieldSetters.
         /// </summary>
         private readonly IDictionary<string, IList<MethodInfo>> fieldSetters = new Dictionary<string, IList<MethodInfo>>();
 
         /// <summary>
-        /// Defines the mapper
+        /// Defines the mapper.
         /// </summary>
         private IUserAgentAnnotationMapper<T> mapper = null;
 
         /// <summary>
-        /// Defines the userAgentAnalyzer
+        /// Defines the userAgentAnalyzer.
         /// </summary>
         private UserAgentAnalyzer userAgentAnalyzer = null;
 
         /// <summary>
-        /// Gets the CacheSize
+        /// Gets the CacheSize.
         /// </summary>
         public int CacheSize { get; private set; } = UserAgentAnalyzer.DEFAULT_PARSE_CACHE_SIZE;
 
         /// <summary>
-        /// The DisableCaching
+        /// The DisableCaching.
         /// </summary>
         public void DisableCaching()
         {
@@ -77,9 +77,9 @@ namespace OrbintSoft.Yauaa.Annotate
         }
 
         /// <summary>
-        /// The Initialize
+        /// The Initialize.
         /// </summary>
-        /// <param name="theMapper">The theMapper<see cref="IUserAgentAnnotationMapper{T}"/></param>
+        /// <param name="theMapper">The theMapper<see cref="IUserAgentAnnotationMapper{T}"/>.</param>
         public void Initialize(IUserAgentAnnotationMapper<T> theMapper)
         {
             this.mapper = theMapper;
@@ -162,10 +162,10 @@ namespace OrbintSoft.Yauaa.Annotate
         }
 
         /// <summary>
-        /// The Map
+        /// The Map.
         /// </summary>
-        /// <param name="record">The record</param>
-        /// <returns>The mapped record</returns>
+        /// <param name="record">The record.</param>
+        /// <returns>The mapped record.</returns>
         public T Map(T record)
         {
             if (record == null)

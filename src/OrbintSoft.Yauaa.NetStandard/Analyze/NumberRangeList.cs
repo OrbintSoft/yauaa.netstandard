@@ -32,15 +32,15 @@ namespace OrbintSoft.Yauaa.Analyze
     using System.Collections.Generic;
 
     /// <summary>
-    /// Defines the <see cref="NumberRangeList" />
+    /// Defines the <see cref="NumberRangeList" />.
     /// </summary>
     public class NumberRangeList : IReadOnlyList<int>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NumberRangeList"/> class.
         /// </summary>
-        /// <param name="start">The start<see cref="int"/></param>
-        /// <param name="end">The end<see cref="int"/></param>
+        /// <param name="start">The start<see cref="int"/>.</param>
+        /// <param name="end">The end<see cref="int"/>.</param>
         public NumberRangeList(int start, int end)
         {
             this.Start = start;
@@ -48,90 +48,90 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets the Count
+        /// Gets the Count.
         /// </summary>
         public int Count => this.End - this.Start + 1;
 
         /// <summary>
-        /// Gets the Start
+        /// Gets the Start.
         /// </summary>
         public int Start { get; }
 
         /// <summary>
-        /// Gets the End
+        /// Gets the End.
         /// </summary>
         public int End { get; }
 
         /// <summary>
-        /// The element of list
+        /// The element of list.
         /// </summary>
-        /// <param name="index">The index of the element</param>
-        /// <returns>The element in position index</returns>
+        /// <param name="index">The index of the element.</param>
+        /// <returns>The element in position index.</returns>
         public int this[int index] => this.Start + index;
 
         /// <summary>
-        /// The GetEnumerator
+        /// The GetEnumerator.
         /// </summary>
-        /// <returns>The enumerator</returns>
+        /// <returns>The enumerator.</returns>
         public IEnumerator<int> GetEnumerator()
         {
             return new NumberRangeEnumerator(this);
         }
 
         /// <summary>
-        /// The GetEnumerator
+        /// The GetEnumerator.
         /// </summary>
-        /// <returns>The <see cref="IEnumerator"/></returns>
+        /// <returns>The <see cref="IEnumerator"/>.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
         /// <summary>
-        /// Defines the <see cref="NumberRangeEnumerator" />
+        /// Defines the <see cref="NumberRangeEnumerator" />.
         /// </summary>
         public class NumberRangeEnumerator : IEnumerator<int>
         {
             /// <summary>
-            /// Defines the list
+            /// Defines the list.
             /// </summary>
             private readonly NumberRangeList list;
 
             /// <summary>
-            /// Defines the offset
+            /// Defines the offset.
             /// </summary>
             private int offset = -1;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="NumberRangeEnumerator"/> class.
             /// </summary>
-            /// <param name="list">The list<see cref="NumberRangeList"/></param>
+            /// <param name="list">The list<see cref="NumberRangeList"/>.</param>
             public NumberRangeEnumerator(NumberRangeList list)
             {
                 this.list = list;
             }
 
             /// <summary>
-            /// Gets the Current
+            /// Gets the Current.
             /// </summary>
             public int Current => this.list[this.offset];
 
             /// <summary>
-            /// Gets the Current
+            /// Gets the Current.
             /// </summary>
             object IEnumerator.Current => this.list[this.offset];
 
             /// <summary>
-            /// The Dispose
+            /// The Dispose.
             /// </summary>
             public void Dispose()
             {
             }
 
             /// <summary>
-            /// The MoveNext
+            /// The MoveNext.
             /// </summary>
-            /// <returns>The <see cref="bool"/></returns>
+            /// <returns>The <see cref="bool"/>.</returns>
             public bool MoveNext()
             {
                 if (this.offset < this.list.Count - 1)
@@ -146,7 +146,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             /// <summary>
-            /// The Reset
+            /// The Reset.
             /// </summary>
             public void Reset()
             {

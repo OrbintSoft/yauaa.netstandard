@@ -33,7 +33,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepUp" />
+    /// Defines the <see cref="StepUp" />.
     /// </summary>
     [Serializable]
     public class StepUp : Step
@@ -48,28 +48,28 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <summary>
         /// Initializes a new instance of the <see cref="StepUp"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepUp(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "Up()";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var parent = this.Up(tree);

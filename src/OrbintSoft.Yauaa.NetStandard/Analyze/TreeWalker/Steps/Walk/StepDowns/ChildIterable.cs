@@ -35,37 +35,37 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="ChildIterable" />
+    /// Defines the <see cref="ChildIterable" />.
     /// </summary>
     public class ChildIterable
     {
         /// <summary>
-        /// Defines the end
+        /// Defines the end.
         /// </summary>
         private readonly int end;
 
         /// <summary>
-        /// Defines the isWantedClassPredicate
+        /// Defines the isWantedClassPredicate.
         /// </summary>
         private readonly Predicate<IParseTree> isWantedClassPredicate;
 
         /// <summary>
-        /// Defines the privateNumberRange
+        /// Defines the privateNumberRange.
         /// </summary>
         private readonly bool privateNumberRange;
 
         /// <summary>
-        /// Defines the start
+        /// Defines the start.
         /// </summary>
         private readonly int start;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChildIterable"/> class.
         /// </summary>
-        /// <param name="privateNumberRange">The privateNumberRange<see cref="bool"/></param>
-        /// <param name="start">The start<see cref="int"/></param>
-        /// <param name="end">The end<see cref="int"/></param>
-        /// <param name="isWantedClassPredicate">The isWantedClassPredicate<see cref="Predicate{ParserRuleContext}"/></param>
+        /// <param name="privateNumberRange">The privateNumberRange<see cref="bool"/>.</param>
+        /// <param name="start">The start<see cref="int"/>.</param>
+        /// <param name="end">The end<see cref="int"/>.</param>
+        /// <param name="isWantedClassPredicate">The isWantedClassPredicate<see cref="Predicate{ParserRuleContext}"/>.</param>
         public ChildIterable(bool privateNumberRange, int start, int end, Predicate<IParseTree> isWantedClassPredicate)
         {
             this.privateNumberRange = privateNumberRange;
@@ -75,40 +75,40 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         }
 
         /// <summary>
-        /// The Iterator
+        /// The Iterator.
         /// </summary>
-        /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/></param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/></returns>
+        /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/>.</param>
+        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
         public IEnumerator<IParseTree> Iterator(ParserRuleContext treeContext)
         {
             return new ChildIterator(this, treeContext);
         }
 
         /// <summary>
-        /// Defines the <see cref="ChildIterator" />
+        /// Defines the <see cref="ChildIterator" />.
         /// </summary>
         internal class ChildIterator : IEnumerator<IParseTree>
         {
             /// <summary>
-            /// Defines the childIter
+            /// Defines the childIter.
             /// </summary>
             private readonly IEnumerator<IParseTree> childIter;
 
             /// <summary>
-            /// Defines the childIterable
+            /// Defines the childIterable.
             /// </summary>
             private readonly ChildIterable childIterable;
 
             /// <summary>
-            /// Defines the index
+            /// Defines the index.
             /// </summary>
             private int index = -1;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ChildIterator"/> class.
             /// </summary>
-            /// <param name="childIterable">The childIterable<see cref="ChildIterable"/></param>
-            /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/></param>
+            /// <param name="childIterable">The childIterable<see cref="ChildIterable"/>.</param>
+            /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/>.</param>
             internal ChildIterator(ChildIterable childIterable, ParserRuleContext treeContext)
             {
                 this.childIterable = childIterable;
@@ -125,12 +125,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             }
 
             /// <summary>
-            /// Gets the Current
+            /// Gets the Current.
             /// </summary>
             public IParseTree Current { get; private set; } = null;
 
             /// <summary>
-            /// Gets the Current
+            /// Gets the Current.
             /// </summary>
             object IEnumerator.Current
             {
@@ -141,7 +141,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             }
 
             /// <summary>
-            /// The Dispose
+            /// The Dispose.
             /// </summary>
             public void Dispose()
             {
@@ -149,9 +149,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             }
 
             /// <summary>
-            /// Find and set the nextChild
+            /// Find and set the nextChild.
             /// </summary>
-            /// <returns>If there is a next</returns>
+            /// <returns>If there is a next.</returns>
             public bool MoveNext()
             {
                 if (this.childIter != null)
@@ -199,7 +199,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             }
 
             /// <summary>
-            /// The Reset
+            /// The Reset.
             /// </summary>
             public void Reset()
             {

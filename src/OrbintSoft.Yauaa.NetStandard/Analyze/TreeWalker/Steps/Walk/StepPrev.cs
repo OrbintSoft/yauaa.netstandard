@@ -33,7 +33,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepPrev" />
+    /// Defines the <see cref="StepPrev" />.
     /// </summary>
     [Serializable]
     public class StepPrev : Step
@@ -48,28 +48,28 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <summary>
         /// Initializes a new instance of the <see cref="StepPrev"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepPrev(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "Prev(1)";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var prevTree = this.Prev(tree);
@@ -82,10 +82,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// The Prev
+        /// The Prev.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <returns>The <see cref="IParseTree"/>.</returns>
         private IParseTree Prev(IParseTree tree)
         {
             var parent = this.Up(tree);

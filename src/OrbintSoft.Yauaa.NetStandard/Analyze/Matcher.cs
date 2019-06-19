@@ -38,75 +38,75 @@ namespace OrbintSoft.Yauaa.Analyze
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
-    /// Defines the <see cref="Matcher" />
+    /// Defines the <see cref="Matcher" />.
     /// </summary>
     [Serializable]
     public class Matcher
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(Matcher));
 
         /// <summary>
-        /// Defines the analyzer
+        /// Defines the analyzer.
         /// </summary>
         private readonly IAnalyzer analyzer;
 
         /// <summary>
-        /// Defines the fixedStringActions
+        /// Defines the fixedStringActions.
         /// </summary>
         private readonly IList<MatcherAction> fixedStringActions;
 
         /// <summary>
-        /// Defines the informMatcherActionsAboutVariables
+        /// Defines the informMatcherActionsAboutVariables.
         /// </summary>
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
 
         /// <summary>
-        /// Defines the matcherSourceLocation
+        /// Defines the matcherSourceLocation.
         /// </summary>
         private readonly string matcherSourceLocation;
 
         /// <summary>
-        /// Defines the newValuesUserAgent
+        /// Defines the newValuesUserAgent.
         /// </summary>
         private readonly UserAgent newValuesUserAgent = new UserAgent();
 
         /// <summary>
-        /// Defines the permanentVerbose
+        /// Defines the permanentVerbose.
         /// </summary>
         private readonly bool permanentVerbose = false;
 
         /// <summary>
-        /// Defines the variableActions
+        /// Defines the variableActions.
         /// </summary>
         private readonly IList<MatcherVariableAction> variableActions;
 
         /// <summary>
-        /// Defines the actionsThatRequireInput
+        /// Defines the actionsThatRequireInput.
         /// </summary>
         private long actionsThatRequireInput = 0;
 
         /// <summary>
-        /// Defines the actionsThatRequireInputAndReceivedInput
+        /// Defines the actionsThatRequireInputAndReceivedInput.
         /// </summary>
         private long actionsThatRequireInputAndReceivedInput = 0;
 
         /// <summary>
-        /// Defines the dynamicActions
+        /// Defines the dynamicActions.
         /// </summary>
         private IList<MatcherAction> dynamicActions = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
-        /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/></param>
-        /// <param name="lookups">The lookups</param>
-        /// <param name="lookupSets">The lookupSets</param>
-        /// <param name="wantedFieldNames">The wantedFieldNames</param>
-        /// <param name="matcherConfig">The matcherConfig<see cref="YamlMappingNode"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
+        /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/>.</param>
+        /// <param name="lookups">The lookups.</param>
+        /// <param name="lookupSets">The lookupSets.</param>
+        /// <param name="wantedFieldNames">The wantedFieldNames.</param>
+        /// <param name="matcherConfig">The matcherConfig<see cref="YamlMappingNode"/>.</param>
+        /// <param name="filename">The filename<see cref="string"/>.</param>
         public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, IList<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
             this.Lookups = lookups;
@@ -249,9 +249,9 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
-        /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/></param>
-        /// <param name="lookups">The lookups</param>
-        /// <param name="lookupSets">The lookupSets</param>
+        /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/>.</param>
+        /// <param name="lookups">The lookups.</param>
+        /// <param name="lookupSets">The lookupSets.</param>
         internal Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets)
         {
             this.Lookups = lookups;
@@ -263,25 +263,25 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets the Lookups
+        /// Gets the Lookups.
         /// </summary>
         public IDictionary<string, IDictionary<string, string>> Lookups { get; }
 
         /// <summary>
-        /// Gets the LookupSets
+        /// Gets the LookupSets.
         /// </summary>
         public IDictionary<string, ISet<string>> LookupSets { get; }
 
         /// <summary>
-        /// Gets a value indicating whether Verbose
+        /// Gets a value indicating whether Verbose.
         /// </summary>
         public bool Verbose { get; private set; } = false;
 
         /// <summary>
         /// Fires all matcher actions.
-        /// IFF all success then we tell the userAgent
+        /// IFF all success then we tell the userAgent.
         /// </summary>
-        /// <param name="userAgent">userAgent The UserAgent that needs to analyzed</param>
+        /// <param name="userAgent">userAgent The UserAgent that needs to analyzed.</param>
         public virtual void Analyze(UserAgent userAgent)
         {
             if (this.Verbose)
@@ -340,9 +340,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetAllPossibleFieldNames
+        /// The GetAllPossibleFieldNames.
         /// </summary>
-        /// <returns>All possible field names</returns>
+        /// <returns>All possible field names.</returns>
         public ISet<string> GetAllPossibleFieldNames()
         {
             var results = new SortedSet<string>();
@@ -353,9 +353,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetMatches
+        /// The GetMatches.
         /// </summary>
-        /// <returns>The list of matchers/></returns>
+        /// <returns>The list of matchers/>.</returns>
         public IList<MatchesList.Match> GetMatches()
         {
             var allMatches = new List<MatchesList.Match>();
@@ -368,9 +368,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetUsedMatches
+        /// The GetUsedMatches.
         /// </summary>
-        /// <returns>The list of matchers</returns>
+        /// <returns>The list of matchers.</returns>
         public IList<MatchesList.Match> GetUsedMatches()
         {
             var allMatches = new List<MatchesList.Match>();
@@ -398,28 +398,28 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The InformMeAbout
+        /// The InformMeAbout.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
         public virtual void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
             this.analyzer.InformMeAbout(matcherAction, keyPattern);
         }
 
         /// <summary>
-        /// The InformMeAboutPrefix
+        /// The InformMeAboutPrefix.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/></param>
-        /// <param name="prefix">The prefix<see cref="string"/></param>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
+        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
+        /// <param name="prefix">The prefix<see cref="string"/>.</param>
         public virtual void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
         {
             this.analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
         }
 
         /// <summary>
-        /// The Initialize
+        /// The Initialize.
         /// </summary>
         public void Initialize()
         {
@@ -509,17 +509,17 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The LookingForRange
+        /// The LookingForRange.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/></param>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/></param>
+        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
         public virtual void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
             this.analyzer.LookingForRange(treeName, range);
         }
 
         /// <summary>
-        /// The Reset
+        /// The Reset.
         /// </summary>
         public void Reset()
         {
@@ -533,9 +533,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The SetVerboseTemporarily
+        /// The SetVerboseTemporarily.
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/></param>
+        /// <param name="newVerbose">The newVerbose<see cref="bool"/>.</param>
         public void SetVerboseTemporarily(bool newVerbose)
         {
             foreach (var action in this.dynamicActions)
@@ -545,9 +545,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             var sb = new StringBuilder(512);
@@ -591,7 +591,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GotMyFirstStartingPoint
+        /// The GotMyFirstStartingPoint.
         /// </summary>
         internal void GotMyFirstStartingPoint()
         {
@@ -599,10 +599,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The InformMeAboutVariable
+        /// The InformMeAboutVariable.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/></param>
-        /// <param name="variableName">The variableName<see cref="string"/></param>
+        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
+        /// <param name="variableName">The variableName<see cref="string"/>.</param>
         internal void InformMeAboutVariable(MatcherAction matcherAction, string variableName)
         {
             if (!this.informMatcherActionsAboutVariables.ContainsKey(variableName))
@@ -615,10 +615,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The CountActionsThatMustHaveMatches
+        /// The CountActionsThatMustHaveMatches.
         /// </summary>
-        /// <param name="actions">The actions<see cref="IList{MatcherAction}"/></param>
-        /// <returns>The <see cref="long"/></returns>
+        /// <param name="actions">The actions<see cref="IList{MatcherAction}"/>.</param>
+        /// <returns>The <see cref="long"/>.</returns>
         private long CountActionsThatMustHaveMatches(IList<MatcherAction> actions)
         {
             long actionsThatMustHaveMatches = 0;
@@ -636,10 +636,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetAllPossibleFieldNames
+        /// The GetAllPossibleFieldNames.
         /// </summary>
-        /// <param name="actions">The actions<see cref="IList{MatcherAction}"/></param>
-        /// <returns>The possible field names</returns>
+        /// <param name="actions">The actions<see cref="IList{MatcherAction}"/>.</param>
+        /// <returns>The possible field names.</returns>
         private ISet<string> GetAllPossibleFieldNames(IList<MatcherAction> actions)
         {
             var results = new HashSet<string>();
@@ -655,17 +655,17 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Defines the <see cref="ConfigLine" />
+        /// Defines the <see cref="ConfigLine" />.
         /// </summary>
         internal class ConfigLine
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="ConfigLine"/> class.
             /// </summary>
-            /// <param name="type">The type<see cref="ConfigType"/></param>
-            /// <param name="attribute">The attribute<see cref="string"/></param>
-            /// <param name="confidence">The confidence/></param>
-            /// <param name="expression">The expression/></param>
+            /// <param name="type">The type<see cref="ConfigType"/>.</param>
+            /// <param name="attribute">The attribute<see cref="string"/>.</param>
+            /// <param name="confidence">The confidence/>.</param>
+            /// <param name="expression">The expression/>.</param>
             public ConfigLine(ConfigType type, string attribute, long? confidence, string expression)
             {
                 this.Type = type;
@@ -675,7 +675,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             /// <summary>
-            /// Defines the Type
+            /// Defines the Type.
             /// </summary>
             public enum ConfigType
             {
@@ -692,26 +692,26 @@ namespace OrbintSoft.Yauaa.Analyze
                 /// <summary>
                 /// Defines the EXTRACT
                 /// </summary>
-                EXTRACT = 0
+                EXTRACT = 0,
             }
 
             /// <summary>
-            /// Gets the Attribute
+            /// Gets the Attribute.
             /// </summary>
             public string Attribute { get; }
 
             /// <summary>
-            /// Gets the Confidence
+            /// Gets the Confidence.
             /// </summary>
             public long? Confidence { get; }
 
             /// <summary>
-            /// Gets the Expression
+            /// Gets the Expression.
             /// </summary>
             public string Expression { get; }
 
             /// <summary>
-            /// Gets the Type
+            /// Gets the Type.
             /// </summary>
             public ConfigType Type { get; }
         }

@@ -33,23 +33,23 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepPrevN" />
+    /// Defines the <see cref="StepPrevN" />.
     /// </summary>
     [Serializable]
     public class StepPrevN : Step
     {
         /// <summary>
-        /// Defines the SIZE
+        /// Defines the SIZE.
         /// </summary>
         private const int SIZE = 20;
 
         /// <summary>
-        /// Defines the steps
+        /// Defines the steps.
         /// </summary>
         private readonly int steps;
 
         /// <summary>
-        /// Defines the children
+        /// Defines the children.
         /// </summary>
         [NonSerialized]
         private IParseTree[] children = null;
@@ -57,7 +57,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <summary>
         /// Initializes a new instance of the <see cref="StepPrevN"/> class.
         /// </summary>
-        /// <param name="steps">The steps<see cref="int"/></param>
+        /// <param name="steps">The steps<see cref="int"/>.</param>
         public StepPrevN(int steps)
         {
             this.steps = steps;
@@ -66,8 +66,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <summary>
         /// Initializes a new instance of the <see cref="StepPrevN"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepPrevN(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -75,10 +75,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -86,20 +86,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "Prev(" + this.steps + ")";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var prevTree = this.Prev(tree);
@@ -112,10 +112,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// The Prev
+        /// The Prev.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <returns>The <see cref="IParseTree"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <returns>The <see cref="IParseTree"/>.</returns>
         private IParseTree Prev(IParseTree tree)
         {
             var parent = this.Up(tree);

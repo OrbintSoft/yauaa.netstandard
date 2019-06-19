@@ -30,21 +30,21 @@ namespace OrbintSoft.Yauaa.Annotate
     using System;
 
     /// <summary>
-    /// Defines the <see cref="YauaaFieldAttribute" />
+    /// Defines the <see cref="YauaaFieldAttribute" />.
     /// </summary>
     public sealed class YauaaFieldAttribute : Attribute
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="YauaaFieldAttribute"/> class.
         /// </summary>
-        /// <param name="value">The value</param>
+        /// <param name="value">The value.</param>
         public YauaaFieldAttribute(params string[] value)
         {
             this.Value = value;
         }
 
         /// <summary>
-        /// Gets or sets the Value
+        /// Gets or sets the Value.
         /// </summary>
         public string[] Value { get; set; }
     }

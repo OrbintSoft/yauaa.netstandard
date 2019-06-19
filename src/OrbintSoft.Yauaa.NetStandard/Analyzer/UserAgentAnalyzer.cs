@@ -32,18 +32,18 @@ namespace OrbintSoft.Yauaa.Analyzer
     using System.Collections.Generic;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentAnalyzer" />
+    /// Defines the <see cref="UserAgentAnalyzer" />.
     /// </summary>
     [Serializable]
     public class UserAgentAnalyzer : UserAgentAnalyzerDirect
     {
         /// <summary>
-        /// Defines the DEFAULT_PARSE_CACHE_SIZE
+        /// Defines the DEFAULT_PARSE_CACHE_SIZE.
         /// </summary>
         public const int DEFAULT_PARSE_CACHE_SIZE = 10000;
 
         /// <summary>
-        /// Defines the parseCache
+        /// Defines the parseCache.
         /// </summary>
         private IDictionary<string, UserAgent> parseCache = null;
 
@@ -57,14 +57,14 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// Gets the CacheSize
+        /// Gets the CacheSize.
         /// </summary>
         public int CacheSize { get; private set; } = DEFAULT_PARSE_CACHE_SIZE;
 
         /// <summary>
-        /// The NewBuilder
+        /// The NewBuilder.
         /// </summary>
-        /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
+        /// <returns>The <see cref="UserAgentAnalyzerBuilder"/>.</returns>
         public static UserAgentAnalyzerBuilder NewBuilder()
         {
             var a = new UserAgentAnalyzer();
@@ -74,7 +74,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The DisableCaching
+        /// The DisableCaching.
         /// </summary>
         public void DisableCaching()
         {
@@ -82,10 +82,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Parse
+        /// The Parse.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <returns>The <see cref="UserAgent"/></returns>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
+        /// <returns>The <see cref="UserAgent"/>.</returns>
         public override UserAgent Parse(UserAgent userAgent)
         {
             lock (this)
@@ -131,7 +131,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The InitializeCache
+        /// The InitializeCache.
         /// </summary>
         private void InitializeCache()
         {
@@ -146,19 +146,19 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// Defines the <see cref="UserAgentAnalyzerBuilder" />
+        /// Defines the <see cref="UserAgentAnalyzerBuilder" />.
         /// </summary>
         public class UserAgentAnalyzerBuilder : UserAgentAnalyzerDirectBuilder<UserAgentAnalyzer, UserAgentAnalyzerBuilder>
         {
             /// <summary>
-            /// Defines the uaa
+            /// Defines the uaa.
             /// </summary>
             private readonly UserAgentAnalyzer uaa;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="UserAgentAnalyzerBuilder"/> class.
             /// </summary>
-            /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzer"/></param>
+            /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzer"/>.</param>
             public UserAgentAnalyzerBuilder(UserAgentAnalyzer newUaa)
                 : base(newUaa)
             {
@@ -166,19 +166,19 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The Build
+            /// The Build.
             /// </summary>
-            /// <returns>The <see cref="UserAgentAnalyzer"/></returns>
+            /// <returns>The <see cref="UserAgentAnalyzer"/>.</returns>
             public override UserAgentAnalyzer Build()
             {
                 return base.Build();
             }
 
             /// <summary>
-            /// The WithCache
+            /// The WithCache.
             /// </summary>
-            /// <param name="newCacheSize">The newCacheSize<see cref="int"/></param>
-            /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
+            /// <param name="newCacheSize">The newCacheSize<see cref="int"/>.</param>
+            /// <returns>The <see cref="UserAgentAnalyzerBuilder"/>.</returns>
             public UserAgentAnalyzerBuilder WithCache(int newCacheSize)
             {
                 this.FailIfAlreadyBuilt();
@@ -187,9 +187,9 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The WithoutCache
+            /// The WithoutCache.
             /// </summary>
-            /// <returns>The <see cref="UserAgentAnalyzerBuilder"/></returns>
+            /// <returns>The <see cref="UserAgentAnalyzerBuilder"/>.</returns>
             public UserAgentAnalyzerBuilder WithoutCache()
             {
                 this.FailIfAlreadyBuilt();

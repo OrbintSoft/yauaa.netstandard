@@ -37,12 +37,12 @@ namespace OrbintSoft.Yauaa.Utils
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
-    /// Defines the <see cref="YauaaVersion" />
+    /// Defines the <see cref="YauaaVersion" />.
     /// </summary>
     public sealed class YauaaVersion
     {
         /// <summary>
-        /// Defines the Log
+        /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(YauaaVersion));
 
@@ -54,10 +54,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The AssertSameVersion
+        /// The AssertSameVersion.
         /// </summary>
-        /// <param name="versionNodeTuple">The versionNodeTuple<see cref="KeyValuePair{YamlNode, YamlNode}"/></param>
-        /// <param name="filename">The filename<see cref="string"/></param>
+        /// <param name="versionNodeTuple">The versionNodeTuple<see cref="KeyValuePair{YamlNode, YamlNode}"/>.</param>
+        /// <param name="filename">The filename<see cref="string"/>.</param>
         public static void AssertSameVersion(KeyValuePair<YamlNode, YamlNode> versionNodeTuple, string filename)
         {
             // Check the version information from the Yaml files
@@ -100,11 +100,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The AssertSameVersion
+        /// The AssertSameVersion.
         /// </summary>
-        /// <param name="gitCommitIdDescribeShort">The gitCommitIdDescribeShort<see cref="string"/></param>
-        /// <param name="buildTimestamp">The buildTimestamp<see cref="string"/></param>
-        /// <param name="projectVersion">The projectVersion<see cref="string"/></param>
+        /// <param name="gitCommitIdDescribeShort">The gitCommitIdDescribeShort<see cref="string"/>.</param>
+        /// <param name="buildTimestamp">The buildTimestamp<see cref="string"/>.</param>
+        /// <param name="projectVersion">The projectVersion<see cref="string"/>.</param>
         public static void AssertSameVersion(string gitCommitIdDescribeShort, string buildTimestamp, string projectVersion)
         {
             var libraryGitCommitIdDescribeShort = ThisVersion.GitCommitIdDescribeShort;
@@ -137,36 +137,36 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetVersion
+        /// The GetVersion.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetVersion()
         {
             return GetVersion(ThisVersion.ProjectVersion, ThisVersion.GitCommitIdDescribeShort, ThisVersion.BuildTimestamp);
         }
 
         /// <summary>
-        /// The GetVersion
+        /// The GetVersion.
         /// </summary>
-        /// <param name="projectVersion">The projectVersion<see cref="string"/></param>
-        /// <param name="gitCommitIdDescribeShort">The gitCommitIdDescribeShort<see cref="string"/></param>
-        /// <param name="buildTimestamp">The buildTimestamp<see cref="string"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="projectVersion">The projectVersion<see cref="string"/>.</param>
+        /// <param name="gitCommitIdDescribeShort">The gitCommitIdDescribeShort<see cref="string"/>.</param>
+        /// <param name="buildTimestamp">The buildTimestamp<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         public static string GetVersion(string projectVersion, string gitCommitIdDescribeShort, string buildTimestamp)
         {
             return "Yauaa " + projectVersion + " (" + gitCommitIdDescribeShort + " @ " + buildTimestamp + ")";
         }
 
         /// <summary>
-        /// The LogVersion
+        /// The LogVersion.
         /// </summary>
-        /// <param name="extraLines">The extraLines</param>
+        /// <param name="extraLines">The extraLines.</param>
         public static void LogVersion(params string[] extraLines)
         {
             string[] lines =
             {
                 "For more information: https://github.com/OrbintSoft/yauaa.netstandard",
-                ThisVersion.Copyright + " - " + ThisVersion.License
+                ThisVersion.Copyright + " - " + ThisVersion.License,
             };
 
             var version = GetVersion();
@@ -204,21 +204,21 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The LogLine
+        /// The LogLine.
         /// </summary>
-        /// <param name="line">The line<see cref="string"/></param>
-        /// <param name="width">The width<see cref="int"/></param>
+        /// <param name="line">The line<see cref="string"/>.</param>
+        /// <param name="width">The width<see cref="int"/>.</param>
         private static void LogLine(string line, int width)
         {
             Log.Info(string.Format("| {0}{1} |", line, Padding(' ', width - line.Length)));
         }
 
         /// <summary>
-        /// The Padding
+        /// The Padding.
         /// </summary>
-        /// <param name="letter">The letter<see cref="char"/></param>
-        /// <param name="count">The count<see cref="int"/></param>
-        /// <returns>The <see cref="string"/></returns>
+        /// <param name="letter">The letter<see cref="char"/>.</param>
+        /// <param name="count">The count<see cref="int"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
         private static string Padding(char letter, int count)
         {
             var sb = new StringBuilder(128);

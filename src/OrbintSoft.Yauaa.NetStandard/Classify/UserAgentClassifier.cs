@@ -31,7 +31,7 @@ namespace OrbintSoft.Yauaa.Classify
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentClassifier" />
+    /// Defines the <see cref="UserAgentClassifier" />.
     /// </summary>
     public class UserAgentClassifier
     {
@@ -43,10 +43,10 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The GetDeviceClass
+        /// The GetDeviceClass.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/></param>
-        /// <returns>The <see cref="DeviceClass"/></returns>
+        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
+        /// <returns>The <see cref="DeviceClass"/>.</returns>
         public static DeviceClass GetDeviceClass(UserAgent userAgent)
         {
             switch (userAgent.GetValue(UserAgent.DEVICE_CLASS))
@@ -73,10 +73,10 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsDeliberateMisuse
+        /// The IsDeliberateMisuse.
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>Do we see this as deliberate misuse?</returns>
+        /// <returns>Do we see this as deliberate misuse?.</returns>
         public static bool IsDeliberateMisuse(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))
@@ -107,7 +107,7 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsHuman
+        /// The IsHuman.
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
         /// <returns>If this is probably a human using the device.</returns>
@@ -141,10 +141,10 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsMobile
+        /// The IsMobile.
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>Is this a 'mobile' device. (includes robots that want to be treated as mobile)</returns>
+        /// <returns>Is this a 'mobile' device. (includes robots that want to be treated as mobile).</returns>
         public static bool IsMobile(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))
@@ -175,7 +175,7 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsNormalConsumerDevice
+        /// The IsNormalConsumerDevice.
         /// </summary>
         /// <param name="userAgent">The instance that needs to be classified.</param>
         /// <returns>Is this a 'normal' consumer device that can simply be bought/downloaded and used as intended.</returns>

@@ -35,31 +35,31 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// Defines the <see cref="StepLookupPrefix" />
+    /// Defines the <see cref="StepLookupPrefix" />.
     /// </summary>
     [Serializable]
     public class StepLookupPrefix : Step
     {
         /// <summary>
-        /// Defines the defaultValue
+        /// Defines the defaultValue.
         /// </summary>
         private readonly string defaultValue;
 
         /// <summary>
-        /// Defines the lookupName
+        /// Defines the lookupName.
         /// </summary>
         private readonly string lookupName;
 
         /// <summary>
-        /// Defines the prefixLookup
+        /// Defines the prefixLookup.
         /// </summary>
         private readonly PrefixLookup prefixLookup;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepLookupPrefix"/> class.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public StepLookupPrefix(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -71,9 +71,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         /// <summary>
         /// Initializes a new instance of the <see cref="StepLookupPrefix"/> class.
         /// </summary>
-        /// <param name="lookupName">The lookupName<see cref="string"/></param>
-        /// <param name="prefixList">The prefixList</param>
-        /// <param name="defaultValue">The defaultValue<see cref="string"/></param>
+        /// <param name="lookupName">The lookupName<see cref="string"/>.</param>
+        /// <param name="prefixList">The prefixList.</param>
+        /// <param name="defaultValue">The defaultValue<see cref="string"/>.</param>
         public StepLookupPrefix(string lookupName, IDictionary<string, string> prefixList, string defaultValue)
         {
             this.lookupName = lookupName;
@@ -82,10 +82,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         }
 
         /// <summary>
-        /// The GetObjectData
+        /// The GetObjectData.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/></param>
-        /// <param name="context">The context<see cref="StreamingContext"/></param>
+        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
@@ -95,20 +95,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
         }
 
         /// <summary>
-        /// The ToString
+        /// The ToString.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The <see cref="string"/>.</returns>
         public override string ToString()
         {
             return "LookupPrefix(@" + this.lookupName + " ; default=" + this.defaultValue + ")";
         }
 
         /// <summary>
-        /// The Walk
+        /// The Walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/></param>
-        /// <param name="value">The value<see cref="string"/></param>
-        /// <returns>The <see cref="WalkList.WalkResult"/></returns>
+        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var input = this.GetActualValue(tree, value);

@@ -31,7 +31,7 @@ namespace OrbintSoft.Yauaa.Antlr4Source
     using System;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentBaseListener" />
+    /// Defines the <see cref="UserAgentBaseListener" />.
     /// </summary>
     [Serializable]
     public partial class UserAgentBaseListener
