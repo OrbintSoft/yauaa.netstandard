@@ -291,7 +291,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             private readonly WalkList walkList = null;
 
             /// <summary>
-            /// Defines the foundHashEntryPoint..
+            /// Defines the foundHashEntryPoint.
             /// </summary>
             private bool foundHashEntryPoint = false;
 

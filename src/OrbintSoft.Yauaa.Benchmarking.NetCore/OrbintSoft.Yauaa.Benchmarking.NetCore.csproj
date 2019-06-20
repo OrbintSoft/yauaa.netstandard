@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>5.7-alpha.2</Version>
+    <Version>5.7-beta.1</Version>
     <Authors>Stefano Balzarotti, Niels Basjes</Authors>
-    <AssemblyVersion>5.7.1.2</AssemblyVersion>
+    <AssemblyVersion>5.7.2.1</AssemblyVersion>
     <ApplicationIcon></ApplicationIcon>
     <OutputType>Exe</OutputType>
     <StartupObject />
-    <FileVersion>5.7.1.2</FileVersion>
+    <FileVersion>5.7.2.1</FileVersion>
     <Copyright>Copyright (C) 2013-2019 Niels Basjes, Porting by OrbintSoft</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>

@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.7-alpha.2</Version>
-    <AssemblyVersion>5.7.1.2</AssemblyVersion>
-    <FileVersion>5.7.1.2</FileVersion>
+    <Version>5.7-beta.1</Version>
+    <AssemblyVersion>5.7.2.1</AssemblyVersion>
+    <FileVersion>5.7.2.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
