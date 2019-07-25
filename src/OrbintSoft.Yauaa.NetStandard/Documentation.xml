@@ -9957,25 +9957,25 @@
             <summary>Provides access to the git information for the current assembly.</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirty">
-            <summary>IsDirty: false</summary>
+            <summary>IsDirty: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.IsDirtyString">
-            <summary>IsDirtyString: false</summary>
+            <summary>IsDirtyString: true</summary>
         </member>
         <member name="F:ThisAssembly.Git.Branch">
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 449ef9f</summary>
+            <summary>Commit: 84747a6</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 449ef9f7a20c90629e2934afeedfd8683bf10a4a</summary>
+            <summary>Sha: 84747a65c80856cfca177373fe02e9a5fa22306c</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 386</summary>
+            <summary>Commits on top of base version: 387</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.4-stable.1-48-g449ef9f</summary>
+            <summary>Tag: 5.4-stable.1-49-g84747a6</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.4-stable.1</summary>
@@ -10002,7 +10002,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 386</summary>
+            <summary>Patch: 387</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>

@@ -5,7 +5,7 @@ First of all, thank you to be here, any contribute here is welcome, and your hel
 ## Requirements
 Here I define a standard enviroment and list of software suggested or required to develop without throubles.
 
-If you prefer to use different software or enviroment you are free todo,but here we don't provide support for that.
+If you prefer to use different software or enviroment you are free to do,but here we don't provide support for that.
 
 ### Recommended enviroment
 
