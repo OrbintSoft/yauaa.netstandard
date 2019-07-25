@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.7-beta.1</Version>
-    <AssemblyVersion>5.7.2.1</AssemblyVersion>
-    <FileVersion>5.7.2.1</FileVersion>
+    <Version>5.7-rc.1</Version>
+    <AssemblyVersion>5.7.3.1</AssemblyVersion>
+    <FileVersion>5.7.3.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -34,7 +34,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <Copyright>Copyright (C) 2013-2019 Niels Basjes, Porting by OrbintSoft</Copyright>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://orbintsoft.net/Yauaa/Index</PackageProjectUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
     <PackageTags>user; agent; useragent; ua; analyzer; parser; parsing; browser; detection; device; platform; detect; engine; classify;</PackageTags>
 	<PackageReleaseNotes></PackageReleaseNotes>	
@@ -44,7 +44,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 	<RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<NoPackageAnalysis>false</NoPackageAnalysis>
-	<MinClientVersion></MinClientVersion>
+	<MinClientVersion>3.0</MinClientVersion>
 	<IncludeBuildOutput>true</IncludeBuildOutput>
 	<IncludeContentInPack>true</IncludeContentInPack>
 	<BuildOutputTargetFolder></BuildOutputTargetFolder>
@@ -561,7 +561,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     </PackageReference>
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.1.0">
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -570,7 +570,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="YamlDotNet" Version="6.1.1" />
+    <PackageReference Include="YamlDotNet" Version="6.1.2" />
   </ItemGroup>
   <ItemGroup>
     <None Update="pre-build.ps1">

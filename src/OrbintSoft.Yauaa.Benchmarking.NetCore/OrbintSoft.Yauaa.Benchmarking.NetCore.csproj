@@ -2,18 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>5.7-beta.1</Version>
+    <Version>5.7-rc.1</Version>
     <Authors>Stefano Balzarotti, Niels Basjes</Authors>
-    <AssemblyVersion>5.7.2.1</AssemblyVersion>
+    <AssemblyVersion>5.7.3.1</AssemblyVersion>
     <ApplicationIcon></ApplicationIcon>
     <OutputType>Exe</OutputType>
     <StartupObject />
-    <FileVersion>5.7.2.1</FileVersion>
+    <FileVersion>5.7.3.1</FileVersion>
     <Copyright>Copyright (C) 2013-2019 Niels Basjes, Porting by OrbintSoft</Copyright>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
     <RootNamespace>OrbintSoft.Yauaa.Benchmarking</RootNamespace>
-    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <Company>OrbintSoft</Company>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <PackageId>OrbintSoft.Yauaa.NetCore.Benchmarking</PackageId>
@@ -21,6 +21,9 @@
     <Description>A benchmarking tool to test application performance</Description>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://orbintsoft.net/Yauaa/Index</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +32,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

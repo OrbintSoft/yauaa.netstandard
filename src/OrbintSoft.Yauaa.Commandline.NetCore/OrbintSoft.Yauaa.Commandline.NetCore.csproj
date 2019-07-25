@@ -4,21 +4,23 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>OrbintSoft.Yauaa.Commandline</RootNamespace>
-    <Version>5.7-beta.1</Version>
+    <Version>5.7-rc.1</Version>
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>												   
-    <AssemblyVersion>5.7.2.1</AssemblyVersion>
+    <AssemblyVersion>5.7.3.1</AssemblyVersion>
 	<Copyright>Copyright (C) 2013-2019 Niels Basjes, Porting by OrbintSoft</Copyright>				 
-    <FileVersion>5.7.2.1</FileVersion>
+    <FileVersion>5.7.3.1</FileVersion>
 	<SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
     <Company>OrbintSoft</Company>
     <Description>A simple commandline application to parse the user agent</Description>
-    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en</NeutralLanguage>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>																				  
+    <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
+    <PackageProjectUrl>https://orbintsoft.net/Yauaa/Index</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>																				  
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.5.0" />
@@ -30,6 +32,10 @@
   <ItemGroup>
     <None Update="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 

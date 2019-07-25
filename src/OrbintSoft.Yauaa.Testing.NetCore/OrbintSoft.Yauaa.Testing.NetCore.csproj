@@ -9,11 +9,11 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.7-beta.1</Version>
+    <Version>5.7-rc.1</Version>
 
-    <AssemblyVersion>5.7.2.1</AssemblyVersion>
+    <AssemblyVersion>5.7.3.1</AssemblyVersion>
 
-    <FileVersion>5.7.2.1</FileVersion>
+    <FileVersion>5.7.3.1</FileVersion>
 
     <NeutralLanguage>en</NeutralLanguage>
 
@@ -23,7 +23,7 @@
 
     <Copyright>Copyright (C) 2013-2019 Niels Basjes, Porting by OrbintSoft</Copyright>
 
-    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
 
     <RepositoryType>git</RepositoryType>
 
@@ -44,6 +44,10 @@
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
 
     <Description>A xUnit test project to test the library</Description>
+
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+
+    <PackageProjectUrl>https://orbintsoft.net/Yauaa/Index</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -115,6 +119,10 @@
     <None Remove="YamlResources\TestCases\YamlParsingTests\NotStringList2.yaml" />
     <None Remove="YamlResources\TestCases\YamlParsingTests\ParseError.yaml" />
     <None Remove="YamlResources\TestCases\YamlParsingTests\TopNotConfig.yaml" />
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -301,8 +309,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.6.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
+    <PackageReference Include="FluentAssertions" Version="5.7.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">

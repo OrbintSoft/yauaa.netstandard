@@ -5,15 +5,17 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Stefano Balzarotti</Authors>
     <Company>OrbintSoft</Company>
-    <AssemblyVersion>5.7.2.1</AssemblyVersion>
-    <FileVersion>5.7.2.1</FileVersion>
-    <Version>5.7-beta.1</Version>
+    <AssemblyVersion>5.7.3.1</AssemblyVersion>
+    <FileVersion>5.7.3.1</FileVersion>
+    <Version>5.7-rc.1</Version>
     <Description>A sample web project to test Yauaa Parser</Description>
     <Copyright>Copyright (C) 2013-2019 OrbintSoft</Copyright>
-    <PackageLicenseUrl>https://github.com/OrbintSoft/yauaa.netstandard/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageProjectUrl>https://orbintsoft.net/Yauaa/Index</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,6 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="wwwroot\favicon.ico" />
     <None Include="wwwroot\lib\jquery-loading-overlay\loadingoverlay.min.js.map" />
     <None Include="wwwroot\lib\twitter-bootstrap\js\bootstrap.min.js" />

@@ -237,7 +237,7 @@
             The GetValue.
             </summary>
             <param name="fieldName">The fieldName<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:System.String"/>..</returns>
+            <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.ProcessSetAll">
             <summary>
@@ -576,7 +576,7 @@
             <summary>
             The WithoutCache.
             </summary>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzer.UserAgentAnalyzerBuilder"/>...</returns>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzer.UserAgentAnalyzerBuilder"/>.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect">
             <summary>
@@ -741,7 +741,7 @@
             <summary>
             The GetAllPathsAnalyzer.
             </summary>
-            <param name="agent">The agent<see cref="T:System.String"/>..</param>
+            <param name="agent">The agent<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.NewBuilder``2">
@@ -779,7 +779,7 @@
             <summary>
             The GetRequiredInformRanges.
             </summary>
-            <param name="treeName">The treeName<see cref="T:System.String"/>..</param>
+            <param name="treeName">The treeName<see cref="T:System.String"/>.</param>
             <returns>The ranges.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetRequiredPrefixLengths(System.String)">
@@ -946,7 +946,7 @@
             <summary>
             The DetermineDeviceBrand.
             </summary>
-            <param name="userAgent">The userAgent<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent"/>..</param>
+            <param name="userAgent">The userAgent<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent"/>.</param>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.ExtractCompanyFromHostName(System.String)">
@@ -1071,7 +1071,7 @@
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass.GetRequiredPrefixLengths(System.String)">
             <summary>
-            The GetRequiredPrefixLengths..
+            The GetRequiredPrefixLengths.
             </summary>
             <param name="treeName">The treeName<see cref="T:System.String"/>.</param>
             <returns>The prefix lengths.</returns>
@@ -1320,14 +1320,14 @@
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.InvalidParserConfigurationException"/> class.
             </summary>
-            <param name="message">The message<see cref="T:System.String"/>..</param>
+            <param name="message">The message<see cref="T:System.String"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.InvalidParserConfigurationException.#ctor(System.String,System.Exception)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.InvalidParserConfigurationException"/> class.
             </summary>
             <param name="message">The message<see cref="T:System.String"/>.</param>
-            <param name="e">The e<see cref="T:System.Exception"/>..</param>
+            <param name="e">The e<see cref="T:System.Exception"/>.</param>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.Matcher">
             <summary>
@@ -1398,7 +1398,7 @@
             <param name="lookupSets">The lookupSets.</param>
             <param name="wantedFieldNames">The wantedFieldNames.</param>
             <param name="matcherConfig">The matcherConfig<see cref="T:YamlDotNet.RepresentationModel.YamlMappingNode"/>.</param>
-            <param name="filename">The filename<see cref="T:System.String"/>..</param>
+            <param name="filename">The filename<see cref="T:System.String"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.Matcher.#ctor(OrbintSoft.Yauaa.Analyze.IAnalyzer,System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.IDictionary{System.String,System.String}},System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.ISet{System.String}})">
             <summary>
@@ -1611,7 +1611,7 @@
             <summary>
             The CalculateInformPathFunction.
             </summary>
-            <param name="action">The action<see cref="T:OrbintSoft.Yauaa.Analyze.MatcherAction"/>..</param>
+            <param name="action">The action<see cref="T:OrbintSoft.Yauaa.Analyze.MatcherAction"/>.</param>
             <param name="treeName">The treeName<see cref="T:System.String"/>.</param>
             <param name="tree">The tree<see cref="T:Antlr4.Runtime.ParserRuleContext"/>.</param>
             <returns>The <see cref="T:System.Int32"/>.</returns>
@@ -1820,7 +1820,7 @@
             The VisitMatcherConcatPostfix.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherConcatPostfixContext"/>.</param>
-            <returns>The <see cref="T:System.Object"/>..</returns>
+            <returns>The <see cref="T:System.Object"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatcherAction.UnQuoteValues.VisitMatcherConcatPrefix(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherConcatPrefixContext)">
             <summary>
@@ -1972,7 +1972,7 @@
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatcherExtractAction.ToString">
             <summary>
-            The ToString..
+            The ToString.
             </summary>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
@@ -2031,7 +2031,7 @@
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatcherRequireAction.Reset">
             <summary>
-            The Reset..
+            The Reset.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatcherRequireAction.ToString">
@@ -2172,7 +2172,7 @@
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatchesList.Add(OrbintSoft.Yauaa.Analyze.MatchesList.Match)">
             <summary>
-            The Add...
+            The Add.
             </summary>
             <param name="item">The item<see cref="T:OrbintSoft.Yauaa.Analyze.MatchesList.Match"/>.</param>
         </member>
@@ -2199,7 +2199,7 @@
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatchesList.CopyTo(OrbintSoft.Yauaa.Analyze.MatchesList.Match[],System.Int32)">
             <summary>
-            The CopyTo..
+            The CopyTo.
             </summary>
             <param name="array">The array.</param>
             <param name="arrayIndex">The arrayIndex.</param>
@@ -2338,7 +2338,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/> class.
             </summary>
-            <param name="start">The start<see cref="T:System.Int32"/>..</param>
+            <param name="start">The start<see cref="T:System.Int32"/>.</param>
             <param name="end">The end<see cref="T:System.Int32"/>.</param>
         </member>
         <member name="P:OrbintSoft.Yauaa.Analyze.NumberRangeList.Count">
@@ -2607,7 +2607,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals"/> class.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>..</param>
+            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
             <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals.#ctor(System.String)">
@@ -2710,7 +2710,7 @@
             <summary>
             The Walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>..</param>
+            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
             <param name="value">The value<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
         </member>
@@ -3045,7 +3045,7 @@
             This must iterate of all possibilities and return the first matching result.
             </summary>
             <param name="tree">The tree to walk into.</param>
-            <param name="value">The value<see cref="T:System.String"/>..</param>
+            <param name="value">The value<see cref="T:System.String"/>.</param>
             <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Step.GetActualValue(Antlr4.Runtime.Tree.IParseTree,System.String)">
@@ -3247,7 +3247,7 @@
             <summary>
             The Walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>..</param>
+            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
             <param name="value">The value<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
         </member>
@@ -3383,15 +3383,15 @@
             <summary>
             The ToString.
             </summary>
-            <returns>The <see cref="T:System.String"/>..</returns>
+            <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
             The Walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>..</param>
+            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
             <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>..</returns>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList">
             <summary>
@@ -3512,7 +3512,7 @@
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.foundHashEntryPoint">
             <summary>
-            Defines the foundHashEntryPoint..
+            Defines the foundHashEntryPoint.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.#ctor(OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList)">
@@ -3553,7 +3553,7 @@
             <summary>
             The VisitMatcherNormalizeBrand.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherNormalizeBrandContext"/>..</param>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherNormalizeBrandContext"/>.</param>
             <returns>The <see cref="T:System.Object"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.VisitMatcherPath(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.MatcherPathContext)">
@@ -3603,7 +3603,7 @@
             The VisitPathVariable.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.PathVariableContext"/>.</param>
-            <returns>The <see cref="T:System.Object"/>..</returns>
+            <returns>The <see cref="T:System.Object"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkListBuilder.VisitPathWalk(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.PathWalkContext)">
             <summary>
@@ -3786,7 +3786,7 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown" />..
+            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown" />.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.end">
@@ -3841,7 +3841,7 @@
             <summary>
             The ToString.
             </summary>
-            <returns>The <see cref="T:System.String"/>..</returns>
+            <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
@@ -4066,7 +4066,7 @@
             <summary>
             The VisitProductNameKeyValue.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameKeyValueContext"/>..</param>
+            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameKeyValueContext"/>.</param>
             <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitProductNameNoVersion(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameNoVersionContext)">
@@ -4392,7 +4392,7 @@
             <summary>
             The Evaluate.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>..</param>
+            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
             <param name="key">The key<see cref="T:System.String"/>.</param>
             <param name="value">The value<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
@@ -4477,7 +4477,7 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.WordRangeVisitor">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.WordRangeVisitor" />..
+            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.WordRangeVisitor" />.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Instance">
@@ -5961,7 +5961,7 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser" />..
+            Defines the <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser" />.
             </summary>
         </member>
         <member name="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerBaseListener">
@@ -7251,7 +7251,7 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerLexer">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerLexer" />..
+            Defines the <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerLexer" />.
             </summary>
         </member>
         <member name="T:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerListener">
@@ -7888,7 +7888,7 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser" />..
+            Defines the <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser" />.
             </summary>
         </member>
         <member name="T:OrbintSoft.Yauaa.Antlr4Source.IUserAgentTreeWalkerVisitor`1">
@@ -8644,7 +8644,7 @@
             The IsMobile.
             </summary>
             <param name="userAgent">The instance that needs to be classified.</param>
-            <returns>Is this a 'mobile' device. (includes robots that want to be treated as mobile)..</returns>
+            <returns>Is this a 'mobile' device. (includes robots that want to be treated as mobile).</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Classify.UserAgentClassifier.IsNormalConsumerDevice(OrbintSoft.Yauaa.Analyzer.UserAgent)">
             <summary>
@@ -8810,8 +8810,8 @@
             <summary>
             The RunTests.
             </summary>
-            <param name="showAll">The showAll<see cref="T:System.Boolean"/>..</param>
-            <param name="failOnUnexpected">The failOnUnexpected<see cref="T:System.Boolean"/>..</param>
+            <param name="showAll">The showAll<see cref="T:System.Boolean"/>.</param>
+            <param name="failOnUnexpected">The failOnUnexpected<see cref="T:System.Boolean"/>.</param>
             <returns>The <see cref="T:System.Boolean"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Debug.UserAgentAnalyzerTester.RunTests(System.Boolean,System.Boolean,System.Collections.Generic.ICollection{System.String},System.Boolean,System.Boolean)">
@@ -8819,7 +8819,7 @@
             The RunTests.
             </summary>
             <param name="showAll">The showAll<see cref="T:System.Boolean"/>.</param>
-            <param name="failOnUnexpected">The failOnUnexpected<see cref="T:System.Boolean"/>..</param>
+            <param name="failOnUnexpected">The failOnUnexpected<see cref="T:System.Boolean"/>.</param>
             <param name="onlyValidateFieldNames">The onlyValidateFieldNames.</param>
             <param name="measureSpeed">The measureSpeed<see cref="T:System.Boolean"/>.</param>
             <param name="showPassedTests">The showPassedTests<see cref="T:System.Boolean"/>.</param>
@@ -8914,7 +8914,7 @@
             <summary>
             The ReplaceString.
             </summary>
-            <param name="input">The input<see cref="T:System.String"/>..</param>
+            <param name="input">The input<see cref="T:System.String"/>.</param>
             <param name="searchFor">The searchFor<see cref="T:System.String"/>.</param>
             <param name="replaceWith">The replaceWith<see cref="T:System.String"/>.</param>
             <returns>The <see cref="T:System.String"/>.</returns>
@@ -9200,7 +9200,7 @@
         </member>
         <member name="M:OrbintSoft.Yauaa.Parse.UserAgentTreeFlattener.EnterUserAgent(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.UserAgentContext)">
             <summary>
-            The EnterUserAgent..
+            The EnterUserAgent.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.UserAgentContext"/>.</param>
         </member>
@@ -9656,7 +9656,7 @@
             <summary>
             The CreateSplitList.
             </summary>
-            <param name="characters">The characters<see cref="T:System.String"/>..</param>
+            <param name="characters">The characters<see cref="T:System.String"/>.</param>
             <returns>The split list.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Utils.Splitter.CreateSplitList(System.Char[])">
@@ -9732,7 +9732,7 @@
             The GetFirstSplits.
             </summary>
             <param name="value">The value<see cref="T:System.String"/>.</param>
-            <param name="split">The split<see cref="T:System.Int32"/>..</param>
+            <param name="split">The split<see cref="T:System.Int32"/>.</param>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Utils.VersionSplitter.GetSingleSplit(System.String,System.Int32)">
@@ -9864,7 +9864,7 @@
             <param name="condition">The condition<see cref="T:System.Boolean"/>.</param>
             <param name="node">The node<see cref="T:YamlDotNet.RepresentationModel.YamlNode"/>.</param>
             <param name="filename">The filename<see cref="T:System.String"/>.</param>
-            <param name="error">The error<see cref="T:System.String"/>..</param>
+            <param name="error">The error<see cref="T:System.String"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Utils.YamlUtils.RequireNodeInstanceOf(System.Type,YamlDotNet.RepresentationModel.YamlNode,System.String,System.String)">
             <summary>
@@ -9966,16 +9966,16 @@
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 7e90162</summary>
+            <summary>Commit: 449ef9f</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 7e90162429e617a48db871e43d17623555e42d83</summary>
+            <summary>Sha: 449ef9f7a20c90629e2934afeedfd8683bf10a4a</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 384</summary>
+            <summary>Commits on top of base version: 386</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.4-stable.1-46-g7e90162</summary>
+            <summary>Tag: 5.4-stable.1-48-g449ef9f</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.4-stable.1</summary>
@@ -10002,7 +10002,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 384</summary>
+            <summary>Patch: 386</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>
