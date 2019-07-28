@@ -323,11 +323,6 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="YamlResources\UserAgents\InternetExplorer.yaml">
-		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		<Pack>true</Pack>
-		<PackageCopyToOutput>true</PackageCopyToOutput>
-    </Content>
     <Content Include="YamlResources\UserAgents\ISOLanguageCode-tests.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
