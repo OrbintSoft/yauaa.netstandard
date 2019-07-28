@@ -528,8 +528,11 @@ namespace OrbintSoft.Yauaa.Analyzer
                         yaml = yamlStream.Documents.FirstOrDefault();
                     }
 
-                    maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
-                    this.LoadResource(yaml, filename);
+                    if (!string.IsNullOrEmpty(filename))
+                    {
+                        maxFilenameLength = Math.Max(maxFilenameLength, filename.Length);
+                        this.LoadResource(yaml, filename);
+                    }
                 }
                 catch (YamlException e)
                 {
