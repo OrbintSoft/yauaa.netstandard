@@ -3,7 +3,7 @@
 # =============================================
 #
 # Yet Another UserAgent Analyzer
-# Copyright (C) 2013-2018 Niels Basjes
+# Copyright (C) 2013-2019 Niels Basjes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,10 @@
 # limitations under the License.
 #
 config:
+
+- matcher:
+    extract:
+    - 'DeviceCpu                           :    115 :LookUp[CPUArchitectures;agent.product.name="Sys_CPU"^.version]'
 
 - matcher:
     extract:
@@ -105,6 +109,14 @@ config:
       "ti8148" : "Ti8148"
       "Mac_68K" : "Motorola 68000"
       "Mac_PowerPC" : "PowerPC"
+
+- matcher:
+    extract:
+    - 'DeviceCpuBits                       :    117 :agent.product.name="App_Bitness"^.version'
+
+- matcher:
+    extract:
+    - 'DeviceCpuBits                       :    116 :LookUp[CPUArchitecturesBits;agent.product.name="Sys_CPU"^.version]'
 
 - matcher:
     extract:

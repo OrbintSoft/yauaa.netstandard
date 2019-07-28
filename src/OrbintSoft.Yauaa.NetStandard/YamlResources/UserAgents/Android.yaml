@@ -1,6 +1,6 @@
 #
 # Yet Another UserAgent Analyzer
-# Copyright (C) 2013-2018 Niels Basjes
+# Copyright (C) 2013-2019 Niels Basjes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -1058,29 +1058,6 @@ config:
 # There is no browser on Android that is Safari.
 # So if we conclude that it must be Safari then it really is the stock android browser.
 
-- matcher:
-    require:
-    - 'agent.product.(1)name="Mobile Safari"'
-    - 'agent.(1)product.comments.entry.product.(1)name[1]="Android"'
-    extract:
-    - 'AgentClass                          :     56 :"Browser"'
-    - 'AgentName                           :     56 :"Stock Android Browser"'
-    - 'AgentVersion                        :     56 :agent.product.(1)name="Version"^.version'
-
-- matcher:
-    require:
-    - 'agent.product.(1)name="Safari"'
-    - 'agent.(1)product.comments.entry.product.(1)name[1]="Android"'
-    extract:
-    - 'AgentClass                          :     56 :"Browser"'
-    - 'AgentName                           :     56 :"Stock Android Browser"'
-    - 'AgentVersion                        :     56 :agent.product.(1)name="Version"^.version'
-
-- matcher:
-    extract:
-    - 'AgentClass                          :     10 :"Browser"'
-    - 'AgentName                           :     10 :"Stock Android Browser"'
-    - 'AgentVersion                        :     10 :agent.product.(1)name[1]="Android"^.version'
 
 - test:
     input:
@@ -1627,33 +1604,6 @@ config:
       AgentLanguageCode                    : 'en-us'
       AgentSecurity                        : 'Strong security'
 
-# FIXME: Version 999 is an indication of some kind of manipulation
-- test:
-    input:
-      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 2.3; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9'
-    expected:
-      DeviceClass                          : 'Tablet'
-      DeviceName                           : 'Android Mobile'
-      DeviceBrand                          : 'Unknown'
-      OperatingSystemClass                 : 'Mobile'
-      OperatingSystemName                  : 'Android'
-      OperatingSystemVersion               : '2.3'
-      OperatingSystemNameVersion           : 'Android 2.3'
-      LayoutEngineClass                    : 'Browser'
-      LayoutEngineName                     : 'AppleWebKit'
-      LayoutEngineVersion                  : '999'
-      LayoutEngineVersionMajor             : '999'
-      LayoutEngineNameVersion              : 'AppleWebKit 999'
-      LayoutEngineNameVersionMajor         : 'AppleWebKit 999'
-      AgentClass                           : 'Browser'
-      AgentName                            : 'Safari'
-      AgentVersion                         : '999.9'
-      AgentVersionMajor                    : '999'
-      AgentNameVersion                     : 'Safari 999.9'
-      AgentNameVersionMajor                : 'Safari 999'
-      AgentLanguage                        : 'English (United States)'
-      AgentLanguageCode                    : 'en-us'
-      AgentSecurity                        : 'Strong security'
 
 - test:
     input:

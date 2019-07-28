@@ -1,6 +1,6 @@
 #
 # Yet Another UserAgent Analyzer
-# Copyright (C) 2013-2018 Niels Basjes
+# Copyright (C) 2013-2019 Niels Basjes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -336,8 +336,8 @@ config:
 - matcher:
     extract:
     - 'AgentClass                          :    100 :"Browser"'
-    - 'AgentName                           :    100 :"SogouMobileBrowser"'
-    - 'AgentVersion                        :    100 :agent.product.(1)name="SogouMSE,SogouMobileBrowser"^.version'
+    - 'AgentName                           :   2100 :"SogouMobileBrowser"'
+    - 'AgentVersion                        :   2100 :agent.product.(1)name="SogouMSE,SogouMobileBrowser"^.version'
 
 - test:
     input:
@@ -1416,10 +1416,10 @@ config:
       LayoutEngineNameVersionMajor         : 'EdgeHTML 12'
       AgentClass                           : 'Browser'
       AgentName                            : 'Edge'
-      AgentVersion                         : '12'
-      AgentVersionMajor                    : '12'
-      AgentNameVersion                     : 'Edge 12'
-      AgentNameVersionMajor                : 'Edge 12'
+      AgentVersion                         : '20.10240'
+      AgentVersionMajor                    : '20'
+      AgentNameVersion                     : 'Edge 20.10240'
+      AgentNameVersionMajor                : 'Edge 20'
 
 - test:
     input:
@@ -1971,34 +1971,6 @@ config:
       AgentNameVersion                     : 'Fennec 10.0.3'
       AgentNameVersionMajor                : 'Fennec 10'
 
-# Version 999 ... yeah right
-- test:
-    input:
-      user_agent_string: 'Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9'
-    expected:
-      DeviceClass                          : 'Mobile'
-      DeviceName                           : 'Android Mobile'
-      DeviceBrand                          : 'Unknown'
-      OperatingSystemClass                 : 'Mobile'
-      OperatingSystemName                  : 'Android'
-      OperatingSystemVersion               : '??'
-      OperatingSystemNameVersion           : 'Android ??'
-      LayoutEngineClass                    : 'Browser'
-      LayoutEngineName                     : 'AppleWebKit'
-      LayoutEngineVersion                  : '999'
-      LayoutEngineVersionMajor             : '999'
-      LayoutEngineNameVersion              : 'AppleWebKit 999'
-      LayoutEngineNameVersionMajor         : 'AppleWebKit 999'
-      AgentClass                           : 'Browser'
-      AgentName                            : 'Safari'
-      AgentVersion                         : '999.9'
-      AgentVersionMajor                    : '999'
-      AgentNameVersion                     : 'Safari 999.9'
-      AgentNameVersionMajor                : 'Safari 999'
-      AgentLanguage                        : 'English (United States)'
-      AgentLanguageCode                    : 'en-us'
-      AgentSecurity                        : 'Strong security'
-
 # Many rules do not fire because of "Android Android 6.0"
 - test:
     input:
@@ -2275,3 +2247,27 @@ config:
       AgentNameVersionMajor                : 'YaBrowser 18'
 
 
+# Manipulated
+- test:
+    input:
+      user_agent_string: 'Mozilla/61748879 (FreeBSD NT 92.6; Win1213; x1510; rv:79.4) Safari/14.9 IZShJuZST 6BVq0FJm9L u89x7bai5NHiU yZ4x9LWDZ1f'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'FreeBsd Desktop'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'FreeBSD'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'FreeBSD ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '61748879'
+      LayoutEngineVersionMajor             : '61748879'
+      LayoutEngineNameVersion              : 'Mozilla 61748879'
+      LayoutEngineNameVersionMajor         : 'Mozilla 61748879'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '61748879'
+      AgentVersionMajor                    : '61748879'
+      AgentNameVersion                     : 'Netscape 61748879'
+      AgentNameVersionMajor                : 'Netscape 61748879'

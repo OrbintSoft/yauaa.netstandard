@@ -3,7 +3,7 @@
 # =============================================
 #
 # Yet Another UserAgent Analyzer
-# Copyright (C) 2013-2018 Niels Basjes
+# Copyright (C) 2013-2019 Niels Basjes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -108,6 +108,9 @@ config:
       "Cosmic"        : "Ubuntu"
       "Cosmic Cuttlefish"             : "Ubuntu"
       "ubuntu-Cosmic" : "Ubuntu"
+      "Disco"        : "Ubuntu"
+      "Disco Dingo"             : "Ubuntu"
+      "ubuntu-Disco" : "Ubuntu"
 - lookup:
     name: 'UbuntuOSVersion'
     map:
@@ -198,3 +201,6 @@ config:
       "Cosmic"        : "18.10"
       "Cosmic Cuttlefish"             : "18.10"
       "ubuntu-Cosmic" : "18.10"
+      "Disco"        : "19.04"
+      "Disco Dingo"             : "19.04"
+      "ubuntu-Disco" : "19.04"

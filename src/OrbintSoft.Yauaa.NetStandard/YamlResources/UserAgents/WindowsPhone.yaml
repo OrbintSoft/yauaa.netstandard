@@ -1,6 +1,6 @@
 #
 # Yet Another UserAgent Analyzer
-# Copyright (C) 2013-2018 Niels Basjes
+# Copyright (C) 2013-2019 Niels Basjes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -333,10 +333,10 @@ config:
       LayoutEngineNameVersionMajor         : 'EdgeHTML 12'
       AgentClass                           : 'Browser'
       AgentName                            : 'Edge'
-      AgentVersion                         : '12'
-      AgentVersionMajor                    : '12'
-      AgentNameVersion                     : 'Edge 12'
-      AgentNameVersionMajor                : 'Edge 12'
+      AgentVersion                         : '20.??'
+      AgentVersionMajor                    : '20'
+      AgentNameVersion                     : 'Edge 20.??'
+      AgentNameVersionMajor                : 'Edge 20'
 
 - test:
     input:
