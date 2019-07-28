@@ -158,7 +158,6 @@ config:
       OperatingSystemName                  : 'BeOS/Haiku'
       OperatingSystemVersion               : '??'
       OperatingSystemNameVersion           : 'BeOS/Haiku ??'
-      OperatingSystemVersion               : '??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Gecko'
       LayoutEngineVersion                  : '1.8.1.18'
