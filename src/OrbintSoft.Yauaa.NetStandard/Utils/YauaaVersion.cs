@@ -190,7 +190,7 @@ namespace OrbintSoft.Yauaa.Utils
                 LogLine(line, width);
             }
 
-            if (extraLines.Length > 0)
+            if (extraLines.Any())
             {
                 Log.Info(string.Format("+-{0}-+", Padding('-', width)));
                 foreach (var line in extraLines)
