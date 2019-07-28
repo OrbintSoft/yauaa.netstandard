@@ -34,7 +34,7 @@ This will allow you to run unsigned scripts.
 
 The following Visual Studio extensions are not necessary, but they can be useful:
 
-- Markdowncan improve they  editor
+- Markdown editor
 - Output enhamcer
 - Powershell tools
 - Real clean

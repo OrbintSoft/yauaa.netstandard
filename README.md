@@ -19,7 +19,6 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 
 ## HIGH Profile release notes:
 
-
 ### 5.6.2
 
 In version 5.6 the number of detected DeviceBrands is greatly increased. 
