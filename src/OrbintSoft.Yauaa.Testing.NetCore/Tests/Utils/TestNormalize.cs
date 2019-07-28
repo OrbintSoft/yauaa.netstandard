@@ -71,6 +71,15 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
             Normalize.Brand("NBA").Should().Be("NBA");
         }
 
+        [Fact]
+        public void CheckBrandThreeFour()
+        {
+            Normalize.Brand("nba/kLmN").Should().Be("NBA/Klmn");
+            Normalize.Brand("nBa/KlMn").Should().Be("NBA/Klmn");
+            Normalize.Brand("Nba/klmn").Should().Be("NBA/Klmn");
+            Normalize.Brand("NBA/KLMN").Should().Be("NBA/Klmn");
+        }
+
         /// <summary>
         /// The CheckBrandNormalizationWord
         /// </summary>
