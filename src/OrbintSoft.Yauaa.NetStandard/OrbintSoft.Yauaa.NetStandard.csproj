@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.7-rc.1</Version>
-    <AssemblyVersion>5.7.3.1</AssemblyVersion>
-    <FileVersion>5.7.3.1</FileVersion>
+    <Version>5.7.1</Version>
+    <AssemblyVersion>5.7.5.1</AssemblyVersion>
+    <FileVersion>5.7.5.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

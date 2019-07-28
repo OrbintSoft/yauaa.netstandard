@@ -1,13 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Stefano Balzarotti</Authors>
     <Company>OrbintSoft</Company>
-    <AssemblyVersion>5.7.3.1</AssemblyVersion>
-    <FileVersion>5.7.3.1</FileVersion>
-    <Version>5.7-rc.1</Version>
+    <AssemblyVersion>5.7.5.1</AssemblyVersion>
+    <FileVersion>5.7.5.1</FileVersion>
+    <Version>5.7.1</Version>
     <Description>A sample web project to test Yauaa Parser</Description>
     <Copyright>Copyright (C) 2013-2019 OrbintSoft</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
