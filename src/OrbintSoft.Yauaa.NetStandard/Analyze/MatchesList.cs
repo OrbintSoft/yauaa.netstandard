@@ -62,12 +62,7 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             this.maxSize = newMaxSize;
 
-            this.Count = 0;
-            this.allElements = new Match[this.maxSize];
-            for (var i = 0; i < this.maxSize; i++)
-            {
-                this.allElements[i] = new Match(null, null, null);
-            }
+            this.Initialize();
         }
 
         /// <summary>
@@ -198,6 +193,16 @@ namespace OrbintSoft.Yauaa.Analyze
 
             this.allElements = newAllElements;
             this.maxSize = newMaxSize;
+        }
+
+        private void Initialize()
+        {
+            this.Count = 0;
+            this.allElements = new Match[this.maxSize];
+            for (var i = 0; i < this.maxSize; i++)
+            {
+                this.allElements[i] = new Match(null, null, null);
+            }
         }
 
         /// <summary>
