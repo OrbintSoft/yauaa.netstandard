@@ -209,12 +209,12 @@ namespace OrbintSoft.Yauaa.Analyze
 
             if (!hasDefinedExtractConfigs)
             {
-                throw new InvalidParserConfigurationException("Matcher does not extract anything");
+                throw new InvalidParserConfigurationException($"Matcher does not extract anything: {this.matcherSourceLocation}");
             }
 
             if (!hasActiveExtractConfigs)
             {
-                throw new UselessMatcherException("Does not extract any wanted fields");
+                throw new UselessMatcherException($"Does not extract any wanted fields: {this.matcherSourceLocation}");
             }
 
             foreach (var configLine in configLines)
