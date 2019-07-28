@@ -9966,16 +9966,16 @@
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: 3e9f9d1</summary>
+            <summary>Commit: a94b39f</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: 3e9f9d1202ac5bb0bfbc12d97864d2c0044c5b94</summary>
+            <summary>Sha: a94b39f3a5320e8184186e2ff40e2e8aacc2c04e</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 392</summary>
+            <summary>Commits on top of base version: 393</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.4-stable.1-54-g3e9f9d1</summary>
+            <summary>Tag: 5.4-stable.1-55-ga94b39f</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.4-stable.1</summary>
@@ -10002,7 +10002,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 392</summary>
+            <summary>Patch: 393</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>
