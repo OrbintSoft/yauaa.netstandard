@@ -1920,7 +1920,11 @@ namespace OrbintSoft.Yauaa.Analyzer
                     this.uaa.WantedFieldNames = new List<string>();
                 }
 
-                this.uaa.WantedFieldNames.Add(fieldName);
+                if (!this.uaa.WantedFieldNames.Contains(fieldName))
+                {
+                    this.uaa.WantedFieldNames.Add(fieldName);
+                }
+
                 return (TB)this;
             }
 
