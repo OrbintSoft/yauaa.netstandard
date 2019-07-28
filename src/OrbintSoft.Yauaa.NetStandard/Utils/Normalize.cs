@@ -215,6 +215,7 @@ namespace OrbintSoft.Yauaa.Utils
                 case ' ':
                 case '-':
                 case '_':
+                case '/':
                     return true;
                 default:
                     return false;
