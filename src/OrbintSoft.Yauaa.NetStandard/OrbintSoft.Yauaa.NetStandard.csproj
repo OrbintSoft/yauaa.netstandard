@@ -125,6 +125,8 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\MobileBrand-tests.yaml" />
     <None Remove="YamlResources\UserAgents\MobileBrands.yaml" />
     <None Remove="YamlResources\UserAgents\Mozilla-Testcases.yaml" />
+    <None Remove="YamlResources\UserAgents\MSEdge.yaml" />
+    <None Remove="YamlResources\UserAgents\MSInternetExplorer.yaml" />
     <None Remove="YamlResources\UserAgents\Nokia.yaml" />
     <None Remove="YamlResources\UserAgents\Opera.yaml" />
     <None Remove="YamlResources\UserAgents\OperatingSystemDeviceNames.yaml" />
@@ -385,6 +387,12 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="YamlResources\UserAgents\MSEdge.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="YamlResources\UserAgents\MSInternetExplorer.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\UserAgents\Nokia.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -73,25 +73,22 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         //[Fact]
         //public void TestError()
         //{
-        //    UserAgentAnalyzerTester uaa = UserAgentAnalyzerTester
-        //        .NewBuilder()
-        //        .HideMatcherLoadStats()
-        //        .DelayInitialization()
-        //        .DropDefaultResources()
-        //        .DropTests()
-        //        .AddResources("YamlResources/UserAgents", "GooglePixel.yaml")
-        //        .Build() as UserAgentAnalyzerTester;
-        //    uaa.SetShowMatcherStats(false);
-        //    uaa.RunTests(false, true).Should().BeFalse();  // This test must return an error state
+        //    var fieldName = "DeviceCpu";
+        //    UserAgentAnalyzerTester userAgentAnalyzer =
+        //        UserAgentAnalyzerTester
+        //            .NewBuilder()
+        //            .WithoutCache()
+        //            .WithFields(fieldName)
+        //            .HideMatcherLoadStats()
+        //            .DropDefaultResources()
+        //            .AddResources("YamlResources/UserAgents", "MSInternetExplorer.yaml")
+        //            .Build() as UserAgentAnalyzerTester;
+
+        //    userAgentAnalyzer.Should().NotBeNull();
+        //    var userAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (compatible; Windows NT 10.0; WOW64; IA64; en) AppleWebKit/599.0+ Chrome/48.2564.0.82 Maxthon/4.9.0 QupZilla/1.8.9");
+        //    var field = userAgent.Get(fieldName);
+        //    field.GetValue().Should().Be("Intel Itanium 64");            
         //}
 
-        //[Fact]
-        //public void TestSerialization()
-        //{
-        //    UserAgentAnalyzerTester uaa = this.SerializeAndDeserializeUAA();
-
-        //    var userAgent = uaa.Parse("Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13");
-        //    userAgent.Get("AgentName").Value.Should().Be("Chrome");
-        //}
     }
 }
