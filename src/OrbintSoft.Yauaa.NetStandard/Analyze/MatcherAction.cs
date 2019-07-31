@@ -615,8 +615,8 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 if (token is CommonToken commonToken)
                 {
-                    commonToken.StartIndex = commonToken.StartIndex + 1;
-                    commonToken.StopIndex = commonToken.StopIndex - 1;
+                    commonToken.StartIndex += 1;
+                    commonToken.StopIndex -= 1;
                 }
             }
         }
