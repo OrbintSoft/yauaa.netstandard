@@ -60,7 +60,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>S:\Progetti\yauaa.netstandard\src\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.xml</DocumentationFile>
+    <DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Verbose|AnyCPU'">
