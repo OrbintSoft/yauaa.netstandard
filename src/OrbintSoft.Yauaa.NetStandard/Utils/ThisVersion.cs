@@ -37,28 +37,39 @@ namespace OrbintSoft.Yauaa.Utils
     public class ThisVersion
     {
         /// <summary>
-        /// Defines the Fi.
+        /// Defines the File informations of the the current assembly.
         /// </summary>
         private static readonly FileInfo Fi;
+
+        /// <summary>
+        /// The current assembly.
+        /// </summary>
+        private static readonly Assembly CurrentAssembly;
+
+        /// <summary>
+        /// The assenmbly name of current assembly.
+        /// </summary>
+        private static readonly AssemblyName AssemblyName;
 
         /// <summary>
         /// Initializes static members of the <see cref="ThisVersion"/> class.
         /// </summary>
         static ThisVersion()
         {
-            var asm = Assembly.GetExecutingAssembly();
-            Fi = new FileInfo(asm.Location);
+            CurrentAssembly = Assembly.GetExecutingAssembly();
+            AssemblyName = CurrentAssembly.GetName();
+            Fi = new FileInfo(CurrentAssembly.Location);
         }
 
         /// <summary>
         /// Gets the BuildTimestamp.
         /// </summary>
-        public static string BuildTimestamp => Fi.LastWriteTime.Ticks.ToString();
+        public static string BuildTimestamp => ((Fi.LastWriteTime.Ticks - 621355968000000000) / 10000).ToString();
 
         /// <summary>
         /// Gets the Copyright.
         /// </summary>
-        public static string Copyright => "Copyright (C) 2013-" + DateTime.Now.Year + " Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft)";
+        public static string Copyright => $"Copyright (C) 2013-{DateTime.Now.Year} Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft)";
 
         /// <summary>
         /// Gets the GitCommitIdDescribeShort.
@@ -73,6 +84,24 @@ namespace OrbintSoft.Yauaa.Utils
         /// <summary>
         /// Gets the ProjectVersion.
         /// </summary>
-        public static string ProjectVersion => new Version(Convert.ToInt16(ThisAssembly.Git.SemVer.Major), Convert.ToInt16(ThisAssembly.Git.SemVer.Minor), Convert.ToInt16(ThisAssembly.Git.SemVer.Patch)).ToString();
+        public static string ProjectVersion => string.Format($"{AssemblyName.Version.Major}.{AssemblyName.Version.Minor}{GetPreReleaseByPatch(AssemblyName.Version.Build)}.{AssemblyName.Version.Revision}");
+
+        /// <summary>
+        /// Returns the prerelease SemVer 2.0 identifier based on assembly patch version.
+        /// </summary>
+        /// <param name="patch">The patch number.</param>
+        /// <returns>The prerelease name.</returns>
+        public static string GetPreReleaseByPatch(int patch)
+        {
+            switch (patch)
+            {
+                case 1: return "-alpha";
+                case 2: return "-beta";
+                case 3: return "-rc";
+                case 4: return "-stable";
+                case 5: return string.Empty;
+                default: return "-undefined";
+            }
+        }
     }
 }

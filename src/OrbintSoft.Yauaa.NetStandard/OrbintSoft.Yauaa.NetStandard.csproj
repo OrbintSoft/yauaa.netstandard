@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.8-beta.1</Version>
-    <AssemblyVersion>5.8.2.1</AssemblyVersion>
-    <FileVersion>5.8.2.1</FileVersion>
+    <Version>5.8-beta.2</Version>
+    <AssemblyVersion>5.8.2.2</AssemblyVersion>
+    <FileVersion>5.8.2.2</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>default</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -562,7 +562,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <PackageReference Include="DomainParser.Library.NetStandard" Version="1.6.0" />
     <PackageReference Include="GitInfo" Version="2.0.20">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
