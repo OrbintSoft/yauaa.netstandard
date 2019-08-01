@@ -29,14 +29,15 @@ using OrbintSoft.Yauaa.Debug;
 using OrbintSoft.Yauaa.Testing.Fixtures;
 using Xunit;
 using FluentAssertions;
-using log4net;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using OrbintSoft.Yauaa.Tests;
 using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.Testing.Tests
 {
+    /// <summary>
+    /// This class is intended for debugging purposes, no real unit testing here.
+    /// </summary>
     public class DebugTest : IClassFixture<LogFixture>
     {
 
@@ -48,18 +49,18 @@ namespace OrbintSoft.Yauaa.Testing.Tests
                 .HideMatcherLoadStats()
                 .DropDefaultResources()
                 .AddResources("YamlResources/UserAgents", "GoogleChrome.yaml")
-                .WithFields(singleFieldList)
+                .WithFields(this.singleFieldList)
                 .ImmediateInitialization()
                 .Build();
             byte[] bytes;
 
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(memoryStream, uaa);
                 bytes = memoryStream.ToArray();
             }
-            using (MemoryStream memoryStream = new MemoryStream(bytes))
+            using (var memoryStream = new MemoryStream(bytes))
             {
                 var formatter = new BinaryFormatter();
                 object obj = formatter.Deserialize(memoryStream);
@@ -70,25 +71,24 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             return uaa as UserAgentAnalyzerTester;
         }
 
-        //[Fact]
-        //public void TestError()
-        //{
-        //    var fieldName = "DeviceCpu";
-        //    UserAgentAnalyzerTester userAgentAnalyzer =
-        //        UserAgentAnalyzerTester
-        //            .NewBuilder()
-        //            .WithoutCache()
-        //            .WithFields(fieldName)
-        //            .HideMatcherLoadStats()
-        //            .DropDefaultResources()
-        //            .AddResources("YamlResources/UserAgents", "MSInternetExplorer.yaml")
-        //            .Build() as UserAgentAnalyzerTester;
+        public void TestError()
+        {
+            var fieldName = "DeviceCpu";
+            UserAgentAnalyzerTester userAgentAnalyzer =
+                UserAgentAnalyzerTester
+                    .NewBuilder()
+                    .WithoutCache()
+                    .WithFields(fieldName)
+                    .HideMatcherLoadStats()
+                    .DropDefaultResources()
+                    .AddResources("YamlResources/UserAgents", "MSInternetExplorer.yaml")
+                    .Build() as UserAgentAnalyzerTester;
 
-        //    userAgentAnalyzer.Should().NotBeNull();
-        //    var userAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (compatible; Windows NT 10.0; WOW64; IA64; en) AppleWebKit/599.0+ Chrome/48.2564.0.82 Maxthon/4.9.0 QupZilla/1.8.9");
-        //    var field = userAgent.Get(fieldName);
-        //    field.GetValue().Should().Be("Intel Itanium 64");            
-        //}
+            userAgentAnalyzer.Should().NotBeNull();
+            var userAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (compatible; Windows NT 10.0; WOW64; IA64; en) AppleWebKit/599.0+ Chrome/48.2564.0.82 Maxthon/4.9.0 QupZilla/1.8.9");
+            var field = userAgent.Get(fieldName);
+            field.GetValue().Should().Be("Intel Itanium 64");
+        }
 
     }
 }

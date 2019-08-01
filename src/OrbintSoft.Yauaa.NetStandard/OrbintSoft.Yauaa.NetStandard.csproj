@@ -60,6 +60,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
+    <DocumentationFile>S:\Progetti\yauaa.netstandard\src\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Verbose|AnyCPU'">
@@ -68,13 +69,14 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <DocumentationFile>S:\Progetti\yauaa.netstandard\src\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
-    <DocumentationFile>S:\Progetti\yauaa.netstandard\src\OrbintSoft.Yauaa.NetStandard\Documentation.xml</DocumentationFile>
+    <DocumentationFile>S:\Progetti\yauaa.netstandard\src\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.xml</DocumentationFile>
     <NoWarn>1701;1702;SA1310</NoWarn>
   </PropertyGroup>
 
