@@ -146,6 +146,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\SpecialBrowsers.yaml" />
     <None Remove="YamlResources\UserAgents\Tencent.yaml" />
     <None Remove="YamlResources\UserAgents\TV.yaml" />
+    <None Remove="YamlResources\UserAgents\Ubuntu-18.10-tests.yaml" />
     <None Remove="YamlResources\UserAgents\Ubuntu.yaml" />
     <None Remove="YamlResources\UserAgents\UbuntuVersionLookups.yaml" />
     <None Remove="YamlResources\UserAgents\URL.yaml" />
@@ -374,6 +375,8 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     </Content>
     <Content Include="YamlResources\UserAgents\MobileBrand-rules.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Pack>true</Pack>
+	  <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\MobileBrand-tests.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -392,9 +395,13 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     </Content>
     <Content Include="YamlResources\UserAgents\MSEdge.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Pack>true</Pack>
+	  <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\MSInternetExplorer.yaml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Nokia.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -480,6 +487,11 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Ubuntu-18.10-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Pack>true</Pack>
+	  <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Ubuntu.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

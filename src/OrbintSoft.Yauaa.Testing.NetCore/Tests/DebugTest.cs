@@ -71,10 +71,11 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             return uaa as UserAgentAnalyzerTester;
         }
 
+        [Fact]
         public void TestError()
         {
             var fieldName = "DeviceCpu";
-            UserAgentAnalyzerTester userAgentAnalyzer =
+            var userAgentAnalyzer =
                 UserAgentAnalyzerTester
                     .NewBuilder()
                     .WithoutCache()
