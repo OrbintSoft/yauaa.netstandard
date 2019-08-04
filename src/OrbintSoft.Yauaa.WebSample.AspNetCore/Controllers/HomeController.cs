@@ -10,19 +10,29 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore.Controllers
 {
     public class HomeController : Controller
     {
-        [HttpGet]
         public IActionResult Index()
         {
+            return this.View();
+        }
+
+        [HttpGet]
+        public IActionResult Demo()
+        {
             string userAgent = this.HttpContext?.Request?.Headers?.FirstOrDefault(s => s.Key.ToLower() == "user-agent").Value;
-            return this.View(new IndexViewModel() { UserAgent = userAgent });
+            return this.View(new DemoViewModel()
+            {
+                UserAgent = userAgent,
+                Version = Yauaa.Utils.YauaaVersion.GetVersion()
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Index(IndexViewModel model)
+        public IActionResult Demo(DemoViewModel model)
         {
             var watch = Stopwatch.StartNew();
-            var ua =YauaaSingleton.Analyzer.Parse(model.UserAgent);
+            var ua = YauaaSingleton.Analyzer.Parse(model.UserAgent);
+            model.Version = Yauaa.Utils.YauaaVersion.GetVersion();
             var fieldNames = ua.GetAvailableFieldNames();
             model.Fields = new Dictionary<string, UserAgent.AgentField>();
             foreach (var name in fieldNames)
@@ -30,8 +40,38 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore.Controllers
                 model.Fields[name] = ua.Get(name);
             }
             watch.Stop();
-            model.ElapsedTime = watch.ElapsedMilliseconds.ToString();
+            var seconds = watch.ElapsedTicks / (double)Stopwatch.Frequency;
+            if (seconds < 1)
+            {
+                var ms = seconds * 1000;
+                if (ms < 1)
+                {
+                    var us = ms * 1000;
+                    if (us < 1)
+                    {
+                        var ns = us * 1000;
+                        model.ElapsedTime = $"{ns} ns";
+                    }
+                    else
+                    {
+                        model.ElapsedTime = $"{us} µs";
+                    }
+                }
+                else
+                {
+                    model.ElapsedTime = $"{ms} ms";
+                }
+            }
+            else
+            {
+                model.ElapsedTime = $"{seconds} s";
+            }
             return this.View(model);
+        }
+
+        public IActionResult Guide()
+        {
+            return this.View();
         }
     }
 }

@@ -1,0 +1,51 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+@model OrbintSoft.Yauaa.WebSample.AspNetCore.Models.DemoViewModel
+@{
+    ViewData["Title"] = localizer["Demo"];
+}
+<h1>@localizer["Yauaa Demo: Try to analyze the User Agent"]</h1>
+<form asp-controller="Yauaa" asp-action="Demo" id="parseForm">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label asp-for="UserAgent">User Agent:</label>
+        <input asp-for="UserAgent" type="text" class="form-control" id="useragent" value="@Model.UserAgent">
+    </div>
+    @if (Model.Fields == null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @localizer["First time parsing can be very slow because the library is loading all matchers"]
+        </div>
+    }
+    <div class="form-group">
+        <button type="submit" id="sendButton" class="btn btn-primary">@localizer["Parse"]</button>
+    </div>
+</form>
+@if (Model.Fields != null)
+{
+    <h2>@localizer["Results:"]</h2>
+    <h4>@localizer["Elapsed time:"] ~ @Model.ElapsedTime</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">@localizer["Field name"]</th>
+                <th scope="col">@localizer["Value"]</th>
+                <th scope="col">@localizer["Confidence"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fieldName in Model.Fields.Keys)
+            {
+                <tr>
+                    <td>@fieldName</td>
+                    <td>@Model.Fields[fieldName].GetValue()</td>
+                    <td>@Model.Fields[fieldName].GetConfidence()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<p>
+    @localizer["Current version:"] @Model.Version
+</p>
+

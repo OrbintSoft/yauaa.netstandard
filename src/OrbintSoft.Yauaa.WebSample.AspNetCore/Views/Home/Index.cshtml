@@ -1,46 +1,33 @@
-﻿@model IndexViewModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using OrbintSoft.Yauaa.Utils;
+@inject IViewLocalizer localizer
 @{
-    ViewData["Title"] = "Home Page";
-}
-<h1>Yauaa: Parse the User Agent</h1>
-<form asp-controller="Home" asp-action="Index" id="parseForm">
-    @Html.AntiForgeryToken()
-    <div class="form-group">
-        <label asp-for="UserAgent">User Agent:</label>
-        <input asp-for="UserAgent" type="text" class="form-control" id="useragent" value="@Model.UserAgent">
-    </div>
-    @if (Model.Fields == null)
-    { 
-        <div class="alert alert-danger" role="alert">
-            First time parsing can be very slow because the library is loading all matchers
-        </div>
-    }
-    <div class="form-group">
-        <button type="submit" id="sendButton" class="btn btn-primary">Parse</button>
-    </div>
-</form>
-@if(Model.Fields != null)
-{
-    <h2>Results:</h2>
-    <h4>Elapsed time: @Model.ElapsedTime ms</h4>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Field Name</th>
-                <th scope="col">Value</th>
-                <th scope="col">Confidence</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var fieldName in Model.Fields.Keys)
-            {
-            <tr>
-                <td>@fieldName</td>
-                <td>@Model.Fields[fieldName].GetValue()</td>
-                <td>@Model.Fields[fieldName].GetConfidence()</td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    ViewData["Title"] = "Yauaa";
 }
 
+<h1>Yauaa: Yet Another User Agent Analyzer</h1>
+<article>
+    <p>
+        @localizer["This is a .NET standard library that tries to parse and analyze the user agent string and extract as many relevant attributes as possible."]
+    </p>
+    @*<p>
+        @localizer["Latest version:"] @YauaaVersion.GetVersion()
+    </p>*@
+    <ul>
+        <li>
+            <a href="https://github.com/OrbintSoft/yauaa.netstandard">GitHub</a>
+        </li>
+        <li>
+            <a href="https://www.nuget.org/packages/Orbintsoft.Yauaa.NetStandard/">NuGet</a>
+        </li>
+        <li>
+            <a href="~/Home/Demo">@localizer["Demo"]</a>
+        </li>
+        <li>
+            <a href="~/Home/Guide">@localizer["Introduction guide"]</a>
+        </li>
+        @*<li>
+                <a href="~/Projects/Yauaa/Tutorial">@localizer["Tutorial"]</a>
+            </li>*@
+    </ul>
+</article>

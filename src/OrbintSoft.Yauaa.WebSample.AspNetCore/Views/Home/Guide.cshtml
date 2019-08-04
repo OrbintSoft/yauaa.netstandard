@@ -1,0 +1,170 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer localizer
+@{
+    ViewData["Title"] = localizer["Yauaa Tutorial"];
+}
+<h2>@localizer["How to use Yauaa for .NET Standard"]</h2>
+<article>
+    <h3>@localizer["Introduction"]</h3>
+    <p>
+        @localizer["This is a .NET standard library that tries to parse and analyze the user agent string and extract as many relevant attributes as possible."]
+    </p>
+    <p>
+        @localizer["The library aims to provides a reliable and extensible user agent parsing, browser and device detection."]
+    </p>
+    <p>
+        @localizer["This is an analyzer, so it doesn't rely on any database (except for some very little lookup tables), that means it is able to parse and recognize every day new kind of user agents and new patterrsns without updates."]
+    </p>
+    <p>
+        @localizer["That makes the library very fast, flexible and easy to mantain, on the contrary the library can't extract info that are not present on user agent string without a proper mapping."]
+    </p>
+    <p>
+        @localizer["The library doesn't aim to recognize every device in the world (there are several thousands), but it is able to work, analyze and extract all attributes available in the user agent."]
+    </p>
+    <p>
+        @localizer["For most common devices we provide a lookup table in yaml file to identify device brand/model based on the few info available in the user agent."]
+    </p>
+    <p>
+        @localizer["The library can be easily extended thanks to yaml files and a simple syntax (we don't rely on regila expression)."]
+    </p>
+    <p>
+        @localizer["Thanks to custom yaml definitions, you can make the library able to identify your company applications/ tools and extract your custom fields."]
+    </p>
+</article>
+<article>
+    <h3>@localizer["Original project"]</h3>
+    <p>
+        @localizer["This library has been built thanks to the effort of Niels Basjes, you can find more on his blog post:"]
+        <br />
+        <a href="https://techlab.bol.com/making-sense-user-agent-string">https://techlab.bol.com/making-sense-user-agent-string</a>
+        <br />
+        @localizer["or on his Java repository on github:"]
+        <br />
+        <a href="https://github.com/nielsbasjes/yauaa">https://github.com/nielsbasjes/yauaa</a>
+    </p>
+</article>
+<article>
+    <h3>@localizer["Demo"]</h3>
+    <p>@localizer["Before to start I suggest to try this"] <a href="~/Yauaa/Demo">Demo</a></p>
+</article>
+<article>
+    <h3>@localizer["Framework"]</h3>
+    <p>@localizer["The library targets .NET standard 2.0, so it can be used on the following frameworks (higher versions are supported):"]</p>
+    <ul>
+        <li>.NET Core 2.0</li>
+        <li>.NET Framework 2.6.1</li>
+        <li>Mono 5.4</li>
+        <li>Xamarin.iOS 10.14</li>
+        <li>Xamarin.Mac 3.8</li>
+        <li>Xamarin.Android 8.0</li>
+        <li>UWP 10.0.16299</li>
+        <li>Unity 2018.1</li>
+    </ul>
+</article>
+<article>
+    <h3>@localizer["Nuget Package"]</h3>
+    <p>@localizer["As first step add this nuget package to your project:"] <a href="https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard/">OrbintSoft.Yauaa.NetStandard</a></p>
+</article>
+<article>
+    <h3>@localizer["How to start"]</h3>
+    <p>@localizer["To use the user agent analyzer you need to create an object of type UserAgentAnalyzer"]</p>
+    <p>@localizer["The constructor is protected to hide the complex nature and initialization of the class, so to simplyfy the process you can take the advantage of a builder:"]</p>
+    <pre><code data-language="csharp">var builder = UserAgentAnalyzer.NewBuilder();</code></pre>
+    <p>@localizer["You can set all required configurations on the builder, and when you are ready, you just need to call the method Build();"]</p>
+    <pre><code data-language="csharp">var analyzer = builder.Build();</code></pre>
+    <p>@localizer["Since the initialization of the analyzer can be very slow and you need to do just a single time, I suggest to create a singleton as support."]</p>
+    <p>@localizer["Below you can see a sample of implementation:"]</p>
+    <pre>
+        <code data-language="csharp">
+public static class YauaaSingleton
+{
+    private static UserAgentAnalyzer.UserAgentAnalyzerBuilder Builder { get; }
+
+    private static readonly Lazy&lt;UserAgentAnalyzer&gt; analyzer = new Lazy&lt;UserAgentAnalyzer&gt; (() => Builder.Build());
+
+    public static UserAgentAnalyzer Analyzer
+    {
+        get
+        {
+            return analyzer.Value;
+        }
+    }
+
+    static YauaaSingleton()
+    {
+        Builder = UserAgentAnalyzer.NewBuilder();
+        Builder.DropTests();
+        Builder.DelayInitialization();
+        Builder.WithCache(100);
+        Builder.HideMatcherLoadStats();
+        Builder.WithAllFields();
+    }
+}
+        </code>
+    </pre>
+</article>
+<article>
+    <h3>@localizer["How to parse"]</h3>
+    <p>@localizer["You can parse the user agent simply calling"]</p>
+    <pre><code data-language="csharp">var ua = YauaaSingleton.Analyzer.Parse(userAgentString)</code></pre>
+    <p>@localizer["and get all parsed fields with"]</p>
+    <pre><code data-language="csharp">var fieldNames = ua.GetAvailableFieldNames();</code></pre>
+    <p>@localizer["Below a complete code sample:"]</p>
+    <pre>
+        <code data-language="csharp">
+var userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36 OPR/60.0.3255.170";
+var ua = YauaaSingleton.Analyzer.Parse(userAgentString);
+var fieldNames = ua.GetAvailableFieldNames();
+var fieldsDictionary = new Dictionary&lt;string, UserAgent.AgentField&gt;();
+foreach (var name in fieldNames)
+{
+    fieldsDictionary[name] = ua.Get(name);
+}
+        </code>
+    </pre>
+    <p>@localizer["As example you can read in asp.net the user agent string on the client with the following code:"]</p>
+    <pre><code data-language="csharp">var userAgentString  = this.HttpContext?.Request?.Headers?.FirstOrDefault(s => s.Key.ToLower() == "user-agent").Value;</code></pre>
+</article>
+<article>
+    <h3>@localizer["How interpret fields and values"]</h3>
+    <p>@localizer["Yauaa is a dynamic User Agent Analyzer that tryes to get any possible info from user agent, that means that there are no predefined fields like most of User Agent parser"]</p>
+    <p>@localizer["In facts you can define any custom fields to extract all info you need in Yaml files, that makes this analyzer extremly extensible and flexible"]</p>
+    <p>@localizer["You can get a list of alla availables field in a user agent with:"]</p>
+    <pre><code data-language="csharp">var fieldNames = ua.GetAvailableFieldNames();</code></pre>
+    <p>@localizer["But since in most comon scenario you need to check some predefined fields, like OS, browser name or version, you can take the help of some defined constants:"]</p>
+    <pre>
+    <code data-language="csharp">
+public const string AGENT_CLASS = "AgentClass";
+public const string USERAGENT_FIELDNAME = "Useragent";
+public const string UNKNOWN_VERSION = "??";
+public const string UNKNOWN_VALUE = "Unknown";
+public const string SYNTAX_ERROR = "__SyntaxError__";
+public const string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
+public const string OPERATING_SYSTEM_NAME = "OperatingSystemName";
+public const string OPERATING_SYSTEM_CLASS = "OperatingSystemClass";
+public const string NULL_VALUE = "&lt;&lt;&lt;null&gt;&gt;&gt;";
+public const string LAYOUT_ENGINE_VERSION_MAJOR = "LayoutEngineVersionMajor";
+public const string SET_ALL_FIELDS = "__Set_ALL_Fields__";
+public const string LAYOUT_ENGINE_NAME = "LayoutEngineName";
+public const string LAYOUT_ENGINE_CLASS = "LayoutEngineClass";
+public const string DEVICE_VERSION = "DeviceVersion";
+public const string DEVICE_NAME = "DeviceName";
+public const string DEVICE_CLASS = "DeviceClass";
+public const string LAYOUT_ENGINE_VERSION = "LayoutEngineVersion";
+public const string DEVICE_BRAND = "DeviceBrand";
+public const string AGENT_VERSION_MAJOR = "AgentVersionMajor";
+public const string AGENT_VERSION = "AgentVersion";
+public const string AGENT_NAME = "AgentName";
+        </code>            
+    </pre>
+    <p>@localizer["Using the field name you can request the value of the field and receive an object of type UserAgent.AgentField:"]</p>
+    <pre>
+    <code data-language="csharp">
+var field = ua.Get(UserAgent.LAYOUT_ENGINE_NAME);
+var name = UserAgent.LAYOUT_ENGINE_NAME; // "LayoutEngineName"
+var val = field.GetValue(); // "Blink"
+var confidence = field.GetConfidence() //999
+        </code>
+    </pre>
+    <p>@localizer["With GetValue() you can read the desidered value, while with GetConfidence() you get a number that shows how much is reliable the extracted field, a confidence < 0 means that parsing has failed and the extracted value is not reliable"]</p>
+</article>

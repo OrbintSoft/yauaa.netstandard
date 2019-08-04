@@ -1,13 +1,19 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.WebSample.AspNetCore
 {
     public class Startup
     {
+        private const string RESOURCES_PATH = "Resources";
+
         public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
@@ -20,12 +26,31 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.Secure = CookieSecurePolicy.None;
             });
-
-            services.AddMvc();
+            services.AddLocalization(options => options.ResourcesPath = RESOURCES_PATH);
+            services.AddMvc()
+                .AddSessionStateTempDataProvider()
+                .AddViewLocalization(
+                    LanguageViewLocationExpanderFormat.SubFolder,
+                    opts => { opts.ResourcesPath = RESOURCES_PATH; })
+                .AddDataAnnotationsLocalization();
+            services.AddSession();
+            services.Configure<CookieTempDataProviderOptions>(options =>
+            {
+                options.Cookie.IsEssential = true;
+            });
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("en");
+                options.RequestCultureProviders = new List<IRequestCultureProvider>() {
+                    new QueryStringRequestCultureProvider(),
+                    new CookieRequestCultureProvider(),
+                    new AcceptLanguageHeaderRequestCultureProvider()
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,9 +58,6 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore
         {
 
             app.UseDeveloperExceptionPage();
-            //app.UseHsts();
-            
-            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
