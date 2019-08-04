@@ -19,7 +19,7 @@ You can download the .nuget package there: https://www.nuget.org/packages/Orbint
 
 ## HIGH Profile release notes:
 
-### 5.8.x
+### 5.8.1
 
 The detection for Microsoft Edge now no longer reports the 'EdgeHtml' version as if it is the version of 'Edge' itself. Microsoft made a mess of things again.
 
