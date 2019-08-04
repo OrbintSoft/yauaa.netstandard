@@ -9,11 +9,11 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.8-rc.1</Version>
+    <Version>5.8.1</Version>
 
-    <AssemblyVersion>5.8.3.1</AssemblyVersion>
+    <AssemblyVersion>5.8.5.1</AssemblyVersion>
 
-    <FileVersion>5.8.3.1</FileVersion>
+    <FileVersion>5.8.5.1</FileVersion>
 
     <NeutralLanguage>en</NeutralLanguage>
 

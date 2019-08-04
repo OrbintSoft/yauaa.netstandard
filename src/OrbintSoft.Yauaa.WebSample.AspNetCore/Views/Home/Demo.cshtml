@@ -5,7 +5,7 @@
     ViewData["Title"] = localizer["Demo"];
 }
 <h1>@localizer["Yauaa Demo: Try to analyze the User Agent"]</h1>
-<form asp-controller="Yauaa" asp-action="Demo" id="parseForm">
+<form asp-controller="Home" asp-action="Demo" id="parseForm">
     @Html.AntiForgeryToken()
     <div class="form-group">
         <label asp-for="UserAgent">User Agent:</label>
