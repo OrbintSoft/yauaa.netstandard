@@ -50,6 +50,7 @@ config:
       "AvantBrowser"    : "AvantBrowser"
       "CoolNovo"        : "CoolNovo"
       "Iron"            : "Iron"
+      "Iridium"         : "Iridium"
       "Quark"           : "Quark"
       "Mxbrowser"       : "Maxthon"
       "Brave Chrome"    : "Brave"
@@ -63,8 +64,9 @@ config:
 - lookup:
     name: 'KnownWebviewAppNames'
     map:
-      'GSApp' : 'Google Search App'
-      'Focus' : 'Firefox Focus'
+      'GSApp'     : 'Google Search App'
+      'Focus'     : 'Firefox Focus'
+      'Acheetahi' : 'Cheetah Mobile Browser'
 
 # ================================
 # Specific browser rules
@@ -335,6 +337,14 @@ config:
     - 'AgentVersion                        :   2500 :agent.product.(1)name="Chrome"^.version'
     - 'WebviewAppName                      :     10 :NormalizeBrand[agent.product.(1)name="Chrome"^>>.name]'
     - 'WebviewAppVersion                   :     10 :agent.product.(1)name="Chrome"^>>.version'
+
+- matcher:
+    variable:
+    - 'Browser: LookUp[SpecialChromeBrowserNames;agent.product.(1)name]'
+    extract:
+    - 'AgentClass                          :     38 :"Browser"'
+    - 'AgentName                           :     38 :@Browser'
+    - 'AgentVersion                        :     38 :@Browser^.version'
 
 - matcher:
     variable:
@@ -1754,11 +1764,11 @@ config:
       LayoutEngineNameVersion              : 'AppleWebKit 537.36'
       LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
       AgentClass                           : 'Browser'
-      AgentName                            : 'Brave Chrome'
+      AgentName                            : 'Brave'
       AgentVersion                         : '65.0.3325.109'
       AgentVersionMajor                    : '65'
-      AgentNameVersion                     : 'Brave Chrome 65.0.3325.109'
-      AgentNameVersionMajor                : 'Brave Chrome 65'
+      AgentNameVersion                     : 'Brave 65.0.3325.109'
+      AgentNameVersionMajor                : 'Brave 65'
 
 # Faked testcase
 - test:
@@ -1780,11 +1790,11 @@ config:
       LayoutEngineNameVersion              : 'AppleWebKit 537.36'
       LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
       AgentClass                           : 'Browser'
-      AgentName                            : 'Brave Chrome'
+      AgentName                            : 'Brave'
       AgentVersion                         : '65.0.3325.109'
       AgentVersionMajor                    : '65'
-      AgentNameVersion                     : 'Brave Chrome 65.0.3325.109'
-      AgentNameVersionMajor                : 'Brave Chrome 65'
+      AgentNameVersion                     : 'Brave 65.0.3325.109'
+      AgentNameVersionMajor                : 'Brave 65'
 
 - test:
     input:

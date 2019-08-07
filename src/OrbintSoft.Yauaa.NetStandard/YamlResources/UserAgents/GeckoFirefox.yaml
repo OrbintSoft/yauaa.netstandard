@@ -54,6 +54,17 @@ config:
 
 - matcher:
     variable:
+    - 'Gecko: agent.(2-5)product.name="Gecko"^>>>'
+    require:
+    - '@Gecko<.name="Firefox"'
+    - 'IsNull[@Gecko.name[-1]?BadGeckoNames]'
+    extract:
+    - 'AgentClass                          :   2002 :"Browser"'
+    - 'AgentName                           :   2002 :@Gecko.name'
+    - 'AgentVersion                        :   2002 :@Gecko.version'
+
+- matcher:
+    variable:
     - 'Gecko: agent.(2-5)product.name="Gecko"^>'
     require:
     - 'agent.(3-6)product.name[2]="Firefox"' # Performance trick
@@ -105,6 +116,14 @@ config:
     - 'AgentName                           :   2005 :@Browser.name'
     - 'AgentVersion                        :   2005 :@Browser.version'
 
+# This extracts the correct name from "Gecko Kazehakase/0.5.4"
+- matcher:
+    variable:
+    - 'Browser: agent.(2-5)product.name[1]="Gecko"@[2-]'
+    extract:
+    - 'AgentClass                          :   2006 :"Browser"'
+    - 'AgentName                           :   2006 :@Browser'
+    - 'AgentVersion                        :   2006 :@Browser^.version'
 
     # In some obscure cases we have a parse problem that sends everything inside a comment block
 - matcher:
@@ -427,9 +446,6 @@ config:
 
 # Problem case: The part between Gecko and Firefox is just a VERSION
 - test:
-#    options:
-#    - 'verbose'
-#    - 'only'
     input:
       user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 6.0; nl; rv:1.9.0.5) Gecko/2008120122 BTRS28059 Firefox/3.0.5 GTB7.1 (.NET CLR 3.5.30729)'
     expected:
@@ -536,11 +552,11 @@ config:
       LayoutEngineNameVersionMajor         : 'Gecko 1'
       LayoutEngineBuild                    : '20101026'
       AgentClass                           : 'Browser'
-      AgentName                            : 'Firefox'
-      AgentVersion                         : '3.5.7'
-      AgentVersionMajor                    : '3'
-      AgentNameVersion                     : 'Firefox 3.5.7'
-      AgentNameVersionMajor                : 'Firefox 3'
+      AgentName                            : 'MEGAUPLOAD'
+      AgentVersion                         : '1.0'
+      AgentVersionMajor                    : '1'
+      AgentNameVersion                     : 'MEGAUPLOAD 1.0'
+      AgentNameVersionMajor                : 'MEGAUPLOAD 1'
       AgentLanguage                        : 'Russian'
       AgentLanguageCode                    : 'ru'
       AgentSecurity                        : 'Strong security'
@@ -767,3 +783,61 @@ config:
       AgentVersionMajor                    : '55'
       AgentNameVersion                     : 'Waterfox 55.2.0'
       AgentNameVersionMajor                : 'Waterfox 55'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20060127 Netscape/8.1'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP'
+      OperatingSystemNameVersion           : 'Windows XP'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Gecko'
+      LayoutEngineVersion                  : '1.7.5'
+      LayoutEngineVersionMajor             : '1'
+      LayoutEngineNameVersion              : 'Gecko 1.7.5'
+      LayoutEngineNameVersionMajor         : 'Gecko 1'
+      LayoutEngineBuild                    : '20060127'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '8.1'
+      AgentVersionMajor                    : '8'
+      AgentNameVersion                     : 'Netscape 8.1'
+      AgentNameVersionMajor                : 'Netscape 8'
+      AgentLanguage                        : 'English (United States)'
+      AgentLanguageCode                    : 'en-us'
+      AgentSecurity                        : 'Strong security'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.7 [fr] (X11; I; Linux 2.0.37 i686)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Linux ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '4.7'
+      LayoutEngineVersionMajor             : '4'
+      LayoutEngineNameVersion              : 'Mozilla 4.7'
+      LayoutEngineNameVersionMajor         : 'Mozilla 4'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '4.7'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Netscape 4.7'
+      AgentNameVersionMajor                : 'Netscape 4'
+      AgentLanguage                        : 'French'
+      AgentLanguageCode                    : 'fr'
+      AgentSecurity                        : 'Weak security'

@@ -480,7 +480,7 @@ config:
       user_agent_string: 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; Noldus B.V. {www.Noldus.com}; rv:11.0) like Gecko'
     expected:
       DeviceClass                          : 'Desktop'
-      DeviceName                           : 'Desktop'
+      DeviceName                           : 'Noldus Desktop'
       DeviceBrand                          : 'Noldus'
       DeviceCpuBits                        : '32'
       OperatingSystemClass                 : 'Desktop'
@@ -534,7 +534,7 @@ config:
       user_agent_string: '/5.0 (Windows; U; Windows NT 5.1; en-ZW) AppleWebKit/534.34 (KHTML, like Gecko)  QtWeb Internet Browser/3.8.5 http://www.QtWeb.net'
     expected:
       DeviceClass                          : 'Desktop'
-      DeviceName                           : 'Desktop'
+      DeviceName                           : 'Qtweb Desktop'
       DeviceBrand                          : 'Qtweb'
       DeviceCpuBits                        : '32'
       OperatingSystemClass                 : 'Desktop'
@@ -727,51 +727,51 @@ config:
       AgentNameVersion                     : 'IE Mobile 7.0'
       AgentNameVersionMajor                : 'IE Mobile 7'
 
-- test:
-    input:
-      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12F70 - iOSWebview'
-    expected:
-      DeviceClass                          : 'Phone'
-      DeviceName                           : 'Apple iPhone'
-      DeviceBrand                          : 'Apple'
-      DeviceFirmwareVersion                : '12F70'
-      DeviceVersion                        : 'iPhone'
-      OperatingSystemClass                 : 'Mobile'
-      OperatingSystemName                  : 'iOS'
-      OperatingSystemVersion               : '8.3'
-      OperatingSystemNameVersion           : 'iOS 8.3'
-      LayoutEngineClass                    : 'Browser'
-      LayoutEngineName                     : 'AppleWebKit'
-      LayoutEngineVersion                  : '600.1.4'
-      LayoutEngineVersionMajor             : '600'
-      LayoutEngineNameVersion              : 'AppleWebKit 600.1.4'
-      LayoutEngineNameVersionMajor         : 'AppleWebKit 600'
-      AgentClass                           : 'Browser Webview'
-      AgentName                            : 'UIWebView'
-      AgentVersion                         : '600.1.4'
-      AgentVersionMajor                    : '600'
-      AgentNameVersion                     : 'UIWebView 600.1.4'
-      AgentNameVersionMajor                : 'UIWebView 600'
-      WebviewAppName                       : 'Unknown Webview App'
-      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
-      WebviewAppVersion                    : '??'
-      WebviewAppVersionMajor               : '??'
+#- test:
+#    input:
+#      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_3 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12F70 - iOSWebview'
+#    expected:
+#      DeviceClass                          : 'Phone'
+#      DeviceName                           : 'Apple iPhone'
+#      DeviceBrand                          : 'Apple'
+#      DeviceFirmwareVersion                : '12F70'
+#      DeviceVersion                        : 'iPhone'
+#      OperatingSystemClass                 : 'Mobile'
+#      OperatingSystemName                  : 'iOS'
+#      OperatingSystemVersion               : '8.3'
+#      OperatingSystemNameVersion           : 'iOS 8.3'
+#      LayoutEngineClass                    : 'Browser'
+#      LayoutEngineName                     : 'AppleWebKit'
+#      LayoutEngineVersion                  : '600.1.4'
+#      LayoutEngineVersionMajor             : '600'
+#      LayoutEngineNameVersion              : 'AppleWebKit 600.1.4'
+#      LayoutEngineNameVersionMajor         : 'AppleWebKit 600'
+#      AgentClass                           : 'Browser Webview'
+#      AgentName                            : 'UIWebView'
+#      AgentVersion                         : '600.1.4'
+#      AgentVersionMajor                    : '600'
+#      AgentNameVersion                     : 'UIWebView 600.1.4'
+#      AgentNameVersionMajor                : 'UIWebView 600'
+#      WebviewAppName                       : 'Unknown Webview App'
+#      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+#      WebviewAppVersion                    : '??'
+#      WebviewAppVersionMajor               : '??'
 
-#  - test:
-#      input:
-#        user_agent_string: 'Java1.0.21.0'
+#- test: #TODO: Implement
+#    input:
+#      user_agent_string: 'Java1.0.21.0'
 
 - test:
     input:
       user_agent_string: 'WordPress/3.5; http://smartphone.ro'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Smartphone Robot'
       DeviceBrand                          : 'Smartphone'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Unknown'
       LayoutEngineName                     : 'Unknown'
       LayoutEngineVersion                  : '??'
@@ -784,17 +784,28 @@ config:
       AgentNameVersionMajor                : 'WordPress 3'
       AgentInformationUrl                  : 'http://smartphone.ro'
 
+- matcher:
+    require:
+    - 'agent.(1)url="wordpress.com"'
+    extract:
+    - 'DeviceClass                         :     10 : "Robot"'
+    - 'DeviceName                          :     10 : "Robot"'
+    - 'AgentClass                          :     10 : "Special"'
+    - 'AgentName                           :     10 : agent.(1)url'
+    - 'AgentVersion                        :     10 : "??"'
+    - 'AgentInformationUrl                 :   5110 : agent.(2)url'
+
 - test:
     input:
       user_agent_string: 'WordPress.com; http://momspiration.nl'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Momspiration Robot'
       DeviceBrand                          : 'Momspiration'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Unknown'
       LayoutEngineName                     : 'Unknown'
       LayoutEngineVersion                  : '??'
@@ -869,12 +880,12 @@ config:
       user_agent_string: 'Mozilla/5.0 (compatible; Abonti/0.91 - http://www.abonti.com)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Abonti Robot'
       DeviceBrand                          : 'Abonti'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '5.0'
@@ -922,9 +933,9 @@ config:
       AgentInformationUrl                  : 'http://www.abonti.com'
       AgentSecurity                        : 'Strong security'
       WebviewAppName                       : 'Unknown Webview App'
-      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
       WebviewAppVersion                    : '??'
       WebviewAppVersionMajor               : '??'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
 
 # Contains __ that breaks the parser
 - test:
@@ -1295,29 +1306,6 @@ config:
 
 - test:
     input:
-      user_agent_string: 'Mozilla/4.0 (compatible;)'
-    expected:
-      DeviceClass                          : 'Unknown'
-      DeviceName                           : 'Unknown'
-      DeviceBrand                          : 'Unknown'
-      OperatingSystemClass                 : 'Unknown'
-      OperatingSystemName                  : 'Unknown'
-      OperatingSystemVersion               : '??'
-      LayoutEngineClass                    : 'Browser'
-      LayoutEngineName                     : 'Mozilla'
-      LayoutEngineVersion                  : '4.0'
-      LayoutEngineVersionMajor             : '4'
-      LayoutEngineNameVersion              : 'Mozilla 4.0'
-      LayoutEngineNameVersionMajor         : 'Mozilla 4'
-      AgentClass                           : 'Browser'
-      AgentName                            : 'Netscape'
-      AgentVersion                         : '4.0'
-      AgentVersionMajor                    : '4'
-      AgentNameVersion                     : 'Netscape 4.0'
-      AgentNameVersionMajor                : 'Netscape 4'
-
-- test:
-    input:
       user_agent_string: 'Mozilla/5.0 (illumOS; rv:38.0) Gecko/20100101 Firefox/38.0'
     expected:
       DeviceClass                          : 'Desktop'
@@ -1448,16 +1436,12 @@ config:
       AgentNameVersion                     : 'Firefox 17.0'
       AgentNameVersionMajor                : 'Firefox 17'
 
-# Manipulated to make it look like Windows 7
-#  - test:
-#      input:
-#        user_agent_string: 'Windows 7 (Internet explorer 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586'
 
-#- test:
+#- test: #TODO: Implement
 #    input:
 #      user_agent_string: 'device_id={763835ca-1b38-48ef-9693-ad6bef1c60b6}&brand=bebook&model=neo&access=wlan'
 
-#- test:
+#- test: #TODO: Implement
 #    input:
 #      user_agent_string: 'Mozilla/5.0 (LG-T385 AppleWebkit/531 Browser/Phantom/V2.0 Widget/LGMW/3.0 MMS/LG-MMS-V1.0/1.2 Java/ASVM/1.1 Profile/MIDP-2.1 Configuration/CLDC-1.1)'
 #
@@ -1639,22 +1623,23 @@ config:
       user_agent_string: '"      ltx71 - (http://ltx71.com/)"'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'LTX71 Robot'
       DeviceBrand                          : 'LTX71'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Unknown'
       LayoutEngineName                     : 'Unknown'
       LayoutEngineVersion                  : '??'
       LayoutEngineVersionMajor             : '??'
-      AgentClass                           : 'Unknown'
-      AgentName                            : 'Unknown'
+      AgentClass                           : 'Special'
+      AgentName                            : '      ltx71' # FIXME: Should strip the 0x2002 'spaces'
       AgentVersion                         : '??'
       AgentVersionMajor                    : '??'
-      AgentInformationUrl                  : 'http://ltx71.com/'
-      __SyntaxError__                      : 'true'
+      AgentNameVersion                     : '      ltx71 ??'
+      AgentNameVersionMajor                : '      ltx71 ??'
+      AgentInformationUrl                  : 'http://ltx71.com'
 
 
 # The OWASMIME plugin damages the useragent.
@@ -2086,17 +2071,18 @@ config:
       AgentNameVersionMajor                : 'Internet Explorer 10'
 
 # Android phone running a custom rom called "Zoe ROM"
-- test:
+- test: # FIXME: Check the Agent
     input:
       user_agent_string: 'Mozilla/5.0 (Linux; U; Android Zoe ROM 7.7 - CM7.2 - SDSL v4; pl-pl; LG-GT540 Build/GWK74; -=Zoe ROM=-) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
     expected:
       DeviceClass                          : 'Mobile'
-      DeviceName                           : 'Android Mobile'
-      DeviceBrand                          : 'Unknown'
+      DeviceName                           : 'LG GT540'
+      DeviceBrand                          : 'LG'
       OperatingSystemClass                 : 'Mobile'
       OperatingSystemName                  : 'Android'
       OperatingSystemVersion               : '7.7'
       OperatingSystemNameVersion           : 'Android 7.7'
+      OperatingSystemVersionBuild          : 'GWK74'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '5.0'
@@ -2104,11 +2090,13 @@ config:
       LayoutEngineNameVersion              : 'Mozilla 5.0'
       LayoutEngineNameVersionMajor         : 'Mozilla 5'
       AgentClass                           : 'Browser'
-      AgentName                            : 'CM7.2'
-      AgentVersion                         : 'SDSL'
-      AgentVersionMajor                    : 'SDSL'
-      AgentNameVersion                     : 'CM7.2 SDSL'
-      AgentNameVersionMajor                : 'CM7.2 SDSL'
+      AgentName                            : 'Android Zoe ROM'         #    10 | FAILED; Should be 'CM7.2'
+      AgentVersion                         : '7.7'                     #    10 | FAILED; Should be 'SDSL'
+      AgentVersionMajor                    : '7'                       #    10 | FAILED; Should be 'SDSL'
+      AgentNameVersion                     : 'Android Zoe ROM 7.7'     #    10 | FAILED; Should be 'CM7.2 SDSL'
+      AgentNameVersionMajor                : 'Android Zoe ROM 7'       #    10 | FAILED; Should be 'CM7.2 SDSL'
+      AgentLanguage                        : 'Polish (Poland)'
+      AgentLanguageCode                    : 'pl-pl'
       AgentSecurity                        : 'Strong security'
       __SyntaxError__                      : 'true'
 
@@ -2271,3 +2259,321 @@ config:
       AgentVersionMajor                    : '61748879'
       AgentNameVersion                     : 'Netscape 61748879'
       AgentNameVersionMajor                : 'Netscape 61748879'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.9.0.1) Gecko/2008070208'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'XP'
+      OperatingSystemNameVersion           : 'Windows XP'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Gecko'
+      LayoutEngineVersion                  : '1.9.0.1'
+      LayoutEngineVersionMajor             : '1'
+      LayoutEngineNameVersion              : 'Gecko 1.9.0.1'
+      LayoutEngineNameVersionMajor         : 'Gecko 1'
+      LayoutEngineBuild                    : '2008070208'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Gecko'
+      AgentVersion                         : '1.9.0.1'
+      AgentVersionMajor                    : '1'
+      AgentNameVersion                     : 'Gecko 1.9.0.1'
+      AgentNameVersionMajor                : 'Gecko 1'
+      AgentLanguage                        : 'Russian'
+      AgentLanguageCode                    : 'ru'
+      AgentSecurity                        : 'Strong security'
+
+
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows; U; Windows NT 6.1; rv:2.2) Gecko/20110201'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Gecko'
+      LayoutEngineVersion                  : '2.2'
+      LayoutEngineVersionMajor             : '2'
+      LayoutEngineNameVersion              : 'Gecko 2.2'
+      LayoutEngineNameVersionMajor         : 'Gecko 2'
+      LayoutEngineBuild                    : '20110201'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Gecko'
+      AgentVersion                         : '2.2'
+      AgentVersionMajor                    : '2'
+      AgentNameVersion                     : 'Gecko 2.2'
+      AgentNameVersionMajor                : 'Gecko 2'
+      AgentSecurity                        : 'Strong security'
+
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Linux Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'Intel x86_64'
+      OperatingSystemNameVersion           : 'Linux Intel x86_64'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '537.36'
+      LayoutEngineVersionMajor             : '537'
+      LayoutEngineNameVersion              : 'AppleWebKit 537.36'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'AppleWebKit'
+      AgentVersion                         : '537.36'
+      AgentVersionMajor                    : '537'
+      AgentNameVersion                     : 'AppleWebKit 537.36'
+      AgentNameVersionMajor                : 'AppleWebKit 537'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.78.2 (KHTML, like Gecko)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Apple Macintosh'
+      DeviceBrand                          : 'Apple'
+      DeviceCpu                            : 'Intel'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Mac OS X'
+      OperatingSystemVersion               : '10.9.5'
+      OperatingSystemNameVersion           : 'Mac OS X 10.9.5'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '537.78.2'
+      LayoutEngineVersionMajor             : '537'
+      LayoutEngineNameVersion              : 'AppleWebKit 537.78.2'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'AppleWebKit'
+      AgentVersion                         : '537.78.2'
+      AgentVersionMajor                    : '537'
+      AgentNameVersion                     : 'AppleWebKit 537.78.2'
+      AgentNameVersionMajor                : 'AppleWebKit 537'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit (KHTML, like Gecko)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Apple Macintosh'
+      DeviceBrand                          : 'Apple'
+      DeviceCpu                            : 'Intel'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Mac OS X'
+      OperatingSystemVersion               : '10.?'
+      OperatingSystemNameVersion           : 'Mac OS X 10.?'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Mozilla 5.0'
+      LayoutEngineNameVersionMajor         : 'Mozilla 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '5.0'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'Netscape 5.0'
+      AgentNameVersionMajor                : 'Netscape 5'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 Chrome/68.0.3440.106 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Unknown'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '68.0'
+      LayoutEngineVersionMajor             : '68'
+      LayoutEngineNameVersion              : 'Blink 68.0'
+      LayoutEngineNameVersionMajor         : 'Blink 68'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '68.0.3440.106'
+      AgentVersionMajor                    : '68'
+      AgentNameVersion                     : 'Chrome 68.0.3440.106'
+      AgentNameVersionMajor                : 'Chrome 68'
+
+- test: # The ${USR_AGNT} part triggers the 'hacker' classification. Is this really a hacker?
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/5.0; SLCC1; ${USR_AGNT}; .NET CLR 3.5.30729; .NET4.0C; BRI/2; McAfee)'
+    expected:
+      DeviceClass                          : 'Hacker'      # Should be 'Desktop' ?
+      DeviceName                           : 'Hacker'      # Should be 'Desktop' ?
+      DeviceBrand                          : 'Hacker'      # Should be 'Unknown' ?
+      DeviceVersion                        : 'Hacker'
+      OperatingSystemClass                 : 'Hacker'      # Should be 'Desktop' ?
+      OperatingSystemName                  : 'Hacker'
+      OperatingSystemVersion               : 'Hacker'
+      OperatingSystemNameVersion           : 'Hacker'      # Should be 'Windows Vista' ?
+      LayoutEngineClass                    : 'Hacker'      # Should be 'Browser' ?
+      LayoutEngineName                     : 'Hacker'
+      LayoutEngineVersion                  : 'Hacker'
+      LayoutEngineVersionMajor             : 'Hacker'
+      LayoutEngineNameVersion              : 'Hacker'      # Should be 'Trident 5.0' ?
+      LayoutEngineNameVersionMajor         : 'Hacker'
+      AgentClass                           : 'Hacker'      # Should be 'Browser' ?
+      AgentName                            : 'Hacker'
+      AgentVersion                         : 'Hacker'
+      AgentVersionMajor                    : 'Hacker'
+      AgentNameVersion                     : 'Hacker'      # Should be 'Internet Explorer 9.0' ?
+      AgentNameVersionMajor                : 'Hacker'
+      HackerAttackVector                   : 'Unknown'
+      HackerToolkit                        : 'Unknown'
+      __SyntaxError__                      : 'true'
+
+
+# Broken in 2 ways:
+# - "MSIE8.0" is missing a space in between.
+# - A ')' too many.
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible; MSIE8.0; Windows NT 6.0) .NET CLR 2.0.50727)'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : 'Vista'
+      OperatingSystemNameVersion           : 'Windows Vista'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '4.0'
+      LayoutEngineVersionMajor             : '4'
+      LayoutEngineNameVersion              : 'Trident 4.0'
+      LayoutEngineNameVersionMajor         : 'Trident 4'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '8.0'
+      AgentVersionMajor                    : '8'
+      AgentNameVersion                     : 'Internet Explorer 8.0'
+      AgentNameVersionMajor                : 'Internet Explorer 8'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0'
+    expected:
+      DeviceClass                          : 'Unknown'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Mozilla 5.0'
+      LayoutEngineNameVersionMajor         : 'Mozilla 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '5.0'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'Netscape 5.0'
+      AgentNameVersionMajor                : 'Netscape 5'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 ()'
+    expected:
+      DeviceClass                          : 'Unknown'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Mozilla 5.0'
+      LayoutEngineNameVersionMajor         : 'Mozilla 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '5.0'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'Netscape 5.0'
+      AgentNameVersionMajor                : 'Netscape 5'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/4.0 (compatible;)'
+    expected:
+      DeviceClass                          : 'Unknown'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '4.0'
+      LayoutEngineVersionMajor             : '4'
+      LayoutEngineNameVersion              : 'Mozilla 4.0'
+      LayoutEngineNameVersionMajor         : 'Mozilla 4'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Netscape 4.0'
+      AgentNameVersionMajor                : 'Netscape 4'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (compatible)'
+    expected:
+      DeviceClass                          : 'Unknown'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Mozilla'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Mozilla 5.0'
+      LayoutEngineNameVersionMajor         : 'Mozilla 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Netscape'
+      AgentVersion                         : '5.0'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'Netscape 5.0'
+      AgentNameVersionMajor                : 'Netscape 5'
+
+

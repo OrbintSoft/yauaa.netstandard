@@ -38,13 +38,16 @@ config:
     - 'AgentVersion                        :   2014 :agent.(4)product.(1)name="NintendoBrowser"^.version'
 
 - matcher:
+    variable:
+    - 'PlayStationTag: agent.(1)product.(1)comments.entry.product.name[1]="PlayStation"^'
+    - 'PlayStationName: Concat["PlayStation ";@PlayStationTag[2]]'
     extract:
     - 'DeviceClass                         :   2014 :"Game Console"'
     - 'DeviceBrand                         :   2014 :"Sony"'
-    - 'DeviceName                          :   2014 :"PlayStation 4"'
+    - 'DeviceName                          :   2014 :@PlayStationName'
     - 'OperatingSystemClass                :   2014 :"Game Console"'
-    - 'OperatingSystemName                 :   2014 :"PlayStation 4"'
-    - 'OperatingSystemVersion              :   2014 :agent.(1)product.(1)comments.entry.product.name[1]="PlayStation"^.(2)version'
+    - 'OperatingSystemName                 :   2014 :@PlayStationName'
+    - 'OperatingSystemVersion              :   2014 :@PlayStationTag[3-]'
 
 - matcher:
     extract:
@@ -138,6 +141,31 @@ config:
 
 - test:
     input:
+      user_agent_string: 'Mozilla/5.0 (PLAYSTATION 3 4.82) AppleWebKit/531.22.8 (KHTML, like Gecko)'
+    expected:
+      DeviceClass                          : 'Game Console'
+      DeviceName                           : 'Sony PlayStation 3'
+      DeviceBrand                          : 'Sony'
+      OperatingSystemClass                 : 'Game Console'
+      OperatingSystemName                  : 'PlayStation 3'
+      OperatingSystemVersion               : '4.82'
+      OperatingSystemNameVersion           : 'PlayStation 3 4.82'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '531.22.8'
+      LayoutEngineVersionMajor             : '531'
+      LayoutEngineNameVersion              : 'AppleWebKit 531.22.8'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 531'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'AppleWebKit'
+      AgentVersion                         : '531.22.8'
+      AgentVersionMajor                    : '531'
+      AgentNameVersion                     : 'AppleWebKit 531.22.8'
+      AgentNameVersionMajor                : 'AppleWebKit 531'
+
+
+- test:
+    input:
       user_agent_string: 'Mozilla/5.0 (PlayStation 4 2.03) AppleWebKit/537.73 (KHTML, like Gecko)'
     expected:
       DeviceClass                          : 'Game Console'
@@ -159,6 +187,34 @@ config:
       AgentVersionMajor                    : '537'
       AgentNameVersion                     : 'AppleWebKit 537.73'
       AgentNameVersionMajor                : 'AppleWebKit 537'
+
+
+# FIXME LATER: IMPORTANT This is an educated guess for the PS5 based on the PS3 and PS4 useragents.
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (PlayStation 5 2.03) AppleWebKit/537.73 (KHTML, like Gecko)'
+    expected:
+      DeviceClass                          : 'Game Console'
+      DeviceName                           : 'Sony PlayStation 5'
+      DeviceBrand                          : 'Sony'
+      OperatingSystemClass                 : 'Game Console'
+      OperatingSystemName                  : 'PlayStation 5'
+      OperatingSystemVersion               : '2.03'
+      OperatingSystemNameVersion           : 'PlayStation 5 2.03'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '537.73'
+      LayoutEngineVersionMajor             : '537'
+      LayoutEngineNameVersion              : 'AppleWebKit 537.73'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 537'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'AppleWebKit'
+      AgentVersion                         : '537.73'
+      AgentVersionMajor                    : '537'
+      AgentNameVersion                     : 'AppleWebKit 537.73'
+      AgentNameVersionMajor                : 'AppleWebKit 537'
+
+
 
 - test:
     input:
@@ -217,6 +273,59 @@ config:
       AgentLanguage                        : 'Dutch'
       AgentLanguageCode                    : 'nl'
       AgentSecurity                        : 'Strong security'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (New Nintendo 3DS like iPhone) AppleWebKit/536.30 (KHTML, like Gecko) NX/3.0.0.5.22 Mobile NintendoBrowser/1.10.10166.EU'
+    expected:
+      DeviceClass                          : 'Handheld Game Console'
+      DeviceName                           : 'Nintendo NEW 3DS'
+      DeviceBrand                          : 'Nintendo'
+      OperatingSystemClass                 : 'Game Console'
+      OperatingSystemName                  : 'Nintendo NX'
+      OperatingSystemVersion               : '3.0.0.5.22'
+      OperatingSystemNameVersion           : 'Nintendo NX 3.0.0.5.22'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '536.30'
+      LayoutEngineVersionMajor             : '536'
+      LayoutEngineNameVersion              : 'AppleWebKit 536.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 536'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'NintendoBrowser'
+      AgentVersion                         : '1.10.10166.EU'
+      AgentVersionMajor                    : '1'
+      AgentNameVersion                     : 'NintendoBrowser 1.10.10166.EU'
+      AgentNameVersionMajor                : 'NintendoBrowser 1'
+
+
+- test:
+    input:
+      user_agent_string: 'Opera/9.50 (Nintendo DSi; Opera/507; U; en-GB)'
+    expected:
+      DeviceClass                          : 'Game Console'
+      DeviceName                           : 'Nintendo DSI'
+      DeviceBrand                          : 'Nintendo'
+      OperatingSystemClass                 : 'Game Console'
+      OperatingSystemName                  : 'Nintendo'
+      OperatingSystemVersion               : 'Nintendo DSi'
+      OperatingSystemNameVersion           : 'Nintendo DSi'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Presto'
+      LayoutEngineVersion                  : '1'
+      LayoutEngineVersionMajor             : '1'
+      LayoutEngineNameVersion              : 'Presto 1'
+      LayoutEngineNameVersionMajor         : 'Presto 1'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Opera'
+      AgentVersion                         : '9.50'
+      AgentVersionMajor                    : '9'
+      AgentNameVersion                     : 'Opera 9.50'
+      AgentNameVersionMajor                : 'Opera 9'
+      AgentLanguage                        : 'English (United Kingdom)'
+      AgentLanguageCode                    : 'en-gb'
+      AgentSecurity                        : 'Strong security'
+
 
 - test:
     input:
@@ -379,4 +488,72 @@ config:
       AgentNameVersionMajor                : 'Netscape 4'
 
 
+#- test: #TODO: Implement
+#    input:
+#      user_agent_string: 'Valve/Steam HTTP Client 1.0'
+#    expected:
+#      DeviceClass                          : 'Unknown' # FIXME: Should be a game console of some sort
+#      DeviceName                           : 'Unknown'
+#      DeviceBrand                          : 'Unknown'
+#      OperatingSystemClass                 : 'Unknown'
+#      OperatingSystemName                  : 'Unknown'
+#      OperatingSystemVersion               : '??'
+#      LayoutEngineClass                    : 'Unknown'
+#      LayoutEngineName                     : 'Unknown'
+#      LayoutEngineVersion                  : '??'
+#      LayoutEngineVersionMajor             : '??'
+#      AgentClass                           : 'Special'
+#      AgentName                            : 'Valve'
+#      AgentVersion                         : 'Steam HTTP Client'
+#      AgentVersionMajor                    : 'Steam HTTP Client'
+#      AgentNameVersion                     : 'Valve Steam HTTP Client'
+#      AgentNameVersionMajor                : 'Valve Steam HTTP Client'
+#
+#
+#- test: #TODO: Implement
+#    input:
+#      user_agent_string: 'PlayStationNetwork/1.0'
+#    expected:
+#      DeviceClass                          : 'Unknown'
+#      DeviceName                           : 'Unknown'
+#      DeviceBrand                          : 'Unknown'
+#      OperatingSystemClass                 : 'Unknown'
+#      OperatingSystemName                  : 'Unknown'
+#      OperatingSystemVersion               : '??'
+#      LayoutEngineClass                    : 'Unknown'
+#      LayoutEngineName                     : 'Unknown'
+#      LayoutEngineVersion                  : '??'
+#      LayoutEngineVersionMajor             : '??'
+#      AgentClass                           : 'Special'
+#      AgentName                            : 'PlayStationNetwork'
+#      AgentVersion                         : '1.0'
+#      AgentVersionMajor                    : '1'
+#      AgentNameVersion                     : 'PlayStationNetwork 1.0'
+#      AgentNameVersionMajor                : 'PlayStationNetwork 1'
+
+- test: #Note the missing ; in this one.
+    input:
+      user_agent_string: 'Mozilla/5.0 (compatible MSIE 9.0 Windows NT 6.1 Trident/5.0 Xbox)'
+    expected:
+      DeviceClass                          : 'Game Console'
+      DeviceName                           : 'Microsoft Xbox'
+      DeviceBrand                          : 'Microsoft'
+      DeviceCpuBits                        : '32'
+      DeviceVersion                        : 'Xbox 360'
+      OperatingSystemClass                 : 'Game Console'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '5.0'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'Trident 5.0'
+      LayoutEngineNameVersionMajor         : 'Trident 5'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '9.0'
+      AgentVersionMajor                    : '9'
+      AgentNameVersion                     : 'Internet Explorer 9.0'
+      AgentNameVersionMajor                : 'Internet Explorer 9'
 

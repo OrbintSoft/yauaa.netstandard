@@ -126,6 +126,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\MobileBrand-rules.yaml" />
     <None Remove="YamlResources\UserAgents\MobileBrand-tests.yaml" />
     <None Remove="YamlResources\UserAgents\MobileBrands.yaml" />
+    <None Remove="YamlResources\UserAgents\MobileBrowser-tests.yaml" />
     <None Remove="YamlResources\UserAgents\Mozilla-Testcases.yaml" />
     <None Remove="YamlResources\UserAgents\MSEdge.yaml" />
     <None Remove="YamlResources\UserAgents\MSInternetExplorer.yaml" />
@@ -135,6 +136,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\Oppo.yaml" />
     <None Remove="YamlResources\UserAgents\OtherOS.yaml" />
     <None Remove="YamlResources\UserAgents\Otter.yaml" />
+    <None Remove="YamlResources\UserAgents\Robot-Imitators.yaml" />
     <None Remove="YamlResources\UserAgents\Robots-Bing.yaml" />
     <None Remove="YamlResources\UserAgents\Robots-Google.yaml" />
     <None Remove="YamlResources\UserAgents\Robots.yaml" />
@@ -147,6 +149,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\Tencent.yaml" />
     <None Remove="YamlResources\UserAgents\TV.yaml" />
     <None Remove="YamlResources\UserAgents\Ubuntu-18.10-tests.yaml" />
+    <None Remove="YamlResources\UserAgents\Ubuntu-tests.yaml" />
     <None Remove="YamlResources\UserAgents\Ubuntu.yaml" />
     <None Remove="YamlResources\UserAgents\UbuntuVersionLookups.yaml" />
     <None Remove="YamlResources\UserAgents\URL.yaml" />
@@ -388,6 +391,11 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
+    <Content Include="YamlResources\UserAgents\MobileBrowser-tests.yaml">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
     <Content Include="YamlResources\UserAgents\Mozilla-Testcases.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
@@ -429,6 +437,11 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Otter.yaml">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Robot-Imitators.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
@@ -489,6 +502,11 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
     <Content Include="YamlResources\UserAgents\Ubuntu-18.10-tests.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Pack>true</Pack>
+	  <PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="YamlResources\UserAgents\Ubuntu-tests.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  <Pack>true</Pack>
 	  <PackageCopyToOutput>true</PackageCopyToOutput>

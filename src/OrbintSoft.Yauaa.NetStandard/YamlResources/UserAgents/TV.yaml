@@ -111,15 +111,15 @@ config:
     variable:
     - 'Language: agent.(1)product.(1)comments.(1-5)entry.(1-5)product.(1)name="Config"^.comments.(1-2)entry.(1)keyvalue.(1)key="L"^.text'
     extract:
-    - 'AgentLanguageCode                   :     10 :LookUp[ISOLanguageCodes;@Language]'
-    - 'AgentLanguage                       :     10 :LookUp[ISOLanguageCodesName;@Language]'
+    - 'AgentLanguageCode                   :   5010 :LookUp[ISOLanguageCodes;@Language]'
+    - 'AgentLanguage                       :   5010 :LookUp[ISOLanguageCodesName;@Language]'
 
 - matcher:
     variable:
     - 'Language: agent.(1)product.(1)comments.(1-5)entry.(1-5)product.(1)name="Config"^.comments.(1-2)entry.(1)keyvalue.(1)key="L"^.text'
     extract:
-    - 'AgentLanguageCode                   :     11 :LookUp[ISOLanguageCodes3;@Language]'
-    - 'AgentLanguage                       :     11 :LookUp[ISOLanguageCodes3Name;@Language]'
+    - 'AgentLanguageCode                   :   5011 :LookUp[ISOLanguageCodes3;@Language]'
+    - 'AgentLanguage                       :   5011 :LookUp[ISOLanguageCodes3Name;@Language]'
 
 - matcher:
     require:
@@ -995,8 +995,8 @@ config:
       user_agent_string: 'Mozilla/5.0 (Linux; NetCast) AppleWebKit/537.31 (KHTML, licke Gecko) Chrome/26.0.1410.33 Safari/537.31  SmartTV/5.0'
     expected:
       DeviceClass                          : 'TV'
-      DeviceName                           : 'SmartTv'
-      DeviceBrand                          : 'Unknown'
+      DeviceName                           : 'LG SmartTv'
+      DeviceBrand                          : 'LG'
       OperatingSystemClass                 : 'Desktop'
       OperatingSystemName                  : 'Linux'
       OperatingSystemVersion               : '??'
@@ -1158,4 +1158,204 @@ config:
       AgentVersionMajor                    : '??'
       AgentNameVersion                     : 'Unknown ??'
       AgentNameVersionMajor                : 'Unknown ??'
+
+- matcher:
+    require:
+    - 'agent.product.comments.entry.text="NetCast"'
+    extract:
+    - 'DeviceClass                         :      1 : "TV"'
+    - 'DeviceBrand                         :      1 : "LG"'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; NetCast; U) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/38.0.2125.122 Safari/537.31 SmartTV/7.0'
+    expected:
+      DeviceClass                          : 'TV'
+      DeviceName                           : 'LG SmartTv'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Linux ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '38.0'
+      LayoutEngineVersionMajor             : '38'
+      LayoutEngineNameVersion              : 'Blink 38.0'
+      LayoutEngineNameVersionMajor         : 'Blink 38'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '38.0.2125.122'
+      AgentVersionMajor                    : '38'
+      AgentNameVersion                     : 'Chrome 38.0.2125.122'
+      AgentNameVersionMajor                : 'Chrome 38'
+      AgentSecurity                        : 'Strong security'
+
+# Philips Android TV
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 4.2.2; AND1E TV Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.80 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Set-top box'
+      DeviceName                           : 'Philips Smart TV'
+      DeviceBrand                          : 'Philips'
+      OperatingSystemClass                 : 'Embedded'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.2.2'
+      OperatingSystemNameVersion           : 'Android 4.2.2'
+      OperatingSystemVersionBuild          : 'JDQ39'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '29.0'
+      LayoutEngineVersionMajor             : '29'
+      LayoutEngineNameVersion              : 'Blink 29.0'
+      LayoutEngineNameVersionMajor         : 'Blink 29'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '29.0.1547.80'
+      AgentVersionMajor                    : '29'
+      AgentNameVersion                     : 'Chrome 29.0.1547.80'
+      AgentNameVersionMajor                : 'Chrome 29'
+
+
+- test: # NOTE: The SonyBDP part is one level deeper than normal.
+    input:
+      user_agent_string: 'Opera/9.80 (Linux armv7l; Opera TV Store/4563; U; (SonyBDP/BDV12); en) Presto/2.10.250 Version/11.60'
+    expected:
+      DeviceClass                          : 'Set-top box'
+      DeviceName                           : 'Sony BDV12'
+      DeviceBrand                          : 'Sony'
+      DeviceCpu                            : 'ARMv7l'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Embedded'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'ARMv7l'
+      OperatingSystemNameVersion           : 'Linux ARMv7l'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Presto'
+      LayoutEngineVersion                  : '2.10.250'
+      LayoutEngineVersionMajor             : '2'
+      LayoutEngineNameVersion              : 'Presto 2.10.250'
+      LayoutEngineNameVersionMajor         : 'Presto 2'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Opera'
+      AgentVersion                         : '11.60'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Opera 11.60'
+      AgentNameVersionMajor                : 'Opera 11'
+      AgentLanguage                        : 'English'
+      AgentLanguageCode                    : 'en'
+      AgentSecurity                        : 'Strong security'
+
+
+- test: # NOTE: The SonyBDP part is one level deeper than normal.
+    input:
+      user_agent_string: 'Opera/9.80 (Linux armv6l; Opera TV Store/5581; (SonyBDP/BDV13)) Presto/2.12.362 Version/12.11'
+    expected:
+      DeviceClass                          : 'Set-top box'
+      DeviceName                           : 'Sony BDV13'
+      DeviceBrand                          : 'Sony'
+      DeviceCpu                            : 'ARMv6l'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Embedded'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'ARMv6l'
+      OperatingSystemNameVersion           : 'Linux ARMv6l'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Presto'
+      LayoutEngineVersion                  : '2.12.362'
+      LayoutEngineVersionMajor             : '2'
+      LayoutEngineNameVersion              : 'Presto 2.12.362'
+      LayoutEngineNameVersionMajor         : 'Presto 2'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Opera'
+      AgentVersion                         : '12.11'
+      AgentVersionMajor                    : '12'
+      AgentNameVersion                     : 'Opera 12.11'
+      AgentNameVersionMajor                : 'Opera 12'
+
+
+- test:
+    input:
+      user_agent_string: 'Opera/9.80 (Linux mips; Opera TV/19; U; pt-BR) Presto/2.9.201 Version/11.60'
+    expected:
+      DeviceClass                          : 'Set-top box'
+      DeviceName                           : 'Smart TV'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Mips'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Embedded'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : 'Mips'
+      OperatingSystemNameVersion           : 'Linux Mips'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Presto'
+      LayoutEngineVersion                  : '2.9.201'
+      LayoutEngineVersionMajor             : '2'
+      LayoutEngineNameVersion              : 'Presto 2.9.201'
+      LayoutEngineNameVersionMajor         : 'Presto 2'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Opera'
+      AgentVersion                         : '11.60'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Opera 11.60'
+      AgentNameVersionMajor                : 'Opera 11'
+      AgentLanguage                        : 'Portuguese (Brazil)'
+      AgentLanguageCode                    : 'pt-br'
+      AgentSecurity                        : 'Strong security'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; NetCast; U) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.31 SmartTV/6.0'
+    expected:
+      DeviceClass                          : 'TV'
+      DeviceName                           : 'LG SmartTv'
+      DeviceBrand                          : 'LG'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Linux'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Linux ??'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '34.0'
+      LayoutEngineVersionMajor             : '34'
+      LayoutEngineNameVersion              : 'Blink 34.0'
+      LayoutEngineNameVersionMajor         : 'Blink 34'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '34.0.1847.137'
+      AgentVersionMajor                    : '34'
+      AgentNameVersion                     : 'Chrome 34.0.1847.137'
+      AgentNameVersionMajor                : 'Chrome 34'
+      AgentSecurity                        : 'Strong security'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; U; Android 4.1.1; nl-nl; POV_TV-HDMI-200BT Build/JRO03H) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Safari/534.30'
+    expected:
+      DeviceClass                          : 'Set-top box'
+      DeviceName                           : 'Point OF View Smart TV'
+      DeviceBrand                          : 'Point OF View'
+      OperatingSystemClass                 : 'Embedded'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '4.1.1'
+      OperatingSystemNameVersion           : 'Android 4.1.1'
+      OperatingSystemVersionBuild          : 'JRO03H'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '534.30'
+      LayoutEngineVersionMajor             : '534'
+      LayoutEngineNameVersion              : 'AppleWebKit 534.30'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 534'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Stock Android Browser'
+      AgentVersion                         : '4.0'
+      AgentVersionMajor                    : '4'
+      AgentNameVersion                     : 'Stock Android Browser 4.0'
+      AgentNameVersionMajor                : 'Stock Android Browser 4'
+      AgentLanguage                        : 'Dutch (Netherlands)'
+      AgentLanguageCode                    : 'nl-nl'
+      AgentSecurity                        : 'Strong security'
 

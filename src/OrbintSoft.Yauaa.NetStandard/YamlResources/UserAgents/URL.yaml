@@ -24,8 +24,16 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5021 :agent.(1-10)keyvalue.url'
+
+- matcher:
+    extract:
+    - 'DeviceClass                         :      0 :"Robot"'
+    - 'DeviceName                          :      0 :"Robot"'
+    - 'OperatingSystemClass                :      0 :"Cloud"'
+    - 'OperatingSystemName                 :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationUrl                 :   5021 :agent.(1-10)url'
 
 - matcher:
@@ -34,8 +42,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationUrl                 :   5022 :agent.(1-5)product.(1)name.(1)url'
 
 - matcher:
@@ -44,8 +51,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationUrl                 :   5023 :agent.(1-5)product.(1)version.(1)url'
 
 - matcher:
@@ -54,8 +60,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationUrl                 :   5024 :agent.(1-5)product.(1)url'
 
 - matcher:
@@ -64,9 +69,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5011 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5042 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.url'
 
 - matcher:
     extract:
@@ -74,9 +78,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5012 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5043 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.name.url'
 
 - matcher:
     extract:
@@ -84,9 +87,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5013 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.name.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5044 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.version.url'
 
 - matcher:
     extract:
@@ -94,9 +96,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5014 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.version.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5045 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)keyvalue.url'
 
 - matcher:
     extract:
@@ -104,9 +105,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5015 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)keyvalue.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5046 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)url'
 
 - matcher:
     extract:
@@ -114,9 +114,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5001 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5031 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)url'
 
 - matcher:
     extract:
@@ -124,9 +123,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5002 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5032 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.url'
 
 - matcher:
     extract:
@@ -134,9 +132,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5003 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.name.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5033 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.name.url'
 
 - matcher:
     extract:
@@ -144,9 +141,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5004 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.version.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5034 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.version.url'
 
 - matcher:
     extract:
@@ -154,9 +150,8 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
-    - 'AgentInformationUrl                 :   5005 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)keyvalue.url'
+    - 'OperatingSystemVersion              :      0 :"??"'
+    - 'AgentInformationUrl                 :   5035 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)keyvalue.url'
 
 - matcher:
     extract:
@@ -164,8 +159,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5021 :agent.(1-10)email'
 
 - matcher:
@@ -174,8 +168,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5022 :agent.(1-5)product.(1)name.(1)email'
 
 - matcher:
@@ -184,8 +177,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5023 :agent.(1-5)product.(1)version.(1)email'
 
 - matcher:
@@ -194,8 +186,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5024 :agent.(1-5)product.(1)email'
 
 - matcher:
@@ -204,8 +195,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5011 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)email'
 
 - matcher:
@@ -214,8 +204,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5012 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.email'
 
 - matcher:
@@ -224,8 +213,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5013 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.name.email'
 
 - matcher:
@@ -234,8 +222,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5014 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)product.version.email'
 
 - matcher:
@@ -244,8 +231,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5015 :agent.(1-5)product.(1-2)comments.(1-10)entry.(1-3)keyvalue.email'
 
 - matcher:
@@ -254,8 +240,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5001 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)email'
 - matcher:
     extract:
@@ -263,8 +248,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5002 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.email'
 
 - matcher:
@@ -273,8 +257,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5003 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.name.email'
 
 - matcher:
@@ -283,8 +266,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5004 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)product.version.email'
 
 - matcher:
@@ -293,8 +275,7 @@ config:
     - 'DeviceName                          :      0 :"Robot"'
     - 'OperatingSystemClass                :      0 :"Cloud"'
     - 'OperatingSystemName                 :      0 :"Cloud"'
-    - 'OperatingSystemVersion              :      0 :"Cloud"'
-    - 'OperatingSystemNameVersion          :      0 :"Cloud"'
+    - 'OperatingSystemVersion              :      0 :"??"'
     - 'AgentInformationEmail               :   5005 :agent.(1-5)product.(1-2)comments.(1-5)entry.(1)product.(1)comments.(1-2)entry.(1-3)keyvalue.email'
 
 
@@ -304,12 +285,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (http://example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -329,12 +310,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (www.example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -354,12 +335,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (URL=http://example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -379,12 +360,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (URL:http://example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -404,12 +385,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (info@example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -429,12 +410,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (URL=info@example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -454,12 +435,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (URL:info@example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -479,12 +460,12 @@ config:
       user_agent_string: 'Mozilla/4.0 ( Something (www.example.nl); else ... )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -504,12 +485,12 @@ config:
       user_agent_string: 'Mozilla/4.0 ( Something (http://example.nl); else ... )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -529,12 +510,12 @@ config:
       user_agent_string: 'Mozilla/4.0 ( Something (URL=http://example.nl); else ... )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -554,12 +535,12 @@ config:
       user_agent_string: 'Mozilla/4.0 ( Something (URL:http://example.nl); else ... )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -579,12 +560,12 @@ config:
       user_agent_string: 'Mozilla/4.0 ( Something (info@example.nl); else ... )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -604,12 +585,12 @@ config:
       user_agent_string: 'Mozilla/4.0 ( Something (URL=info@example.nl); else ... )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -629,12 +610,12 @@ config:
       user_agent_string: 'Mozilla/4.0 ( Something (URL:info@example.nl); else ... )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -654,12 +635,12 @@ config:
       user_agent_string: 'www.basjes.nl /info@basj.es'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Basjes Robot'
       DeviceBrand                          : 'Basjes'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Unknown'
       LayoutEngineName                     : 'Unknown'
       LayoutEngineVersion                  : '??'
@@ -679,12 +660,12 @@ config:
       user_agent_string: 'Mozilla/4.0 (+www.example.nl ; +info@example.nl)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Example Robot'
       DeviceBrand                          : 'Example'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '4.0'
@@ -705,12 +686,12 @@ config:
       user_agent_string: 'Twikle/1.0 , http://twikle.com , contact@twikle.com'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Twikle Robot'
       DeviceBrand                          : 'Twikle'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Unknown'
       LayoutEngineName                     : 'Unknown'
       LayoutEngineVersion                  : '??'

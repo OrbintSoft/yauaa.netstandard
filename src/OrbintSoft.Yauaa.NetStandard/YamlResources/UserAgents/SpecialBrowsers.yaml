@@ -17,6 +17,21 @@
 
 config:
 
+# These are known robots that do not have words like bot, crawler, spider in their name.
+- set:
+    name: 'NamedSpecials'
+    values:
+    - 'IntelliJ IDEA'
+
+- matcher:
+    require:
+    - 'agent.(1)text?NamedSpecials'
+    extract:
+    - '__Set_ALL_Fields__                  :     14 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
+    - 'AgentClass                          :     15 :"Special"'
+    - 'AgentName                           :     15 :agent'
+    - 'AgentVersion                        :     15 :"??"'
+
 - matcher:
     require:
     - 'IsNull[agent.(1)product.(1)name="Mozilla"]'
@@ -267,23 +282,23 @@ config:
       user_agent_string: 'http://Anonymouse.org/ (Unix)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Anonymouse Robot'
       DeviceBrand                          : 'Anonymouse'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Unknown'
       LayoutEngineName                     : 'Unknown'
       LayoutEngineVersion                  : '??'
       LayoutEngineVersionMajor             : '??'
       AgentClass                           : 'Special'
-      AgentName                            : 'http://Anonymouse.org/'
+      AgentName                            : 'http://Anonymouse.org'
       AgentVersion                         : 'Unix'
       AgentVersionMajor                    : 'Unix'
-      AgentNameVersion                     : 'http://Anonymouse.org/ Unix'
-      AgentNameVersionMajor                : 'http://Anonymouse.org/ Unix'
-      AgentInformationUrl                  : 'http://Anonymouse.org/'
+      AgentNameVersion                     : 'http://Anonymouse.org Unix'
+      AgentNameVersionMajor                : 'http://Anonymouse.org Unix'
+      AgentInformationUrl                  : 'http://Anonymouse.org'
 
 - matcher:
     extract:
@@ -303,8 +318,8 @@ config:
       DeviceBrand                          : 'CloudFlare'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Browser'
       LayoutEngineName                     : 'AppleWebKit'
       LayoutEngineVersion                  : '534.34'
@@ -432,6 +447,28 @@ config:
       AgentVersionMajor                    : '162'
       AgentNameVersion                     : 'IntelliJ IDEA 162.1447.26'
       AgentNameVersionMajor                : 'IntelliJ IDEA 162'
+
+
+- test:
+    input:
+      user_agent_string: 'IntelliJ IDEA'
+    expected:
+      DeviceClass                          : 'Unknown'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Unknown'
+      OperatingSystemName                  : 'Unknown'
+      OperatingSystemVersion               : '??'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'IntelliJ IDEA'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'IntelliJ IDEA ??'
+      AgentNameVersionMajor                : 'IntelliJ IDEA ??'
 
 
 - matcher:
@@ -832,7 +869,7 @@ config:
     - 'Product: agent.product.(1)name="Mobile"^>>.name="Safari"^<'
     extract:
     - 'AgentClass                          :   2049 :"Browser"'
-    - 'AgentName                           :   2049 :@Product.name'
+    - 'AgentName                           :   2049 :@Product.name!="Version"'
     - 'AgentVersion                        :   2049 :@Product.version'
 
 - matcher:
@@ -842,7 +879,7 @@ config:
     - 'Product: agent.product.(1)name="Mobile"^>>.name="Mobile Safari"^<'
     extract:
     - 'AgentClass                          :   2049 :"Browser"'
-    - 'AgentName                           :   2049 :@Product.name'
+    - 'AgentName                           :   2049 :@Product.name!="Version"'
     - 'AgentVersion                        :   2049 :@Product.version'
 
 - test:
@@ -1177,7 +1214,6 @@ config:
     - 'OperatingSystemClass                :    100 : "Desktop"'
     - 'OperatingSystemName                 :    100 : "Windows NT"'
     - 'OperatingSystemVersion              :    100 : "??"'
-    - 'OperatingSystemNameVersion          :    100 : "Windows NT ??"'
     - 'AgentClass                          :    100 : "Special"'
     - 'AgentName                           :    100 : "Microsoft Lync (Skype)"'
     - 'AgentVersion                        :    100 : agent.(1)product.(1)version'
@@ -1272,12 +1308,12 @@ config:
       user_agent_string: 'Iframely/0.8.5 (+http://iframely.com/;)'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Robot'
+      DeviceName                           : 'Iframely Robot'
       DeviceBrand                          : 'Iframely'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
-      OperatingSystemVersion               : 'Cloud'
-      OperatingSystemNameVersion           : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
       LayoutEngineClass                    : 'Unknown'
       LayoutEngineName                     : 'Unknown'
       LayoutEngineVersion                  : '??'
@@ -1288,7 +1324,7 @@ config:
       AgentVersionMajor                    : '0'
       AgentNameVersion                     : 'Iframely 0.8.5'
       AgentNameVersionMajor                : 'Iframely 0'
-      AgentInformationUrl                  : 'http://iframely.com/'
+      AgentInformationUrl                  : 'http://iframely.com'
 
 # The demonstration case in the web servlet
 - test:
@@ -1515,6 +1551,30 @@ config:
       AgentVersionMajor                    : '3'
       AgentNameVersion                     : 'DuckDuckGo 3.0.14'
       AgentNameVersionMajor                : 'DuckDuckGo 3'
+
+- test:
+    input:
+      user_agent_string: 'DDG-Android-%version'
+    expected:
+      DeviceClass                          : 'Mobile'
+      DeviceName                           : 'Unknown'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '??'
+      OperatingSystemNameVersion           : 'Android ??'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'Unknown ??'
+      LayoutEngineNameVersionMajor         : 'Unknown ??'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'DuckDuckGo'
+      AgentVersion                         : '%version'
+      AgentVersionMajor                    : '%version'
+      AgentNameVersion                     : 'DuckDuckGo %version'
+      AgentNameVersionMajor                : 'DuckDuckGo %version'
 
 
 - matcher:
@@ -2365,4 +2425,283 @@ config:
       AgentVersionMajor                    : '17'
       AgentNameVersion                     : 'Kodi 17.1'
       AgentNameVersionMajor                : 'Kodi 17'
+
+
+#Chrome in Android Studio emulator
+- test:
+    input:
+      user_agent_string:   'Mozilla/5.0 (Linux; Android 7.0; Android SDK built for x86 Build/NYC) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.90 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Android SDK Built FOR X86'
+      DeviceBrand                          : 'Google'
+      DeviceCpu                            : 'x86'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.0'
+      OperatingSystemNameVersion           : 'Android 7.0'
+      OperatingSystemVersionBuild          : 'NYC'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '51.0'
+      LayoutEngineVersionMajor             : '51'
+      LayoutEngineNameVersion              : 'Blink 51.0'
+      LayoutEngineNameVersionMajor         : 'Blink 51'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Chrome'
+      AgentVersion                         : '51.0.2704.90'
+      AgentVersionMajor                    : '51'
+      AgentNameVersion                     : 'Chrome 51.0.2704.90'
+      AgentNameVersionMajor                : 'Chrome 51'
+
+
+
+
+# TODO: Review this. tb-gmx is the real useragent. Perhaps this is Thunderbird??
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; tb-gmx/2.6.12; (gmx/1.5.0.0); rv:11.0) like Gecko'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '11.0'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Internet Explorer 11.0'
+      AgentNameVersionMajor                : 'Internet Explorer 11'
+
+
+
+# TODO: Review this. tb-webde is the real useragent. Perhaps this is Thunderbird??
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; tb-webde/2.7.4; (webde/1.4.0.0); rv:11.0) like Gecko'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpu                            : 'Intel x86_64'
+      DeviceCpuBits                        : '64'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Trident'
+      LayoutEngineVersion                  : '7.0'
+      LayoutEngineVersionMajor             : '7'
+      LayoutEngineNameVersion              : 'Trident 7.0'
+      LayoutEngineNameVersionMajor         : 'Trident 7'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Internet Explorer'
+      AgentVersion                         : '11.0'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Internet Explorer 11.0'
+      AgentNameVersionMajor                : 'Internet Explorer 11'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 8.0.0; SM-G950F Build/R16NW; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/69.0.3497.100 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung SM-G950F'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '8.0.0'
+      OperatingSystemNameVersion           : 'Android 8.0.0'
+      OperatingSystemVersionBuild          : 'R16NW'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '69.0'
+      LayoutEngineVersionMajor             : '69'
+      LayoutEngineNameVersion              : 'Blink 69.0'
+      LayoutEngineNameVersionMajor         : 'Blink 69'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '69.0.3497.100'
+      AgentVersionMajor                    : '69'
+      AgentNameVersion                     : 'Chrome Webview 69.0.3497.100'
+      AgentNameVersionMajor                : 'Chrome Webview 69'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 6.0.1; SM-G800F Build/MMB29K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/69.0.3497.100 Mobile Safari/537.36'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Samsung SM-G800F'
+      DeviceBrand                          : 'Samsung'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '6.0.1'
+      OperatingSystemNameVersion           : 'Android 6.0.1'
+      OperatingSystemVersionBuild          : 'MMB29K'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '69.0'
+      LayoutEngineVersionMajor             : '69'
+      LayoutEngineNameVersion              : 'Blink 69.0'
+      LayoutEngineNameVersionMajor         : 'Blink 69'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '69.0.3497.100'
+      AgentVersionMajor                    : '69'
+      AgentNameVersion                     : 'Chrome Webview 69.0.3497.100'
+      AgentNameVersionMajor                : 'Chrome Webview 69'
+      WebviewAppName                       : 'Unknown Webview App'
+      WebviewAppVersion                    : '??'
+      WebviewAppVersionMajor               : '??'
+      WebviewAppNameVersionMajor           : 'Unknown Webview App ??'
+
+
+# Cheetah Mobile : CM Browser version 5.22.xx
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Linux; Android 7.1.1; Nexus 6 Build/N6F27M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/44.0.2403.119 Mobile Safari/537.36 ACHEETAHI/1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Google Nexus 6'
+      DeviceBrand                          : 'Google'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'Android'
+      OperatingSystemVersion               : '7.1.1'
+      OperatingSystemNameVersion           : 'Android 7.1.1'
+      OperatingSystemVersionBuild          : 'N6F27M'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '44.0'
+      LayoutEngineVersionMajor             : '44'
+      LayoutEngineNameVersion              : 'Blink 44.0'
+      LayoutEngineNameVersionMajor         : 'Blink 44'
+      AgentClass                           : 'Browser Webview'
+      AgentName                            : 'Chrome Webview'
+      AgentVersion                         : '44.0.2403.119'
+      AgentVersionMajor                    : '44'
+      AgentNameVersion                     : 'Chrome Webview 44.0.2403.119'
+      AgentNameVersionMajor                : 'Chrome Webview 44'
+      WebviewAppName                       : 'Cheetah Mobile Browser'
+      WebviewAppVersion                    : '1'
+      WebviewAppVersionMajor               : '1'
+      WebviewAppNameVersionMajor           : 'Cheetah Mobile Browser 1'
+
+# Manually created edge case: Here the 'Version' is NOT the name of the browser.
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16B92 Version/12.1 Safari/605.1.15'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Apple iPhone'
+      DeviceBrand                          : 'Apple'
+      DeviceFirmwareVersion                : '16B92'
+      DeviceVersion                        : 'iPhone'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'iOS'
+      OperatingSystemVersion               : '12.1'
+      OperatingSystemNameVersion           : 'iOS 12.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '605.1.15'
+      LayoutEngineVersionMajor             : '605'
+      LayoutEngineNameVersion              : 'AppleWebKit 605.1.15'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 605'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Safari'
+      AgentVersion                         : '12.1'
+      AgentVersionMajor                    : '12'
+      AgentNameVersion                     : 'Safari 12.1'
+      AgentNameVersionMajor                : 'Safari 12'
+
+
+# Sometimes the name of the agent is the first comment of the "(Mobile) Safari" product.
+- matcher:
+    variable:
+    - 'Safari:agent.product.(1)name="Safari"^'
+    - 'Product:@Safari.comments.(1)entry.product'
+    extract:
+    - 'AgentClass                          :     59 :"Browser"'
+    - 'AgentName                           :     59 :@Product.name'
+    - 'AgentVersion                        :     59 :@Product.version'
+
+- matcher:
+    variable:
+    - 'Safari:agent.product.(1)name="Mobile Safari"^'
+    - 'Product:@Safari.comments.(1)entry.product'
+    extract:
+    - 'AgentClass                          :     59 :"Browser"'
+    - 'AgentName                           :     59 :@Product.name'
+    - 'AgentVersion                        :     59 :@Product.version'
+
+# Apparently the Airwatch Browser is a browser within the VMWare "Workspace ONE"/"AirWatch" system.
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16B92 Version/12.1 Safari/605.1.15 (AirWatch Browser v7.1'
+    expected:
+      DeviceClass                          : 'Phone'
+      DeviceName                           : 'Apple iPhone'
+      DeviceBrand                          : 'Apple'
+      DeviceFirmwareVersion                : '16B92'
+      DeviceVersion                        : 'iPhone'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'iOS'
+      OperatingSystemVersion               : '12.1'
+      OperatingSystemNameVersion           : 'iOS 12.1'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '605.1.15'
+      LayoutEngineVersionMajor             : '605'
+      LayoutEngineNameVersion              : 'AppleWebKit 605.1.15'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 605'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'AirWatch Browser'
+      AgentVersion                         : 'v7.1'
+      AgentVersionMajor                    : 'v7'
+      AgentNameVersion                     : 'AirWatch Browser v7.1'
+      AgentNameVersionMajor                : 'AirWatch Browser v7'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (iPad; CPU OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13C75 Version/7.0 Safari/9537.53 (AirWatch Browser v4509)'
+    expected:
+      DeviceClass                          : 'Tablet'
+      DeviceName                           : 'Apple iPad'
+      DeviceBrand                          : 'Apple'
+      DeviceFirmwareVersion                : '13C75'
+      DeviceVersion                        : 'iPad'
+      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemName                  : 'iOS'
+      OperatingSystemVersion               : '9.2'
+      OperatingSystemNameVersion           : 'iOS 9.2'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'AppleWebKit'
+      LayoutEngineVersion                  : '601.1.46'
+      LayoutEngineVersionMajor             : '601'
+      LayoutEngineNameVersion              : 'AppleWebKit 601.1.46'
+      LayoutEngineNameVersionMajor         : 'AppleWebKit 601'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'AirWatch Browser'
+      AgentVersion                         : 'v4509'
+      AgentVersionMajor                    : 'v4509'
+      AgentNameVersion                     : 'AirWatch Browser v4509'
+      AgentNameVersionMajor                : 'AirWatch Browser v4509'
 
