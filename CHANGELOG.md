@@ -3,6 +3,18 @@ This is intended as an overview of the major changes
 v5.9
 ===
 - Target equivalent Java 5.9 Version
+- Detection for Google Go, Google Docs, Google Docs Script
+- New class of Device and Agent: Voice
+- Detection for CAT, General Mobile, Wileyfox, ZTE, Fairphone, Gigaset, PlayStation 3, Kobo Desktop Edition
+- Improved Robot detection, most of them are now "Cloud" instead of "normal" hardware/os.
+- Updated the way yaml files are loaded. An analyzer without any rules will fail faster.
+- An imperfect fallback is attempted when the classloader cannot find the yaml files via a wildcard (happens on Android, OSGi, ...).
+- Improved detection of Ubuntu
+- Detection for very old Windows Phones, Nikto, Dell devices
+- Renamed DeviceClass "Spy" to "Robot Imitator" 
+- More consistently add the DeviceBrand to the DeviceName
+- Detect Apple iOS Universal Links updater, Netsparker, CasperJs
+- Fix the AirWatch scenario
 
 v5.8
 ===
