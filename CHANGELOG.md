@@ -3,6 +3,8 @@ This is intended as an overview of the major changes
 v5.9
 ===
 - Target equivalent Java 5.9 Version
+- Speedup in handling IsNull cases.
+- Speedup in skipping the untouched Matchers.
 - Detection for Google Go, Google Docs, Google Docs Script
 - New class of Device and Agent: Voice
 - Detection for CAT, General Mobile, Wileyfox, ZTE, Fairphone, Gigaset, PlayStation 3, Kobo Desktop Edition
@@ -15,6 +17,7 @@ v5.9
 - More consistently add the DeviceBrand to the DeviceName
 - Detect Apple iOS Universal Links updater, Netsparker, CasperJs
 - Fix the AirWatch scenario
+- Massive improvement in detection of URLs.
 
 v5.8
 ===
