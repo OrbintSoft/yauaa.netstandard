@@ -70,8 +70,8 @@ namespace OrbintSoft.Yauaa.Classify
                     return "Robot";
                 case DeviceClass.RobotMobile:
                     return "Robot Mobile";
-                case DeviceClass.Spy:
-                    return "Spy";
+                case DeviceClass.RobotImitator:
+                    return "Robot Imitator";
                 case DeviceClass.Hacker:
                     return "Hacker";
                 case DeviceClass.Unknown:

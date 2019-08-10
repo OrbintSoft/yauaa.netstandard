@@ -130,7 +130,7 @@ namespace OrbintSoft.Yauaa.Analyze
             for (var i = 0; i < this.Count; i++)
             {
                 array.SetValue(this.allElements[i], arrayIndex);
-                arrayIndex = arrayIndex + 1;
+                arrayIndex += 1;
             }
         }
 

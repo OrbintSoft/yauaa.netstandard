@@ -82,8 +82,20 @@ namespace OrbintSoft.Yauaa.Parse
 
             result = ReplaceString(result, "SSL/TLS", "SSL TLS");
 
+            if (result.Contains("MSIE"))
+            {
+                result = ReplaceString(result, "MSIE7", "MSIE 7");
+                result = ReplaceString(result, "MSIE8", "MSIE 8");
+                result = ReplaceString(result, "MSIE9", "MSIE 9");
+            }
+
+            result = ReplaceString(result, "Ant.com Toolbar", "Ant.com_Toolbar");
+
             // We have seen problems causes by " Version/4.0Mobile Safari/530.17"
             result = MissingSpace.Replace(result, "$1 $2");
+
+            // We have seen problem cases like "Wazzup1.1.100"
+            result = ReplaceString(result, "Wazzup", "Wazzup ");
 
             // This one is a single useragent that hold significant traffic
             result = ReplaceString(result, " (Macintosh); ", " (Macintosh; ");

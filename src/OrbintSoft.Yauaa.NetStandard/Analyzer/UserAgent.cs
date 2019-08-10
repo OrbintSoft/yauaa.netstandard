@@ -330,6 +330,18 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
+        /// The IsSystemField.
+        /// </summary>
+        /// <param name="fieldname">The fieldname<see cref="string"/>.</param>
+        /// <returns>The <see cref="bool"/>.</returns>
+        public static bool IsSystemField(string fieldname)
+        {
+            return SET_ALL_FIELDS.Equals(fieldname) ||
+                    SYNTAX_ERROR.Equals(fieldname) ||
+                    USERAGENT_FIELDNAME.Equals(fieldname);
+        }
+
+        /// <summary>
         /// The Clone.
         /// </summary>
         /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
@@ -882,18 +894,6 @@ namespace OrbintSoft.Yauaa.Analyzer
             sb.Append("\n\n");
 
             return sb.ToString();
-        }
-
-        /// <summary>
-        /// The IsSystemField.
-        /// </summary>
-        /// <param name="fieldname">The fieldname<see cref="string"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        internal static bool IsSystemField(string fieldname)
-        {
-            return SET_ALL_FIELDS.Equals(fieldname) ||
-                    SYNTAX_ERROR.Equals(fieldname) ||
-                    USERAGENT_FIELDNAME.Equals(fieldname);
         }
 
         /// <summary>

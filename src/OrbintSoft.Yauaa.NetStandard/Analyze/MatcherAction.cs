@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Atn;
     using Antlr4.Runtime.Dfa;
@@ -198,6 +199,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="result">The result<see cref="IParseTree"/>.</param>
         public void Inform(string key, string value, IParseTree result)
         {
+            this.matcher.ReceivedInput();
             // Only if this needs input we tell the matcher on the first one.
             if (this.MustHaveMatches && this.Matches.Count == 0)
             {
@@ -311,7 +313,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/>.</returns>
         internal bool CannotBeValid()
         {
-            return this.MustHaveMatches && this.Matches.Count == 0;
+            return this.MustHaveMatches == !this.Matches.Any();
         }
 
         /// <summary>

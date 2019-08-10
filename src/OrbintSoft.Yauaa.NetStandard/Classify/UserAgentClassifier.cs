@@ -64,7 +64,8 @@ namespace OrbintSoft.Yauaa.Classify
                 case "Handheld Game Console": return DeviceClass.HandheldGameConsole;
                 case "Robot": return DeviceClass.Robot;
                 case "Robot Mobile": return DeviceClass.RobotMobile;
-                case "Spy": return DeviceClass.Spy;
+                case "Spy":
+                case "Robot Imitator": return DeviceClass.RobotImitator;
                 case "Hacker": return DeviceClass.Hacker;
                 case "Unknown": return DeviceClass.Unknown;
                 default: return DeviceClass.Unclassified;
@@ -81,7 +82,7 @@ namespace OrbintSoft.Yauaa.Classify
             switch (GetDeviceClass(userAgent))
             {
                 case DeviceClass.Anonymized:
-                case DeviceClass.Spy:
+                case DeviceClass.RobotImitator:
                 case DeviceClass.Hacker:
                     return true;
 
@@ -130,7 +131,7 @@ namespace OrbintSoft.Yauaa.Classify
 
                 case DeviceClass.Robot:
                 case DeviceClass.RobotMobile:
-                case DeviceClass.Spy:
+                case DeviceClass.RobotImitator:
                 case DeviceClass.Hacker:
                 case DeviceClass.Unknown:
                 case DeviceClass.Unclassified:
@@ -164,7 +165,7 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.GameConsole:
                 case DeviceClass.Anonymized:
                 case DeviceClass.Robot:
-                case DeviceClass.Spy:
+                case DeviceClass.RobotImitator:
                 case DeviceClass.Hacker:
                 case DeviceClass.Unknown:
                 case DeviceClass.Unclassified:
@@ -198,7 +199,7 @@ namespace OrbintSoft.Yauaa.Classify
                 case DeviceClass.Anonymized:
                 case DeviceClass.Robot:
                 case DeviceClass.RobotMobile:
-                case DeviceClass.Spy:
+                case DeviceClass.RobotImitator:
                 case DeviceClass.Hacker:
                 case DeviceClass.Unknown:
                 case DeviceClass.Unclassified:

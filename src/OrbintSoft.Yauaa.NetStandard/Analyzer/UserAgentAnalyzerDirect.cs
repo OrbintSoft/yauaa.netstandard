@@ -140,6 +140,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         private bool verbose = false;
 
+        private readonly MatcherList zeroInputMatchers = new MatcherList(100);
+
+        private MatcherList touchedMatchers = null;
+
         /// <summary>
         /// Initializes static members of the <see cref="UserAgentAnalyzerDirect"/> class.
         /// </summary>
@@ -422,6 +426,12 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             Log.Info("Initializing Analyzer data structures");
+
+            if (!this.AllMatchers.Any())
+            {
+                throw new InvalidParserConfigurationException("No matchers were loaded at all.");
+            }
+
             var stopwatch = Stopwatch.StartNew();
             foreach (var item in this.AllMatchers)
             {
@@ -430,7 +440,23 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             stopwatch.Stop();
             this.matchersHaveBeenInitialized = true;
-            Log.Info(string.Format("Built in {0} msec : Hashmap {1}, Ranges map:{2}", stopwatch.ElapsedMilliseconds, this.informMatcherActions.Count, this.informMatcherActionRanges.Count));
+            Log.Info($"Built in {stopwatch.ElapsedMilliseconds} msec : Hashmap {this.informMatcherActions.Count}, Ranges map:{this.informMatcherActionRanges.Count}");
+
+            foreach (var matcher in this.AllMatchers)
+            {
+                if (matcher.ActionsThatRequireInput == 0)
+                {
+                    this.zeroInputMatchers.Add(matcher);
+                }
+            }
+
+            // Reset all Matchers
+            foreach (var matcher in this.AllMatchers)
+            {
+                matcher.Reset();
+            }
+
+            touchedMatchers = new MatcherList(16);
         }
 
         /// <summary>
@@ -470,8 +496,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                 throw new Exception("Refusing to load additional resources after the datastructures have been initialized.");
             }
 
-            Log.Info(string.Format("Loading from: \"{0}\": \"{1}\"", resourceString, pattern));
-
             var filesStopwatch = Stopwatch.StartNew();
 
             this.Flattener = new UserAgentTreeFlattener(this);
@@ -499,9 +523,11 @@ namespace OrbintSoft.Yauaa.Analyzer
             this.doingOnlyASingleTest = false;
             var maxFilenameLength = 0;
 
-            if (resources.Count == 0)
+            if (!resources.Any())
             {
-                throw new InvalidParserConfigurationException("Unable to find ANY config files");
+                Log.Warn($"NO config files were found matching this expression: {resourceString}");
+                Log.Error("If you are using wildcards in your expression then try explicitly naming all yamls files explicitly.");
+                return;
             }
 
             // We need to determine if we are trying to load the yaml files TWICE.
@@ -551,7 +577,13 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             filesStopwatch.Stop();
-            Log.Info(string.Format("Loaded {0} files in {1} msec", resources.Count, filesStopwatch.ElapsedMilliseconds));
+            var msg = $"Loading {resources.Count} files in {filesStopwatch.ElapsedMilliseconds} msec from {resourceString}";
+            Log.Info(msg);
+
+            if (!resources.Any())
+            {
+                throw new InvalidParserConfigurationException("No matchers were loaded at all.");
+            }
 
             if (this.lookups != null && this.lookups.Count != 0)
             {
@@ -569,21 +601,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                 }
 
                 this.lookups = cleanedLookups;
-            }
-
-            if (this.WantedFieldNames != null)
-            {
-                var wantedSize = this.WantedFieldNames.Count;
-                if (this.WantedFieldNames.Contains(UserAgent.SET_ALL_FIELDS))
-                {
-                    wantedSize--;
-                }
-
-                Log.Info(string.Format("Building all needed matchers for the requested {0} fields.", wantedSize));
-            }
-            else
-            {
-                Log.Info("Building all matchers for all possible fields.");
             }
 
             var totalNumberOfMatchers = 0;
@@ -638,17 +655,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                 }
 
                 fullStopwatch.Stop();
-
-                Log.Info(
-                    string.Format(
-                        "Loading {0} (dropped {1}) matchers, {2} lookups, {3} lookupsets, {4} testcases from {5} files took {6} msec",
-                        totalNumberOfMatchers,
-                        skippedMatchers,
-                        (this.lookups == null) ? 0 : this.lookups.Count(),
-                        this.lookupSets.Count(),
-                        this.TestCases.Count,
-                        this.matcherConfigs.Count,
-                        fullStopwatch.ElapsedMilliseconds));
             }
         }
 
@@ -697,7 +703,14 @@ namespace OrbintSoft.Yauaa.Analyzer
                 }
 
                 // Reset all Matchers
-                foreach (var matcher in this.AllMatchers)
+                foreach (var matcher in this.touchedMatchers)
+                {
+                    matcher.Reset();
+                }
+
+                this.touchedMatchers.Clear();
+
+                foreach (var matcher in this.zeroInputMatchers)
                 {
                     matcher.Reset();
                 }
@@ -715,7 +728,13 @@ namespace OrbintSoft.Yauaa.Analyzer
                     userAgent = this.Flattener.Parse(userAgent);
 
                     // Fire all Analyzers
-                    foreach (var matcher in this.AllMatchers)
+                    foreach (var matcher in this.touchedMatchers)
+                    {
+                        matcher.Analyze(userAgent);
+                    }
+
+                    // Fire all Analyzers that should not get input
+                    foreach (var matcher in this.zeroInputMatchers)
                     {
                         matcher.Analyze(userAgent);
                     }
@@ -947,10 +966,37 @@ namespace OrbintSoft.Yauaa.Analyzer
         protected void Initialize(IList<ResourcesPath> resources)
         {
             YauaaVersion.LogVersion();
+            var fullStart = Stopwatch.StartNew();
+            if (this.WantedFieldNames != null)
+            {
+                int wantedSize = this.WantedFieldNames.Count;
+                if (this.WantedFieldNames.Contains(UserAgent.SET_ALL_FIELDS))
+                {
+                    wantedSize--;
+                }
+
+                Log.Info($"Building all needed matchers for the requested {wantedSize} fields.");
+            }
+            else
+            {
+                Log.Info("Building all matchers for all possible fields.");
+            }
+
             foreach (var r in resources)
             {
                 this.LoadResources(r.Directory, r.Filter);
             }
+
+            if (!this.matcherConfigs.Any())
+            {
+                throw new InvalidParserConfigurationException("No matchers were loaded at all.");
+            }
+
+            fullStart.Stop();
+            var fullStop = fullStart.ElapsedMilliseconds;
+            var lookupsCount = (this.lookups == null) ? 0 : this.lookups.Count;
+            var msg = $"Loading {this.AllMatchers.Count} matchers, {lookupsCount} lookups, {this.lookupSets.Count} lookupsets, {this.TestCases.Count} testcases from {this.matcherConfigs.Count} files took {fullStop} msec";
+            Log.Info(msg);
 
             this.VerifyWeAreNotAskingForImpossibleFields();
             if (!this.delayInitialization)
@@ -1165,6 +1211,16 @@ namespace OrbintSoft.Yauaa.Analyzer
                     email.GetConfidence());
             }
 
+            if (deviceBrand.GetConfidence() < 0)
+            {
+                // If no brand is known then try to extract something that looks like a Brand from things like URL and Email addresses.
+                var newDeviceBrand = this.DetermineDeviceBrand(userAgent);
+                if (newDeviceBrand != null)
+                {
+                    userAgent.SetForced(UserAgent.DEVICE_BRAND, newDeviceBrand, 1);
+                }
+            }
+
             // Make sure the DeviceName always starts with the DeviceBrand
             var deviceName = userAgent.Get(UserAgent.DEVICE_NAME);
             if (deviceName.GetConfidence() >= 0)
@@ -1188,19 +1244,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                     UserAgent.DEVICE_NAME,
                     deviceNameValue,
                     deviceName.GetConfidence());
-            }
-
-            if (deviceBrand.GetConfidence() < 0)
-            {
-                // If no brand is known then try to extract something that looks like a Brand from things like URL and Email addresses.
-                var newDeviceBrand = this.DetermineDeviceBrand(userAgent);
-                if (newDeviceBrand != null)
-                {
-                    userAgent.SetForced(
-                        UserAgent.DEVICE_BRAND,
-                        newDeviceBrand,
-                        1);
-                }
             }
 
             return userAgent;
@@ -1272,7 +1315,8 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (loadedYaml == null)
             {
-                throw new InvalidParserConfigurationException("The file " + filename + " is empty");
+                Log.Warn($"The file {filename} is empty");
+                return;
             }
 
             // Get and check top level config
@@ -1578,6 +1622,22 @@ namespace OrbintSoft.Yauaa.Analyzer
             return userAgent;
         }
 
+        /// <inheritdoc/>
+        public void ReceivedInput(Matcher matcher)
+        {
+            this.touchedMatchers.Add(matcher);
+        }
+
+        public IDictionary<string, IDictionary<string, string>> GetLookups()
+        {
+            return this.lookups;
+        }
+
+        public IDictionary<string, ISet<string>> GetLookupSets()
+        {
+            return this.lookupSets;
+        }
+
         /// <summary>
         /// Defines the <see cref="GetAllPathsAnalyzerClass" />.
         /// </summary>
@@ -1617,6 +1677,16 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// Gets the Values.
             /// </summary>
             public IList<string> Values => this.values;
+
+            public IDictionary<string, IDictionary<string, string>> GetLookups()
+            {
+                return new Dictionary<string, IDictionary<string, string>>();
+            }
+
+            public IDictionary<string, ISet<string>> GetLookupSets()
+            {
+                return new Dictionary<string, ISet<string>>();
+            }
 
             /// <summary>
             /// The GetRequiredInformRanges.
@@ -1678,6 +1748,11 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <param name="treeName">The treeName<see cref="string"/>.</param>
             /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
             public void LookingForRange(string treeName, WordRangeVisitor.Range range)
+            {
+            }
+
+            /// <inheritdoc/>
+            public void ReceivedInput(Matcher matcher)
             {
             }
         }

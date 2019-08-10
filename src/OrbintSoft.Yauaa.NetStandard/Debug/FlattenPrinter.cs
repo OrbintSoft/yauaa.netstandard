@@ -115,5 +115,22 @@ namespace OrbintSoft.Yauaa.Debug
             // Never called
             return new HashSet<int?>();
         }
+
+        /// <inheritdoc/>
+        public void ReceivedInput(Matcher matcher)
+        {
+        }
+
+        /// <inheritdoc/>
+        public IDictionary<string, IDictionary<string, string>> GetLookups()
+        {
+            return new Dictionary<string, IDictionary<string, string>>();
+        }
+
+        /// <inheritdoc/>
+        public IDictionary<string, ISet<string>> GetLookupSets()
+        {
+            return new Dictionary<string, ISet<string>>();
+        }
     }
 }

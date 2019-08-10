@@ -135,7 +135,7 @@ namespace OrbintSoft.Yauaa.Utils
                 }
             }
 
-            return sb.ToString();
+            return sb.ToString().Trim();
         }
 
         /// <summary>

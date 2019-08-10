@@ -24,6 +24,8 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System;
+
 namespace OrbintSoft.Yauaa.Classify
 {
     /// <summary>
@@ -34,91 +36,97 @@ namespace OrbintSoft.Yauaa.Classify
         /// <summary>
         /// The device is assessed as a Desktop/Laptop class device.
         /// </summary>
-        Desktop,
+        Desktop = 1,
 
         /// <summary>
         /// In some cases the useragent has been altered by anonimization software.
         /// </summary>
-        Anonymized,
+        Anonymized = 2,
 
         /// <summary>
         /// A device that is mobile yet we do not know if it is a eReader/Tablet/Phone or Watch.
         /// </summary>
-        Mobile,
+        Mobile = 3,
 
         /// <summary>
         /// A mobile device with a rather large screen (common &gt; 7").
         /// </summary>
-        Tablet,
+        Tablet = 4,
 
         /// <summary>
         /// A mobile device with a small screen (common &lt; 7").
         /// </summary>
-        Phone,
+        Phone = 5,
 
         /// <summary>
         /// A mobile device with a tiny screen (common &lt; 2"). Normally these are an additional screen for a phone/tablet type device.
         /// </summary>
-        Watch,
+        Watch = 6,
 
         /// <summary>
         /// A mobile device with a VR capabilities.
         /// </summary>
-        VirtualReality,
+        VirtualReality = 7,
 
         /// <summary>
         /// Similar to a Tablet yet in most cases with an eInk screen.
         /// </summary>
-        EReader,
+        EReader = 8,
 
         /// <summary>
         /// A connected device that allows interacting via a TV sized screen.
         /// </summary>
-        SetTopBox,
+        SetTopBox = 9,
 
         /// <summary>
         /// Similar to Set-top box yet here this is built into the TV.
         /// </summary>
-        TV,
+        TV = 10,
 
         /// <summary>
         /// 'Fixed' game systems like the PlayStation and XBox.
         /// </summary>
-        GameConsole,
+        GameConsole = 11,
 
         /// <summary>
         /// 'Mobile' game systems like the 3DS.
         /// </summary>
-        HandheldGameConsole,
+        HandheldGameConsole = 12,
 
         /// <summary>
         /// Robots that visit the site.
         /// </summary>
-        Robot,
+        Robot = 13,
 
         /// <summary>
         /// Robots that visit the site indicating they want to be seen as a Mobile visitor.
         /// </summary>
-        RobotMobile,
+        RobotMobile = 14,
 
         /// <summary>
         /// Robots that visit the site pretending they are robots like google, but they are not.
         /// </summary>
-        Spy,
+        [Obsolete("use RobotImitator")]
+        Spy = 15,
+
+        /// <summary>
+        /// Robots that visit the site pretending they are robots like google, but they are not.
+        /// </summary>
+        RobotImitator = 15,
 
         /// <summary>
         /// In case scripting is detected in the useragent string, also fallback in really broken situations.
         /// </summary>
-        Hacker,
+        Hacker = 16,
 
         /// <summary>
         /// We really don't know, these are usually useragents that look normal yet contain almost no information about the device.
         /// </summary>
-        Unknown,
+        Unknown = 17,
 
         /// <summary>
         ///  We found a deviceclass string that we have no enum value for.
         /// </summary>
-        Unclassified,
+        Unclassified = 18,
     }
 }

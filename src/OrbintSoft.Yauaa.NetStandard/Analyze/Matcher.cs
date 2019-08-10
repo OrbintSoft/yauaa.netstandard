@@ -43,6 +43,16 @@ namespace OrbintSoft.Yauaa.Analyze
     public class Matcher
     {
         /// <summary>
+        /// Gets the number of actions that requires an input.
+        /// </summary>
+        public long ActionsThatRequireInput { get; private set; } = 0;
+
+        /// <summary>
+        /// Gets or sets if we have already notified trhat the analyzer has already received the input.
+        /// </summary>
+        internal bool AlreadyNotifiedAnalyzerWeReceivedInput { get; set; } = false;
+
+        /// <summary>
         /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(Matcher));
@@ -83,11 +93,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly IList<MatcherVariableAction> variableActions;
 
         /// <summary>
-        /// Defines the actionsThatRequireInput.
-        /// </summary>
-        private long actionsThatRequireInput = 0;
-
-        /// <summary>
         /// Defines the actionsThatRequireInputAndReceivedInput.
         /// </summary>
         private long actionsThatRequireInputAndReceivedInput = 0;
@@ -108,8 +113,6 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="filename">The filename<see cref="string"/>.</param>
         public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, IList<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
-            this.Lookups = lookups;
-            this.LookupSets = lookupSets;
             this.analyzer = analyzer;
             this.fixedStringActions = new List<MatcherAction>();
             this.variableActions = new List<MatcherVariableAction>();
@@ -253,8 +256,6 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="lookupSets">The lookupSets.</param>
         internal Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets)
         {
-            this.Lookups = lookups;
-            this.LookupSets = lookupSets;
             this.analyzer = analyzer;
             this.fixedStringActions = new List<MatcherAction>();
             this.variableActions = new List<MatcherVariableAction>();
@@ -264,12 +265,23 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Gets the Lookups.
         /// </summary>
-        public IDictionary<string, IDictionary<string, string>> Lookups { get; }
+        public IDictionary<string, IDictionary<string, string>> Lookups
+        {
+            get
+            {
+                return this.analyzer.GetLookups();
+            }
+        }
 
         /// <summary>
         /// Gets the LookupSets.
         /// </summary>
-        public IDictionary<string, ISet<string>> LookupSets { get; }
+        public IDictionary<string, ISet<string>> LookupSets {
+            get
+            {
+                return this.analyzer.GetLookupSets();
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether Verbose.
@@ -319,7 +331,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
             else
             {
-                if (this.actionsThatRequireInput != this.actionsThatRequireInputAndReceivedInput)
+                if (this.ActionsThatRequireInput != this.actionsThatRequireInputAndReceivedInput)
                 {
                     return;
                 }
@@ -499,7 +511,7 @@ namespace OrbintSoft.Yauaa.Analyze
             allDynamicActions.AddRange(this.dynamicActions);
             this.dynamicActions = allDynamicActions;
 
-            this.actionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
+            this.ActionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
 
             if (this.Verbose)
             {
@@ -518,11 +530,24 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
+        /// The ReceivedInput.
+        /// </summary>
+        public void ReceivedInput()
+        {
+            if (!this.AlreadyNotifiedAnalyzerWeReceivedInput)
+            {
+                this.analyzer.ReceivedInput(this);
+                this.AlreadyNotifiedAnalyzerWeReceivedInput = true;
+            }
+        }
+
+        /// <summary>
         /// The Reset.
         /// </summary>
         public void Reset()
         {
             // If there are no dynamic actions we have fixed strings only
+            this.AlreadyNotifiedAnalyzerWeReceivedInput = false;
             this.actionsThatRequireInputAndReceivedInput = 0;
             this.Verbose = this.permanentVerbose;
             foreach (var action in this.dynamicActions)

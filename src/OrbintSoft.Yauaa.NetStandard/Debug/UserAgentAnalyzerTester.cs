@@ -193,6 +193,8 @@ namespace OrbintSoft.Yauaa.Debug
                 sb.Append(", PPS=parses/sec, msPP=milliseconds per parse");
             }
 
+            var fullStartStopWatch = Stopwatch.StartNew();
+
             if (showPassedTests)
             {
                 Log.Info("+===========================================================================================");
@@ -247,7 +249,14 @@ namespace OrbintSoft.Yauaa.Debug
 
                 if (testName == null)
                 {
-                    testName = userAgentString;
+                    if (userAgentString.Length > 300)
+                    {
+                        testName = userAgentString.Substring(0, 290) + " ... ( " + userAgentString.Length + " chars)";
+                    }
+                    else
+                    {
+                        testName = userAgentString;
+                    }
                 }
 
                 sb.Length = 0;
@@ -655,6 +664,11 @@ namespace OrbintSoft.Yauaa.Debug
             {
                 Log.Info(string.Format("All {0} tests passed", testcount));
             }
+
+            fullStartStopWatch.Stop();
+            var fullStop = fullStartStopWatch.ElapsedMilliseconds;
+
+            Log.Info($"This took {fullStop} ms for {testcount} tests : averaging to {fullStop / testcount} msec/test (This includes test validation and logging!!)");
 
             return allPass;
         }

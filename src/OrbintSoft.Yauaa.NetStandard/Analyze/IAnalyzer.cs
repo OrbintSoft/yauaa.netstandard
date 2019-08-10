@@ -73,5 +73,23 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="treeName">The treeName<see cref="string"/>.</param>
         /// <returns>The prefix lenghts/>.</returns>
         ISet<int?> GetRequiredPrefixLengths(string treeName);
+
+        /// <summary>
+        /// The ReceivedInput.
+        /// </summary>
+        /// <param name="matcher">The matcher.</param>
+        void ReceivedInput(Matcher matcher);
+
+        /// <summary>
+        /// The GetLookups.
+        /// </summary>
+        /// <returns>The dictionary of lookups.</returns>
+        IDictionary<string, IDictionary<string, string>> GetLookups();
+
+        /// <summary>
+        /// The GetLookupSets.
+        /// </summary>
+        /// <returns>A dictionary of lookups sets.</returns>
+        IDictionary<string, ISet<string>> GetLookupSets();
     }
 }
