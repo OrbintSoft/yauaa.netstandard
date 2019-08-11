@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestChildIterable.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018 - 2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-20189Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -37,18 +37,51 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 {
     public class TestChildIterable : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// Here I test the child iterator without children, the iteratir should be null and if I call MoveNext(), it should return false, because no next children.
+        /// </summary>
         [Fact]
-        public void TestEdges()
+        public void TestEdgesNoChildren()
         {
-            ChildIterable ci = new ChildIterable(true, 1, 5, x=> (true));
+            var ci = new ChildIterable(true, 1, 5, x=> (true));
 
-            ParserRuleContext prc = new ParserRuleContext();
+            var prc = new ParserRuleContext();
 
-            IEnumerator<IParseTree> iterator = ci.Iterator(prc);
+            var iterator = ci.Iterator(prc);
 
             iterator.Current.Should().BeNull();
             iterator.MoveNext().Should().BeFalse();            
             iterator.Current.Should().BeNull();            
+        }
+
+        /// <summary>
+        /// Here I test the children iterator with few children and I try to loop more.
+        /// Java throws an exception, but here I think it's not a good in .NET, if no children it simply return false when you call MoveNext.
+        /// I assume the test as passed if no exceptions are thrown.
+        /// </summary>
+        [Fact]
+        public void TestEdgeFewChildrens()
+        {
+            var ci = new ChildIterable(true, 1, 5, x => (true));
+
+            var prc = new ParserRuleContext
+            {
+                children = new List<IParseTree>()
+            };
+            prc.children.Add(new ParserRuleContext());
+            prc.children.Add(new ParserRuleContext());
+            prc.children.Add(new ParserRuleContext());
+            prc.children.Add(new ParserRuleContext());
+
+            var iterator = ci.Iterator(prc);
+
+            var i = 0;
+            while (i < 10)
+            {
+                i++;
+                iterator.MoveNext();
+            }
+
         }
     }
 }

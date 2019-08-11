@@ -103,6 +103,18 @@ namespace OrbintSoft.Yauaa.Analyze
         private IList<MatcherAction> dynamicActions = null;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Matcher"/> class for testing purpose.
+        /// </summary>
+        /// <param name="analyzer">The analyzer.</param>
+        internal Matcher(IAnalyzer analyzer)
+        {
+            this.analyzer = analyzer;
+            this.fixedStringActions = new List<MatcherAction>();
+            this.variableActions = new List<MatcherVariableAction>();
+            this.dynamicActions = new List<MatcherAction>();
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
         /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/>.</param>

@@ -104,6 +104,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             private int index = -1;
 
             /// <summary>
+            /// True if I alread iterated all the tree.
+            /// </summary>
+            private bool endReached = false;
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="ChildIterator"/> class.
             /// </summary>
             /// <param name="childIterable">The childIterable<see cref="ChildIterable"/>.</param>
@@ -194,6 +199,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
 
                 // We found nothing
                 this.Current = null;
+                this.endReached = true;
                 return false;
             }
 
@@ -204,6 +210,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             {
                 this.index = -1;
                 this.Current = null;
+                this.endReached = false;
                 this.childIter.Reset();
             }
         }

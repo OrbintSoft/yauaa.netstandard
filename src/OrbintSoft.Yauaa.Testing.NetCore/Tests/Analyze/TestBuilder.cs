@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestBuilder.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -36,18 +36,17 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
     using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="TestBuilder" />
+    /// With this class I test the <see cref="UserAgentAnalyzer"/> Builder
     /// </summary>
     public class TestBuilder : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// The RunTestCase
+        /// This is an helper method to test if the created <see cref="UserAgentAnalyzer"/> works as exected. 
         /// </summary>
         /// <param name="userAgentAnalyzer">The userAgentAnalyzer<see cref="UserAgentAnalyzerDirect"/></param>
         private void RunTestCase(UserAgentAnalyzerDirect userAgentAnalyzer)
         {
-            UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) " +
-                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
+            var parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
 
             // The requested fields
             parsedAgent.GetValue("DeviceClass").Should().Be("Phone"); // Phone
@@ -79,14 +78,13 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestLimitedFieldsDirect
+        /// This method should test the <see cref="UserAgentAnalyzerDirect.UserAgentAnalyzerDirectBuilder{TUAA, TB}"/>, but by now I am unable to do in c# :(
         /// </summary>
         [Fact]
         public void TestLimitedFieldsDirect()
         {
-            UserAgentAnalyzerDirect userAgentAnalyzer =
-                UserAgentAnalyzer
-                    .NewBuilder()
+            var builder = UserAgentAnalyzer.NewBuilder();
+            var userAgentAnalyzer = builder
                     .Preheat(100)
                     .Preheat()
                     .HideMatcherLoadStats()
@@ -99,18 +97,17 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(1234);
 
-            RunTestCase(userAgentAnalyzer);
+            this.RunTestCase(userAgentAnalyzer);
         }
 
         /// <summary>
-        /// The TestLimitedFields
+        /// Here I test the <see cref="UserAgentAnalyzer.UserAgentAnalyzerBuilder"/> with limited fields.
         /// </summary>
         [Fact]
         public void TestLimitedFields()
         {
-            UserAgentAnalyzer userAgentAnalyzer =
-                UserAgentAnalyzer
-                    .NewBuilder()
+            var builder = UserAgentAnalyzer.NewBuilder();
+            var userAgentAnalyzer = builder
                     .Preheat(100)
                     .Preheat()
                     .WithCache(42)
@@ -125,16 +122,16 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 
             userAgentAnalyzer.GetUserAgentMaxLength().Should().Be(1234);
 
-            RunTestCase(userAgentAnalyzer);
+            this.RunTestCase(userAgentAnalyzer);
         }
 
         /// <summary>
-        /// The TestLoadAdditionalRules
+        /// Here I test if I can add addinional rules (custom fields) with the builder.
         /// </summary>
         [Fact]
         public void TestLoadAdditionalRules()
         {
-            UserAgentAnalyzer userAgentAnalyzer =
+            var userAgentAnalyzer =
                 UserAgentAnalyzer
                     .NewBuilder()
                     .WithField("DeviceClass")
@@ -146,8 +143,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .AddResources(Config.RESOURCES_PATH, "ExtraLoadedRule2.yaml")
                     .Build();
 
-            UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) " +
-                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
+            var parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
 
             // The requested fields
             parsedAgent.GetValue("DeviceClass").Should().Be("Phone");
@@ -156,12 +152,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestLoadOnlyCustomRules
+        /// Here I test if I can load only custom rules and fields.
         /// </summary>
         [Fact]
         public void TestLoadOnlyCustomRules()
         {
-            UserAgentAnalyzer userAgentAnalyzer =
+            var userAgentAnalyzer =
                 UserAgentAnalyzer
                     .NewBuilder()
                     .WithoutCache()
@@ -172,8 +168,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .AddResources(Config.RESOURCES_PATH, "ExtraLoadedRule2.yaml")
                     .Build();
 
-            UserAgent parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) " +
-                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
+            var parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
 
             // The requested fields
             parsedAgent.GetValue("ExtraValue1").Should().Be("One");
@@ -181,12 +176,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestLoadOnlyCompanyCustomFormatRules
+        /// Here I test if I can load only custom comany internal user agents.
         /// </summary>
         [Fact]
         public void TestLoadOnlyCompanyCustomFormatRules()
         {
-            UserAgentAnalyzer userAgentAnalyzer =
+            var userAgentAnalyzer =
                 UserAgentAnalyzer
                     .NewBuilder()
                     .WithoutCache()
@@ -198,8 +193,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                     .WithField("ServerName")
                     .Build();
 
-            UserAgent parsedAgent = userAgentAnalyzer.Parse(
-                "TestApplication/1.2.3 (node123.datacenter.example.nl; 1234; d71922715c2bfe29343644b14a4731bf5690e66e)");
+            var parsedAgent = userAgentAnalyzer.Parse("TestApplication/1.2.3 (node123.datacenter.example.nl; 1234; d71922715c2bfe29343644b14a4731bf5690e66e)");
 
             // The requested fields
             parsedAgent.GetValue("ApplicationName").Should().Be("TestApplication");
@@ -210,7 +204,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestAskingForImpossibleField
+        /// Here I test if I ask to build with an impossible field(non existent) the builder should throw a <see cref="InvalidParserConfigurationException"/>
         /// </summary>
         [Fact]
         public void TestAskingForImpossibleField()
@@ -223,62 +217,64 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             .WithField("FirstNonexistentField")
             .WithField("DeviceClass")
             .WithField("SecondNonexistentField");
-            Action a = new Action(() => uaa.Build());
+            var a = new Action(() => uaa.Build());
             a.Should().Throw<InvalidParserConfigurationException>().WithMessage("We cannot provide these fields: [FirstNonexistentField] [SecondNonexistentField]");
         }
 
         /// <summary>
-        /// The TestDualBuilderUsageNoSecondInstance
+        /// Here I delay the initialization and call Build() a second time, builder can only return a single istance so it should thrown an exception.
+        /// Sorry the builder is not thread safe.
         /// </summary>
         [Fact]
         public void TestDualBuilderUsageNoSecondInstance()
         {
-            UserAgentAnalyzer.UserAgentAnalyzerBuilder builder = UserAgentAnalyzer.NewBuilder().DelayInitialization();
+            var builder = UserAgentAnalyzer.NewBuilder().DelayInitialization();
 
             builder.Build().Should().NotBeNull("We should get a first instance from a single builder.");
             // And calling build() again should fail with an exception
-            Action a = new Action(() => builder.Build());
+            var a = new Action(() => builder.Build());
             a.Should().Throw<Exception>();
         }
 
         /// <summary>
-        /// The TestDualBuilderUsageUseSetterAfterBuild
+        /// Here I test that I can't set a property (example cache) from builder after I call Build(), even if initialization has been delayed, because
+        /// the builder is not thread safe.
         /// </summary>
         [Fact]
         public void TestDualBuilderUsageUseSetterAfterBuild()
         {
-            UserAgentAnalyzer.UserAgentAnalyzerBuilder builder = UserAgentAnalyzer.NewBuilder().DelayInitialization();
+            var builder = UserAgentAnalyzer.NewBuilder().DelayInitialization();
 
             builder.Build().Should().NotBeNull("We should get a first instance from a single builder.");
 
             // And calling a setter after the build() should fail with an exception
-            Action a = new Action(() => builder.WithCache(1234));
+            var a = new Action(() => builder.WithCache(1234));
             a.Should().Throw<Exception>();
         }
 
         /// <summary>
-        /// The TestLoadMoreResources
+        /// Here I test that I can't load other resources after I called Build();
         /// </summary>
         [Fact]
         public void TestLoadMoreResources()
         {
-            UserAgentAnalyzer.UserAgentAnalyzerBuilder builder = UserAgentAnalyzer.NewBuilder().DelayInitialization().WithField("DeviceClass");
+            var builder = UserAgentAnalyzer.NewBuilder().DelayInitialization().WithField("DeviceClass");
 
-            UserAgentAnalyzer uaa = builder.Build();
+            var uaa = builder.Build();
             builder.Should().NotBeNull("We should get a first instance from a single builder.");
 
             uaa.InitializeMatchers();
-            Action a = new Action(() => uaa.LoadResources("Something extra"));
+            var a = new Action(() => uaa.LoadResources("Something extra"));
             a.Should().Throw<Exception>();
         }
 
         /// <summary>
-        /// The TestPostPreheatDroptests
+        /// Here I test Preheat to optimize parsing performance after first startup.
         /// </summary>
         [Fact]
         public void TestPostPreheatDroptests()
         {
-            UserAgentAnalyzer userAgentAnalyzer =
+            var userAgentAnalyzer =
                 UserAgentAnalyzer
                     .NewBuilder()
                     .ImmediateInitialization()
@@ -302,12 +298,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestPreheatNoTests
+        /// Here I test Preheat to optimize parsing performance after first startup, but keeping also tests.
         /// </summary>
         [Fact]
         public void TestPreheatNoTests()
         {
-            UserAgentAnalyzer userAgentAnalyzer =
+            var userAgentAnalyzer =
                 UserAgentAnalyzer
                     .NewBuilder()
                     .KeepTests()
