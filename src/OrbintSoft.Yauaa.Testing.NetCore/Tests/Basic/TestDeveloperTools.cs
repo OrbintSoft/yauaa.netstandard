@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestDeveloperTools.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,28 +25,27 @@
 // <date>2018, 11, 24, 17:39</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
-namespace OrbintSoft.Yauaa.Testing.Tests
-{
-    using FluentAssertions;
-    using OrbintSoft.Yauaa.Analyze;
-    using OrbintSoft.Yauaa.Analyzer;
-    using OrbintSoft.Yauaa.Debug;
-    using OrbintSoft.Yauaa.Testing.Fixtures;
-    using OrbintSoft.Yauaa.Tests;
-    using Xunit;
+using FluentAssertions;
+using OrbintSoft.Yauaa.Analyze;
+using OrbintSoft.Yauaa.Debug;
+using OrbintSoft.Yauaa.Testing.Fixtures;
+using OrbintSoft.Yauaa.Tests;
+using Xunit;
 
+namespace OrbintSoft.Yauaa.Testing.Tests.Basic
+{
     /// <summary>
-    /// Defines the <see cref="TestDeveloperTools" />
+    /// I test that test and debugging tools works as expected.
     /// </summary>
     public class TestDeveloperTools : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// The ValidateErrorSituationOutput
+        /// I check with a wrong test case define in in CheckErrorOutput.yaml, the test fails.
         /// </summary>
         [Fact]
         public void ValidateErrorSituationOutput()
         {
-            UserAgentAnalyzerTester uaa = UserAgentAnalyzerTester
+            var uaa = UserAgentAnalyzerTester
                 .NewBuilder()
                 .HideMatcherLoadStats()
                 .DelayInitialization()
@@ -59,12 +58,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         }
 
         /// <summary>
-        /// The ValidateNewTestcaseSituationOutput
+        /// I check taht if I add a new empty test case, the other test cases continue to woirk as expected.
         /// </summary>
         [Fact]
         public void ValidateNewTestcaseSituationOutput()
         {
-            UserAgentAnalyzerTester uaa = UserAgentAnalyzerTester
+            var uaa = UserAgentAnalyzerTester
             .NewBuilder()
             .DelayInitialization()
             .HideMatcherLoadStats()
@@ -73,24 +72,23 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             uaa.SetShowMatcherStats(true);
             uaa.KeepTests();
             uaa.LoadResources(Config.RESOURCES_PATH, "CheckNewTestcaseOutput.yaml");
-            uaa.RunTests(false, true).Should().BeTrue();  // This test must return an error state
+            uaa.RunTests(false, true).Should().BeTrue();
         }
 
         /// <summary>
-        /// The ValidateStringOutputsAndMatches
+        /// I validate that the ouput of tests and matchers is formatted as expected.
         /// </summary>
         [Fact]
         public void ValidateStringOutputsAndMatches()
         {
             var uaa = UserAgentAnalyzerTester.NewBuilder().WithField("DeviceName").Build() as UserAgentAnalyzerTester;
-            var useragent = uaa.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) " +
-                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
+            var useragent = uaa.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
             useragent.ToString().Contains("'Google Nexus 6'").Should().BeTrue();
             useragent.ToJson().Contains("\"DeviceName\":\"Google Nexus 6\"").Should().BeTrue();
             useragent.ToYamlTestCase(true).Contains("'Google Nexus 6'").Should().BeTrue();
 
-            bool ok = false;
-            foreach (MatchesList.Match match in uaa.GetMatches())
+            var ok = false;
+            foreach (var match in uaa.GetMatches())
             {
                 if ("agent.(1)product.(1)comments.(3)entry[3-3]".Equals(match.Key))
                 {

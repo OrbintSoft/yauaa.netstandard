@@ -36,7 +36,9 @@ namespace OrbintSoft.Yauaa.Debug
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentAnalyzerTester" />.
+    /// This class is used for test/debugging purposes.
+    /// It provides a verbose log and complete tests.
+    /// You can use this class if you are creating your custom yaml definitions and you want check that everything works well.
     /// </summary>
     [Serializable]
     public class UserAgentAnalyzerTester : UserAgentAnalyzer
@@ -58,12 +60,12 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAgentAnalyzerTester"/> class.
         /// </summary>
-        /// <param name="resourceString">The resourceString<see cref="string"/>.</param>
-        /// <param name="pattern">The pattern<see cref="string"/>.</param>
-        public UserAgentAnalyzerTester(string resourceString, string pattern = "*.yaml")
+        /// <param name="folder">The path to yaml definitions folder.</param>
+        /// <param name="pattern">The pattern or the name of yaml file to load, default it's *.yaml.</param>
+        public UserAgentAnalyzerTester(string folder, string pattern = "*.yaml")
             : this()
         {
-            this.LoadResources(resourceString, pattern);
+            this.LoadResources(folder, pattern);
         }
 
         /// <summary>
@@ -129,11 +131,11 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The RunTests.
+        /// This method is used to test if parsing works correctly.
         /// </summary>
-        /// <param name="showAll">The showAll<see cref="bool"/>.</param>
-        /// <param name="failOnUnexpected">The failOnUnexpected<see cref="bool"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="showAll">If true shows all results of the tests.</param>
+        /// <param name="failOnUnexpected">If true the test fails in case of unexpected result.</param>
+        /// <returns>True if test has passed.</returns>
         public bool RunTests(bool showAll, bool failOnUnexpected)
         {
             return this.RunTests(showAll, failOnUnexpected, null, false, false);

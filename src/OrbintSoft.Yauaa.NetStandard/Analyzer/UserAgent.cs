@@ -42,7 +42,8 @@ namespace OrbintSoft.Yauaa.Analyzer
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="UserAgent" />.
+    /// Defines the <see cref="UserAgent" /> class.
+    /// This class contains all info about a parsed user agent and all utility to work with it.
     /// </summary>
     [Serializable]
     public class UserAgent : UserAgentBaseListener, IAntlrErrorListener<int>, IAntlrErrorListener<IToken>
@@ -491,10 +492,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The GetValue.
+        /// It resturns the parsed value of the wanted field.
         /// </summary>
-        /// <param name="fieldName">The fieldName<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="fieldName">The name the field.</param>
+        /// <returns>The parsed value.</returns>
         public string GetValue(string fieldName)
         {
             if (USERAGENT_FIELDNAME.Equals(fieldName))
@@ -634,11 +635,11 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The SetForced.
+        /// This method is used to force or add a custom field with a value and conficence.
         /// </summary>
-        /// <param name="attribute">The attribute<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="confidence">The confidence<see cref="long"/>.</param>
+        /// <param name="attribute">The name of the field we want set (ex: 'BrowserCustomName').</param>
+        /// <param name="value">The value of the field we want set (ex: 'Custom Chrome').</param>
+        /// <param name="confidence">A value that indicates how much the value of the parsed field is reliable.</param>
         public void SetForced(string attribute, string value, long confidence)
         {
             AgentField field;
@@ -655,7 +656,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             field.SetValueForced(value, confidence);
             if (this.IsDebug && !wasEmpty)
             {
-                Log.Info(string.Format("USE  {0} ({1}) = {2}", attribute, confidence, value));
+                Log.Info($"USE  {attribute} ({confidence}) = {value}");
             }
 
             this.allFields[attribute] = field;

@@ -874,12 +874,12 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The ConcatFieldValuesNONDuplicated.
+        /// This is used to concatenate two parsed fields into one.
         /// </summary>
         /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <param name="targetName">The targetName<see cref="string"/>.</param>
-        /// <param name="firstName">The firstName<see cref="string"/>.</param>
-        /// <param name="secondName">The secondName<see cref="string"/>.</param>
+        /// <param name="targetName">The name of the new field after concatenation.</param>
+        /// <param name="firstName">The name of first field you want concatenate</param>
+        /// <param name="secondName">The name of the second field.</param>
         internal void ConcatFieldValuesNONDuplicated(UserAgent userAgent, string targetName, string firstName, string secondName)
         {
             if (!this.IsWantedField(targetName))

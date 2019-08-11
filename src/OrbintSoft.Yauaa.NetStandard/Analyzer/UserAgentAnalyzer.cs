@@ -61,7 +61,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         public int CacheSize { get; private set; } = DEFAULT_PARSE_CACHE_SIZE;
 
         /// <summary>
-        /// The NewBuilder.
+        /// Creates a new instance of <see cref="UserAgentAnalyzerBuilder"/>.
         /// </summary>
         /// <returns>The <see cref="UserAgentAnalyzerBuilder"/>.</returns>
         public static UserAgentAnalyzerBuilder NewBuilder()

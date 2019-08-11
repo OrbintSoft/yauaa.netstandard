@@ -100,6 +100,7 @@
     <None Remove="YamlResources\SubString-tests.yaml" />
     <None Remove="YamlResources\SubStringVersion-tests.yaml" />
     <None Remove="YamlResources\TestCases\LookupPrefix-tests.yaml" />
+    <None Remove="YamlResources\TestCases\YamlParsingTests\AllSteps.yaml" />
     <None Remove="YamlResources\TestOnlyOneTest.yaml" />
     <None Remove="YamlResources\Variable-tests.yaml" />
     <None Remove="YamlResources\TestCases\Versions\BadVersion.yaml" />
@@ -267,6 +268,9 @@
     <Content Include="YamlResources\TestCases\Walking-tests.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="YamlResources\TestCases\YamlParsingTests\AllSteps.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="YamlResources\TestCases\YamlParsingTests\BadConfig1.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -309,7 +313,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.7.0" />
+    <PackageReference Include="FluentAssertions" Version="5.8.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
     <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />

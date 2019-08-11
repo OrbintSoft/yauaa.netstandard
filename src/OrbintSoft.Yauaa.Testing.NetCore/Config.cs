@@ -25,11 +25,13 @@
 // <date>2018, 11, 24, 17:39</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using System.IO;
+
 namespace OrbintSoft.Yauaa.Tests
 {
     public static class Config
     {
-        public const string RESOURCES_PATH = "YamlResources/TestCases";
+        public static string RESOURCES_PATH = $"YamlResources{Path.DirectorySeparatorChar}TestCases";
         public const bool ENABLE_PROFILING = false;
     }
 }

@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestClassifier.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -34,84 +34,84 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Classify
     using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="TestClassifier" />
+    /// This class is used to test if devices are classified in the right way.
     /// </summary>
     public class TestClassifier : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// The TestEnumCreation
+        /// This methos test if the enum used for device clasaification is created in the right way a correctly traslated in the corrisponding string representation.
         /// </summary>
         [Fact]
         public void TestEnumCreation()
         {
-            VerifyEnum("Desktop");
-            VerifyEnum("Anonymized");
-            VerifyEnum("Mobile");
-            VerifyEnum("Tablet");
-            VerifyEnum("Phone");
-            VerifyEnum("Watch");
-            VerifyEnum("Virtual Reality");
-            VerifyEnum("eReader");
-            VerifyEnum("Set-top box");
-            VerifyEnum("TV");
-            VerifyEnum("Game Console");
-            VerifyEnum("Handheld Game Console");
-            VerifyEnum("Robot");
-            VerifyEnum("Robot Mobile");
-            VerifyEnum("Spy");
-            VerifyEnum("Hacker");
-            VerifyEnum("Unknown");
+            this.VerifyEnum("Desktop");
+            this.VerifyEnum("Anonymized");
+            this.VerifyEnum("Mobile");
+            this.VerifyEnum("Tablet");
+            this.VerifyEnum("Phone");
+            this.VerifyEnum("Watch");
+            this.VerifyEnum("Virtual Reality");
+            this.VerifyEnum("eReader");
+            this.VerifyEnum("Set-top box");
+            this.VerifyEnum("TV");
+            this.VerifyEnum("Game Console");
+            this.VerifyEnum("Handheld Game Console");
+            this.VerifyEnum("Robot");
+            this.VerifyEnum("Robot Mobile");
+            this.VerifyEnum("Robot Imitator");
+            this.VerifyEnum("Hacker");
+            this.VerifyEnum("Unknown");
         }
 
         /// <summary>
-        /// The VerifyEnum
+        /// This is a methis helper to verify the emum creation.
         /// </summary>
-        /// <param name="deviceClass">The deviceClass<see cref="string"/></param>
+        /// <param name="deviceClass">The deviceClass enum as string.</param>
         private void VerifyEnum(string deviceClass)
         {
-            UserAgent userAgent = new UserAgent();
+            var userAgent = new UserAgent();
             userAgent.Set(UserAgent.DEVICE_CLASS, deviceClass, 1);
             deviceClass.Should().Be(UserAgentClassifier.GetDeviceClass(userAgent).GetValue());
         }
 
         /// <summary>
-        /// The ClassifierTest
+        /// This method cgecks if the device class is classified correctly.
         /// </summary>
         [Fact]
         public void ClassifierTest()
         {
-            // DeviceClass,          human, mobile, normal, misuse
-            VerifyDeviceClass(DeviceClass.Desktop, true, false, true, false);
-            VerifyDeviceClass(DeviceClass.Anonymized, true, false, false, true);
-            VerifyDeviceClass(DeviceClass.Mobile, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.Tablet, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.Phone, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.Watch, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.VirtualReality, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.EReader, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.SetTopBox, true, false, true, false);
-            VerifyDeviceClass(DeviceClass.TV, true, false, true, false);
-            VerifyDeviceClass(DeviceClass.GameConsole, true, false, true, false);
-            VerifyDeviceClass(DeviceClass.HandheldGameConsole, true, true, true, false);
-            VerifyDeviceClass(DeviceClass.Robot, false, false, false, false);
-            VerifyDeviceClass(DeviceClass.RobotMobile, false, true, false, false);
-            VerifyDeviceClass(DeviceClass.Spy, false, false, false, true);
-            VerifyDeviceClass(DeviceClass.Hacker, false, false, false, true);
-            VerifyDeviceClass(DeviceClass.Unknown, false, false, false, false);
-            VerifyDeviceClass(DeviceClass.Unclassified, false, false, false, false);
+            //                                 DeviceClass,         human, mobile, normal, misuse
+            this.VerifyDeviceClass(DeviceClass.Desktop,             true,  false,  true,   false);
+            this.VerifyDeviceClass(DeviceClass.Anonymized,          true,  false,  false,  true);
+            this.VerifyDeviceClass(DeviceClass.Mobile,              true,  true,   true,   false);
+            this.VerifyDeviceClass(DeviceClass.Tablet,              true,  true,   true,   false);
+            this.VerifyDeviceClass(DeviceClass.Phone,               true,  true,   true,   false);
+            this.VerifyDeviceClass(DeviceClass.Watch,               true,  true,   true,   false);
+            this.VerifyDeviceClass(DeviceClass.VirtualReality,      true,  true,   true,   false);
+            this.VerifyDeviceClass(DeviceClass.EReader,             true,  true,   true,   false);
+            this.VerifyDeviceClass(DeviceClass.SetTopBox,           true,  false,  true,   false);
+            this.VerifyDeviceClass(DeviceClass.TV,                  true,  false,  true,   false);
+            this.VerifyDeviceClass(DeviceClass.GameConsole,         true,  false,  true,   false);
+            this.VerifyDeviceClass(DeviceClass.HandheldGameConsole, true,  true,   true,   false);
+            this.VerifyDeviceClass(DeviceClass.Robot,               false, false,  false,  false);
+            this.VerifyDeviceClass(DeviceClass.RobotMobile,         false, true,   false,  false);
+            this.VerifyDeviceClass(DeviceClass.RobotImitator,       false, false,  false,  true);
+            this.VerifyDeviceClass(DeviceClass.Hacker,              false, false,  false,  true);
+            this.VerifyDeviceClass(DeviceClass.Unknown,             false, false,  false,  false);
+            this.VerifyDeviceClass(DeviceClass.Unclassified,        false, false,  false,  false);
         }
 
         /// <summary>
-        /// The VerifyDeviceClass
+        /// This is an helper method to verify device class classification.
         /// </summary>
         /// <param name="deviceClass">The deviceClass<see cref="DeviceClass"/></param>
-        /// <param name="human">The human<see cref="bool"/></param>
-        /// <param name="mobile">The mobile<see cref="bool"/></param>
-        /// <param name="normal">The normal<see cref="bool"/></param>
-        /// <param name="misuse">The misuse<see cref="bool"/></param>
+        /// <param name="human">If the device is used by a human (like  a browser)</param>
+        /// <param name="mobile">If the device is mobile</param>
+        /// <param name="normal">If its a normal consumer device.</param>
+        /// <param name="misuse">If this user agent is a misuse like an hacker.</param>
         private void VerifyDeviceClass(DeviceClass deviceClass, bool human, bool mobile, bool normal, bool misuse)
         {
-            UserAgent userAgent = new UserAgent();
+            var userAgent = new UserAgent();
 
             userAgent.Set(UserAgent.DEVICE_CLASS, deviceClass.GetValue(), 1);
             UserAgentClassifier.IsHuman(userAgent).Should().Be(human, "For the DeviceClass " + deviceClass.ToString() + " the isHuman() should be correct");

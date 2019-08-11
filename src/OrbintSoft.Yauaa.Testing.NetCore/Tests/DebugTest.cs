@@ -71,7 +71,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             return uaa as UserAgentAnalyzerTester;
         }
 
-        [Fact]
+        //[Fact]
         public void TestError()
         {
             var fieldName = "DeviceCpu";
