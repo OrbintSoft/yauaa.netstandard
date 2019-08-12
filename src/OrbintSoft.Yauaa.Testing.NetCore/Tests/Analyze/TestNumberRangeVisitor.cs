@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestNumberRangeVisitor.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -36,17 +36,17 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
     using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="TestNumberRangeVisitor" />
+    /// This class is used to test if <see cref="NumberRangeList" /> works as expected.
     /// </summary>
     public class TestNumberRangeVisitor : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// The RangeSingleValue
+        /// I test a range win same start and end, in fact a single value range.
         /// </summary>
         [Fact]
         public void RangeSingleValue()
         {
-            IReadOnlyList<int> values = new NumberRangeList(5, 5);
+            var values = new NumberRangeList(5, 5);
             values.Count.Should().Be(1);
             values.Contains(1).Should().BeFalse();
             values.Contains(2).Should().BeFalse();
@@ -62,12 +62,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The RangeMultipleValues
+        /// I test a normal range of values.
         /// </summary>
         [Fact]
         public void RangeMultipleValues()
         {
-            IReadOnlyList<int> values = new NumberRangeList(3, 5);
+            var values = new NumberRangeList(3, 5);
             values.Count.Should().Be(3);
             values.Contains(1).Should().BeFalse();
             values.Contains(2).Should().BeFalse();
@@ -83,17 +83,17 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestRangeCompare
+        /// I test if I can compare two different instances with same values.
         /// </summary>
         [Fact]
         public void TestRangeCompare()
         {
-            WordRangeVisitor.Range range1 = new WordRangeVisitor.Range(1, 2);
-            WordRangeVisitor.Range range1b = new WordRangeVisitor.Range(1, 2);
-            WordRangeVisitor.Range range2 = new WordRangeVisitor.Range(2, 1);
-            WordRangeVisitor.Range range3 = new WordRangeVisitor.Range(1, 1);
-            WordRangeVisitor.Range range4 = new WordRangeVisitor.Range(2, 2);
-            string notARange = "Range";
+            var range1 = new WordRangeVisitor.Range(1, 2);
+            var range1b = new WordRangeVisitor.Range(1, 2);
+            var range2 = new WordRangeVisitor.Range(2, 1);
+            var range3 = new WordRangeVisitor.Range(1, 1);
+            var range4 = new WordRangeVisitor.Range(2, 2);
+            var notARange = "Range";
 
             range1.Should().BeEquivalentTo(range1b);
             range1.Equals(null).Should().BeFalse();

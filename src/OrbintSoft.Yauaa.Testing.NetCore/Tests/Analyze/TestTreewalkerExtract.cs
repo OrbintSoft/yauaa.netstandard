@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestTreewalkerExtract.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -27,10 +27,8 @@
 //-----------------------------------------------------------------------
 using FluentAssertions;
 using OrbintSoft.Yauaa.Analyze;
-using OrbintSoft.Yauaa.Analyze.TreeWalker;
-using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
-using OrbintSoft.Yauaa.Analyzer;
 using OrbintSoft.Yauaa.Testing.Fixtures;
+using OrbintSoft.Yauaa.Testing.Tests.Analyze.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,42 +36,54 @@ using Xunit;
 
 namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 {
+    /// <summary>
+    /// Thi class is used to test Treewalker extract.
+    /// </summary>
     public class TestTreewalkerExtract : IClassFixture<LogFixture>
     {
+        /// <summary>
+        /// I test a simple path, it should extract the name entry and there are no walking lists.
+        /// </summary>
         [Fact]
         public void ValidateWalkPathSimpleName()
         {
-            string path = "agent.(1)product.(1)name";
+            var path = "agent.(1)product.(1)name";
 
-            string[] expectedHashEntries = {"agent.(1)product.(1)name"};
+            var expectedHashEntries = new string[]{"agent.(1)product.(1)name"};
 
-            string[] expectedWalkList = {};
+            var expectedWalkList = new string[]{};
 
-            CheckPath(path, expectedHashEntries, expectedWalkList);
+            this.CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// I test a simple open start range path, it should extract all entries in the range, no walink list.
+        /// </summary>
         [Fact]
         public void ValidateWalkPathSimpleNameOpenStartRange()
         {
             var path = "agent.(-3)product.(1)name";
 
-            string[] expectedHashEntries = {
+            var expectedHashEntries = new string[]{
                 "agent.(1)product.(1)name",
                 "agent.(2)product.(1)name",
                 "agent.(3)product.(1)name",
             };
 
-            string[] expectedWalkList = {};
+            var expectedWalkList = new string[]{};
 
-            CheckPath(path, expectedHashEntries, expectedWalkList);
+            this.CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// I test a simple open end range path, it should extract all entries in the range, no walink list.
+        /// </summary>
         [Fact]
         public void ValidateWalkPathSimpleNameOpenEndRange()
         {
             var path = "agent.(5-)product.(1)name";
 
-            string[] expectedHashEntries = {
+            var expectedHashEntries = new string[] {
                 "agent.(5)product.(1)name",
                 "agent.(6)product.(1)name",
                 "agent.(7)product.(1)name",
@@ -82,21 +92,24 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                 "agent.(10)product.(1)name",
             };
 
-            string[] expectedWalkList = {};
+            var expectedWalkList = new string[] { };
 
-            CheckPath(path, expectedHashEntries, expectedWalkList);
+            this.CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Fact]
         public void ValidateWalkPathSimpleNameEquals()
         {
-            string path = "agent.(1)product.(1)name=\"Foo\"^.(1-3)version";
+            var path = "agent.(1)product.(1)name=\"Foo\"^.(1-3)version";
 
             string[] expectedHashEntries = { "agent.(1)product.(1)name=\"Foo\""};
 
             string[] expectedWalkList = { "Up()", "Down([1:3]version)"};
 
-            CheckPath(path, expectedHashEntries, expectedWalkList);
+            this.CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
         [Fact]
@@ -213,12 +226,18 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         {
             string path = "agent.product.(1)name[3]\"Safari\"";
 
-            TestMatcher matcher = new TestMatcher(new Dictionary<string, IDictionary<string, string>>(), new Dictionary<string, ISet<string>>());
+            var matcher = new TestMatcher(new Dictionary<string, IDictionary<string, string>>(), new Dictionary<string, ISet<string>>());
             MatcherExtractAction action = new MatcherExtractAction("Dummy", 42, path, matcher);
             Action a = new Action(() => action.Initialize());
             a.Should().Throw<InvalidParserConfigurationException>();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="expectedHashEntries"></param>
+        /// <param name="expectedWalkList"></param>
         private void CheckPath(string path, string[] expectedHashEntries, string[] expectedWalkList)
         {
             var lookups = new Dictionary<string, IDictionary<string, string>>
@@ -226,73 +245,40 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                 ["TridentVersions"] = new Dictionary<string, string>()
             };
 
-            TestMatcher matcher = new TestMatcher(lookups, new Dictionary<string, ISet<string>>());
+            var matcher = new TestMatcher(lookups, new Dictionary<string, ISet<string>>());
             var action = new MatcherExtractAction("Dummy", 42, path, matcher);
             action.Initialize();
 
-            StringBuilder sb = new StringBuilder("\n---------------------------\nActual list (")
-                .Append(matcher.reveicedValues.Count)
-                .Append(" entries):\n");
+            var sb = new StringBuilder("\n---------------------------\nActual list (")
+                        .Append(matcher.receivedValues.Count)
+                        .Append(" entries):\n");
 
-            foreach (string actual in matcher.reveicedValues)
+            foreach (var actual in matcher.receivedValues)
             {
                 sb.Append(actual).Append('\n');
             }
             sb.Append("---------------------------\n");
 
             // Validate the expected hash entries (i.e. the first part of the path)
-            foreach (string expect in expectedHashEntries)
+            foreach (var expect in expectedHashEntries)
             {
-                matcher.reveicedValues.Contains(expect).Should().BeTrue("\nExpected:\n" + expect + sb.ToString());
+                matcher.receivedValues.Contains(expect).Should().BeTrue("\nExpected:\n" + expect + sb.ToString());
             }
 
-            expectedHashEntries.Length.Should().Be(matcher.reveicedValues.Count, "Found that number of entries");
+            expectedHashEntries.Length.Should().Be(matcher.receivedValues.Count, "Found that number of entries");
 
             // Validate the expected walk list entries (i.e. the dynamic part of the path)
-            TreeExpressionEvaluator evaluator = action.EvaluatorForUnitTesting;
-            WalkList walkList = evaluator.WalkListForUnitTesting;
+            var evaluator = action.EvaluatorForUnitTesting;
+            var walkList = evaluator.WalkListForUnitTesting;
 
-            Step step = walkList.FirstStep;
-            foreach (string walkStep in expectedWalkList)
+            var step = walkList.FirstStep;
+            foreach (var walkStep in expectedWalkList)
             {
                 step.Should().NotBeNull("Step: " + walkStep);
                 walkStep.Should().Be(step.ToString(), "step(" + step.ToString() + " should be " + walkStep + ")");
                 step = step.NextStep;
             }
             step.Should().BeNull();
-        }
-
-        private class TestMatcher: Matcher
-        {
-            internal readonly IList<string> reveicedValues = new List<string>(128);
-
-            internal TestMatcher(IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets): base(null, lookups, lookupSets)
-            {
-            }
-
-       
-            public override void InformMeAbout(MatcherAction matcherAction, string keyPattern)
-            {
-                reveicedValues.Add(keyPattern);
-            }
-
-        
-            public override void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
-            {
-                InformMeAbout(matcherAction, treeName + "{\"" + UserAgentAnalyzerDirect.FirstCharactersForPrefixHash(prefix, UserAgentAnalyzerDirect.MAX_PREFIX_HASH_MATCH) + "\"");
-            }
-
-        
-            public override void Analyze(UserAgent userAgent)
-            {
-                // Do nothing
-            }
-
- 
-            public override void LookingForRange(string treeName, WordRangeVisitor.Range range)
-            {
-                // Do nothing
-            }
         }
     }
 }

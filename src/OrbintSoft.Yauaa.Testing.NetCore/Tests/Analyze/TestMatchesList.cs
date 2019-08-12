@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestMatchesList.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -25,39 +25,39 @@
 // <date>2018, 11, 24, 17:39</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
+using FluentAssertions;
+using OrbintSoft.Yauaa.Analyze;
+using OrbintSoft.Yauaa.Testing.Fixtures;
+using System;
+using System.Collections.Generic;
+using Xunit;
+
 namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 {
-    using FluentAssertions;
-    using OrbintSoft.Yauaa.Analyze;
-    using OrbintSoft.Yauaa.Testing.Fixtures;
-    using System;
-    using System.Collections.Generic;
-    using Xunit;
-
     /// <summary>
-    /// Defines the <see cref="TestMatchesList" />
+    /// This class tests that iteration thought  MatchesList works as expected.
     /// </summary>
     public class TestMatchesList : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// The TestNormalUse
+        /// I test a normal use of the list.
         /// </summary>
         [Fact]
         public void TestNormalUse()
         {
-            MatchesList list = new MatchesList(5);
+            var list = new MatchesList(5);
             list.Count.Should().Be(0);
             list.Add("one", "two", null);
             list.Count.Should().Be(1);
             list.Add("three", "four", null);
             list.Count.Should().Be(2);
-            IEnumerator<MatchesList.Match> iterator = list.GetEnumerator();
+            var iterator = list.GetEnumerator();
             var next = iterator.MoveNext();
             next.Should().BeTrue();
-            MatchesList.Match match1 = iterator.Current;
+            var match1 = iterator.Current;
             next = iterator.MoveNext();
             next.Should().BeTrue();
-            MatchesList.Match match2 = iterator.Current;
+            var match2 = iterator.Current;
             next = iterator.MoveNext();
             next.Should().BeFalse();
             match1.Key.Should().Be("one");
@@ -68,27 +68,30 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             match2.GetResult().Should().BeNull();
         }
 
+        /// <summary>
+        /// I test if I try to iterate for too many elements, it should throw an exception. 
+        /// </summary>
         [Fact]
         public void TestTooMany()
         {
-            MatchesList list = new MatchesList(5)
+            var list = new MatchesList(5)
             {
                 { "one", "two", null },
                 { "three", "four", null }
             };
-            IEnumerator<MatchesList.Match> iterator = list.GetEnumerator();
+            var iterator = list.GetEnumerator();
 
             iterator.MoveNext().Should().BeTrue();
             iterator.Current.Should().NotBeNull();
             iterator.MoveNext().Should().BeTrue();
             iterator.Current.Should().NotBeNull();
             iterator.MoveNext().Should().BeFalse();
-            Action a = new Action(() => { var c = iterator.Current; }); 
+            var a = new Action(() => { var c = iterator.Current; }); 
             a.Should().Throw<IndexOutOfRangeException>();
         }
 
         /// <summary>
-        /// The TestUnsupportedAdd
+        /// For now Add is not supported, as in Java library, but I don't like this kind of partial implementation, I should implement it in future.
         /// </summary>
         [Fact]
         public void TestUnsupportedAdd()
@@ -97,7 +100,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestUnsupportedRemove
+        /// For now Remove is not supported, as in Java library, but I don't like this kind of partial implementation, I should implement it in future.
         /// </summary>
         [Fact]
         public void TestUnsupportedRemove()
@@ -106,7 +109,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// The TestUnsupportedContains
+        /// For now Contains is not supported, as in Java library, but I don't like this kind of partial implementation, I should implement it in future.
         /// </summary>
         [Fact]
         public void TestUnsupportedContains()

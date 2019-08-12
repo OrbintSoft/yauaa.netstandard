@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestTreewalkerRequire.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ using OrbintSoft.Yauaa.Analyze;
 using OrbintSoft.Yauaa.Analyze.TreeWalker;
 using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
 using OrbintSoft.Yauaa.Analyzer;
+using OrbintSoft.Yauaa.Testing.Tests.Analyze.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -101,7 +102,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                 "agent.(1)product.(1)name[1-2]=\"Foo\"",
             };
 
-            string[] expectedWalkList = {};
+            string[] expectedWalkList = { };
 
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
@@ -149,7 +150,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                 "agent.(1)product.(1)name[1-2]=\"Foo\"",
             };
 
-            string[] expectedWalkList = {};
+            string[] expectedWalkList = { };
 
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
@@ -198,7 +199,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             string path = "\"Safari\"";
 
             TestMatcher matcher = new TestMatcher(new Dictionary<string, IDictionary<string, string>>(), new Dictionary<string, ISet<string>>());
-            MatcherRequireAction action = new MatcherRequireAction(path, matcher);            
+            MatcherRequireAction action = new MatcherRequireAction(path, matcher);
             Action a = new Action(() => action.Initialize());
             a.Should().Throw<InvalidParserConfigurationException>();
         }
@@ -300,15 +301,15 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                 ["TridentVersions"] = new Dictionary<string, string>()
             };
 
-            TestMatcher matcher = new TestMatcher(lookups, new Dictionary<string, ISet<string>>());
+            var matcher = new TestMatcher(lookups, new Dictionary<string, ISet<string>>());
             var action = new MatcherRequireAction(path, matcher);
             action.Initialize();
 
-            StringBuilder sb = new StringBuilder("\n---------------------------\nActual list (")
-                .Append(matcher.reveicedValues.Count)
+            var sb = new StringBuilder("\n---------------------------\nActual list (")
+                .Append(matcher.receivedValues.Count)
                 .Append(" entries):\n");
 
-            foreach (string actual in matcher.reveicedValues)
+            foreach (string actual in matcher.receivedValues)
             {
                 sb.Append(actual).Append('\n');
             }
@@ -317,16 +318,16 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             // Validate the expected hash entries (i.e. the first part of the path)
             foreach (string expect in expectedHashEntries)
             {
-                matcher.reveicedValues.Contains(expect).Should().BeTrue("\nExpected:\n" + expect + sb.ToString());
+                matcher.receivedValues.Contains(expect).Should().BeTrue("\nExpected:\n" + expect + sb.ToString());
             }
 
-            expectedHashEntries.Length.Should().Be(matcher.reveicedValues.Count, "Found that number of entries");
+            expectedHashEntries.Length.Should().Be(matcher.receivedValues.Count, "Found that number of entries");
 
             // Validate the expected walk list entries (i.e. the dynamic part of the path)
             TreeExpressionEvaluator evaluator = action.EvaluatorForUnitTesting;
             WalkList walkList = evaluator.WalkListForUnitTesting;
 
-            Step step = walkList.FirstStep;
+            var step = walkList.FirstStep;
             foreach (string walkStep in expectedWalkList)
             {
                 step.Should().NotBeNull("Step: " + walkStep);
@@ -334,39 +335,6 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                 step = step.NextStep;
             }
             step.Should().BeNull();
-        }
-
-        private class TestMatcher : Matcher
-        {
-            internal readonly IList<string> reveicedValues = new List<string>(128);
-
-            internal TestMatcher(IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets) : base(null, lookups, lookupSets)
-            {
-            }
-
-
-            public override void InformMeAbout(MatcherAction matcherAction, string keyPattern)
-            {
-                reveicedValues.Add(keyPattern);
-            }
-
-
-            public override void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
-            {
-                InformMeAbout(matcherAction, treeName + "{\"" + UserAgentAnalyzerDirect.FirstCharactersForPrefixHash(prefix, UserAgentAnalyzerDirect.MAX_PREFIX_HASH_MATCH) + "\"");
-            }
-
-
-            public override void Analyze(UserAgent userAgent)
-            {
-                // Do nothing
-            }
-
-
-            public override void LookingForRange(string treeName, WordRangeVisitor.Range range)
-            {
-                // Do nothing
-            }
         }
     }
 }

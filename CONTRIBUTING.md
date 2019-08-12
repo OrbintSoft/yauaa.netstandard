@@ -38,4 +38,5 @@ The following Visual Studio extensions are not necessary, but they can be useful
 - Output enhamcer
 - Powershell tools
 - Real clean
+- License Header Manager
 
