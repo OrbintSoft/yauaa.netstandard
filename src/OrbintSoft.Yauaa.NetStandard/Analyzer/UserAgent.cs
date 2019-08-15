@@ -308,10 +308,14 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public bool HasSyntaxError { get; private set; }
 
+#if !VERBOSE
         /// <summary>
         /// Gets or sets a value indicating whether IsDebug.
         /// </summary>
         public bool IsDebug { get; set; } = false;
+#else
+        public bool IsDebug { get; set; } = true;
+#endif
 
         /// <summary>
         /// Gets or sets the user agent strings.

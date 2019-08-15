@@ -47,7 +47,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void ValidateWalkPathSimpleName()
         {
-            var path = "agent.(1)product.(1)name";
+            var path = "agent.(1)product.(1)name"; // no operations, no walk.
 
             var expectedHashEntries = new string[]{"agent.(1)product.(1)name"};
 
@@ -62,6 +62,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void ValidateWalkPathSimpleNameOpenStartRange()
         {
+            //From open to 3, expected 1, 2 ,3
             var path = "agent.(-3)product.(1)name";
 
             var expectedHashEntries = new string[]{
@@ -105,9 +106,9 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         {
             var path = "agent.(1)product.(1)name=\"Foo\"^.(1-3)version";
 
-            string[] expectedHashEntries = { "agent.(1)product.(1)name=\"Foo\""};
+            var expectedHashEntries = new string[] { "agent.(1)product.(1)name=\"Foo\""};
 
-            string[] expectedWalkList = { "Up()", "Down([1:3]version)"};
+            var expectedWalkList = new string[] { "Up()", "Down([1:3]version)"};
 
             this.CheckPath(path, expectedHashEntries, expectedWalkList);
         }

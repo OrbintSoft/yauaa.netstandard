@@ -34,7 +34,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
     using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="TestYamlBasedExpressions" />
+    /// I use this class to to test all possible kind of exoressions that can be defined in yaml.
     /// </summary>
     public class TestYamlBasedExpressions : IClassFixture<LogFixture>
     {
@@ -49,7 +49,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunMatcherTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Matcher-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Matcher-tests.yaml");
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
@@ -59,7 +59,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunMatcherNestedFunctionsTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Matcher-nested-functions.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Matcher-nested-functions.yaml");
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
@@ -69,7 +69,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunMatcherIsNullTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Matcher-IsNull-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Matcher-IsNull-tests.yaml");
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
@@ -79,7 +79,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunSubstringTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "SubString-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "SubString-tests.yaml");
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
@@ -89,7 +89,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunSubstringVersionTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "SubStringVersion-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "SubStringVersion-tests.yaml");
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
@@ -99,14 +99,14 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunLookupTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Lookup-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Lookup-tests.yaml");
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
         [Fact]
         public void RunLookupPrefixTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "LookupPrefix-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "LookupPrefix-tests.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
@@ -116,7 +116,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunVariableTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Variable-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Variable-tests.yaml");
             uaa.RunTests(false, false).Should().BeTrue();
         }
 
@@ -126,7 +126,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunPositionalTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Positional-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Positional-tests.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
@@ -136,7 +136,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunWalkingTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Walking-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Walking-tests.yaml");
             uaa.SetVerbose(true);
             uaa.RunTests(false, false).Should().BeTrue();
         }
@@ -147,7 +147,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunAllFieldsTests()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "AllFields-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "AllFields-tests.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
@@ -157,7 +157,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunDebugOutputTest()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "DebugOutput-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "DebugOutput-tests.yaml");
             uaa.RunTests(true, true).Should().BeTrue();
         }
 
@@ -167,7 +167,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunEdgecasesTest()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Edgecases-tests.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "Edgecases-tests.yaml");
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
@@ -177,7 +177,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunAllPossibleSteps()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "AllPossibleSteps.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "AllPossibleSteps.yaml");
             uaa.SetVerbose(true);
             uaa.RunTests(false, false).Should().BeTrue();
         }
@@ -185,7 +185,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         [Fact]
         public void RunOnlyOneTest()
         {
-            UserAgentAnalyzerTester uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "TestOnlyOneTest.yaml");
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "TestOnlyOneTest.yaml");
             uaa.SetVerbose(true);
             uaa.RunTests(false, false).Should().BeTrue();
         }
