@@ -24,10 +24,10 @@
 // <date>2018, 11, 24, 12:49</date>
 // <summary></summary>
 //-----------------------------------------------------------------------
-using System;
-
 namespace OrbintSoft.Yauaa.Classify
 {
+    using System;
+
     /// <summary>
     /// Defines the DeviceClass.
     /// </summary>

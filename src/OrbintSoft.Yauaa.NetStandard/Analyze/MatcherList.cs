@@ -25,8 +25,10 @@ namespace OrbintSoft.Yauaa.Analyze
     using System;
     using System.Collections;
     using System.Collections.Generic;
-    using System.Text;
 
+    /// <summary>
+    /// This class represent a collection of matchers.
+    /// </summary>
     [Serializable]
     public class MatcherList: ICollection<Matcher>
     {
@@ -100,8 +102,6 @@ namespace OrbintSoft.Yauaa.Analyze
                 arrayIndex += 1;
             }
         }
-
-
 
         /// <summary>
         /// The GetEnumerator.
@@ -238,5 +238,5 @@ namespace OrbintSoft.Yauaa.Analyze
                 this.offset = -1;
             }
         }
-    }    
+    }
 }

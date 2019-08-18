@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="UserAgentAnalyzerDirect.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2019 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:51</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyzer
@@ -100,6 +99,11 @@ namespace OrbintSoft.Yauaa.Analyzer
         private readonly IDictionary<string, ISet<string>> lookupSets = new Dictionary<string, ISet<string>>();
 
         /// <summary>
+        /// A list of methers that doesn't require an input.
+        /// </summary>
+        private readonly MatcherList zeroInputMatchers = new MatcherList(100);
+
+        /// <summary>
         /// Defines the delayInitialization.
         /// </summary>
         private bool delayInitialization = true;
@@ -136,12 +140,13 @@ namespace OrbintSoft.Yauaa.Analyzer
         private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
 
         /// <summary>
-        /// Defines the verbose.
+        /// Defines a verbose property to enable verbose logging.
         /// </summary>
         private bool verbose = false;
 
-        private readonly MatcherList zeroInputMatchers = new MatcherList(100);
-
+        /// <summary>
+        /// A list of matchers that have been touched with parsing.
+        /// </summary>
         private MatcherList touchedMatchers = null;
 
         /// <summary>
@@ -456,7 +461,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 matcher.Reset();
             }
 
-            touchedMatchers = new MatcherList(16);
+            this.touchedMatchers = new MatcherList(16);
         }
 
         /// <summary>
@@ -871,6 +876,24 @@ namespace OrbintSoft.Yauaa.Analyzer
         {
             this.verbose = newVerbose;
             this.Flattener.SetVerbose(newVerbose);
+        }
+
+        /// <inheritdoc/>
+        public void ReceivedInput(Matcher matcher)
+        {
+            this.touchedMatchers.Add(matcher);
+        }
+
+        /// <inheritdoc/>
+        public IDictionary<string, IDictionary<string, string>> GetLookups()
+        {
+            return this.lookups;
+        }
+
+        /// <inheritdoc/>
+        public IDictionary<string, ISet<string>> GetLookupSets()
+        {
+            return this.lookupSets;
         }
 
         /// <summary>
@@ -1620,22 +1643,6 @@ namespace OrbintSoft.Yauaa.Analyzer
             userAgent.Set("HackerToolkit", "Unknown", confidence);
             userAgent.Set("HackerAttackVector", "Buffer overflow", confidence);
             return userAgent;
-        }
-
-        /// <inheritdoc/>
-        public void ReceivedInput(Matcher matcher)
-        {
-            this.touchedMatchers.Add(matcher);
-        }
-
-        public IDictionary<string, IDictionary<string, string>> GetLookups()
-        {
-            return this.lookups;
-        }
-
-        public IDictionary<string, ISet<string>> GetLookupSets()
-        {
-            return this.lookupSets;
         }
 
         /// <summary>

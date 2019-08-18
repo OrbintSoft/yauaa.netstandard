@@ -158,7 +158,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             /// <returns>If there is a next.</returns>
             public bool MoveNext()
             {
-                if (this.childIter != null)
+                if (this.childIter != null && !this.endReached)
                 {
                     while (this.childIter.MoveNext())
                     {

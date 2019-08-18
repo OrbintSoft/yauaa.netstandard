@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Matcher.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2019 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// </copyright>
-// <author>Stefano Balzarotti, Niels Basjes</author>
-// <date>2018, 11, 24, 12:48</date>
-// <summary></summary>
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+//   </copyright>
+//   <author>Stefano Balzarotti, Niels Basjes</author>
+//   <date>2018, 11, 24, 12:48</date>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyze
@@ -43,22 +42,12 @@ namespace OrbintSoft.Yauaa.Analyze
     public class Matcher
     {
         /// <summary>
-        /// Gets the number of actions that requires an input.
-        /// </summary>
-        public long ActionsThatRequireInput { get; private set; } = 0;
-
-        /// <summary>
-        /// Gets or sets if we have already notified trhat the analyzer has already received the input.
-        /// </summary>
-        internal bool AlreadyNotifiedAnalyzerWeReceivedInput { get; set; } = false;
-
-        /// <summary>
         /// Defines the Log.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(Matcher));
 
         /// <summary>
-        /// Defines the analyzer.
+        /// The analyzer used for parsing.
         /// </summary>
         private readonly IAnalyzer analyzer;
 
@@ -103,16 +92,14 @@ namespace OrbintSoft.Yauaa.Analyze
         private IList<MatcherAction> dynamicActions = null;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Matcher"/> class for testing purpose.
+        /// Gets the number of actions that requires an input.
         /// </summary>
-        /// <param name="analyzer">The analyzer.</param>
-        internal Matcher(IAnalyzer analyzer)
-        {
-            this.analyzer = analyzer;
-            this.fixedStringActions = new List<MatcherAction>();
-            this.variableActions = new List<MatcherVariableAction>();
-            this.dynamicActions = new List<MatcherAction>();
-        }
+        public long ActionsThatRequireInput { get; private set; } = 0;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether we have already notified that the analyzer has already received the input.
+        /// </summary>
+        internal bool AlreadyNotifiedAnalyzerWeReceivedInput { get; set; } = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
@@ -261,6 +248,18 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Matcher"/> class for testing purpose.
+        /// </summary>
+        /// <param name="analyzer">The analyzer.</param>
+        internal Matcher(IAnalyzer analyzer)
+        {
+            this.analyzer = analyzer;
+            this.fixedStringActions = new List<MatcherAction>();
+            this.variableActions = new List<MatcherVariableAction>();
+            this.dynamicActions = new List<MatcherAction>();
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
         /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/>.</param>
@@ -286,9 +285,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets the LookupSets.
+        /// Gets the LookupSets from the analyzer.
         /// </summary>
-        public IDictionary<string, ISet<string>> LookupSets {
+        public IDictionary<string, ISet<string>> LookupSets
+        {
             get
             {
                 return this.analyzer.GetLookupSets();
