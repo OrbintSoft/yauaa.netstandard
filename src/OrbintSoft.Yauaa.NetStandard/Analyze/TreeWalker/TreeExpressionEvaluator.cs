@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TreeExpressionEvaluator.cs" company="OrbintSoft">
 // Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+// porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 // Original Author and License:
 //

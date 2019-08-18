@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestYamlParsing.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -32,28 +32,30 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Tests;
     using System;
+    using System.IO;
     using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="TestYamlParsing" />
+    /// Here I test some wrong formatted yaml files to check if parsing is handled correctly.
     /// </summary>
     public class TestYamlParsing
     {
         /// <summary>
-        /// The RunTest
+        /// I run the the test in the input file and I check that it throws the expected exteption message.
         /// </summary>
         /// <param name="inputFilename">The inputFilename<see cref="string"/></param>
         /// <param name="message">The message<see cref="string"/></param>
         private void RunTest(string inputFilename, string message)
         {
-            UserAgentAnalyzer uaa = UserAgentAnalyzer
+            var uaaB = UserAgentAnalyzer
                 .NewBuilder()
                 .DropDefaultResources()
                 .KeepTests()
-                .DelayInitialization()
-                .Build();
+                .AddResources($"{Config.RESOURCES_PATH}{Path.DirectorySeparatorChar}YamlParsingTests", inputFilename)
+                .DelayInitialization();
+                
 
-            Action a = new Action(() => { uaa.LoadResources(Config.RESOURCES_PATH + "/YamlParsingTests", inputFilename); });
+            var a = new Action(() => { uaaB.Build(); });
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains(message));
         }
 
@@ -63,7 +65,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestEmpty()
         {
-            RunTest("Empty.yaml", "The file Empty.yaml is empty");
+            this.RunTest("Empty.yaml", "No matchers were loaded at all");
         }
 
         /// <summary>
@@ -72,7 +74,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestTopNotConfig()
         {
-            RunTest("TopNotConfig.yaml", "The top level entry MUST be 'config'");
+            this.RunTest("TopNotConfig.yaml", "The top level entry MUST be 'config'");
         }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestNotAMapFile()
         {
-            RunTest("NotAMapFile.yaml", "File must be a Map");
+            this.RunTest("NotAMapFile.yaml", "File must be a Map");
         }
 
         /// <summary>
@@ -90,7 +92,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestBadConfig1()
         {
-            RunTest("BadConfig1.yaml", "The value should be a sequence but it is a Scalar");
+            this.RunTest("BadConfig1.yaml", "The value should be a sequence but it is a Scalar");
         }
 
         /// <summary>
@@ -99,7 +101,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestBadConfig2()
         {
-            RunTest("BadConfig2.yaml", "The entry MUST be a mapping");
+            this.RunTest("BadConfig2.yaml", "The entry MUST be a mapping");
         }
 
         /// <summary>
@@ -108,7 +110,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestInputAbsent()
         {
-            RunTest("InputAbsent.yaml", "Test is missing input");
+            this.RunTest("InputAbsent.yaml", "Test is missing input");
         }
 
         /// <summary>
@@ -117,7 +119,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestInputNotString()
         {
-            RunTest("InputNotString.yaml", "The value should be a string but it is a Sequence");
+            this.RunTest("InputNotString.yaml", "The value should be a string but it is a Sequence");
         }
 
         /// <summary>
@@ -126,7 +128,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestNotAMap()
         {
-            RunTest("NotAMap.yaml", "The value should be a map but it is a Scalar");
+            this.RunTest("NotAMap.yaml", "The value should be a map but it is a Scalar");
         }
 
         /// <summary>
@@ -135,7 +137,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestNotSingle()
         {
-            RunTest("NotSingle.yaml", "There must be exactly 1 value in the list");
+            this.RunTest("NotSingle.yaml", "There must be exactly 1 value in the list");
         }
 
         /// <summary>
@@ -144,7 +146,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestNotStringList1()
         {
-            RunTest("NotStringList1.yaml", "The value should be a string but it is a Mapping");
+            this.RunTest("NotStringList1.yaml", "The value should be a string but it is a Mapping");
         }
 
         /// <summary>
@@ -153,7 +155,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestNotStringList2()
         {
-            RunTest("NotStringList2.yaml", "The provided node must be a sequence but it is a Scalar");
+            this.RunTest("NotStringList2.yaml", "The provided node must be a sequence but it is a Scalar");
         }
 
         /// <summary>
@@ -162,7 +164,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestKeyNotString()
         {
-            RunTest("KeyNotString.yaml", "The key should be a string but it is a Sequence");
+            this.RunTest("KeyNotString.yaml", "The key should be a string but it is a Sequence");
         }
 
         /// <summary>
@@ -171,7 +173,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestParseError()
         {
-            RunTest("ParseError.yaml", "Parse error in the file ParseError.yaml: ");
+            this.RunTest("ParseError.yaml", "Parse error in the file ParseError.yaml: ");
         }
     }
 }

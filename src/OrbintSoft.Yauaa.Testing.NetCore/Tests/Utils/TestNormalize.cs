@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestNormalize.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -33,12 +33,13 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
     using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="TestNormalize" />
+    /// This class is usded to test the normalize utility.    
     /// </summary>
     public class TestNormalize : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// The CheckBrandOne
+        /// I test if I am able to normalize a brand with one char.
+        /// I expect the char to be capitalized.
         /// </summary>
         [Fact]
         public void CheckBrandOne()
@@ -48,7 +49,8 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         }
 
         /// <summary>
-        /// The CheckBrandTwo
+        /// I test if I am able to normalize a brand with two chars.
+        /// I expect the chars to be capitalized.
         /// </summary>
         [Fact]
         public void CheckBrandTwo()
@@ -60,7 +62,8 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         }
 
         /// <summary>
-        /// The CheckBrandThree
+        /// I test if I am able to normalize a brand with three chars.
+        /// I expect the chars to be capitalized.
         /// </summary>
         [Fact]
         public void CheckBrandThree()
@@ -71,6 +74,9 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
             Normalize.Brand("NBA").Should().Be("NBA");
         }
 
+        /// <summary>
+        /// I test if I am able to normalize a brand with three and four chars separated bt a slash.        
+        /// </summary>
         [Fact]
         public void CheckBrandThreeFour()
         {
@@ -81,7 +87,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         }
 
         /// <summary>
-        /// The CheckBrandNormalizationWord
+        /// I test if I am able to normalize a word with more than 3 chars.
         /// </summary>
         [Fact]
         public void CheckBrandNormalizationWord()
@@ -94,7 +100,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         }
 
         /// <summary>
-        /// The CheckBrandNormalizationExamples
+        /// I try to normalize different words.
         /// </summary>
         [Fact]
         public void CheckBrandNormalizationExamples()
@@ -117,7 +123,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         }
 
         /// <summary>
-        /// The CheckCombiningDeviceNameAndBrand
+        /// I test the normalization of different brands and device names.
         /// </summary>
         [Fact]
         public void CheckCombiningDeviceNameAndBrand()
@@ -131,7 +137,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         }
 
         /// <summary>
-        /// The CheckEmailNormalization
+        /// I test the normalization of email.
         /// </summary>
         [Fact]
         public void CheckEmailNormalization()
@@ -151,7 +157,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         }
 
         /// <summary>
-        /// The CheckBadInputData
+        /// I test that the normalization don't fail with bad input data.
         /// </summary>
         [Fact]
         public void CheckBadInputData()

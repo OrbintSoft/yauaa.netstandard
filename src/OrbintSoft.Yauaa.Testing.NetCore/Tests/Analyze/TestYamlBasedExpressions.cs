@@ -151,6 +151,13 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             uaa.RunTests(false, true).Should().BeTrue();
         }
 
+        [Fact]
+        public void RunAllStepsTests()
+        {
+            var uaa = new UserAgentAnalyzerTester(Config.RESOURCES_PATH, "AllSteps.yaml");
+            uaa.RunTests(false, true).Should().BeTrue();
+        }
+
         /// <summary>
         /// The RunDebugOutputTest
         /// </summary>

@@ -2,7 +2,7 @@ extensions: .cs
 //-----------------------------------------------------------------------
 // <copyright file="%FileName%" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright %CreationYear%-%CurrentYear% (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-%CurrentYear% (C) OrbintSoft
 //
 //    Original Author and License:
 //
@@ -24,5 +24,4 @@ extensions: .cs
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>%CreationYear%, %CreationMonth%, %CreationDay%, %CreationTime%</date>
-// <summary></summary>
 //-----------------------------------------------------------------------

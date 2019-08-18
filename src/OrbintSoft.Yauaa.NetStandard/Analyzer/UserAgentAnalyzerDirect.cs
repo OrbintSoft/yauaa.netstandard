@@ -1138,7 +1138,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         {
             if (DomainName.TryParse(hostname, out var outDomain))
             {
-                return Normalize.Brand(outDomain.Domain);
+                return Normalize.Brand(outDomain.Domain?.ToLower());
             }
             else
             {

@@ -99,11 +99,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         }
 
         /// <summary>
-        /// 
+        /// I test s imple path with equal operator
         /// </summary>
         [Fact]
         public void ValidateWalkPathSimpleNameEquals()
         {
+            //where name is equal to Foo up and down to version, range from 1 to 3
             var path = "agent.(1)product.(1)name=\"Foo\"^.(1-3)version";
 
             var expectedHashEntries = new string[] { "agent.(1)product.(1)name=\"Foo\""};
@@ -113,14 +114,18 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             this.CheckPath(path, expectedHashEntries, expectedWalkList);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+
         [Fact]
         public void ValidateWalkPathNameSubstring()
         {
-            string path = "agent.(1)product.(1)name[1-2]=\"Foo\"^.(1-3)version";
+            var path = "agent.(1)product.(1)name[1-2]=\"Foo\"^.(1-3)version";
 
-            string[] expectedHashEntries = { "agent.(1)product.(1)name[1-2]=\"Foo\"" };
+            string[] expectedHashEntries = new string[] { "agent.(1)product.(1)name[1-2]=\"Foo\"" };
 
-            string[] expectedWalkList = { "Up()", "Down([1:3]version)" };
+            string[] expectedWalkList = new string[] { "Up()", "Down([1:3]version)" };
 
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
@@ -130,9 +135,9 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         {
             string path = "agent.(1)product.(1)name[3-5]=\"Foo\"^.(1-3)version";
 
-            string[] expectedHashEntries = { "agent.(1)product.(1)name[3-5]=\"Foo\"" };
+            string[] expectedHashEntries = new string[] { "agent.(1)product.(1)name[3-5]=\"Foo\"" };
 
-            string[] expectedWalkList = { "Up()", "Down([1:3]version)" };
+            string[] expectedWalkList = new string[] { "Up()", "Down([1:3]version)" };
 
             CheckPath(path, expectedHashEntries, expectedWalkList);
         }
@@ -142,7 +147,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         {
             string path = "agent.(2-4)product.(1)comments.(5-6)entry.(1)text[2]=\"seven\"^^^<.name=\"foo faa\"^.comments.entry.text[-2]=\"three\"@[1-2]";
 
-            string[] expectedHashEntries = {
+            string[] expectedHashEntries = new string[]{
                 "agent.(2)product.(1)comments.(5)entry.(1)text[2-2]=\"seven\"",
                 "agent.(2)product.(1)comments.(6)entry.(1)text[2-2]=\"seven\"",
                 "agent.(3)product.(1)comments.(5)entry.(1)text[2-2]=\"seven\"",
@@ -151,7 +156,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
                 "agent.(4)product.(1)comments.(6)entry.(1)text[2-2]=\"seven\"",
             };
 
-            string[] expectedWalkList = {
+            string[] expectedWalkList = new string[] {
                 "Up()",
                 "Up()",
                 "Up()",
@@ -177,7 +182,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 
             string path = "CleanVersion[LookUp[TridentVersions;agent.(1)product.(2-4)comments.(*)product.name[1-1]=\"Trident\"" + "^.(*)version[-2]{\"7.\";\"DefaultValue\"]]";
 
-            string[] expectedHashEntries = {
+            string[] expectedHashEntries = new string[] {
                 "agent.(1)product.(2)comments.(1)product.(1)name[1-1]=\"Trident\"",
                 "agent.(1)product.(2)comments.(2)product.(1)name[1-1]=\"Trident\"",
                 "agent.(1)product.(2)comments.(3)product.(1)name[1-1]=\"Trident\"",

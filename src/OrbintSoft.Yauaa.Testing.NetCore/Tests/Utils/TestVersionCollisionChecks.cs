@@ -33,6 +33,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
     using OrbintSoft.Yauaa.Testing.Fixtures;
     using OrbintSoft.Yauaa.Tests;
     using System;
+    using System.IO;
     using Xunit;
 
     /// <summary>
@@ -41,18 +42,18 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
     public class TestVersionCollisionChecks : IClassFixture<LogFixture>
     {
         /// <summary>
-        /// The TestBadVersion
+        /// I test a yaml file with a bad version, loafd should fail
         /// </summary>
         [Fact]
         public void TestBadVersion()
         {
-            UserAgentAnalyzer uaa = UserAgentAnalyzer
+            var uaaB = UserAgentAnalyzer
              .NewBuilder()
              .DropDefaultResources()
-             .DelayInitialization()
-             .Build();
+             .AddResources($"{Config.RESOURCES_PATH}{Path.DirectorySeparatorChar}Versions", "BadVersion.yaml")
+             .DelayInitialization();
 
-            Action a = new Action(() => uaa.LoadResources(Config.RESOURCES_PATH + "/Versions", "BadVersion.yaml"));
+            var a = new Action(() => uaaB.Build());
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("Found unexpected config entry: bad"));
         }
 
@@ -63,13 +64,13 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         public void TestBadVersionNotMap()
         {
 
-            UserAgentAnalyzer uaa = UserAgentAnalyzer
+            var uaaB = UserAgentAnalyzer
             .NewBuilder()
             .DropDefaultResources()
-            .DelayInitialization()
-            .Build();
+            .AddResources($"{Config.RESOURCES_PATH}{Path.DirectorySeparatorChar}Versions", "BadVersionNotMap.yaml")
+            .DelayInitialization();
 
-            Action a = new Action(() => uaa.LoadResources(Config.RESOURCES_PATH + "/Versions", "BadVersionNotMap.yaml"));
+            var a = new Action(() => uaaB.Build());
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("The value should be a string but it is a Sequence"));
         }
 
@@ -79,12 +80,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestDifferentVersion()
         {
-            UserAgentAnalyzer uaa = UserAgentAnalyzer
+            var uaaB = UserAgentAnalyzer
              .NewBuilder()
              .DelayInitialization()
-             .Build();
+             .AddResources($"{Config.RESOURCES_PATH}{Path.DirectorySeparatorChar}Versions", "DifferentVersion.yaml");
 
-            Action a = new Action(() => uaa.LoadResources(Config.RESOURCES_PATH + "/Versions", "DifferentVersion.yaml"));
+            var a = new Action(() => uaaB.Build());
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("Two different Yauaa versions have been loaded:"));
         }
 
@@ -94,12 +95,12 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Utils
         [Fact]
         public void TestDoubleLoadedResources()
         {
-            UserAgentAnalyzer uaa = UserAgentAnalyzer
+            var uaaB = UserAgentAnalyzer
              .NewBuilder()
              .DelayInitialization()
-             .Build();
+             .AddResources("YamlResources/Useragents");
 
-            Action a = new Action(() => uaa.LoadResources("YamlResources/Useragents"));
+            var a = new Action(() => uaaB.Build());
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains("resources for the second time"));
         }
     }

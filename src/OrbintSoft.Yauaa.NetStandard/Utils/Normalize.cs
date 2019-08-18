@@ -161,7 +161,7 @@ namespace OrbintSoft.Yauaa.Utils
                 deviceName = Regex.Replace(deviceName, "_", " ");
 
                 // (?i) means: case insensitive
-                deviceName = Regex.Replace(deviceName, "(?i)^" + Regex.Escape(deviceBrand) + "([^ ].*)$", Regex.Escape(deviceBrand) + " $1");
+                deviceName = Regex.Replace(deviceName, "(?i)^" + Regex.Escape(deviceBrand) + "([^ ].*)$", deviceBrand.Replace("$", "$$") + " $1");
                 deviceName = Regex.Replace(deviceName, "( -| )+", " ");
             }
             else

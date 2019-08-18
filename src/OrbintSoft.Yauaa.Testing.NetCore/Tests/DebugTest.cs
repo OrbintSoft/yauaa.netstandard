@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="DebugTest.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
     public class DebugTest : IClassFixture<LogFixture>
     {
 
-        readonly HashSet<string> singleFieldList = new HashSet<string>() { "AgentName" };
+        readonly HashSet<string> singleFieldList = new HashSet<string>() { "DeviceBrand" };
 
         public UserAgentAnalyzerTester SerializeAndDeserializeUAA()
         {
@@ -63,7 +63,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             using (var memoryStream = new MemoryStream(bytes))
             {
                 var formatter = new BinaryFormatter();
-                object obj = formatter.Deserialize(memoryStream);
+                var obj = formatter.Deserialize(memoryStream);
                 obj.Should().BeOfType<UserAgentAnalyzerTester>();
                 uaa = obj as UserAgentAnalyzerTester;
             }
@@ -74,7 +74,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         //[Fact]
         public void TestError()
         {
-            var fieldName = "DeviceCpu";
+            var fieldName = "DeviceName";
             var userAgentAnalyzer =
                 UserAgentAnalyzerTester
                     .NewBuilder()
@@ -82,13 +82,14 @@ namespace OrbintSoft.Yauaa.Testing.Tests
                     .WithFields(fieldName)
                     .HideMatcherLoadStats()
                     .DropDefaultResources()
-                    .AddResources("YamlResources/UserAgents", "MSInternetExplorer.yaml")
+                    .AddResources("YamlResources/UserAgents", "EMailClients.yaml")
                     .Build() as UserAgentAnalyzerTester;
 
             userAgentAnalyzer.Should().NotBeNull();
-            var userAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (compatible; Windows NT 10.0; WOW64; IA64; en) AppleWebKit/599.0+ Chrome/48.2564.0.82 Maxthon/4.9.0 QupZilla/1.8.9");
+            //userAgentAnalyzer.RunTests(false, true, singleFieldList, false, false).Should().BeTrue();
+            var userAgent = userAgentAnalyzer.Parse("OneNote/16.0.8431.2110 (Windows/10.0; Desktop x64; nl-NL; Desktop app; Dell Inc./Latitude 7480)");
             var field = userAgent.Get(fieldName);
-            field.GetValue().Should().Be("Intel Itanium 64");
+            field.GetValue().Should().Be("Dell Inc. /Latitude 7480");
         }
 
     }
