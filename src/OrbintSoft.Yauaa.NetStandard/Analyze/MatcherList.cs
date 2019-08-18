@@ -1,24 +1,29 @@
-﻿// <copyright file="MatcherList.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+﻿//-----------------------------------------------------------------------
+// <copyright file="MatcherList.cs" company="OrbintSoft">
+//    Yet Another User Agent Analyzer for .NET Standard
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
-// Original Author and License:
+//    Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//    Yet Another UserAgent Analyzer
+//    Copyright(C) 2013-2019 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//    https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+//
 // </copyright>
+// <author>Stefano Balzarotti, Niels Basjes</author>
+// <date>2019, 8, 9, 07:49</date>
+//-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyze
 {
@@ -30,7 +35,7 @@ namespace OrbintSoft.Yauaa.Analyze
     /// This class represent a collection of matchers.
     /// </summary>
     [Serializable]
-    public class MatcherList: ICollection<Matcher>
+    public class MatcherList : ICollection<Matcher>
     {
         private const int CAPACITY_INCREASE = 3;
         private int maxSize;

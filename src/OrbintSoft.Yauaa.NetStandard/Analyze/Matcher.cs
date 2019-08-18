@@ -92,16 +92,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private IList<MatcherAction> dynamicActions = null;
 
         /// <summary>
-        /// Gets the number of actions that requires an input.
-        /// </summary>
-        public long ActionsThatRequireInput { get; private set; } = 0;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether we have already notified that the analyzer has already received the input.
-        /// </summary>
-        internal bool AlreadyNotifiedAnalyzerWeReceivedInput { get; set; } = false;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
         /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/>.</param>
@@ -274,7 +264,12 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets the Lookups.
+        /// Gets the number of actions that requires an input.
+        /// </summary>
+        public long ActionsThatRequireInput { get; private set; } = 0;
+
+        /// <summary>
+        /// Gets the analyzer Lookups.
         /// </summary>
         public IDictionary<string, IDictionary<string, string>> Lookups
         {
@@ -296,9 +291,15 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets a value indicating whether Verbose.
+        /// Gets a value indicating whether Verbose is enabled.
+        /// It is used for verbose logging.
         /// </summary>
         public bool Verbose { get; private set; } = false;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether we have already notified that the analyzer has already received the input.
+        /// </summary>
+        internal bool AlreadyNotifiedAnalyzerWeReceivedInput { get; set; } = false;
 
         /// <summary>
         /// Fires all matcher actions.
