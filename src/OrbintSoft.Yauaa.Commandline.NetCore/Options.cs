@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Options.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 25, 19:51</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 using CommandLine;
 using OrbintSoft.Yauaa.Analyzer;
@@ -47,6 +46,9 @@ namespace OrbintSoft.Yauaa.Commandline
 
         [Option(longName: "json", HelpText = "Output in json format", SetName = "format")]
         public bool JsonFormat { get; set; } = false;
+
+        [Option(longName: "xml", HelpText = "Output in xml format", SetName = "format")]
+        public bool XmlFormat { get; set; } = false;
 
         [Option(longName: "fields", Separator =',', HelpText = "A list of the desired fieldnames (use '" + UserAgent.USERAGENT_FIELDNAME + "' if you want the input value as well)")]
         public IList<string> Fields { get; set; } = null;

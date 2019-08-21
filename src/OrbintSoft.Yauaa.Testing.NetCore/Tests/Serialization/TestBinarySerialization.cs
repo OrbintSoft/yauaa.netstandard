@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="TestSerialization.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 17:39</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 namespace OrbintSoft.Yauaa.Testing.Tests
 {
@@ -36,9 +35,9 @@ namespace OrbintSoft.Yauaa.Testing.Tests
     using Xunit;
 
     /// <summary>
-    /// Defines the <see cref="TestSerialization" />
+    /// Defines the <see cref="TestBinarySerialization" />
     /// </summary>
-    public class TestSerialization : IClassFixture<LogFixture>
+    public class TestBinarySerialization : IClassFixture<LogFixture>
     {
         /// <summary>
         /// Defines the LOG
@@ -72,7 +71,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             LOG.Info("Serialize");
             byte[] bytes;
 
-            using (MemoryStream memoryStream = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
                 var formatter = new BinaryFormatter();
                 formatter.Serialize(memoryStream, uaa);
@@ -83,10 +82,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             LOG.Info("--------------------------------------------------------------");
             LOG.Info("Deserialize");
 
-            using (MemoryStream memoryStream = new MemoryStream(bytes))
+            using (var memoryStream = new MemoryStream(bytes))
             {
                 var formatter = new BinaryFormatter();
-                object obj = formatter.Deserialize(memoryStream);
+                var obj = formatter.Deserialize(memoryStream);
                 obj.Should().BeOfType<UserAgentAnalyzerTester>();
                 uaa = obj as UserAgentAnalyzerTester;
             }
@@ -106,7 +105,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [InlineData(false)]
         public void ValidateAllPredefinedBrowsers(bool delay)
         {
-            UserAgentAnalyzerTester uaa = SerializeAndDeserializeUAA(delay);
+            var uaa = this.SerializeAndDeserializeUAA(delay);
             LOG.Info("==============================================================");
             LOG.Info("Validating when getting all fields");
             LOG.Info("--------------------------------------------------------------");

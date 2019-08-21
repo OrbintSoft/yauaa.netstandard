@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Program.cs" company="OrbintSoft">
 //    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018 (C) OrbintSoft
+//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 //    Original Author and License:
 //
 //    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2018 Niels Basjes
+//    Copyright(C) 2013-2019 Niels Basjes
 //
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 25, 18:21</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 using CommandLine;
 using log4net;
@@ -38,69 +37,94 @@ using System.Text;
 
 namespace OrbintSoft.Yauaa.Commandline
 {
+    /// <summary>
+    /// This is a console application program to use yauaa.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Defines the logger.
+        /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
+        /// <summary>
+        /// Supported output format.
+        /// </summary>
         private enum OutputFormat
         {
-            CSV, JSON, YAML
+            CSV, JSON, YAML, XML, UNSUPPORTED
         }
 
-        private static void PrintHeader(OutputFormat outputFormat, ICollection<string> fields)
+        /// <summary>
+        /// Prints the headers in case the output is a CSV.
+        /// </summary>
+        /// <param name="writer">The writer to print the output (console, file..)</param>
+        /// <param name="outputFormat">The output format.</param>
+        /// <param name="fields">The list of fields to be printed</param>
+        private static void PrintHeader(TextWriter writer, OutputFormat outputFormat, IEnumerable<string> fields)
         {
             switch (outputFormat)
             {
                 case OutputFormat.CSV:
-                    bool doSeparator = false;
-                    foreach (string field in fields)
+                    var doSeparator = false;
+                    foreach (var field in fields)
                     {
                         if (doSeparator)
                         {
-                            Console.Write("\t");
+                            writer.Write("\t");
                         }
                         else
                         {
                             doSeparator = true;
                         }
-                        Console.Write(field);
+                        writer.Write(field);
                     }
-                    Console.WriteLine();
+                    writer.WriteLine();
                     break;
                 default:
                     break;
             }
         }
 
-        private static void PrintAgent(OutputFormat outputFormat, IList<string> fields, UserAgent agent)
+        /// <summary>
+        /// Prints the parsed user agent.
+        /// </summary>
+        /// <param name="writer">The writer to print the output (console, file..)</param>
+        /// <param name="outputFormat">The output format(CSV, XML, JSON...)</param>
+        /// <param name="fields">The list of fields to be printed.</param>
+        /// <param name="agent">The parsed useragent.</param>
+        private static void PrintAgent(TextWriter writer, OutputFormat outputFormat, IList<string> fields, UserAgent agent)
         {
             switch (outputFormat)
             {
                 case OutputFormat.CSV:
-                    bool doSeparator = false;
-                    foreach (string field in fields)
+                    var doSeparator = false;
+                    foreach (var field in fields)
                     {
                         if (doSeparator)
                         {
-                            Console.Write("\t");
+                            writer.Write("\t");
                         }
                         else
                         {
                             doSeparator = true;
                         }
-                        string value = agent.GetValue(field);
+                        var value = agent.GetValue(field);
                         if (value != null)
                         {
-                            Console.Write(value);
+                            writer.Write(value);
                         }
                     }
-                    Console.WriteLine();
+                    writer.WriteLine();
                     break;
                 case OutputFormat.JSON:
-                    Console.WriteLine(agent.ToJson(fields));
+                    writer.WriteLine(agent.ToJson(fields));
                     break;
                 case OutputFormat.YAML:
-                    Console.WriteLine(agent.ToYamlTestCase());
+                    writer.WriteLine(agent.ToYamlTestCase());
+                    break;
+                case OutputFormat.XML:
+                    writer.WriteLine("Not supported yet.");
                     break;
                 default:
                     break;
@@ -109,32 +133,36 @@ namespace OrbintSoft.Yauaa.Commandline
 
         public static void Main(string[] args)
         {
-            Options commandlineOptions = new Options();
+            var commandlineOptions = new Options();
             var parser = new Parser();
             try
             {                
                 parser.ParseArguments<Options>(args);
-                OutputFormat outputFormat = OutputFormat.YAML;
+                var outputFormat = OutputFormat.YAML;
                 if (commandlineOptions.CsvFormat)
                 {
                     outputFormat = OutputFormat.CSV;
                 }
                 else if (commandlineOptions.JsonFormat)
                 {
-                    outputFormat = OutputFormat.JSON;                    
+                    outputFormat = OutputFormat.JSON;
+                }
+                else if(commandlineOptions.XmlFormat)
+                {
+                    outputFormat = OutputFormat.XML;
                 }
 
-                UserAgentAnalyzerTester.UserAgentAnalyzerTesterBuilder builder = UserAgentAnalyzerTester.NewBuilder();
+                var builder = UserAgentAnalyzerTester.NewBuilder();
                 builder.HideMatcherLoadStats();
                 builder.WithCache(commandlineOptions.CacheSize);
                 if (commandlineOptions.Fields != null)
                 {
-                    foreach (string field in commandlineOptions.Fields)
+                    foreach (var field in commandlineOptions.Fields)
                     {
                         builder.WithField(field);
                     }
                 }
-                UserAgentAnalyzerTester uaa = builder.Build() as UserAgentAnalyzerTester;
+                var uaa = builder.Build() as UserAgentAnalyzerTester;
 
                 IList<string> fields;
                 if (commandlineOptions.Fields == null)
@@ -146,12 +174,12 @@ namespace OrbintSoft.Yauaa.Commandline
                 {
                     fields = commandlineOptions.Fields;
                 }
-                PrintHeader(outputFormat, fields);
+                //PrintHeader(outputFormat, fields);
 
                 if (commandlineOptions.Useragent != null)
                 {
-                    UserAgent agent = uaa.Parse(commandlineOptions.Useragent);
-                    PrintAgent(outputFormat, fields, agent);
+                    var agent = uaa.Parse(commandlineOptions.Useragent);
+                    //PrintAgent(outputFormat, fields, agent);
                     return;
                 }
 
@@ -164,7 +192,7 @@ namespace OrbintSoft.Yauaa.Commandline
                 else
                 {
                     var input = Console.ReadLine();
-                    byte[] bytes = Encoding.UTF8.GetBytes(input);
+                    var bytes = Encoding.UTF8.GetBytes(input);
                     inputStream = new MemoryStream(bytes);
                 }
                 var sw = new StreamWriter(Console.OpenStandardOutput())
@@ -172,8 +200,8 @@ namespace OrbintSoft.Yauaa.Commandline
                     AutoFlush = true
                 };
                 Console.SetOut(sw);
-                UserAgentTreeFlattener flattenPrinter = new UserAgentTreeFlattener(new FlattenPrinter(sw));
-                using (StreamReader br = new StreamReader(inputStream))
+                var flattenPrinter = new UserAgentTreeFlattener(new FlattenPrinter(sw));
+                using (var br = new StreamReader(inputStream))
                 {
                     string strLine;
 
@@ -293,7 +321,7 @@ namespace OrbintSoft.Yauaa.Commandline
                             }
                         }
 
-                        PrintAgent(outputFormat, fields, agent);
+                        //PrintAgent(outputFormat, fields, agent);
                     }
 
                     Log.Info("-------------------------------------------------------------");

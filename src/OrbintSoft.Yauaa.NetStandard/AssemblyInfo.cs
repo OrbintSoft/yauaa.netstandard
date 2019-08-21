@@ -1,7 +1,7 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="OrbintSoft">
 // Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+// porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
 // Original Author and License:
 //
@@ -22,7 +22,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 19, 16:21</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 using System;

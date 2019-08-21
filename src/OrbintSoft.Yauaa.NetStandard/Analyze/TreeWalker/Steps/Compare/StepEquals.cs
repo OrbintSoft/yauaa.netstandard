@@ -31,58 +31,63 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepEquals" />.
+    /// This class defines the Equals Step, it is used in parsing to check if the actual value is equal to the desidered value.
     /// </summary>
     [Serializable]
     public class StepEquals : Step
     {
         /// <summary>
-        /// Defines the desiredValue.
+        /// Defines the desired value you want compare.
         /// </summary>
         private readonly string desiredValue;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepEquals"/> class.
+        /// This is used only for binary deserialization.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
-        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
+        /// <param name="info">The info <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context <see cref="StreamingContext"/>.</param>
         public StepEquals(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            this.desiredValue = (string)info.GetValue("desiredValue", typeof(string));
+            this.desiredValue = (string)info.GetValue(nameof(this.desiredValue), typeof(string));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepEquals"/> class.
         /// </summary>
-        /// <param name="desiredValue">The desiredValue<see cref="string"/>.</param>
+        /// <param name="desiredValue">The desired value you want check if equals to the actual value.</param>
         public StepEquals(string desiredValue)
         {
             this.desiredValue = desiredValue.ToLower();
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// This is used for binary serialization.
+        /// Populates a SerializationInfo with the data needed to serialize the target object.
+        /// </summary>
+        /// <param name="info">The SerializationInfo to populate with data.</param>
+        /// <param name="context">The destination <see cref="StreamingContext"/> for this serialization.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("desiredValue", this.desiredValue, typeof(string));
+            info.AddValue(nameof(this.desiredValue), this.desiredValue, typeof(string));
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
-            return "Equals(" + this.desiredValue + ")";
+            return $"Equals({this.desiredValue})";
         }
 
         /// <summary>
-        /// The Walk.
+        /// It checks if tha actual value equals to the desired value, in that case:
+        /// this will walk into the tree and recurse through all the remaining steps.
+        /// Otherwise it will return null, since no other steps to walk.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
+        /// <param name="tree">The tree to walk into.</param>
         /// <param name="value">The value<see cref="string"/>.</param>
-        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
+        /// <returns>Either null or the actual value that was found.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.GetActualValue(tree, value);
