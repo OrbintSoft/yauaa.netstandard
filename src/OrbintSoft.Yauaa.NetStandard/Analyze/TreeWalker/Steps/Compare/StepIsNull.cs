@@ -65,18 +65,20 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
         /// othewise it will return null.
         /// </summary>
         /// <param name="tree">The tree to walk into.</param>
-        /// <param name="value">The value of the step.</param>
+        /// <param name="value">The actual value of the node or null to get the root.</param>
         /// <returns>Either null or a <see cref="WalkList.WalkResult"/>.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.WalkNextStep(tree, value);
 
-            if (actualValue is null || actualValue.Value is null)
+            if (actualValue?.Value is null)
             {
                 return new WalkList.WalkResult(tree, "<<<Null Value>>>");
             }
-
-            return null;
+            else
+            {
+                return null;
+            }
         }
     }
 }
