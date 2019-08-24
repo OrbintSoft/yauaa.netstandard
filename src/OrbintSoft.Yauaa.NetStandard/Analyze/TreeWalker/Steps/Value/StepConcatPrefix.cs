@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="StepConcatPrefix.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2019 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
@@ -32,71 +31,70 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="StepConcatPrefix" />.
+    /// This class defines the ConcatPrefixStep, it is used in parsing to concatenate a prefix to the value of the node.
     /// </summary>
     [Serializable]
     public class StepConcatPrefix : Step
     {
         /// <summary>
-        /// Defines the prefix.
+        ///  Defines the prefix to concatenate.
         /// </summary>
         private readonly string prefix;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepConcatPrefix"/> class.
+        /// This is used only for binary deserialization.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
-        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
+        /// <param name="info">The info <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context <see cref="StreamingContext"/>.</param>
         public StepConcatPrefix(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            this.prefix = (string)info.GetValue("prefix", typeof(string));
+            this.prefix = (string)info.GetValue(nameof(this.prefix), typeof(string));
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepConcatPrefix"/> class.
         /// </summary>
-        /// <param name="prefix">The prefix<see cref="string"/>.</param>
+        /// <param name="prefix">The prefix that should be concatenated.</param>
         public StepConcatPrefix(string prefix)
         {
             this.prefix = prefix;
         }
 
         /// <summary>
-        /// The CanFail.
+        /// This step should never fail.
         /// </summary>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <returns>It returns false.</returns>
         public override bool CanFail()
         {
             return false;
         }
 
         /// <summary>
-        /// The GetObjectData.
+        /// This is used for binary serialization.
+        /// Populates a SerializationInfo with the data needed to serialize the target object.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
-        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
+        /// <param name="info">The SerializationInfo to populate with data.</param>
+        /// <param name="context">The destination <see cref="StreamingContext"/> for this serialization.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("prefix", this.prefix, typeof(string));
+            info.AddValue(nameof(this.prefix), this.prefix, typeof(string));
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
-            return "ConcatPrefix(" + this.prefix + ")";
+            return $"ConcatPrefix({this.prefix})";
         }
 
         /// <summary>
-        /// The Walk.
+        /// It concatenates a prefix to the actual value, then it will walk into the tree and recurse through all the remaining steps.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
+        /// <param name="tree">The tree to walk into.</param>
+        /// <param name="value">The actual value of the node or null to get the root.</param>
+        /// <returns>Either null or the actual value that was found.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var actualValue = this.GetActualValue(tree, value);

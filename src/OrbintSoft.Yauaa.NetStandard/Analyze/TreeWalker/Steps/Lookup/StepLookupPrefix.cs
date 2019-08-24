@@ -33,7 +33,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// This class defines the LookupPrefix Step, it is used in parsing find a value in a lookup by a prefix.
+    /// This class defines the LookupPrefix Step, it is used in parsing to find a value in a lookup by a prefix.
     /// </summary>
     [Serializable]
     public class StepLookupPrefix : Step

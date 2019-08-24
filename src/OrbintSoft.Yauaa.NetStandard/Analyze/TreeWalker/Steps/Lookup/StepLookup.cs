@@ -32,7 +32,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// This class defines the Lookup Step, it is used in parsing find a value in a lookup.
+    /// This class defines the Lookup Step, it is used in parsing to find a value in a lookup.
     /// </summary>
     [Serializable]
     public class StepLookup : Step
