@@ -20,7 +20,8 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <PackageIconUrl>https://raw.githubusercontent.com/OrbintSoft/yauaa.netstandard/master/assets/icon.png</PackageIconUrl>
     <PackageProjectUrl>https://orbintsoft.net/Yauaa/Index</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>																				  
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <LangVersion>7.3</LangVersion>																				  
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.6.0" />

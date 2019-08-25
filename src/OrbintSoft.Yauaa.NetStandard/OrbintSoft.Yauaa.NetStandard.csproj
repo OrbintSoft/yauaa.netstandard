@@ -8,7 +8,7 @@
     <AssemblyVersion>5.9.1.4</AssemblyVersion>
     <FileVersion>5.9.1.4</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
-    <LangVersion>default</LangVersion>
+    <LangVersion>7.3</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product>Yauaa: Yet Another User Agent Analyzer</Product>
 	<SignAssembly>true</SignAssembly>
