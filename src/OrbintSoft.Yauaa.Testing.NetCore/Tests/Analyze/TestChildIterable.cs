@@ -47,7 +47,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 
             var prc = new ParserRuleContext();
 
-            var iterator = ci.Iterator(prc);
+            var iterator = ci.GetEnumerator(prc);
 
             iterator.Current.Should().BeNull();
             iterator.MoveNext().Should().BeFalse();            
@@ -73,7 +73,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             prc.children.Add(new ParserRuleContext());
             prc.children.Add(new ParserRuleContext());
 
-            var iterator = ci.Iterator(prc);
+            var iterator = ci.GetEnumerator(prc);
 
             var i = 0;
             while (i < 10)

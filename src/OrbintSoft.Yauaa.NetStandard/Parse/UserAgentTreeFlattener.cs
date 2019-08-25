@@ -45,62 +45,72 @@ namespace OrbintSoft.Yauaa.Parse
         /// <summary>
         /// Defines the AGENT.
         /// </summary>
-        private const string AGENT = "agent";
+        internal const string AGENT = "agent";
 
         /// <summary>
         /// Defines the BASE64.
         /// </summary>
-        private const string BASE64 = "base64";
+        internal const string BASE64 = "base64";
 
         /// <summary>
         /// Defines the COMMENTS.
         /// </summary>
-        private const string COMMENTS = "comments";
+        internal const string COMMENTS = "comments";
 
         /// <summary>
         /// Defines the EMAIL.
         /// </summary>
-        private const string EMAIL = "email";
+        internal const string EMAIL = "email";
+
+        /// <summary>
+        /// Defines the ENTRY.
+        /// </summary>
+        internal const string ENTRY = "entry";
 
         /// <summary>
         /// Defines the KEY.
         /// </summary>
-        private const string KEY = "key";
+        internal const string KEY = "key";
 
         /// <summary>
         /// Defines the KEYVALUE.
         /// </summary>
-        private const string KEYVALUE = "keyvalue";
+        internal const string KEYVALUE = "keyvalue";
 
         /// <summary>
         /// Defines the NAME.
         /// </summary>
-        private const string NAME = "name";
+        internal const string NAME = "name";
 
         /// <summary>
         /// Defines the PRODUCT.
         /// </summary>
-        private const string PRODUCT = "product";
+        internal const string PRODUCT = "product";
 
         /// <summary>
         /// Defines the TEXT.
         /// </summary>
-        private const string TEXT = "text";
+        internal const string TEXT = "text";
 
         /// <summary>
         /// Defines the URL.
         /// </summary>
-        private const string URL = "url";
+        internal const string URL = "url";
 
         /// <summary>
         /// Defines the UUID.
         /// </summary>
-        private const string UUID = "uuid";
+        internal const string UUID = "uuid";
+
+        /// <summary>
+        /// Defines the VALUE.
+        /// </summary>
+        internal const string VALUE = "value";
 
         /// <summary>
         /// Defines the VERSION.
         /// </summary>
-        private const string VERSION = "version";
+        internal const string VERSION = "version";
 
         /// <summary>
         /// Defines the Walker.

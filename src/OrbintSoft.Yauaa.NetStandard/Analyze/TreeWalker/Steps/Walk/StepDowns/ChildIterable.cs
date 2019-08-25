@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ChildIterable.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2019 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
@@ -34,37 +33,37 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="ChildIterable" />.
+    /// This class is used to iterate throught the childres of a <see cref="IParseTree"/>.
     /// </summary>
     public class ChildIterable
     {
         /// <summary>
-        /// Defines the end.
-        /// </summary>
-        private readonly int end;
-
-        /// <summary>
-        /// Defines the isWantedClassPredicate.
-        /// </summary>
-        private readonly Predicate<IParseTree> isWantedClassPredicate;
-
-        /// <summary>
-        /// Defines the privateNumberRange.
-        /// </summary>
-        private readonly bool privateNumberRange;
-
-        /// <summary>
-        /// Defines the start.
+        /// Defines the start index of the interation.
         /// </summary>
         private readonly int start;
 
         /// <summary>
+        /// Defines the end index of the interation.
+        /// </summary>
+        private readonly int end;
+
+        /// <summary>
+        /// Defines a predicate to filter the wanted node type.
+        /// </summary>
+        private readonly Predicate<IParseTree> isWantedClassPredicate;
+
+        /// <summary>
+        /// Defines if the range is private.
+        /// </summary>
+        private readonly bool privateNumberRange;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ChildIterable"/> class.
         /// </summary>
-        /// <param name="privateNumberRange">The privateNumberRange<see cref="bool"/>.</param>
-        /// <param name="start">The start<see cref="int"/>.</param>
-        /// <param name="end">The end<see cref="int"/>.</param>
-        /// <param name="isWantedClassPredicate">The isWantedClassPredicate<see cref="Predicate{ParserRuleContext}"/>.</param>
+        /// <param name="privateNumberRange">Defines if the range to iterate is private.</param>
+        /// <param name="start">The start index of iteration.</param>
+        /// <param name="end">The end index of the iteration.</param>
+        /// <param name="isWantedClassPredicate">A predicate to filter only the wanted classes.</param>
         public ChildIterable(bool privateNumberRange, int start, int end, Predicate<IParseTree> isWantedClassPredicate)
         {
             this.privateNumberRange = privateNumberRange;
@@ -74,49 +73,50 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         }
 
         /// <summary>
-        /// The Iterator.
+        /// It returns the enumerator by the current parser rule of tree context.
         /// </summary>
-        /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/>.</param>
-        /// <returns>The <see cref="IEnumerator{IParseTree}"/>.</returns>
-        public IEnumerator<IParseTree> Iterator(ParserRuleContext treeContext)
+        /// <param name="treeContext">The tree context<see cref="ParserRuleContext"/>.</param>
+        /// <returns>The enumerator of the tree.</returns>
+        public IEnumerator<IParseTree> GetEnumerator(ParserRuleContext treeContext)
         {
-            return new ChildIterator(this, treeContext);
+            return new ChildEnumerator(this, treeContext);
         }
 
         /// <summary>
-        /// Defines the <see cref="ChildIterator" />.
+        /// This class is used as the enumerator of a <see cref="IParseTree"/>.
         /// </summary>
-        internal class ChildIterator : IEnumerator<IParseTree>
+        internal class ChildEnumerator : IEnumerator<IParseTree>
         {
             /// <summary>
-            /// Defines the childIter.
+            /// Defines private iterator of child.
             /// </summary>
             private readonly IEnumerator<IParseTree> childIter;
 
             /// <summary>
-            /// Defines the childIterable.
+            /// Defines the referenced child iterable class.
             /// </summary>
             private readonly ChildIterable childIterable;
 
             /// <summary>
-            /// Defines the index.
+            /// Defines the current index, -1 as default because iteration has not started.
             /// </summary>
             private int index = -1;
 
             /// <summary>
-            /// True if I alread iterated all the tree.
+            /// True if I alread iterated all the nodes in the tree context.
             /// </summary>
             private bool endReached = false;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="ChildIterator"/> class.
+            /// Initializes a new instance of the <see cref="ChildEnumerator"/> class.
+            /// This class is used to initialize the enumerator.
             /// </summary>
-            /// <param name="childIterable">The childIterable<see cref="ChildIterable"/>.</param>
-            /// <param name="treeContext">The treeContext<see cref="ParserRuleContext"/>.</param>
-            internal ChildIterator(ChildIterable childIterable, ParserRuleContext treeContext)
+            /// <param name="childIterable">The referenced <see cref="ChildIterable"/> class.</param>
+            /// <param name="treeContext">The tree context, <see cref="ParserRuleContext"/>.</param>
+            internal ChildEnumerator(ChildIterable childIterable, ParserRuleContext treeContext)
             {
                 this.childIterable = childIterable;
-                if (treeContext.children == null)
+                if (treeContext.children is null)
                 {
                     this.childIter = null;
                     this.Current = null;
@@ -129,12 +129,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             }
 
             /// <summary>
-            /// Gets the Current.
+            /// Gets the current node.
             /// </summary>
             public IParseTree Current { get; private set; } = null;
 
             /// <summary>
-            /// Gets the Current.
+            /// Gets the current node.
             /// </summary>
             object IEnumerator.Current
             {
@@ -145,7 +145,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             }
 
             /// <summary>
-            /// The Dispose.
+            /// It is used to dispose the enumerator.
             /// </summary>
             public void Dispose()
             {
@@ -204,7 +204,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             }
 
             /// <summary>
-            /// The Reset.
+            /// I reset the enumerator, so I can restart the iteration.
             /// </summary>
             public void Reset()
             {
