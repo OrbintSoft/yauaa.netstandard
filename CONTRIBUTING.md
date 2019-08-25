@@ -2,6 +2,14 @@
 
 First of all, thank you to be here, any contribute here is welcome, and your help can be vital to keep this project alive and to make it a great library.
 
+#Languages and framework
+
+- Most of the library is written in C# 7.3
+- Parsing rules are written in ANTLR4, this part is shared with the main Java library and usually we don't touch that in this repository.
+- User agent definitions are witten in YAML, these are shared with the main Java library and usually we don't touch those in this repository.
+- The libary is written in .NET Standard 2.0.
+- Tools and applications based on the library, including unit tests are witten in .NET Core 2.2.
+
 ## Requirements
 Here I define a standard enviroment and list of software suggested or required to develop without throubles.
 
