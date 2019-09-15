@@ -2,7 +2,7 @@
   "profiles": {
     "OrbintSoft.Yauaa.Commandline.NetCore": {
       "commandName": "Project",
-      "commandLineArgs": "--ua"
+      "commandLineArgs": "--ua \"Chrome\" --json"
     }
   }
 }

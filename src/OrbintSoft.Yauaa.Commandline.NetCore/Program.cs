@@ -19,21 +19,20 @@
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
-//   
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 25, 18:21</date>
 //-----------------------------------------------------------------------
 using CommandLine;
+using CommandLine.Text;
 using log4net;
 using OrbintSoft.Yauaa.Analyzer;
 using OrbintSoft.Yauaa.Debug;
-using OrbintSoft.Yauaa.Parse;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
+using System.Linq;
 
 namespace OrbintSoft.Yauaa.Commandline
 {
@@ -52,7 +51,12 @@ namespace OrbintSoft.Yauaa.Commandline
         /// </summary>
         private enum OutputFormat
         {
-            CSV, JSON, YAML, XML, UNSUPPORTED
+            TEXT,
+            CSV,
+            JSON,
+            YAML,
+            XML,
+            UNSUPPORTED
         }
 
         /// <summary>
@@ -123,235 +127,160 @@ namespace OrbintSoft.Yauaa.Commandline
                 case OutputFormat.YAML:
                     writer.WriteLine(agent.ToYamlTestCase());
                     break;
+                case OutputFormat.TEXT:
+                case OutputFormat.UNSUPPORTED:
                 case OutputFormat.XML:
+                default:
                     writer.WriteLine("Not supported yet.");
                     break;
-                default:
-                    break;
+            }
+        }
+
+        private static IEnumerable<string> GetUserAgents(Options commandlineOptions)
+        {
+            if (!string.IsNullOrWhiteSpace(commandlineOptions.Useragent))
+            {
+                yield return commandlineOptions.Useragent;
+            }
+            else
+            {
+                var inputFile = commandlineOptions.InFile;
+                if (!File.Exists(inputFile))
+                {
+                    throw new FileNotFoundException(inputFile);
+                }
+                else
+                {
+                    using (var reader = new StreamReader(inputFile))
+                    {
+                        while (!reader.EndOfStream)
+                        {
+                            yield return reader.ReadLine();
+                        }
+                    }
+                }
             }
         }
 
         public static void Main(string[] args)
         {
-            var commandlineOptions = new Options();
-            var parser = new Parser();
-            try
-            {                
-                parser.ParseArguments<Options>(args);
-                var outputFormat = OutputFormat.YAML;
-                if (commandlineOptions.CsvFormat)
+            using (var parser = new Parser(w => { w.EnableDashDash = true; }))
+            {
+                var result = parser.ParseArguments<Options>(args);
+                result.WithParsed(commandlineOptions =>
                 {
-                    outputFormat = OutputFormat.CSV;
-                }
-                else if (commandlineOptions.JsonFormat)
-                {
-                    outputFormat = OutputFormat.JSON;
-                }
-                else if(commandlineOptions.XmlFormat)
-                {
-                    outputFormat = OutputFormat.XML;
-                }
+                    Execute(commandlineOptions);
+                });
+                result.WithNotParsed(errors =>
+               {
+                   var helpText = HelpText.AutoBuild(result, h =>
+                   {
+                       // Configure HelpText here  or create your own and return it 
+                       h.AdditionalNewLineAfterOption = false;
+                       return HelpText.DefaultParsingErrorsHandler(result, h);
+                   }, e =>
+                   {
 
-                var builder = UserAgentAnalyzerTester.NewBuilder();
-                builder.HideMatcherLoadStats();
-                builder.WithCache(commandlineOptions.CacheSize);
-                if (commandlineOptions.Fields != null)
-                {
-                    foreach (var field in commandlineOptions.Fields)
-                    {
-                        builder.WithField(field);
-                    }
-                }
-                var uaa = builder.Build() as UserAgentAnalyzerTester;
+                       return e;
+                   });
+                   Console.WriteLine(helpText);
+               });
+            }
+            if (Debugger.IsAttached)
+            {
+                Console.ReadKey();
+            }
+        }
 
-                IList<string> fields;
-                if (commandlineOptions.Fields == null)
-                {
-                    fields = uaa.GetAllPossibleFieldNamesSorted();
-                    fields.Add(UserAgent.USERAGENT_FIELDNAME);
-                }
-                else
-                {
-                    fields = commandlineOptions.Fields;
-                }
-                //PrintHeader(outputFormat, fields);
+        private static void Execute(Options commandlineOptions)
+        {
+            var outputFormat = SetOutputFormat(commandlineOptions);
+            var uaa = CreateAndConfigureParser(commandlineOptions);
+            var fields = GetFields(commandlineOptions, uaa);
+            var userAgentStrings = GetUserAgents(commandlineOptions);
+            var stream = GetStream(commandlineOptions);
 
-                if (commandlineOptions.Useragent != null)
-                {
-                    var agent = uaa.Parse(commandlineOptions.Useragent);
-                    //PrintAgent(outputFormat, fields, agent);
-                    return;
-                }
+            PrintHeader(stream, outputFormat, fields);
+            foreach (var us in userAgentStrings)
+            {
+                var userAgent = uaa.Parse(us);
+                PrintAgent(stream, outputFormat, fields, userAgent);
+            }
 
-                // Open the file (or stdin)
-                Stream inputStream;
-                if (commandlineOptions.InFile != null)
-                {
-                    inputStream = new FileStream(commandlineOptions.InFile, FileMode.Open);
-                }
-                else
-                {
-                    var input = Console.ReadLine();
-                    var bytes = Encoding.UTF8.GetBytes(input);
-                    inputStream = new MemoryStream(bytes);
-                }
+            if (!string.IsNullOrWhiteSpace(commandlineOptions.OutFile))
+            {
+                stream.Dispose(); //I dispose file stream, console should not be disposed
+            }            
+        }
+
+        private static StreamWriter GetStream(Options commandlineOptions)
+        {
+            if (!string.IsNullOrWhiteSpace(commandlineOptions.OutFile))
+            {
+                return new StreamWriter(commandlineOptions.OutFile);
+            } else
+            {
                 var sw = new StreamWriter(Console.OpenStandardOutput())
                 {
                     AutoFlush = true
                 };
                 Console.SetOut(sw);
-                var flattenPrinter = new UserAgentTreeFlattener(new FlattenPrinter(sw));
-                using (var br = new StreamReader(inputStream))
-                {
-                    string strLine;
-
-                    long ambiguities = 0;
-                    long syntaxErrors = 0;
-
-                    long linesTotal = 0;
-                    long hitsTotal = 0;
-                    long linesOk = 0;
-                    long hitsOk = 0;
-                    long linesMatched = 0;
-                    long hitsMatched = 0;
-                    Stopwatch stopwatch = Stopwatch.StartNew();
-
-                    Stopwatch segmentStopwatch = Stopwatch.StartNew();
-                    long segmentStartLines = linesTotal;
-
-                    //Read File Line By Line
-                    while ((strLine = br.ReadLine()) != null)
-                    {
-                        if (strLine.StartsWith(" ") || strLine.StartsWith("#") || strLine.Length == 0)
-                        {
-                            continue;
-                        }
-
-                        long hits = 1;
-                        string agentStr = strLine;
-
-                        if (strLine.Contains("\t"))
-                        {
-                            string[] parts = strLine.Split("\t", 2);
-                            if (long.TryParse(parts[0], out hits))
-                            {
-                                agentStr = parts[1];
-                            }
-                            else
-                            {
-                                agentStr = strLine;
-                            }
-                        }
-
-                        if (commandlineOptions.FullFlatten)
-                        {
-                            flattenPrinter.Parse(agentStr);
-                            continue;
-                        }
-
-                        if (commandlineOptions.MatchedFlatten)
-                        {
-                            foreach (var match in uaa.GetUsedMatches(new UserAgent(agentStr)))
-                            {
-                                Console.WriteLine(match.Key + " " + match.Value);
-                            }
-                            continue;
-                        }
-
-                        UserAgent agent = uaa.Parse(agentStr);
-
-                        bool hasBad = false;
-                        foreach (string field in UserAgent.StandardFields)
-                        {
-                            if (agent.GetConfidence(field) < 0)
-                            {
-                                hasBad = true;
-                                break;
-                            }
-                        }
-
-                        linesTotal++;
-                        hitsTotal += hits;
-
-                        if (agent.HasSyntaxError)
-                        {
-                            if (outputFormat == OutputFormat.YAML)
-                            {
-                                Console.WriteLine("# Syntax error: " + agentStr);
-                            }
-                        }
-                        else
-                        {
-                            linesOk++;
-                            hitsOk += hits;
-                        }
-
-                        if (!hasBad)
-                        {
-                            linesMatched++;
-                            hitsMatched += hits;
-                        }
-
-                        if (agent.HasAmbiguity)
-                        {
-                            ambiguities++;
-                        }
-                        if (agent.HasSyntaxError)
-                        {
-                            syntaxErrors++;
-                        }
-
-                        if (linesTotal % 1000 == 0)
-                        {
-                            long speed = (linesTotal - segmentStartLines) / (stopwatch.ElapsedMilliseconds);
-                            Console.WriteLine(
-                                string.Format("Lines = {0} (Ambiguities: {1} ; SyntaxErrors: {2}) Analyze speed = {3}/ms.",
-                                    linesTotal, ambiguities, syntaxErrors, speed));
-                            segmentStopwatch.Reset();
-                            segmentStartLines = linesTotal;
-                            ambiguities = 0;
-                            syntaxErrors = 0;
-                        }
-
-                        if (commandlineOptions.OutputOnlyBadResults)
-                        {
-                            if (hasBad)
-                            {
-                                continue;
-                            }
-                        }
-
-                        //PrintAgent(outputFormat, fields, agent);
-                    }
-
-                    Log.Info("-------------------------------------------------------------");
-                    Log.Info(string.Format("Performance: {0} in {1} ms --> {2}/ms", linesTotal, stopwatch.ElapsedMilliseconds, linesTotal / stopwatch.ElapsedMilliseconds));
-                    Log.Info("-------------------------------------------------------------");
-                    Log.Info(string.Format("Parse results of {0} lines", linesTotal));
-                    Log.Info(string.Format("Parsed without error: {0} ({1})", linesOk, 100.0 * linesOk / linesTotal));
-                    Log.Info(string.Format("Parsed with    error: {0} ({1})", linesTotal - linesOk, 100.0 * (linesTotal - linesOk) / linesTotal));
-                    Log.Info(string.Format("Fully matched       : {0} ({1})", linesMatched, 100.0 * linesMatched / linesTotal));
-
-                    if (linesTotal != hitsTotal)
-                    {
-                        Log.Info("-------------------------------------------------------------");
-                        Log.Info(string.Format("Parse results of {0} hits", hitsTotal));
-                        Log.Info(string.Format("Parsed without error: %8d (=%6.2f%%)",
-                            hitsOk, 100.0 * hitsOk / hitsTotal));
-                        Log.Info(string.Format("Parsed with    error: %8d (=%6.2f%%)",
-                            hitsTotal - hitsOk, 100.0 * (hitsTotal - hitsOk) / hitsTotal));
-                        Log.Info(string.Format("Fully matched       : %8d (=%6.2f%%)",
-                            hitsMatched, 100.0 * hitsMatched / hitsTotal));
-                        Log.Info("-------------------------------------------------------------");
-                    }
-                }
-            } catch (Exception e )
-            {
-                Log.Error(string.Format("IOException: {0}", e));               
+                return sw;
             }
-#if DEBUG
-            Console.ReadKey();
-#endif
+        }       
+
+        private static IList<string> GetFields(Options commandlineOptions, UserAgentAnalyzerTester uaa)
+        {
+            IList<string> fields;
+            if (commandlineOptions.Fields == null || !commandlineOptions.Fields.Any())
+            {
+                fields = uaa.GetAllPossibleFieldNamesSorted();
+                fields.Add(UserAgent.USERAGENT_FIELDNAME);
+            }
+            else
+            {
+                fields = commandlineOptions.Fields;
+            }
+
+            return fields;
+        }
+
+        private static UserAgentAnalyzerTester CreateAndConfigureParser(Options commandlineOptions)
+        {
+            var builder = UserAgentAnalyzerTester.NewBuilder();
+            builder.HideMatcherLoadStats();
+            builder.WithCache(commandlineOptions.CacheSize);
+            if (commandlineOptions.Fields != null)
+            {
+                foreach (var field in commandlineOptions.Fields)
+                {
+                    builder.WithField(field);
+                }
+            }
+            var uaa = builder.Build() as UserAgentAnalyzerTester;
+            return uaa;
+        }
+
+        private static OutputFormat SetOutputFormat(Options commandlineOptions)
+        {
+            var outputFormat = OutputFormat.TEXT;
+            if (commandlineOptions.CsvFormat)
+            {
+                outputFormat = OutputFormat.CSV;
+            }
+            else if (commandlineOptions.JsonFormat)
+            {
+                outputFormat = OutputFormat.JSON;
+            }
+            else if (commandlineOptions.XmlFormat)
+            {
+                outputFormat = OutputFormat.XML;
+            }
+            else if (commandlineOptions.YamlFormat)
+            {
+                outputFormat = OutputFormat.YAML;
+            }
+            return outputFormat;
         }
     }
 }
