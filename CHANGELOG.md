@@ -18,6 +18,7 @@ v5.9
 - Detect Apple iOS Universal Links updater, Netsparker, CasperJs
 - Fix the AirWatch scenario
 - Massive improvement in detection of URLs.
+- Fix resource path on linux
 
 v5.8
 ===
