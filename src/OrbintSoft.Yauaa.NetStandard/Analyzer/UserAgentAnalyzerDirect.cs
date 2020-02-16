@@ -66,7 +66,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Defines the DefaultResources.
         /// </summary>
-        private static readonly ResourcesPath DefaultResources = new ResourcesPath(@"YamlResources\UserAgents", "*.yaml");
+        private static readonly ResourcesPath DefaultResources = new ResourcesPath($@"YamlResources{Path.DirectorySeparatorChar}UserAgents", "*.yaml");
 
         /// <summary>
         /// Defines the HardCodedGeneratedFields.

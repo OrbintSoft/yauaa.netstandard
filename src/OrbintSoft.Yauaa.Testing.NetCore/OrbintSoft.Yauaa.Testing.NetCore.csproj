@@ -9,7 +9,7 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.9-beta.1</Version>
+    <Version>5.9-rc.1</Version>
 
     <AssemblyVersion>5.9.2.1</AssemblyVersion>
 
@@ -319,7 +319,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.8.0" />
+    <PackageReference Include="FluentAssertions" Version="5.9.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="Semver" Version="2.0.4" />
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />

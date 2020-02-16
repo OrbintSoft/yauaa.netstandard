@@ -4,7 +4,7 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.9-beta.1</Version>
+    <Version>5.9-rc.1</Version>
     <AssemblyVersion>5.9.2.1</AssemblyVersion>
     <FileVersion>5.9.2.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>

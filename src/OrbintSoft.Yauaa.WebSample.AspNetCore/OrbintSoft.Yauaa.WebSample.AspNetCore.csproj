@@ -7,7 +7,7 @@
     <Company>OrbintSoft</Company>
     <AssemblyVersion>5.9.2.1</AssemblyVersion>
     <FileVersion>5.9.2.1</FileVersion>
-    <Version>5.9-beta.1</Version>
+    <Version>5.9-rc.1</Version>
     <Description>A sample web project to test Yauaa Parser</Description>
     <Copyright>Copyright (C) 2013-2019 OrbintSoft</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>

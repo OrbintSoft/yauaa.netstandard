@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
-    <Version>5.9-beta.1</Version>
+    <Version>5.9-rc.1</Version>
     <Authors>Stefano Balzarotti, Niels Basjes</Authors>
     <AssemblyVersion>5.9.2.1</AssemblyVersion>
     <ApplicationIcon></ApplicationIcon>
