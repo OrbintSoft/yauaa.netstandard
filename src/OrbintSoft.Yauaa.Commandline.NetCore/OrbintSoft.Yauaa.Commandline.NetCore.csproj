@@ -4,11 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>OrbintSoft.Yauaa.Commandline</RootNamespace>
-    <Version>5.9.1</Version>
+    <Version>5.10-alpha.1</Version>
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>												   
-    <AssemblyVersion>5.9.5.1</AssemblyVersion>
+    <AssemblyVersion>5.10.1.1</AssemblyVersion>
 	<Copyright>Copyright (C) 2013-2019 Niels Basjes, Porting by OrbintSoft</Copyright>				 
-    <FileVersion>5.9.5.1</FileVersion>
+    <FileVersion>5.10.1.1</FileVersion>
 	<SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\orbintsoft-public.snk</AssemblyOriginatorKeyFile>
     <Company>OrbintSoft</Company>
