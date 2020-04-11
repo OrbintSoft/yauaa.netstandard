@@ -52,7 +52,7 @@ config:
       DeviceClass                          : 'Phone'
       DeviceName                           : 'Samsung SCH-I535'
       DeviceBrand                          : 'Samsung'
-      OperatingSystemClass                 : 'Mobile'
+      OperatingSystemClass                 : 'Mobile'      
       OperatingSystemName                  : 'Android'
       OperatingSystemVersion               : '4.4.2'
       OperatingSystemNameVersion           : 'Android 4.4.2'
