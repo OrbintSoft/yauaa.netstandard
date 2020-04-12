@@ -67,7 +67,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Defines the resultAgentField.
         /// </summary>
-        private UserAgent.AgentField resultAgentField = null;
+        private AgentField resultAgentField = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatcherExtractAction"/> class.
@@ -176,7 +176,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// The SetResultAgentField.
         /// </summary>
         /// <param name="newResultAgentField">The newResultAgentField<see cref="UserAgent.AgentField"/>.</param>
-        public void SetResultAgentField(UserAgent.AgentField newResultAgentField)
+        public void SetResultAgentField(AgentField newResultAgentField)
         {
             this.resultAgentField = newResultAgentField;
         }

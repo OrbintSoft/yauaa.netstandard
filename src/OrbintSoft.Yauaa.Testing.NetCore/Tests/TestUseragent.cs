@@ -119,7 +119,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             agent.Set(name, "Three", 333); // Should be used
             Check(agent, name, "Three", 333);
 
-            UserAgent.AgentField field = agent.Get(name);
+            var field = agent.Get(name);
             field.SetValueForced("Five", 5); // Should be used
             Check(agent, name, "Five", 5);
             field.SetValueForced("<<<null>>>", 4); // Should be used
@@ -137,9 +137,9 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [Fact]
         public void TestCopying()
         {
-            UserAgent.AgentField origNull = new UserAgent.AgentField(null);
+            var origNull = new AgentField(null);
             origNull.SetValue("One", 1);
-            UserAgent.AgentField copyNull = new UserAgent.AgentField("Foo"); // Different default!
+            var copyNull = new AgentField("Foo"); // Different default!
             copyNull.SetValue(origNull);
 
             copyNull.GetValue().Should().Be("One");
@@ -149,9 +149,9 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             copyNull.GetConfidence().Should().Be(-1);
 
 
-            UserAgent.AgentField origFoo = new UserAgent.AgentField("Foo");
+            var origFoo = new AgentField("Foo");
             origFoo.SetValue("Two", 2);
-            UserAgent.AgentField copyFoo = new UserAgent.AgentField(null); // Different default!
+            var copyFoo = new AgentField(null); // Different default!
             copyFoo.SetValue(origFoo);
 
             copyFoo.GetValue().Should().Be("Two");
@@ -171,19 +171,19 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             UserAgent agent3 = new UserAgent("Something 2");
             UserAgent agent4 = new UserAgent("Something 2");
 
-            UserAgent.AgentField field0 = new UserAgent.AgentField("Foo");
+            var field0 = new AgentField("Foo");
             field0.SetValue("One", 1);
 
-            UserAgent.AgentField field1 = new UserAgent.AgentField("Foo");
+            var field1 = new AgentField("Foo");
             field1.SetValue("One", 1);
 
-            UserAgent.AgentField field2 = new UserAgent.AgentField("Foo"); // Same, different value
+            var field2 = new AgentField("Foo"); // Same, different value
             field2.SetValue("Two", 1);
 
-            UserAgent.AgentField field3 = new UserAgent.AgentField("Foo"); // Same, different confidence
+            var field3 = new AgentField("Foo"); // Same, different confidence
             field3.SetValue("One", 2);
 
-            UserAgent.AgentField field4 = new UserAgent.AgentField(null); // Same, different default
+            var field4 = new AgentField(null); // Same, different default
             field4.SetValue("One", 1);
 
             // We compare the base agent with 4 variations
