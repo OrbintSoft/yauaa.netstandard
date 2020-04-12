@@ -1,5 +1,11 @@
 This is intended as an overview of the major changes
 
+v5.10
+===
+- Improved SpeedCurve Robot detection (thanks to Ben Rogers)
+- Detection for Chromium/Blink based Edge on Windows 10
+- Detect Sogou Explorer (Sogou Browser)
+
 v5.9
 ===
 - Target equivalent Java 5.9 Version

@@ -9,7 +9,7 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore.Models
         [Required(ErrorMessage = "The User Agent is required")]
         public string UserAgent { get; set; }
 
-        public Dictionary<string, UserAgent.AgentField> Fields;
+        public Dictionary<string, AgentField> Fields;
 
         public string Version { get; set; }
 
