@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.10-beta.1</Version>
-    <AssemblyVersion>5.10.2.1</AssemblyVersion>
-    <FileVersion>5.10.2.1</FileVersion>
+    <Version>5.10-rc.1</Version>
+    <AssemblyVersion>5.10.3.1</AssemblyVersion>
+    <FileVersion>5.10.3.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>7.3</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -588,15 +588,15 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.7.2" />
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.8.0" />
     <PackageReference Include="DomainParser.Library.NetStandard" Version="1.6.0" />
-    <PackageReference Include="GitInfo" Version="2.0.20">
+    <PackageReference Include="GitInfo" Version="2.0.26">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.2.0">
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.5.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -606,7 +606,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="YamlDotNet" Version="6.1.2" />
+    <PackageReference Include="YamlDotNet" Version="8.1.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="pre-build.ps1">

@@ -9,6 +9,5 @@
         /// Gets or sets the user agent strings.
         /// </summary>
         string UserAgentString { get; set; }
-
     }
 }

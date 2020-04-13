@@ -9,11 +9,11 @@
 
     <Configurations>Debug;Release;Verbose</Configurations>
 
-    <Version>5.10-beta.1</Version>
+    <Version>5.10-rc.1</Version>
 
-    <AssemblyVersion>5.10.2.1</AssemblyVersion>
+    <AssemblyVersion>5.10.3.1</AssemblyVersion>
 
-    <FileVersion>5.10.2.1</FileVersion>
+    <FileVersion>5.10.3.1</FileVersion>
 
     <NeutralLanguage>en</NeutralLanguage>
 
@@ -319,9 +319,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" Version="5.9.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="Semver" Version="2.0.4" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Semver" Version="2.0.6" />
     <PackageReference Include="System.Diagnostics.Process" Version="4.3.0" />
     <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
