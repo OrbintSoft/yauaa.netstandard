@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="StepDown.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -27,14 +27,13 @@
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
 {
     using System;
-    using System.IO;
     using System.Runtime.Serialization;
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns;
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="StepDown" />.
+    /// This class defines the Down Step, it is used in parsing to go down to children of current node in the tree.
     /// </summary>
     [Serializable]
     public class StepDown : Step
@@ -62,33 +61,34 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepDown"/> class.
+        /// This is used only for binary deserialization.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
-        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
+        /// <param name="info">The info <see cref="SerializationInfo"/>.</param>
+        /// <param name="context">The context <see cref="StreamingContext"/>.</param>
         public StepDown(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            this.name = (string)info.GetValue("name", typeof(string));
-            this.start = (int)info.GetValue("start", typeof(int));
-            this.end = (int)info.GetValue("end", typeof(int));
+            this.name = (string)info.GetValue(nameof(this.name), typeof(string));
+            this.start = (int)info.GetValue(nameof(this.start), typeof(int));
+            this.end = (int)info.GetValue(nameof(this.end), typeof(int));
             this.SetDefaultFieldValues();
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StepDown"/> class.
         /// </summary>
-        /// <param name="numberRange">The numberRange<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
+        /// <param name="numberRange">The range<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/> used to get the list of children.</param>
+        /// <param name="name">The name of the node.</param>
         public StepDown(UserAgentTreeWalkerParser.NumberRangeContext numberRange, string name)
             : this(NumberRangeVisitor.GetList(numberRange), name)
         {
         }
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="StepDown"/> class from being created.
+        /// Initializes a new instance of the <see cref="StepDown"/> class.
         /// </summary>
-        /// <param name="numberRange">The numberRange<see cref="NumberRangeList"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
+        /// <param name="numberRange">The range to get the list of children.</param>
+        /// <param name="name">The name of the node.</param>
         private StepDown(NumberRangeList numberRange, string name)
         {
             this.name = name;
@@ -98,33 +98,31 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// The GetObjectData.
+        /// This is used for binary serialization.
+        /// Populates a SerializationInfo with the data needed to serialize the target object.
         /// </summary>
-        /// <param name="info">The info<see cref="SerializationInfo"/>.</param>
-        /// <param name="context">The context<see cref="StreamingContext"/>.</param>
+        /// <param name="info">The SerializationInfo to populate with data.</param>
+        /// <param name="context">The destination <see cref="StreamingContext"/> for this serialization.</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);
-            info.AddValue("name", this.name, typeof(string));
-            info.AddValue("start", this.start, typeof(int));
-            info.AddValue("end", this.end, typeof(int));
+            info.AddValue(nameof(this.name), this.name, typeof(string));
+            info.AddValue(nameof(this.start), this.start, typeof(int));
+            info.AddValue(nameof(this.end), this.end, typeof(int));
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
-            return "Down([" + this.start + ":" + this.end + "]" + this.name + ")";
+            return $"Down([{this.start}:{this.end}]{this.name})";
         }
 
         /// <summary>
-        /// The Walk.
+        /// It iterates throught children walking to next steps until it find a value, if a value is found it stops iterating.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
+        /// <param name="tree">The tree to walk into.</param>
+        /// <param name="value">Not used.</param>
+        /// <returns>Either null or the actual value that was found.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
             var children = this.userAgentGetChildrenVisitor.Visit(tree);
@@ -146,15 +144,6 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// The ReadObject.
-        /// </summary>
-        /// <param name="stream">The stream<see cref="Stream"/>.</param>
-        private void ReadObject(Stream stream)
-        {
-            this.SetDefaultFieldValues();
         }
 
         /// <summary>
