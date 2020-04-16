@@ -155,6 +155,12 @@ namespace OrbintSoft.Yauaa.Debug
                 foreach (var fieldName in result.GetAvailableFieldNamesSorted())
                 {
                     var field = result.Get(fieldName);
+
+                    if (field == null)
+                    {
+                        Log.Error("Should not happen");
+                    }
+
                     if (field.GetConfidence() >= 0)
                     {
                         var marker = string.Empty;

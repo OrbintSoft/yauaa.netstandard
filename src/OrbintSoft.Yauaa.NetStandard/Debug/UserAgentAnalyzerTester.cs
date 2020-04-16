@@ -49,32 +49,13 @@ namespace OrbintSoft.Yauaa.Debug
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerTester));
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserAgentAnalyzerTester"/> class.
-        /// </summary>
-        public UserAgentAnalyzerTester()
-            : base()
-        {
-            this.KeepTests();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserAgentAnalyzerTester"/> class.
-        /// </summary>
-        /// <param name="folder">The path to yaml definitions folder.</param>
-        /// <param name="pattern">The pattern or the name of yaml file to load, default it's *.yaml.</param>
-        public UserAgentAnalyzerTester(string folder, string pattern = "*.yaml")
-            : this()
-        {
-            this.LoadResources(folder, pattern);
-        }
-
-        /// <summary>
         /// The NewBuilder.
         /// </summary>
         /// <returns>The <see cref="UserAgentAnalyzerTesterBuilder"/>.</returns>
         public static new UserAgentAnalyzerTesterBuilder NewBuilder()
         {
             var a = new UserAgentAnalyzerTester();
+            a.KeepTests();
             var b = new UserAgentAnalyzerTesterBuilder(a);
             b.SetUAA(a);
             return b;
@@ -669,8 +650,13 @@ namespace OrbintSoft.Yauaa.Debug
 
             fullStartStopWatch.Stop();
             var fullStop = fullStartStopWatch.ElapsedMilliseconds;
-
-            Log.Info($"This took {fullStop} ms for {testcount} tests : averaging to {fullStop / testcount} msec/test (This includes test validation and logging!!)");
+            var speed = testcount > 0 ? fullStop / testcount : float.NaN;
+            Log.Info($"This took {fullStop} ms for {testcount} tests : averaging to {speed} msec/test (This includes test validation and logging!!)");
+            if (testcount == 0)
+            {
+                Log.Error("NO tests were run at all!!!");
+                allPass = false;
+            }
 
             return allPass;
         }

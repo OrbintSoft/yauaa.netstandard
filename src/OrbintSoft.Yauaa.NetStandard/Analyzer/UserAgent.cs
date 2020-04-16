@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="UserAgent.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -48,14 +48,59 @@ namespace OrbintSoft.Yauaa.Analyzer
     public class UserAgent : UserAgentBaseListener, IAntlrErrorListener<int>, IAntlrErrorListener<IToken>, IUserAgent
     {
         /// <summary>
+        /// Defines the AGENT_BUILD.
+        /// </summary>
+        public const string AGENT_BUILD = "AgentBuild";
+
+        /// <summary>
         /// Defines the AGENT_CLASS.
         /// </summary>
         public const string AGENT_CLASS = "AgentClass";
 
         /// <summary>
+        /// Defines the AGENT_INFORMATION_EMAIL.
+        /// </summary>
+        public const string AGENT_INFORMATION_EMAIL = "AgentInformationEmail";
+
+        /// <summary>
+        /// Defines the AGENT_INFORMATION_URL.
+        /// </summary>
+        public const string AGENT_INFORMATION_URL = "AgentInformationUrl";
+
+        /// <summary>
+        /// Defines the AGENT_LANGUAGE.
+        /// </summary>
+        public const string AGENT_LANGUAGE = "AgentLanguage";
+
+        /// <summary>
+        /// Defines the AGENT_LANGUAGE_CODE.
+        /// </summary>
+        public const string AGENT_LANGUAGE_CODE = "AgentLanguageCode";
+
+        /// <summary>
         /// Defines the AGENT_NAME.
         /// </summary>
         public const string AGENT_NAME = "AgentName";
+
+        /// <summary>
+        /// Defines the AGENT_NAME_VERSION.
+        /// </summary>
+        public const string AGENT_NAME_VERSION = "AgentNameVersion";
+
+        /// <summary>
+        /// Defines the AGENT_NAME_VERSION_MAJOR.
+        /// </summary>
+        public const string AGENT_NAME_VERSION_MAJOR = "AgentNameVersionMajor";
+
+        /// <summary>
+        /// Defines the AGENT_SECURITY.
+        /// </summary>
+        public const string AGENT_SECURITY = "AgentSecurity";
+
+        /// <summary>
+        /// Defines the AGENT_UUID.
+        /// </summary>
+        public const string AGENT_UUID = "AgentUuid";
 
         /// <summary>
         /// Defines the AGENT_VERSION.
@@ -68,6 +113,11 @@ namespace OrbintSoft.Yauaa.Analyzer
         public const string AGENT_VERSION_MAJOR = "AgentVersionMajor";
 
         /// <summary>
+        /// Defines the ANONYMIZED.
+        /// </summary>
+        public const string ANONYMIZED = "Anonymized";
+
+        /// <summary>
         /// Defines the DEVICE_BRAND.
         /// </summary>
         public const string DEVICE_BRAND = "DeviceBrand";
@@ -76,6 +126,21 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// Defines the DEVICE_CLASS.
         /// </summary>
         public const string DEVICE_CLASS = "DeviceClass";
+
+        /// <summary>
+        /// Defines the DEVICE_CPU.
+        /// </summary>
+        public const string DEVICE_CPU = "DeviceCpu";
+
+        /// <summary>
+        /// Defines the DEVICE_CPU_BITS.
+        /// </summary>
+        public const string DEVICE_CPU_BITS = "DeviceCpuBits";
+
+        /// <summary>
+        /// Defines the DEVICE_FIRMWARE_VERSION.
+        /// </summary>
+        public const string DEVICE_FIRMWARE_VERSION = "DeviceFirmwareVersion";
 
         /// <summary>
         /// Defines the DEVICE_NAME.
@@ -88,6 +153,91 @@ namespace OrbintSoft.Yauaa.Analyzer
         public const string DEVICE_VERSION = "DeviceVersion";
 
         /// <summary>
+        /// Defines the FACEBOOK_CARRIER.
+        /// </summary>
+        public const string FACEBOOK_CARRIER = "FacebookCarrier";
+
+        /// <summary>
+        /// Defines the FACEBOOK_DEVICE_CLASS.
+        /// </summary>
+        public const string FACEBOOK_DEVICE_CLASS = "FacebookDeviceClass";
+
+        /// <summary>
+        /// Defines the FACEBOOK_DEVICE_NAME.
+        /// </summary>
+        public const string FACEBOOK_DEVICE_NAME = "FacebookDeviceName";
+
+        /// <summary>
+        /// Defines the FACEBOOK_DEVICE_VERSION.
+        /// </summary>
+        public const string FACEBOOK_DEVICE_VERSION = "FacebookDeviceVersion";
+
+        /// <summary>
+        /// Defines the FACEBOOK_F_B_O_P.
+        /// </summary>
+        public const string FACEBOOK_F_B_O_P = "FacebookFBOP";
+
+        /// <summary>
+        /// Defines the FACEBOOK_F_B_S_S.
+        /// </summary>
+        public const string FACEBOOK_F_B_S_S = "FacebookFBSS";
+
+        /// <summary>
+        /// Defines the FACEBOOK_OPERATING_SYSTEM_NAME.
+        /// </summary>
+        public const string FACEBOOK_OPERATING_SYSTEM_NAME = "FacebookOperatingSystemName";
+
+        /// <summary>
+        /// Defines the FACEBOOK_OPERATING_SYSTEM_VERSION.
+        /// </summary>
+        public const string FACEBOOK_OPERATING_SYSTEM_VERSION = "FacebookOperatingSystemVersion";
+
+        /// <summary>
+        /// Defines the HACKER_ATTACK_VECTOR.
+        /// </summary>
+        public const string HACKER_ATTACK_VECTOR = "HackerAttackVector";
+
+        /// <summary>
+        /// Defines the HACKER_TOOLKIT.
+        /// </summary>
+        public const string HACKER_TOOLKIT = "HackerToolkit";
+
+        /// <summary>
+        /// Defines the IE_COMPATIBILITY_NAME_VERSION.
+        /// </summary>
+        public const string IE_COMPATIBILITY_NAME_VERSION = "IECompatibilityNameVersion";
+
+        /// <summary>
+        /// Defines the IE_COMPATIBILITY_NAME_VERSION_MAJOR.
+        /// </summary>
+        public const string IE_COMPATIBILITY_NAME_VERSION_MAJOR = "IECompatibilityNameVersionMajor";
+
+        /// <summary>
+        /// Defines the IE_COMPATIBILITY_VERSION.
+        /// </summary>
+        public const string IE_COMPATIBILITY_VERSION = "IECompatibilityVersion";
+
+        /// <summary>
+        /// Defines the IE_COMPATIBILITY_VERSION_MAJOR.
+        /// </summary>
+        public const string IE_COMPATIBILITY_VERSION_MAJOR = "IECompatibilityVersionMajor";
+
+        /// <summary>
+        /// Defines the KOBO_AFFILIATE.
+        /// </summary>
+        public const string KOBO_AFFILIATE = "KoboAffiliate";
+
+        /// <summary>
+        /// Defines the KOBO_PLATFORM_ID.
+        /// </summary>
+        public const string KOBO_PLATFORM_ID = "KoboPlatformId";
+
+        /// <summary>
+        /// Defines the LAYOUT_ENGINE_BUILD.
+        /// </summary>
+        public const string LAYOUT_ENGINE_BUILD = "LayoutEngineBuild";
+
+        /// <summary>
         /// Defines the LAYOUT_ENGINE_CLASS.
         /// </summary>
         public const string LAYOUT_ENGINE_CLASS = "LayoutEngineClass";
@@ -96,6 +246,16 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// Defines the LAYOUT_ENGINE_NAME.
         /// </summary>
         public const string LAYOUT_ENGINE_NAME = "LayoutEngineName";
+
+        /// <summary>
+        /// Defines the LAYOUT_ENGINE_NAME_VERSION.
+        /// </summary>
+        public const string LAYOUT_ENGINE_NAME_VERSION = "LayoutEngineNameVersion";
+
+        /// <summary>
+        /// Defines the LAYOUT_ENGINE_NAME_VERSION_MAJOR.
+        /// </summary>
+        public const string LAYOUT_ENGINE_NAME_VERSION_MAJOR = "LayoutEngineNameVersionMajor";
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_VERSION.
@@ -123,9 +283,29 @@ namespace OrbintSoft.Yauaa.Analyzer
         public const string OPERATING_SYSTEM_NAME = "OperatingSystemName";
 
         /// <summary>
+        /// Defines the OPERATING_SYSTEM_NAME_VERSION.
+        /// </summary>
+        public const string OPERATING_SYSTEM_NAME_VERSION = "OperatingSystemNameVersion";
+
+        /// <summary>
+        /// Defines the OPERATING_SYSTEM_NAME_VERSION_MAJOR.
+        /// </summary>
+        public const string OPERATING_SYSTEM_NAME_VERSION_MAJOR = "OperatingSystemNameVersionMajor";
+
+        /// <summary>
         /// Defines the OPERATING_SYSTEM_VERSION.
         /// </summary>
         public const string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
+
+        /// <summary>
+        /// Defines the OPERATING_SYSTEM_VERSION_BUILD.
+        /// </summary>
+        public const string OPERATING_SYSTEM_VERSION_BUILD = "OperatingSystemVersionBuild";
+
+        /// <summary>
+        /// Defines the OPERATING_SYSTEM_VERSION_MAJOR.
+        /// </summary>
+        public const string OPERATING_SYSTEM_VERSION_MAJOR = "OperatingSystemVersionMajor";
 
         /// <summary>
         /// Defines the SET_ALL_FIELDS.
@@ -148,9 +328,34 @@ namespace OrbintSoft.Yauaa.Analyzer
         public const string UNKNOWN_VERSION = "??";
 
         /// <summary>
+        /// Defines the UNKNOWN_NAME_VERSION.
+        /// </summary>
+        public const string UNKNOWN_NAME_VERSION = "Unknown ??";
+
+        /// <summary>
         /// Defines the USERAGENT_FIELDNAME.
         /// </summary>
         public const string USERAGENT_FIELDNAME = "Useragent";
+
+        /// <summary>
+        /// Defines the WEBVIEW_APP_NAME.
+        /// </summary>
+        public const string WEBVIEW_APP_NAME = "WebviewAppName";
+
+        /// <summary>
+        /// Defines the WEBVIEW_APP_NAME_VERSION_MAJOR.
+        /// </summary>
+        public const string WEBVIEW_APP_NAME_VERSION_MAJOR = "WebviewAppNameVersionMajor";
+
+        /// <summary>
+        /// Defines the WEBVIEW_APP_VERSION.
+        /// </summary>
+        public const string WEBVIEW_APP_VERSION = "WebviewAppVersion";
+
+        /// <summary>
+        /// Defines the WEBVIEW_APP_VERSION_MAJOR.
+        /// </summary>
+        public const string WEBVIEW_APP_VERSION_MAJOR = "WebviewAppVersionMajor";
 
         /// <summary>
         /// Standard fields used during parsing.
@@ -163,14 +368,21 @@ namespace OrbintSoft.Yauaa.Analyzer
             OPERATING_SYSTEM_CLASS,
             OPERATING_SYSTEM_NAME,
             OPERATING_SYSTEM_VERSION,
+            OPERATING_SYSTEM_VERSION_MAJOR,
+            OPERATING_SYSTEM_NAME_VERSION,
+            OPERATING_SYSTEM_NAME_VERSION_MAJOR,
             LAYOUT_ENGINE_CLASS,
             LAYOUT_ENGINE_NAME,
             LAYOUT_ENGINE_VERSION,
             LAYOUT_ENGINE_VERSION_MAJOR,
+            LAYOUT_ENGINE_NAME_VERSION,
+            LAYOUT_ENGINE_NAME_VERSION_MAJOR,
             AGENT_CLASS,
             AGENT_NAME,
             AGENT_VERSION,
             AGENT_VERSION_MAJOR,
+            AGENT_NAME_VERSION,
+            AGENT_NAME_VERSION_MAJOR,
         };
 
         /// <summary>
@@ -199,68 +411,70 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         static UserAgent()
         {
-            PreSortedFieldList.Add("DeviceClass");
-            PreSortedFieldList.Add("DeviceName");
-            PreSortedFieldList.Add("DeviceBrand");
-            PreSortedFieldList.Add("DeviceCpu");
-            PreSortedFieldList.Add("DeviceCpuBits");
-            PreSortedFieldList.Add("DeviceFirmwareVersion");
-            PreSortedFieldList.Add("DeviceVersion");
+            PreSortedFieldList.Add(DEVICE_CLASS);
+            PreSortedFieldList.Add(DEVICE_NAME);
+            PreSortedFieldList.Add(DEVICE_BRAND);
+            PreSortedFieldList.Add(DEVICE_CPU);
+            PreSortedFieldList.Add(DEVICE_CPU_BITS);
+            PreSortedFieldList.Add(DEVICE_FIRMWARE_VERSION);
+            PreSortedFieldList.Add(DEVICE_VERSION);
 
-            PreSortedFieldList.Add("OperatingSystemClass");
-            PreSortedFieldList.Add("OperatingSystemName");
-            PreSortedFieldList.Add("OperatingSystemVersion");
-            PreSortedFieldList.Add("OperatingSystemNameVersion");
-            PreSortedFieldList.Add("OperatingSystemVersionBuild");
+            PreSortedFieldList.Add(OPERATING_SYSTEM_CLASS);
+            PreSortedFieldList.Add(OPERATING_SYSTEM_NAME);
+            PreSortedFieldList.Add(OPERATING_SYSTEM_VERSION);
+            PreSortedFieldList.Add(OPERATING_SYSTEM_VERSION_MAJOR);
+            PreSortedFieldList.Add(OPERATING_SYSTEM_NAME_VERSION);
+            PreSortedFieldList.Add(OPERATING_SYSTEM_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(OPERATING_SYSTEM_VERSION_BUILD);
 
-            PreSortedFieldList.Add("LayoutEngineClass");
-            PreSortedFieldList.Add("LayoutEngineName");
-            PreSortedFieldList.Add("LayoutEngineVersion");
-            PreSortedFieldList.Add("LayoutEngineVersionMajor");
-            PreSortedFieldList.Add("LayoutEngineNameVersion");
-            PreSortedFieldList.Add("LayoutEngineNameVersionMajor");
-            PreSortedFieldList.Add("LayoutEngineBuild");
+            PreSortedFieldList.Add(LAYOUT_ENGINE_CLASS);
+            PreSortedFieldList.Add(LAYOUT_ENGINE_NAME);
+            PreSortedFieldList.Add(LAYOUT_ENGINE_VERSION);
+            PreSortedFieldList.Add(LAYOUT_ENGINE_VERSION_MAJOR);
+            PreSortedFieldList.Add(LAYOUT_ENGINE_NAME_VERSION);
+            PreSortedFieldList.Add(LAYOUT_ENGINE_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(LAYOUT_ENGINE_BUILD);
 
-            PreSortedFieldList.Add("AgentClass");
-            PreSortedFieldList.Add("AgentName");
-            PreSortedFieldList.Add("AgentVersion");
-            PreSortedFieldList.Add("AgentVersionMajor");
-            PreSortedFieldList.Add("AgentNameVersion");
-            PreSortedFieldList.Add("AgentNameVersionMajor");
-            PreSortedFieldList.Add("AgentBuild");
-            PreSortedFieldList.Add("AgentLanguage");
-            PreSortedFieldList.Add("AgentLanguageCode");
-            PreSortedFieldList.Add("AgentInformationEmail");
-            PreSortedFieldList.Add("AgentInformationUrl");
-            PreSortedFieldList.Add("AgentSecurity");
-            PreSortedFieldList.Add("AgentUuid");
+            PreSortedFieldList.Add(AGENT_CLASS);
+            PreSortedFieldList.Add(AGENT_NAME);
+            PreSortedFieldList.Add(AGENT_VERSION);
+            PreSortedFieldList.Add(AGENT_VERSION_MAJOR);
+            PreSortedFieldList.Add(AGENT_NAME_VERSION);
+            PreSortedFieldList.Add(AGENT_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(AGENT_BUILD);
+            PreSortedFieldList.Add(AGENT_LANGUAGE);
+            PreSortedFieldList.Add(AGENT_LANGUAGE_CODE);
+            PreSortedFieldList.Add(AGENT_INFORMATION_EMAIL);
+            PreSortedFieldList.Add(AGENT_INFORMATION_URL);
+            PreSortedFieldList.Add(AGENT_SECURITY);
+            PreSortedFieldList.Add(AGENT_UUID);
 
-            PreSortedFieldList.Add("WebviewAppName");
-            PreSortedFieldList.Add("WebviewAppVersion");
-            PreSortedFieldList.Add("WebviewAppVersionMajor");
-            PreSortedFieldList.Add("WebviewAppNameVersionMajor");
+            PreSortedFieldList.Add(WEBVIEW_APP_NAME);
+            PreSortedFieldList.Add(WEBVIEW_APP_VERSION);
+            PreSortedFieldList.Add(WEBVIEW_APP_VERSION_MAJOR);
+            PreSortedFieldList.Add(WEBVIEW_APP_NAME_VERSION_MAJOR);
 
-            PreSortedFieldList.Add("FacebookCarrier");
-            PreSortedFieldList.Add("FacebookDeviceClass");
-            PreSortedFieldList.Add("FacebookDeviceName");
-            PreSortedFieldList.Add("FacebookDeviceVersion");
-            PreSortedFieldList.Add("FacebookFBOP");
-            PreSortedFieldList.Add("FacebookFBSS");
-            PreSortedFieldList.Add("FacebookOperatingSystemName");
-            PreSortedFieldList.Add("FacebookOperatingSystemVersion");
+            PreSortedFieldList.Add(FACEBOOK_CARRIER);
+            PreSortedFieldList.Add(FACEBOOK_DEVICE_CLASS);
+            PreSortedFieldList.Add(FACEBOOK_DEVICE_NAME);
+            PreSortedFieldList.Add(FACEBOOK_DEVICE_VERSION);
+            PreSortedFieldList.Add(FACEBOOK_F_B_O_P);
+            PreSortedFieldList.Add(FACEBOOK_F_B_S_S);
+            PreSortedFieldList.Add(FACEBOOK_OPERATING_SYSTEM_NAME);
+            PreSortedFieldList.Add(FACEBOOK_OPERATING_SYSTEM_VERSION);
 
-            PreSortedFieldList.Add("Anonymized");
+            PreSortedFieldList.Add(ANONYMIZED);
 
-            PreSortedFieldList.Add("HackerAttackVector");
-            PreSortedFieldList.Add("HackerToolkit");
+            PreSortedFieldList.Add(HACKER_ATTACK_VECTOR);
+            PreSortedFieldList.Add(HACKER_TOOLKIT);
 
-            PreSortedFieldList.Add("KoboAffiliate");
-            PreSortedFieldList.Add("KoboPlatformId");
+            PreSortedFieldList.Add(KOBO_AFFILIATE);
+            PreSortedFieldList.Add(KOBO_PLATFORM_ID);
 
-            PreSortedFieldList.Add("IECompatibilityVersion");
-            PreSortedFieldList.Add("IECompatibilityVersionMajor");
-            PreSortedFieldList.Add("IECompatibilityNameVersion");
-            PreSortedFieldList.Add("IECompatibilityNameVersionMajor");
+            PreSortedFieldList.Add(IE_COMPATIBILITY_VERSION);
+            PreSortedFieldList.Add(IE_COMPATIBILITY_VERSION_MAJOR);
+            PreSortedFieldList.Add(IE_COMPATIBILITY_NAME_VERSION);
+            PreSortedFieldList.Add(IE_COMPATIBILITY_NAME_VERSION_MAJOR);
 
             PreSortedFieldList.Add(SYNTAX_ERROR);
         }
@@ -922,18 +1136,25 @@ namespace OrbintSoft.Yauaa.Analyzer
             this.allFields[OPERATING_SYSTEM_CLASS] = new AgentField(UNKNOWN_VALUE); // Cloud, Desktop, Mobile, Embedded
             this.allFields[OPERATING_SYSTEM_NAME] = new AgentField(UNKNOWN_VALUE); // ( Linux / Android / Windows ...)
             this.allFields[OPERATING_SYSTEM_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[OPERATING_SYSTEM_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[OPERATING_SYSTEM_NAME_VERSION] = new AgentField(UNKNOWN_NAME_VERSION);
+            this.allFields[OPERATING_SYSTEM_NAME_VERSION_MAJOR] = new AgentField(UNKNOWN_NAME_VERSION);
 
             // Engine : Class (=None/Hacker/Robot/Browser) - Name - Version
             this.allFields[LAYOUT_ENGINE_CLASS] = new AgentField(UNKNOWN_VALUE); // None / Hacker / Robot / Browser /
             this.allFields[LAYOUT_ENGINE_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / (Trident / Gecko / ...)
             this.allFields[LAYOUT_ENGINE_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
             this.allFields[LAYOUT_ENGINE_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
+            this.allFields[LAYOUT_ENGINE_NAME_VERSION] = new AgentField(UNKNOWN_NAME_VERSION);
+            this.allFields[LAYOUT_ENGINE_NAME_VERSION_MAJOR] = new AgentField(UNKNOWN_NAME_VERSION);
 
             // Agent: Class (=Hacker/Robot/Browser) - Name - Version
             this.allFields[AGENT_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Robot / Browser /
             this.allFields[AGENT_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / ( Firefox / Chrome / ... )
             this.allFields[AGENT_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
             this.allFields[AGENT_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
+            this.allFields[AGENT_NAME_VERSION] = new AgentField(UNKNOWN_NAME_VERSION);
+            this.allFields[AGENT_NAME_VERSION_MAJOR] = new AgentField(UNKNOWN_NAME_VERSION);
         }
     }
 }

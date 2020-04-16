@@ -52,7 +52,11 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         {
             var a = new Action(() =>
             {
-                var uaa = new UserAgentAnalyzerTester(directory, file);
+                var uaa = UserAgentAnalyzerTester.NewBuilder()
+                .DropDefaultResources()
+                .KeepTests()
+                .AddResources(directory, file)
+                .Build() as UserAgentAnalyzerTester;
                 uaa.RunTests(false, false);
             });
             a.Should().Throw<InvalidParserConfigurationException>().Where(e => e.Message.Contains(expectedMessage));

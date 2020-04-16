@@ -1,7 +1,21 @@
 This is intended as an overview of the major changes
 
+v5.11
+===
+- Target equivalent Java 5.11 Version
+- Finalized detection of Chromium/Blink based Edge both for Windows 10 and Mac
+- Detect Liebao Browser
+- Make compiler a bit stricter, fixed the warnings.
+- Added two new fields: OperatingSystemVersionMajor and OperatingSystemNameVersionMajor
+- Fix detection of iOS in specific edge case
+- Modularized and optimized the postprocessing of the found fields.
+- Updated all dependencies and build plugins.
+- Improve detection of Maemo / Nokia N900
+- Extra testcases for Firefox (They implemented some small useragent changes)
+
 v5.10
 ===
+- Target equivalent Java 5.10 Version
 - Improved SpeedCurve Robot detection (thanks to Ben Rogers)
 - Detection for Chromium/Blink based Edge on Windows 10
 - Detect Sogou Explorer (Sogou Browser)

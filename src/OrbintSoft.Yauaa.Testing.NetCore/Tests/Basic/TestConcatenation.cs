@@ -29,6 +29,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
 {
     using FluentAssertions;
     using OrbintSoft.Yauaa.Analyzer;
+    using OrbintSoft.Yauaa.Calculate;
     using OrbintSoft.Yauaa.Testing.Fixtures;
     using OrbintSoft.Yauaa.Tests;
     using System.IO;
@@ -55,33 +56,28 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         }
 
         /// <summary>
-        /// I create an instance of <see cref="UserAgentAnalyzer"/> dropping default resources, and adding a custom yaml definition: AllSteps.yaml.
-        /// </summary>
-        /// <returns></returns>
-        private UserAgentAnalyzer CreateUserAgentAnalyzer()
-        {
-            return UserAgentAnalyzer.NewBuilder().DropTests().DropDefaultResources().AddResources($"{Config.RESOURCES_PATH}{Path.DirectorySeparatorChar}YamlParsingTests", $"AllSteps.yaml").Build();
-        }
-
-        /// <summary>
         /// The 
         /// </summary>
         [Fact]
         public void TestFieldConcatenation()
         {
-            var uaa = this.CreateUserAgentAnalyzer();
+            IFieldCalculator fc;
             var userAgent = this.CreateUserAgent();
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined1", "One", "Two");
+            fc = new ConcatNONDuplicatedCalculator("Combined1", "One", "Two");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined1").Should().Be("One Two");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined2", "One", "One");
+            fc = new ConcatNONDuplicatedCalculator("Combined2", "One", "One");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined2").Should().Be("One");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", "MinusOne", "One");
+            fc = new ConcatNONDuplicatedCalculator("Combined3", "MinusOne", "One");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined3").Should().Be("MinusOne One");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined4", "One", "MinusOne");
+            fc = new ConcatNONDuplicatedCalculator("Combined4", "One", "MinusOne");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined4").Should().Be("One MinusOne");
         }
 
@@ -91,19 +87,23 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         [Fact]
         public void TestFieldConcatenationNulls()
         {
-            var uaa = this.CreateUserAgentAnalyzer();
+            IFieldCalculator fc;
             var userAgent = this.CreateUserAgent();
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", "MinusOne", null);
+            fc = new ConcatNONDuplicatedCalculator("Combined3", "MinusOne", null);
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined3").Should().Be("Unknown");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined4", null, "MinusOne");
+            fc = new ConcatNONDuplicatedCalculator("Combined4", null, "MinusOne");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined4").Should().Be("Unknown");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", null, "One");
+            fc = new ConcatNONDuplicatedCalculator("Combined3", null, "One");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined3").Should().Be("One");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined4", "One", null);
+            fc = new ConcatNONDuplicatedCalculator("Combined4", "One", null);
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined4").Should().Be("One");
         }
 
@@ -113,16 +113,19 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         [Fact]
         public void TestFieldConcatenationSamePrefix()
         {
-            var uaa = this.CreateUserAgentAnalyzer();
+            IFieldCalculator fc;
             var userAgent = this.CreateUserAgent();
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined1", "One", "Two");
+            fc = new ConcatNONDuplicatedCalculator("Combined1", "One", "Two");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined1").Should().Be("One Two");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined2", "One", "One");
+            fc = new ConcatNONDuplicatedCalculator("Combined2", "One", "One");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined2").Should().Be("One");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", "One", "One Two");
+            fc = new ConcatNONDuplicatedCalculator("Combined3", "One", "One Two");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined3").Should().Be("One Two");
         }
 
@@ -132,16 +135,19 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         [Fact]
         public void TestFieldConcatenationNonExistent()
         {
-            var uaa = this.CreateUserAgentAnalyzer();
+            IFieldCalculator fc;
             var userAgent = this.CreateUserAgent();
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined2", "One", "NonExistent");
+            fc = new ConcatNONDuplicatedCalculator("Combined2", "One", "NonExistent");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined2").Should().Be("One");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", "NonExistent", "Two");
+            fc = new ConcatNONDuplicatedCalculator("Combined3", "NonExistent", "Two");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined3").Should().Be("Two");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined4", "NonExistent1", "NonExistent2");
+            fc = new ConcatNONDuplicatedCalculator("Combined4", "NonExistent1", "NonExistent2");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined4").Should().Be("Unknown");
         }
 
@@ -151,16 +157,19 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         [Fact]
         public void TestFieldConcatenationNull()
         {
-            var uaa = this.CreateUserAgentAnalyzer();
+            IFieldCalculator fc;
             var userAgent = this.CreateUserAgent();
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined2", "One", null);
+            fc = new ConcatNONDuplicatedCalculator("Combined2", "One", null);
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined2").Should().Be("One");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", null, "Two");
+            fc = new ConcatNONDuplicatedCalculator("Combined3", null, "Two");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined3").Should().Be("Two");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined4", null, null);
+            fc = new ConcatNONDuplicatedCalculator("Combined4", null, null);
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined4").Should().Be("Unknown");
         }
 
@@ -170,27 +179,16 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         [Fact]
         public void TestFieldConcatenationNoConfidence()
         {
-            var uaa = this.CreateUserAgentAnalyzer();
+            IFieldCalculator fc;
             var userAgent = this.CreateUserAgent();
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined2", "One", "MinusOne");
+            fc = new ConcatNONDuplicatedCalculator("Combined2", "One", "MinusOne");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined2").Should().Be("One MinusOne");
 
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Combined3", "MinusOne", "Two");
+            fc = new ConcatNONDuplicatedCalculator("Combined3", "MinusOne", "Two");
+            fc.Calculate(userAgent);
             userAgent.GetValue("Combined3").Should().Be("MinusOne Two");
-        }
-
-        /// <summary>
-        /// I test that if I cancatenate two field with an unwanted (DeviceClass) everything works.
-        /// </summary>
-        [Fact]
-        public void TestFieldConcatenationUnwanted()
-        {
-            var uaa = UserAgentAnalyzer.NewBuilder().DropTests().WithField("DeviceClass").Build();
-            var userAgent = this.CreateUserAgent();
-
-            uaa.ConcatFieldValuesNONDuplicated(userAgent, "Unwanted", "One", "Two");
-            userAgent.GetValue("Unwanted").Should().Be("Unknown");
         }
     }
 }

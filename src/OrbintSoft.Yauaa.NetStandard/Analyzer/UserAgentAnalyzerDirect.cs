@@ -37,6 +37,7 @@ namespace OrbintSoft.Yauaa.Analyzer
     using DomainParser.Library;
     using log4net;
     using OrbintSoft.Yauaa.Analyze;
+    using OrbintSoft.Yauaa.Calculate;
     using OrbintSoft.Yauaa.Parse;
     using OrbintSoft.Yauaa.Utils;
     using YamlDotNet.Core;
@@ -118,6 +119,8 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         private IDictionary<string, IDictionary<string, string>> lookups = new Dictionary<string, IDictionary<string, string>>();
 
+        private IList<IFieldCalculator> fieldCalculators = new List<IFieldCalculator>();
+
         /// <summary>
         /// Defines the matcherConfigs.
         /// </summary>
@@ -157,13 +160,14 @@ namespace OrbintSoft.Yauaa.Analyzer
             HardCodedGeneratedFields.Add(UserAgent.SYNTAX_ERROR);
             HardCodedGeneratedFields.Add(UserAgent.AGENT_VERSION_MAJOR);
             HardCodedGeneratedFields.Add(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-            HardCodedGeneratedFields.Add("AgentNameVersion");
-            HardCodedGeneratedFields.Add("AgentNameVersionMajor");
-            HardCodedGeneratedFields.Add("LayoutEngineNameVersion");
-            HardCodedGeneratedFields.Add("LayoutEngineNameVersionMajor");
-            HardCodedGeneratedFields.Add("OperatingSystemNameVersion");
-            HardCodedGeneratedFields.Add("WebviewAppVersionMajor");
-            HardCodedGeneratedFields.Add("WebviewAppNameVersionMajor");
+            HardCodedGeneratedFields.Add(UserAgent.AGENT_NAME_VERSION);
+            HardCodedGeneratedFields.Add(UserAgent.AGENT_NAME_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(UserAgent.LAYOUT_ENGINE_NAME_VERSION);
+            HardCodedGeneratedFields.Add(UserAgent.LAYOUT_ENGINE_NAME_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(UserAgent.OPERATING_SYSTEM_NAME_VERSION);
+            HardCodedGeneratedFields.Add(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(UserAgent.WEBVIEW_APP_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(UserAgent.WEBVIEW_APP_NAME_VERSION_MAJOR);
         }
 
         /// <summary>
@@ -608,12 +612,10 @@ namespace OrbintSoft.Yauaa.Analyzer
                 this.lookups = cleanedLookups;
             }
 
-            var totalNumberOfMatchers = 0;
             var skippedMatchers = 0;
 
             if (this.matcherConfigs != null)
             {
-                var fullStopwatch = Stopwatch.StartNew();
                 foreach (var resourceEntry in resources)
                 {
                     var resource = resourceEntry.Value;
@@ -636,7 +638,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                         try
                         {
                             this.AllMatchers.Add(new Matcher(this, this.lookups, this.lookupSets, this.WantedFieldNames, map, configFilename));
-                            totalNumberOfMatchers++;
                         }
                         catch (UselessMatcherException)
                         {
@@ -658,8 +659,6 @@ namespace OrbintSoft.Yauaa.Analyzer
                                 stopwatch.ElapsedMilliseconds));
                     }
                 }
-
-                fullStopwatch.Stop();
             }
         }
 
@@ -703,7 +702,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 if (useragentString != null && useragentString.Length > this.userAgentMaxLength)
                 {
                     this.SetAsHacker(userAgent, 100);
-                    userAgent.SetForced("HackerAttackVector", "Buffer overflow", 100);
+                    userAgent.SetForced(UserAgent.HACKER_ATTACK_VECTOR, "Buffer overflow", 100);
                     return this.HardCodedPostProcessing(userAgent);
                 }
 
@@ -754,7 +753,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                     // I guess this exploit can work only in Java, but better to keep the code as safety measure
                     userAgent.Reset();
                     userAgent = this.SetAsHacker(userAgent, 10000);
-                    userAgent.SetForced("HackerAttackVector", "Yauaa NPE Exploit", 10000);
+                    userAgent.SetForced(UserAgent.HACKER_ATTACK_VECTOR, "Yauaa NPE Exploit", 10000);
                     return this.HardCodedPostProcessing(userAgent);
                 }
             }
@@ -1102,74 +1101,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The DetermineDeviceBrand.
-        /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        private string DetermineDeviceBrand(UserAgent userAgent)
-        {
-            // If no brand is known but we do have a URL then we assume the hostname to be the brand.
-            // We put this AFTER the creation of the DeviceName because we choose to not have
-            // this brandname in the DeviceName.
-            var informationUrl = userAgent.Get("AgentInformationUrl");
-            if (informationUrl != null && informationUrl.GetConfidence() >= 0)
-            {
-                var hostname = informationUrl.GetValue();
-                try
-                {
-                    var url = new Uri(hostname);
-                    hostname = url.Host;
-                }
-                catch (Exception)
-                {
-                    // Ignore any exception and continue.
-                }
-
-                hostname = this.ExtractCompanyFromHostName(hostname);
-                if (hostname != null)
-                {
-                    return hostname;
-                }
-            }
-
-            var informationEmail = userAgent.Get("AgentInformationEmail");
-            if (informationEmail != null && informationEmail.GetConfidence() >= 0)
-            {
-                var hostname = informationEmail.GetValue();
-                var atOffset = hostname.IndexOf('@');
-                if (atOffset >= 0)
-                {
-                    hostname = hostname.Substring(atOffset + 1);
-                }
-
-                hostname = this.ExtractCompanyFromHostName(hostname);
-                if (hostname != null)
-                {
-                    return hostname;
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// The ExtractCompanyFromHostName.
-        /// </summary>
-        /// <param name="hostname">The hostname<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
-        private string ExtractCompanyFromHostName(string hostname)
-        {
-            if (DomainName.TryParse(hostname, out var outDomain))
-            {
-                return Normalize.Brand(outDomain.Domain?.ToLower());
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
         /// The HardCodedPostProcessing.
         /// </summary>
         /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
@@ -1196,77 +1127,15 @@ namespace OrbintSoft.Yauaa.Analyzer
                     userAgent.Set(UserAgent.AGENT_NAME, "Hacker", 10);
                     userAgent.Set(UserAgent.AGENT_VERSION, "Hacker", 10);
                     userAgent.Set(UserAgent.AGENT_VERSION_MAJOR, "Hacker", 10);
-                    userAgent.Set("HackerToolkit", "Unknown", 10);
-                    userAgent.Set("HackerAttackVector", "Unknown", 10);
+                    userAgent.Set(UserAgent.HACKER_TOOLKIT, "Unknown", 10);
+                    userAgent.Set(UserAgent.HACKER_ATTACK_VECTOR, "Unknown", 10);
                 }
             }
 
-            // !!!!!!!!!! NOTE !!!!!!!!!!!!
-            // IF YOU ADD ANY EXTRA FIELDS YOU MUST ADD THEM TO THE BUILDER TOO !!!!
-            this.AddMajorVersionField(userAgent, UserAgent.AGENT_VERSION, UserAgent.AGENT_VERSION_MAJOR);
-            this.AddMajorVersionField(userAgent, UserAgent.LAYOUT_ENGINE_VERSION, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-            this.AddMajorVersionField(userAgent, "WebviewAppVersion", "WebviewAppVersionMajor");
-
-            this.ConcatFieldValuesNONDuplicated(userAgent, "AgentNameVersion", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
-            this.ConcatFieldValuesNONDuplicated(userAgent, "AgentNameVersionMajor", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
-            this.ConcatFieldValuesNONDuplicated(userAgent, "WebviewAppNameVersionMajor", "WebviewAppName", "WebviewAppVersionMajor");
-            this.ConcatFieldValuesNONDuplicated(userAgent, "LayoutEngineNameVersion", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
-            this.ConcatFieldValuesNONDuplicated(userAgent, "LayoutEngineNameVersionMajor", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-            this.ConcatFieldValuesNONDuplicated(userAgent, "OperatingSystemNameVersion", UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
-
-            // The device brand field is a mess.
-            var deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
-            if (deviceBrand.GetConfidence() >= 0)
+            // Calculate all fields that are constructed from the found ones.
+            foreach (var fieldCalculator in fieldCalculators)
             {
-                userAgent.SetForced(
-                    UserAgent.DEVICE_BRAND,
-                    Normalize.Brand(deviceBrand.GetValue()),
-                    deviceBrand.GetConfidence());
-            }
-
-            // The email address is a mess
-            var email = userAgent.Get("AgentInformationEmail");
-            if (email != null && email.GetConfidence() >= 0)
-            {
-                userAgent.SetForced(
-                    "AgentInformationEmail",
-                    Normalize.Email(email.GetValue()),
-                    email.GetConfidence());
-            }
-
-            if (deviceBrand.GetConfidence() < 0)
-            {
-                // If no brand is known then try to extract something that looks like a Brand from things like URL and Email addresses.
-                var newDeviceBrand = this.DetermineDeviceBrand(userAgent);
-                if (newDeviceBrand != null)
-                {
-                    userAgent.SetForced(UserAgent.DEVICE_BRAND, newDeviceBrand, 1);
-                }
-            }
-
-            // Make sure the DeviceName always starts with the DeviceBrand
-            var deviceName = userAgent.Get(UserAgent.DEVICE_NAME);
-            if (deviceName.GetConfidence() >= 0)
-            {
-                deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
-                var deviceNameValue = deviceName.GetValue();
-                var deviceBrandValue = deviceBrand.GetValue();
-                if (deviceName.GetConfidence() >= 0 &&
-                    deviceBrand.GetConfidence() >= 0 &&
-                    !deviceBrandValue.Equals("Unknown"))
-                {
-                    // In some cases it does start with the brand but without a separator following the brand
-                    deviceNameValue = Normalize.CleanupDeviceBrandName(deviceBrandValue, deviceNameValue);
-                }
-                else
-                {
-                    deviceNameValue = Normalize.Brand(deviceNameValue);
-                }
-
-                userAgent.SetForced(
-                    UserAgent.DEVICE_NAME,
-                    deviceNameValue,
-                    deviceName.GetConfidence());
+                fieldCalculator.Calculate(userAgent);
             }
 
             return userAgent;
@@ -1316,7 +1185,8 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         private void InitTransientFields()
         {
-            this.matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>();
+            this.matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>(64);
+            this.touchedMatchers = new MatcherList(16);
         }
 
         /// <summary>
@@ -1529,17 +1399,13 @@ namespace OrbintSoft.Yauaa.Analyzer
                             foreach (var inputTuple in YamlUtils.GetValueAsMappingNode(tuple, filename))
                             {
                                 var inputName = YamlUtils.GetKeyAsString(inputTuple, filename);
-                                switch (inputName)
+                                if ("user_agent_string".Equals(inputName))
                                 {
-                                    case "user_agent_string":
-                                        var inputString = YamlUtils.GetValueAsString(inputTuple, filename);
-                                        input = new Dictionary<string, string>
-                                        {
-                                            [inputName] = inputString,
-                                        };
-                                        break;
-                                    default:
-                                        break;
+                                    var inputString = YamlUtils.GetValueAsString(inputTuple, filename);
+                                    input = new Dictionary<string, string>
+                                    {
+                                        [inputName] = inputString,
+                                    };
                                 }
                             }
 
@@ -1640,8 +1506,8 @@ namespace OrbintSoft.Yauaa.Analyzer
             userAgent.Set(UserAgent.AGENT_NAME, "Hacker", confidence);
             userAgent.Set(UserAgent.AGENT_VERSION, "Hacker", confidence);
             userAgent.Set(UserAgent.AGENT_VERSION_MAJOR, "Hacker", confidence);
-            userAgent.Set("HackerToolkit", "Unknown", confidence);
-            userAgent.Set("HackerAttackVector", "Buffer overflow", confidence);
+            userAgent.Set(UserAgent.HACKER_TOOLKIT, "Unknown", confidence);
+            userAgent.Set(UserAgent.HACKER_ATTACK_VECTOR, "Buffer overflow", confidence);
             return userAgent;
         }
 
@@ -1650,11 +1516,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public class GetAllPathsAnalyzerClass : IAnalyzer
         {
-            /// <summary>
-            /// Defines the flattener.
-            /// </summary>
-            private readonly UserAgentTreeFlattener flattener;
-
             /// <summary>
             /// Defines the result.
             /// </summary>
@@ -1671,8 +1532,8 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// <param name="useragent">The useragent<see cref="string"/>.</param>
             internal GetAllPathsAnalyzerClass(string useragent)
             {
-                this.flattener = new UserAgentTreeFlattener(this);
-                this.result = this.flattener.Parse(useragent);
+                var flattener = new UserAgentTreeFlattener(this);
+                this.result = flattener.Parse(useragent);
             }
 
             /// <summary>
@@ -1685,11 +1546,19 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// </summary>
             public IList<string> Values => this.values;
 
+            /// <summary>
+            /// GetLookups.
+            /// </summary>
+            /// <returns>loockups.</returns>
             public IDictionary<string, IDictionary<string, string>> GetLookups()
             {
                 return new Dictionary<string, IDictionary<string, string>>();
             }
 
+            /// <summary>
+            /// GetLookupSets.
+            /// </summary>
+            /// <returns>lookups.</returns>
             public IDictionary<string, ISet<string>> GetLookupSets()
             {
                 return new Dictionary<string, ISet<string>>();
@@ -1824,28 +1693,52 @@ namespace OrbintSoft.Yauaa.Analyzer
             public virtual TUAA Build()
             {
                 this.FailIfAlreadyBuilt();
+
+                // In case we only want specific fields we must all these special cases too
                 if (this.uaa.WantedFieldNames != null)
                 {
-                    this.AddGeneratedFields("AgentNameVersion", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
-                    this.AddGeneratedFields("AgentNameVersionMajor", UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
-                    this.AddGeneratedFields("WebviewAppNameVersionMajor", "WebviewAppName", "WebviewAppVersionMajor");
-                    this.AddGeneratedFields("LayoutEngineNameVersion", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
-                    this.AddGeneratedFields("LayoutEngineNameVersionMajor", UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-                    this.AddGeneratedFields("OperatingSystemNameVersion", UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
-                    this.AddGeneratedFields(UserAgent.DEVICE_NAME, UserAgent.DEVICE_BRAND);
-                    this.AddGeneratedFields(UserAgent.AGENT_VERSION_MAJOR, UserAgent.AGENT_VERSION);
-                    this.AddGeneratedFields(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, UserAgent.LAYOUT_ENGINE_VERSION);
-                    this.AddGeneratedFields("WebviewAppVersionMajor", "WebviewAppVersion");
-
-                    // If we do not have a Brand we try to extract it from URL/Email iff present.
-                    this.AddGeneratedFields(UserAgent.DEVICE_BRAND, "AgentInformationUrl", "AgentInformationEmail");
-
                     // Special field that affects ALL fields.
                     this.uaa.WantedFieldNames.Add(UserAgent.SET_ALL_FIELDS);
 
                     // This is always needed to determine the Hacker fallback
                     this.uaa.WantedFieldNames.Add(UserAgent.DEVICE_CLASS);
                 }
+
+                this.AddCalculatedConcatNONDuplicated(UserAgent.AGENT_NAME_VERSION_MAJOR, UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
+                this.AddCalculatedConcatNONDuplicated(UserAgent.AGENT_NAME_VERSION, UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
+                this.AddCalculatedMajorVersionField(UserAgent.AGENT_VERSION_MAJOR, UserAgent.AGENT_VERSION);
+
+                this.AddCalculatedConcatNONDuplicated(UserAgent.WEBVIEW_APP_NAME_VERSION_MAJOR, UserAgent.WEBVIEW_APP_NAME, UserAgent.WEBVIEW_APP_VERSION_MAJOR);
+                this.AddCalculatedMajorVersionField(UserAgent.WEBVIEW_APP_VERSION_MAJOR, UserAgent.WEBVIEW_APP_VERSION);
+
+                this.AddCalculatedConcatNONDuplicated(UserAgent.LAYOUT_ENGINE_NAME_VERSION_MAJOR, UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
+                this.AddCalculatedConcatNONDuplicated(UserAgent.LAYOUT_ENGINE_NAME_VERSION, UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
+                this.AddCalculatedMajorVersionField(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, UserAgent.LAYOUT_ENGINE_VERSION);
+
+                this.AddCalculatedMajorVersionField(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR, UserAgent.OPERATING_SYSTEM_NAME_VERSION);
+                this.AddCalculatedConcatNONDuplicated(UserAgent.OPERATING_SYSTEM_NAME_VERSION, UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
+                this.AddCalculatedMajorVersionField(UserAgent.OPERATING_SYSTEM_VERSION_MAJOR, UserAgent.OPERATING_SYSTEM_VERSION);
+
+                if (this.uaa.IsWantedField(UserAgent.DEVICE_NAME))
+                {
+                    this.uaa.fieldCalculators.Add(new CalculateDeviceName());
+                    this.AddSpecialDependencies(UserAgent.DEVICE_NAME, UserAgent.DEVICE_BRAND);
+                }
+
+                if (this.uaa.IsWantedField(UserAgent.DEVICE_BRAND))
+                {
+                    this.uaa.fieldCalculators.Add(new CalculateDeviceBrand());
+
+                    // If we do not have a Brand we try to extract it from URL/Email iff present.
+                    this.AddSpecialDependencies(UserAgent.DEVICE_BRAND, UserAgent.AGENT_INFORMATION_URL, UserAgent.AGENT_INFORMATION_EMAIL);
+                }
+
+                if (this.uaa.IsWantedField(UserAgent.AGENT_INFORMATION_EMAIL))
+                {
+                    this.uaa.fieldCalculators.Add(new CalculateAgentEmail());
+                }
+
+                this.uaa.fieldCalculators = this.uaa.fieldCalculators.Reverse().ToList();
 
                 var mustDropTestsLater = !this.uaa.WillKeepTests;
                 if (this.preheatIterations != 0)
@@ -2072,15 +1965,54 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The AddGeneratedFields.
+            /// AddSpecialDependencies.
             /// </summary>
-            /// <param name="result">The result<see cref="string"/>.</param>
-            /// <param name="dependencies">The dependencies.</param>
-            private void AddGeneratedFields(string result, params string[] dependencies)
+            /// <param name="result">result.</param>
+            /// <param name="dependencies">dependencies.</param>
+            private void AddSpecialDependencies(string result, params string[] dependencies)
             {
-                if (this.uaa.WantedFieldNames.Contains(result))
+                if (this.uaa.IsWantedField(result))
                 {
-                    this.uaa.WantedFieldNames.AddRange(dependencies);
+                    if (this.uaa.WantedFieldNames != null)
+                    {
+                        this.uaa.WantedFieldNames.AddRange(dependencies);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// AddCalculatedMajorVersionField.
+            /// </summary>
+            /// <param name="result">result.</param>
+            /// <param name="dependency">dependency.</param>
+            private void AddCalculatedMajorVersionField(string result, string dependency)
+            {
+                if (this.uaa.IsWantedField(result))
+                {
+                    this.uaa.fieldCalculators.Add(new MajorVersionCalculator(result, dependency));
+                    if (this.uaa.WantedFieldNames != null)
+                    {
+                        this.uaa.WantedFieldNames.Add(dependency);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// AddCalculatedConcatNONDuplicated.
+            /// </summary>
+            /// <param name="result">result.</param>
+            /// <param name="first">first.</param>
+            /// <param name="second">second.</param>
+            private void AddCalculatedConcatNONDuplicated(string result, string first, string second)
+            {
+                if (this.uaa.IsWantedField(result))
+                {
+                    this.uaa.fieldCalculators.Add(new ConcatNONDuplicatedCalculator(result, first, second));
+                    if (this.uaa.WantedFieldNames != null)
+                    {
+                        this.uaa.WantedFieldNames.Add(first);
+                        this.uaa.WantedFieldNames.Add(second);
+                    }
                 }
             }
         }
