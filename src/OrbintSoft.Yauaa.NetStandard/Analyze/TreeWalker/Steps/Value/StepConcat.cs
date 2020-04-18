@@ -26,12 +26,14 @@
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
 {
+    using System;
     using System.Runtime.Serialization;
     using Antlr4.Runtime.Tree;
 
     /// <summary>
     /// This class defines the Concat Step, it is used in parsing to concatenate a prefix and a postfix to the value of the node.
     /// </summary>
+    [Serializable]
     public class StepConcat : Step
     {
         /// <summary>

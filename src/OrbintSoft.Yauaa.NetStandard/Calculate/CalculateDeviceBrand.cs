@@ -33,6 +33,7 @@ namespace OrbintSoft.Yauaa.Calculate
     /// <summary>
     /// CalculateDeviceBrand.
     /// </summary>
+    [Serializable]
     public class CalculateDeviceBrand : IFieldCalculator
     {
         /// <inheritdoc/>

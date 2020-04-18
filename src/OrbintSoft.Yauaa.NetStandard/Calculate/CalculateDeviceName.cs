@@ -24,12 +24,14 @@
 // <date>2020, 04, 16, 08:28</date>
 namespace OrbintSoft.Yauaa.Calculate
 {
+    using System;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
     /// CalculateDeviceName.
     /// </summary>
+    [Serializable]
     public class CalculateDeviceName : IFieldCalculator
     {
         /// <inheritdoc/>

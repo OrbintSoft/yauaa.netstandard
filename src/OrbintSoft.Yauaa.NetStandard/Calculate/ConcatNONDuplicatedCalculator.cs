@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Calculate
     /// <summary>
     /// ConcatNONDuplicatedCalculator.
     /// </summary>
+    [Serializable]
     public class ConcatNONDuplicatedCalculator : IFieldCalculator
     {
         private readonly string targetName;

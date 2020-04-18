@@ -25,12 +25,14 @@
 
 namespace OrbintSoft.Yauaa.Calculate
 {
+    using System;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
     /// MajorVersionCalculator.
     /// </summary>
+    [Serializable]
     public class MajorVersionCalculator : IFieldCalculator
     {
         private readonly string versionName;

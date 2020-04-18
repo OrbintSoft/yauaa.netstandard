@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
     using log4net;
     using OrbintSoft.Yauaa.Debug;
     using OrbintSoft.Yauaa.Testing.Fixtures;
+    using OrbintSoft.Yauaa.Tests;
     using System.IO;
     using System.Runtime.Serialization.Formatters.Binary;
     using Xunit;
@@ -54,19 +55,26 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             LOG.Info("==============================================================");
             LOG.Info("Create");
             LOG.Info("--------------------------------------------------------------");
-            var uaa = new UserAgentAnalyzerTester();
-            uaa.SetShowMatcherStats(false);
+            var uaab = UserAgentAnalyzerTester
+                .NewBuilder()
+                .KeepTests()
+                .DropDefaultResources()
+                .AddResources(Config.RESOURCES_PATH, "AllSteps.yaml")
+                .AddResources(Config.RESOURCES_PATH, "AllFields-tests.yaml")
+                .AddResources(Config.RESOURCES_PATH, "AllPossibleSteps.yaml")
+                .AddResources(Config.RESOURCES_PATH, "DocumentationExample.yaml")
+                .HideMatcherLoadStats();
+
             if (delay)
             {
-                uaa.DelayInitialization();
+                uaab.DelayInitialization();
             }
             else
             {
-                uaa.ImmediateInitialization();
+                uaab.ImmediateInitialization();
             }
 
-            uaa.Initialize();
-
+            var uaa = uaab.Build() as UserAgentAnalyzerTester;
             LOG.Info("--------------------------------------------------------------");
             LOG.Info("Serialize");
             byte[] bytes;
@@ -109,7 +117,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
             LOG.Info("==============================================================");
             LOG.Info("Validating when getting all fields");
             LOG.Info("--------------------------------------------------------------");
-            uaa.RunTests(false, true).Should().BeTrue();
+            uaa.RunTests(false, false, null, false, false).Should().BeTrue();
         }
     }
 }
