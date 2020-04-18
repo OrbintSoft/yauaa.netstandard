@@ -6,7 +6,7 @@
     /// Defines a field of a parsed user agent, like LayoutEngineName or OperatingSystemVersion.
     /// </summary>
     [Serializable]
-    public class AgentField : IAgentField
+    public class AgentField : IAgentField, IEquatable<AgentField>
     {
         /// <summary>
         /// The default value to be used for this field..
@@ -34,26 +34,37 @@
         internal string Value { get; set; }
 
         /// <summary>
-        /// The Equals.
+        /// Determines if the other agend field equals to this.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public override bool Equals(object obj)
+        /// <param name="other">The other AgentField.</param>
+        /// <returns>True if equals.</returns>
+        public bool Equals(AgentField other)
         {
-            if (this == obj)
+            if (ReferenceEquals(this, other))
             {
                 return true;
             }
 
-            if (!(obj is AgentField))
+            if (other is null)
             {
                 return false;
             }
 
-            var that = (AgentField)obj;
-            return this.Confidence == that.Confidence &&
-                Equals(this.defaultValue, that.defaultValue) &&
-                Equals(this.Value, that.Value);
+            return this.Confidence == other.Confidence &&
+                Equals(this.defaultValue, other.defaultValue) &&
+                Equals(this.Value, other.Value);
+
+        }
+
+        /// <inheritdoc>/>.
+        public override bool Equals(object other)
+        {
+            if (!(other is AgentField))
+            {
+                return false;
+            }
+
+            return this.Equals((AgentField)other);
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace OrbintSoft.Yauaa.Analyzer
     /// This class contains all info about a parsed user agent and all utility to work with it.
     /// </summary>
     [Serializable]
-    public class UserAgent : UserAgentBaseListener, IAntlrErrorListener<int>, IAntlrErrorListener<IToken>, IUserAgent
+    public class UserAgent : UserAgentBaseListener, IAntlrErrorListener<int>, IAntlrErrorListener<IToken>, IEquatable<UserAgent>, IUserAgent
     {
         /// <summary>
         /// Defines the AGENT_BUILD.
@@ -578,25 +578,35 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Equals.
+        /// Check if the two user agents are equals.
         /// </summary>
-        /// <param name="obj">The obj<see cref="object"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
-        public override bool Equals(object obj)
+        /// <param name="other">The other useragent.</param>
+        /// <returns>True if equals.</returns>
+        public bool Equals(UserAgent other)
         {
-            if (this == obj)
+            if (ReferenceEquals(this, other))
             {
                 return true;
             }
 
+            if (other is null)
+            {
+                return false;
+            }
+
+            return Equals(this.userAgentString, other.userAgentString) &&
+                   (this.allFields == other.allFields || (this.allFields != null && this.allFields.SequenceEqual(other.allFields)));
+        }
+
+        /// <inheritdoc/>
+        public override bool Equals(object obj)
+        {
             if (!(obj is UserAgent))
             {
                 return false;
             }
 
-            var agent = (UserAgent)obj;
-            return Equals(this.userAgentString, agent.userAgentString) &&
-                   (this.allFields == agent.allFields || (this.allFields != null && this.allFields.SequenceEqual(agent.allFields)));
+            return this.Equals((UserAgent)obj);
         }
 
         /// <summary>
@@ -1096,7 +1106,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                         sb.Append(' ');
                     }
 
-                    sb.Append("# ").Append(string.Format("{0}", this.Get(fieldName).Confidence));
+                    sb.Append("# ").Append(string.Format("{0}", this.Get(fieldName).GetConfidence()));
                 }
 
                 if (comments != null && comments.ContainsKey(fieldName))

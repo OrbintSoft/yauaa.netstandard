@@ -38,10 +38,10 @@ namespace OrbintSoft.Yauaa.Calculate
         public void Calculate(UserAgent userAgent)
         {
             // Make sure the DeviceName always starts with the DeviceBrand
-            AgentField deviceName = userAgent.Get(UserAgent.DEVICE_NAME);
+            var deviceName = userAgent.Get(UserAgent.DEVICE_NAME);
             if (deviceName.GetConfidence() >= 0)
             {
-                AgentField deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
+                var deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
                 string deviceNameValue = deviceName.GetValue();
                 string deviceBrandValue = deviceBrand.GetValue();
                 if (deviceName.GetConfidence() >= 0 &&

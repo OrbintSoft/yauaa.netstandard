@@ -103,7 +103,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Defines the <see cref="Range" />.
         /// </summary>
         [Serializable]
-        public class Range
+        public class Range: IEquatable<Range>
         {
             /// <summary>
             /// Defines the rangeString.
@@ -153,25 +153,37 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             /// <summary>
-            /// The Equals.
+            /// If the wheth the specified <see cref="Range"/> is equal to the current object.
             /// </summary>
-            /// <param name="obj">The obj<see cref="object"/>.</param>
-            /// <returns>The <see cref="bool"/>.</returns>
-            public override bool Equals(object obj)
+            /// <param name="other">other.</param>
+            /// <returns>True if equals.</returns>
+            public bool Equals(Range other)
             {
-                if (!(obj is Range))
+                if (ReferenceEquals(this, other))
+                {
+                    return true;
+                }
+
+                if (other is null)
                 {
                     return false;
                 }
 
-                var range = (Range)obj;
-                return this.First == range.First && this.Last == range.Last;
+                return this.First == other.First && this.Last == other.Last;
             }
 
-            /// <summary>
-            /// The GetHashCode.
-            /// </summary>
-            /// <returns>The <see cref="int"/>.</returns>
+            /// <inheritdoc/>
+            public override bool Equals(object other)
+            {
+                if (!(other is Range))
+                {
+                    return false;
+                }
+
+                return Equals(this, other);
+            }
+
+            /// <inheritdoc/>
             public override int GetHashCode()
             {
                 return ValueTuple.Create(this.First, this.Last).GetHashCode();
