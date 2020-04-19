@@ -12,6 +12,7 @@ v5.11
 - Updated all dependencies and build plugins.
 - Improve detection of Maemo / Nokia N900
 - Extra testcases for Firefox (They implemented some small useragent changes)
+- Update Antlr to 4.8
 
 v5.10
 ===

@@ -4,10 +4,178 @@
         <name>OrbintSoft.Yauaa.NetStandard</name>
     </assembly>
     <members>
+        <member name="T:OrbintSoft.Yauaa.Analyzer.AgentField">
+            <summary>
+            Defines a field of a parsed user agent, like LayoutEngineName or OperatingSystemVersion.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.AgentField.defaultValue">
+            <summary>
+            The default value to be used for this field..
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyzer.AgentField"/> class.
+            </summary>
+            <param name="defaultValue">The default value to be used for this field...</param>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyzer.AgentField.Confidence">
+            <summary>
+            Gets or sets the Confidence.
+            </summary>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyzer.AgentField.Value">
+            <summary>
+            Gets or sets the Value.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.Equals(OrbintSoft.Yauaa.Analyzer.AgentField)">
+            <summary>
+            Determines if the other agend field equals to this.
+            </summary>
+            <param name="other">The other AgentField.</param>
+            <returns>True if equals.</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:OrbintSoft.Yauaa.Analyzer.AgentField.Equals(System.Object)" -->
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.GetConfidence">
+            <summary>
+            The GetConfidence.
+            </summary>
+            <returns>The <see cref="T:System.Int64"/>.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.GetHashCode">
+            <summary>
+            The GetHashCode.
+            </summary>
+            <returns>The <see cref="T:System.Int32"/>.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.GetValue">
+            <summary>
+            The GetValue.
+            </summary>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.Reset">
+            <summary>
+            The Reset.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.SetValue(OrbintSoft.Yauaa.Analyzer.IAgentField)">
+            <summary>
+            The SetValue.
+            </summary>
+            <param name="field">The field<see cref="T:OrbintSoft.Yauaa.Analyzer.AgentField"/>.</param>
+            <returns>The <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.SetValue(System.String,System.Int64)">
+            <summary>
+            The SetValue.
+            </summary>
+            <param name="newValue">The newValue<see cref="T:System.String"/>.</param>
+            <param name="newConfidence">The newConfidence<see cref="T:System.Int64"/>.</param>
+            <returns>The <see cref="T:System.Boolean"/>.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.SetValueForced(System.String,System.Int64)">
+            <summary>
+            The SetValueForced.
+            </summary>
+            <param name="newValue">The newValue<see cref="T:System.String"/>.</param>
+            <param name="newConfidence">The newConfidence<see cref="T:System.Int64"/>.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.AgentField.ToString">
+            <summary>
+            The ToString.
+            </summary>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Analyzer.IAgentField">
+            <summary>
+            Defines a field of a parsed user agent, like LayoutEngineName or OperatingSystemVersion.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.IAgentField.GetConfidence">
+            <summary>
+            Gets the confidence.
+            Higher is better.
+            -1: This field should not be considered, the value is not reliable.
+            </summary>
+            <returns>A number >= -1.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.IAgentField.GetValue">
+            <summary>
+            Gets the value of this field.
+            </summary>
+            <returns>The string value.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.IAgentField.Reset">
+            <summary>
+            Resets the value of this field.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.IAgentField.SetValue(OrbintSoft.Yauaa.Analyzer.IAgentField)">
+            <summary>
+            Sets the value of this field from another field if confidence is better.
+            </summary>
+            <param name="field">The field.</param>
+            <returns>
+            True in case of success.
+            False if the value cannot be set.
+            </returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.IAgentField.SetValue(System.String,System.Int64)">
+            <summary>
+            Sets the value of this field if provided confidence is better.
+            </summary>
+            <param name="newValue">The value to be set.</param>
+            <param name="newConfidence">The confidence of the new value.</param>
+            <returns>
+            True in case of success.
+            False if the value cannot be set.
+            </returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.IAgentField.SetValueForced(System.String,System.Int64)">
+            <summary>
+            Sets a new value for the field with provided confidence.
+            It doesn't check if confidence is better.
+            </summary>
+            <param name="newValue">The value to be set.</param>
+            <param name="newConfidence">The confidence of the new value.</param>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Analyzer.IUserAgent">
+            <summary>
+            A user agenent with its fields.
+            </summary>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyzer.IUserAgent.UserAgentString">
+            <summary>
+            Gets or sets the user agent strings.
+            </summary>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyzer.IUserAgent.AmbiguityCount">
+            <summary>
+            Gets the numer of ambiguities found.
+            </summary>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyzer.IUserAgent.HasAmbiguity">
+            <summary>
+            Gets a value indicating whether some fields are ambiguos.
+            </summary>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyzer.IUserAgent.HasSyntaxError">
+            <summary>
+            Gets a value indicating whether the user agent contains syntax errors.
+            </summary>
+        </member>
         <member name="T:OrbintSoft.Yauaa.Analyzer.UserAgent">
             <summary>
             Defines the <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent" /> class.
             This class contains all info about a parsed user agent and all utility to work with it.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_BUILD">
+            <summary>
+            Defines the AGENT_BUILD.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_CLASS">
@@ -15,9 +183,49 @@
             Defines the AGENT_CLASS.
             </summary>
         </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_INFORMATION_EMAIL">
+            <summary>
+            Defines the AGENT_INFORMATION_EMAIL.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_INFORMATION_URL">
+            <summary>
+            Defines the AGENT_INFORMATION_URL.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_LANGUAGE">
+            <summary>
+            Defines the AGENT_LANGUAGE.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_LANGUAGE_CODE">
+            <summary>
+            Defines the AGENT_LANGUAGE_CODE.
+            </summary>
+        </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_NAME">
             <summary>
             Defines the AGENT_NAME.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_NAME_VERSION">
+            <summary>
+            Defines the AGENT_NAME_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_NAME_VERSION_MAJOR">
+            <summary>
+            Defines the AGENT_NAME_VERSION_MAJOR.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_SECURITY">
+            <summary>
+            Defines the AGENT_SECURITY.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_UUID">
+            <summary>
+            Defines the AGENT_UUID.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AGENT_VERSION">
@@ -30,6 +238,11 @@
             Defines the AGENT_VERSION_MAJOR.
             </summary>
         </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.ANONYMIZED">
+            <summary>
+            Defines the ANONYMIZED.
+            </summary>
+        </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.DEVICE_BRAND">
             <summary>
             Defines the DEVICE_BRAND.
@@ -38,6 +251,21 @@
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.DEVICE_CLASS">
             <summary>
             Defines the DEVICE_CLASS.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.DEVICE_CPU">
+            <summary>
+            Defines the DEVICE_CPU.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.DEVICE_CPU_BITS">
+            <summary>
+            Defines the DEVICE_CPU_BITS.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.DEVICE_FIRMWARE_VERSION">
+            <summary>
+            Defines the DEVICE_FIRMWARE_VERSION.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.DEVICE_NAME">
@@ -50,6 +278,91 @@
             Defines the DEVICE_VERSION.
             </summary>
         </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_CARRIER">
+            <summary>
+            Defines the FACEBOOK_CARRIER.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_DEVICE_CLASS">
+            <summary>
+            Defines the FACEBOOK_DEVICE_CLASS.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_DEVICE_NAME">
+            <summary>
+            Defines the FACEBOOK_DEVICE_NAME.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_DEVICE_VERSION">
+            <summary>
+            Defines the FACEBOOK_DEVICE_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_F_B_O_P">
+            <summary>
+            Defines the FACEBOOK_F_B_O_P.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_F_B_S_S">
+            <summary>
+            Defines the FACEBOOK_F_B_S_S.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_OPERATING_SYSTEM_NAME">
+            <summary>
+            Defines the FACEBOOK_OPERATING_SYSTEM_NAME.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.FACEBOOK_OPERATING_SYSTEM_VERSION">
+            <summary>
+            Defines the FACEBOOK_OPERATING_SYSTEM_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.HACKER_ATTACK_VECTOR">
+            <summary>
+            Defines the HACKER_ATTACK_VECTOR.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.HACKER_TOOLKIT">
+            <summary>
+            Defines the HACKER_TOOLKIT.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.IE_COMPATIBILITY_NAME_VERSION">
+            <summary>
+            Defines the IE_COMPATIBILITY_NAME_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.IE_COMPATIBILITY_NAME_VERSION_MAJOR">
+            <summary>
+            Defines the IE_COMPATIBILITY_NAME_VERSION_MAJOR.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.IE_COMPATIBILITY_VERSION">
+            <summary>
+            Defines the IE_COMPATIBILITY_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.IE_COMPATIBILITY_VERSION_MAJOR">
+            <summary>
+            Defines the IE_COMPATIBILITY_VERSION_MAJOR.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.KOBO_AFFILIATE">
+            <summary>
+            Defines the KOBO_AFFILIATE.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.KOBO_PLATFORM_ID">
+            <summary>
+            Defines the KOBO_PLATFORM_ID.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.LAYOUT_ENGINE_BUILD">
+            <summary>
+            Defines the LAYOUT_ENGINE_BUILD.
+            </summary>
+        </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.LAYOUT_ENGINE_CLASS">
             <summary>
             Defines the LAYOUT_ENGINE_CLASS.
@@ -58,6 +371,16 @@
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.LAYOUT_ENGINE_NAME">
             <summary>
             Defines the LAYOUT_ENGINE_NAME.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.LAYOUT_ENGINE_NAME_VERSION">
+            <summary>
+            Defines the LAYOUT_ENGINE_NAME_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.LAYOUT_ENGINE_NAME_VERSION_MAJOR">
+            <summary>
+            Defines the LAYOUT_ENGINE_NAME_VERSION_MAJOR.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.LAYOUT_ENGINE_VERSION">
@@ -85,9 +408,29 @@
             Defines the OPERATING_SYSTEM_NAME.
             </summary>
         </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.OPERATING_SYSTEM_NAME_VERSION">
+            <summary>
+            Defines the OPERATING_SYSTEM_NAME_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR">
+            <summary>
+            Defines the OPERATING_SYSTEM_NAME_VERSION_MAJOR.
+            </summary>
+        </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.OPERATING_SYSTEM_VERSION">
             <summary>
             Defines the OPERATING_SYSTEM_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.OPERATING_SYSTEM_VERSION_BUILD">
+            <summary>
+            Defines the OPERATING_SYSTEM_VERSION_BUILD.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.OPERATING_SYSTEM_VERSION_MAJOR">
+            <summary>
+            Defines the OPERATING_SYSTEM_VERSION_MAJOR.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.SET_ALL_FIELDS">
@@ -110,9 +453,34 @@
             Defines the UNKNOWN_VERSION.
             </summary>
         </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.UNKNOWN_NAME_VERSION">
+            <summary>
+            Defines the UNKNOWN_NAME_VERSION.
+            </summary>
+        </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.USERAGENT_FIELDNAME">
             <summary>
             Defines the USERAGENT_FIELDNAME.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.WEBVIEW_APP_NAME">
+            <summary>
+            Defines the WEBVIEW_APP_NAME.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.WEBVIEW_APP_NAME_VERSION_MAJOR">
+            <summary>
+            Defines the WEBVIEW_APP_NAME_VERSION_MAJOR.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.WEBVIEW_APP_VERSION">
+            <summary>
+            Defines the WEBVIEW_APP_VERSION.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.WEBVIEW_APP_VERSION_MAJOR">
+            <summary>
+            Defines the WEBVIEW_APP_VERSION_MAJOR.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.StandardFields">
@@ -178,10 +546,13 @@
             Gets a value indicating whether the user agent contains syntax errors.
             </summary>
         </member>
-        <member name="P:OrbintSoft.Yauaa.Analyzer.UserAgent.UserAgentString">
+        <member name="P:OrbintSoft.Yauaa.Analyzer.UserAgent.IsDebug">
             <summary>
-            Gets or sets the user agent strings.
+            Gets or sets a value indicating whether IsDebug.
             </summary>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyzer.UserAgent.UserAgentString">
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.IsSystemField(System.String)">
             <summary>
@@ -196,19 +567,22 @@
             </summary>
             <param name="userAgent">The userAgent<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent"/>.</param>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.Equals(System.Object)">
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.Equals(OrbintSoft.Yauaa.Analyzer.UserAgent)">
             <summary>
-            The Equals.
+            Check if the two user agents are equals.
             </summary>
-            <param name="obj">The obj<see cref="T:System.Object"/>.</param>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <param name="other">The other useragent.</param>
+            <returns>True if equals.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.Equals(System.Object)">
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.Get(System.String)">
             <summary>
             The Get.
             </summary>
             <param name="fieldName">The fieldName<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField"/>.</returns>
+            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyzer.AgentField"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.GetAvailableFieldNames">
             <summary>
@@ -388,101 +762,17 @@
             <param name="comments">The comments.</param>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.SetImmediateForTesting(System.String,OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField)">
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.SetImmediateForTesting(System.String,OrbintSoft.Yauaa.Analyzer.AgentField)">
             <summary>
             The Set.
             </summary>
             <param name="fieldName">The fieldName<see cref="T:System.String"/>.</param>
-            <param name="agentField">The agentField<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField"/>.</param>
+            <param name="agentField">The agentField<see cref="T:OrbintSoft.Yauaa.Analyzer.AgentField"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.Init">
             <summary>
             The Init.
             </summary>
-        </member>
-        <member name="T:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField">
-            <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField" />.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.defaultValue">
-            <summary>
-            Defines the defaultValue.
-            </summary>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField"/> class.
-            </summary>
-            <param name="defaultValue">The defaultValue<see cref="T:System.String"/>.</param>
-        </member>
-        <member name="P:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.Confidence">
-            <summary>
-            Gets or sets the Confidence.
-            </summary>
-        </member>
-        <member name="P:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.Value">
-            <summary>
-            Gets or sets the Value.
-            </summary>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.Equals(System.Object)">
-            <summary>
-            The Equals.
-            </summary>
-            <param name="obj">The obj<see cref="T:System.Object"/>.</param>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.GetConfidence">
-            <summary>
-            The GetConfidence.
-            </summary>
-            <returns>The <see cref="T:System.Int64"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.GetHashCode">
-            <summary>
-            The GetHashCode.
-            </summary>
-            <returns>The <see cref="T:System.Int32"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.GetValue">
-            <summary>
-            The GetValue.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.Reset">
-            <summary>
-            The Reset.
-            </summary>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.SetValue(OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField)">
-            <summary>
-            The SetValue.
-            </summary>
-            <param name="field">The field<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField"/>.</param>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.SetValue(System.String,System.Int64)">
-            <summary>
-            The SetValue.
-            </summary>
-            <param name="newValue">The newValue<see cref="T:System.String"/>.</param>
-            <param name="newConfidence">The newConfidence<see cref="T:System.Int64"/>.</param>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.SetValueForced(System.String,System.Int64)">
-            <summary>
-            The SetValueForced.
-            </summary>
-            <param name="newValue">The newValue<see cref="T:System.String"/>.</param>
-            <param name="newConfidence">The newConfidence<see cref="T:System.Int64"/>.</param>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzer">
             <summary>
@@ -629,6 +919,11 @@
             Defines the lookupSets.
             </summary>
         </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.zeroInputMatchers">
+            <summary>
+            A list of methers that doesn't require an input.
+            </summary>
+        </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.delayInitialization">
             <summary>
             Defines the delayInitialization.
@@ -666,7 +961,12 @@
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.verbose">
             <summary>
-            Defines the verbose.
+            Defines a verbose property to enable verbose logging.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.touchedMatchers">
+            <summary>
+            A list of matchers that have been touched with parsing.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.#cctor">
@@ -905,6 +1205,15 @@
             </summary>
             <param name="newVerbose">The newVerbose<see cref="T:System.Boolean"/>.</param>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.ReceivedInput(OrbintSoft.Yauaa.Analyze.Matcher)">
+            <inheritdoc/>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetLookups">
+            <inheritdoc/>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetLookupSets">
+            <inheritdoc/>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.ConcatFieldValuesNONDuplicated(OrbintSoft.Yauaa.Analyzer.UserAgent,System.String,System.String,System.String)">
             <summary>
             This is used to concatenate two parsed fields into one.
@@ -937,20 +1246,6 @@
             <param name="userAgent">The userAgent<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent"/>.</param>
             <param name="versionName">The versionName<see cref="T:System.String"/>.</param>
             <param name="majorVersionName">The majorVersionName<see cref="T:System.String"/>.</param>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.DetermineDeviceBrand(OrbintSoft.Yauaa.Analyzer.UserAgent)">
-            <summary>
-            The DetermineDeviceBrand.
-            </summary>
-            <param name="userAgent">The userAgent<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent"/>.</param>
-            <returns>The <see cref="T:System.String"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.ExtractCompanyFromHostName(System.String)">
-            <summary>
-            The ExtractCompanyFromHostName.
-            </summary>
-            <param name="hostname">The hostname<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:System.String"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.HardCodedPostProcessing(OrbintSoft.Yauaa.Analyzer.UserAgent)">
             <summary>
@@ -1022,17 +1317,9 @@
             <param name="confidence">The confidence<see cref="T:System.Int32"/>.</param>
             <returns>The <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent"/>.</returns>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.ReceivedInput(OrbintSoft.Yauaa.Analyze.Matcher)">
-            <inheritdoc/>
-        </member>
         <member name="T:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass">
             <summary>
             Defines the <see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass" />.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass.flattener">
-            <summary>
-            Defines the flattener.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass.result">
@@ -1060,6 +1347,18 @@
             <summary>
             Gets the Values.
             </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass.GetLookups">
+            <summary>
+            GetLookups.
+            </summary>
+            <returns>loockups.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass.GetLookupSets">
+            <summary>
+            GetLookupSets.
+            </summary>
+            <returns>lookups.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.GetAllPathsAnalyzerClass.GetRequiredInformRanges(System.String)">
             <summary>
@@ -1257,12 +1556,27 @@
             The FailIfAlreadyBuilt.
             </summary>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.UserAgentAnalyzerDirectBuilder`2.AddGeneratedFields(System.String,System.String[])">
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.UserAgentAnalyzerDirectBuilder`2.AddSpecialDependencies(System.String,System.String[])">
             <summary>
-            The AddGeneratedFields.
+            AddSpecialDependencies.
             </summary>
-            <param name="result">The result<see cref="T:System.String"/>.</param>
-            <param name="dependencies">The dependencies.</param>
+            <param name="result">result.</param>
+            <param name="dependencies">dependencies.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.UserAgentAnalyzerDirectBuilder`2.AddCalculatedMajorVersionField(System.String,System.String)">
+            <summary>
+            AddCalculatedMajorVersionField.
+            </summary>
+            <param name="result">result.</param>
+            <param name="dependency">dependency.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyzer.UserAgentAnalyzerDirect.UserAgentAnalyzerDirectBuilder`2.AddCalculatedConcatNONDuplicated(System.String,System.String,System.String)">
+            <summary>
+            AddCalculatedConcatNONDuplicated.
+            </summary>
+            <param name="result">result.</param>
+            <param name="first">first.</param>
+            <param name="second">second.</param>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.IAnalyzer">
             <summary>
@@ -1354,16 +1668,6 @@
             Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.Matcher" />.
             </summary>
         </member>
-        <member name="P:OrbintSoft.Yauaa.Analyze.Matcher.ActionsThatRequireInput">
-            <summary>
-            Gets the number of actions that requires an input.
-            </summary>
-        </member>
-        <member name="P:OrbintSoft.Yauaa.Analyze.Matcher.AlreadyNotifiedAnalyzerWeReceivedInput">
-            <summary>
-            Gets or sets if we have already notified trhat the analyzer has already received the input.
-            </summary>
-        </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.Matcher.Log">
             <summary>
             Defines the Log.
@@ -1371,7 +1675,7 @@
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.Matcher.analyzer">
             <summary>
-            Defines the analyzer.
+            The analyzer used for parsing.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.Matcher.fixedStringActions">
@@ -1414,12 +1718,6 @@
             Defines the dynamicActions.
             </summary>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.Matcher.#ctor(OrbintSoft.Yauaa.Analyze.IAnalyzer)">
-            <summary>
-            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.Matcher"/> class for testing purpose.
-            </summary>
-            <param name="analyzer">The analyzer.</param>
-        </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.Matcher.#ctor(OrbintSoft.Yauaa.Analyze.IAnalyzer,System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.IDictionary{System.String,System.String}},System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.ISet{System.String}},System.Collections.Generic.IList{System.String},YamlDotNet.RepresentationModel.YamlMappingNode,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.Matcher"/> class.
@@ -1431,6 +1729,12 @@
             <param name="matcherConfig">The matcherConfig<see cref="T:YamlDotNet.RepresentationModel.YamlMappingNode"/>.</param>
             <param name="filename">The filename<see cref="T:System.String"/>.</param>
         </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.Matcher.#ctor(OrbintSoft.Yauaa.Analyze.IAnalyzer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.Matcher"/> class for testing purpose.
+            </summary>
+            <param name="analyzer">The analyzer.</param>
+        </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.Matcher.#ctor(OrbintSoft.Yauaa.Analyze.IAnalyzer,System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.IDictionary{System.String,System.String}},System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.ISet{System.String}})">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.Matcher"/> class.
@@ -1439,19 +1743,30 @@
             <param name="lookups">The lookups.</param>
             <param name="lookupSets">The lookupSets.</param>
         </member>
+        <member name="P:OrbintSoft.Yauaa.Analyze.Matcher.ActionsThatRequireInput">
+            <summary>
+            Gets the number of actions that requires an input.
+            </summary>
+        </member>
         <member name="P:OrbintSoft.Yauaa.Analyze.Matcher.Lookups">
             <summary>
-            Gets the Lookups.
+            Gets the analyzer Lookups.
             </summary>
         </member>
         <member name="P:OrbintSoft.Yauaa.Analyze.Matcher.LookupSets">
             <summary>
-            Gets the LookupSets.
+            Gets the LookupSets from the analyzer.
             </summary>
         </member>
         <member name="P:OrbintSoft.Yauaa.Analyze.Matcher.Verbose">
             <summary>
-            Gets a value indicating whether Verbose.
+            Gets a value indicating whether Verbose is enabled.
+            It is used for verbose logging.
+            </summary>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyze.Matcher.AlreadyNotifiedAnalyzerWeReceivedInput">
+            <summary>
+            Gets or sets a value indicating whether we have already notified that the analyzer has already received the input.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.Matcher.Analyze(OrbintSoft.Yauaa.Analyzer.UserAgent)">
@@ -2000,11 +2315,11 @@
             The Reset.
             </summary>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.MatcherExtractAction.SetResultAgentField(OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField)">
+        <member name="M:OrbintSoft.Yauaa.Analyze.MatcherExtractAction.SetResultAgentField(OrbintSoft.Yauaa.Analyzer.AgentField)">
             <summary>
             The SetResultAgentField.
             </summary>
-            <param name="newResultAgentField">The newResultAgentField<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent.AgentField"/>.</param>
+            <param name="newResultAgentField">The newResultAgentField<see cref="!:UserAgent.AgentField"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatcherExtractAction.ToString">
             <summary>
@@ -2024,6 +2339,11 @@
             The SetFixedValue.
             </summary>
             <param name="newFixedValue">The newFixedValue<see cref="T:System.String"/>.</param>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Analyze.MatcherList">
+            <summary>
+            This class represent a collection of matchers.
+            </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.MatcherList.#ctor(System.Int32)">
             <summary>
@@ -2661,177 +2981,193 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains" />.
+            This class defines the Coontains Step, it is used in parsing to check if the actual value contains the desidered value.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains.desiredValue">
             <summary>
-            Defines the desiredValue.
+            Defines the desired value you want search.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains"/> class.
             </summary>
-            <param name="desiredValue">The desiredValue<see cref="T:System.String"/>.</param>
+            <param name="desiredValue">The desired value you want check if is contained in the actual value.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <inheritdoc/>
+            <summary>
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
+            </summary>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepContains.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It checks if tha actual value contains the desired value, in that case:
+            this will walk into the tree and recurse through all the remaining steps.
+            Otherwise it will return null, since no other steps to walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith" />.
+            This class defines the EndsWith Step, it is used in parsing to check if the actual value contains at the end of the string the desidered value.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith.desiredValue">
             <summary>
-            Defines the desiredValue.
+            Defines the desired value you want search.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith"/> class.
             </summary>
-            <param name="desiredValue">The desiredValue<see cref="T:System.String"/>.</param>
+            <param name="desiredValue">The desired value you want check if is contained at the end of string of the actual value.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <inheritdoc/>
+            <summary>
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
+            </summary>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEndsWith.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It checks if the actual value contains the desired value at the end of the string, in that case:
+            this will walk into the tree and recurse through all the remaining steps.
+            Otherwise it will return null, since no other steps to walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals" />.
+            This class defines the Equals Step, it is used in parsing to check if the actual value is equal to the desidered value.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals.desiredValue">
             <summary>
-            Defines the desiredValue.
+            Defines the desired value you want compare.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals"/> class.
             </summary>
-            <param name="desiredValue">The desiredValue<see cref="T:System.String"/>.</param>
+            <param name="desiredValue">The desired value you want check if equals to the actual value.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <inheritdoc/>
+            <summary>
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
+            </summary>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepEquals.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It checks if tha actual value equals to the desired value, in that case:
+            this will walk into the tree and recurse through all the remaining steps.
+            Otherwise it will return null, since no other steps to walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet" />.
+            This class defines the IsInSet Step, it is used in parsing to check if the actual value is the set of provided values.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet.list">
             <summary>
-            Defines the list.
+            Defines the set of values that you want use for matching.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet.listName">
             <summary>
-            Defines the listName.
+            Defines the name of the list.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet.#ctor(System.String,System.Collections.Generic.ISet{System.String})">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet"/> class.
             </summary>
-            <param name="listName">The listName<see cref="T:System.String"/>.</param>
-            <param name="list">The list.</param>
+            <param name="listName">The listName, a conventional name associated to the list, used to define operations.</param>
+            <param name="list">The set of values you want use to match.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsInSet.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It checks if the actual value is contained in the set of desidered values, in that case:
+            this will walk into the tree and recurse through all the remaining steps.
+            Otherwise it will return null, since no other steps to walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsNull">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsNull" />.
+            This class defines the IsNull Step, it is used in parsing to check if the next step is null.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsNull.#ctor">
@@ -2842,269 +3178,275 @@
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsNull.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsNull"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsNull.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepIsNull.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It checks if the next step is null in that case it will return a &lt;&lt;&lt;Null Value&gt;&gt;&gt; <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>
+            othewise it will return null.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or a <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals" />.
+            This class defines the NotEquals Step, it is used in parsing to check if the actual value is not equal to the desidered value.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals.desiredValue">
             <summary>
-            Defines the desiredValue.
+            Defines the desired value you want compare.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals"/> class.
             </summary>
-            <param name="desiredValue">The desiredValue<see cref="T:System.String"/>.</param>
+            <param name="desiredValue">The desired value you want check if is not equal to the actual value.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <inheritdoc/>
+            <summary>
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
+            </summary>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepNotEquals.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It checks if tha actual value is not equals to the desired value, in that case:
+            this will walk into the tree and recurse through all the remaining steps.
+            Otherwise it will return null, since no other steps to walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith" />.
+            This class defines the StartsWith Step, it is used in parsing to check if the actual value contains at the start of the string the desidered value.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith.desiredValue">
             <summary>
-            Defines the desiredValue.
+            Defines the desired value you want search.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith"/> class.
             </summary>
-            <param name="desiredValue">The desiredValue<see cref="T:System.String"/>.</param>
+            <param name="desiredValue">The desired value you want check if is contained at the start of string of the actual value.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare.StepStartsWith.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It checks if the actual value contains the desired value at the start of the string, in that case:
+            this will walk into the tree and recurse through all the remaining steps.
+            Otherwise it will return null, since no other steps to walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix" />.
+            This class defines the InLookupPrefix Step, it is used in parsing to check if the actual value exist in a lookup as prefix.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.lookupName">
             <summary>
-            Defines the lookupName.
+            Defines the name of the lookup.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.prefixLookup">
             <summary>
-            Defines the prefixLookup.
+            Defines the prefix lookup.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix"/> class.
             </summary>
-            <param name="lookupName">The lookupName<see cref="T:System.String"/>.</param>
-            <param name="prefixList">The prefixList.</param>
+            <param name="lookupName">The name of the lookup, a conventional name associated to the lookup, used to define operations.</param>
+            <param name="prefixList">The dictionary of prefix/values you want use for lookup.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepIsInLookupPrefix.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It finds if the actual value exist in the prefix lookup, in that case:
+            this will walk into the tree and recurse through all the remaining steps.
+            Otherwise it will return null, since no other steps to walk.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup" />.
+            This class defines the Lookup Step, it is used in parsing to find a value in a lookup.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.defaultValue">
             <summary>
-            Defines the defaultValue.
+            The default value to be used in case no value found in lookup.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.lookup">
             <summary>
-            Defines the lookup.
+            Defines the lookup dictionary.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.lookupName">
             <summary>
-            Defines the lookupName.
+            Defines the name of the lookup.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup"/> class.
             </summary>
-            <param name="lookupName">The lookupName<see cref="T:System.String"/>.</param>
-            <param name="lookup">The lookup.</param>
-            <param name="defaultValue">The defaultValue<see cref="T:System.String"/>.</param>
+            <param name="lookupName">The name of the lookup, a conventional name associated to the lookup, used to define operations.</param>
+            <param name="lookup">The dictionary you want use for lookup.</param>
+            <param name="defaultValue">The default value to be used in case of no lookup found.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookup.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It finds the value in the lookup given the actual value or the default value if not not null
+            so it will walk into the tree and recurse through all the remaining steps.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix" />.
+            This class defines the LookupPrefix Step, it is used in parsing to find a value in a lookup by a prefix.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.defaultValue">
             <summary>
-            Defines the defaultValue.
+            The default value to be used in case no value found in lookup.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.lookupName">
             <summary>
-            Defines the lookupName.
+            Defines the name of the lookup.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.prefixLookup">
             <summary>
-            Defines the prefixLookup.
+            Defines the prefix lookup.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix"/> class.
             </summary>
-            <param name="lookupName">The lookupName<see cref="T:System.String"/>.</param>
-            <param name="prefixList">The prefixList.</param>
-            <param name="defaultValue">The defaultValue<see cref="T:System.String"/>.</param>
+            <param name="lookupName">The name of the lookup, a conventional name associated to the lookup, used to define operations.</param>
+            <param name="prefixList">The dictionary you want use for prefix lookup.</param>
+            <param name="defaultValue">The default value to be used in case of no lookup found.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup.StepLookupPrefix.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It finds the value in the lookup by prefix given the actual value or the default value if not not null
+            so it will walk into the tree and recurse through all the remaining steps.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Step">
             <summary>
@@ -3219,7 +3561,7 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull" />.
+            This class defines the BackToFull Step, it is used in parsing to go back to the root of the tree.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull.#ctor">
@@ -3230,33 +3572,31 @@
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull.CanFail">
             <summary>
-            The CanFail.
+            This step should never fail.
             </summary>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <returns>It returns false.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepBackToFull.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It walks back to the root of the tree.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion" />.
+            This class defines the CleanVersion Step, it is used in parsing to format the value of a version node.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion.#ctor">
@@ -3267,189 +3607,184 @@
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion.CanFail">
             <summary>
-            The CanFail.
+            This step should never fail.
             </summary>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <returns>It returns false.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepCleanVersion.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It cleans the actual value, then it will walk into the tree and recurse through all the remaining steps.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat" />.
+            This class defines the Concat Step, it is used in parsing to concatenate a prefix and a postfix to the value of the node.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.postfix">
             <summary>
-            Defines the postfix.
+            Defines the postfix to concatenate.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.prefix">
             <summary>
-            Defines the prefix.
+            Defines the prefix to concatenate.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.#ctor(System.String,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat"/> class.
             </summary>
-            <param name="prefix">The prefix<see cref="T:System.String"/>.</param>
-            <param name="postfix">The postfix<see cref="T:System.String"/>.</param>
+            <param name="prefix">The prefix that shoukd be concatenated.</param>
+            <param name="postfix">The postfix that should be concatenated.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.CanFail">
             <summary>
-            The CanFail.
+            This step should never fail.
             </summary>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <returns>It returns false.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcat.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It concatenates a prefix and a postfix to the actual value, then it will walk into the tree and recurse through all the remaining steps.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix" />.
+            This class defines the ConcatPostfix Step, it is used in parsing to concatenate a postfix to the value of the node.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix.postfix">
             <summary>
-            Defines the postfix.
+            Defines the postfix to concatenate.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix"/> class.
             </summary>
-            <param name="postfix">The postfix<see cref="T:System.String"/>.</param>
+            <param name="postfix">The postfix that should be concatenated.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix.CanFail">
             <summary>
-            The CanFail.
+            This step should never fail.
             </summary>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <returns>It returns false.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPostfix.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It concatenates a postfix to the actual value, then it will walk into the tree and recurse through all the remaining steps.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix" />.
+            This class defines the ConcatPrefixStep, it is used in parsing to concatenate a prefix to the value of the node.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix.prefix">
             <summary>
-            Defines the prefix.
+             Defines the prefix to concatenate.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix"/> class.
             </summary>
-            <param name="prefix">The prefix<see cref="T:System.String"/>.</param>
+            <param name="prefix">The prefix that should be concatenated.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix.CanFail">
             <summary>
-            The CanFail.
+            This step should never fail.
             </summary>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <returns>It returns false.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepConcatPrefix.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It concatenates a prefix to the actual value, then it will walk into the tree and recurse through all the remaining steps.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand" />.
+             This class defines the NormalizeBrand Step, it is used in parsing to format the name of the brand.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand.#ctor">
@@ -3460,84 +3795,82 @@
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand.CanFail">
             <summary>
-            The CanFail.
+            This step should never fail.
             </summary>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <returns>It returns false.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepNormalizeBrand.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It normalize the actual value as a brand convention, then it will walk into the tree and recurse through all the remaining steps.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange" />.
+            This class defines the WordRange Step, it is used in parsing to extract a substring of words from the actual value.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.firstWord">
             <summary>
-            Defines the firstWord.
+            Defines the index of firstWord.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.lastWord">
             <summary>
-            Defines the lastWord.
+            Defines the index of the lastWord.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.#ctor(OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange"/> class.
             </summary>
-            <param name="range">The range<see cref="T:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range"/>.</param>
+            <param name="range">The range of words <see cref="T:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.CanFail">
             <summary>
-            The CanFail.
+            It reurns true if it can fail.
             </summary>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <returns>True or false.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value.StepWordRange.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It finds a substring from the actual value between a frirs word and a last word range.
+            Then it will walk into the tree and recurse through all the remaining steps or reutn null if no range.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">The actual value of the node or null to get the root.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList">
             <summary>
@@ -3932,7 +4265,7 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown" />.
+            This class defines the Down Step, it is used in parsing to go down to children of current node in the tree.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.end">
@@ -3958,50 +4291,43 @@
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.#ctor(OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeContext,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown"/> class.
             </summary>
-            <param name="numberRange">The numberRange<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeContext"/>.</param>
-            <param name="name">The name<see cref="T:System.String"/>.</param>
+            <param name="numberRange">The range<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentTreeWalkerParser.NumberRangeContext"/> used to get the list of children.</param>
+            <param name="name">The name of the node.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.#ctor(OrbintSoft.Yauaa.Analyze.NumberRangeList,System.String)">
             <summary>
-            Prevents a default instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown"/> class from being created.
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown"/> class.
             </summary>
-            <param name="numberRange">The numberRange<see cref="T:OrbintSoft.Yauaa.Analyze.NumberRangeList"/>.</param>
-            <param name="name">The name<see cref="T:System.String"/>.</param>
+            <param name="numberRange">The range to get the list of children.</param>
+            <param name="name">The name of the node.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            It iterates throught children walking to next steps until it find a value, if a value is found it stops iterating.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.ReadObject(System.IO.Stream)">
-            <summary>
-            The ReadObject.
-            </summary>
-            <param name="stream">The stream<see cref="T:System.IO.Stream"/>.</param>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">Not used.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDown.SetDefaultFieldValues">
             <summary>
@@ -4010,136 +4336,138 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable" />.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.end">
-            <summary>
-            Defines the end.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.isWantedClassPredicate">
-            <summary>
-            Defines the isWantedClassPredicate.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.privateNumberRange">
-            <summary>
-            Defines the privateNumberRange.
+            This class is used to iterate throught the childres of a <see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.start">
             <summary>
-            Defines the start.
+            Defines the start index of the interation.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.end">
+            <summary>
+            Defines the end index of the interation.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.isWantedClassPredicate">
+            <summary>
+            Defines a predicate to filter the wanted node type.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.privateNumberRange">
+            <summary>
+            Defines if the range is private.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.#ctor(System.Boolean,System.Int32,System.Int32,System.Predicate{Antlr4.Runtime.Tree.IParseTree})">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable"/> class.
             </summary>
-            <param name="privateNumberRange">The privateNumberRange<see cref="T:System.Boolean"/>.</param>
-            <param name="start">The start<see cref="T:System.Int32"/>.</param>
-            <param name="end">The end<see cref="T:System.Int32"/>.</param>
-            <param name="isWantedClassPredicate">The isWantedClassPredicate<see cref="T:System.Predicate`1"/>.</param>
+            <param name="privateNumberRange">Defines if the range to iterate is private.</param>
+            <param name="start">The start index of iteration.</param>
+            <param name="end">The end index of the iteration.</param>
+            <param name="isWantedClassPredicate">A predicate to filter only the wanted classes.</param>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.Iterator(Antlr4.Runtime.ParserRuleContext)">
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.GetEnumerator(Antlr4.Runtime.ParserRuleContext)">
             <summary>
-            The Iterator.
+            It returns the enumerator by the current parser rule of tree context.
             </summary>
-            <param name="treeContext">The treeContext<see cref="T:Antlr4.Runtime.ParserRuleContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <param name="treeContext">The tree context<see cref="T:Antlr4.Runtime.ParserRuleContext"/>.</param>
+            <returns>The enumerator of the tree.</returns>
         </member>
-        <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator">
+        <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator" />.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.childIter">
-            <summary>
-            Defines the childIter.
+            This class is used as the enumerator of a <see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.
             </summary>
         </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.childIterable">
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.childIter">
             <summary>
-            Defines the childIterable.
+            Defines private iterator of child.
             </summary>
         </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.index">
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.childIterable">
             <summary>
-            Defines the index.
+            Defines the referenced child iterable class.
             </summary>
         </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.endReached">
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.index">
             <summary>
-            True if I alread iterated all the tree.
+            Defines the current index, -1 as default because iteration has not started.
             </summary>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.#ctor(OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable,Antlr4.Runtime.ParserRuleContext)">
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.endReached">
             <summary>
-            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator"/> class.
-            </summary>
-            <param name="childIterable">The childIterable<see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable"/>.</param>
-            <param name="treeContext">The treeContext<see cref="T:Antlr4.Runtime.ParserRuleContext"/>.</param>
-        </member>
-        <member name="P:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.Current">
-            <summary>
-            Gets the Current.
+            True if I alread iterated all the nodes in the tree context.
             </summary>
         </member>
-        <member name="P:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.System#Collections#IEnumerator#Current">
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.#ctor(OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable,Antlr4.Runtime.ParserRuleContext)">
             <summary>
-            Gets the Current.
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator"/> class.
+            This class is used to initialize the enumerator.
+            </summary>
+            <param name="childIterable">The referenced <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable"/> class.</param>
+            <param name="treeContext">The tree context, <see cref="T:Antlr4.Runtime.ParserRuleContext"/>.</param>
+        </member>
+        <member name="P:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.Current">
+            <summary>
+            Gets the current node.
             </summary>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.Dispose">
+        <member name="P:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.System#Collections#IEnumerator#Current">
             <summary>
-            The Dispose.
+            Gets the current node.
             </summary>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.MoveNext">
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.Dispose">
+            <summary>
+            It is used to dispose the enumerator.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.MoveNext">
             <summary>
             Find and set the nextChild.
             </summary>
             <returns>If there is a next.</returns>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildIterator.Reset">
+        <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.ChildIterable.ChildEnumerator.Reset">
             <summary>
-            The Reset.
+            I reset the enumerator, so I can restart the iteration.
             </summary>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor" />.
+            This class is used to visit the children of a <see cref="T:System.Collections.Generic.IEnumerator`1"/>.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.Empty">
             <summary>
-            Defines the Empty.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.end">
-            <summary>
-            Defines the end.
-            </summary>
-        </member>
-        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.name">
-            <summary>
-            Defines the name.
+            The default enumerator of an empty node.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.start">
             <summary>
-            Defines the start.
+            Defines the start index.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.end">
+            <summary>
+            Defines the end index.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.name">
+            <summary>
+            Defines the name of the visitor.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.childIterable">
             <summary>
-            Defines the childIterable.
+            Defines the child iterable.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor"/> class.
+            It is used for bonary deserialization.
             </summary>
             <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
             <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
@@ -4148,131 +4476,134 @@
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor"/> class.
             </summary>
-            <param name="name">The name<see cref="T:System.String"/>.</param>
-            <param name="start">The start<see cref="T:System.Int32"/>.</param>
-            <param name="end">The end<see cref="T:System.Int32"/>.</param>
+            <param name="name">The name of the visitor.</param>
+            <param name="start">The start index to iterate.</param>
+            <param name="end">The end index to iterate.</param>
         </member>
         <member name="P:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.DefaultResult">
             <summary>
-            Gets the DefaultResult.
+            Gets the default result.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
-            The GetObjectData.
+            This is used for binary serialization.
+            Populates a SerializationInfo with the data needed to serialize the target object.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The SerializationInfo to populate with data.</param>
+            <param name="context">The destination <see cref="T:System.Runtime.Serialization.StreamingContext"/> for this serialization.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitCommentBlock(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.CommentBlockContext)">
             <summary>
-            The VisitCommentBlock.
+            When visiting a comment block node finds the children by name appling the parsing rule for the context.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.CommentBlockContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitCommentEntry(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.CommentEntryContext)">
             <summary>
-            The VisitCommentEntry.
+            When visiting a comment entry node finds the children by name appling the parsing rule for the context.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.CommentEntryContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitCommentProduct(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.CommentProductContext)">
             <summary>
-            The VisitCommentProduct.
+            When visiting a comment for a product node finds the children by name appling the parsing rule for the context.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.CommentProductContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitKeyValue(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.KeyValueContext)">
             <summary>
-            The VisitKeyValue.
+            When visiting a key with value node finds the children by name appling the parsing rule for the context.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.KeyValueContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitKeyWithoutValue(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.KeyWithoutValueContext)">
             <summary>
-            The VisitKeyWithoutValue.
+            When visiting a key without a value node finds the children by name appling the parsing rule for the context.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.KeyWithoutValueContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitProduct(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductContext)">
             <summary>
-            The VisitProduct.
+            When visiting a product node finds the children by name appling the parsing rule for the context.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitProductName(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameContext)">
             <summary>
-            The VisitProductName.
+            When visiting a product name node finds the children by name appling the parsing rule for the context.
             </summary>
             <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitProductNameKeyValue(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameKeyValueContext)">
             <summary>
-            The VisitProductNameKeyValue.
+            When visiting a product name with key and value node, in case the current vistor is searching for the key, returns the key.
+            In case it's a value, tries to find children using different strategies.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameKeyValueContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <param name="context">The context of the current node<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameKeyValueContext"/>.</param>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitProductNameNoVersion(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameNoVersionContext)">
             <summary>
-            The VisitProductNameNoVersion.
+            When visiting a product name without version node find the children by name appling the parsing rule for the context.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameNoVersionContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <param name="context">The context node <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductNameNoVersionContext"/>.</param>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitProductVersion(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductVersionContext)">
             <summary>
-            The VisitProductVersion.
+            When visiting a product name with a version node finds the children by name appling the parsing rule for the context.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductVersionContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <param name="context">The context of the current node <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductVersionContext"/>.</param>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitProductVersionWithCommas(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductVersionWithCommasContext)">
             <summary>
-            The VisitProductVersionWithCommas.
+            When visiting a product name with a version that contains commas node finds the children by name appling the parsing rule for the context.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductVersionWithCommasContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <param name="context">The context of the current node <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.ProductVersionWithCommasContext"/>.</param>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitRootElements(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.RootElementsContext)">
             <summary>
-            The VisitRootElements.
+            When visiting root node finds the children by name appling the parsing rule for the context.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.RootElementsContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <param name="context">The context of the current node <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.RootElementsContext"/>.</param>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.VisitUserAgent(OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.UserAgentContext)">
             <summary>
-            The VisitUserAgent.
+            When visiting the user agent node tries to find children skipping root node by name.
+            Otherwise calls tries to get children using children visitor.
             </summary>
-            <param name="context">The context<see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.UserAgentContext"/>.</param>
-            <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
+            <param name="context">The context of the current node <see cref="T:OrbintSoft.Yauaa.Antlr4Source.UserAgentParser.UserAgentContext"/>.</param>
+            <returns>The found children as <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.GetChildrenByName(Antlr4.Runtime.ParserRuleContext)">
             <summary>
-            The GetChildrenByName.
+            Gets the children enumerator of the context node.
             </summary>
-            <param name="ctx">The ctx<see cref="T:Antlr4.Runtime.ParserRuleContext"/>.</param>
+            <param name="ctx">The context of the current node<see cref="T:Antlr4.Runtime.ParserRuleContext"/>.</param>
             <returns>The <see cref="T:System.Collections.Generic.IEnumerator`1"/>.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor.Init(System.String,System.Int32,System.Int32)">
             <summary>
-            The Init.
+            Initialize the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns.UserAgentGetChildrenVisitor"/> by the name and provided range.
             </summary>
-            <param name="name">The name<see cref="T:System.String"/>.</param>
-            <param name="start">The start<see cref="T:System.Int32"/>.</param>
-            <param name="end">The end<see cref="T:System.Int32"/>.</param>
+            <param name="name">The name of the visitor based on the kind of node we need to iterate children.</param>
+            <param name="start">The start range.</param>
+            <param name="end">>The end range.</param>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext" />.
+            This class defines the Next Step, it is used in parsing to go to the next node.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext.#ctor">
@@ -4283,30 +4614,28 @@
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
             <summary>
             Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext"/> class.
+            This is used only for binary deserialization.
             </summary>
-            <param name="info">The info<see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
-            <param name="context">The context<see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
+            <param name="info">The info <see cref="T:System.Runtime.Serialization.SerializationInfo"/>.</param>
+            <param name="context">The context <see cref="T:System.Runtime.Serialization.StreamingContext"/>.</param>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext.ToString">
-            <summary>
-            The ToString.
-            </summary>
-            <returns>The <see cref="T:System.String"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext.Walk(Antlr4.Runtime.Tree.IParseTree,System.String)">
             <summary>
-            The Walk.
+            If there is a next node to the current walks to that.
             </summary>
-            <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <param name="value">The value<see cref="T:System.String"/>.</param>
-            <returns>The <see cref="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.WalkList.WalkResult"/>.</returns>
+            <param name="tree">The tree to walk into.</param>
+            <param name="value">Not used.</param>
+            <returns>Either null or the actual value that was found.</returns>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNext.Next(Antlr4.Runtime.Tree.IParseTree)">
             <summary>
-            The Next.
+            Tries tio find the next node to the current.
             </summary>
             <param name="tree">The tree<see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</param>
-            <returns>The <see cref="T:Antlr4.Runtime.Tree.IParseTree"/>.</returns>
+            <returns>The next node.</returns>
         </member>
         <member name="T:OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepNextN">
             <summary>
@@ -4709,18 +5038,18 @@
             </summary>
             <returns>The <see cref="T:System.String"/>.</returns>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range.Equals(System.Object)">
+        <member name="M:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range.Equals(OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range)">
             <summary>
-            The Equals.
+            If the wheth the specified <see cref="T:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range"/> is equal to the current object.
             </summary>
-            <param name="obj">The obj<see cref="T:System.Object"/>.</param>
-            <returns>The <see cref="T:System.Boolean"/>.</returns>
+            <param name="other">other.</param>
+            <returns>True if equals.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range.Equals(System.Object)">
+            <inheritdoc/>
         </member>
         <member name="M:OrbintSoft.Yauaa.Analyze.WordRangeVisitor.Range.GetHashCode">
-            <summary>
-            The GetHashCode.
-            </summary>
-            <returns>The <see cref="T:System.Int32"/>.</returns>
+            <inheritdoc/>
         </member>
         <member name="T:OrbintSoft.Yauaa.Annotate.IUserAgentAnnotationMapper`1">
             <summary>
@@ -8679,6 +9008,89 @@
             <param name="context">The parse tree.</param>
             <return>The visitor result.</return>
         </member>
+        <member name="T:OrbintSoft.Yauaa.Calculate.CalculateAgentEmail">
+            <summary>
+            CalculateAgentEmail.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.CalculateAgentEmail.Calculate(OrbintSoft.Yauaa.Analyzer.UserAgent)">
+            <summary>
+            Calculate.
+            </summary>
+            <param name="userAgent">userAgent.</param>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Calculate.CalculateDeviceBrand">
+            <summary>
+            CalculateDeviceBrand.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.CalculateDeviceBrand.Calculate(OrbintSoft.Yauaa.Analyzer.UserAgent)">
+            <inheritdoc/>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.CalculateDeviceBrand.DetermineDeviceBrand(OrbintSoft.Yauaa.Analyzer.UserAgent)">
+            <summary>
+            The DetermineDeviceBrand.
+            </summary>
+            <param name="userAgent">The userAgent<see cref="T:OrbintSoft.Yauaa.Analyzer.UserAgent"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.CalculateDeviceBrand.ExtractCompanyFromHostName(System.String)">
+            <summary>
+            The ExtractCompanyFromHostName.
+            </summary>
+            <param name="hostname">The hostname<see cref="T:System.String"/>.</param>
+            <returns>The <see cref="T:System.String"/>.</returns>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Calculate.CalculateDeviceName">
+            <summary>
+            CalculateDeviceName.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.CalculateDeviceName.Calculate(OrbintSoft.Yauaa.Analyzer.UserAgent)">
+            <inheritdoc/>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Calculate.ConcatNONDuplicatedCalculator">
+            <summary>
+            ConcatNONDuplicatedCalculator.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.ConcatNONDuplicatedCalculator.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Calculate.ConcatNONDuplicatedCalculator"/> class.
+            </summary>
+            <param name="targetName">targetName.</param>
+            <param name="firstName">firstName.</param>
+            <param name="secondName">secondName.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.ConcatNONDuplicatedCalculator.Calculate(OrbintSoft.Yauaa.Analyzer.UserAgent)">
+            <inheritdoc/>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Calculate.IFieldCalculator">
+            <summary>
+            IFieldCalculator.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.IFieldCalculator.Calculate(OrbintSoft.Yauaa.Analyzer.UserAgent)">
+            <summary>
+            Calculate.
+            </summary>
+            <param name="userAgent">userAgent.</param>
+        </member>
+        <member name="T:OrbintSoft.Yauaa.Calculate.MajorVersionCalculator">
+            <summary>
+            MajorVersionCalculator.
+            </summary>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.MajorVersionCalculator.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Calculate.MajorVersionCalculator"/> class.
+            </summary>
+            <param name="majorVersionName">majorVersionName.</param>
+            <param name="versionName">versionName.</param>
+        </member>
+        <member name="M:OrbintSoft.Yauaa.Calculate.MajorVersionCalculator.Calculate(OrbintSoft.Yauaa.Analyzer.UserAgent)">
+            <inheritdoc/>
+        </member>
         <member name="T:OrbintSoft.Yauaa.Classify.DeviceClass">
             <summary>
             Defines the DeviceClass.
@@ -8962,18 +9374,6 @@
             Defines the Log.
             </summary>
         </member>
-        <member name="M:OrbintSoft.Yauaa.Debug.UserAgentAnalyzerTester.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Debug.UserAgentAnalyzerTester"/> class.
-            </summary>
-        </member>
-        <member name="M:OrbintSoft.Yauaa.Debug.UserAgentAnalyzerTester.#ctor(System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:OrbintSoft.Yauaa.Debug.UserAgentAnalyzerTester"/> class.
-            </summary>
-            <param name="folder">The path to yaml definitions folder.</param>
-            <param name="pattern">The pattern or the name of yaml file to load, default it's *.yaml.</param>
-        </member>
         <member name="M:OrbintSoft.Yauaa.Debug.UserAgentAnalyzerTester.NewBuilder">
             <summary>
             The NewBuilder.
@@ -9138,6 +9538,11 @@
             Defines the EMAIL.
             </summary>
         </member>
+        <member name="F:OrbintSoft.Yauaa.Parse.UserAgentTreeFlattener.ENTRY">
+            <summary>
+            Defines the ENTRY.
+            </summary>
+        </member>
         <member name="F:OrbintSoft.Yauaa.Parse.UserAgentTreeFlattener.KEY">
             <summary>
             Defines the KEY.
@@ -9171,6 +9576,11 @@
         <member name="F:OrbintSoft.Yauaa.Parse.UserAgentTreeFlattener.UUID">
             <summary>
             Defines the UUID.
+            </summary>
+        </member>
+        <member name="F:OrbintSoft.Yauaa.Parse.UserAgentTreeFlattener.VALUE">
+            <summary>
+            Defines the VALUE.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Parse.UserAgentTreeFlattener.VERSION">
@@ -10097,12 +10507,12 @@
         </member>
         <member name="T:OrbintSoft.Yauaa.Utils.YauaaVersion">
             <summary>
-            Defines the <see cref="T:OrbintSoft.Yauaa.Utils.YauaaVersion" />.
+            This class is an helper to get, compare and log the current version of Yauaa library.
             </summary>
         </member>
         <member name="F:OrbintSoft.Yauaa.Utils.YauaaVersion.Log">
             <summary>
-            Defines the Log.
+            Defines the Logger.
             </summary>
         </member>
         <member name="M:OrbintSoft.Yauaa.Utils.YauaaVersion.#ctor">
@@ -10177,16 +10587,16 @@
             <summary>Branch: master</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commit">
-            <summary>Commit: b681c52</summary>
+            <summary>Commit: 89986c8</summary>
         </member>
         <member name="F:ThisAssembly.Git.Sha">
-            <summary>Sha: b681c525cfa3b4f6867714cabac504a9db514634</summary>
+            <summary>Sha: 89986c80f6a7f07f27886a802f152f88b7cd2b98</summary>
         </member>
         <member name="F:ThisAssembly.Git.Commits">
-            <summary>Commits on top of base version: 431</summary>
+            <summary>Commits on top of base version: 460</summary>
         </member>
         <member name="F:ThisAssembly.Git.Tag">
-            <summary>Tag: 5.8-beta.1-18-gb681c52</summary>
+            <summary>Tag: 5.8-beta.1-47-g89986c8</summary>
         </member>
         <member name="F:ThisAssembly.Git.BaseTag">
             <summary>Base tag: 5.8-beta.1</summary>
@@ -10213,7 +10623,7 @@
             <summary>Minor: 0</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Patch">
-            <summary>Patch: 431</summary>
+            <summary>Patch: 460</summary>
         </member>
         <member name="F:ThisAssembly.Git.SemVer.Label">
             <summary>Label: </summary>

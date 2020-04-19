@@ -180,7 +180,7 @@ namespace OrbintSoft.Yauaa.Analyze
                     return false;
                 }
 
-                return Equals(this, other);
+                return Equals(this, (Range)other);
             }
 
             /// <inheritdoc/>

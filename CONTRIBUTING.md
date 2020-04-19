@@ -43,8 +43,7 @@ This will allow you to run unsigned scripts.
 The following Visual Studio extensions are not necessary, but they can be useful:
 
 - Markdown editor
-- Output enhamcer
+- Output enhancer
 - Powershell tools
 - Real clean
 - License Header Manager
-
