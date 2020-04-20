@@ -22,7 +22,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
@@ -79,7 +78,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         }
 
         /// <summary>
-        /// Tries tio find the next node to the current.
+        /// Tries to find the next node to the current.
         /// </summary>
         /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
         /// <returns>The next node.</returns>

@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="WalkList.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
@@ -49,42 +48,43 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
     public class WalkList
     {
         /// <summary>
-        /// Defines the Log.
+        /// Defines the Logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(WalkList));
 
         /// <summary>
-        /// Defines the lookups.
+        /// Defines the lookups dictionary.
         /// </summary>
         private readonly IDictionary<string, IDictionary<string, string>> lookups;
 
         /// <summary>
-        /// Defines the lookupSets.
+        /// Defines the lookup sets dictionary.
         /// </summary>
         private readonly IDictionary<string, ISet<string>> lookupSets;
 
         /// <summary>
-        /// Defines the steps.
+        /// Defines the list of steps.
         /// </summary>
         private readonly List<Step> steps = new List<Step>();
 
         /// <summary>
-        /// Defines the verbose.
+        /// Defines if verbose logging is enabled.
         /// </summary>
         private readonly bool verbose;
 
         /// <summary>
-        /// Defines the usesIsNull.
+        /// Defines if the walking list uses null step.
+        /// Null if not defined yet.
         /// </summary>
         private bool? usesIsNull = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WalkList"/> class.
         /// </summary>
-        /// <param name="requiredPattern">The requiredPattern<see cref="ParserRuleContext"/>.</param>
+        /// <param name="requiredPattern">The require pattern.</param>
         /// <param name="lookups">The lookups.</param>
         /// <param name="lookupSets">The lookupSets.</param>
-        /// <param name="verbose">The verbose<see cref="bool"/>.</param>
+        /// <param name="verbose">True to enable verbose logging, or false.</param>
         public WalkList(ParserRuleContext requiredPattern, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, bool verbose)
         {
             this.lookups = lookups;
@@ -95,26 +95,26 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             new WalkListBuilder(this).Visit(requiredPattern);
             this.LinkSteps();
 
-            var i = 1;
             if (verbose)
             {
+                var i = 1;
                 Log.Info("------------------------------------");
-                Log.Info(string.Format("Required: {0}", requiredPattern.GetText()));
+                Log.Info($"Required: {requiredPattern.GetText()}");
                 foreach (var step in this.steps)
                 {
                     step.SetVerbose(true);
-                    Log.Info(string.Format("{0}: {1}", i++, step));
+                    Log.Info($"{i++}: {step}");
                 }
             }
         }
 
         /// <summary>
-        /// Gets the FirstStep.
+        /// Gets the First step in the list of steps.
         /// </summary>
         public Step FirstStep => this.steps.Count == 0 ? null : this.steps[0];
 
         /// <summary>
-        /// Gets a value indicating whether UsesIsNull.
+        /// Gets a value indicating whether there is a <see cref="StepIsNull"/>.
         /// </summary>
         public bool UsesIsNull
         {
@@ -143,7 +143,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The PruneTrailingStepsThatCannotFail.
+        /// Finds the lastr step that cannot fail, and removes the following steps.
         /// </summary>
         public void PruneTrailingStepsThatCannotFail()
         {
@@ -176,10 +176,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             if (this.steps.Count == 0)
@@ -197,10 +194,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// The Walk.
+        /// Takes the first step and walks into it, or returns the <see cref="WalkResult"/>.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <param name="tree">The node tree.</param>
+        /// <param name="value">The value.</param>
         /// <returns>The <see cref="WalkResult"/>.</returns>
         public WalkResult Walk(IParseTree tree, string value)
         {
@@ -212,21 +209,21 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             var firstStep = this.steps[0];
             if (this.verbose)
             {
-                Step.Log.Info(string.Format("Tree: >>>{0}<<<", tree.GetText()));
-                Step.Log.Info(string.Format("Enter step: {0}", firstStep));
+                Step.Log.Info($"Tree: >>>{tree.GetText()}<<<");
+                Step.Log.Info($"Enter step: {firstStep}");
             }
 
             var result = firstStep.Walk(tree, value);
             if (this.verbose)
             {
-                Step.Log.Info(string.Format("Leave step ({0}): {1}", result == null ? "-" : "+", firstStep));
+                Step.Log.Info(string.Format($"Leave step ({(result is null ? " - " : " + ")}): {firstStep}"));
             }
 
             return result;
         }
 
         /// <summary>
-        /// The LinkSteps.
+        /// Links the steps in this.steps together as next steps.
         /// </summary>
         private void LinkSteps()
         {
@@ -240,7 +237,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// Defines the <see cref="WalkResult" />.
+        /// This class represent a result in walking a node.
         /// </summary>
         [Serializable]
         public sealed class WalkResult
@@ -257,7 +254,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// Gets the Tree.
+            /// Gets the tree.
             /// </summary>
             public IParseTree Tree { get; }
 
@@ -266,38 +263,35 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             /// </summary>
             public string Value { get; }
 
-            /// <summary>
-            /// The ToString.
-            /// </summary>
-            /// <returns>The <see cref="string"/>.</returns>
+            /// <inheritdoc/>
             public override string ToString()
             {
                 return "WalkResult{" +
-                    "tree=" + (this.Tree == null ? ">>>NULL<<<" : this.Tree.GetText()) +
-                    ", value=" + (this.Value == null ? ">>>NULL<<<" : '\'' + this.Value + '\'') +
+                    "tree=" + (this.Tree is null ? ">>>NULL<<<" : this.Tree.GetText()) +
+                    ", value=" + (this.Value is null ? ">>>NULL<<<" : '\'' + this.Value + '\'') +
                     '}';
             }
         }
 
         /// <summary>
-        /// Defines the <see cref="WalkListBuilder" />.
+        /// This class is a utility to build the <see cref="WalkList"/> based on the <see cref="UserAgentTreeWalkerBaseVisitor&lt;object&gt;"/>.
         /// </summary>
         private class WalkListBuilder : UserAgentTreeWalkerBaseVisitor<object>
         {
             /// <summary>
-            /// Defines the walkList.
+            /// The walk list.
             /// </summary>
             private readonly WalkList walkList = null;
 
             /// <summary>
-            /// Defines the foundHashEntryPoint.
+            /// True if found an hash entry point.
             /// </summary>
             private bool foundHashEntryPoint = false;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="WalkListBuilder"/> class.
             /// </summary>
-            /// <param name="walkList">The walkList<see cref="WalkList"/>.</param>
+            /// <param name="walkList">The <see cref="WalkList"/>.</param>
             public WalkListBuilder(WalkList walkList)
                 : base()
             {
@@ -305,10 +299,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherCleanVersion.
+            /// When match a clean version context adds a <see cref="StepCleanVersion"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherCleanVersionContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherCleanVersion([NotNull] UserAgentTreeWalkerParser.MatcherCleanVersionContext context)
             {
                 this.Visit(context.matcher());
@@ -318,10 +312,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherConcat.
+            /// When match a concat context adds a <see cref="StepConcat"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherConcat([NotNull] UserAgentTreeWalkerParser.MatcherConcatContext context)
             {
                 this.Visit(context.matcher());
@@ -331,10 +325,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherConcatPostfix.
+            /// When match a concat postfix context adds a <see cref="StepConcatPostfix"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPostfixContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context)
             {
                 this.Visit(context.matcher());
@@ -344,10 +338,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherConcatPrefix.
+            /// When match a concat prefix context adds a <see cref="StepConcatPrefix"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherConcatPrefixContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherConcatPrefix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPrefixContext context)
             {
                 this.Visit(context.matcher());
@@ -357,10 +351,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherNormalizeBrand.
+            /// When match a normalize brand prefix context adds a <see cref="StepNormalizeBrand"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherNormalizeBrandContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherNormalizeBrand([NotNull] UserAgentTreeWalkerParser.MatcherNormalizeBrandContext context)
             {
                 this.Visit(context.matcher());
@@ -370,10 +364,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherPath.
+            /// When match a path context visits the base path of the context.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherPath([NotNull] UserAgentTreeWalkerParser.MatcherPathContext context)
             {
                 this.Visit(context.basePath());
@@ -381,10 +375,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherPathIsInLookupPrefix.
+            /// When match a path is in lookup prefix context adds a <see cref="StepIsInLookupPrefix"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherPathIsInLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext context)
             {
                 this.Visit(context.matcher());
@@ -399,10 +393,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherPathIsNull.
+            /// When match a null path  context adds a <see cref="StepIsNull"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathIsNullContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherPathIsNull([NotNull] UserAgentTreeWalkerParser.MatcherPathIsNullContext context)
             {
                 // Always add this one, it's special
@@ -412,10 +406,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherPathLookup.
+            /// When match a path lookup context adds a <see cref="StepLookup"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherPathLookup([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContext context)
             {
                 this.Visit(context.matcher());
@@ -436,10 +430,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherPathLookupPrefix.
+            /// When match a path lookup prefix context adds a <see cref="StepLookupPrefix"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context)
             {
                 this.Visit(context.matcher());
@@ -460,10 +454,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitMatcherWordRange.
+            /// When match a word range context adds a <see cref="StepWordRange"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherWordRangeContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitMatcherWordRange([NotNull] UserAgentTreeWalkerParser.MatcherWordRangeContext context)
             {
                 this.Visit(context.matcher());
@@ -473,10 +467,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitPathVariable.
+            /// When visit a path variable context visits next step.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.PathVariableContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitPathVariable([NotNull] UserAgentTreeWalkerParser.PathVariableContext context)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -485,10 +479,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitPathWalk.
+            /// When visit a path walk context visits next step.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.PathWalkContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitPathWalk([NotNull] UserAgentTreeWalkerParser.PathWalkContext context)
             {
                 this.VisitNext(context.nextStep);
@@ -496,10 +490,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepBackToFull.
+            /// When visit a step back to full context adds a <see cref="StepBackToFull"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepBackToFullContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepBackToFull([NotNull] UserAgentTreeWalkerParser.StepBackToFullContext context)
             {
                 this.Add(new StepBackToFull());
@@ -508,10 +502,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepContainsValue.
+            /// When visit a step that contains value adds a <see cref="StepContains"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepContainsValueContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepContainsValue([NotNull] UserAgentTreeWalkerParser.StepContainsValueContext context)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -521,10 +515,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepDown.
+            /// When visit a step down adds a <see cref="StepDown"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepDownContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepDown([NotNull] UserAgentTreeWalkerParser.StepDownContext context)
             {
                 this.Add(new StepDown(context.numberRange(), context.name.Text));
@@ -533,10 +527,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepEndsWithValue.
+            /// When visit a step that ends with value adds a <see cref="StepEndsWith"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEndsWithValueContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepEndsWithValue([NotNull] UserAgentTreeWalkerParser.StepEndsWithValueContext context)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -546,10 +540,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepEqualsValue.
+            /// When visit a step that equals with value adds a <see cref="StepEquals"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepEqualsValueContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepEqualsValue([NotNull] UserAgentTreeWalkerParser.StepEqualsValueContext context)
             {
                 this.Add(new StepEquals(context.value.Text));
@@ -559,17 +553,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepIsInSet.
+            ///  When visit a step that is in a set value adds a <see cref="StepIsInSet"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepIsInSetContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepIsInSet([NotNull] UserAgentTreeWalkerParser.StepIsInSetContext context)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
 
                 var lookupSetName = context.set.Text;
                 var lookupSet = this.walkList.lookupSets.ContainsKey(lookupSetName) ? this.walkList.lookupSets[lookupSetName] : null;
-                if (lookupSet == null)
+                if (lookupSet is null)
                 {
                     if (this.walkList.lookups.ContainsKey(lookupSetName))
                     {
@@ -577,9 +571,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                     }
                 }
 
-                if (lookupSet == null)
+                if (lookupSet is null)
                 {
-                    throw new InvalidParserConfigurationException("Missing lookupSet \"" + lookupSetName + "\" ");
+                    throw new InvalidParserConfigurationException($"Missing lookupSet \"{lookupSetName}\"");
                 }
 
                 this.Add(new StepIsInSet(lookupSetName, lookupSet));
@@ -588,10 +582,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepNext.
+            /// When visit a next step adds a <see cref="StepNext"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepNextContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepNext([NotNull] UserAgentTreeWalkerParser.StepNextContext context)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -601,40 +595,40 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepNext2.
+            /// When visit 2 next step adds a <see cref="StepNextN"/> with N = 2.
             /// </summary>
             /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.StepNext2Context"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepNext2(UserAgentTreeWalkerParser.StepNext2Context ctx)
             {
                 return this.DoStepNextN(ctx.nextStep, 2);
             }
 
             /// <summary>
-            /// The VisitStepNext3.
+            /// When visit 3 next step adds a <see cref="StepNextN"/> with N = 3.
             /// </summary>
             /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.StepNext3Context"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepNext3(UserAgentTreeWalkerParser.StepNext3Context ctx)
             {
                 return this.DoStepNextN(ctx.nextStep, 3);
             }
 
             /// <summary>
-            /// The VisitStepNext4.
+            /// When visit 4 next step adds a <see cref="StepNextN"/> with N = 4.
             /// </summary>
             /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.StepNext4Context"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepNext4(UserAgentTreeWalkerParser.StepNext4Context ctx)
             {
                 return this.DoStepNextN(ctx.nextStep, 4);
             }
 
             /// <summary>
-            /// The VisitStepNotEqualsValue.
+            /// When visit a step that is not equal to value adds a <see cref="StepNotEquals"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepNotEqualsValueContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepNotEqualsValue([NotNull] UserAgentTreeWalkerParser.StepNotEqualsValueContext context)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -644,10 +638,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepPrev.
+            /// When visit a previous step adds a <see cref="StepPrev"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepPrevContext"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <returns>null.</returns>
             public override object VisitStepPrev([NotNull] UserAgentTreeWalkerParser.StepPrevContext context)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -657,7 +651,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepPrev2.
+            /// When visit 2 previous steps adds a <see cref="StepPrevN"/> with N = 2.
             /// </summary>
             /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.StepPrev2Context"/>.</param>
             /// <returns>The <see cref="object"/>.</returns>
@@ -667,7 +661,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepPrev3.
+            /// When visit 3 previous steps adds a <see cref="StepPrevN"/> with N = 3.
             /// </summary>
             /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.StepPrev3Context"/>.</param>
             /// <returns>The <see cref="object"/>.</returns>
@@ -677,7 +671,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepPrev4.
+            /// When visit 4 previous steps adds a <see cref="StepPrevN"/> with N = 4.
             /// </summary>
             /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.StepPrev4Context"/>.</param>
             /// <returns>The <see cref="object"/>.</returns>
@@ -687,7 +681,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepStartsWithValue.
+            /// When visit a step that starts with a value adds a <see cref="StepStartsWith"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepStartsWithValueContext"/>.</param>
             /// <returns>The <see cref="object"/>.</returns>
@@ -718,7 +712,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepUp.
+            /// When visit an up step adds a <see cref="StepUp"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepUpContext"/>.</param>
             /// <returns>The <see cref="object"/>.</returns>
@@ -731,7 +725,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The VisitStepWordRange.
+            /// When visit a word range step adds a <see cref="StepWordRange"/>.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.StepWordRangeContext"/>.</param>
             /// <returns>The <see cref="object"/>.</returns>
@@ -744,9 +738,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The Add.
+            /// Used to add a step.
             /// </summary>
-            /// <param name="step">The step<see cref="Step"/>.</param>
+            /// <param name="step">The <see cref="Step"/> to be added.</param>
             private void Add(Step step)
             {
                 if (this.foundHashEntryPoint)
@@ -756,11 +750,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The DoStepNextN.
+            /// Used to elaborate a next step with N.
             /// </summary>
-            /// <param name="nextStep">The nextStep<see cref="UserAgentTreeWalkerParser.PathContext"/>.</param>
-            /// <param name="nextSteps">The nextSteps<see cref="int"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <param name="nextStep">The next step context.</param>
+            /// <param name="nextSteps">How many steps.</param>
+            /// <returns>null.</returns>
             private object DoStepNextN(UserAgentTreeWalkerParser.PathContext nextStep, int nextSteps)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -770,11 +764,11 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The DoStepPrevN.
+            /// Used to elaborate a previous step with N.
             /// </summary>
-            /// <param name="nextStep">The nextStep<see cref="UserAgentTreeWalkerParser.PathContext"/>.</param>
-            /// <param name="prevSteps">The prevSteps<see cref="int"/>.</param>
-            /// <returns>The <see cref="object"/>.</returns>
+            /// <param name="nextStep">The previous step context.</param>
+            /// <param name="prevSteps">How many steps.</param>
+            /// <returns>null.</returns>
             private object DoStepPrevN(UserAgentTreeWalkerParser.PathContext nextStep, int prevSteps)
             {
                 this.FromHereItCannotBeInHashMapAnymore();
@@ -784,7 +778,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The FromHereItCannotBeInHashMapAnymore.
+            /// Used to set that from this point, there can't be anymore hash entry points.
             /// </summary>
             private void FromHereItCannotBeInHashMapAnymore()
             {
@@ -792,31 +786,31 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             }
 
             /// <summary>
-            /// The GetLookup.
+            /// Return a lookup by name.
             /// </summary>
-            /// <param name="lookupName">The lookupName<see cref="string"/>.</param>
-            /// <returns>The Lookup.</returns>
+            /// <param name="lookupName">The name of the lookup.</param>
+            /// <returns>null.</returns>
             private IDictionary<string, string> GetLookup(string lookupName)
             {
                 if (!this.walkList.lookups.ContainsKey(lookupName))
                 {
-                    throw new InvalidParserConfigurationException("Missing lookup \"" + lookupName + "\" ");
+                    throw new InvalidParserConfigurationException($"Missing lookup \"{lookupName}\" ");
                 }
 
                 return this.walkList.lookups[lookupName];
             }
 
             /// <summary>
-            /// The StillGoingToHashMap.
+            /// If we have not yet found an hash entry point.
             /// </summary>
-            /// <returns>The <see cref="bool"/>.</returns>
+            /// <returns>True if not foyn an entry point yet.</returns>
             private bool StillGoingToHashMap()
             {
                 return !this.foundHashEntryPoint;
             }
 
             /// <summary>
-            /// The VisitNext.
+            /// Used to visit a next step, if there is a next step.
             /// </summary>
             /// <param name="nextStep">The nextStep<see cref="UserAgentTreeWalkerParser.PathContext"/>.</param>
             private void VisitNext(UserAgentTreeWalkerParser.PathContext nextStep)
