@@ -42,7 +42,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
     public class TreeExpressionEvaluator
     {
         /// <summary>
-        /// Defines the Log.
+        /// Defines the logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(TreeExpressionEvaluator));
 
@@ -52,12 +52,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         private readonly Matcher matcher;
 
         /// <summary>
-        /// Defines the requiredPatternText.
+        /// The required text pattern.
         /// </summary>
         private readonly string requiredPatternText;
 
         /// <summary>
-        /// Defines the verbose.
+        /// True if verbose logging is enabled.
         /// </summary>
         private readonly bool verbose;
 
@@ -65,8 +65,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         /// Initializes a new instance of the <see cref="TreeExpressionEvaluator"/> class.
         /// </summary>
         /// <param name="requiredPattern">The requiredPattern<see cref="ParserRuleContext"/>.</param>
-        /// <param name="matcher">The matcher<see cref="Matcher"/>.</param>
-        /// <param name="verbose">The verbose<see cref="bool"/>.</param>
+        /// <param name="matcher">The <see cref="Matcher"/>.</param>
+        /// <param name="verbose">True to enable verbose logging.</param>
         public TreeExpressionEvaluator(ParserRuleContext requiredPattern, Matcher matcher, bool verbose)
         {
             this.requiredPatternText = requiredPattern.GetText();
@@ -77,48 +77,47 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         }
 
         /// <summary>
-        /// Gets the FixedValue
-        /// Get the fixed value in case of a fixed value. NULL if a dynamic value.
+        /// Gets the fixed value in case of a fixed value. NULL if a dynamic value.
         /// </summary>
         public string FixedValue { get; }
 
         /// <summary>
-        /// Gets a value indicating whether UsesIsNull.
+        /// Gets a value indicating whether walkList for unit testing uses null.
         /// </summary>
         public bool UsesIsNull => this.WalkListForUnitTesting.UsesIsNull;
 
         /// <summary>
-        /// Gets the WalkListForUnitTesting.
+        /// Gets the walklist for Unit testing.
         /// </summary>
-        public WalkList WalkListForUnitTesting { get; }
+        internal WalkList WalkListForUnitTesting { get; }
 
         /// <summary>
-        /// The Evaluate.
+        /// Evaluates the tree.
         /// </summary>
-        /// <param name="tree">The tree<see cref="IParseTree"/>.</param>
-        /// <param name="key">The key<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
+        /// <param name="tree">The tree.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
         /// <returns>The <see cref="WalkList.WalkResult"/>.</returns>
         public WalkList.WalkResult Evaluate(IParseTree tree, string key, string value)
         {
             if (this.verbose)
             {
-                Log.Info(string.Format("Evaluate: {0} => {1}", key, value));
-                Log.Info(string.Format("Pattern : {0}", this.requiredPatternText));
-                Log.Info(string.Format("WalkList: {0}", this.WalkListForUnitTesting.ToString()));
+                Log.Info($"Evaluate: {key} => {value}");
+                Log.Info($"Pattern : {this.requiredPatternText}");
+                Log.Info($"WalkList: {this.WalkListForUnitTesting}");
             }
 
             var result = this.WalkListForUnitTesting.Walk(tree, value);
             if (this.verbose)
             {
-                Log.Info(string.Format("Evaluate: Result = {0}", result == null ? "null" : result.Value));
+                Log.Info($"Evaluate: Result = {(result is null ? "null" : result.Value)}");
             }
 
             return result;
         }
 
         /// <summary>
-        /// The PruneTrailingStepsThatCannotFail.
+        /// Finds the last step that cannot fail, and removes the following steps.
         /// </summary>
         public void PruneTrailingStepsThatCannotFail()
         {
@@ -126,17 +125,17 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         }
 
         /// <summary>
-        /// The CalculateFixedValue.
+        /// Calculated the fixed value from pattern.
         /// </summary>
-        /// <param name="requiredPattern">The requiredPattern<see cref="ParserRuleContext"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="requiredPattern">The pattern.</param>
+        /// <returns>The result.</returns>
         private string CalculateFixedValue(ParserRuleContext requiredPattern)
         {
             return new DerivedUserAgentTreeWalkerBaseVisitor(this.matcher).Visit(requiredPattern);
         }
 
         /// <summary>
-        /// Defines the <see cref="DerivedUserAgentTreeWalkerBaseVisitor" />.
+        /// This class derives and implement the tree walker user agent visitor.
         /// </summary>
         private class DerivedUserAgentTreeWalkerBaseVisitor : UserAgentTreeWalkerBaseVisitor<string>
         {
@@ -148,14 +147,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
             /// <summary>
             /// Initializes a new instance of the <see cref="DerivedUserAgentTreeWalkerBaseVisitor"/> class.
             /// </summary>
-            /// <param name="matcher">The matcher<see cref="Matcher"/>.</param>
+            /// <param name="matcher">The <see cref="Matcher"/>.</param>
             public DerivedUserAgentTreeWalkerBaseVisitor(Matcher matcher)
             {
                 this.matcher = matcher;
             }
 
             /// <summary>
-            /// The VisitMatcherPathLookup.
+            /// When match a path lookup visit the lookups.
             /// </summary>
             /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupContext"/>.</param>
             /// <returns>The <see cref="string"/>.</returns>
@@ -165,7 +164,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
             }
 
             /// <summary>
-            /// The VisitPathFixedValue.
+            /// When visit a path lookup visits the lookups.
             /// </summary>
             /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.PathFixedValueContext"/>.</param>
             /// <returns>The <see cref="string"/>.</returns>
@@ -175,38 +174,38 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
             }
 
             /// <summary>
-            /// The AggregateResult.
+            /// If next result is available returs the next result otherwise the aggreagate.
             /// </summary>
-            /// <param name="aggregate">The aggregate<see cref="string"/>.</param>
-            /// <param name="nextResult">The nextResult<see cref="string"/>.</param>
-            /// <returns>The <see cref="string"/>.</returns>
+            /// <param name="aggregate">The aggregate.</param>
+            /// <param name="nextResult">The nextResult.</param>
+            /// <returns>The result.</returns>
             protected override string AggregateResult(string aggregate, string nextResult)
             {
                 return nextResult ?? aggregate;
             }
 
             /// <summary>
-            /// The ShouldVisitNextChild.
+            /// If we should visit the next child.
             /// </summary>
-            /// <param name="node">The node<see cref="IRuleNode"/>.</param>
-            /// <param name="currentResult">The currentResult<see cref="string"/>.</param>
-            /// <returns>The <see cref="bool"/>.</returns>
+            /// <param name="node">The node.</param>
+            /// <param name="currentResult">The currentResult.</param>
+            /// <returns>True if current result is null.</returns>
             protected override bool ShouldVisitNextChild([NotNull] IRuleNode node, string currentResult)
             {
-                return currentResult == null;
+                return currentResult is null;
             }
 
             /// <summary>
-            /// The VisitLookups.
+            /// Visits the lookups.
             /// </summary>
-            /// <param name="matcherTree">The matcherTree<see cref="IParseTree"/>.</param>
-            /// <param name="lookup">The lookup<see cref="IToken"/>.</param>
-            /// <param name="defaultValue">The defaultValue<see cref="IToken"/>.</param>
-            /// <returns>The <see cref="string"/>.</returns>
+            /// <param name="matcherTree">The matcher tree.</param>
+            /// <param name="lookup">The lookup.</param>
+            /// <param name="defaultValue">The default value.</param>
+            /// <returns>The value in the lookup or the default value if no value found.</returns>
             private string VisitLookups(IParseTree matcherTree, IToken lookup, IToken defaultValue)
             {
                 var value = this.Visit(matcherTree);
-                if (value == null)
+                if (value is null)
                 {
                     return null;
                 }
@@ -215,7 +214,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
                 // configured. If we have this then this is a FATAL error (it will fail always everywhere).
                 if (!this.matcher.Lookups.ContainsKey(lookup.Text))
                 {
-                    throw new InvalidParserConfigurationException("Missing lookup \"" + lookup.Text + "\" ");
+                    throw new InvalidParserConfigurationException($"Missing lookup \"{lookup.Text}\" ");
                 }
 
                 var lookupMap = this.matcher.Lookups[lookup.Text];
@@ -230,8 +229,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
                         return defaultValue.Text;
                     }
 
-                    throw new InvalidParserConfigurationException(
-                        "Fixed value >>" + value + "<< is missing in lookup: \"" + lookup.Text + "\" ");
+                    throw new InvalidParserConfigurationException($"Fixed value >>{value}<< is missing in lookup: \"{lookup.Text}\" ");
                 }
             }
         }

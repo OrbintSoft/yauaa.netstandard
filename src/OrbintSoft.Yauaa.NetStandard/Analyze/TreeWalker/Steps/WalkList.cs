@@ -143,7 +143,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// Finds the lastr step that cannot fail, and removes the following steps.
+        /// Finds the last step that cannot fail, and removes the following steps.
         /// </summary>
         public void PruneTrailingStepsThatCannotFail()
         {
