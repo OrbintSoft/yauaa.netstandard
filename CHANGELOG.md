@@ -1,5 +1,16 @@
 This is intended as an overview of the major changes
 
+v5.12
+===
+- New detections
+  - Agent: AdobeAir, Whale, Tungsten, Kinza, Iridium, Superbird, Avast, Comodo Dragon & IceDragon
+  - Device: Raspberry PI
+  - OS: KaiOS
+  - Brands: Lyf
+  - Robots: Naver Yeti, TrueClicks
+  - Anonymized: Google Web Light (proxy)
+- Nuget packages including alpha pre-releases are now available on github.
+
 v5.11
 ===
 - Target equivalent Java 5.11 Version
