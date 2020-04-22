@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="InvalidParserConfigurationException.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -29,7 +29,8 @@ namespace OrbintSoft.Yauaa.Analyze
     using System;
 
     /// <summary>
-    /// Defines the <see cref="InvalidParserConfigurationException" />.
+    /// This defines an exception that is thrown when there is a misconfiguration in the analyzer.
+    /// It can be an invalid yaml definition or a problem with the builder parameters.
     /// </summary>
     public class InvalidParserConfigurationException : Exception
     {

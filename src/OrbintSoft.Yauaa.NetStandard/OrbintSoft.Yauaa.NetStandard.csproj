@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.11.1</Version>
-    <AssemblyVersion>5.11.5.1</AssemblyVersion>
-    <FileVersion>5.11.5.1</FileVersion>
+    <Version>5.12-alpha.1</Version>
+    <AssemblyVersion>5.12.1.1</AssemblyVersion>
+    <FileVersion>5.12.1.1</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>7.3</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -116,6 +116,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\InternetExplorer.yaml" />
     <None Remove="YamlResources\UserAgents\ISOLanguageCode-tests.yaml" />
     <None Remove="YamlResources\UserAgents\ISOLanguageCode.yaml" />
+    <None Remove="YamlResources\UserAgents\KaiOS.yaml" />
     <None Remove="YamlResources\UserAgents\Konqueror.yaml" />
     <None Remove="YamlResources\UserAgents\Lenovo-Tests.yaml" />
     <None Remove="YamlResources\UserAgents\LG.yaml" />
@@ -340,6 +341,11 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+    <Content Include="YamlResources\UserAgents\KaiOS.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <Pack>true</Pack>
+	  <PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
 	<Content Include="YamlResources\UserAgents\Konqueror.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

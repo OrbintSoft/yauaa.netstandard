@@ -29,68 +29,68 @@ namespace OrbintSoft.Yauaa.Analyze
     using Antlr4.Runtime.Tree;
 
     /// <summary>
-    /// Defines the <see cref="IAnalyzer" />.
+    /// This interface defines methods used by the user agent analyzer.
     /// </summary>
     public interface IAnalyzer
     {
         /// <summary>
-        /// The Inform.
+        /// Inform about a path and value in the context.
         /// </summary>
-        /// <param name="path">The path<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="context">The context<see cref="IParseTree"/>.</param>
+        /// <param name="path">The flat path in the tree.</param>
+        /// <param name="value">The value of the node.</param>
+        /// <param name="context">The tree node context.</param>
         void Inform(string path, string value, IParseTree context);
 
         /// <summary>
-        /// The InformMeAbout.
+        /// Informs the analyzer about a key pattern in a matcher action.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
+        /// <param name="matcherAction">The <see cref="MatcherAction"/>.</param>
+        /// <param name="keyPattern">The keyPattern.</param>
         void InformMeAbout(MatcherAction matcherAction, string keyPattern);
 
         /// <summary>
-        /// The LookingForRange.
+        /// Looks for a range by the tree name.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
+        /// <param name="treeName">The tree name.</param>
+        /// <param name="range">The range.</param>
         void LookingForRange(string treeName, WordRangeVisitor.Range range);
 
         /// <summary>
-        /// The GetRequiredInformRanges.
+        /// Gets the required range from tree name.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="treeName">The tree name.</param>
         /// <returns>The ranges.</returns>
         ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName);
 
         /// <summary>
-        /// The InformMeAboutPrefix.
+        /// Informe me about a prefix.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
-        /// <param name="prefix">The prefix<see cref="string"/>.</param>
+        /// <param name="matcherAction">The <see cref="MatcherAction"/>.</param>
+        /// <param name="treeName">The tree name.</param>
+        /// <param name="prefix">The prefix.</param>
         void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix);
 
         /// <summary>
-        /// The GetRequiredPrefixLengths.
+        /// For a tree gets required prefix lenghts.
         /// </summary>
         /// <param name="treeName">The treeName<see cref="string"/>.</param>
         /// <returns>The prefix lenghts/>.</returns>
         ISet<int?> GetRequiredPrefixLengths(string treeName);
 
         /// <summary>
-        /// The ReceivedInput.
+        /// When received an input.
         /// </summary>
         /// <param name="matcher">The matcher.</param>
         void ReceivedInput(Matcher matcher);
 
         /// <summary>
-        /// The GetLookups.
+        /// Gets the lookups.
         /// </summary>
         /// <returns>The dictionary of lookups.</returns>
         IDictionary<string, IDictionary<string, string>> GetLookups();
 
         /// <summary>
-        /// The GetLookupSets.
+        /// Gets the sets of lookup.
         /// </summary>
         /// <returns>A dictionary of lookups sets.</returns>
         IDictionary<string, ISet<string>> GetLookupSets();
