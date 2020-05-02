@@ -32,7 +32,7 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore.Controllers
         {
             var watch = Stopwatch.StartNew();
             var ua = YauaaSingleton.Analyzer.Parse(model.UserAgent);
-            model.Version = Yauaa.Utils.YauaaVersion.GetVersion();
+            model.Version = Utils.YauaaVersion.GetVersion();
             var fieldNames = ua.GetAvailableFieldNames();
             model.Fields = new Dictionary<string, AgentField>();
             foreach (var name in fieldNames)

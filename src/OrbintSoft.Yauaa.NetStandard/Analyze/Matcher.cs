@@ -36,13 +36,13 @@ namespace OrbintSoft.Yauaa.Analyze
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
-    /// Defines the <see cref="Matcher" />.
+    /// This class loads a matcher configuration from yaml and applies the rules to parse the user agent.
     /// </summary>
     [Serializable]
     public class Matcher
     {
         /// <summary>
-        /// Defines the Log.
+        /// Defines the Logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(Matcher));
 
@@ -52,7 +52,7 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly IAnalyzer analyzer;
 
         /// <summary>
-        /// Defines the fixedStringActions.
+        /// Defines the actions for fixed strings.
         /// </summary>
         private readonly IList<MatcherAction> fixedStringActions;
 
@@ -94,12 +94,12 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
-        /// <param name="analyzer">The analyzer<see cref="IAnalyzer"/>.</param>
+        /// <param name="analyzer">The analyzer used for parsing>.</param>
         /// <param name="lookups">The lookups.</param>
-        /// <param name="lookupSets">The lookupSets.</param>
-        /// <param name="wantedFieldNames">The wantedFieldNames.</param>
-        /// <param name="matcherConfig">The matcherConfig<see cref="YamlMappingNode"/>.</param>
-        /// <param name="filename">The filename<see cref="string"/>.</param>
+        /// <param name="lookupSets">The lookup Sets.</param>
+        /// <param name="wantedFieldNames">The wanted field names.</param>
+        /// <param name="matcherConfig">The matcher configuration.</param>
+        /// <param name="filename">The filename.</param>
         public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, IList<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
             this.analyzer = analyzer;
@@ -350,7 +350,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetAllPossibleFieldNames.
+        /// Used to retrieve all available field names from the user agent.
         /// </summary>
         /// <returns>All possible field names.</returns>
         public ISet<string> GetAllPossibleFieldNames()
@@ -358,14 +358,14 @@ namespace OrbintSoft.Yauaa.Analyze
             var results = new SortedSet<string>();
             results.UnionWith(this.GetAllPossibleFieldNames(this.dynamicActions));
             results.UnionWith(this.GetAllPossibleFieldNames(this.fixedStringActions));
-            results.Remove(UserAgent.SET_ALL_FIELDS);
+            results.Remove(DefaultUserAgentFields.SET_ALL_FIELDS);
             return results;
         }
 
         /// <summary>
-        /// The GetMatches.
+        /// Gets all matches.
         /// </summary>
-        /// <returns>The list of matchers/>.</returns>
+        /// <returns>The list of matches/>.</returns>
         public IList<MatchesList.Match> GetMatches()
         {
             var allMatches = new List<MatchesList.Match>();
@@ -378,7 +378,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetUsedMatches.
+        /// Retrieves all matches that have been used.
         /// </summary>
         /// <returns>The list of matchers.</returns>
         public IList<MatchesList.Match> GetUsedMatches()
@@ -408,28 +408,28 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The InformMeAbout.
+        /// Inform me about a matcher that matches a key pattern.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
+        /// <param name="matcherAction">The matcher action.</param>
+        /// <param name="keyPattern">The key pattern.</param>
         public virtual void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
             this.analyzer.InformMeAbout(matcherAction, keyPattern);
         }
 
         /// <summary>
-        /// The InformMeAboutPrefix.
+        /// The Inform me about a matcher that matches a pattern with prefix.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
-        /// <param name="prefix">The prefix<see cref="string"/>.</param>
+        /// <param name="matcherAction">The matcher action.</param>
+        /// <param name="keyPattern">The key pattern.</param>
+        /// <param name="prefix">The prefix.</param>
         public virtual void InformMeAboutPrefix(MatcherAction matcherAction, string keyPattern, string prefix)
         {
             this.analyzer.InformMeAboutPrefix(matcherAction, keyPattern, prefix);
         }
 
         /// <summary>
-        /// The Initialize.
+        /// TUsed to initialize the matcher.
         /// </summary>
         public void Initialize()
         {
@@ -442,7 +442,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
             catch (InvalidParserConfigurationException e)
             {
-                throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")", e);
+                throw new InvalidParserConfigurationException($"Syntax error.({this.matcherSourceLocation})", e);
             }
 
             var uselessRequireActions = new HashSet<MatcherAction>();
@@ -457,7 +457,7 @@ namespace OrbintSoft.Yauaa.Analyze
                     if (!e.Message.StartsWith("It is useless to put a fixed value"))
                     {
                         // Ignore fixed values in require
-                        throw new InvalidParserConfigurationException("Syntax error.(" + this.matcherSourceLocation + ")" + e.Message, e);
+                        throw new InvalidParserConfigurationException($"Syntax error.({this.matcherSourceLocation})" + e.Message, e);
                     }
 
                     uselessRequireActions.Add(dynamicAction);
@@ -498,8 +498,7 @@ namespace OrbintSoft.Yauaa.Analyze
                     {
                         if (seenVariables.Contains(interestedAction))
                         {
-                            throw new InvalidParserConfigurationException("Syntax error: The line >>" + interestedAction + "<< " +
-                                "is referencing variable @" + variableAction.VariableName + " which is not defined yet.");
+                            throw new InvalidParserConfigurationException($"Syntax error: The line >>{interestedAction}<< is referencing variable @{variableAction.VariableName} which is not defined yet.");
                         }
                     }
                 }
@@ -519,17 +518,17 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The LookingForRange.
+        /// Look for a range in the tree.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
+        /// <param name="treeName">The tree name.</param>
+        /// <param name="range">The range.</param>
         public virtual void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
             this.analyzer.LookingForRange(treeName, range);
         }
 
         /// <summary>
-        /// The ReceivedInput.
+        /// The received input.
         /// </summary>
         public void ReceivedInput()
         {
@@ -541,7 +540,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Reset.
+        /// Resets the matcher.
         /// </summary>
         public void Reset()
         {
@@ -556,9 +555,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The SetVerboseTemporarily.
+        /// Used to change verbosity log level temporarly.
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/>.</param>
+        /// <param name="newVerbose">The new verbose level>.</param>
         public void SetVerboseTemporarily(bool newVerbose)
         {
             foreach (var action in this.dynamicActions)
@@ -567,10 +566,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
             var sb = new StringBuilder(512);
@@ -614,7 +610,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GotMyFirstStartingPoint.
+        /// Used to count the actions that require input and receive input.
         /// </summary>
         internal void GotMyFirstStartingPoint()
         {
@@ -622,10 +618,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The InformMeAboutVariable.
+        /// TheInform me when matches a variable name.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-        /// <param name="variableName">The variableName<see cref="string"/>.</param>
+        /// <param name="matcherAction">The matcher action.</param>
+        /// <param name="variableName">The variable name.</param>
         internal void InformMeAboutVariable(MatcherAction matcherAction, string variableName)
         {
             if (!this.informMatcherActionsAboutVariables.ContainsKey(variableName))
@@ -638,10 +634,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The CountActionsThatMustHaveMatches.
+        /// Counts the actions that must have matches..
         /// </summary>
-        /// <param name="actions">The actions<see cref="IList{MatcherAction}"/>.</param>
-        /// <returns>The <see cref="long"/>.</returns>
+        /// <param name="actions">The actions.</param>
+        /// <returns>The count number.</returns>
         private long CountActionsThatMustHaveMatches(IList<MatcherAction> actions)
         {
             long actionsThatMustHaveMatches = 0;
@@ -659,9 +655,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetAllPossibleFieldNames.
+        /// Gets all possible field names.
         /// </summary>
-        /// <param name="actions">The actions<see cref="IList{MatcherAction}"/>.</param>
+        /// <param name="actions">The actions</param>
         /// <returns>The possible field names.</returns>
         private ISet<string> GetAllPossibleFieldNames(IList<MatcherAction> actions)
         {
@@ -678,7 +674,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Defines the <see cref="ConfigLine" />.
+        /// This class is used to load configuration from extracted conffig line in yaml.
         /// </summary>
         internal class ConfigLine
         {
@@ -698,43 +694,43 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             /// <summary>
-            /// Defines the Type.
+            /// Defines the type of configuration.
             /// </summary>
             public enum ConfigType
             {
                 /// <summary>
-                /// Defines the VARIABLE
+                /// The configured variable.
                 /// </summary>
                 VARIABLE = 2,
 
                 /// <summary>
-                /// Defines the REQUIRE
+                /// Configure if required.
                 /// </summary>
                 REQUIRE = 1,
 
                 /// <summary>
-                /// Defines the EXTRACT
+                /// Configure what to extract.
                 /// </summary>
                 EXTRACT = 0,
             }
 
             /// <summary>
-            /// Gets the Attribute.
+            /// Gets the attribute to extract.
             /// </summary>
             public string Attribute { get; }
 
             /// <summary>
-            /// Gets the Confidence.
+            /// Gets the extracted confidence.
             /// </summary>
             public long? Confidence { get; }
 
             /// <summary>
-            /// Gets the Expression.
+            /// Gets the expression to apply.
             /// </summary>
             public string Expression { get; }
 
             /// <summary>
-            /// Gets the Type.
+            /// Gets the Tconfiguration type.
             /// </summary>
             public ConfigType Type { get; }
         }

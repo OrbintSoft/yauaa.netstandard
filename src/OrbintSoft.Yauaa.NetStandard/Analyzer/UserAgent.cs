@@ -50,312 +50,374 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Defines the AGENT_BUILD.
         /// </summary>
-        public const string AGENT_BUILD = "AgentBuild";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_BUILD")]
+        public const string AGENT_BUILD = DefaultUserAgentFields.AGENT_BUILD;
 
         /// <summary>
         /// Defines the AGENT_CLASS.
         /// </summary>
-        public const string AGENT_CLASS = "AgentClass";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_CLASS")]
+        public const string AGENT_CLASS = DefaultUserAgentFields.AGENT_CLASS;
 
         /// <summary>
         /// Defines the AGENT_INFORMATION_EMAIL.
         /// </summary>
-        public const string AGENT_INFORMATION_EMAIL = "AgentInformationEmail";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_INFORMATION_EMAIL")]
+        public const string AGENT_INFORMATION_EMAIL = DefaultUserAgentFields.AGENT_INFORMATION_EMAIL;
 
         /// <summary>
         /// Defines the AGENT_INFORMATION_URL.
         /// </summary>
-        public const string AGENT_INFORMATION_URL = "AgentInformationUrl";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_INFORMATION_URL")]
+        public const string AGENT_INFORMATION_URL = DefaultUserAgentFields.AGENT_INFORMATION_URL;
 
         /// <summary>
         /// Defines the AGENT_LANGUAGE.
         /// </summary>
-        public const string AGENT_LANGUAGE = "AgentLanguage";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_LANGUAGE")]
+        public const string AGENT_LANGUAGE = DefaultUserAgentFields.AGENT_LANGUAGE;
 
         /// <summary>
         /// Defines the AGENT_LANGUAGE_CODE.
         /// </summary>
-        public const string AGENT_LANGUAGE_CODE = "AgentLanguageCode";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_LANGUAGE_CODE")]
+        public const string AGENT_LANGUAGE_CODE = DefaultUserAgentFields.AGENT_LANGUAGE_CODE;
 
         /// <summary>
         /// Defines the AGENT_NAME.
         /// </summary>
-        public const string AGENT_NAME = "AgentName";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_NAME")]
+        public const string AGENT_NAME = DefaultUserAgentFields.AGENT_NAME;
 
         /// <summary>
         /// Defines the AGENT_NAME_VERSION.
         /// </summary>
-        public const string AGENT_NAME_VERSION = "AgentNameVersion";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_NAME_VERSION")]
+        public const string AGENT_NAME_VERSION = DefaultUserAgentFields.AGENT_NAME_VERSION;
 
         /// <summary>
         /// Defines the AGENT_NAME_VERSION_MAJOR.
         /// </summary>
-        public const string AGENT_NAME_VERSION_MAJOR = "AgentNameVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR")]
+        public const string AGENT_NAME_VERSION_MAJOR = DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the AGENT_SECURITY.
         /// </summary>
-        public const string AGENT_SECURITY = "AgentSecurity";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_SECURITY")]
+        public const string AGENT_SECURITY = DefaultUserAgentFields.AGENT_SECURITY;
 
         /// <summary>
         /// Defines the AGENT_UUID.
         /// </summary>
-        public const string AGENT_UUID = "AgentUuid";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_UUID")]
+        public const string AGENT_UUID = DefaultUserAgentFields.AGENT_UUID;
 
         /// <summary>
         /// Defines the AGENT_VERSION.
         /// </summary>
-        public const string AGENT_VERSION = "AgentVersion";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_VERSION")]
+        public const string AGENT_VERSION = DefaultUserAgentFields.AGENT_VERSION;
 
         /// <summary>
         /// Defines the AGENT_VERSION_MAJOR.
         /// </summary>
-        public const string AGENT_VERSION_MAJOR = "AgentVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.AGENT_VERSION_MAJOR")]
+        public const string AGENT_VERSION_MAJOR = DefaultUserAgentFields.AGENT_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the ANONYMIZED.
         /// </summary>
-        public const string ANONYMIZED = "Anonymized";
+        [Obsolete("Use DefaultUserAgentFields.ANONYMIZED")]
+        public const string ANONYMIZED = DefaultUserAgentFields.ANONYMIZED;
 
         /// <summary>
         /// Defines the DEVICE_BRAND.
         /// </summary>
-        public const string DEVICE_BRAND = "DeviceBrand";
+        [Obsolete("Use DefaultUserAgentFields.DEVICE_BRAND")]
+        public const string DEVICE_BRAND = DefaultUserAgentFields.DEVICE_BRAND;
 
         /// <summary>
         /// Defines the DEVICE_CLASS.
         /// </summary>
-        public const string DEVICE_CLASS = "DeviceClass";
+        [Obsolete("Use DefaultUserAgentFields.DEVICE_CLASS")]
+        public const string DEVICE_CLASS = DefaultUserAgentFields.DEVICE_CLASS;
 
         /// <summary>
         /// Defines the DEVICE_CPU.
         /// </summary>
-        public const string DEVICE_CPU = "DeviceCpu";
+        [Obsolete("Use DefaultUserAgentFields.DEVICE_CPU")]
+        public const string DEVICE_CPU = DefaultUserAgentFields.DEVICE_CPU;
 
         /// <summary>
         /// Defines the DEVICE_CPU_BITS.
         /// </summary>
-        public const string DEVICE_CPU_BITS = "DeviceCpuBits";
+        [Obsolete("Use DefaultUserAgentFields.DEVICE_CPU_BITS")]
+        public const string DEVICE_CPU_BITS = DefaultUserAgentFields.DEVICE_CPU_BITS;
 
         /// <summary>
         /// Defines the DEVICE_FIRMWARE_VERSION.
         /// </summary>
-        public const string DEVICE_FIRMWARE_VERSION = "DeviceFirmwareVersion";
+        [Obsolete("Use DefaultUserAgentFields.DEVICE_FIRMWARE_VERSION")]
+        public const string DEVICE_FIRMWARE_VERSION = DefaultUserAgentFields.DEVICE_FIRMWARE_VERSION;
 
         /// <summary>
         /// Defines the DEVICE_NAME.
         /// </summary>
-        public const string DEVICE_NAME = "DeviceName";
+        [Obsolete("Use DefaultUserAgentFields.DEVICE_NAME")]
+        public const string DEVICE_NAME = DefaultUserAgentFields.DEVICE_NAME;
 
         /// <summary>
         /// Defines the DEVICE_VERSION.
         /// </summary>
-        public const string DEVICE_VERSION = "DeviceVersion";
+        [Obsolete("Use DefaultUserAgentFields.DEVICE_VERSION")]
+        public const string DEVICE_VERSION = DefaultUserAgentFields.DEVICE_VERSION;
 
         /// <summary>
         /// Defines the FACEBOOK_CARRIER.
         /// </summary>
-        public const string FACEBOOK_CARRIER = "FacebookCarrier";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_CARRIER")]
+        public const string FACEBOOK_CARRIER = DefaultUserAgentFields.FACEBOOK_CARRIER;
 
         /// <summary>
         /// Defines the FACEBOOK_DEVICE_CLASS.
         /// </summary>
-        public const string FACEBOOK_DEVICE_CLASS = "FacebookDeviceClass";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_DEVICE_CLASS")]
+        public const string FACEBOOK_DEVICE_CLASS = DefaultUserAgentFields.FACEBOOK_DEVICE_CLASS;
 
         /// <summary>
         /// Defines the FACEBOOK_DEVICE_NAME.
         /// </summary>
-        public const string FACEBOOK_DEVICE_NAME = "FacebookDeviceName";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_DEVICE_NAME")]
+        public const string FACEBOOK_DEVICE_NAME = DefaultUserAgentFields.FACEBOOK_DEVICE_NAME;
 
         /// <summary>
         /// Defines the FACEBOOK_DEVICE_VERSION.
         /// </summary>
-        public const string FACEBOOK_DEVICE_VERSION = "FacebookDeviceVersion";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_DEVICE_VERSION")]
+        public const string FACEBOOK_DEVICE_VERSION = DefaultUserAgentFields.FACEBOOK_DEVICE_VERSION;
 
         /// <summary>
         /// Defines the FACEBOOK_F_B_O_P.
         /// </summary>
-        public const string FACEBOOK_F_B_O_P = "FacebookFBOP";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_F_B_O_P")]
+        public const string FACEBOOK_F_B_O_P = DefaultUserAgentFields.FACEBOOK_F_B_O_P;
 
         /// <summary>
         /// Defines the FACEBOOK_F_B_S_S.
         /// </summary>
-        public const string FACEBOOK_F_B_S_S = "FacebookFBSS";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_F_B_S_S")]
+        public const string FACEBOOK_F_B_S_S = DefaultUserAgentFields.FACEBOOK_F_B_S_S;
 
         /// <summary>
         /// Defines the FACEBOOK_OPERATING_SYSTEM_NAME.
         /// </summary>
-        public const string FACEBOOK_OPERATING_SYSTEM_NAME = "FacebookOperatingSystemName";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_OPERATING_SYSTEM_NAME")]
+        public const string FACEBOOK_OPERATING_SYSTEM_NAME = DefaultUserAgentFields.FACEBOOK_OPERATING_SYSTEM_NAME;
 
         /// <summary>
         /// Defines the FACEBOOK_OPERATING_SYSTEM_VERSION.
         /// </summary>
-        public const string FACEBOOK_OPERATING_SYSTEM_VERSION = "FacebookOperatingSystemVersion";
+        [Obsolete("Use DefaultUserAgentFields.FACEBOOK_OPERATING_SYSTEM_VERSION")]
+        public const string FACEBOOK_OPERATING_SYSTEM_VERSION = DefaultUserAgentFields.FACEBOOK_OPERATING_SYSTEM_VERSION;
 
         /// <summary>
         /// Defines the HACKER_ATTACK_VECTOR.
         /// </summary>
-        public const string HACKER_ATTACK_VECTOR = "HackerAttackVector";
+        [Obsolete("Use DefaultUserAgentFields.HACKER_ATTACK_VECTOR")]
+        public const string HACKER_ATTACK_VECTOR = DefaultUserAgentFields.HACKER_ATTACK_VECTOR;
 
         /// <summary>
         /// Defines the HACKER_TOOLKIT.
         /// </summary>
-        public const string HACKER_TOOLKIT = "HackerToolkit";
+        [Obsolete("Use DefaultUserAgentFields.HACKER_TOOLKIT")]
+        public const string HACKER_TOOLKIT = DefaultUserAgentFields.HACKER_TOOLKIT;
 
         /// <summary>
         /// Defines the IE_COMPATIBILITY_NAME_VERSION.
         /// </summary>
-        public const string IE_COMPATIBILITY_NAME_VERSION = "IECompatibilityNameVersion";
+        [Obsolete("Use DefaultUserAgentFields.IE_COMPATIBILITY_NAME_VERSION")]
+        public const string IE_COMPATIBILITY_NAME_VERSION = DefaultUserAgentFields.IE_COMPATIBILITY_NAME_VERSION;
 
         /// <summary>
         /// Defines the IE_COMPATIBILITY_NAME_VERSION_MAJOR.
         /// </summary>
-        public const string IE_COMPATIBILITY_NAME_VERSION_MAJOR = "IECompatibilityNameVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.IE_COMPATIBILITY_NAME_VERSION_MAJOR")]
+        public const string IE_COMPATIBILITY_NAME_VERSION_MAJOR = DefaultUserAgentFields.IE_COMPATIBILITY_NAME_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the IE_COMPATIBILITY_VERSION.
         /// </summary>
-        public const string IE_COMPATIBILITY_VERSION = "IECompatibilityVersion";
+        [Obsolete("Use DefaultUserAgentFields.IE_COMPATIBILITY_VERSION")]
+        public const string IE_COMPATIBILITY_VERSION = DefaultUserAgentFields.IE_COMPATIBILITY_VERSION;
 
         /// <summary>
         /// Defines the IE_COMPATIBILITY_VERSION_MAJOR.
         /// </summary>
-        public const string IE_COMPATIBILITY_VERSION_MAJOR = "IECompatibilityVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.IE_COMPATIBILITY_VERSION_MAJOR")]
+        public const string IE_COMPATIBILITY_VERSION_MAJOR = DefaultUserAgentFields.IE_COMPATIBILITY_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the KOBO_AFFILIATE.
         /// </summary>
-        public const string KOBO_AFFILIATE = "KoboAffiliate";
+        [Obsolete("Use DefaultUserAgentFields.KOBO_AFFILIATE")]
+        public const string KOBO_AFFILIATE = DefaultUserAgentFields.KOBO_AFFILIATE;
 
         /// <summary>
         /// Defines the KOBO_PLATFORM_ID.
         /// </summary>
-        public const string KOBO_PLATFORM_ID = "KoboPlatformId";
+        [Obsolete("Use DefaultUserAgentFields.KOBO_PLATFORM_ID")]
+        public const string KOBO_PLATFORM_ID = DefaultUserAgentFields.KOBO_PLATFORM_ID;
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_BUILD.
         /// </summary>
-        public const string LAYOUT_ENGINE_BUILD = "LayoutEngineBuild";
+        [Obsolete("Use DefaultUserAgentFields.LAYOUT_ENGINE_BUILD")]
+        public const string LAYOUT_ENGINE_BUILD = DefaultUserAgentFields.LAYOUT_ENGINE_BUILD;
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_CLASS.
         /// </summary>
-        public const string LAYOUT_ENGINE_CLASS = "LayoutEngineClass";
+        [Obsolete("Use DefaultUserAgentFields.LAYOUT_ENGINE_CLASS")]
+        public const string LAYOUT_ENGINE_CLASS = DefaultUserAgentFields.LAYOUT_ENGINE_CLASS;
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_NAME.
         /// </summary>
-        public const string LAYOUT_ENGINE_NAME = "LayoutEngineName";
+        [Obsolete("Use DefaultUserAgentFields.LAYOUT_ENGINE_NAME")]
+        public const string LAYOUT_ENGINE_NAME = DefaultUserAgentFields.LAYOUT_ENGINE_NAME;
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_NAME_VERSION.
         /// </summary>
-        public const string LAYOUT_ENGINE_NAME_VERSION = "LayoutEngineNameVersion";
+        [Obsolete("Use DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION")]
+        public const string LAYOUT_ENGINE_NAME_VERSION = DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION;
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_NAME_VERSION_MAJOR.
         /// </summary>
-        public const string LAYOUT_ENGINE_NAME_VERSION_MAJOR = "LayoutEngineNameVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION_MAJOR")]
+        public const string LAYOUT_ENGINE_NAME_VERSION_MAJOR = DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_VERSION.
         /// </summary>
-        public const string LAYOUT_ENGINE_VERSION = "LayoutEngineVersion";
+        [Obsolete("Use DefaultUserAgentFields.LAYOUT_ENGINE_VERSION")]
+        public const string LAYOUT_ENGINE_VERSION = DefaultUserAgentFields.LAYOUT_ENGINE_VERSION;
 
         /// <summary>
         /// Defines the LAYOUT_ENGINE_VERSION_MAJOR.
         /// </summary>
-        public const string LAYOUT_ENGINE_VERSION_MAJOR = "LayoutEngineVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR")]
+        public const string LAYOUT_ENGINE_VERSION_MAJOR = DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the NULL_VALUE.
         /// </summary>
-        public const string NULL_VALUE = "<<<null>>>";
+        [Obsolete("Use DefaultUserAgentFields.NULL_VALUE")]
+        public const string NULL_VALUE = DefaultUserAgentFields.NULL_VALUE;
 
         /// <summary>
         /// Defines the OPERATING_SYSTEM_CLASS.
         /// </summary>
-        public const string OPERATING_SYSTEM_CLASS = "OperatingSystemClass";
+        [Obsolete("Use DefaultUserAgentFields.OPERATING_SYSTEM_CLASS")]
+        public const string OPERATING_SYSTEM_CLASS = DefaultUserAgentFields.OPERATING_SYSTEM_CLASS;
 
         /// <summary>
         /// Defines the OPERATING_SYSTEM_NAME.
         /// </summary>
-        public const string OPERATING_SYSTEM_NAME = "OperatingSystemName";
+        [Obsolete("Use DefaultUserAgentFields.OPERATING_SYSTEM_NAME")]
+        public const string OPERATING_SYSTEM_NAME = DefaultUserAgentFields.OPERATING_SYSTEM_NAME;
 
         /// <summary>
         /// Defines the OPERATING_SYSTEM_NAME_VERSION.
         /// </summary>
-        public const string OPERATING_SYSTEM_NAME_VERSION = "OperatingSystemNameVersion";
+        [Obsolete("Use DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION")]
+        public const string OPERATING_SYSTEM_NAME_VERSION = DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION;
 
         /// <summary>
         /// Defines the OPERATING_SYSTEM_NAME_VERSION_MAJOR.
         /// </summary>
-        public const string OPERATING_SYSTEM_NAME_VERSION_MAJOR = "OperatingSystemNameVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION_MAJOR")]
+        public const string OPERATING_SYSTEM_NAME_VERSION_MAJOR = DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the OPERATING_SYSTEM_VERSION.
         /// </summary>
-        public const string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
+        [Obsolete("Use DefaultUserAgentFields.OPERATING_SYSTEM_VERSION")]
+        public const string OPERATING_SYSTEM_VERSION = DefaultUserAgentFields.OPERATING_SYSTEM_VERSION;
 
         /// <summary>
         /// Defines the OPERATING_SYSTEM_VERSION_BUILD.
         /// </summary>
-        public const string OPERATING_SYSTEM_VERSION_BUILD = "OperatingSystemVersionBuild";
+        [Obsolete("Use DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_BUILD")]
+        public const string OPERATING_SYSTEM_VERSION_BUILD = DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_BUILD;
 
         /// <summary>
         /// Defines the OPERATING_SYSTEM_VERSION_MAJOR.
         /// </summary>
-        public const string OPERATING_SYSTEM_VERSION_MAJOR = "OperatingSystemVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_MAJOR")]
+        public const string OPERATING_SYSTEM_VERSION_MAJOR = DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the SET_ALL_FIELDS.
         /// </summary>
-        public const string SET_ALL_FIELDS = "__Set_ALL_Fields__";
+        [Obsolete("Use DefaultUserAgentFields.SET_ALL_FIELDS")]
+        public const string SET_ALL_FIELDS = DefaultUserAgentFields.SET_ALL_FIELDS;
 
         /// <summary>
         /// Defines the SYNTAX_ERROR.
         /// </summary>
-        public const string SYNTAX_ERROR = "__SyntaxError__";
+        [Obsolete("Use DefaultUserAgentFields.SYNTAX_ERROR")]
+        public const string SYNTAX_ERROR = DefaultUserAgentFields.SYNTAX_ERROR;
 
         /// <summary>
         /// Defines the UNKNOWN_VALUE.
         /// </summary>
-        public const string UNKNOWN_VALUE = "Unknown";
+        [Obsolete("Use DefaultUserAgentFields.UNKNOWN_VALUE")]
+        public const string UNKNOWN_VALUE = DefaultUserAgentFields.UNKNOWN_VALUE;
 
         /// <summary>
         /// Defines the UNKNOWN_VERSION.
         /// </summary>
-        public const string UNKNOWN_VERSION = "??";
+        [Obsolete("Use DefaultUserAgentFields.UNKNOWN_VERSION")]
+        public const string UNKNOWN_VERSION = DefaultUserAgentFields.UNKNOWN_VERSION;
 
         /// <summary>
         /// Defines the UNKNOWN_NAME_VERSION.
         /// </summary>
-        public const string UNKNOWN_NAME_VERSION = "Unknown ??";
+        [Obsolete("Use DefaultUserAgentFields.UNKNOWN_NAME_VERSION")]
+        public const string UNKNOWN_NAME_VERSION = DefaultUserAgentFields.UNKNOWN_NAME_VERSION;
 
         /// <summary>
         /// Defines the USERAGENT_FIELDNAME.
         /// </summary>
-        public const string USERAGENT_FIELDNAME = "Useragent";
+        [Obsolete("Use DefaultUserAgentFields.USERAGENT_FIELDNAME")]
+        public const string USERAGENT_FIELDNAME = DefaultUserAgentFields.USERAGENT_FIELDNAME;
 
         /// <summary>
         /// Defines the WEBVIEW_APP_NAME.
         /// </summary>
-        public const string WEBVIEW_APP_NAME = "WebviewAppName";
+        [Obsolete("Use DefaultUserAgentFields.WEBVIEW_APP_NAME")]
+        public const string WEBVIEW_APP_NAME = DefaultUserAgentFields.WEBVIEW_APP_NAME;
 
         /// <summary>
         /// Defines the WEBVIEW_APP_NAME_VERSION_MAJOR.
         /// </summary>
-        public const string WEBVIEW_APP_NAME_VERSION_MAJOR = "WebviewAppNameVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.WEBVIEW_APP_NAME_VERSION_MAJOR")]
+        public const string WEBVIEW_APP_NAME_VERSION_MAJOR = DefaultUserAgentFields.WEBVIEW_APP_NAME_VERSION_MAJOR;
 
         /// <summary>
         /// Defines the WEBVIEW_APP_VERSION.
         /// </summary>
-        public const string WEBVIEW_APP_VERSION = "WebviewAppVersion";
+        [Obsolete("Use DefaultUserAgentFields.WEBVIEW_APP_VERSION")]
+        public const string WEBVIEW_APP_VERSION = DefaultUserAgentFields.WEBVIEW_APP_VERSION;
 
         /// <summary>
         /// Defines the WEBVIEW_APP_VERSION_MAJOR.
         /// </summary>
-        public const string WEBVIEW_APP_VERSION_MAJOR = "WebviewAppVersionMajor";
+        [Obsolete("Use DefaultUserAgentFields.WEBVIEW_APP_VERSION_MAJOR")]
+        public const string WEBVIEW_APP_VERSION_MAJOR = DefaultUserAgentFields.WEBVIEW_APP_VERSION_MAJOR;
 
         /// <summary>
         /// Standard fields used during parsing.

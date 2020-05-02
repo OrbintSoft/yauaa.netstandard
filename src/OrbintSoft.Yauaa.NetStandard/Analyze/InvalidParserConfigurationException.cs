@@ -37,7 +37,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidParserConfigurationException"/> class.
         /// </summary>
-        /// <param name="message">The message<see cref="string"/>.</param>
+        /// <param name="message">The message.</param>
         public InvalidParserConfigurationException(string message)
             : base(message)
         {
@@ -46,8 +46,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Initializes a new instance of the <see cref="InvalidParserConfigurationException"/> class.
         /// </summary>
-        /// <param name="message">The message<see cref="string"/>.</param>
-        /// <param name="e">The e<see cref="Exception"/>.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="e">The inner exception.</param>
         public InvalidParserConfigurationException(string message, Exception e)
             : base(message, e)
         {
