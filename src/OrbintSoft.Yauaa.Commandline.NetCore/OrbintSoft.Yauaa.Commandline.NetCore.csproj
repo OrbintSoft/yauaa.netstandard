@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>OrbintSoft.Yauaa.Commandline</RootNamespace>
     <Version>5.12-beta.1</Version>
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>												   
@@ -24,7 +24,7 @@
     <LangVersion>7.3</LangVersion>																				  
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.7.82" />
+    <PackageReference Include="CommandLineParser" Version="2.8.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.csproj" />

@@ -135,7 +135,7 @@ namespace OrbintSoft.Yauaa.Analyze
 
                             if (configParts.Length != 2)
                             {
-                                throw new InvalidParserConfigurationException("Invalid variable config line: " + variableConfig);
+                                throw new InvalidParserConfigurationException($"Invalid variable config line: {variableConfig}");
                             }
 
                             var variableName = configParts[0].Trim();
@@ -159,7 +159,7 @@ namespace OrbintSoft.Yauaa.Analyze
 
                             if (configParts.Length != 3)
                             {
-                                throw new InvalidParserConfigurationException("Invalid extract config line: " + extractConfig);
+                                throw new InvalidParserConfigurationException($"Invalid extract config line: {extractConfig}");
                             }
 
                             var attribute = configParts[0].Trim();
@@ -173,7 +173,7 @@ namespace OrbintSoft.Yauaa.Analyze
                             hasDefinedExtractConfigs = true;
 
                             // If we have a restriction on the wanted fields we check if this one is needed at all
-                            if (wantedFieldNames == null || wantedFieldNames.Contains(attribute))
+                            if (wantedFieldNames is null || wantedFieldNames.Contains(attribute))
                             {
                                 configLines.Add(new ConfigLine(ConfigLine.ConfigType.EXTRACT, attribute, confidence, config));
                                 hasActiveExtractConfigs = true;
@@ -212,7 +212,7 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 if (this.Verbose)
                 {
-                    Log.Info(string.Format("{0}: {1}", configLine.Type, configLine.Expression));
+                    Log.Info($"{configLine.Type}: {configLine.Expression}");
                 }
 
                 switch (configLine.Type)
@@ -304,7 +304,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     if (action.CannotBeValid())
                     {
-                        Log.Error(string.Format("CANNOT BE VALID : {0}", action.MatchExpression));
+                        Log.Error($"CANNOT BE VALID : {action.MatchExpression}");
                         good = false;
                     }
                 }
@@ -313,7 +313,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     if (!action.ObtainResult())
                     {
-                        Log.Error(string.Format("FAILED : {0}", action.MatchExpression));
+                        Log.Error($"FAILED : {action.MatchExpression}");
                         good = false;
                     }
                 }
@@ -657,7 +657,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Gets all possible field names.
         /// </summary>
-        /// <param name="actions">The actions</param>
+        /// <param name="actions">The actions.</param>
         /// <returns>The possible field names.</returns>
         private ISet<string> GetAllPossibleFieldNames(IList<MatcherAction> actions)
         {

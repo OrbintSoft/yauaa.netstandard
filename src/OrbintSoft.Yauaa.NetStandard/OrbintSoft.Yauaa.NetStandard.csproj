@@ -612,7 +612,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Collections.NonGeneric" Version="4.3.0" />
-    <PackageReference Include="YamlDotNet" Version="8.1.0" />
+    <PackageReference Include="YamlDotNet" Version="8.1.1" />
   </ItemGroup>
   <ItemGroup>
     <None Update="pre-build.ps1">

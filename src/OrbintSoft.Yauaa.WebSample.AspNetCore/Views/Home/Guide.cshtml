@@ -115,7 +115,7 @@ public static class YauaaSingleton
 var userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36 OPR/60.0.3255.170";
 var ua = YauaaSingleton.Analyzer.Parse(userAgentString);
 var fieldNames = ua.GetAvailableFieldNames();
-var fieldsDictionary = new Dictionary&lt;string, UserAgent.AgentField&gt;();
+var fieldsDictionary = new Dictionary&lt;string, AgentField&gt;();
 foreach (var name in fieldNames)
 {
     fieldsDictionary[name] = ua.Get(name);
@@ -157,11 +157,11 @@ public const string AGENT_VERSION = "AgentVersion";
 public const string AGENT_NAME = "AgentName";
         </code>            
     </pre>
-    <p>@localizer["Using the field name you can request the value of the field and receive an object of type UserAgent.AgentField:"]</p>
+    <p>@localizer["Using the field name you can request the value of the field and receive an object of type AgentField:"]</p>
     <pre>
     <code data-language="csharp">
-var field = ua.Get(UserAgent.LAYOUT_ENGINE_NAME);
-var name = UserAgent.LAYOUT_ENGINE_NAME; // "LayoutEngineName"
+var field = ua.Get(DefaultUserAgentFields.LAYOUT_ENGINE_NAME);
+var name = DefaultUserAgentFields.LAYOUT_ENGINE_NAME; // "LayoutEngineName"
 var val = field.GetValue(); // "Blink"
 var confidence = field.GetConfidence() //999
         </code>
