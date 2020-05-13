@@ -8,7 +8,7 @@ First of all, thank you to be here, any contribute here is welcome, and your hel
 - Parsing rules are written in ANTLR4, this part is shared with the main Java library and usually we don't touch that in this repository.
 - User agent definitions are witten in YAML, these are shared with the main Java library and usually we don't touch those in this repository.
 - The libary is written in .NET Standard 2.0.
-- Tools and applications based on the library, including unit tests are witten in .NET Core 2.2.
+- Tools and applications based on the library, including unit tests are witten in .NET Core 3.0.
 
 ## Requirements
 Here I define a standard enviroment and list of software suggested or required to develop without throubles.
@@ -24,7 +24,7 @@ The project is multi platform, but here I recommend:
 
 ### Required Software
 
-- **.NET Framework:** [.NET Core 2.2.300 SDK](https://dotnet.microsoft.com/download/dotnet-core/2.2)
+- **.NET Framework:** [.NET Core 3.0.103 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 - **Java JDK:** [Java SE Development Kit 12.0.1](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html)
 
 ### Enviroment Variables

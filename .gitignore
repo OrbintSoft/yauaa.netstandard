@@ -20,3 +20,5 @@
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/publicsuffix.txt
 /src/OrbintSoft.Yauaa.WebSample.AspNetCore/*.user
 /src/OrbintSoft.Yauaa.NetStandard/*.user
+/src/OrbintSoft.Yauaa.WebSample.AspNetCore/node_modules
+/src/OrbintSoft.Yauaa.WebSample.AspNetCore/package-lock.json

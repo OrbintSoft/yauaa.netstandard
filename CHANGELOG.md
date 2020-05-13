@@ -10,6 +10,8 @@ v5.12
   - Robots: Naver Yeti, TrueClicks
   - Anonymized: Google Web Light (proxy)
 - Nuget packages including alpha pre-releases are now available on github.
+- Move costant fields to DefaultUserAgentFields class. (old costants are deprecated.)
+- Update sample web Application, consol application, test and benchmark projects to .NET Core 3.0 
 
 v5.11
 ===
