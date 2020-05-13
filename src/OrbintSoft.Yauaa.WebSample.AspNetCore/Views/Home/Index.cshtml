@@ -1,18 +1,12 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
-@using OrbintSoft.Yauaa.Utils;
-@inject IViewLocalizer localizer
-@{
+﻿@{
     ViewData["Title"] = "Yauaa";
 }
 
 <h1>Yauaa: Yet Another User Agent Analyzer</h1>
 <article>
-    <p>
-        @localizer["This is a .NET standard library that tries to parse and analyze the user agent string and extract as many relevant attributes as possible."]
+    <p localize>
+        This is a .NET standard library that tries to parse and analyze the user agent string and extract as many relevant attributes as possible.
     </p>
-    @*<p>
-        @localizer["Latest version:"] @YauaaVersion.GetVersion()
-    </p>*@
     <ul>
         <li>
             <a href="https://github.com/OrbintSoft/yauaa.netstandard">GitHub</a>
@@ -21,13 +15,17 @@
             <a href="https://www.nuget.org/packages/Orbintsoft.Yauaa.NetStandard/">NuGet</a>
         </li>
         <li>
-            <a href="~/Home/Demo">@localizer["Demo"]</a>
+            <a href="~/Home/Demo" localize>
+                Demo
+            </a>
         </li>
         <li>
-            <a href="~/Home/Guide">@localizer["Introduction guide"]</a>
+            <a href="~/Home/Guide" localize>
+                Introduction guide
+            </a>
         </li>
         @*<li>
-                <a href="~/Projects/Yauaa/Tutorial">@localizer["Tutorial"]</a>
+                   <a href="~/Projects/Yauaa/Tutorial">@localizer["Tutorial"]</a>
             </li>*@
     </ul>
 </article>

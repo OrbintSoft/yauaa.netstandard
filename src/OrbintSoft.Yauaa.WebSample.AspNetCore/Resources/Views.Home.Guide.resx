@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Demo" xml:space="preserve">
+    <value>Demo</value>
+  </data>
+  <data name="For most common devices we provide a lookup table in yaml file to identify device brand/model based on the few info available in the user agent." xml:space="preserve">
+    <value>For most common devices we provide a lookup table in yaml file to identify device brand/model based on the few info available in the user agent.</value>
+  </data>
+  <data name="How to use Yauaa for .NET Standard" xml:space="preserve">
+    <value>How to use Yauaa for .NET Standard</value>
+  </data>
+  <data name="Introduction" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="or on his Java repository on github:" xml:space="preserve">
+    <value>or on his Java repository on github:</value>
+  </data>
+  <data name="Original project" xml:space="preserve">
+    <value>Original project</value>
+  </data>
+  <data name="Thanks to custom yaml definitions, you can make the library able to identify your company applications/ tools and extract your custom fields." xml:space="preserve">
+    <value>Thanks to custom yaml definitions, you can make the library able to identify your company applications/ tools and extract your custom fields.</value>
+  </data>
+  <data name="That makes the library very fast, flexible and easy to mantain, on the contrary the library can't extract info that are not present on user agent string without a proper mapping." xml:space="preserve">
+    <value>That makes the library very fast, flexible and easy to mantain, on the contrary the library can't extract info that are not present on user agent string without a proper mapping.</value>
+  </data>
+  <data name="The library aims to provides a reliable and extensible user agent parsing, browser and device detection." xml:space="preserve">
+    <value>The library aims to provides a reliable and extensible user agent parsing, browser and device detection.</value>
+  </data>
+  <data name="The library can be easily extended thanks to yaml files and a simple syntax (we don't rely on regular expression)." xml:space="preserve">
+    <value>The library can be easily extended thanks to yaml files and a simple syntax (we don't rely on regular expression).</value>
+  </data>
+  <data name="The library doesn't aim to recognize every device in the world (there are several thousands), but it is able to work, analyze and extract all attributes available in the user agent." xml:space="preserve">
+    <value>The library doesn't aim to recognize every device in the world (there are several thousands), but it is able to work, analyze and extract all attributes available in the user agent.</value>
+  </data>
+  <data name="This is a .NET standard library that tries to parse and analyze the user agent string and extract as many relevant attributes as possible." xml:space="preserve">
+    <value>This is a .NET standard library that tries to parse and analyze the user agent string and extract as many relevant attributes as possible.</value>
+  </data>
+  <data name="This is a semantic analyzer, so it doesn't rely on any database (except for some very little lookup tables), that means it is able to parse and recognize every day new kind of user agents and new patterrsns without updates." xml:space="preserve">
+    <value>This is a semantic analyzer, so it doesn't rely on any database (except for some very little lookup tables), that means it is able to parse and recognize every day new kind of user agents and new patterrsns without updates.</value>
+  </data>
+  <data name="This library has been built thanks to the effort of Niels Basjes, you can find more on his blog post:" xml:space="preserve">
+    <value>This library has been built thanks to the effort of Niels Basjes, you can find more on his blog post:</value>
+  </data>
+  <data name="Yauaa Tutorial" xml:space="preserve">
+    <value>Yauaa Tutorial</value>
+  </data>
+  <data name="As first step add this nuget package to your project:" xml:space="preserve">
+    <value>As first step add this nuget package to your project:</value>
+  </data>
+  <data name="Before to start I suggest to try this" xml:space="preserve">
+    <value>Before to start I suggest to try this</value>
+  </data>
+  <data name="Below you can see a sample of implementation:" xml:space="preserve">
+    <value>Below you can see a sample of implementation:</value>
+  </data>
+  <data name="How to start" xml:space="preserve">
+    <value>How to start</value>
+  </data>
+  <data name="Nuget Package" xml:space="preserve">
+    <value>Nuget Package</value>
+  </data>
+  <data name="The constructor is protected to hide the complex nature and initialization of the class, so to simplyfy the process you can take the advantage of a builder:" xml:space="preserve">
+    <value>The constructor is protected to hide the complex nature and initialization of the class, so to simplyfy the process you can take the advantage of a builder:</value>
+  </data>
+  <data name="The library targets .NET standard 2.0, so it can be used on the following frameworks (higher versions are supported):" xml:space="preserve">
+    <value>The library targets .NET standard 2.0, so it can be used on the following frameworks (higher versions are supported)</value>
+  </data>
+  <data name="To use the user agent analyzer you need to create an object of type UserAgentAnalyzer" xml:space="preserve">
+    <value>To use the user agent analyzer you need to create an object of type UserAgentAnalyzer</value>
+  </data>
+  <data name="and get all parsed fields with" xml:space="preserve">
+    <value>and get all parsed fields with:</value>
+  </data>
+  <data name="As example you can read in asp.net the user agent string on the client with the following code:" xml:space="preserve">
+    <value>As example you can read in asp.net the user agent string on the client with the following code:</value>
+  </data>
+  <data name="Below a complete code sample:" xml:space="preserve">
+    <value>Below a complete code sample:</value>
+  </data>
+  <data name="But since in most comon scenario you need to check some predefined fields, like OS, browser name or version, you can take the help of some defined constants:" xml:space="preserve">
+    <value>But since in most comon scenario you need to check some predefined fields, like OS, browser name or version, you can take the help of some defined constants:</value>
+  </data>
+  <data name="How interpret fields and values" xml:space="preserve">
+    <value>How interpret fields and values</value>
+  </data>
+  <data name="In facts you can define any custom fields to extract all info you need in Yaml files, that makes this analyzer extremly extensible and flexible" xml:space="preserve">
+    <value>In facts you can define any custom fields to extract all info you need in Yaml files, that makes this analyzer extremly extensible and flexible</value>
+  </data>
+  <data name="Using the field name you can request the value of the field and receive an object of type AgentField:" xml:space="preserve">
+    <value>Using the field name you can request the value of the field and receive an object of type AgentField:</value>
+  </data>
+  <data name="With GetValue() you can read the desidered value, while with GetConfidence() you get a number that shows how much is reliable the extracted field, a confidence &lt; 0 means that parsing has failed and the extracted value is not reliable." xml:space="preserve">
+    <value>With GetValue() you can read the desidered value, while with GetConfidence() you get a number that shows how much is reliable the extracted field, a confidence &lt; 0 means that parsing has failed and the extracted value is not reliable.</value>
+  </data>
+  <data name="Yauaa is a dynamic User Agent Analyzer that tryes to get any possible info from user agent, that means that there are no predefined fields like most of User Agent parser" xml:space="preserve">
+    <value>Yauaa is a dynamic User Agent Analyzer that tryes to get any possible info from user agent, that means that there are no predefined fields like most of User Agent parser</value>
+  </data>
+  <data name="You can get a list of alla availables field in a user agent with:" xml:space="preserve">
+    <value>You can get a list of alla availables field in a user agent with:</value>
+  </data>
+  <data name="You can parse the user agent simply calling" xml:space="preserve">
+    <value>You can parse the user agent simply calling:</value>
+  </data>
+  <data name="You can set all required configurations on the builder, and when you are ready, you just need to call the method Build();" xml:space="preserve">
+    <value>You can set all required configurations on the builder, and when you are ready, you just need to call the method Build();</value>
+  </data>
+  <data name="Since the initialization of the analyzer can be very slow and you need to do just a single time, I suggest to create a singleton as support." xml:space="preserve">
+    <value>Since the initialization of the analyzer can be very slow and you need to do just a single time, I suggest to create a singleton as support.</value>
+  </data>
+  <data name="How to parse" xml:space="preserve">
+    <value>How to parse</value>
+  </data>
+  <data name="How to classify" xml:space="preserve">
+    <value>How to classify</value>
+  </data>
+  <data name="In a common use case you will need to classify user agents by their kind (mobile, tablet, bot, crawler, TV, etc...)" xml:space="preserve">
+    <value>In a common use case you will need to classify user agents by their kind (mobile, tablet, bot, crawler, TV, etc...)</value>
+  </data>
+  <data name="Below the possible values for DeviceClass enum" xml:space="preserve">
+    <value>Below the possible values for DeviceClass enum</value>
+  </data>
+  <data name="For this purpose you can take the advantage of the UserAgentClassifier class, let see an example:" xml:space="preserve">
+    <value>For this purpose you can take the advantage of the UserAgentClassifier class, let see an example:</value>
+  </data>
+</root>

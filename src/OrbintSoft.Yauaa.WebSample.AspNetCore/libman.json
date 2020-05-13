@@ -14,13 +14,26 @@
       "library": "font-awesome@5.13.0",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [
-        "css/font-awesome.css",
-        "fonts/fontawesome-webfont.eot",
-        "fonts/fontawesome-webfont.svg",
-        "fonts/fontawesome-webfont.ttf",
-        "fonts/fontawesome-webfont.woff",
-        "fonts/fontawesome-webfont.woff2",
-        "fonts/FontAwesome.otf"
+        "css/all.css",
+        "js/all.js",
+        "sprites/brands.svg",
+        "sprites/regular.svg",
+        "sprites/solid.svg",
+        "webfonts/fa-brands-400.eot",
+        "webfonts/fa-brands-400.svg",
+        "webfonts/fa-brands-400.ttf",
+        "webfonts/fa-brands-400.woff",
+        "webfonts/fa-brands-400.woff2",
+        "webfonts/fa-regular-400.eot",
+        "webfonts/fa-regular-400.svg",
+        "webfonts/fa-regular-400.ttf",
+        "webfonts/fa-regular-400.woff",
+        "webfonts/fa-regular-400.woff2",
+        "webfonts/fa-solid-900.eot",
+        "webfonts/fa-solid-900.svg",
+        "webfonts/fa-solid-900.ttf",
+        "webfonts/fa-solid-900.woff",
+        "webfonts/fa-solid-900.woff2"
       ]
     },
     {
@@ -57,10 +70,10 @@
     },
     {
       "provider": "cdnjs",
-      "library": "popper.js@2.4.0",
+      "library": "popper.js@1.16.1",
       "destination": "wwwroot/lib/popper.js/",
       "files": [
-        "popper.js"
+        "umd/popper.js"
       ]
     },
     {

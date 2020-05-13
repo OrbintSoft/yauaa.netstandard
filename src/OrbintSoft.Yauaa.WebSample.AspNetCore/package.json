@@ -1,0 +1,28 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "scripts": {
+    "clean": "node ./JsTasks/clean.js",
+    "minifyjs": "node ./JsTasks/minifyjs.js",
+    "minifycss": "node ./JsTasks/minifycss.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "fs": "0.0.2",
+    "glob": "7.1.4",
+    "google-closure-compiler": "20190618.0.0",
+    "clean-css": "4.2.1",
+    "typescript": "3.8.3"
+  },
+  "-vs-binding": {
+    "BeforeBuild": [
+      "compilets",
+      "minifycss",
+      "minifyjs"
+    ],
+    "Clean": [
+      "clean"
+    ]
+  }
+}

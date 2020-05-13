@@ -5,9 +5,9 @@
     <NeutralLanguage>en</NeutralLanguage>
     <Authors>Stefano Balzarotti</Authors>
     <Company>OrbintSoft</Company>
-    <AssemblyVersion>5.12.3.1</AssemblyVersion>
-    <FileVersion>5.12.3.1</FileVersion>
-    <Version>5.12-rc.1</Version>
+    <AssemblyVersion>5.12.5.1</AssemblyVersion>
+    <FileVersion>5.12.5.1</FileVersion>
+    <Version>5.12.1</Version>
     <Description>A sample web project to test Yauaa Parser</Description>
     <Copyright>Copyright (C) 2013-2020 OrbintSoft</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
@@ -39,6 +39,8 @@
 
   <ItemGroup>
     <PackageReference Include="jQWidgets.AspNetCore.Mvc.Bootstrap.TagHelpers" Version="2.0.0" />
+    <PackageReference Include="Localization.AspNetCore.TagHelpers" Version="0.6.0" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.76" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,7 +60,6 @@
   <ItemGroup>
     <Folder Include="JsTasks\" />
     <Folder Include="Models\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 
 </Project>

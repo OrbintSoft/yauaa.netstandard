@@ -1,10 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Mvc.Localization
-@inject IViewLocalizer localizer
 @model OrbintSoft.Yauaa.WebSample.AspNetCore.Models.DemoViewModel
 @{
-    ViewData["Title"] = localizer["Demo"];
+    ViewData["Title"] = "Demo";
 }
-<h1>@localizer["Yauaa Demo: Try to analyze the User Agent"]</h1>
+<h1 localize>
+    Yauaa Demo: Try to analyze the User Agent
+</h1>
 <form asp-controller="Home" asp-action="Demo" id="parseForm">
     @Html.AntiForgeryToken()
     <div class="form-group">
@@ -13,24 +14,26 @@
     </div>
     @if (Model.Fields == null)
     {
-        <div class="alert alert-danger" role="alert">
-            @localizer["First time parsing can be very slow because the library is loading all matchers"]
+        <div class="alert alert-danger" role="alert" localize>
+            First time parsing can be very slow because the library is loading all matchers.
         </div>
     }
     <div class="form-group">
-        <button type="submit" id="sendButton" class="btn btn-primary">@localizer["Parse"]</button>
+        <button type="submit" id="sendButton" class="btn btn-primary" localize>Parse</button>
     </div>
 </form>
 @if (Model.Fields != null)
 {
-    <h2>@localizer["Results:"]</h2>
-    <h4>@localizer["Elapsed time:"] ~ @Model.ElapsedTime</h4>
+    <h2 localize>Results:</h2>
+    <h4>
+        <localize>Elapsed time:</localize> ~ @Model.ElapsedTime
+    </h4>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">@localizer["Field name"]</th>
-                <th scope="col">@localizer["Value"]</th>
-                <th scope="col">@localizer["Confidence"]</th>
+                <th scope="col" localize>Field name</th>
+                <th scope="col" localize>Value</th>
+                <th scope="col" localize>Confidence</th>
             </tr>
         </thead>
         <tbody>
@@ -46,6 +49,6 @@
     </table>
 }
 <p>
-    @localizer["Current version:"] @Model.Version
+    <localize>Current version:</localize> @Model.Version
 </p>
 
