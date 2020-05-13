@@ -125,22 +125,24 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk
         /// <returns>Either null or the actual value that was found.</returns>
         public override WalkList.WalkResult Walk(IParseTree tree, string value)
         {
-            var children = this.userAgentGetChildrenVisitor.Visit(tree);
-            if (children != null)
+            using (var children = this.userAgentGetChildrenVisitor.Visit(tree))
             {
-                do
+                if (children != null)
                 {
-                    if (children.Current != null || children.MoveNext())
+                    do
                     {
-                        var child = children.Current;
-                        var childResult = this.WalkNextStep(child, null);
-                        if (childResult != null)
+                        if (children.Current != null || children.MoveNext())
                         {
-                            return childResult;
+                            var child = children.Current;
+                            var childResult = this.WalkNextStep(child, null);
+                            if (childResult != null)
+                            {
+                                return childResult;
+                            }
                         }
                     }
+                    while (children.MoveNext());
                 }
-                while (children.MoveNext());
             }
 
             return null;

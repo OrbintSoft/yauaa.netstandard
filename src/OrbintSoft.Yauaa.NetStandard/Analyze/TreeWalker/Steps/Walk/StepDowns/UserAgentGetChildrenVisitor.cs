@@ -282,13 +282,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
         /// <returns>The found children as <see cref="IEnumerator{IParseTree}"/>.</returns>
         public override IEnumerator<IParseTree> VisitUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
-            var children = this.GetChildrenByName(context);
-            if (!children.MoveNext() && children.Current == null)
+            using (var children = this.GetChildrenByName(context))
             {
-                return this.VisitChildren(context);
-            }
+                if (!children.MoveNext() && children.Current == null)
+                {
+                    return this.VisitChildren(context);
+                }
 
-            return children;
+                return children;
+            }
         }
 
         /// <summary>

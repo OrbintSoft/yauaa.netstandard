@@ -111,14 +111,5 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         {
             new MatcherList(1).Invoking(m => m.Remove(null)).Should().Throw<NotImplementedException>();
         }
-
-        /// <summary>
-        /// For now Contains is not supported, as in Java library, but I don't like this kind of partial implementation, I should implement it in future.
-        /// </summary>
-        [Fact]
-        public void TestUnsupportedContains()
-        {
-            new MatcherList(1).Invoking(m => m.Contains(null)).Should().Throw<NotImplementedException>();
-        }
     }
 }

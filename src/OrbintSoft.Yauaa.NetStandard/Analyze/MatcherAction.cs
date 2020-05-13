@@ -42,7 +42,7 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// This class is used to repesent action associated to a matcher.
+    /// This class is used to repesent an action associated to a matcher.
     /// </summary>
     [Serializable]
     public abstract class MatcherAction
@@ -343,7 +343,7 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             foreach (var match in this.Matches)
             {
-                var matchedValue = this.Evaluator.Evaluate(match.GetResult(), match.Key, match.Value);
+                var matchedValue = this.Evaluator.Evaluate(match.Result, match.Key, match.Value);
                 if (matchedValue != null)
                 {
                     this.Inform(match.Key, matchedValue);

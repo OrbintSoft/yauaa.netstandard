@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MatcherVariableAction.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -33,13 +33,13 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="MatcherVariableAction" />.
+    /// This class is used to define a variable value action for a matcher.
     /// </summary>
     [Serializable]
     public class MatcherVariableAction : MatcherAction
     {
         /// <summary>
-        /// Defines the Log.
+        /// Defines the logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherVariableAction));
 
@@ -55,16 +55,16 @@ namespace OrbintSoft.Yauaa.Analyze
         private WalkList.WalkResult foundValue = null;
 
         /// <summary>
-        /// Defines the interestedActions.
+        /// Defines the interested actions set.
         /// </summary>
         private ISet<MatcherAction> interestedActions = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MatcherVariableAction"/> class.
         /// </summary>
-        /// <param name="variableName">The variableName<see cref="string"/>.</param>
-        /// <param name="config">The config<see cref="string"/>.</param>
-        /// <param name="matcher">The matcher<see cref="Matcher"/>.</param>
+        /// <param name="variableName">The variable name.</param>
+        /// <param name="config">The configuration.</param>
+        /// <param name="matcher">The matcher.</param>
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
             this.VariableName = variableName;
@@ -73,21 +73,21 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Gets the VariableName.
+        /// Gets the variable name.
         /// </summary>
         public string VariableName { get; }
 
         /// <summary>
-        /// The Inform.
+        /// Informs the mayìtcher about a new found value.
         /// </summary>
-        /// <param name="key">The key<see cref="string"/>.</param>
-        /// <param name="newlyFoundValue">The newlyFoundValue<see cref="WalkList.WalkResult"/>.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="newlyFoundValue">The new found value.</param>
         public override void Inform(string key, WalkList.WalkResult newlyFoundValue)
         {
             if (this.Verbose)
             {
-                Log.Info(string.Format("INFO  : VARIABLE ({0}): {1}", this.VariableName, key));
-                Log.Info(string.Format("NEED  : VARIABLE ({0}): {1}", this.VariableName, this.MatchExpression));
+                Log.Info($"INFO  : VARIABLE ({this.VariableName}): {key}");
+                Log.Info($"NEED  : VARIABLE ({this.VariableName}): {this.MatchExpression}");
             }
 
             /*
@@ -95,12 +95,12 @@ namespace OrbintSoft.Yauaa.Analyze
              * This is also the priority in the fields.
              * So we always use the first value we find.
              */
-            if (this.foundValue == null)
+            if (this.foundValue is null)
             {
                 this.foundValue = newlyFoundValue;
                 if (this.Verbose)
                 {
-                    Log.Info(string.Format("KEPT  : VARIABLE ({0}): {1}", this.VariableName, key));
+                    Log.Info($"KEPT  : VARIABLE ({this.VariableName}): {key}");
                 }
 
                 if (this.interestedActions != null && this.interestedActions.Count != 0)
@@ -114,9 +114,9 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The ObtainResult.
+        /// Process the natches and find a value.
         /// </summary>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <returns>True if found a value.</returns>
         public override bool ObtainResult()
         {
             this.ProcessInformedMatches();
@@ -124,7 +124,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Reset.
+        /// Resets the matches.
         /// </summary>
         public override void Reset()
         {
@@ -132,42 +132,38 @@ namespace OrbintSoft.Yauaa.Analyze
             this.foundValue = null;
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
-            return "VARIABLE: (" + this.VariableName + "): " + this.expression;
+            return $"VARIABLE: ({this.VariableName}): {this.expression}";
         }
 
         /// <summary>
-        /// The SetInterestedActions.
+        /// Sets the new interested actions.
         /// </summary>
-        /// <param name="newInterestedActions">The newInterestedActions<see cref="ISet{MatcherAction}"/>.</param>
+        /// <param name="newInterestedActions">The new interested actions.</param>
         public void SetInterestedActions(ISet<MatcherAction> newInterestedActions)
         {
             this.interestedActions = newInterestedActions;
         }
 
         /// <summary>
-        /// The ParseWalkerExpression.
+        /// Execute the matcher variable parser.
         /// </summary>
-        /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/>.</param>
-        /// <returns>The <see cref="ParserRuleContext"/>.</returns>
+        /// <param name="parser">The parser.</param>
+        /// <returns>The context.</returns>
         protected override ParserRuleContext ParseWalkerExpression(UserAgentTreeWalkerParser parser)
         {
             return parser.matcherVariable();
         }
 
         /// <summary>
-        /// The SetFixedValue.
+        /// A fixed value cannot be set for a variable action.
         /// </summary>
-        /// <param name="fixedValue">The fixedValue<see cref="string"/>.</param>
+        /// <param name="fixedValue">The fixed value.</param>
         protected override void SetFixedValue(string fixedValue)
         {
-            throw new InvalidParserConfigurationException(
-                "It is useless to put a fixed value \"" + fixedValue + "\" in the variable section.");
+            throw new InvalidParserConfigurationException($"It is useless to put a fixed value \"{fixedValue}\" in the variable section.");
         }
     }
 }

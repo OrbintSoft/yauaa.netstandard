@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="NumberRangeVisitor.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -31,27 +31,27 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="NumberRangeVisitor" />.
+    /// Implements an antlr visitor for parsing number ranges.
     /// </summary>
     public sealed class NumberRangeVisitor : UserAgentTreeWalkerBaseVisitor<NumberRangeList>
     {
         /// <summary>
-        /// Defines the Instance.
+        /// Defines the singleton instance.
         /// </summary>
         internal static readonly NumberRangeVisitor Instance = new NumberRangeVisitor();
 
         /// <summary>
-        /// Defines the DEFAULT_MAX.
+        /// Defines default max number that can be used for a range.
         /// </summary>
         private const int DEFAULT_MAX = 10;
 
         /// <summary>
-        /// Defines the DEFAULT_MIN.
+        /// Defines the default min number that can be used for a range.
         /// </summary>
         private const int DEFAULT_MIN = 1;
 
         /// <summary>
-        /// Defines the MaxRange.
+        /// Defines a dictionary of max range per user agent section.
         /// </summary>
         private static readonly IDictionary<string, int> MaxRange = new Dictionary<string, int>();
 
@@ -88,7 +88,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The GetList.
+        /// Gets the <see cref="NumberRangeList"/> after parsing the user agent.
         /// </summary>
         /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/>.</param>
         /// <returns>The <see cref="NumberRangeList"/>.</returns>
@@ -98,40 +98,40 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The VisitNumberRangeAll.
+        /// Visits a number range all (from <see cref="DEFAULT_MIN"/> to max).
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeAllContext"/>.</param>
-        /// <returns>The <see cref="NumberRangeList"/>.</returns>
+        /// <param name="context">The context.</param>
+        /// <returns>The resulting <see cref="NumberRangeList"/>.</returns>
         public override NumberRangeList VisitNumberRangeAll([NotNull] UserAgentTreeWalkerParser.NumberRangeAllContext context)
         {
             return new NumberRangeList(DEFAULT_MIN, GetMaxRange(context));
         }
 
         /// <summary>
-        /// The VisitNumberRangeEmpty.
+        /// Visits an empty range, returns as default from <see cref="DEFAULT_MIN"/> to max.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeEmptyContext"/>.</param>
-        /// <returns>The <see cref="NumberRangeList"/>.</returns>
+        /// <param name="context">The context.</param>
+        /// <returns>The resulting <see cref="NumberRangeList"/>.</returns>
         public override NumberRangeList VisitNumberRangeEmpty([NotNull] UserAgentTreeWalkerParser.NumberRangeEmptyContext context)
         {
             return new NumberRangeList(DEFAULT_MIN, GetMaxRange(context));
         }
 
         /// <summary>
-        /// The VisitNumberRangeOpenStartToEnd.
+        /// Visits a range with open start from <see cref="DEFAULT_MIN"/> to end value.
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext"/>.</param>
-        /// <returns>The <see cref="NumberRangeList"/>.</returns>
+        /// <returns>The resulting <see cref="NumberRangeList"/>.</returns>
         public override NumberRangeList VisitNumberRangeOpenStartToEnd([NotNull] UserAgentTreeWalkerParser.NumberRangeOpenStartToEndContext context)
         {
-            return new NumberRangeList(1, int.Parse(context.rangeEnd.Text));
+            return new NumberRangeList(DEFAULT_MIN, int.Parse(context.rangeEnd.Text));
         }
 
         /// <summary>
-        /// The VisitNumberRangeSingleValue.
+        /// Vists a range with single value (from value to value).
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeSingleValueContext"/>.</param>
-        /// <returns>The <see cref="NumberRangeList"/>.</returns>
+        /// <returns>The resulting <see cref="NumberRangeList"/>.</returns>
         public override NumberRangeList VisitNumberRangeSingleValue([NotNull] UserAgentTreeWalkerParser.NumberRangeSingleValueContext context)
         {
             var value = int.Parse(context.count.Text);
@@ -139,10 +139,10 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The VisitNumberRangeStartToEnd.
+        /// Visits a range with start and end (from start value to end value(.
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeStartToEndContext"/>.</param>
-        /// <returns>The <see cref="NumberRangeList"/>.</returns>
+        /// <returns>The resulting <see cref="NumberRangeList"/></returns>
         public override NumberRangeList VisitNumberRangeStartToEnd([NotNull] UserAgentTreeWalkerParser.NumberRangeStartToEndContext context)
         {
             return new NumberRangeList(
@@ -151,26 +151,27 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The VisitNumberRangeStartToOpenEnd.
+        /// Visits a range with open end from start value to max value.
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext"/>.</param>
-        /// <returns>The <see cref="NumberRangeList"/>.</returns>
+        /// <returns>The resulting <see cref="NumberRangeList"/></returns>
         public override NumberRangeList VisitNumberRangeStartToOpenEnd([NotNull] UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext context)
         {
             return new NumberRangeList(int.Parse(context.rangeStart.Text), GetMaxRange(context));
         }
 
         /// <summary>
-        /// The GetMaxRange.
+        /// Gets the max range based on the context.
+        /// If not faound <see cref="DEFAULT_MAX"/> is used.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="UserAgentTreeWalkerParser.NumberRangeContext"/>.</param>
-        /// <returns>The <see cref="int"/>.</returns>
+        /// <param name="ctx">The context.</param>
+        /// <returns>The max value for the range.</returns>
         private static int GetMaxRange(UserAgentTreeWalkerParser.NumberRangeContext ctx)
         {
             var parent = ctx.Parent;
             var name = ((UserAgentTreeWalkerParser.StepDownContext)parent).name.Text;
             var maxRange = MaxRange.ContainsKey(name) ? (int?)MaxRange[name] : null;
-            if (maxRange == null)
+            if (maxRange is null)
             {
                 return DEFAULT_MAX;
             }

@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MatcherRequireAction.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Analyze
@@ -34,18 +33,18 @@ namespace OrbintSoft.Yauaa.Analyze
     using OrbintSoft.Yauaa.Antlr4Source;
 
     /// <summary>
-    /// Defines the <see cref="MatcherRequireAction" />.
+    /// This class is used to define a require value action for a matcher.
     /// </summary>
     [Serializable]
     public class MatcherRequireAction : MatcherAction
     {
         /// <summary>
-        /// Defines the Log.
+        /// Defines the logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherRequireAction));
 
         /// <summary>
-        /// Defines the foundRequiredValue.
+        /// Defines wether a required value is found.
         /// </summary>
         private bool foundRequiredValue = false;
 
@@ -60,7 +59,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Initialize.
+        /// Itialize the matcher with require action.
         /// </summary>
         public override void Initialize()
         {
@@ -71,23 +70,23 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// The Inform.
         /// </summary>
-        /// <param name="key">The key<see cref="string"/>.</param>
-        /// <param name="foundValue">The foundValue<see cref="WalkList.WalkResult"/>.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="foundValue">Not used.</param>
         public override void Inform(string key, WalkList.WalkResult foundValue)
         {
             this.foundRequiredValue = true;
             if (this.Verbose)
             {
-                Log.Info(string.Format("Info REQUIRE: {0}", key));
-                Log.Info(string.Format("NEED REQUIRE: {0}", this.MatchExpression));
-                Log.Info(string.Format("KEPT REQUIRE: {0}", key));
+                Log.Info($"Info REQUIRE: {key}");
+                Log.Info($"NEED REQUIRE: {this.MatchExpression}");
+                Log.Info($"KEPT REQUIRE: {key}");
             }
         }
 
         /// <summary>
-        /// The ObtainResult.
+        /// Find required value.
         /// </summary>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <returns>True if required value is found.</returns>
         public override bool ObtainResult()
         {
             if (this.IsValidIsNull())
@@ -100,7 +99,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Reset.
+        /// Reset the matches.
         /// </summary>
         public override void Reset()
         {
@@ -108,17 +107,14 @@ namespace OrbintSoft.Yauaa.Analyze
             this.foundRequiredValue = false;
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
-            return "Require: " + this.MatchExpression;
+            return $"Require: {this.MatchExpression}";
         }
 
         /// <summary>
-        /// The ParseWalkerExpression.
+        /// Execute the matcher require parser.
         /// </summary>
         /// <param name="parser">The parser<see cref="UserAgentTreeWalkerParser"/>.</param>
         /// <returns>The <see cref="ParserRuleContext"/>.</returns>
@@ -128,13 +124,12 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The SetFixedValue.
+        /// Cannot set a fixed value for a require action.
         /// </summary>
-        /// <param name="fixedValue">The fixedValue<see cref="string"/>.</param>
+        /// <param name="fixedValue">The fixed Value.</param>
         protected override void SetFixedValue(string fixedValue)
         {
-            throw new InvalidParserConfigurationException(
-                    "It is useless to put a fixed value \"" + fixedValue + "\" in the require section.");
+            throw new InvalidParserConfigurationException($"It is useless to put a fixed value \"{fixedValue}\" in the require section.");
         }
     }
 }

@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="NumberRangeList.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze
     using System.Collections.Generic;
 
     /// <summary>
-    /// Defines the <see cref="NumberRangeList" />.
+    /// This list respresents a range of numbers.
     /// </summary>
     public class NumberRangeList : IReadOnlyList<int>
     {
@@ -45,30 +45,28 @@ namespace OrbintSoft.Yauaa.Analyze
             this.End = end;
         }
 
-        /// <summary>
-        /// Gets the Count.
-        /// </summary>
+        /// <inheritdoc/>
         public int Count => this.End - this.Start + 1;
 
         /// <summary>
-        /// Gets the Start.
+        /// Gets the start of range.
         /// </summary>
         public int Start { get; }
 
         /// <summary>
-        /// Gets the End.
+        /// Gets the end of the range.
         /// </summary>
         public int End { get; }
 
         /// <summary>
-        /// The element of list.
+        /// Gets a number in the range by an index.
         /// </summary>
         /// <param name="index">The index of the element.</param>
-        /// <returns>The element in position index.</returns>
+        /// <returns>The number in position index.</returns>
         public int this[int index] => this.Start + index;
 
         /// <summary>
-        /// The GetEnumerator.
+        /// Returns an enumerator that iterates throught the range.
         /// </summary>
         /// <returns>The enumerator.</returns>
         public IEnumerator<int> GetEnumerator()
@@ -76,22 +74,19 @@ namespace OrbintSoft.Yauaa.Analyze
             return new NumberRangeEnumerator(this);
         }
 
-        /// <summary>
-        /// The GetEnumerator.
-        /// </summary>
-        /// <returns>The <see cref="IEnumerator"/>.</returns>
+         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
         }
 
         /// <summary>
-        /// Defines the <see cref="NumberRangeEnumerator" />.
+        /// Supports a simmple ieration over a <see cref="NumberRangeList"/>.
         /// </summary>
         public class NumberRangeEnumerator : IEnumerator<int>
         {
             /// <summary>
-            /// Defines the list.
+            /// Defines the list of numbers.
             /// </summary>
             private readonly NumberRangeList list;
 
@@ -110,26 +105,22 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             /// <summary>
-            /// Gets the Current.
+            /// Gets the current number in the range at the current position of the enumerator.
             /// </summary>
             public int Current => this.list[this.offset];
 
-            /// <summary>
-            /// Gets the Current.
-            /// </summary>
+            /// <inheritdoc/>
             object IEnumerator.Current => this.list[this.offset];
 
-            /// <summary>
-            /// The Dispose.
-            /// </summary>
+            /// <inheritdoc/>
             public void Dispose()
             {
             }
 
             /// <summary>
-            /// The MoveNext.
+            /// Advances the enumberator to the next element of the range.
             /// </summary>
-            /// <returns>The <see cref="bool"/>.</returns>
+            /// <returns>True if there is a next element.</returns>
             public bool MoveNext()
             {
                 if (this.offset < this.list.Count - 1)
@@ -144,7 +135,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             /// <summary>
-            /// The Reset.
+            /// Sets the enumerator at initial position, resets the enumerator.
             /// </summary>
             public void Reset()
             {

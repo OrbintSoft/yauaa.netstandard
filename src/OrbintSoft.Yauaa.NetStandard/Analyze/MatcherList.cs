@@ -1,25 +1,24 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MatcherList.cs" company="OrbintSoft">
-//    Yet Another User Agent Analyzer for .NET Standard
-//    porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-//    Original Author and License:
+//   Original Author and License:
 //
-//    Yet Another UserAgent Analyzer
-//    Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-//    Licensed under the Apache License, Version 2.0 (the "License");
-//    you may not use this file except in compliance with the License.
-//    You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-//    https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-//    Unless required by applicable law or agreed to in writing, software
-//    distributed under the License is distributed on an "AS IS" BASIS,
-//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//    See the License for the specific language governing permissions and
-//    limitations under the License.
-//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2019, 8, 9, 07:49</date>
@@ -30,6 +29,7 @@ namespace OrbintSoft.Yauaa.Analyze
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// This class represent a collection of matchers.
@@ -57,7 +57,7 @@ namespace OrbintSoft.Yauaa.Analyze
         public int Count { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether  the collection is read only, no it's not read only.
+        /// Gets a value indicating whether the collection is read only, no it's not read only.
         /// </summary>
         public bool IsReadOnly => false;
 
@@ -84,14 +84,10 @@ namespace OrbintSoft.Yauaa.Analyze
             this.Count = 0;
         }
 
-        /// <summary>
-        /// Not implemented.
-        /// </summary>
-        /// <param name="item">The matcher.</param>
-        /// <returns>True or False.</returns>
+        /// <inheritdoc/>
         public bool Contains(Matcher item)
         {
-            throw new NotImplementedException();
+            return this.allElements.Contains(item);
         }
 
         /// <summary>
@@ -108,17 +104,14 @@ namespace OrbintSoft.Yauaa.Analyze
             }
         }
 
-        /// <summary>
-        /// The GetEnumerator.
-        /// </summary>
-        /// <returns>The <see cref="IEnumerator{Matcher}"/>.</returns>
+        /// <inheritdoc/>
         public IEnumerator<Matcher> GetEnumerator()
         {
             return new MatcherEnumerator(this.allElements, this.Count);
         }
 
         /// <summary>
-        /// The remove.
+        /// Not implemented.
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>True if removed.</returns>
@@ -133,6 +126,9 @@ namespace OrbintSoft.Yauaa.Analyze
             return this.GetEnumerator();
         }
 
+        /// <summary>
+        /// Initialize the collections preallocating space in an array.
+        /// </summary>
         private void Initialize()
         {
             this.Count = 0;
@@ -143,6 +139,9 @@ namespace OrbintSoft.Yauaa.Analyze
             }
         }
 
+        /// <summary>
+        /// Increases the capacity of the array.
+        /// </summary>
         private void IncreaseCapacity()
         {
             var newMaxSize = this.maxSize + CAPACITY_INCREASE;
@@ -158,7 +157,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The Matcher enumerator
+        /// The Matcher enumerator.
         /// </summary>
         public class MatcherEnumerator : IEnumerator<Matcher>
         {
@@ -206,22 +205,17 @@ namespace OrbintSoft.Yauaa.Analyze
                 }
             }
 
-            /// <summary>
-            /// Gets the Current.
-            /// </summary>
+            /// <inheritdoc/>
             object IEnumerator.Current => this.Current;
 
             /// <summary>
-            /// The Dispose.
+            /// Nothing to do.
             /// </summary>
             public void Dispose()
             {
             }
 
-            /// <summary>
-            /// The MoveNext.
-            /// </summary>
-            /// <returns>The <see cref="bool"/>.</returns>
+            /// <inheritdoc/>
             public bool MoveNext()
             {
                 this.offset++;
@@ -235,9 +229,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 }
             }
 
-            /// <summary>
-            /// The Reset.
-            /// </summary>
+            /// <inheritdoc/>
             public void Reset()
             {
                 this.offset = -1;

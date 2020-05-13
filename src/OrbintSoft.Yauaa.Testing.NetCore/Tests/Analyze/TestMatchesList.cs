@@ -62,10 +62,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             next.Should().BeFalse();
             match1.Key.Should().Be("one");
             match1.Value.Should().Be("two");
-            match1.GetResult().Should().BeNull();
+            match1.Result.Should().BeNull();
             match2.Key.Should().Be("three");
             match2.Value.Should().Be("four");
-            match2.GetResult().Should().BeNull();
+            match2.Result.Should().BeNull();
         }
 
         /// <summary>
@@ -88,33 +88,6 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
             iterator.MoveNext().Should().BeFalse();
             var a = new Action(() => { var c = iterator.Current; }); 
             a.Should().Throw<IndexOutOfRangeException>();
-        }
-
-        /// <summary>
-        /// For now Add is not supported, as in Java library, but I don't like this kind of partial implementation, I should implement it in future.
-        /// </summary>
-        [Fact]
-        public void TestUnsupportedAdd()
-        {
-            new MatchesList(1).Invoking(m => m.Add(null)).Should().Throw<NotImplementedException>();
-        }
-
-        /// <summary>
-        /// For now Remove is not supported, as in Java library, but I don't like this kind of partial implementation, I should implement it in future.
-        /// </summary>
-        [Fact]
-        public void TestUnsupportedRemove()
-        {
-            new MatchesList(1).Invoking(m => m.Remove(null)).Should().Throw<NotImplementedException>();
-        }
-
-        /// <summary>
-        /// For now Contains is not supported, as in Java library, but I don't like this kind of partial implementation, I should implement it in future.
-        /// </summary>
-        [Fact]
-        public void TestUnsupportedContains()
-        {
-            new MatchesList(1).Invoking(m => m.Contains(null)).Should().Throw<NotImplementedException>();
-        }
+        }       
     }
 }
