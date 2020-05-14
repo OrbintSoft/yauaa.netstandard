@@ -44,7 +44,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 	<RepositoryUrl>https://github.com/OrbintSoft/yauaa.netstandard</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<NoPackageAnalysis>false</NoPackageAnalysis>
-	<MinClientVersion>4.0</MinClientVersion>
+	<MinClientVersion>4.1</MinClientVersion>
 	<IncludeBuildOutput>true</IncludeBuildOutput>
 	<IncludeContentInPack>true</IncludeContentInPack>
 	<BuildOutputTargetFolder></BuildOutputTargetFolder>
