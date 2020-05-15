@@ -1,4 +1,4 @@
-﻿$java = 'java'
+﻿$java = 'java.exe'
 if (-Not (Get-Command $java -ErrorAction SilentlyContinue)) 
 { 
 	echo "Java not found, probably enviroment path is not set"
@@ -6,7 +6,7 @@ if (-Not (Get-Command $java -ErrorAction SilentlyContinue))
 		echo "JAVA_HOME is not set, it impossible to compile"
 		exit -2
 	} else {
-		$java = "$($env:JAVA_HOME)\java"
+		$java = "$($env:JAVA_HOME)\java.exe"
 		if (-Not (Get-Command $java -ErrorAction SilentlyContinue)) 
 		{
 			echo "Java not found, it impossible to compile"

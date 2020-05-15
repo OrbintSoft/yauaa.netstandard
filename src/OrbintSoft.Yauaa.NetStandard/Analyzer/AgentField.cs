@@ -1,4 +1,29 @@
-﻿namespace OrbintSoft.Yauaa.Analyzer
+﻿//-----------------------------------------------------------------------
+// <copyright file="AgentField.cs" company="OrbintSoft">
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
+//
+//   Original Author and License:
+//
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//   https://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+// <author>Stefano Balzarotti, Niels Basjes</author>
+// <date>2020, 05, 14, 19:47</date>
+//-----------------------------------------------------------------------
+namespace OrbintSoft.Yauaa.Analyzer
 {
     using System;
 
@@ -24,7 +49,7 @@
         }
 
         /// <summary>
-        /// Gets or sets the Confidence.
+        /// Gets or sets the internal Confidence.
         /// </summary>
         internal long Confidence { get; set; }
 
@@ -53,7 +78,6 @@
             return this.Confidence == other.Confidence &&
                 Equals(this.defaultValue, other.defaultValue) &&
                 Equals(this.Value, other.Value);
-
         }
 
         /// <inheritdoc>/>.
@@ -68,12 +92,13 @@
         }
 
         /// <summary>
-        /// The GetConfidence.
+        /// Gets the Confidence, default -1.
+        /// Higher is better, if less than 0 not realiable.
         /// </summary>
-        /// <returns>The <see cref="long"/>.</returns>
+        /// <returns>The value.</returns>
         public long GetConfidence()
         {
-            if (this.Value == null)
+            if (this.Value is null)
             {
                 return -1; // Lie in case the value was wiped.
             }
@@ -81,26 +106,23 @@
             return this.Confidence;
         }
 
-        /// <summary>
-        /// The GetHashCode.
-        /// </summary>
-        /// <returns>The <see cref="int"/>.</returns>
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return ValueTuple.Create(this.defaultValue, this.Value, this.Confidence).GetHashCode();
         }
 
         /// <summary>
-        /// The GetValue.
+        /// Get the value of the field.
         /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <returns>The value.</returns>
         public string GetValue()
         {
             return this.Value ?? this.defaultValue;
         }
 
         /// <summary>
-        /// The Reset.
+        /// Resets the field with default values.
         /// </summary>
         public void Reset()
         {
@@ -109,27 +131,28 @@
         }
 
         /// <summary>
-        /// The SetValue.
+        /// Sets the value using another field.
+        /// This is done only if confidence is better.
         /// </summary>
-        /// <param name="field">The field<see cref="AgentField"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="field">The field.</param>
+        /// <returns>True if set..</returns>
         public bool SetValue(IAgentField field)
         {
             return this.SetValue(field.GetValue(), field.GetConfidence());
         }
 
         /// <summary>
-        /// The SetValue.
+        /// sets a new value with confidence, the new value is set only if the confidence is better.
         /// </summary>
-        /// <param name="newValue">The newValue<see cref="string"/>.</param>
-        /// <param name="newConfidence">The newConfidence<see cref="long"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="newValue">The new value.</param>
+        /// <param name="newConfidence">The new confidence.</param>
+        /// <returns>True if value has been set.</returns>
         public bool SetValue(string newValue, long newConfidence)
         {
             if (newConfidence > this.Confidence)
             {
                 this.Confidence = newConfidence;
-                if (UserAgent.NULL_VALUE.Equals(newValue))
+                if (DefaultUserAgentFields.NULL_VALUE.Equals(newValue))
                 {
                     this.Value = this.defaultValue;
                 }
@@ -145,15 +168,15 @@
         }
 
         /// <summary>
-        /// The SetValueForced.
+        /// Force set a new value with confidence, value is set without cheking confidence.
         /// </summary>
-        /// <param name="newValue">The newValue<see cref="string"/>.</param>
-        /// <param name="newConfidence">The newConfidence<see cref="long"/>.</param>
+        /// <param name="newValue">The new value.</param>
+        /// <param name="newConfidence">The new confidence.</param>
         public void SetValueForced(string newValue, long newConfidence)
         {
             this.Confidence = newConfidence;
 
-            if (UserAgent.NULL_VALUE.Equals(newValue))
+            if (DefaultUserAgentFields.NULL_VALUE.Equals(newValue))
             {
                 this.Value = this.defaultValue;
             }
@@ -163,18 +186,15 @@
             }
         }
 
-        /// <summary>
-        /// The ToString.
-        /// </summary>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <inheritdoc/>
         public override string ToString()
         {
-            if (this.defaultValue == null)
+            if (this.defaultValue is null)
             {
-                return "{ value:'" + this.Value + "', confidence:'" + this.Confidence + "', default:null }";
+                return $"{{ value:'{this.Value}', confidence:'{this.Confidence}', default:null }}";
             }
 
-            return "{ value:'" + this.Value + "', confidence:'" + this.Confidence + "', default:'" + this.defaultValue + "' }";
+            return $"{{ value:'{this.Value}', confidence:'{this.Confidence}', default:'{this.defaultValue}' }}";
         }
     }
 }

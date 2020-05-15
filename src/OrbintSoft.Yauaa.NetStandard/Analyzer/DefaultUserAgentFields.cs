@@ -1,4 +1,28 @@
-﻿namespace OrbintSoft.Yauaa.Analyzer
+﻿//-----------------------------------------------------------------------
+// <copyright file="DefaultUserAgentFields.cs" company="OrbintSoft">
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
+//
+//   Original Author and License:
+//
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
+//
+//   https://www.apache.org/licenses/LICENSE-2.0
+//
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
+// </copyright>
+// <author>Stefano Balzarotti, Niels Basjes</author>
+// <date>2020, 05, 15, 00:30</date>
+namespace OrbintSoft.Yauaa.Analyzer
 {
     /// <summary>
     /// In this class you can find the default field names costants.
@@ -81,237 +105,237 @@
         public const string DEVICE_BRAND = "DeviceBrand";
 
         /// <summary>
-        /// This field represents a device class (phone, tablet, TV,...)
+        /// This field represents a device class (phone, tablet, TV,...).
         /// </summary>
         public const string DEVICE_CLASS = "DeviceClass";
 
         /// <summary>
-        /// This field represents a device class (phone, tablet, TV,...)
+        /// This field represents a device cpu (Intel, ARM,...).
         /// </summary>
         public const string DEVICE_CPU = "DeviceCpu";
 
         /// <summary>
-        /// Defines the DEVICE_CPU_BITS.
+        /// This fields repesents cpu bits (16, 32, 64,...)
         /// </summary>
         public const string DEVICE_CPU_BITS = "DeviceCpuBits";
 
         /// <summary>
-        /// Defines the DEVICE_FIRMWARE_VERSION.
+        /// This fields repesents the device firmware version.
         /// </summary>
         public const string DEVICE_FIRMWARE_VERSION = "DeviceFirmwareVersion";
 
         /// <summary>
-        /// Defines the DEVICE_NAME.
+        /// This fields repesents the device name (Desktop, iPhone, iMac, Samsung TV ...)
         /// </summary>
         public const string DEVICE_NAME = "DeviceName";
 
         /// <summary>
-        /// Defines the DEVICE_VERSION.
+        /// This fields repesents the device version.
         /// </summary>
         public const string DEVICE_VERSION = "DeviceVersion";
 
         /// <summary>
-        /// Defines the FACEBOOK_CARRIER.
+        /// This fields repesents the facebook carrier (OrangeB, TelfortNL, ...)
         /// </summary>
         public const string FACEBOOK_CARRIER = "FacebookCarrier";
 
         /// <summary>
-        /// Defines the FACEBOOK_DEVICE_CLASS.
+        /// This fields repesents the facebook device class (same as device class, but provided by facebook).
         /// </summary>
         public const string FACEBOOK_DEVICE_CLASS = "FacebookDeviceClass";
 
         /// <summary>
-        /// Defines the FACEBOOK_DEVICE_NAME.
+        /// This fields repesents the facebook device name (same as device name, but provided by facebook).
         /// </summary>
         public const string FACEBOOK_DEVICE_NAME = "FacebookDeviceName";
 
         /// <summary>
-        /// Defines the FACEBOOK_DEVICE_VERSION.
+        /// This fields repesents the facebook device version (same as device version, but provided by facebook).
         /// </summary>
         public const string FACEBOOK_DEVICE_VERSION = "FacebookDeviceVersion";
 
         /// <summary>
-        /// Defines the FACEBOOK_F_B_O_P.
+        /// Specific field of facebook user agent.
         /// </summary>
         public const string FACEBOOK_F_B_O_P = "FacebookFBOP";
 
         /// <summary>
-        /// Defines the FACEBOOK_F_B_S_S.
+        /// Specific field of facebook user agent.
         /// </summary>
         public const string FACEBOOK_F_B_S_S = "FacebookFBSS";
 
         /// <summary>
-        /// Defines the FACEBOOK_OPERATING_SYSTEM_NAME.
+        /// This fields repesents the facebook operating system name (same as operating system name, but provided by facebook).
         /// </summary>
         public const string FACEBOOK_OPERATING_SYSTEM_NAME = "FacebookOperatingSystemName";
 
         /// <summary>
-        /// Defines the FACEBOOK_OPERATING_SYSTEM_VERSION.
+        /// This fields repesents the facebook operating system version (same as operating system version, but provided by facebook).
         /// </summary>
         public const string FACEBOOK_OPERATING_SYSTEM_VERSION = "FacebookOperatingSystemVersion";
 
         /// <summary>
-        /// Defines the HACKER_ATTACK_VECTOR.
+        /// This fields repesents the kind of attack vector.
         /// </summary>
         public const string HACKER_ATTACK_VECTOR = "HackerAttackVector";
 
         /// <summary>
-        /// Defines the HACKER_TOOLKIT.
+        /// This fields repesents the name of hacker toolkit.
         /// </summary>
         public const string HACKER_TOOLKIT = "HackerToolkit";
 
         /// <summary>
-        /// Defines the IE_COMPATIBILITY_NAME_VERSION.
+        /// This fields repesents the emulated compatibility name and version of internet explorer.
         /// </summary>
         public const string IE_COMPATIBILITY_NAME_VERSION = "IECompatibilityNameVersion";
 
         /// <summary>
-        /// Defines the IE_COMPATIBILITY_NAME_VERSION_MAJOR.
+        /// This fields repesents the emulated compatibility name and major version of internet explorer.
         /// </summary>
         public const string IE_COMPATIBILITY_NAME_VERSION_MAJOR = "IECompatibilityNameVersionMajor";
 
         /// <summary>
-        /// Defines the IE_COMPATIBILITY_VERSION.
+        /// This fields repesents the emulated compatibility version of internet explorer.
         /// </summary>
         public const string IE_COMPATIBILITY_VERSION = "IECompatibilityVersion";
 
         /// <summary>
-        /// Defines the IE_COMPATIBILITY_VERSION_MAJOR.
+        /// This fields repesents the emulated compatibility major version of internet explorer.
         /// </summary>
         public const string IE_COMPATIBILITY_VERSION_MAJOR = "IECompatibilityVersionMajor";
 
         /// <summary>
-        /// Defines the KOBO_AFFILIATE.
+        /// This fields repesents the name of kobo affiliate.
         /// </summary>
         public const string KOBO_AFFILIATE = "KoboAffiliate";
 
         /// <summary>
-        /// Defines the KOBO_PLATFORM_ID.
+        /// This fields repesents the kobo platform id.
         /// </summary>
         public const string KOBO_PLATFORM_ID = "KoboPlatformId";
 
         /// <summary>
-        /// Defines the LAYOUT_ENGINE_BUILD.
+        /// This fields repesents the layout engine build number.
         /// </summary>
         public const string LAYOUT_ENGINE_BUILD = "LayoutEngineBuild";
 
         /// <summary>
-        /// Defines the LAYOUT_ENGINE_CLASS.
+        /// This fields repesents the layout engine class (Browser, cloud, tool).
         /// </summary>
         public const string LAYOUT_ENGINE_CLASS = "LayoutEngineClass";
 
         /// <summary>
-        /// Defines the LAYOUT_ENGINE_NAME.
+        /// This fields repesents the layout engine name (Presto, Webkit, Trident, ...).
         /// </summary>
         public const string LAYOUT_ENGINE_NAME = "LayoutEngineName";
 
         /// <summary>
-        /// Defines the LAYOUT_ENGINE_NAME_VERSION.
+        /// This fields repesents the layout engine name and version.
         /// </summary>
         public const string LAYOUT_ENGINE_NAME_VERSION = "LayoutEngineNameVersion";
 
         /// <summary>
-        /// Defines the LAYOUT_ENGINE_NAME_VERSION_MAJOR.
+        /// This fields repesents the layout engine version major.
         /// </summary>
         public const string LAYOUT_ENGINE_NAME_VERSION_MAJOR = "LayoutEngineNameVersionMajor";
 
         /// <summary>
-        /// Defines the LAYOUT_ENGINE_VERSION.
+        /// This fields repesents the layout engine version.
         /// </summary>
         public const string LAYOUT_ENGINE_VERSION = "LayoutEngineVersion";
 
         /// <summary>
-        /// Defines the LAYOUT_ENGINE_VERSION_MAJOR.
+        /// This fields repesents the layout engine version major.
         /// </summary>
         public const string LAYOUT_ENGINE_VERSION_MAJOR = "LayoutEngineVersionMajor";
 
         /// <summary>
-        /// Defines the NULL_VALUE.
+        /// For internal use (null user agent).
         /// </summary>
         public const string NULL_VALUE = "<<<null>>>";
 
         /// <summary>
-        /// Defines the OPERATING_SYSTEM_CLASS.
+        /// This fields repesents the Operating System class (Mobile, Desktop, ...).
         /// </summary>
         public const string OPERATING_SYSTEM_CLASS = "OperatingSystemClass";
 
         /// <summary>
-        /// Defines the OPERATING_SYSTEM_NAME.
+        /// This fields repesents the Operating System name.
         /// </summary>
         public const string OPERATING_SYSTEM_NAME = "OperatingSystemName";
 
         /// <summary>
-        /// Defines the OPERATING_SYSTEM_NAME_VERSION.
+        /// This fields repesents the Operating System name and version.
         /// </summary>
         public const string OPERATING_SYSTEM_NAME_VERSION = "OperatingSystemNameVersion";
 
         /// <summary>
-        /// Defines the OPERATING_SYSTEM_NAME_VERSION_MAJOR.
+        /// This fields repesents the Operating System name and major version.
         /// </summary>
         public const string OPERATING_SYSTEM_NAME_VERSION_MAJOR = "OperatingSystemNameVersionMajor";
 
         /// <summary>
-        /// Defines the OPERATING_SYSTEM_VERSION.
+        /// This fields repesents the Operating System version.
         /// </summary>
         public const string OPERATING_SYSTEM_VERSION = "OperatingSystemVersion";
 
         /// <summary>
-        /// Defines the OPERATING_SYSTEM_VERSION_BUILD.
+        /// This fields repesents the Operating System version build.
         /// </summary>
         public const string OPERATING_SYSTEM_VERSION_BUILD = "OperatingSystemVersionBuild";
 
         /// <summary>
-        /// Defines the OPERATING_SYSTEM_VERSION_MAJOR.
+        /// This fields repesents the Operating System major version.
         /// </summary>
         public const string OPERATING_SYSTEM_VERSION_MAJOR = "OperatingSystemVersionMajor";
 
         /// <summary>
-        /// Defines the SET_ALL_FIELDS.
+        /// For internal use (used to retrieve all fields).
         /// </summary>
         public const string SET_ALL_FIELDS = "__Set_ALL_Fields__";
 
         /// <summary>
-        /// Defines the SYNTAX_ERROR.
+        /// For internal use (used to retrieve the syntax error in user agent string).
         /// </summary>
         public const string SYNTAX_ERROR = "__SyntaxError__";
 
         /// <summary>
-        /// Defines the UNKNOWN_VALUE.
+        /// This fields repesents an unnknow/non categorized value retrieved from the user agent.
         /// </summary>
         public const string UNKNOWN_VALUE = "Unknown";
 
         /// <summary>
-        /// Defines the UNKNOWN_VERSION.
+        /// This fields repesents an unnknow/non categorized version retrieved from the user agent.
         /// </summary>
         public const string UNKNOWN_VERSION = "??";
 
         /// <summary>
-        /// Defines the UNKNOWN_NAME_VERSION.
+        /// This fields repesents an unnknow/non categorized name and version retrieved from the user agent.
         /// </summary>
         public const string UNKNOWN_NAME_VERSION = "Unknown ??";
 
         /// <summary>
-        /// Defines the USERAGENT_FIELDNAME.
+        /// Used to retrieve the full user agent.
         /// </summary>
         public const string USERAGENT_FIELDNAME = "Useragent";
 
         /// <summary>
-        /// Defines the WEBVIEW_APP_NAME.
+        /// This fields repesents the name of the app that is running the webview.
         /// </summary>
         public const string WEBVIEW_APP_NAME = "WebviewAppName";
 
         /// <summary>
-        /// Defines the WEBVIEW_APP_NAME_VERSION_MAJOR.
+        /// This fields repesents the name and version of the app that is running the webview.
         /// </summary>
         public const string WEBVIEW_APP_NAME_VERSION_MAJOR = "WebviewAppNameVersionMajor";
 
         /// <summary>
-        /// Defines the WEBVIEW_APP_VERSION.
+        /// This fields repesents the version of the app that is running the webview.
         /// </summary>
         public const string WEBVIEW_APP_VERSION = "WebviewAppVersion";
 
         /// <summary>
-        /// Defines the WEBVIEW_APP_VERSION_MAJOR.
+        /// This fields repesents the major version of the app that is running the webview.
         /// </summary>
         public const string WEBVIEW_APP_VERSION_MAJOR = "WebviewAppVersionMajor";
     }

@@ -21,74 +21,86 @@ config:
 
 - matcher:
     require:
-    - 'agent.product.comments.entry.product.name="Googlebot"'
-    - 'IsNull[agent.product.comments.entry.url="http://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url="https://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url~"googlebot.com"]'
+    - 'agent.text="Googlebot"'
     extract:
-    - 'DeviceClass                         :   3201 : "Robot Imitator"'
-    - 'DeviceName                          :   3201 : "Googlebot Imitator"'
-    - 'OperatingSystemClass                :   3201 : "Cloud"'
-    - 'OperatingSystemName                 :   3201 : "Cloud"'
-    - 'OperatingSystemVersion              :   3201 : "??"'
-    - 'LayoutEngineName                    :   3201 : "Googlebot Imitator"'
-    - 'AgentName                           :   3201 : "Googlebot Imitator"'
+    - 'DeviceClass                         :   320100 : "Robot Imitator"'
+    - 'DeviceName                          :   320100 : "Googlebot Imitator"'
+    - 'OperatingSystemClass                :   320100 : "Cloud"'
+    - 'OperatingSystemName                 :   320100 : "Cloud"'
+    - 'OperatingSystemVersion              :   320100 : "??"'
+    - 'LayoutEngineName                    :   320100 : "Googlebot Imitator"'
+    - 'AgentName                           :   320100 : "Googlebot Imitator"'
+
+- matcher:
+    require:
+    - 'agent.(1-10)product.(1-2)comments.(1-8)entry.(1-4)product.name="Googlebot"'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="http://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="https://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url~"googlebot.com"]'
+    extract:
+    - 'DeviceClass                         :   320100 : "Robot Imitator"'
+    - 'DeviceName                          :   320100 : "Googlebot Imitator"'
+    - 'OperatingSystemClass                :   320100 : "Cloud"'
+    - 'OperatingSystemName                 :   320100 : "Cloud"'
+    - 'OperatingSystemVersion              :   320100 : "??"'
+    - 'LayoutEngineName                    :   320100 : "Googlebot Imitator"'
+    - 'AgentName                           :   320100 : "Googlebot Imitator"'
 
 
 - matcher:
     require:
-    - 'agent.product.comments.entry.product.name="Googlebot"'
-    - 'IsNull[agent.product.comments.entry.url="http://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url="https://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url~"googlebot.com"]'
+    - 'agent.(1-10)product.(1-2)comments.(1-8)entry.(1-4)product.name="Googlebot"'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="http://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="https://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url~"googlebot.com"]'
     variable:
-    - 'RealAgent: agent.(1)product.(1)name!="Mozilla"'
+    - 'RealAgent: agent.(1)product.name!="Mozilla"'
     extract:
-    - 'AgentName                           :   3202 : @RealAgent'
-    - 'AgentVersion                        :   3202 : @RealAgent^.version'
+    - 'AgentName                           :   320200 : @RealAgent'
+    - 'AgentVersion                        :   320200 : @RealAgent^.version'
 
 
 - matcher:
     require:
-    - 'agent.product.comments.entry.product.name="Googlebot"'
-    - 'IsNull[agent.product.comments.entry.url="http://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url="https://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url~"googlebot.com"]'
+    - 'agent.(1-10)product.(1-2)comments.(1-8)entry.(1-4)product.name="Googlebot"'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="http://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="https://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url~"googlebot.com"]'
     variable:
-    - 'RealAgent: agent.(1)product.comments.entry.product.(1)name!="GoogleBot"'
+    - 'RealAgent: agent.(1)product.comments.entry.product.name!="GoogleBot"'
     extract:
-    - 'AgentName                           :   3202 : @RealAgent'
-    - 'AgentVersion                        :   3202 : @RealAgent^.version'
+    - 'AgentName                           :   320200 : @RealAgent'
+    - 'AgentVersion                        :   320200 : @RealAgent^.version'
 
 
 - matcher:
     require:
     - 'agent.product.name="Googlebot"'
-    - 'IsNull[agent.product.comments.entry.url="http://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url="https://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="http://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="https://www.google.com/bot.html"]'
     extract:
-    - 'DeviceClass                         :   3201 : "Robot Imitator"'
-    - 'DeviceName                          :   3201 : "Googlebot Imitator"'
-    - 'OperatingSystemClass                :   3201 : "Cloud"'
-    - 'OperatingSystemName                 :   3201 : "Cloud"'
-    - 'OperatingSystemVersion              :   3201 : "??"'
-    - 'LayoutEngineName                    :   3201 : "Googlebot Imitator"'
-    - 'AgentName                           :   3201 : "Googlebot Imitator"'
+    - 'DeviceClass                         :   320100 : "Robot Imitator"'
+    - 'DeviceName                          :   320100 : "Googlebot Imitator"'
+    - 'OperatingSystemClass                :   320100 : "Cloud"'
+    - 'OperatingSystemName                 :   320100 : "Cloud"'
+    - 'OperatingSystemVersion              :   320100 : "??"'
+    - 'LayoutEngineName                    :   320100 : "Googlebot Imitator"'
+    - 'AgentName                           :   320100 : "Googlebot Imitator"'
 
 - matcher:
     require:
     - 'agent.product.name="Googlebot"'
-    - 'IsNull[agent.product.comments.entry.url="http://www.google.com/bot.html"]'
-    - 'IsNull[agent.product.comments.entry.url="https://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="http://www.google.com/bot.html"]'
+    - 'IsNull[agent.(1-10)product.(1-2)comments.(1-8)entry.(1-2)url="https://www.google.com/bot.html"]'
     extract:
-    - 'DeviceClass                         :   3201 : "Robot Imitator"'
-    - 'DeviceName                          :   3201 : "Googlebot Imitator"'
-    - 'OperatingSystemClass                :   3201 : "Cloud"'
-    - 'OperatingSystemName                 :   3201 : "Cloud"'
-    - 'OperatingSystemVersion              :   3201 : "??"'
-    - 'LayoutEngineName                    :   3201 : "Googlebot Imitator"'
-    - 'AgentName                           :   3203 : agent.text'
-    - 'AgentVersion                        :   3203 : "??"'
+    - 'DeviceClass                         :   320100 : "Robot Imitator"'
+    - 'DeviceName                          :   320100 : "Googlebot Imitator"'
+    - 'OperatingSystemClass                :   320100 : "Cloud"'
+    - 'OperatingSystemName                 :   320100 : "Cloud"'
+    - 'OperatingSystemVersion              :   320100 : "??"'
+    - 'LayoutEngineName                    :   320100 : "Googlebot Imitator"'
+    - 'AgentName                           :   320300 : agent.text'
+    - 'AgentVersion                        :   320300 : "??"'
 
 
 - matcher:
@@ -96,14 +108,14 @@ config:
     # Although this is a domain related to the GoogleBot, this is NOT used by Google this way.
     - 'agent.product.comments.entry.url~"googlebot.com"'
     extract:
-    - 'DeviceClass                         :   3201 : "Robot Imitator"'
-    - 'DeviceName                          :   3201 : "Googlebot Imitator"'
-    - 'DeviceBrand                         :   3201 : "Unknown"'
-    - 'OperatingSystemClass                :   3201 : "Cloud"'
-    - 'OperatingSystemName                 :   3201 : "Cloud"'
-    - 'OperatingSystemVersion              :   3201 : "??"'
-    - 'LayoutEngineName                    :   3201 : "Googlebot Imitator"'
-    - 'AgentName                           :   3201 : "Googlebot Imitator"'
+    - 'DeviceClass                         :   320100 : "Robot Imitator"'
+    - 'DeviceName                          :   320100 : "Googlebot Imitator"'
+    - 'DeviceBrand                         :   320100 : "Unknown"'
+    - 'OperatingSystemClass                :   320100 : "Cloud"'
+    - 'OperatingSystemName                 :   320100 : "Cloud"'
+    - 'OperatingSystemVersion              :   320100 : "??"'
+    - 'LayoutEngineName                    :   320100 : "Googlebot Imitator"'
+    - 'AgentName                           :   320100 : "Googlebot Imitator"'
 
 
 # Robots imitating googlebot
@@ -271,9 +283,35 @@ config:
       AgentNameVersion                     : 'Googlebot Imitator 2.1'
       AgentNameVersionMajor                : 'Googlebot Imitator 2'
 
-#- test: #TODO: Implement
-#    input:
-#      user_agent_string: 'Googlebot'
+
+- test:
+    input:
+      user_agent_string: 'Googlebot'
+    expected:
+      DeviceClass                          : 'Robot Imitator'
+      DeviceName                           : 'Googlebot Imitator'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Googlebot Imitator'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'Googlebot Imitator ??'
+      LayoutEngineNameVersionMajor         : 'Googlebot Imitator ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Googlebot Imitator'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'Googlebot Imitator ??'
+      AgentNameVersionMajor                : 'Googlebot Imitator ??'
+      HackerAttackVector                   : 'Unknown'
+      HackerToolkit                        : 'Unknown'
+
 
 - test:
     input:
@@ -690,8 +728,8 @@ config:
 #      user_agent_string: 'Googlebot/Nutch-1.7'
 #    expected:
 #      DeviceClass                          : 'Robot Imitator'
-#      DeviceName                           : 'Google BOT Imitator'
-#      DeviceBrand                          : 'Google'
+#      DeviceName                           : 'Googlebot Imitator'
+#      DeviceBrand                          : 'Apache'
 #      OperatingSystemClass                 : 'Cloud'
 #      OperatingSystemName                  : 'Cloud'
 #      OperatingSystemVersion               : '??'

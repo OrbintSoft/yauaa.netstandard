@@ -4,9 +4,9 @@
     <Company>OrbintSoft</Company>
     <RootNamespace>OrbintSoft.Yauaa</RootNamespace>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>5.13-alpha.1</Version>
-    <AssemblyVersion>5.13.1.1</AssemblyVersion>
-    <FileVersion>5.13.1.1</FileVersion>
+    <Version>5.13-alpha.2</Version>
+    <AssemblyVersion>5.13.1.2</AssemblyVersion>
+    <FileVersion>5.13.1.2</FileVersion>
     <Configurations>Debug;Release;Verbose</Configurations>
     <LangVersion>7.3</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -137,10 +137,12 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <None Remove="YamlResources\UserAgents\Oppo.yaml" />
     <None Remove="YamlResources\UserAgents\OtherOS.yaml" />
     <None Remove="YamlResources\UserAgents\Otter.yaml" />
+	<None Remove="YamlResources\UserAgents\Robots.yaml" />
+	<None Remove="YamlResources\UserAgents\RobotBaseRules.yaml" />
     <None Remove="YamlResources\UserAgents\Robot-Imitators.yaml" />
     <None Remove="YamlResources\UserAgents\Robots-Bing.yaml" />
-    <None Remove="YamlResources\UserAgents\Robots-Google.yaml" />
-    <None Remove="YamlResources\UserAgents\Robots.yaml" />
+    <None Remove="YamlResources\UserAgents\Robots-Google.yaml" />    
+	<None Remove="YamlResources\UserAgents\Robots-PriceSpiders.yaml" />    
     <None Remove="YamlResources\UserAgents\Safari.yaml" />
     <None Remove="YamlResources\UserAgents\Samsung.yaml" />
     <None Remove="YamlResources\UserAgents\SecurityFlag.yaml" />
@@ -447,7 +449,17 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
+	<Content Include="YamlResources\UserAgents\RobotBaseRules.yaml">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
     <Content Include="YamlResources\UserAgents\Robot-Imitators.yaml">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Pack>true</Pack>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+    </Content>
+	<Content Include="YamlResources\UserAgents\Robots.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
@@ -462,7 +474,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
     </Content>
-    <Content Include="YamlResources\UserAgents\Robots.yaml">
+	<Content Include="YamlResources\UserAgents\Robots-PriceSpiders.yaml">
 		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<Pack>true</Pack>
 		<PackageCopyToOutput>true</PackageCopyToOutput>
@@ -619,7 +631,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
     <Exec Command="powershell.exe -ExecutionPolicy Unrestricted -file $(ProjectDir)pre-build.ps1" />
   </Target>
 </Project>
