@@ -19,7 +19,7 @@ steps:
   displayName: 'Install .NET 3.0.x SDK'
   inputs:
     packageType: 'sdk'
-    performMultiLevelLookup: true
+    installationPath: $(Agent.ToolsDirectory)/dotnet
     version: '3.0.x'
 - task: NuGetToolInstaller@1
   displayName: 'Install .Nuget 5.5'
@@ -33,7 +33,14 @@ steps:
     restoreSolution: '**/*.sln'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
-  inputs:
+  displayName: 'Build all projects'
+  inputs:    
     command: 'build'
     arguments: '--configuration Release --no-restore --no-incremental'
     projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run Tests'
+  inputs:
+    command: 'test'
+    projects: '**/OrbintSoft.Yauaa.Testing.NetCore.csproj'
