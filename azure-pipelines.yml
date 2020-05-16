@@ -19,7 +19,7 @@ steps:
   displayName: 'Install .NET 3.0.x SDK'
   inputs:
     packageType: 'sdk'
-    performMultiLevelLookup: true
+    installationPath: $(Agent.ToolsDirectory)/dotnet
     version: '3.0.x'
 - task: NuGetToolInstaller@1
   displayName: 'Install .Nuget 5.5'
