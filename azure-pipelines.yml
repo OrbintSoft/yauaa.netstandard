@@ -37,3 +37,12 @@ steps:
     command: 'build'
     arguments: '--configuration Release --no-restore --no-incremental'
     projects: '**/*.csproj'
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\bin\Release\**\*test*.dll
+      !**\obj\**
+      !**\xunit.runner.visualstudio.testadapter.dll
+      !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+    searchFolder: '$(System.DefaultWorkingDirectory)'
