@@ -424,27 +424,27 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public static readonly string[] StandardFields =
         {
-            DEVICE_CLASS,
-            DEVICE_BRAND,
-            DEVICE_NAME,
-            OPERATING_SYSTEM_CLASS,
-            OPERATING_SYSTEM_NAME,
-            OPERATING_SYSTEM_VERSION,
-            OPERATING_SYSTEM_VERSION_MAJOR,
-            OPERATING_SYSTEM_NAME_VERSION,
-            OPERATING_SYSTEM_NAME_VERSION_MAJOR,
-            LAYOUT_ENGINE_CLASS,
-            LAYOUT_ENGINE_NAME,
-            LAYOUT_ENGINE_VERSION,
-            LAYOUT_ENGINE_VERSION_MAJOR,
-            LAYOUT_ENGINE_NAME_VERSION,
-            LAYOUT_ENGINE_NAME_VERSION_MAJOR,
-            AGENT_CLASS,
-            AGENT_NAME,
-            AGENT_VERSION,
-            AGENT_VERSION_MAJOR,
-            AGENT_NAME_VERSION,
-            AGENT_NAME_VERSION_MAJOR,
+            DefaultUserAgentFields.DEVICE_CLASS,
+            DefaultUserAgentFields.DEVICE_BRAND,
+            DefaultUserAgentFields.DEVICE_NAME,
+            DefaultUserAgentFields.OPERATING_SYSTEM_CLASS,
+            DefaultUserAgentFields.OPERATING_SYSTEM_NAME,
+            DefaultUserAgentFields.OPERATING_SYSTEM_VERSION,
+            DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_MAJOR,
+            DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION,
+            DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION_MAJOR,
+            DefaultUserAgentFields.LAYOUT_ENGINE_CLASS,
+            DefaultUserAgentFields.LAYOUT_ENGINE_NAME,
+            DefaultUserAgentFields.LAYOUT_ENGINE_VERSION,
+            DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR,
+            DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION,
+            DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION_MAJOR,
+            DefaultUserAgentFields.AGENT_CLASS,
+            DefaultUserAgentFields.AGENT_NAME,
+            DefaultUserAgentFields.AGENT_VERSION,
+            DefaultUserAgentFields.AGENT_VERSION_MAJOR,
+            DefaultUserAgentFields.AGENT_NAME_VERSION,
+            DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR,
         };
 
         /// <summary>
@@ -473,72 +473,72 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         static UserAgent()
         {
-            PreSortedFieldList.Add(DEVICE_CLASS);
-            PreSortedFieldList.Add(DEVICE_NAME);
-            PreSortedFieldList.Add(DEVICE_BRAND);
-            PreSortedFieldList.Add(DEVICE_CPU);
-            PreSortedFieldList.Add(DEVICE_CPU_BITS);
-            PreSortedFieldList.Add(DEVICE_FIRMWARE_VERSION);
-            PreSortedFieldList.Add(DEVICE_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.DEVICE_CLASS);
+            PreSortedFieldList.Add(DefaultUserAgentFields.DEVICE_NAME);
+            PreSortedFieldList.Add(DefaultUserAgentFields.DEVICE_BRAND);
+            PreSortedFieldList.Add(DefaultUserAgentFields.DEVICE_CPU);
+            PreSortedFieldList.Add(DefaultUserAgentFields.DEVICE_CPU_BITS);
+            PreSortedFieldList.Add(DefaultUserAgentFields.DEVICE_FIRMWARE_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.DEVICE_VERSION);
 
-            PreSortedFieldList.Add(OPERATING_SYSTEM_CLASS);
-            PreSortedFieldList.Add(OPERATING_SYSTEM_NAME);
-            PreSortedFieldList.Add(OPERATING_SYSTEM_VERSION);
-            PreSortedFieldList.Add(OPERATING_SYSTEM_VERSION_MAJOR);
-            PreSortedFieldList.Add(OPERATING_SYSTEM_NAME_VERSION);
-            PreSortedFieldList.Add(OPERATING_SYSTEM_NAME_VERSION_MAJOR);
-            PreSortedFieldList.Add(OPERATING_SYSTEM_VERSION_BUILD);
+            PreSortedFieldList.Add(DefaultUserAgentFields.OPERATING_SYSTEM_CLASS);
+            PreSortedFieldList.Add(DefaultUserAgentFields.OPERATING_SYSTEM_NAME);
+            PreSortedFieldList.Add(DefaultUserAgentFields.OPERATING_SYSTEM_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_BUILD);
 
-            PreSortedFieldList.Add(LAYOUT_ENGINE_CLASS);
-            PreSortedFieldList.Add(LAYOUT_ENGINE_NAME);
-            PreSortedFieldList.Add(LAYOUT_ENGINE_VERSION);
-            PreSortedFieldList.Add(LAYOUT_ENGINE_VERSION_MAJOR);
-            PreSortedFieldList.Add(LAYOUT_ENGINE_NAME_VERSION);
-            PreSortedFieldList.Add(LAYOUT_ENGINE_NAME_VERSION_MAJOR);
-            PreSortedFieldList.Add(LAYOUT_ENGINE_BUILD);
+            PreSortedFieldList.Add(DefaultUserAgentFields.LAYOUT_ENGINE_CLASS);
+            PreSortedFieldList.Add(DefaultUserAgentFields.LAYOUT_ENGINE_NAME);
+            PreSortedFieldList.Add(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.LAYOUT_ENGINE_BUILD);
 
-            PreSortedFieldList.Add(AGENT_CLASS);
-            PreSortedFieldList.Add(AGENT_NAME);
-            PreSortedFieldList.Add(AGENT_VERSION);
-            PreSortedFieldList.Add(AGENT_VERSION_MAJOR);
-            PreSortedFieldList.Add(AGENT_NAME_VERSION);
-            PreSortedFieldList.Add(AGENT_NAME_VERSION_MAJOR);
-            PreSortedFieldList.Add(AGENT_BUILD);
-            PreSortedFieldList.Add(AGENT_LANGUAGE);
-            PreSortedFieldList.Add(AGENT_LANGUAGE_CODE);
-            PreSortedFieldList.Add(AGENT_INFORMATION_EMAIL);
-            PreSortedFieldList.Add(AGENT_INFORMATION_URL);
-            PreSortedFieldList.Add(AGENT_SECURITY);
-            PreSortedFieldList.Add(AGENT_UUID);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_CLASS);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_NAME);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_NAME_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_BUILD);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_LANGUAGE);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_LANGUAGE_CODE);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_INFORMATION_EMAIL);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_INFORMATION_URL);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_SECURITY);
+            PreSortedFieldList.Add(DefaultUserAgentFields.AGENT_UUID);
 
-            PreSortedFieldList.Add(WEBVIEW_APP_NAME);
-            PreSortedFieldList.Add(WEBVIEW_APP_VERSION);
-            PreSortedFieldList.Add(WEBVIEW_APP_VERSION_MAJOR);
-            PreSortedFieldList.Add(WEBVIEW_APP_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.WEBVIEW_APP_NAME);
+            PreSortedFieldList.Add(DefaultUserAgentFields.WEBVIEW_APP_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.WEBVIEW_APP_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.WEBVIEW_APP_NAME_VERSION_MAJOR);
 
-            PreSortedFieldList.Add(FACEBOOK_CARRIER);
-            PreSortedFieldList.Add(FACEBOOK_DEVICE_CLASS);
-            PreSortedFieldList.Add(FACEBOOK_DEVICE_NAME);
-            PreSortedFieldList.Add(FACEBOOK_DEVICE_VERSION);
-            PreSortedFieldList.Add(FACEBOOK_F_B_O_P);
-            PreSortedFieldList.Add(FACEBOOK_F_B_S_S);
-            PreSortedFieldList.Add(FACEBOOK_OPERATING_SYSTEM_NAME);
-            PreSortedFieldList.Add(FACEBOOK_OPERATING_SYSTEM_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_CARRIER);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_DEVICE_CLASS);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_DEVICE_NAME);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_DEVICE_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_F_B_O_P);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_F_B_S_S);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_OPERATING_SYSTEM_NAME);
+            PreSortedFieldList.Add(DefaultUserAgentFields.FACEBOOK_OPERATING_SYSTEM_VERSION);
 
-            PreSortedFieldList.Add(ANONYMIZED);
+            PreSortedFieldList.Add(DefaultUserAgentFields.ANONYMIZED);
 
-            PreSortedFieldList.Add(HACKER_ATTACK_VECTOR);
-            PreSortedFieldList.Add(HACKER_TOOLKIT);
+            PreSortedFieldList.Add(DefaultUserAgentFields.HACKER_ATTACK_VECTOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.HACKER_TOOLKIT);
 
-            PreSortedFieldList.Add(KOBO_AFFILIATE);
-            PreSortedFieldList.Add(KOBO_PLATFORM_ID);
+            PreSortedFieldList.Add(DefaultUserAgentFields.KOBO_AFFILIATE);
+            PreSortedFieldList.Add(DefaultUserAgentFields.KOBO_PLATFORM_ID);
 
-            PreSortedFieldList.Add(IE_COMPATIBILITY_VERSION);
-            PreSortedFieldList.Add(IE_COMPATIBILITY_VERSION_MAJOR);
-            PreSortedFieldList.Add(IE_COMPATIBILITY_NAME_VERSION);
-            PreSortedFieldList.Add(IE_COMPATIBILITY_NAME_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.IE_COMPATIBILITY_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.IE_COMPATIBILITY_VERSION_MAJOR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.IE_COMPATIBILITY_NAME_VERSION);
+            PreSortedFieldList.Add(DefaultUserAgentFields.IE_COMPATIBILITY_NAME_VERSION_MAJOR);
 
-            PreSortedFieldList.Add(SYNTAX_ERROR);
+            PreSortedFieldList.Add(DefaultUserAgentFields.SYNTAX_ERROR);
         }
 
         /// <summary>
@@ -614,9 +614,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="bool"/>.</returns>
         public static bool IsSystemField(string fieldname)
         {
-            return SET_ALL_FIELDS.Equals(fieldname) ||
-                    SYNTAX_ERROR.Equals(fieldname) ||
-                    USERAGENT_FIELDNAME.Equals(fieldname);
+            return DefaultUserAgentFields.SET_ALL_FIELDS.Equals(fieldname) ||
+                   DefaultUserAgentFields.SYNTAX_ERROR.Equals(fieldname) ||
+                   DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldname);
         }
 
         /// <summary>
@@ -678,7 +678,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="AgentField"/>.</returns>
         public AgentField Get(string fieldName)
         {
-            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            if (DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldName))
             {
                 var agentField = new AgentField(this.userAgentString);
                 agentField.SetValue(this.userAgentString, 0L);
@@ -715,7 +715,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             // This is not a field; this is a special operator.
-            resultSet.Remove(SET_ALL_FIELDS);
+            resultSet.Remove(DefaultUserAgentFields.SET_ALL_FIELDS);
             return resultSet;
         }
 
@@ -748,7 +748,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="long"/>.</returns>
         public long GetConfidence(string fieldName)
         {
-            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            if (DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldName))
             {
                 return 0L;
             }
@@ -785,7 +785,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The parsed value.</returns>
         public string GetValue(string fieldName)
         {
-            if (USERAGENT_FIELDNAME.Equals(fieldName))
+            if (DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldName))
             {
                 return this.userAgentString;
             }
@@ -793,7 +793,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             var field = this.allFields.ContainsKey(fieldName) ? this.allFields[fieldName] : null;
             if (field == null)
             {
-                return UNKNOWN_VALUE;
+                return DefaultUserAgentFields.UNKNOWN_VALUE;
             }
 
             return field.GetValue();
@@ -804,9 +804,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public void ProcessSetAll()
         {
-            if (this.allFields.ContainsKey(SET_ALL_FIELDS))
+            if (this.allFields.ContainsKey(DefaultUserAgentFields.SET_ALL_FIELDS))
             {
-                var setAllField = this.allFields[SET_ALL_FIELDS];
+                var setAllField = this.allFields[DefaultUserAgentFields.SET_ALL_FIELDS];
                 var value = setAllField.GetValue();
                 var confidence = setAllField.Confidence;
                 foreach (var fieldEntry in this.allFields)
@@ -986,7 +986,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             this.HasSyntaxError = true;
             var syntaxError = new AgentField("false");
             syntaxError.SetValue("true", 1);
-            this.allFields[SYNTAX_ERROR] = syntaxError;
+            this.allFields[DefaultUserAgentFields.SYNTAX_ERROR] = syntaxError;
         }
 
         /// <summary>
@@ -996,7 +996,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         public string ToJson()
         {
             var fields = this.GetAvailableFieldNames();
-            fields.Add(USERAGENT_FIELDNAME);
+            fields.Add(DefaultUserAgentFields.USERAGENT_FIELDNAME);
             return this.ToJson(fields);
         }
 
@@ -1021,7 +1021,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                     addSeparator = true;
                 }
 
-                if (USERAGENT_FIELDNAME.Equals(fieldName))
+                if (DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldName))
                 {
                     sb
                         .Append("\"Useragent\"")
@@ -1066,7 +1066,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             foreach (var fieldName in fieldNames)
             {
-                if (!USERAGENT_FIELDNAME.Equals(fieldName))
+                if (!DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldName))
                 {
                     var field = this.allFields[fieldName];
                     if (field.GetValue() != null)
@@ -1200,33 +1200,33 @@ namespace OrbintSoft.Yauaa.Analyzer
         private void Init()
         {
             // Device : Family - Brand - Model
-            this.allFields[DEVICE_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Cloud / Server / Desktop / Tablet / Phone / Watch
-            this.allFields[DEVICE_BRAND] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
-            this.allFields[DEVICE_NAME] = new AgentField(UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
+            this.allFields[DefaultUserAgentFields.DEVICE_CLASS] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // Hacker / Cloud / Server / Desktop / Tablet / Phone / Watch
+            this.allFields[DefaultUserAgentFields.DEVICE_BRAND] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
+            this.allFields[DefaultUserAgentFields.DEVICE_NAME] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // (Google/AWS/Azure) / ????
 
             // Operating system
-            this.allFields[OPERATING_SYSTEM_CLASS] = new AgentField(UNKNOWN_VALUE); // Cloud, Desktop, Mobile, Embedded
-            this.allFields[OPERATING_SYSTEM_NAME] = new AgentField(UNKNOWN_VALUE); // ( Linux / Android / Windows ...)
-            this.allFields[OPERATING_SYSTEM_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            this.allFields[OPERATING_SYSTEM_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            this.allFields[OPERATING_SYSTEM_NAME_VERSION] = new AgentField(UNKNOWN_NAME_VERSION);
-            this.allFields[OPERATING_SYSTEM_NAME_VERSION_MAJOR] = new AgentField(UNKNOWN_NAME_VERSION);
+            this.allFields[DefaultUserAgentFields.OPERATING_SYSTEM_CLASS] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // Cloud, Desktop, Mobile, Embedded
+            this.allFields[DefaultUserAgentFields.OPERATING_SYSTEM_NAME] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // ( Linux / Android / Windows ...)
+            this.allFields[DefaultUserAgentFields.OPERATING_SYSTEM_VERSION] = new AgentField(DefaultUserAgentFields.UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
+            this.allFields[DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
 
             // Engine : Class (=None/Hacker/Robot/Browser) - Name - Version
-            this.allFields[LAYOUT_ENGINE_CLASS] = new AgentField(UNKNOWN_VALUE); // None / Hacker / Robot / Browser /
-            this.allFields[LAYOUT_ENGINE_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / (Trident / Gecko / ...)
-            this.allFields[LAYOUT_ENGINE_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            this.allFields[LAYOUT_ENGINE_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
-            this.allFields[LAYOUT_ENGINE_NAME_VERSION] = new AgentField(UNKNOWN_NAME_VERSION);
-            this.allFields[LAYOUT_ENGINE_NAME_VERSION_MAJOR] = new AgentField(UNKNOWN_NAME_VERSION);
+            this.allFields[DefaultUserAgentFields.LAYOUT_ENGINE_CLASS] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // None / Hacker / Robot / Browser /
+            this.allFields[DefaultUserAgentFields.LAYOUT_ENGINE_NAME] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / (Trident / Gecko / ...)
+            this.allFields[DefaultUserAgentFields.LAYOUT_ENGINE_VERSION] = new AgentField(DefaultUserAgentFields.UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_VERSION); // 1 / 43 / ...
+            this.allFields[DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
+            this.allFields[DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
 
             // Agent: Class (=Hacker/Robot/Browser) - Name - Version
-            this.allFields[AGENT_CLASS] = new AgentField(UNKNOWN_VALUE); // Hacker / Robot / Browser /
-            this.allFields[AGENT_NAME] = new AgentField(UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / ( Firefox / Chrome / ... )
-            this.allFields[AGENT_VERSION] = new AgentField(UNKNOWN_VERSION); // 1.2 / 43 / ...
-            this.allFields[AGENT_VERSION_MAJOR] = new AgentField(UNKNOWN_VERSION); // 1 / 43 / ...
-            this.allFields[AGENT_NAME_VERSION] = new AgentField(UNKNOWN_NAME_VERSION);
-            this.allFields[AGENT_NAME_VERSION_MAJOR] = new AgentField(UNKNOWN_NAME_VERSION);
+            this.allFields[DefaultUserAgentFields.AGENT_CLASS] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // Hacker / Robot / Browser /
+            this.allFields[DefaultUserAgentFields.AGENT_NAME] = new AgentField(DefaultUserAgentFields.UNKNOWN_VALUE); // ( GoogleBot / Bing / ...) / ( Firefox / Chrome / ... )
+            this.allFields[DefaultUserAgentFields.AGENT_VERSION] = new AgentField(DefaultUserAgentFields.UNKNOWN_VERSION); // 1.2 / 43 / ...
+            this.allFields[DefaultUserAgentFields.AGENT_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_VERSION); // 1 / 43 / ...
+            this.allFields[DefaultUserAgentFields.AGENT_NAME_VERSION] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
+            this.allFields[DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
         }
     }
 }
