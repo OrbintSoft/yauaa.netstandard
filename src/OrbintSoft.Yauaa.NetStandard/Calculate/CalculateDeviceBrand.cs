@@ -26,6 +26,7 @@
 namespace OrbintSoft.Yauaa.Calculate
 {
     using System;
+    using System.Collections.Generic;
     using DomainParser.Library;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Utils;
@@ -36,27 +37,48 @@ namespace OrbintSoft.Yauaa.Calculate
     [Serializable]
     public class CalculateDeviceBrand : IFieldCalculator
     {
+        private readonly HashSet<string> unwantedUrlBrands;
+        private readonly HashSet<string> unwantedEmailBrands;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalculateDeviceBrand"/> class.
+        /// </summary>
+        public CalculateDeviceBrand()
+        {
+            this.unwantedUrlBrands = new HashSet<string>
+            {
+                "Github",
+                "Gitlab",
+            };
+
+            this.unwantedEmailBrands = new HashSet<string>
+            {
+                "Gmail",
+                "Outlook",
+            };
+        }
+
         /// <inheritdoc/>
         public void Calculate(UserAgent userAgent)
         {
             // The device brand field is a mess.
-            var deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
-            if (deviceBrand.GetConfidence() >= 0)
+            var deviceBrand = userAgent.Get(DefaultUserAgentFields.DEVICE_BRAND);
+            if (deviceBrand.IsDefaultValue)
             {
                 userAgent.SetForced(
-                    UserAgent.DEVICE_BRAND,
+                    DefaultUserAgentFields.DEVICE_BRAND,
                     Normalize.Brand(deviceBrand.GetValue()),
                     deviceBrand.GetConfidence());
             }
 
-            if (deviceBrand.GetConfidence() < 0)
+            if (deviceBrand.IsDefaultValue)
             {
                 // If no brand is known then try to extract something that looks like a Brand from things like URL and Email addresses.
                 var newDeviceBrand = this.DetermineDeviceBrand(userAgent);
                 if (newDeviceBrand != null)
                 {
                     userAgent.SetForced(
-                        UserAgent.DEVICE_BRAND,
+                        DefaultUserAgentFields.DEVICE_BRAND,
                         newDeviceBrand,
                         1);
                 }
@@ -73,7 +95,7 @@ namespace OrbintSoft.Yauaa.Calculate
             // If no brand is known but we do have a URL then we assume the hostname to be the brand.
             // We put this AFTER the creation of the DeviceName because we choose to not have
             // this brandname in the DeviceName.
-            var informationUrl = userAgent.Get(UserAgent.AGENT_INFORMATION_URL);
+            var informationUrl = userAgent.Get(DefaultUserAgentFields.AGENT_INFORMATION_URL);
             if (informationUrl != null && informationUrl.GetConfidence() >= 0)
             {
                 var hostname = informationUrl.GetValue();
@@ -87,14 +109,14 @@ namespace OrbintSoft.Yauaa.Calculate
                     // Ignore any exception and continue.
                 }
 
-                hostname = this.ExtractCompanyFromHostName(hostname);
+                hostname = this.ExtractCompanyFromHostName(hostname, this.unwantedUrlBrands);
                 if (hostname != null)
                 {
                     return hostname;
                 }
             }
 
-            var informationEmail = userAgent.Get(UserAgent.AGENT_INFORMATION_EMAIL);
+            var informationEmail = userAgent.Get(DefaultUserAgentFields.AGENT_INFORMATION_EMAIL);
             if (informationEmail != null && informationEmail.GetConfidence() >= 0)
             {
                 var hostname = informationEmail.GetValue();
@@ -104,7 +126,7 @@ namespace OrbintSoft.Yauaa.Calculate
                     hostname = hostname.Substring(atOffset + 1);
                 }
 
-                hostname = this.ExtractCompanyFromHostName(hostname);
+                hostname = this.ExtractCompanyFromHostName(hostname, this.unwantedEmailBrands);
                 if (hostname != null)
                 {
                     return hostname;
@@ -119,11 +141,17 @@ namespace OrbintSoft.Yauaa.Calculate
         /// </summary>
         /// <param name="hostname">The hostname<see cref="string"/>.</param>
         /// <returns>The <see cref="string"/>.</returns>
-        private string ExtractCompanyFromHostName(string hostname)
+        private string ExtractCompanyFromHostName(string hostname, ISet<string> blackList)
         {
             if (DomainName.TryParse(hostname, out var outDomain))
             {
-                return Normalize.Brand(outDomain.Domain?.ToLower());
+                var brand = Normalize.Brand(outDomain.Domain?.ToLower());
+                if (blackList.Contains(brand))
+                {
+                    return null;
+                }
+
+                return brand;
             }
             else
             {

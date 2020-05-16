@@ -139,6 +139,45 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
+        /// The ReplaceString.
+        /// </summary>
+        /// <param name="input">The input<see cref="string"/>.</param>
+        /// <param name="searchFor">The searchFor<see cref="string"/>.</param>
+        /// <param name="replaceWith">The replaceWith<see cref="string"/>.</param>
+        /// <returns>The <see cref="string"/>.</returns>
+        public static string ReplaceString(string input, string searchFor, string replaceWith)
+        {
+            // startIdx and idxSearchFor delimit various chunks of input; these
+            // chunks always end where searchFor begins
+            var startIdx = 0;
+            var idxSearchFor = input.IndexOf(searchFor, startIdx);
+            if (idxSearchFor < 0)
+            {
+                return input;
+            }
+
+            var result = new StringBuilder(input.Length + 32);
+
+            while (idxSearchFor >= 0)
+            {
+                // grab a part of input which does not include searchFor
+                result.Append(input.Substring(startIdx, idxSearchFor - startIdx));
+
+                // add replaceWith to take place of searchFor
+                result.Append(replaceWith);
+
+                // reset the startIdx to just after the current match, to see
+                // if there are any further matches
+                startIdx = idxSearchFor + searchFor.Length;
+                idxSearchFor = input.IndexOf(searchFor, startIdx);
+            }
+
+            // the final chunk will go to the end of input
+            result.Append(input.Substring(startIdx));
+            return result.ToString();
+        }
+
+        /// <summary>
         /// The CleanupDeviceBrandName.
         /// </summary>
         /// <param name="deviceBrand">The deviceBrand<see cref="string"/>.</param>

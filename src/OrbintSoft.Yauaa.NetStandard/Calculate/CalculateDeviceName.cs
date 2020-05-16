@@ -22,6 +22,7 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 04, 16, 08:28</date>
+
 namespace OrbintSoft.Yauaa.Calculate
 {
     using System;
@@ -38,11 +39,11 @@ namespace OrbintSoft.Yauaa.Calculate
         public void Calculate(UserAgent userAgent)
         {
             // Make sure the DeviceName always starts with the DeviceBrand
-            var deviceName = userAgent.Get(UserAgent.DEVICE_NAME);
+            var deviceName = userAgent.Get(DefaultUserAgentFields.DEVICE_NAME);
             if (deviceName.GetConfidence() >= 0)
             {
-                var deviceBrand = userAgent.Get(UserAgent.DEVICE_BRAND);
-                string deviceNameValue = deviceName.GetValue();
+                var deviceBrand = userAgent.Get(DefaultUserAgentFields.DEVICE_BRAND);
+                string deviceNameValue = this.RemoveBadSubStrings(deviceName.GetValue());
                 string deviceBrandValue = deviceBrand.GetValue();
                 if (deviceName.GetConfidence() >= 0 &&
                     deviceBrand.GetConfidence() >= 0 &&
@@ -57,10 +58,22 @@ namespace OrbintSoft.Yauaa.Calculate
                 }
 
                 userAgent.SetForced(
-                    UserAgent.DEVICE_NAME,
+                    DefaultUserAgentFields.DEVICE_NAME,
                     deviceNameValue,
                     deviceName.GetConfidence());
             }
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Calculate {DefaultUserAgentFields.DEVICE_NAME}";
+        }
+
+        private string RemoveBadSubStrings(string input)
+        {
+            input = input.Replace("AppleWebKit", string.Empty);
+            return input;
         }
     }
 }

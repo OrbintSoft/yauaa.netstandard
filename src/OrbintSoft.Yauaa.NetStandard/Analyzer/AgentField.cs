@@ -48,6 +48,9 @@ namespace OrbintSoft.Yauaa.Analyzer
             this.Reset();
         }
 
+        /// <inheritdoc/>
+        public bool IsDefaultValue => this.GetConfidence() < 0;
+
         /// <summary>
         /// Gets or sets the internal Confidence.
         /// </summary>

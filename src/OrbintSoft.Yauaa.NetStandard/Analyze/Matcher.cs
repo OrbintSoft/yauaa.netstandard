@@ -28,6 +28,7 @@ namespace OrbintSoft.Yauaa.Analyze
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using log4net;
@@ -67,11 +68,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly string matcherSourceLocation;
 
         /// <summary>
-        /// Defines the newValuesUserAgent.
-        /// </summary>
-        private readonly UserAgent newValuesUserAgent = new UserAgent();
-
-        /// <summary>
         /// Defines the permanentVerbose.
         /// </summary>
         private readonly bool permanentVerbose = false;
@@ -80,6 +76,11 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Defines the variableActions.
         /// </summary>
         private readonly IList<MatcherVariableAction> variableActions;
+
+        /// <summary>
+        /// Defines the newValuesUserAgent.
+        /// </summary>
+        private readonly UserAgent newValuesUserAgent = null;
 
         /// <summary>
         /// Defines the actionsThatRequireInputAndReceivedInput.
@@ -106,6 +107,7 @@ namespace OrbintSoft.Yauaa.Analyze
             this.fixedStringActions = new List<MatcherAction>();
             this.variableActions = new List<MatcherVariableAction>();
             this.dynamicActions = new List<MatcherAction>();
+            this.newValuesUserAgent = new UserAgent(wantedFieldNames);
 
             this.matcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
 
@@ -433,11 +435,13 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         public void Initialize()
         {
+            long newEntries = 0;
+            var initStart = Stopwatch.StartNew();
             try
             {
                 foreach (var item in this.variableActions)
                 {
-                    item.Initialize();
+                    newEntries += item.Initialize();
                 }
             }
             catch (InvalidParserConfigurationException e)
@@ -450,7 +454,7 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 try
                 {
-                    dynamicAction.Initialize();
+                    newEntries += dynamicAction.Initialize();
                 }
                 catch (InvalidParserConfigurationException e)
                 {
@@ -498,10 +502,31 @@ namespace OrbintSoft.Yauaa.Analyze
                     {
                         if (seenVariables.Contains(interestedAction))
                         {
-                            throw new InvalidParserConfigurationException($"Syntax error: The line >>{interestedAction}<< is referencing variable @{variableAction.VariableName} which is not defined yet.");
+                            throw new InvalidParserConfigurationException($"Syntax error: ({this.matcherSourceLocation}): The line >>{interestedAction}<< is referencing variable @{variableAction.VariableName} which is not defined yet.");
                         }
                     }
                 }
+            }
+
+            // Check if any variable was requested that was not defined.
+            var missingVariableNames = new HashSet<string>();
+            var seenVariableNames = new HashSet<string>();
+            foreach (var seenVariable in seenVariables)
+            {
+                seenVariableNames.Add(((MatcherVariableAction)seenVariable).VariableName);
+            }
+
+            foreach (var variableName in this.informMatcherActionsAboutVariables.Keys)
+            {
+                if (!seenVariableNames.Contains(variableName))
+                {
+                    missingVariableNames.Add(variableName);
+                }
+            }
+
+            if (missingVariableNames.Count > 0)
+            {
+                throw new InvalidParserConfigurationException($"Syntax error ({this.matcherSourceLocation}): Used, yet undefined variables: {missingVariableNames}");
             }
 
             var allDynamicActions = new List<MatcherAction>();
@@ -510,6 +535,12 @@ namespace OrbintSoft.Yauaa.Analyze
             this.dynamicActions = allDynamicActions;
 
             this.ActionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
+
+            initStart.Stop();
+            if (newEntries > 3000)
+            {
+                Log.Warn($"Large matcher: {newEntries} in {initStart.ElapsedMilliseconds} ms:.({this.matcherSourceLocation})");
+            }
 
             if (this.Verbose)
             {
@@ -587,7 +618,15 @@ namespace OrbintSoft.Yauaa.Analyze
                 if (action is MatcherRequireAction)
                 {
                     sb.Append("        ").Append(action.MatchExpression).Append('\n');
-                    sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
+                    var matches = action.Matches;
+                    if (matches is null)
+                    {
+                        sb.Append("        --> []\n");
+                    }
+                    else
+                    {
+                        sb.Append("        --> [").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
+                    }
                 }
             }
 
@@ -597,7 +636,15 @@ namespace OrbintSoft.Yauaa.Analyze
                 if (action is MatcherExtractAction)
                 {
                     sb.Append("        ").Append(action.ToString()).Append('\n');
-                    sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
+                    var matches = action.Matches;
+                    if (matches is null)
+                    {
+                        sb.Append("        --> []\n");
+                    }
+                    else
+                    {
+                        sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
+                    }
                 }
             }
 

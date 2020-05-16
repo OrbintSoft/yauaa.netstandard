@@ -133,5 +133,11 @@ namespace OrbintSoft.Yauaa.Calculate
                 }
             }
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Calculate [{this.firstName} + {this.secondName}] --> {this.targetName}";
+        }
     }
 }

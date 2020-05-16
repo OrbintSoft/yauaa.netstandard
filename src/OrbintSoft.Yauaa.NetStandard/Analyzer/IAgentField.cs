@@ -30,6 +30,11 @@ namespace OrbintSoft.Yauaa.Analyzer
     public interface IAgentField
     {
         /// <summary>
+        /// Gets a value indicating whether the field is valoriozid with a default value.
+        /// </summary>
+        bool IsDefaultValue { get; }
+
+        /// <summary>
         /// Gets the confidence.
         /// Higher is better.
         /// -1: This field should not be considered, the value is not reliable.

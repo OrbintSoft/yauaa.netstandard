@@ -30,6 +30,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
     using System.Runtime.Serialization;
     using Antlr4.Runtime.Tree;
     using OrbintSoft.Yauaa.Parse;
+    using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
     /// This class defines the CleanVersion Step, it is used in parsing to format the value of a version node.
@@ -80,8 +81,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
         {
             var actualValue = this.GetActualValue(tree, value);
 
-            var cleanedValue = EvilManualUseragentStringHacks.ReplaceString(actualValue, "_", ".");
-            return this.WalkNextStep(tree, cleanedValue);
+            actualValue = Normalize.ReplaceString(actualValue, "_", ".");
+            actualValue = Normalize.ReplaceString(actualValue, "/", " ");
+            return this.WalkNextStep(tree, actualValue);
         }
     }
 }

@@ -41,14 +41,20 @@ namespace OrbintSoft.Yauaa.Calculate
         public void Calculate(UserAgent userAgent)
         {
             // The email address is a mess
-            var email = userAgent.Get(UserAgent.AGENT_INFORMATION_EMAIL);
+            var email = userAgent.Get(DefaultUserAgentFields.AGENT_INFORMATION_EMAIL);
             if (email != null && email.GetConfidence() >= 0)
             {
                 userAgent.SetForced(
-                    UserAgent.AGENT_INFORMATION_EMAIL,
+                    DefaultUserAgentFields.AGENT_INFORMATION_EMAIL,
                     Normalize.Email(email.GetValue()),
                     email.GetConfidence());
             }
+        }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"Calculate {DefaultUserAgentFields.AGENT_INFORMATION_EMAIL}";
         }
     }
 }

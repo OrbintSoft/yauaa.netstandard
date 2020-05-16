@@ -51,6 +51,15 @@ namespace OrbintSoft.Yauaa.Debug
         private readonly IList<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DebugUserAgent"/> class.
+        /// </summary>
+        /// <param name="wantedFieldNames">The field names you want to retrieve.</param>
+        public DebugUserAgent(IList<string> wantedFieldNames)
+            : base(wantedFieldNames)
+        {
+        }
+
+        /// <summary>
         /// Gets the NumberOfAppliedMatches.
         /// </summary>
         public int NumberOfAppliedMatches => this.appliedMatcherResults.Count;
@@ -169,8 +178,13 @@ namespace OrbintSoft.Yauaa.Debug
                             marker = " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
                         }
 
-                        sb.Append("| ").Append(fieldName).Append('(').Append(field.GetConfidence()).Append(") = ")
-                            .Append(field.GetValue()).Append(marker).Append('\n');
+                        sb.Append("| ").Append(fieldName).Append('(').Append(field.GetConfidence());
+                        if (field.IsDefaultValue)
+                        {
+                            sb.Append(" => isDefaultValue");
+                        }
+
+                        sb.Append(") = ").Append(field.GetValue()).Append(marker).Append('\n');
                     }
                 }
 

@@ -68,7 +68,7 @@ namespace OrbintSoft.Yauaa.Analyze
             // Did statistics on over 200K real useragents from 2015.
             // These are the maximum values from that test set (+ a little margin)
             MaxRange["value"] = 2; // Max was 2
-            MaxRange["version"] = 5; // Max was 4
+            MaxRange["version"] = 4; // Max was 4
             MaxRange["comments"] = 2; // Max was 2
             MaxRange["entry"] = 20; // Max was much higher
             MaxRange["product"] = 10; // Max was much higher
@@ -76,8 +76,8 @@ namespace OrbintSoft.Yauaa.Analyze
             MaxRange["email"] = 2;
             MaxRange["keyvalue"] = 3;
             MaxRange["text"] = 8;
-            MaxRange["url"] = 3;
-            MaxRange["uuid"] = 4;
+            MaxRange["url"] = 2;
+            MaxRange["uuid"] = 2;
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Visits a range with start and end (from start value to end value(.
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeStartToEndContext"/>.</param>
-        /// <returns>The resulting <see cref="NumberRangeList"/></returns>
+        /// <returns>The resulting <see cref="NumberRangeList"/>.</returns>
         public override NumberRangeList VisitNumberRangeStartToEnd([NotNull] UserAgentTreeWalkerParser.NumberRangeStartToEndContext context)
         {
             return new NumberRangeList(
@@ -154,7 +154,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// Visits a range with open end from start value to max value.
         /// </summary>
         /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext"/>.</param>
-        /// <returns>The resulting <see cref="NumberRangeList"/></returns>
+        /// <returns>The resulting <see cref="NumberRangeList"/>.</returns>
         public override NumberRangeList VisitNumberRangeStartToOpenEnd([NotNull] UserAgentTreeWalkerParser.NumberRangeStartToOpenEndContext context)
         {
             return new NumberRangeList(int.Parse(context.rangeStart.Text), GetMaxRange(context));

@@ -218,7 +218,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Used to initialize the matcher action.
         /// </summary>
-        public virtual void Initialize()
+        /// <returns>The number of inform paths.</returns>
+        public virtual long Initialize()
         {
             var lexerErrorListener = new InitErrorListener<int>(this);
             var input = new AntlrInputStream(this.MatchExpression);
@@ -249,7 +250,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 this.SetFixedValue(fixedValue);
                 this.MustHaveMatches = false;
                 this.Matches = new MatchesList(0);
-                return; // Not interested in any patterns
+                return 0; // Not interested in any patterns
             }
 
             this.MustHaveMatches = !this.Evaluator.UsesIsNull;
@@ -269,6 +270,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
 
             this.Matches = new MatchesList(listSize);
+            return informs;
         }
 
         /// <summary>

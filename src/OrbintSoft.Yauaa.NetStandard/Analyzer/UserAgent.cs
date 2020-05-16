@@ -454,19 +454,24 @@ namespace OrbintSoft.Yauaa.Analyzer
         protected internal static readonly IList<string> PreSortedFieldList = new List<string>(32);
 
         /// <summary>
-        /// Defines the Log.
+        /// Defines the logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgent));
 
         /// <summary>
-        /// Defines the allFields.
+        /// All fields extracted by the user agent.
         /// </summary>
         private readonly IDictionary<string, AgentField> allFields = new Dictionary<string, AgentField>();
 
         /// <summary>
-        /// Defines the userAgentString.
+        /// The full user agent string.
         /// </summary>
         private string userAgentString = null;
+
+        /// <summary>
+        /// The field nemes to be extracted.
+        /// </summary>
+        private HashSet<string> wantedFieldNames = null;
 
         /// <summary>
         /// Initializes static members of the <see cref="UserAgent"/> class.
@@ -546,6 +551,16 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public UserAgent()
         {
+            this.Init();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserAgent"/> class.
+        /// </summary>
+        /// <param name="wantedFieldNames">Thw wanted field names.</param>
+        public UserAgent(IList<string> wantedFieldNames)
+        {
+            this.SetWantedFieldNames(wantedFieldNames);
             this.Init();
         }
 
@@ -1227,6 +1242,21 @@ namespace OrbintSoft.Yauaa.Analyzer
             this.allFields[DefaultUserAgentFields.AGENT_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_VERSION); // 1 / 43 / ...
             this.allFields[DefaultUserAgentFields.AGENT_NAME_VERSION] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
             this.allFields[DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR] = new AgentField(DefaultUserAgentFields.UNKNOWN_NAME_VERSION);
+        }
+
+        /// <summary>
+        /// Used to set the wanted field names.
+        /// </summary>
+        /// <param name="newWantedFieldNames">The new wanted field names.</param>
+        private void SetWantedFieldNames(IList<string> newWantedFieldNames)
+        {
+            if (newWantedFieldNames != null)
+            {
+                if (!newWantedFieldNames.Any())
+                {
+                    this.wantedFieldNames = new HashSet<string>(newWantedFieldNames);
+                }
+            }
         }
     }
 }

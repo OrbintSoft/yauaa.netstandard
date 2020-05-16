@@ -61,10 +61,12 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Itialize the matcher with require action.
         /// </summary>
-        public override void Initialize()
+        /// <returns>The number of steps.</returns>
+        public override long Initialize()
         {
-            base.Initialize();
-            this.Evaluator.PruneTrailingStepsThatCannotFail();
+            var newEntries = base.Initialize();
+            newEntries -= this.Evaluator.PruneTrailingStepsThatCannotFail();
+            return newEntries;
         }
 
         /// <summary>

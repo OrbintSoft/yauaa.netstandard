@@ -119,9 +119,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         /// <summary>
         /// Finds the last step that cannot fail, and removes the following steps.
         /// </summary>
-        public void PruneTrailingStepsThatCannotFail()
+        /// <returns>Number of steos that cannot fail.</returns>
+        public long PruneTrailingStepsThatCannotFail()
         {
-            this.WalkListForUnitTesting.PruneTrailingStepsThatCannotFail();
+            return this.WalkListForUnitTesting.PruneTrailingStepsThatCannotFail();
         }
 
         /// <summary>

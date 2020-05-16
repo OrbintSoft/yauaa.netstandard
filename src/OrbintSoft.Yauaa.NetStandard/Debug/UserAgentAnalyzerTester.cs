@@ -140,7 +140,7 @@ namespace OrbintSoft.Yauaa.Debug
                 return allPass;
             }
 
-            var agent = new DebugUserAgent();
+            var agent = new DebugUserAgent(this.WantedFieldNames);
 
             var results = new List<TestResult>();
 
@@ -377,7 +377,7 @@ namespace OrbintSoft.Yauaa.Debug
                         result.Confidence = agent.GetConfidence(result.Field);
                         if (result.Actual == null)
                         {
-                            result.Actual = UserAgent.NULL_VALUE;
+                            result.Actual = DefaultUserAgentFields.NULL_VALUE;
                         }
 
                         // Expected value
@@ -413,7 +413,7 @@ namespace OrbintSoft.Yauaa.Debug
                                 if (failOnUnexpected)
                                 {
                                     // We ignore this special field
-                                    if (!UserAgent.SYNTAX_ERROR.Equals(result.Field))
+                                    if (!DefaultUserAgentFields.SYNTAX_ERROR.Equals(result.Field))
                                     {
                                         result.Warn = false;
                                         pass = false;

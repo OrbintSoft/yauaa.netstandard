@@ -145,7 +145,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// <summary>
         /// Finds the last step that cannot fail, and removes the following steps.
         /// </summary>
-        public void PruneTrailingStepsThatCannotFail()
+        /// <returns>Number of steps that cannot fail.</returns>
+        public long PruneTrailingStepsThatCannotFail()
         {
             var lastStepThatCannotFail = int.MaxValue;
             for (var i = this.steps.Count - 1; i >= 0; i--)
@@ -159,21 +160,24 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 lastStepThatCannotFail = i;
             }
 
-            if (lastStepThatCannotFail != int.MaxValue)
+            if (lastStepThatCannotFail == int.MaxValue)
             {
-                if (lastStepThatCannotFail == 0)
-                {
-                    this.steps.Clear();
-                }
-                else
-                {
-                    var lastRelevantStepIndex = lastStepThatCannotFail - 1;
-                    var lastRelevantStep = this.steps[lastRelevantStepIndex];
-                    lastRelevantStep.SetNextStep(lastRelevantStepIndex, null);
-
-                    this.steps.RemoveRange(lastRelevantStepIndex + 1, this.steps.Count - lastRelevantStepIndex - 1);
-                }
+                return 0;
             }
+
+            if (lastStepThatCannotFail == 0)
+            {
+                var prunedSteps = this.steps.Count;
+                this.steps.Clear();
+                return prunedSteps;
+            }
+
+            var lastRelevantStepIndex = lastStepThatCannotFail - 1;
+            var lastRelevantStep = this.steps[lastRelevantStepIndex];
+            lastRelevantStep.SetNextStep(lastRelevantStepIndex, null);
+
+            this.steps.RemoveRange(lastRelevantStepIndex + 1, this.steps.Count - lastRelevantStepIndex - 1);
+            return this.steps.Count - (lastRelevantStepIndex + 1);
         }
 
         /// <inheritdoc/>
