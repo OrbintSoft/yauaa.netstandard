@@ -16,15 +16,26 @@ variables:
 
 steps:
 - task: UseDotNet@2
+  displayName: 'Install .NET 3.0.x SDK'
   inputs:
     packageType: 'sdk'
+    performMultiLevelLookup: true
     version: '3.0.x'
 - task: NuGetToolInstaller@1
+  displayName: 'Install .Nuget 5.5'
   inputs:
+   versionSpec: '5.5.x'
    checkLatest: true
+- task: NuGetCommand@2
+  displayName: 'Restore .Nuget Packages'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
+    projects: '**/*.csproj'
 - task: VSTest@2
   inputs:
     testSelector: 'testAssemblies'
