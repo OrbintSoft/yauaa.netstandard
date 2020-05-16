@@ -43,5 +43,5 @@ steps:
   displayName: 'Run Tests'
   inputs:
     command: 'test'
-    arguments: '--configuration Release --no-build --results-directory $(TestOutputDirectory) --list-tests --verbosity d'
+    arguments: '--configuration Release'
     projects: '**/OrbintSoft.Yauaa.Testing.NetCore.csproj'
