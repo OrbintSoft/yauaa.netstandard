@@ -41,11 +41,11 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'Run Tests'
+  continueOnError: true
   inputs:
     command: 'test'
     arguments: '--configuration Release --no-build '
     projects: '**/OrbintSoft.Yauaa.Testing.NetCore.csproj'
-
 - task: DotNetCoreCLI@2
   displayName: 'Create Package'
   inputs:
