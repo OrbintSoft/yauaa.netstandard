@@ -69,7 +69,7 @@ Thanks to custom yaml definitions, you can make the library able to identify you
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <DocumentationFile>S:\Progetti\yauaa.netstandard\src\OrbintSoft.Yauaa.NetStandard\OrbintSoft.Yauaa.NetStandard.xml</DocumentationFile>
+    <DocumentationFile>DocumentationFile.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
