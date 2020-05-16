@@ -33,16 +33,14 @@ steps:
     restoreSolution: '**/*.sln'
     feedsToUse: 'select'
 - task: DotNetCoreCLI@2
-  inputs:
+  displayName: 'Build all projects'
+  inputs:    
     command: 'build'
     arguments: '--configuration Release --no-restore --no-incremental'
     projects: '**/*.csproj'
-- task: VSTest@2
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run Tests'
   inputs:
-    testSelector: 'testAssemblies'
-    testAssemblyVer2: |
-      **\bin\Release\**\*test*.dll
-      !**\obj\**
-      !**\xunit.runner.visualstudio.testadapter.dll
-      !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    command: 'test'
+    projects: '**/OrbintSoft.Yauaa.Testing.NetCore.csproj'
