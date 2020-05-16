@@ -1,0 +1,50 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET 3.0.x SDK'
+  inputs:
+    packageType: 'sdk'
+    performMultiLevelLookup: true
+    version: '3.0.x'
+- task: NuGetToolInstaller@1
+  displayName: 'Install .Nuget 5.5'
+  inputs:
+   versionSpec: '5.5.x'
+   checkLatest: true
+- task: NuGetCommand@2
+  displayName: 'Restore .Nuget Packages'
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+    feedsToUse: 'select'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    arguments: '--configuration Release --no-restore --no-incremental'
+    projects: '**/*.csproj'
+
+- task: VSTest@2
+  inputs:
+    testSelector: 'testAssemblies'
+    testAssemblyVer2: |
+      **\*test*.dll
+      !**\*TestAdapter.dll
+      !**\obj\**
+    searchFolder: '$(System.DefaultWorkingDirectory)'
+    vsTestVersion: '16.0'
+    arguments: '/Framework:.NETCoreApp,Version=3.0'
