@@ -1,7 +1,22 @@
 This is intended as an overview of the major changes
 
+v5.13
+===
+- Target equivalent Java 5.13 Version
+- Update public suffix list for detecting hostnames.
+- New/improved detections
+  - Agent: Latest Edge, HeadlessChrome, CrMo (=very old Chrome), Hawk
+  - Robots: Apache Nifi, Wget, Curl, Bytedance Bytespider, Popular product "con_aff" robot., TencentTraveler, EmbeddedWB
+  - Device: Improved Xiaomi detection., Improved RaspberryPi
+- Fixes:
+  - Check if a used variable actually exists.
+  - Many TODO items (mostly corner cases).
+  - Domains like Github and Gmail are no longer used as "DeviceBrand" when they occur in URL or Email.
+  - Edgecase where much of the useragent was incorrectly seen as a BASE64 fragment.
+
 v5.12
 ===
+- Target equivalent Java 5.12 Version
 - New detections
   - Agent: AdobeAir, Whale, Tungsten, Kinza, Iridium, Superbird, Avast, Comodo Dragon & IceDragon
   - Device: Raspberry PI

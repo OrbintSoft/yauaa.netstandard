@@ -1,6 +1,6 @@
 # Yauaa: Yet Another User Agent Analyzer
 
-[![Build Status](https://dev.azure.com/orbintsoft/yauaa.netstandard/_apis/build/status/yauaa.netstandard-pipeline)](https://dev.azure.com/orbintsoft/yauaa.netstandard/_build/latest?definitionId=3)
+[![Build Status](https://dev.azure.com/orbintsoft/yauaa.netstandard/_apis/build/status/Windows?branchName=master)](https://dev.azure.com/orbintsoft/yauaa.netstandard/_build/latest?definitionId=4&branchName=master)
 [![NuGet](https://img.shields.io/nuget/v/Orbintsoft.Yauaa.NetStandard.svg)](https://www.nuget.org/packages/Orbintsoft.Yauaa.NetStandard/)
 [![License](https://img.shields.io/:license-apache-purple.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 [![Donations via PayPal](https://img.shields.io/badge/Donations-via%20Paypal-orange.svg)](https://www.paypal.me/orbintsoft) 
