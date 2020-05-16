@@ -37,6 +37,7 @@ steps:
     command: 'build'
     arguments: '--configuration Release --no-restore --no-incremental'
     projects: '**/*.csproj'
+
 - task: VSTest@2
   inputs:
     testSelector: 'testAssemblies'
