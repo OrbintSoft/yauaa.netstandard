@@ -43,5 +43,19 @@ steps:
   displayName: 'Run Tests'
   inputs:
     command: 'test'
-    arguments: '--configuration Release'
+    arguments: '--configuration Release --no-build '
     projects: '**/OrbintSoft.Yauaa.Testing.NetCore.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Create Package'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/OrbintSoft.Yauaa.NetStandard.csproj'
+    versioningScheme: 'off'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory)'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
