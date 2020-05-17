@@ -34,22 +34,20 @@ namespace OrbintSoft.Yauaa.Analyzer
     public class AgentField : IAgentField, IEquatable<AgentField>
     {
         /// <summary>
-        /// The default value to be used for this field..
-        /// </summary>
-        private readonly string defaultValue;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AgentField"/> class.
         /// </summary>
         /// <param name="defaultValue">The default value to be used for this field...</param>
         internal AgentField(string defaultValue)
         {
-            this.defaultValue = defaultValue;
+            this.DefaultValue = defaultValue;
             this.Reset();
         }
 
         /// <inheritdoc/>
         public bool IsDefaultValue => this.GetConfidence() < 0;
+
+        /// <inheritdoc/>
+        public string DefaultValue { get; }
 
         /// <summary>
         /// Gets or sets the internal Confidence.
@@ -79,7 +77,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             return this.Confidence == other.Confidence &&
-                Equals(this.defaultValue, other.defaultValue) &&
+                Equals(this.DefaultValue, other.DefaultValue) &&
                 Equals(this.Value, other.Value);
         }
 
@@ -112,7 +110,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <inheritdoc/>
         public override int GetHashCode()
         {
-            return ValueTuple.Create(this.defaultValue, this.Value, this.Confidence).GetHashCode();
+            return ValueTuple.Create(this.DefaultValue, this.Value, this.Confidence).GetHashCode();
         }
 
         /// <summary>
@@ -121,7 +119,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The value.</returns>
         public string GetValue()
         {
-            return this.Value ?? this.defaultValue;
+            return this.Value ?? this.DefaultValue;
         }
 
         /// <summary>
@@ -129,7 +127,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         public void Reset()
         {
-            this.Value = this.defaultValue;
+            this.Value = null;
             this.Confidence = -1;
         }
 
@@ -157,7 +155,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 this.Confidence = newConfidence;
                 if (DefaultUserAgentFields.NULL_VALUE.Equals(newValue))
                 {
-                    this.Value = this.defaultValue;
+                    this.Value = null;
                 }
                 else
                 {
@@ -181,7 +179,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (DefaultUserAgentFields.NULL_VALUE.Equals(newValue))
             {
-                this.Value = this.defaultValue;
+                this.Value = null;
             }
             else
             {
@@ -192,12 +190,12 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <inheritdoc/>
         public override string ToString()
         {
-            if (this.defaultValue is null)
+            if (this.DefaultValue is null)
             {
                 return $"{{ value:'{this.Value}', confidence:'{this.Confidence}', default:null }}";
             }
 
-            return $"{{ value:'{this.Value}', confidence:'{this.Confidence}', default:'{this.defaultValue}' }}";
+            return $"{{ value:'{this.Value}', confidence:'{this.Confidence}', default:'{this.DefaultValue}' }}";
         }
     }
 }

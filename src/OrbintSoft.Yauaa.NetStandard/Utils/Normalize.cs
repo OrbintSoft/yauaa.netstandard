@@ -187,7 +187,9 @@ namespace OrbintSoft.Yauaa.Utils
         {
             var lowerDeviceBrand = deviceBrand.ToLower(CultureInfo.InvariantCulture);
 
-            deviceName = Regex.Replace(deviceName, "_", " ");
+            deviceName = ReplaceString(deviceName, "'", " ");
+            deviceName = ReplaceString(deviceName, "_", " ");
+
             deviceName = Regex.Replace(deviceName, "- +", "-");
             deviceName = Regex.Replace(deviceName, " +-", "-");
             deviceName = Regex.Replace(deviceName, " +", " ");
@@ -197,7 +199,7 @@ namespace OrbintSoft.Yauaa.Utils
             // In some cases it does start with the brand but without a separator following the brand
             if (lowerDeviceName.StartsWith(lowerDeviceBrand))
             {
-                deviceName = Regex.Replace(deviceName, "_", " ");
+                deviceName = ReplaceString(deviceName, "_", " ");
 
                 // (?i) means: case insensitive
                 deviceName = Regex.Replace(deviceName, "(?i)^" + Regex.Escape(deviceBrand) + "([^ ].*)$", deviceBrand.Replace("$", "$$") + " $1");
@@ -212,10 +214,10 @@ namespace OrbintSoft.Yauaa.Utils
 
             if (result.Contains("I"))
             {
-                result = Regex.Replace(result, "Ipad", "iPad");
-                result = Regex.Replace(result, "Ipod", "iPod");
-                result = Regex.Replace(result, "Iphone", "iPhone");
-                result = Regex.Replace(result, "IOS", "iOS");
+                result = ReplaceString(result, "Ipad", "iPad");
+                result = ReplaceString(result, "Ipod", "iPod");
+                result = ReplaceString(result, "Iphone", "iPhone");
+                result = ReplaceString(result, "IOS", "iOS");
             }
 
             return result;

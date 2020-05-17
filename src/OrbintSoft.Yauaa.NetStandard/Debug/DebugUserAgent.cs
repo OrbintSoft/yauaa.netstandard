@@ -54,7 +54,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// Initializes a new instance of the <see cref="DebugUserAgent"/> class.
         /// </summary>
         /// <param name="wantedFieldNames">The field names you want to retrieve.</param>
-        public DebugUserAgent(IList<string> wantedFieldNames)
+        public DebugUserAgent(ICollection<string> wantedFieldNames)
             : base(wantedFieldNames)
         {
         }

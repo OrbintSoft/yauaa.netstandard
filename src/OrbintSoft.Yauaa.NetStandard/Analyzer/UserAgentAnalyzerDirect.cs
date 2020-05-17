@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="UserAgentAnalyzerDirect.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -34,7 +34,6 @@ namespace OrbintSoft.Yauaa.Analyzer
     using System.Linq;
     using System.Text;
     using Antlr4.Runtime.Tree;
-    using DomainParser.Library;
     using log4net;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Calculate;
@@ -44,58 +43,59 @@ namespace OrbintSoft.Yauaa.Analyzer
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentAnalyzerDirect" />.
+    /// This analzyer is for internal use, this can be used as base class to build your custom analyzer or it can be used for tests.
+    /// With this class you can call some direct function used in parsing.
     /// </summary>
     [Serializable]
     public class UserAgentAnalyzerDirect : IAnalyzer
     {
         /// <summary>
-        /// Defines the DEFAULT_USER_AGENT_MAX_LENGTH.
+        /// Defines the user agent max lenght.
         /// </summary>
         public const int DEFAULT_USER_AGENT_MAX_LENGTH = 2048;
 
         /// <summary>
-        /// Defines the MAX_PREFIX_HASH_MATCH.
+        /// Defines the max prefix hash match.
         /// </summary>
         public const int MAX_PREFIX_HASH_MATCH = 3;
 
         /// <summary>
-        /// Defines the MAX_PRE_HEAT_ITERATIONS.
+        /// Defines the max iterations that can be used for preheat.
         /// </summary>
         private const long MAX_PRE_HEAT_ITERATIONS = 1_000_000L;
 
         /// <summary>
-        /// Defines the DefaultResources.
+        /// Defines the default resources path to be loaded.
         /// </summary>
         private static readonly ResourcesPath DefaultResources = new ResourcesPath($@"YamlResources{Path.DirectorySeparatorChar}UserAgents", "*.yaml");
 
         /// <summary>
-        /// Defines the HardCodedGeneratedFields.
+        /// A list of hardcoded generated fields.
         /// </summary>
         private static readonly IList<string> HardCodedGeneratedFields = new List<string>();
 
         /// <summary>
-        /// Defines the Log.
+        /// Defines the Logger.
         /// </summary>
         private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
 
         /// <summary>
-        /// Defines the informMatcherActionPrefixesLengths.
+        /// Defines the inform matcher action prefix lenghts.
         /// </summary>
         private readonly IDictionary<string, ISet<int?>> informMatcherActionPrefixesLengths = new Dictionary<string, ISet<int?>>();
 
         /// <summary>
-        /// Defines the informMatcherActionRanges.
+        /// Defines the inform matcher action ranges.
         /// </summary>
         private readonly IDictionary<string, ISet<WordRangeVisitor.Range>> informMatcherActionRanges = new Dictionary<string, ISet<WordRangeVisitor.Range>>();
 
         /// <summary>
-        /// Defines the informMatcherActions.
+        /// Defines the inform matchers.
         /// </summary>
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActions = new Dictionary<string, ISet<MatcherAction>>();
 
         /// <summary>
-        /// Defines the lookupSets.
+        /// Defines the lookup sets.
         /// </summary>
         private readonly IDictionary<string, ISet<string>> lookupSets = new Dictionary<string, ISet<string>>();
 
@@ -105,12 +105,12 @@ namespace OrbintSoft.Yauaa.Analyzer
         private readonly MatcherList zeroInputMatchers = new MatcherList(100);
 
         /// <summary>
-        /// Defines the delayInitialization.
+        /// True if you want delay the initialization.
         /// </summary>
         private bool delayInitialization = true;
 
         /// <summary>
-        /// Defines the doingOnlyASingleTest.
+        /// True if tyou want do only a single test.
         /// </summary>
         private bool doingOnlyASingleTest = false;
 
@@ -119,26 +119,29 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         private IDictionary<string, IDictionary<string, string>> lookups = new Dictionary<string, IDictionary<string, string>>();
 
+        /// <summary>
+        /// The list of field caclculators that can be used.
+        /// </summary>
         private IList<IFieldCalculator> fieldCalculators = new List<IFieldCalculator>();
 
         /// <summary>
-        /// Defines the matcherConfigs.
+        /// The configuraion dictionary of the matchers that have been loaded.
         /// </summary>
         [NonSerialized]
         private IDictionary<string, IList<YamlMappingNode>> matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>();
 
         /// <summary>
-        /// Defines the matchersHaveBeenInitialized.
+        /// True if matchers have already been initialized.
         /// </summary>
         private bool matchersHaveBeenInitialized = false;
 
         /// <summary>
-        /// Defines the showMatcherStats.
+        /// True if you want log the statistics.
         /// </summary>
         private bool showMatcherStats = false;
 
         /// <summary>
-        /// Defines the userAgentMaxLength.
+        /// Defines the user agent max lenght that will be considered during the parsing.
         /// </summary>
         private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
 
@@ -148,7 +151,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         private bool verbose = false;
 
         /// <summary>
-        /// A list of matchers that have been touched with parsing.
+        /// A list of matchers that have been used during the parsing.
         /// </summary>
         private MatcherList touchedMatchers = null;
 
@@ -157,17 +160,17 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// </summary>
         static UserAgentAnalyzerDirect()
         {
-            HardCodedGeneratedFields.Add(UserAgent.SYNTAX_ERROR);
-            HardCodedGeneratedFields.Add(UserAgent.AGENT_VERSION_MAJOR);
-            HardCodedGeneratedFields.Add(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-            HardCodedGeneratedFields.Add(UserAgent.AGENT_NAME_VERSION);
-            HardCodedGeneratedFields.Add(UserAgent.AGENT_NAME_VERSION_MAJOR);
-            HardCodedGeneratedFields.Add(UserAgent.LAYOUT_ENGINE_NAME_VERSION);
-            HardCodedGeneratedFields.Add(UserAgent.LAYOUT_ENGINE_NAME_VERSION_MAJOR);
-            HardCodedGeneratedFields.Add(UserAgent.OPERATING_SYSTEM_NAME_VERSION);
-            HardCodedGeneratedFields.Add(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR);
-            HardCodedGeneratedFields.Add(UserAgent.WEBVIEW_APP_VERSION_MAJOR);
-            HardCodedGeneratedFields.Add(UserAgent.WEBVIEW_APP_NAME_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.SYNTAX_ERROR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.AGENT_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.AGENT_NAME_VERSION);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.WEBVIEW_APP_VERSION_MAJOR);
+            HardCodedGeneratedFields.Add(DefaultUserAgentFields.WEBVIEW_APP_NAME_VERSION_MAJOR);
         }
 
         /// <summary>
@@ -178,17 +181,17 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// Gets the NumberOfTestCases.
+        /// Gets the number of test cases that have been loaded.
         /// </summary>
         public long NumberOfTestCases => this.TestCases.Count;
 
         /// <summary>
-        /// Gets the TestCases.
+        /// Gets the test cases that have been loaded.
         /// </summary>
         public IList<IDictionary<string, IDictionary<string, string>>> TestCases { get; } = new List<IDictionary<string, IDictionary<string, string>>>();
 
         /// <summary>
-        /// Gets a value indicating whether WillKeepTests.
+        /// Gets a value indicating whether tests will be keeed or will be discarded.
         /// </summary>
         public bool WillKeepTests { get; private set; } = false;
 
@@ -196,7 +199,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// Gets or sets the WantedFieldNames
         /// Defines the wantedFieldNames.
         /// </summary>
-        internal List<string> WantedFieldNames { get; set; } = null;
+        protected ICollection<string> WantedFieldNames { get; set; } = null;
 
         /// <summary>
         /// Gets the AllMatchers.
@@ -684,7 +687,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <returns>The <see cref="UserAgent"/>.</returns>
         public virtual UserAgent Parse(string userAgentString)
         {
-            var userAgent = new UserAgent(userAgentString);
+            var userAgent = new UserAgent(userAgentString, this.WantedFieldNames);
             return this.Parse(userAgent);
         }
 
@@ -1891,13 +1894,10 @@ namespace OrbintSoft.Yauaa.Analyzer
                 this.FailIfAlreadyBuilt();
                 if (this.uaa.WantedFieldNames == null)
                 {
-                    this.uaa.WantedFieldNames = new List<string>();
+                    this.uaa.WantedFieldNames = new HashSet<string>();
                 }
 
-                if (!this.uaa.WantedFieldNames.Contains(fieldName))
-                {
-                    this.uaa.WantedFieldNames.Add(fieldName);
-                }
+                this.uaa.WantedFieldNames.Add(fieldName);
 
                 return (TB)this;
             }
@@ -1975,7 +1975,10 @@ namespace OrbintSoft.Yauaa.Analyzer
                 {
                     if (this.uaa.WantedFieldNames != null)
                     {
-                        this.uaa.WantedFieldNames.AddRange(dependencies);
+                        foreach (var item in dependencies)
+                        {
+                            this.uaa.WantedFieldNames.Add(item);
+                        }
                     }
                 }
             }

@@ -22,8 +22,11 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 05, 15, 00:30</date>
+
 namespace OrbintSoft.Yauaa.Analyzer
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A user agenent with its fields.
     /// </summary>
@@ -48,5 +51,57 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// Gets a value indicating whether the user agent contains syntax errors.
         /// </summary>
         bool HasSyntaxError { get; }
+
+        /// <summary>
+        /// Extract the requested field by name.
+        /// </summary>
+        /// <param name="fieldName">The field name.</param>
+        /// <returns>The extracted field.</returns>
+        IAgentField Get(string fieldName);
+
+        /// <summary>
+        /// Gets the extracted value for for the specified field.
+        /// </summary>
+        /// <param name="fieldName">The name of the field.</param>
+        /// <returns>The value.</returns>
+        string GetValue(string fieldName);
+
+        /// <summary>
+        /// Gets the Confidence for for the specified field.
+        /// A value less than 0 means that the extracted value for the field is not reliable.
+        /// </summary>
+        /// <param name="fieldName">The name of the field.</param>
+        /// <returns>The confidence value.</returns>
+        long GetConfidence(string fieldName);
+
+        /// <summary>
+        /// Retrieve the list of all available fields for the specified user agent.
+        /// Some standard fields will be returned too with a default value even if they can't be extracted by the current user agent string.
+        /// </summary>
+        /// <returns>The list of field names.</returns>
+        IList<string> GetAvailableFieldNames();
+
+        /// <summary>
+        /// Resets all fields to default value. (like if no parsing has occurred).
+        /// </summary>
+        void Reset();
+
+        /// <summary>
+        /// Set an user agent attribute (field) with a custom value and confidence.
+        /// Value is set only if confidence is better than previous value.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="confidence">The confidence.</param>
+        void Set(string attribute, string value, long confidence);
+
+        /// <summary>
+        /// Set an user agent attribute (field) with a custom value and confidence.
+        /// Value is set without cheking the confidence.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="confidence">The confidence.</param>
+        void SetForced(string attribute, string value, long confidence);
     }
 }

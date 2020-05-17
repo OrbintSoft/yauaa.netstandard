@@ -176,7 +176,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// The sets the user agent field.
         /// </summary>
         /// <param name="newResultAgentField">The new user agent to set.</param>
-        public void SetResultAgentField(AgentField newResultAgentField)
+        public void SetResultAgentField(IAgentField newResultAgentField)
         {
             this.resultAgentField = newResultAgentField;
         }

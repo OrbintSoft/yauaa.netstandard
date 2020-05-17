@@ -127,9 +127,13 @@ namespace OrbintSoft.Yauaa.Commandline
                 case OutputFormat.YAML:
                     writer.WriteLine(agent.ToYamlTestCase());
                     break;
-                case OutputFormat.TEXT:
-                case OutputFormat.UNSUPPORTED:
                 case OutputFormat.XML:
+                    writer.WriteLine(agent.ToXML(fields));
+                    break;
+                case OutputFormat.TEXT:
+                    writer.WriteLine(agent.ToString(fields));
+                    break;
+                case OutputFormat.UNSUPPORTED:                
                 default:
                     writer.WriteLine("Not supported yet.");
                     break;
@@ -235,7 +239,7 @@ namespace OrbintSoft.Yauaa.Commandline
             if (commandlineOptions.Fields == null || !commandlineOptions.Fields.Any())
             {
                 fields = uaa.GetAllPossibleFieldNamesSorted();
-                fields.Add(UserAgent.USERAGENT_FIELDNAME);
+                fields.Add(DefaultUserAgentFields.USERAGENT_FIELDNAME);
             }
             else
             {

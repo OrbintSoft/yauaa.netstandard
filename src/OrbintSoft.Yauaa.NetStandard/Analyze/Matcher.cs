@@ -101,7 +101,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="wantedFieldNames">The wanted field names.</param>
         /// <param name="matcherConfig">The matcher configuration.</param>
         /// <param name="filename">The filename.</param>
-        public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, IList<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
+        public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, ICollection<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
             this.analyzer = analyzer;
             this.fixedStringActions = new List<MatcherAction>();

@@ -35,6 +35,11 @@ namespace OrbintSoft.Yauaa.Analyzer
         bool IsDefaultValue { get; }
 
         /// <summary>
+        /// Gets default value to be used for this field.
+        /// </summary>
+        string DefaultValue { get; }
+
+        /// <summary>
         /// Gets the confidence.
         /// Higher is better.
         /// -1: This field should not be considered, the value is not reliable.
