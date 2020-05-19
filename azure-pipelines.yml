@@ -38,7 +38,6 @@ steps:
     command: 'build'
     arguments: '--configuration Release --no-restore --no-incremental'
     projects: '**/*.csproj'
-
 - task: DotNetCoreCLI@2
   displayName: 'Run Tests'
   continueOnError: true
@@ -52,10 +51,12 @@ steps:
     command: 'pack'
     packagesToPack: '**/OrbintSoft.Yauaa.NetStandard.csproj'
     versioningScheme: 'off'
-
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)'
     Contents: '**'
     TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
