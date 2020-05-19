@@ -105,6 +105,12 @@ namespace OrbintSoft.Yauaa.Analyzer
         private readonly MatcherList zeroInputMatchers = new MatcherList(100);
 
         /// <summary>
+        /// The configuraion dictionary of the matchers that have been loaded.
+        /// </summary>
+        [NonSerialized]
+        private readonly IDictionary<string, IList<YamlMappingNode>> matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>();
+
+        /// <summary>
         /// True if you want delay the initialization.
         /// </summary>
         private bool delayInitialization = true;
@@ -115,7 +121,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         private bool doingOnlyASingleTest = false;
 
         /// <summary>
-        /// Defines the lookups.
+        /// The lookups dictionary.
         /// </summary>
         private IDictionary<string, IDictionary<string, string>> lookups = new Dictionary<string, IDictionary<string, string>>();
 
@@ -123,12 +129,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// The list of field caclculators that can be used.
         /// </summary>
         private IList<IFieldCalculator> fieldCalculators = new List<IFieldCalculator>();
-
-        /// <summary>
-        /// The configuraion dictionary of the matchers that have been loaded.
-        /// </summary>
-        [NonSerialized]
-        private IDictionary<string, IList<YamlMappingNode>> matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>();
 
         /// <summary>
         /// True if matchers have already been initialized.
@@ -139,11 +139,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// True if you want log the statistics.
         /// </summary>
         private bool showMatcherStats = false;
-
-        /// <summary>
-        /// Defines the user agent max lenght that will be considered during the parsing.
-        /// </summary>
-        private int userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
 
         /// <summary>
         /// Defines a verbose property to enable verbose logging.
@@ -196,47 +191,52 @@ namespace OrbintSoft.Yauaa.Analyzer
         public bool WillKeepTests { get; private set; } = false;
 
         /// <summary>
+        /// Gets the user agent max lenght that will be considered during the parsing.
+        /// </summary>
+        public int UserAgentMaxLength { get; private set; } = DEFAULT_USER_AGENT_MAX_LENGTH;
+
+        /// <summary>
         /// Gets or sets the WantedFieldNames
         /// Defines the wantedFieldNames.
         /// </summary>
         protected ICollection<string> WantedFieldNames { get; set; } = null;
 
         /// <summary>
-        /// Gets the AllMatchers.
+        /// Gets all matchers.
         /// </summary>
         protected IList<Matcher> AllMatchers { get; } = new List<Matcher>();
 
         /// <summary>
-        /// Gets or sets the Flattener.
+        /// Gets or sets the user agent tree flattern.
         /// </summary>
         protected UserAgentTreeFlattener Flattener { get; set; } = null;
 
         /// <summary>
-        /// The FirstCharactersForPrefixHash.
+        /// Finds the first characters for prefix hash.
         /// </summary>
-        /// <param name="input">The input<see cref="string"/>.</param>
-        /// <param name="maxChars">The maxChars<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="input">The input string.</param>
+        /// <param name="maxChars">Max chars to retrieve.</param>
+        /// <returns>The first characters.</returns>
         public static string FirstCharactersForPrefixHash(string input, int maxChars)
         {
             return input.Substring(0, FirstCharactersForPrefixHashLength(input, maxChars));
         }
 
         /// <summary>
-        /// The FirstCharactersForPrefixHashLength.
+        /// Finds the length of first characters for prefix hash.
         /// </summary>
-        /// <param name="input">The input<see cref="string"/>.</param>
-        /// <param name="maxChars">The maxChars<see cref="int"/>.</param>
-        /// <returns>The <see cref="int"/>.</returns>
+        /// <param name="input">The input string.</param>
+        /// <param name="maxChars">Max chars to retrieve.</param>
+        /// <returns>The length.</returns>
         public static int FirstCharactersForPrefixHashLength(string input, int maxChars)
         {
             return Math.Min(maxChars, Math.Min(MAX_PREFIX_HASH_MATCH, input.Length));
         }
 
         /// <summary>
-        /// The GetAllPaths.
+        /// Gets all paths from the user agent string.
         /// </summary>
-        /// <param name="agent">The agent<see cref="string"/>.</param>
+        /// <param name="agent">The user agent.</param>
         /// <returns>The paths.</returns>
         public static IList<string> GetAllPaths(string agent)
         {
@@ -244,17 +244,17 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The GetAllPathsAnalyzer.
+        /// Get the Path Analyzer.
         /// </summary>
-        /// <param name="agent">The agent<see cref="string"/>.</param>
-        /// <returns>The <see cref="GetAllPathsAnalyzerClass"/>.</returns>
+        /// <param name="agent">The user agent string.</param>
+        /// <returns>The Path analyzer.</returns>
         public static GetAllPathsAnalyzerClass GetAllPathsAnalyzer(string agent)
         {
             return new GetAllPathsAnalyzerClass(agent);
         }
 
         /// <summary>
-        /// The NewBuilder.
+        /// Create a new Builder to construct and initialize the <see cref="UserAgentAnalyzerDirect"/>.
         /// </summary>
         /// <typeparam name="TUAA">Type of UserAgent Analyzer.</typeparam>
         /// <typeparam name="TB">Type of builder.</typeparam>
@@ -270,7 +270,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The DelayInitialization.
+        /// Used to delay the initialization.
         /// </summary>
         public void DelayInitialization()
         {
@@ -278,9 +278,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The DropTests.
+        /// Removes all tests.
         /// </summary>
-        /// <returns>The <see cref="UserAgentAnalyzerDirect"/>.</returns>
+        /// <returns>The <see cref="UserAgentAnalyzerDirect"/> for chaining.</returns>
         public UserAgentAnalyzerDirect DropTests()
         {
             this.WillKeepTests = false;
@@ -289,9 +289,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The GetAllPossibleFieldNames.
+        /// Retrieves all possible field names.
         /// </summary>
-        /// <returns>The field names/>.</returns>
+        /// <returns>The field names.</returns>
         public ISet<string> GetAllPossibleFieldNames()
         {
             var results = new SortedSet<string>(HardCodedGeneratedFields);
@@ -304,7 +304,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The GetAllPossibleFieldNamesSorted.
+        /// Retrieves all possible field names sorted.
         /// </summary>
         /// <returns>The field names.</returns>
         public IList<string> GetAllPossibleFieldNamesSorted()
@@ -325,9 +325,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The GetRequiredInformRanges.
+        /// Retrieves the required inform ranges.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="treeName">The tree name.</param>
         /// <returns>The ranges.</returns>
         public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
         {
@@ -340,9 +340,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The GetRequiredPrefixLengths.
+        /// Retrieves the required prefixed lengths.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
+        /// <param name="treeName">The name of the tree.</param>
         /// <returns>The required prefix lenght.</returns>
         public ISet<int?> GetRequiredPrefixLengths(string treeName)
         {
@@ -350,16 +350,17 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The GetUserAgentMaxLength.
+        /// Gets the User Agent max length.
         /// </summary>
-        /// <returns>The <see cref="int"/>.</returns>
+        /// <returns>The length.</returns>
+        [Obsolete("Use UserAgentMaxLength property")]
         public int GetUserAgentMaxLength()
         {
-            return this.userAgentMaxLength;
+            return this.UserAgentMaxLength;
         }
 
         /// <summary>
-        /// The ImmediateInitialization.
+        /// The analyzer will be initialized and ready before start parsing.
         /// </summary>
         public void ImmediateInitialization()
         {
@@ -367,15 +368,15 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Inform.
+        /// Informs when matches a key value in context tree node.
         /// </summary>
-        /// <param name="key">The key<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="ctx">The context node.</param>
         public void Inform(string key, string value, IParseTree ctx)
         {
             this.Inform(key, key, value, ctx);
-            this.Inform(key + "=\"" + value + '"', key, value, ctx);
+            this.Inform($"{key}=\"{value}\"", key, value, ctx);
 
             var lengths = this.GetRequiredPrefixLengths(key);
             if (lengths != null)
@@ -385,17 +386,17 @@ namespace OrbintSoft.Yauaa.Analyzer
                 {
                     if (valueLength >= prefixLength)
                     {
-                        this.Inform(key + "{\"" + FirstCharactersForPrefixHash(value, prefixLength.Value) + '"', key, value, ctx);
+                        this.Inform(key + $"{{\"{FirstCharactersForPrefixHash(value, prefixLength.Value)}\"", key, value, ctx);
                     }
                 }
             }
         }
 
         /// <summary>
-        /// The InformMeAbout.
+        /// Informs me ambout a key pattern.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-        /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
+        /// <param name="matcherAction">The <see cref="MatcherAction"/>.</param>
+        /// <param name="keyPattern">The key pattern.</param>
         public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
         {
             var hashKey = keyPattern.ToLower();
@@ -409,11 +410,11 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The InformMeAboutPrefix.
+        /// Informs me about a prefix.
         /// </summary>
-        /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
-        /// <param name="prefix">The prefix<see cref="string"/>.</param>
+        /// <param name="matcherAction">The <see cref="MatcherAction"/>.</param>
+        /// <param name="treeName">The name of the tree.</param>
+        /// <param name="prefix">The prefix.</param>
         public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
         {
             this.InformMeAbout(matcherAction, treeName + "{\"" + FirstCharactersForPrefixHash(prefix, MAX_PREFIX_HASH_MATCH) + "\"");
@@ -428,7 +429,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The InitializeMatchers.
+        /// Initialize all matchers.
         /// </summary>
         public void InitializeMatchers()
         {
@@ -472,13 +473,13 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The IsWantedField.
+        /// Checks if the field is one of the wanted fields.
         /// </summary>
-        /// <param name="fieldName">The fieldName<see cref="string"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="fieldName">The name of the field.</param>
+        /// <returns>True if wanted.</returns>
         public bool IsWantedField(string fieldName)
         {
-            if (this.WantedFieldNames == null)
+            if (this.WantedFieldNames is null)
             {
                 return true;
             }
@@ -487,7 +488,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The KeepTests.
+        /// The analyzer will keep all tests.
         /// </summary>
         /// <returns>The <see cref="UserAgentAnalyzerDirect"/>.</returns>
         public UserAgentAnalyzerDirect KeepTests()
@@ -497,10 +498,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The LoadResources.
+        /// Loads all yaml resources with user agent definitions, matcher configurations and tests.
         /// </summary>
-        /// <param name="resourceString">The resourceString<see cref="string"/>.</param>
-        /// <param name="pattern">The pattern<see cref="string"/>.</param>
+        /// <param name="resourceString">The folder path where to load all resources.</param>
+        /// <param name="pattern">The pattern, for default all yaml files in the folder will be loaded.</param>
         public void LoadResources(string resourceString, string pattern = "*.yaml")
         {
             if (this.matchersHaveBeenInitialized)
@@ -529,7 +530,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
             catch (Exception e)
             {
-                throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
+                throw new InvalidParserConfigurationException($"Error reading resources: {e.Message}", e);
             }
 
             this.doingOnlyASingleTest = false;
@@ -548,8 +549,8 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (alreadyLoadedResourceBasenames.Length > 0)
             {
-                Log.Error(string.Format("Trying to load these {0} resources for the second time: [{1}]", alreadyLoadedResourceBasenames.Length, string.Join(",", alreadyLoadedResourceBasenames)));
-                throw new InvalidParserConfigurationException("Trying to load " + alreadyLoadedResourceBasenames.Length + " resources for the second time");
+                Log.Error($"Trying to load these {alreadyLoadedResourceBasenames.Length} resources for the second time: [{string.Join(",", alreadyLoadedResourceBasenames)}]");
+                throw new InvalidParserConfigurationException($"Trying to load {alreadyLoadedResourceBasenames.Length} resources for the second time");
             }
 
             foreach (var resourceEntry in resources)
@@ -579,12 +580,12 @@ namespace OrbintSoft.Yauaa.Analyzer
                     }
                     else
                     {
-                        throw new InvalidParserConfigurationException("Parse error in the file " + filename + ": " + e.Message, e);
+                        throw new InvalidParserConfigurationException($"Parse error in the file {filename} : {e.Message}", e);
                     }
                 }
                 catch (Exception e)
                 {
-                    throw new InvalidParserConfigurationException("Error reading resources: " + e.Message, e);
+                    throw new InvalidParserConfigurationException($"Error reading resources: {e.Message}", e);
                 }
             }
 
@@ -653,23 +654,17 @@ namespace OrbintSoft.Yauaa.Analyzer
 
                     if (this.showMatcherStats)
                     {
-                        Log.Info(
-                            string.Format(
-                                "Loading {0} (dropped {1}) matchers from {2} took {3} msec",
-                                matcherConfig.Count - (stopSkipped - startSkipped),
-                                stopSkipped - startSkipped,
-                                configFilename,
-                                stopwatch.ElapsedMilliseconds));
+                        Log.Info($"Loading {matcherConfig.Count - (stopSkipped - startSkipped)} (dropped {stopSkipped - startSkipped}) matchers from {configFilename} took {stopwatch.ElapsedMilliseconds} msec");
                     }
                 }
             }
         }
 
         /// <summary>
-        /// The LookingForRange.
+        /// Looks for range.
         /// </summary>
-        /// <param name="treeName">The treeName<see cref="string"/>.</param>
-        /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
+        /// <param name="treeName">The name of the tree.</param>
+        /// <param name="range">The range.</param>
         public void LookingForRange(string treeName, WordRangeVisitor.Range range)
         {
             if (!this.informMatcherActionRanges.Keys.Contains(treeName))
@@ -681,9 +676,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Parse.
+        /// Parse the user agent string.
         /// </summary>
-        /// <param name="userAgentString">The userAgentString<see cref="string"/>.</param>
+        /// <param name="userAgentString">The user agent string.</param>
         /// <returns>The <see cref="UserAgent"/>.</returns>
         public virtual UserAgent Parse(string userAgentString)
         {
@@ -692,20 +687,20 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Parse.
+        /// Parse a <see cref="UserAgent"/> object filling all fields.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <returns>The <see cref="UserAgent"/>.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/> to parse.</param>
+        /// <returns>The parsed <see cref="UserAgent"/>.</returns>
         public virtual UserAgent Parse(UserAgent userAgent)
         {
             lock (this)
             {
                 this.InitializeMatchers();
                 var useragentString = userAgent.UserAgentString;
-                if (useragentString != null && useragentString.Length > this.userAgentMaxLength)
+                if (useragentString != null && useragentString.Length > this.UserAgentMaxLength)
                 {
                     this.SetAsHacker(userAgent, 100);
-                    userAgent.SetForced(UserAgent.HACKER_ATTACK_VECTOR, "Buffer overflow", 100);
+                    userAgent.SetForced(DefaultUserAgentFields.HACKER_ATTACK_VECTOR, "Buffer overflow", 100);
                     return this.HardCodedPostProcessing(userAgent);
                 }
 
@@ -756,16 +751,16 @@ namespace OrbintSoft.Yauaa.Analyzer
                     // I guess this exploit can work only in Java, but better to keep the code as safety measure
                     userAgent.Reset();
                     userAgent = this.SetAsHacker(userAgent, 10000);
-                    userAgent.SetForced(UserAgent.HACKER_ATTACK_VECTOR, "Yauaa NPE Exploit", 10000);
+                    userAgent.SetForced(DefaultUserAgentFields.HACKER_ATTACK_VECTOR, "Yauaa NPE Exploit", 10000);
                     return this.HardCodedPostProcessing(userAgent);
                 }
             }
         }
 
         /// <summary>
-        /// Runs all testcases once to heat up the JVM.
+        /// Runs all testcases once to heat up the CLR.
         /// </summary>
-        /// <returns>The <see cref="long"/>.</returns>
+        /// <returns>The number of ierations.</returns>
         public long PreHeat()
         {
             return this.PreHeat(this.TestCases.Count, true);
@@ -774,7 +769,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Runs the number of specified testcases to heat up the CLR.
         /// </summary>
-        /// <param name="preheatIterations">The preheatIterations<see cref="long"/>.</param>
+        /// <param name="preheatIterations">The number of iterations.</param>
         /// <returns>The <see cref="long"/>.</returns>
         public long PreHeat(long preheatIterations)
         {
@@ -784,9 +779,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Runs the number of specified testcases to heat up the CLR.
         /// </summary>
-        /// <param name="preheatIterations">The preheatIterations<see cref="long"/>.</param>
-        /// <param name="log">The log<see cref="bool"/>.</param>
-        /// <returns>The <see cref="long"/>.</returns>
+        /// <param name="preheatIterations">The number of ierations .</param>
+        /// <param name="log">True to enable loggng.</param>
+        /// <returns>The number of iterations.</returns>
         public long PreHeat(long preheatIterations, bool log)
         {
             if (this.TestCases.Count == 0)
@@ -797,19 +792,19 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (preheatIterations <= 0)
             {
-                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for {0} to run.", preheatIterations));
+                Log.Warn($"NO PREHEAT WAS DONE. Simply because you asked for {preheatIterations} to run.");
                 return 0;
             }
 
             if (preheatIterations > MAX_PRE_HEAT_ITERATIONS)
             {
-                Log.Warn(string.Format("NO PREHEAT WAS DONE. Simply because you asked for too many ({0} > {1}) to run.", preheatIterations, MAX_PRE_HEAT_ITERATIONS));
+                Log.Warn($"NO PREHEAT WAS DONE. Simply because you asked for too many ({preheatIterations} > {MAX_PRE_HEAT_ITERATIONS}) to run.");
                 return 0;
             }
 
             if (log)
             {
-                Log.Info(string.Format("Preheating CLR by running {0} testcases.", preheatIterations));
+                Log.Info($"Preheating CLR by running {preheatIterations} testcases.");
             }
 
             var remainingIterations = preheatIterations;
@@ -837,17 +832,17 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (log)
             {
-                Log.Info(string.Format("Preheating CLR completed. ({0} of {1} were proper results)", goodResults, preheatIterations));
+                Log.Info($"Preheating CLR completed. ({goodResults} of {preheatIterations} were proper results)");
             }
 
             return preheatIterations;
         }
 
         /// <summary>
-        /// The SetShowMatcherStats.
+        /// Enable statistics logging.
         /// </summary>
-        /// <param name="newShowMatcherStats">The newShowMatcherStats<see cref="bool"/>.</param>
-        /// <returns>The <see cref="UserAgentAnalyzerDirect"/>.</returns>
+        /// <param name="newShowMatcherStats">Trye to enable statistics.</param>
+        /// <returns>The <see cref="UserAgentAnalyzerDirect"/> for chaining.</returns>
         public UserAgentAnalyzerDirect SetShowMatcherStats(bool newShowMatcherStats)
         {
             this.showMatcherStats = newShowMatcherStats;
@@ -855,25 +850,25 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The SetUserAgentMaxLength.
+        /// Sets the use agent max length.
         /// </summary>
-        /// <param name="newUserAgentMaxLength">The newUserAgentMaxLength<see cref="int"/>.</param>
+        /// <param name="newUserAgentMaxLength">The length.</param>
         public void SetUserAgentMaxLength(int newUserAgentMaxLength)
         {
             if (newUserAgentMaxLength <= 0)
             {
-                this.userAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
+                this.UserAgentMaxLength = DEFAULT_USER_AGENT_MAX_LENGTH;
             }
             else
             {
-                this.userAgentMaxLength = newUserAgentMaxLength;
+                this.UserAgentMaxLength = newUserAgentMaxLength;
             }
         }
 
         /// <summary>
-        /// The SetVerbose.
+        /// Set true to enable verbose logging.
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/>.</param>
+        /// <param name="newVerbose">True to enable verbose.</param>
         public void SetVerbose(bool newVerbose)
         {
             this.verbose = newVerbose;
@@ -901,9 +896,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// This is used to concatenate two parsed fields into one.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         /// <param name="targetName">The name of the new field after concatenation.</param>
-        /// <param name="firstName">The name of first field you want concatenate</param>
+        /// <param name="firstName">The name of first field you want concatenate.</param>
         /// <param name="secondName">The name of the second field.</param>
         internal void ConcatFieldValuesNONDuplicated(UserAgent userAgent, string targetName, string firstName, string secondName)
         {
@@ -977,7 +972,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Initialize.
+        /// Initialize the analyzer.
         /// </summary>
         protected internal void Initialize()
         {
@@ -985,9 +980,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Initialize.
+        /// Initialize the analyser with a set of resources.
         /// </summary>
-        /// <param name="resources">The resources<see cref="List{ResourcesPath}"/>.</param>
+        /// <param name="resources">The resources to be loaded.</param>
         protected void Initialize(IList<ResourcesPath> resources)
         {
             YauaaVersion.LogVersion();
@@ -995,7 +990,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             if (this.WantedFieldNames != null)
             {
                 int wantedSize = this.WantedFieldNames.Count;
-                if (this.WantedFieldNames.Contains(UserAgent.SET_ALL_FIELDS))
+                if (this.WantedFieldNames.Contains(DefaultUserAgentFields.SET_ALL_FIELDS))
                 {
                     wantedSize--;
                 }
@@ -1031,11 +1026,11 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The VerifyWeAreNotAskingForImpossibleFields.
+        /// Verify that we are not asking impossible fields.
         /// </summary>
         protected void VerifyWeAreNotAskingForImpossibleFields()
         {
-            if (this.WantedFieldNames == null)
+            if (this.WantedFieldNames is null)
             {
                 return; //// Nothing to check
             }
@@ -1067,76 +1062,43 @@ namespace OrbintSoft.Yauaa.Analyzer
                 bd.AppendFormat(" [{0}]", item);
             }
 
-            throw new InvalidParserConfigurationException("We cannot provide these fields:" + bd.ToString());
+            throw new InvalidParserConfigurationException($"We cannot provide these fields:{bd}");
         }
 
         /// <summary>
-        /// The AddMajorVersionField.
+        /// Used to hardcode processing fields.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <param name="versionName">The versionName<see cref="string"/>.</param>
-        /// <param name="majorVersionName">The majorVersionName<see cref="string"/>.</param>
-        private void AddMajorVersionField(UserAgent userAgent, string versionName, string majorVersionName)
-        {
-            if (!this.IsWantedField(majorVersionName))
-            {
-                return;
-            }
-
-            var agentVersionMajor = userAgent.Get(majorVersionName);
-            if (agentVersionMajor == null || agentVersionMajor.GetConfidence() == -1)
-            {
-                var agentVersion = userAgent.Get(versionName);
-                if (agentVersion != null)
-                {
-                    var version = agentVersion.GetValue();
-                    if (version != null)
-                    {
-                        version = VersionSplitter.GetInstance().GetSingleSplit(agentVersion.GetValue(), 1);
-                    }
-
-                    userAgent.Set(
-                        majorVersionName,
-                        version,
-                        agentVersion.GetConfidence());
-                }
-            }
-        }
-
-        /// <summary>
-        /// The HardCodedPostProcessing.
-        /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <returns>The <see cref="UserAgent"/>.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/> to be processed.</param>
+        /// <returns>The parsed <see cref="UserAgent"/>.</returns>
         private UserAgent HardCodedPostProcessing(UserAgent userAgent)
         {
             // If it is really really bad ... then it is a Hacker.
-            if ("true".Equals(userAgent.GetValue(UserAgent.SYNTAX_ERROR)))
+            if ("true".Equals(userAgent.GetValue(DefaultUserAgentFields.SYNTAX_ERROR)))
             {
-                if (userAgent.Get(UserAgent.DEVICE_CLASS).GetConfidence() == -1)
+                if (userAgent.Get(DefaultUserAgentFields.DEVICE_CLASS).GetConfidence() == -1)
                 {
-                    userAgent.Set(UserAgent.DEVICE_CLASS, "Hacker", 10);
-                    userAgent.Set(UserAgent.DEVICE_BRAND, "Hacker", 10);
-                    userAgent.Set(UserAgent.DEVICE_NAME, "Hacker", 10);
-                    userAgent.Set(UserAgent.DEVICE_VERSION, "Hacker", 10);
-                    userAgent.Set(UserAgent.OPERATING_SYSTEM_CLASS, "Hacker", 10);
-                    userAgent.Set(UserAgent.OPERATING_SYSTEM_NAME, "Hacker", 10);
-                    userAgent.Set(UserAgent.OPERATING_SYSTEM_VERSION, "Hacker", 10);
-                    userAgent.Set(UserAgent.LAYOUT_ENGINE_CLASS, "Hacker", 10);
-                    userAgent.Set(UserAgent.LAYOUT_ENGINE_NAME, "Hacker", 10);
-                    userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION, "Hacker", 10);
-                    userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, "Hacker", 10);
-                    userAgent.Set(UserAgent.AGENT_CLASS, "Hacker", 10);
-                    userAgent.Set(UserAgent.AGENT_NAME, "Hacker", 10);
-                    userAgent.Set(UserAgent.AGENT_VERSION, "Hacker", 10);
-                    userAgent.Set(UserAgent.AGENT_VERSION_MAJOR, "Hacker", 10);
-                    userAgent.Set(UserAgent.HACKER_TOOLKIT, "Unknown", 10);
-                    userAgent.Set(UserAgent.HACKER_ATTACK_VECTOR, "Unknown", 10);
+                    userAgent.Set(DefaultUserAgentFields.DEVICE_CLASS, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.DEVICE_BRAND, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.DEVICE_NAME, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.DEVICE_VERSION, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.OPERATING_SYSTEM_CLASS, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.OPERATING_SYSTEM_NAME, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.OPERATING_SYSTEM_VERSION, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_CLASS, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_NAME, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.AGENT_CLASS, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.AGENT_NAME, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.AGENT_VERSION, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.AGENT_VERSION_MAJOR, "Hacker", 10);
+                    userAgent.Set(DefaultUserAgentFields.HACKER_TOOLKIT, "Unknown", 10);
+                    userAgent.Set(DefaultUserAgentFields.HACKER_ATTACK_VECTOR, "Unknown", 10);
                 }
             }
 
             // Calculate all fields that are constructed from the found ones.
-            foreach (var fieldCalculator in fieldCalculators)
+            foreach (var fieldCalculator in this.fieldCalculators)
             {
                 fieldCalculator.Calculate(userAgent);
             }
@@ -1145,30 +1107,30 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The Inform.
+        /// Informs about a match.
         /// </summary>
-        /// <param name="match">The match<see cref="string"/>.</param>
-        /// <param name="key">The key<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
+        /// <param name="match">The match.</param>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="ctx">The context.</param>
         private void Inform(string match, string key, string value, IParseTree ctx)
         {
             var cmatch = match.ToLower(CultureInfo.InvariantCulture);
             var relevantActions = this.informMatcherActions.ContainsKey(cmatch) ? this.informMatcherActions[cmatch] : null;
             if (this.verbose)
             {
-                if (relevantActions == null)
+                if (relevantActions is null)
                 {
-                    Log.Info(string.Format("--- Have (0): {0}", match));
+                    Log.Info($"--- Have (0): {match}");
                 }
                 else
                 {
-                    Log.Info(string.Format("+++ Have ({0}): {1}", relevantActions.Count, match));
+                    Log.Info($"+++ Have ({relevantActions.Count}): {match}");
 
                     var count = 1;
                     foreach (var action in relevantActions)
                     {
-                        Log.Info(string.Format("+++ -------> ({0}): {1}", count, action.ToString()));
+                        Log.Info($"+++ -------> ({count}): {action}");
                         count++;
                     }
                 }
@@ -1184,19 +1146,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The InitTransientFields.
+        /// Load a resource form yaml document.
         /// </summary>
-        private void InitTransientFields()
-        {
-            this.matcherConfigs = new Dictionary<string, IList<YamlMappingNode>>(64);
-            this.touchedMatchers = new MatcherList(16);
-        }
-
-        /// <summary>
-        /// The LoadResource.
-        /// </summary>
-        /// <param name="yaml">The yaml<see cref="YamlDocument"/>.</param>
-        /// <param name="filename">The filename<see cref="string"/>.</param>
+        /// <param name="yaml">The <see cref="YamlDocument"/>.</param>
+        /// <param name="filename">The filename.</param>
         private void LoadResource(YamlDocument yaml, string filename)
         {
             YamlNode loadedYaml;
@@ -1206,10 +1159,10 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
             catch (Exception e)
             {
-                throw new InvalidParserConfigurationException("Parse error in the file " + filename + ": " + e.Message, e);
+                throw new InvalidParserConfigurationException($"Parse error in the file {filename}: {e.Message}", e);
             }
 
-            if (loadedYaml == null)
+            if (loadedYaml is null)
             {
                 Log.Warn($"The file {filename} is empty");
                 return;
@@ -1269,17 +1222,16 @@ namespace OrbintSoft.Yauaa.Analyzer
                         break;
                     default:
                         throw new InvalidParserConfigurationException(
-                            "Yaml config.(" + filename + ":" + actualEntry.Start.Line + "): " +
-                                "Found unexpected config entry: " + entryType + ", allowed are 'lookup', 'set', 'matcher' and 'test'");
+                            $"Yaml config.({filename}:{actualEntry.Start.Line}): Found unexpected config entry: {entryType}, allowed are 'lookup', 'set', 'matcher' and 'test'");
                 }
             }
         }
 
         /// <summary>
-        /// The LoadYamlLookup.
+        /// Load lookups from yaml node.
         /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/>.</param>
-        /// <param name="filename">The filename<see cref="string"/>.</param>
+        /// <param name="entry">The <see cref="YamlMappingNode"/>.</param>
+        /// <param name="filename">The filename.</param>
         private void LoadYamlLookup(YamlMappingNode entry, string filename)
         {
             string name = null;
@@ -1293,7 +1245,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                         name = YamlUtils.GetValueAsString(tuple, filename);
                         break;
                     case "map":
-                        if (map == null)
+                        if (map is null)
                         {
                             map = new Dictionary<string, string>();
                         }
@@ -1318,10 +1270,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The LoadYamlLookupSets.
+        /// Load all yaml lookup sets from yaml node.
         /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/>.</param>
-        /// <param name="filename">The filename<see cref="string"/>.</param>
+        /// <param name="entry">The <see cref="YamlMappingNode"/>.</param>
+        /// <param name="filename">The name of the node.</param>
         private void LoadYamlLookupSets(YamlMappingNode entry, string filename)
         {
             string name = null;
@@ -1351,10 +1303,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The LoadYamlMatcher.
+        /// Loads the matcher from yaml node.
         /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/>.</param>
-        /// <param name="filename">The filename<see cref="string"/>.</param>
+        /// <param name="entry">The entry <see cref="YamlMappingNode"/>.</param>
+        /// <param name="filename">The name of the file.</param>
         private void LoadYamlMatcher(YamlMappingNode entry, string filename)
         {
             var matcherConfigList = this.matcherConfigs.FirstOrDefault(e => e.Key == filename).Value;
@@ -1367,10 +1319,10 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The LoadYamlTestcase.
+        /// Loads a test case from yaml node.
         /// </summary>
-        /// <param name="entry">The entry<see cref="YamlMappingNode"/>.</param>
-        /// <param name="filename">The filename<see cref="string"/>.</param>
+        /// <param name="entry">The <see cref="YamlMappingNode"/>.</param>
+        /// <param name="filename">The name of the file.</param>
         private void LoadYamlTestcase(YamlMappingNode entry, string filename)
         {
             if (!this.doingOnlyASingleTest)
@@ -1464,113 +1416,80 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// The ReadObject.
+        /// Set as user agent as hacker with given confidence.
         /// </summary>
-        /// <param name="stream">The stream<see cref="Stream"/>.</param>
-        private void ReadObject(Stream stream)
-        {
-            this.InitTransientFields();
-
-            var lines = new List<string>
-            {
-                "This Analyzer instance was deserialized.",
-                string.Empty,
-                "Lookups      : " + ((this.lookups == null) ? 0 : this.lookups.Count),
-                "LookupSets   : " + this.lookupSets.Count,
-                "Matchers     : " + this.AllMatchers.Count,
-                "Hashmap size : " + this.informMatcherActions.Count,
-                "Testcases    : " + this.TestCases.Count,
-            };
-
-            string[] x = { };
-            YauaaVersion.LogVersion(lines.ToArray());
-        }
-
-        /// <summary>
-        /// The SetAsHacker.
-        /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <param name="confidence">The confidence<see cref="int"/>.</param>
-        /// <returns>The <see cref="UserAgent"/>.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
+        /// <param name="confidence">The confidence.</param>
+        /// <returns>The resulting <see cref="UserAgent"/>.</returns>
         private UserAgent SetAsHacker(UserAgent userAgent, int confidence)
         {
-            userAgent.Set(UserAgent.DEVICE_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.DEVICE_BRAND, "Hacker", confidence);
-            userAgent.Set(UserAgent.DEVICE_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.DEVICE_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.OPERATING_SYSTEM_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.OPERATING_SYSTEM_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.OPERATING_SYSTEM_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_CLASS, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_NAME, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_VERSION, "Hacker", confidence);
-            userAgent.Set(UserAgent.AGENT_VERSION_MAJOR, "Hacker", confidence);
-            userAgent.Set(UserAgent.HACKER_TOOLKIT, "Unknown", confidence);
-            userAgent.Set(UserAgent.HACKER_ATTACK_VECTOR, "Buffer overflow", confidence);
+            userAgent.Set(DefaultUserAgentFields.DEVICE_CLASS, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.DEVICE_BRAND, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.DEVICE_NAME, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.DEVICE_VERSION, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.OPERATING_SYSTEM_CLASS, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.OPERATING_SYSTEM_NAME, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.OPERATING_SYSTEM_VERSION, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_CLASS, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_NAME, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.AGENT_CLASS, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.AGENT_NAME, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.AGENT_VERSION, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.AGENT_VERSION_MAJOR, "Hacker", confidence);
+            userAgent.Set(DefaultUserAgentFields.HACKER_TOOLKIT, "Unknown", confidence);
+            userAgent.Set(DefaultUserAgentFields.HACKER_ATTACK_VECTOR, "Buffer overflow", confidence);
             return userAgent;
         }
 
         /// <summary>
-        /// Defines the <see cref="GetAllPathsAnalyzerClass" />.
+        /// This analyzer is for testing all paths.
         /// </summary>
         public class GetAllPathsAnalyzerClass : IAnalyzer
         {
             /// <summary>
-            /// Defines the result.
-            /// </summary>
-            private readonly UserAgent result;
-
-            /// <summary>
-            /// Defines the values.
-            /// </summary>
-            private readonly IList<string> values = new List<string>();
-
-            /// <summary>
             /// Initializes a new instance of the <see cref="GetAllPathsAnalyzerClass"/> class.
             /// </summary>
-            /// <param name="useragent">The useragent<see cref="string"/>.</param>
+            /// <param name="useragent">The user agent string.</param>
             internal GetAllPathsAnalyzerClass(string useragent)
             {
                 var flattener = new UserAgentTreeFlattener(this);
-                this.result = flattener.Parse(useragent);
+                this.Result = flattener.Parse(useragent);
             }
 
             /// <summary>
-            /// Gets the Result.
+            /// Gets the parsed <see cref="UserAgent"/>.
             /// </summary>
-            public UserAgent Result => this.result;
+            public UserAgent Result { get; }
 
             /// <summary>
-            /// Gets the Values.
+            /// Gets the parsed values.
             /// </summary>
-            public IList<string> Values => this.values;
+            public IList<string> Values { get; } = new List<string>();
 
             /// <summary>
-            /// GetLookups.
+            /// Gets all lookups.
             /// </summary>
-            /// <returns>loockups.</returns>
+            /// <returns>The dictionary of lookups.</returns>
             public IDictionary<string, IDictionary<string, string>> GetLookups()
             {
                 return new Dictionary<string, IDictionary<string, string>>();
             }
 
             /// <summary>
-            /// GetLookupSets.
+            /// Gets all lookup sets.
             /// </summary>
-            /// <returns>lookups.</returns>
+            /// <returns>The lookups sets.</returns>
             public IDictionary<string, ISet<string>> GetLookupSets()
             {
                 return new Dictionary<string, ISet<string>>();
             }
 
             /// <summary>
-            /// The GetRequiredInformRanges.
+            /// Gets the required inform ranges.
             /// </summary>
-            /// <param name="treeName">The treeName<see cref="string"/>.</param>
+            /// <param name="treeName">The name of the tree.</param>
             /// <returns>The ranges.</returns>
             public ISet<WordRangeVisitor.Range> GetRequiredInformRanges(string treeName)
             {
@@ -1579,9 +1498,9 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The GetRequiredPrefixLengths.
+            /// Gets the required prefix lenghts.
             /// </summary>
-            /// <param name="treeName">The treeName<see cref="string"/>.</param>
+            /// <param name="treeName">The name of the tree.</param>
             /// <returns>The prefix lengths.</returns>
             public ISet<int?> GetRequiredPrefixLengths(string treeName)
             {
@@ -1590,42 +1509,42 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The Inform.
+            /// Informs about parsed values in path.
             /// </summary>
-            /// <param name="path">The path<see cref="string"/>.</param>
-            /// <param name="value">The value<see cref="string"/>.</param>
-            /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
+            /// <param name="path">The path.</param>
+            /// <param name="value">The value.</param>
+            /// <param name="ctx">The context node.</param>
             public void Inform(string path, string value, IParseTree ctx)
             {
-                this.values.Add(path);
-                this.values.Add(path + "=\"" + value + "\"");
-                this.values.Add(path + "{\"" + FirstCharactersForPrefixHash(value, MAX_PREFIX_HASH_MATCH) + "\"");
+                this.Values.Add(path);
+                this.Values.Add($"{path}=\"{value}\"");
+                this.Values.Add($"{path}{{\"{FirstCharactersForPrefixHash(value, MAX_PREFIX_HASH_MATCH)}\"");
             }
 
             /// <summary>
-            /// The InformMeAbout.
+            /// Not implemented.
             /// </summary>
-            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-            /// <param name="keyPattern">The keyPattern<see cref="string"/>.</param>
+            /// <param name="matcherAction">The <see cref="MatcherAction"/>.</param>
+            /// <param name="keyPattern">The key pattern.</param>
             public void InformMeAbout(MatcherAction matcherAction, string keyPattern)
             {
             }
 
             /// <summary>
-            /// The InformMeAboutPrefix.
+            /// Not implemented.
             /// </summary>
-            /// <param name="matcherAction">The matcherAction<see cref="MatcherAction"/>.</param>
-            /// <param name="treeName">The treeName<see cref="string"/>.</param>
-            /// <param name="prefix">The prefix<see cref="string"/>.</param>
+            /// <param name="matcherAction">The <see cref="MatcherAction"/>.</param>
+            /// <param name="treeName">name of the tree.</param>
+            /// <param name="prefix">The prefix.</param>
             public void InformMeAboutPrefix(MatcherAction matcherAction, string treeName, string prefix)
             {
             }
 
             /// <summary>
-            /// The LookingForRange.
+            /// Not implemented.
             /// </summary>
-            /// <param name="treeName">The treeName<see cref="string"/>.</param>
-            /// <param name="range">The range<see cref="WordRangeVisitor.Range"/>.</param>
+            /// <param name="treeName">The name of the tree.</param>
+            /// <param name="range">The <see cref="WordRangeVisitor.Range"/>.</param>
             public void LookingForRange(string treeName, WordRangeVisitor.Range range)
             {
             }
@@ -1637,7 +1556,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// Defines the <see cref="UserAgentAnalyzerDirectBuilder{UAA, B}" />.
+        /// This is used to build a <see cref="UserAgentAnalyzerDirect"/>.
         /// </summary>
         /// <typeparam name="TUAA">the UserAgent Analyzer.</typeparam>
         /// <typeparam name="TB">the Builder.</typeparam>
@@ -1646,22 +1565,22 @@ namespace OrbintSoft.Yauaa.Analyzer
             where TB : UserAgentAnalyzerDirectBuilder<TUAA, TB>
         {
             /// <summary>
-            /// Defines the resources.
+            /// Defines the loaded yaml resources.
             /// </summary>
             private readonly IList<ResourcesPath> resources = new List<ResourcesPath>();
 
             /// <summary>
-            /// Defines the didBuildStep.
+            /// Defines if analyzer has been built.
             /// </summary>
-            private bool didBuildStep = false;
+            private volatile bool didBuildStep = false;
 
             /// <summary>
-            /// Defines the preheatIterations.
+            /// Defines number of iterations to be done to preheat the CLR.
             /// </summary>
             private int preheatIterations = 0;
 
             /// <summary>
-            /// Defines the uaa.
+            /// Defines the user agent analyzr to use.
             /// </summary>
             private TUAA uaa;
 
@@ -1680,7 +1599,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             /// Add a set of additional rules. Useful in handling specific cases.
             /// </summary>
             /// <param name="resourceString">resourceString The dirctory that contains the resources list that needs to be added.</param>
-            /// <param name="filter">The filter<see cref="string"/>.</param>
+            /// <param name="filter">The filte (default *.yaml).</param>
             /// <returns>the current Builder instance.</returns>
             public TB AddResources(string resourceString, string filter = "*.yaml")
             {
@@ -1701,42 +1620,42 @@ namespace OrbintSoft.Yauaa.Analyzer
                 if (this.uaa.WantedFieldNames != null)
                 {
                     // Special field that affects ALL fields.
-                    this.uaa.WantedFieldNames.Add(UserAgent.SET_ALL_FIELDS);
+                    this.uaa.WantedFieldNames.Add(DefaultUserAgentFields.SET_ALL_FIELDS);
 
                     // This is always needed to determine the Hacker fallback
-                    this.uaa.WantedFieldNames.Add(UserAgent.DEVICE_CLASS);
+                    this.uaa.WantedFieldNames.Add(DefaultUserAgentFields.DEVICE_CLASS);
                 }
 
-                this.AddCalculatedConcatNONDuplicated(UserAgent.AGENT_NAME_VERSION_MAJOR, UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION_MAJOR);
-                this.AddCalculatedConcatNONDuplicated(UserAgent.AGENT_NAME_VERSION, UserAgent.AGENT_NAME, UserAgent.AGENT_VERSION);
-                this.AddCalculatedMajorVersionField(UserAgent.AGENT_VERSION_MAJOR, UserAgent.AGENT_VERSION);
+                this.AddCalculatedConcatNONDuplicated(DefaultUserAgentFields.AGENT_NAME_VERSION_MAJOR, DefaultUserAgentFields.AGENT_NAME, DefaultUserAgentFields.AGENT_VERSION_MAJOR);
+                this.AddCalculatedConcatNONDuplicated(DefaultUserAgentFields.AGENT_NAME_VERSION, DefaultUserAgentFields.AGENT_NAME, DefaultUserAgentFields.AGENT_VERSION);
+                this.AddCalculatedMajorVersionField(DefaultUserAgentFields.AGENT_VERSION_MAJOR, DefaultUserAgentFields.AGENT_VERSION);
 
-                this.AddCalculatedConcatNONDuplicated(UserAgent.WEBVIEW_APP_NAME_VERSION_MAJOR, UserAgent.WEBVIEW_APP_NAME, UserAgent.WEBVIEW_APP_VERSION_MAJOR);
-                this.AddCalculatedMajorVersionField(UserAgent.WEBVIEW_APP_VERSION_MAJOR, UserAgent.WEBVIEW_APP_VERSION);
+                this.AddCalculatedConcatNONDuplicated(DefaultUserAgentFields.WEBVIEW_APP_NAME_VERSION_MAJOR, DefaultUserAgentFields.WEBVIEW_APP_NAME, DefaultUserAgentFields.WEBVIEW_APP_VERSION_MAJOR);
+                this.AddCalculatedMajorVersionField(DefaultUserAgentFields.WEBVIEW_APP_VERSION_MAJOR, DefaultUserAgentFields.WEBVIEW_APP_VERSION);
 
-                this.AddCalculatedConcatNONDuplicated(UserAgent.LAYOUT_ENGINE_NAME_VERSION_MAJOR, UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION_MAJOR);
-                this.AddCalculatedConcatNONDuplicated(UserAgent.LAYOUT_ENGINE_NAME_VERSION, UserAgent.LAYOUT_ENGINE_NAME, UserAgent.LAYOUT_ENGINE_VERSION);
-                this.AddCalculatedMajorVersionField(UserAgent.LAYOUT_ENGINE_VERSION_MAJOR, UserAgent.LAYOUT_ENGINE_VERSION);
+                this.AddCalculatedConcatNONDuplicated(DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION_MAJOR, DefaultUserAgentFields.LAYOUT_ENGINE_NAME, DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR);
+                this.AddCalculatedConcatNONDuplicated(DefaultUserAgentFields.LAYOUT_ENGINE_NAME_VERSION, DefaultUserAgentFields.LAYOUT_ENGINE_NAME, DefaultUserAgentFields.LAYOUT_ENGINE_VERSION);
+                this.AddCalculatedMajorVersionField(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION_MAJOR, DefaultUserAgentFields.LAYOUT_ENGINE_VERSION);
 
-                this.AddCalculatedMajorVersionField(UserAgent.OPERATING_SYSTEM_NAME_VERSION_MAJOR, UserAgent.OPERATING_SYSTEM_NAME_VERSION);
-                this.AddCalculatedConcatNONDuplicated(UserAgent.OPERATING_SYSTEM_NAME_VERSION, UserAgent.OPERATING_SYSTEM_NAME, UserAgent.OPERATING_SYSTEM_VERSION);
-                this.AddCalculatedMajorVersionField(UserAgent.OPERATING_SYSTEM_VERSION_MAJOR, UserAgent.OPERATING_SYSTEM_VERSION);
+                this.AddCalculatedMajorVersionField(DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION_MAJOR, DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION);
+                this.AddCalculatedConcatNONDuplicated(DefaultUserAgentFields.OPERATING_SYSTEM_NAME_VERSION, DefaultUserAgentFields.OPERATING_SYSTEM_NAME, DefaultUserAgentFields.OPERATING_SYSTEM_VERSION);
+                this.AddCalculatedMajorVersionField(DefaultUserAgentFields.OPERATING_SYSTEM_VERSION_MAJOR, DefaultUserAgentFields.OPERATING_SYSTEM_VERSION);
 
-                if (this.uaa.IsWantedField(UserAgent.DEVICE_NAME))
+                if (this.uaa.IsWantedField(DefaultUserAgentFields.DEVICE_NAME))
                 {
                     this.uaa.fieldCalculators.Add(new CalculateDeviceName());
-                    this.AddSpecialDependencies(UserAgent.DEVICE_NAME, UserAgent.DEVICE_BRAND);
+                    this.AddSpecialDependencies(DefaultUserAgentFields.DEVICE_NAME, DefaultUserAgentFields.DEVICE_BRAND);
                 }
 
-                if (this.uaa.IsWantedField(UserAgent.DEVICE_BRAND))
+                if (this.uaa.IsWantedField(DefaultUserAgentFields.DEVICE_BRAND))
                 {
                     this.uaa.fieldCalculators.Add(new CalculateDeviceBrand());
 
                     // If we do not have a Brand we try to extract it from URL/Email iff present.
-                    this.AddSpecialDependencies(UserAgent.DEVICE_BRAND, UserAgent.AGENT_INFORMATION_URL, UserAgent.AGENT_INFORMATION_EMAIL);
+                    this.AddSpecialDependencies(DefaultUserAgentFields.DEVICE_BRAND, DefaultUserAgentFields.AGENT_INFORMATION_URL, DefaultUserAgentFields.AGENT_INFORMATION_EMAIL);
                 }
 
-                if (this.uaa.IsWantedField(UserAgent.AGENT_INFORMATION_EMAIL))
+                if (this.uaa.IsWantedField(DefaultUserAgentFields.AGENT_INFORMATION_EMAIL))
                 {
                     this.uaa.fieldCalculators.Add(new CalculateAgentEmail());
                 }
@@ -1945,7 +1864,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The SetUAA.
+            /// Set the User agent Analyzer to be used.
             /// </summary>
             /// <param name="a">The User Agent Analyzer.</param>
             internal void SetUAA(TUAA a)
@@ -1954,7 +1873,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// The FailIfAlreadyBuilt.
+            /// Throws an exception if the analyzer has already been built.
             /// </summary>
             protected void FailIfAlreadyBuilt()
             {
@@ -1965,10 +1884,10 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// AddSpecialDependencies.
+            /// Add custom dependencies.
             /// </summary>
-            /// <param name="result">result.</param>
-            /// <param name="dependencies">dependencies.</param>
+            /// <param name="result">The result.</param>
+            /// <param name="dependencies">The dependencies.</param>
             private void AddSpecialDependencies(string result, params string[] dependencies)
             {
                 if (this.uaa.IsWantedField(result))
@@ -1984,10 +1903,10 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// AddCalculatedMajorVersionField.
+            /// Add a calculator to calculate major version.
             /// </summary>
-            /// <param name="result">result.</param>
-            /// <param name="dependency">dependency.</param>
+            /// <param name="result">The result.</param>
+            /// <param name="dependency">The dependency.</param>
             private void AddCalculatedMajorVersionField(string result, string dependency)
             {
                 if (this.uaa.IsWantedField(result))
@@ -2001,11 +1920,11 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             /// <summary>
-            /// AddCalculatedConcatNONDuplicated.
+            /// dd a calculator to calculate concatenated fields.
             /// </summary>
-            /// <param name="result">result.</param>
-            /// <param name="first">first.</param>
-            /// <param name="second">second.</param>
+            /// <param name="result">The result.</param>
+            /// <param name="first">The first field to concatenate.</param>
+            /// <param name="second">The second field to concatenate.</param>
             private void AddCalculatedConcatNONDuplicated(string result, string first, string second)
             {
                 if (this.uaa.IsWantedField(result))

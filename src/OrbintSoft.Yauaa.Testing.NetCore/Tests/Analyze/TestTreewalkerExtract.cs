@@ -217,7 +217,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
 
             string[] expectedWalkList = {
                 "Up()",
-                "Down([1:5]version)",
+                "Down([1:4]version)",
                 "WordRange([1:2])",
                 "StartsWith(7.)",
                 "Lookup(@TridentVersions ; default=DefaultValue)",
