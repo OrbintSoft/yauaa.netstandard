@@ -22,9 +22,9 @@ steps:
     installationPath: $(Agent.ToolsDirectory)/dotnet
     version: '3.0.x'
 - task: NuGetToolInstaller@1
-  displayName: 'Install .Nuget 5.5'
+  displayName: 'Install .Nuget 5.6'
   inputs:
-   versionSpec: '5.5.x'
+   versionSpec: '5.6.x'
    checkLatest: true
 - task: NuGetCommand@2
   displayName: 'Restore .Nuget Packages'
