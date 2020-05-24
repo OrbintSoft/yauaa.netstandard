@@ -580,7 +580,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                     }
                     else
                     {
-                        throw new InvalidParserConfigurationException($"Parse error in the file {filename} : {e.Message}", e);
+                        throw new InvalidParserConfigurationException($"Parse error in the file {filename}: {e.Message}", e);
                     }
                 }
                 catch (Exception e)

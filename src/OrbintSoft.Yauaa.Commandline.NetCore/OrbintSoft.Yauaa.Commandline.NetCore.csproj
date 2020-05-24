@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <RootNamespace>OrbintSoft.Yauaa.Commandline</RootNamespace>
-    <Version>4</Version>
+    <Version>5.13-alpha.4</Version>
 	<Authors>Stefano Balzarotti, Niels Basjes</Authors>												   
     <AssemblyVersion>5.13.1.4</AssemblyVersion>
 	<Copyright>Copyright (C) 2013-2020 Niels Basjes, Porting by OrbintSoft</Copyright>				 

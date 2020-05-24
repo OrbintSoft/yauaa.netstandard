@@ -220,7 +220,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             var result = firstStep.Walk(tree, value);
             if (this.verbose)
             {
-                Step.Log.Info(string.Format($"Leave step ({(result is null ? " - " : " + ")}): {firstStep}"));
+                Step.Log.Info($"Leave step ({(result is null ? " - " : " + ")}): {firstStep}");
             }
 
             return result;

@@ -63,7 +63,7 @@ namespace OrbintSoft.Yauaa.Calculate
         {
             // The device brand field is a mess.
             var deviceBrand = userAgent.Get(DefaultUserAgentFields.DEVICE_BRAND);
-            if (deviceBrand.IsDefaultValue)
+            if (!deviceBrand.IsDefaultValue)
             {
                 userAgent.SetForced(
                     DefaultUserAgentFields.DEVICE_BRAND,

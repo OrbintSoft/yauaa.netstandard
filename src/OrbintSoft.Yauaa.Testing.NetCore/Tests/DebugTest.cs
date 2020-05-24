@@ -74,7 +74,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         //[Fact]
         public void TestError()
         {
-            var fieldName = "DeviceName";
+            var fieldName = "DeviceBrand";
             var userAgentAnalyzer =
                 UserAgentAnalyzerTester
                     .NewBuilder()
@@ -82,14 +82,15 @@ namespace OrbintSoft.Yauaa.Testing.Tests
                     .WithFields(fieldName)
                     .HideMatcherLoadStats()
                     .DropDefaultResources()
-                    .AddResources("YamlResources/UserAgents", "EMailClients.yaml")
+                    .AddResources("YamlResources/UserAgents", "MobileBrand-rules.yaml")
+                    .AddResources("YamlResources/UserAgents", "MobileBrands.yaml")
                     .Build() as UserAgentAnalyzerTester;
 
             userAgentAnalyzer.Should().NotBeNull();
             //userAgentAnalyzer.RunTests(false, true, singleFieldList, false, false).Should().BeTrue();
-            var userAgent = userAgentAnalyzer.Parse("OneNote/16.0.8431.2110 (Windows/10.0; Desktop x64; nl-NL; Desktop app; Dell Inc./Latitude 7480)");
+            var userAgent = userAgentAnalyzer.Parse("AndroidDownloadManager/6.0.1 (Linux; U; Android 6.0.1; A0001 Build/MMB29X)");
             var field = userAgent.Get(fieldName);
-            field.GetValue().Should().Be("Dell Inc. /Latitude 7480");
+            field.GetValue().Should().Be("Oneplus");
         }
 
     }
