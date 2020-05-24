@@ -149,7 +149,10 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk.StepDowns
             /// </summary>
             public void Dispose()
             {
-                this.childIter.Dispose();
+                if (this.childIter != null)
+                {
+                    this.childIter.Dispose();
+                }
             }
 
             /// <summary>

@@ -26,6 +26,7 @@
 namespace OrbintSoft.Yauaa.Calculate
 {
     using System;
+    using System.Text.RegularExpressions;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Utils;
 
@@ -35,6 +36,8 @@ namespace OrbintSoft.Yauaa.Calculate
     [Serializable]
     public class CalculateDeviceName : IFieldCalculator
     {
+        private static readonly Regex Clean1Pattern = new Regex("AppleWebKit", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
         /// <inheritdoc/>
         public void Calculate(UserAgent userAgent)
         {
@@ -72,7 +75,7 @@ namespace OrbintSoft.Yauaa.Calculate
 
         private string RemoveBadSubStrings(string input)
         {
-            input = input.Replace("AppleWebKit", string.Empty);
+            input = Clean1Pattern.Replace(input, string.Empty);
             return input;
         }
     }

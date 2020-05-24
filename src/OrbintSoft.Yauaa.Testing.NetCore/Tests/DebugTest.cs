@@ -74,23 +74,23 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         //[Fact]
         public void TestError()
         {
-            var fieldName = "DeviceBrand";
+            var fieldName = "HackerAttackVector";
             var userAgentAnalyzer =
                 UserAgentAnalyzerTester
                     .NewBuilder()
                     .WithoutCache()
-                    .WithFields(fieldName)
+                    //.WithFields(fieldName)
                     .HideMatcherLoadStats()
-                    .DropDefaultResources()
-                    .AddResources("YamlResources/UserAgents", "MobileBrand-rules.yaml")
-                    .AddResources("YamlResources/UserAgents", "MobileBrands.yaml")
+                    //.DropDefaultResources()
+                    //.AddResources("YamlResources/UserAgents", "Hackers.yaml")
+                    //.AddResources("YamlResources/UserAgents", "MobileBrands.yaml")
                     .Build() as UserAgentAnalyzerTester;
 
             userAgentAnalyzer.Should().NotBeNull();
             //userAgentAnalyzer.RunTests(false, true, singleFieldList, false, false).Should().BeTrue();
-            var userAgent = userAgentAnalyzer.Parse("AndroidDownloadManager/6.0.1 (Linux; U; Android 6.0.1; A0001 Build/MMB29X)");
+            var userAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36{${sleep(20)}}");
             var field = userAgent.Get(fieldName);
-            field.GetValue().Should().Be("Oneplus");
+            field.GetValue().Should().Be("Unknown");
         }
 
     }

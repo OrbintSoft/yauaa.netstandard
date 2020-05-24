@@ -86,6 +86,7 @@
     <None Remove="YamlResources\TestCases\BadDefinitions\Variable-BackReference.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\Variable-BadDefinition.yaml" />
     <None Remove="YamlResources\TestCases\BadDefinitions\Variable-FixedString.yaml" />
+	<None Remove="YamlResources\TestCases\BadDefinitions\Variable-NoSuchVariable.yaml" />
     <None Remove="YamlResources\CheckErrorOutput.yaml" />
     <None Remove="YamlResources\CheckNewTestcaseOutput.yaml" />
     <None Remove="YamlResources\CompanyInternalUserAgents.yaml" />
@@ -123,6 +124,7 @@
     <None Remove="YamlResources\TestCases\YamlParsingTests\NotStringList2.yaml" />
     <None Remove="YamlResources\TestCases\YamlParsingTests\ParseError.yaml" />
     <None Remove="YamlResources\TestCases\YamlParsingTests\TopNotConfig.yaml" />
+
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
@@ -203,6 +205,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\TestCases\BadDefinitions\Variable-FixedString.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+	<Content Include="YamlResources\TestCases\BadDefinitions\Variable-NoSuchVariable.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="YamlResources\TestCases\CheckErrorOutput.yaml">
