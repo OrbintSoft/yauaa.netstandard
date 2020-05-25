@@ -33,6 +33,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 using Xunit;
+using Xunit.Sdk;
 
 namespace OrbintSoft.Yauaa.Testing.Tests.Project
 {
@@ -65,7 +66,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Project
                     var projVersion = SemVersion.Parse(version.Value);
                     var assemblyVersion = Version.Parse(assemblyVersionXml.Value);
                     var fileVersion = Version.Parse(fileVersionXml.Value);
-                    if (solutionVersion == null)
+                    if (solutionVersion is null)
                     {
                         solutionVersion = projVersion;
                     }
@@ -86,11 +87,46 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Project
                         preReleaseSplit.Count().Should().Be(2);
                         var prefix = preReleaseSplit[0];
                         var preBuild = preReleaseSplit[1];
+                        int.TryParse(preBuild, out int build).Should().BeTrue();
+                        CheckPreRelease(prefix, assemblyVersion.Build);
+                        CheckPreRelease(prefix, fileVersion.Build);
+                        assemblyVersion.Revision.Should().Be(build);
+                        fileVersion.Revision.Should().Be(build);
                     }
+                    else
+                    {
+                        CheckPreRelease(null, assemblyVersion.Build);
+                        CheckPreRelease(null, fileVersion.Build);
+                    }
+                    
                 }                
             }
         }
 
+
+        private void  CheckPreRelease(string prerelease, int build)
+        {
+            switch (prerelease)
+            {
+                case "alpha":
+                    build.Should().Be(1);
+                    break;
+                case "beta":
+                    build.Should().Be(2);
+                    break;
+                case "rc":
+                    build.Should().Be(3);
+                    break;
+                case "stable":
+                    build.Should().Be(4);
+                    break;
+                case null:
+                    build.Should().Be(5);
+                    break;
+                default:
+                    throw new XunitException("PreRelease not supported");
+            }
+        }
 
     }
 }
