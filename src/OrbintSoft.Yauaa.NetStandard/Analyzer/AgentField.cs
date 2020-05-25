@@ -81,7 +81,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 Equals(this.Value, other.Value);
         }
 
-        /// <inheritdoc>/>.
+        /// <inheritdoc/>.
         public override bool Equals(object other)
         {
             if (!(other is AgentField))

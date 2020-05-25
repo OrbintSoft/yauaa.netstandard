@@ -278,7 +278,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// This class is a utility to build the <see cref="WalkList"/> based on the <see cref="UserAgentTreeWalkerBaseVisitor&lt;object&gt;"/>.
+        /// This class is a utility to build the <see cref="WalkList"/> based on the <see cref="UserAgentTreeWalkerBaseVisitor{object}"/>.
         /// </summary>
         private class WalkListBuilder : UserAgentTreeWalkerBaseVisitor<object>
         {
