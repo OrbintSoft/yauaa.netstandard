@@ -765,7 +765,6 @@ namespace OrbintSoft.Yauaa.Analyzer
         public IList<string> GetAvailableFieldNames()
         {
             var resultSet = new List<string>(this.allFields.Count + 10);
-            resultSet.AddRange(StandardFields);
             foreach (var fieldName in this.allFields.Keys)
             {
                 if (!resultSet.Contains(fieldName))
@@ -1124,10 +1123,10 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             foreach (var fieldName in fieldNames)
             {
-                if (!DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldName))
+                if (!DefaultUserAgentFields.USERAGENT_FIELDNAME.Equals(fieldName) && this.allFields.ContainsKey(fieldName))
                 {
                     var field = this.allFields[fieldName];
-                    if (field?.GetValue() != null)
+                    if (field.GetValue() != null)
                     {
                         sb.Append("    ").Append(fieldName);
                         for (var l = fieldName.Length; l < maxLength + 2; l++)
@@ -1288,12 +1287,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <param name="newWantedFieldNames">The new wanted field names.</param>
         private void SetWantedFieldNames(ICollection<string> newWantedFieldNames)
         {
-            if (newWantedFieldNames != null)
+            if (newWantedFieldNames != null && newWantedFieldNames.Any())
             {
-                if (!newWantedFieldNames.Any())
-                {
-                    this.wantedFieldNames = new HashSet<string>(newWantedFieldNames);
-                }
+                this.wantedFieldNames = new HashSet<string>(newWantedFieldNames);
             }
         }
     }

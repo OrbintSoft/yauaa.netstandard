@@ -71,7 +71,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         [MemberData(nameof(Data))]
         public void ValidateAllPredefinedBrowsersForField(string fieldName)
         {
-            HashSet<string> singleFieldList = new HashSet<string>();
+            ICollection<string> singleFieldList = new string[] { fieldName };
             LOG.Info("==============================================================");
             LOG.Info(string.Format("Validating when ONLY asking for {0}", fieldName));
             LOG.Info("--------------------------------------------------------------");
@@ -82,8 +82,6 @@ namespace OrbintSoft.Yauaa.Testing.Tests
                     .WithField(fieldName)
                     .HideMatcherLoadStats()
                     .Build() as UserAgentAnalyzerTester;
-            singleFieldList.Clear();
-            singleFieldList.Add(fieldName);
             userAgentAnalyzer.Should().NotBeNull();
             userAgentAnalyzer.RunTests(false, true, singleFieldList, false, false).Should().BeTrue();
         }

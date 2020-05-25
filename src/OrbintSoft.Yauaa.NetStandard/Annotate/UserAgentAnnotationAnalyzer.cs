@@ -22,7 +22,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Annotate
@@ -36,19 +35,14 @@ namespace OrbintSoft.Yauaa.Annotate
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentAnnotationAnalyzer{T}" />.
+    /// This analyzer is used to parse an user agent and automap it's fields with a <see cref="YauaaFieldAttribute"/>.
     /// </summary>
     /// <typeparam name="T">The type to map.</typeparam>
     public class UserAgentAnnotationAnalyzer<T>
         where T : class
     {
         /// <summary>
-        /// Defines the Log.
-        /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnnotationAnalyzer<T>));
-
-        /// <summary>
-        /// Defines the fieldSetters.
+        /// Defines the fields to be setted.
         /// </summary>
         private readonly IDictionary<string, IList<MethodInfo>> fieldSetters = new Dictionary<string, IList<MethodInfo>>();
 
@@ -58,17 +52,17 @@ namespace OrbintSoft.Yauaa.Annotate
         private IUserAgentAnnotationMapper<T> mapper = null;
 
         /// <summary>
-        /// Defines the userAgentAnalyzer.
+        /// Defines the user agent analyzer.
         /// </summary>
         private UserAgentAnalyzer userAgentAnalyzer = null;
 
         /// <summary>
-        /// Gets the CacheSize.
+        /// Gets the cache size.
         /// </summary>
         public int CacheSize { get; private set; } = UserAgentAnalyzer.DEFAULT_PARSE_CACHE_SIZE;
 
         /// <summary>
-        /// The DisableCaching.
+        /// Diasble cache.
         /// </summary>
         public void DisableCaching()
         {
@@ -76,27 +70,25 @@ namespace OrbintSoft.Yauaa.Annotate
         }
 
         /// <summary>
-        /// The Initialize.
+        /// Initialize the analyzer.
         /// </summary>
         /// <param name="theMapper">The theMapper<see cref="IUserAgentAnnotationMapper{T}"/>.</param>
         public void Initialize(IUserAgentAnnotationMapper<T> theMapper)
         {
             this.mapper = theMapper;
 
-            if (this.mapper == null)
+            if (this.mapper is null)
             {
                 throw new InvalidParserConfigurationException("[Initialize] The mapper instance is null.");
             }
 
             var classOfTArray = typeof(IUserAgentAnnotationMapper<T>).GenericTypeArguments;
-            if (classOfTArray == null)
+            if (classOfTArray is null)
             {
                 throw new InvalidParserConfigurationException("Couldn't find the used generic type of the UserAgentAnnotationMapper.");
             }
 
             var classOfT = classOfTArray[0];
-
-            var anonymous = false;
 
             // Get all methods of the correct signature that have been annotated with YauaaField
             foreach (var method in theMapper.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
@@ -109,20 +101,12 @@ namespace OrbintSoft.Yauaa.Annotate
                     {
                         if (!classOfT.IsVisible)
                         {
-                            throw new InvalidParserConfigurationException("The class " + classOfT.Name + " is not public.");
+                            throw new InvalidParserConfigurationException($"The class {classOfT.Name} is not public.");
                         }
 
                         if (!method.IsPublic)
                         {
-                            throw new InvalidParserConfigurationException("Method annotated with YauaaField is not public: " + method.Name);
-                        }
-
-                        if (anonymous)
-                        {
-                            var methodName = method.ReturnType.Name + " " + method.Name + "(" + parameters[0].Name + " ," + parameters[1].Name + ");";
-                            Log.Warn(string.Format("Trying to make anonymous {0} {1} accessible.", theMapper.GetType().Name, methodName));
-
-                            // method.setAccessible(true); NOT POSSIBLE IN C#
+                            throw new InvalidParserConfigurationException($"Method annotated with YauaaField is not public: {method.Name}");
                         }
 
                         foreach (var fieldName in field.Value)
@@ -138,9 +122,7 @@ namespace OrbintSoft.Yauaa.Annotate
                     else
                     {
                         throw new InvalidParserConfigurationException(
-                            "In class [" + this.mapper.GetType().Name + "] the method [" + method.Name + "] " +
-                            "has been annotated with YauaaField but it has the wrong method signature. " +
-                            "It must look like [ public void " + method.Name + "(" + classOfT.Name + " record, String value) ]");
+                            $"In class [{this.mapper.GetType().Name}] the method [{method.Name}] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void {method.Name}({classOfT.Name} record, string value) ]");
                     }
                 }
             }
@@ -161,9 +143,9 @@ namespace OrbintSoft.Yauaa.Annotate
         }
 
         /// <summary>
-        /// The Map.
+        /// Maps the fields to class properties.
         /// </summary>
-        /// <param name="record">The record.</param>
+        /// <param name="record">The record to map.</param>
         /// <returns>The mapped record.</returns>
         public T Map(T record)
         {
@@ -172,7 +154,7 @@ namespace OrbintSoft.Yauaa.Annotate
                 return null;
             }
 
-            if (this.mapper == null)
+            if (this.mapper is null)
             {
                 throw new InvalidParserConfigurationException("[Map] The mapper instance is null.");
             }

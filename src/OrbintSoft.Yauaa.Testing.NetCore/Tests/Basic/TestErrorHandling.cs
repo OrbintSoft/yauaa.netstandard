@@ -253,6 +253,15 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         }
 
         /// <summary>
+        /// I test a yaml definition with a variable that doesn't exist.
+        /// </summary>
+        [Fact]
+        public void CheckForVariableExistance()
+        {
+            this.RunTest(Config.RESOURCES_PATH + "/BadDefinitions", "Variable-NoSuchVariable.yaml", "Syntax error");
+        }
+
+        /// <summary>
         /// I test tht user agent analyzer works with null inputs.
         /// </summary>
         [Fact]

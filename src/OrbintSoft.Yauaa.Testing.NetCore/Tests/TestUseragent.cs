@@ -29,6 +29,7 @@ using FluentAssertions;
 using log4net;
 using OrbintSoft.Yauaa.Analyzer;
 using OrbintSoft.Yauaa.Testing.Fixtures;
+using System.Collections.Generic;
 using Xunit;
 
 namespace OrbintSoft.Yauaa.Testing.Tests
@@ -42,10 +43,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         {
             string uaString = "Foo Bar";
             UserAgent agent = new UserAgent(uaString);
-            agent.Get(UserAgent.USERAGENT_FIELDNAME).GetValue().Should().Be(uaString);
-            agent.Get(UserAgent.USERAGENT_FIELDNAME).GetConfidence().Should().Be(0);
-            agent.GetValue(UserAgent.USERAGENT_FIELDNAME).Should().Be(uaString);
-            agent.GetConfidence(UserAgent.USERAGENT_FIELDNAME).Should().Be(0L);
+            agent.Get(DefaultUserAgentFields.USERAGENT_FIELDNAME).GetValue().Should().Be(uaString);
+            agent.Get(DefaultUserAgentFields.USERAGENT_FIELDNAME).GetConfidence().Should().Be(0);
+            agent.GetValue(DefaultUserAgentFields.USERAGENT_FIELDNAME).Should().Be(uaString);
+            agent.GetConfidence(DefaultUserAgentFields.USERAGENT_FIELDNAME).Should().Be(0L);
         }
 
         [Fact]
@@ -59,8 +60,10 @@ namespace OrbintSoft.Yauaa.Testing.Tests
         {
             string name = "Attribute";
             string uaString = "Foo Bar";
-            UserAgent agent = new UserAgent(uaString);
-            agent.IsDebug = debug;
+            UserAgent agent = new UserAgent(uaString)
+            {
+                IsDebug = debug
+            };
 
             // Setting unknown new attributes
             agent.Get("UnknownOne").Should().BeNull();
@@ -209,6 +212,58 @@ namespace OrbintSoft.Yauaa.Testing.Tests
 
             agent1.Equals("String").Should().BeFalse();
             "String".Equals(agent1).Should().BeFalse();
+        }
+
+        [Fact]
+        public void FullToString()
+        {
+            UserAgent userAgent = new UserAgent("Some Agent");
+            var expected =
+                "  - user_agent_string: '\"Some Agent\"'\n" +
+                "    DeviceClass                      : 'Unknown'\n" +
+                "    DeviceName                       : 'Unknown'\n" +
+                "    DeviceBrand                      : 'Unknown'\n" +
+                "    OperatingSystemClass             : 'Unknown'\n" +
+                "    OperatingSystemName              : 'Unknown'\n" +
+                "    OperatingSystemVersion           : '??'\n" +
+                "    OperatingSystemVersionMajor      : '??'\n" +
+                "    OperatingSystemNameVersion       : 'Unknown ??'\n" +
+                "    OperatingSystemNameVersionMajor  : 'Unknown ??'\n" +
+                "    LayoutEngineClass                : 'Unknown'\n" +
+                "    LayoutEngineName                 : 'Unknown'\n" +
+                "    LayoutEngineVersion              : '??'\n" +
+                "    LayoutEngineVersionMajor         : '??'\n" +
+                "    LayoutEngineNameVersion          : 'Unknown ??'\n" +
+                "    LayoutEngineNameVersionMajor     : 'Unknown ??'\n" +
+                "    AgentClass                       : 'Unknown'\n" +
+                "    AgentName                        : 'Unknown'\n" +
+                "    AgentVersion                     : '??'\n" +
+                "    AgentVersionMajor                : '??'\n" +
+                "    AgentNameVersion                 : 'Unknown ??'\n" +
+                "    AgentNameVersionMajor            : 'Unknown ??'\n";
+            userAgent.ToString().Should().Be(expected);
+        }
+
+        [Fact]
+        public void LimitedToString()
+        {
+            List<string> wanted = new List<string> { "DeviceClass", "AgentVersion", "SomethingElse" };
+
+            // When only asking for a limited set of fields then the internal datastructures are
+            // initialized with only the known attributes for which we have 'non standard' default values.
+            UserAgent userAgent = new UserAgent("Some Agent", wanted);
+
+            var expected =
+                "  - user_agent_string: '\"Some Agent\"'\n" +
+                "    DeviceClass   : 'Unknown'\n" +
+                "    AgentVersion  : '??'\n";
+           
+            var result = userAgent.ToString();
+            result.Should().Be(expected);
+
+            userAgent.GetValue("DeviceClass").Should().Be("Unknown");
+            userAgent.GetValue("AgentVersion").Should().Be("??");
+            userAgent.GetValue("SomethingElse").Should().Be("Unknown");
         }
     }
 }

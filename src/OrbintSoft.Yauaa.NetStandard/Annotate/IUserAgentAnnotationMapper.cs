@@ -22,7 +22,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 namespace OrbintSoft.Yauaa.Annotate
 {

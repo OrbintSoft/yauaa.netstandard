@@ -96,7 +96,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Profile
             stopwatch.Stop();
             long initializeMsecs = stopwatch.ElapsedMilliseconds;
             LOG.Info(string.Format("-- Initialization: {0}ms", initializeMsecs));
-            initializeMsecs.Should().BeGreaterThan(1000, "The initialization should take several seconds");
+            initializeMsecs.Should().BeGreaterThan(300, "The initialization should take several seconds");
 
             LOG.Info("Preheat");
             stopwatch.Restart();
