@@ -30,7 +30,6 @@ namespace OrbintSoft.Yauaa.Annotate
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Analyzer;
 

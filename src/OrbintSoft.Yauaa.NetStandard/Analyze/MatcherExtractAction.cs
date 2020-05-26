@@ -28,10 +28,10 @@ namespace OrbintSoft.Yauaa.Analyze
 {
     using System;
     using Antlr4.Runtime;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// This class is used to repesent the extract action associated to a matcher.
@@ -42,7 +42,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Defines the Loggger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherExtractAction));
+        private static readonly ILogger Logger = new Logger<MatcherExtractAction>();
 
         /// <summary>
         /// Defines the confidence value, higher is better.
@@ -98,8 +98,8 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             if (this.Verbose)
             {
-                Log.Info($"INFO  : EXTRACT ({this.Attribute}): {key}");
-                Log.Info($"NEED  : EXTRACT ({this.Attribute}): {this.MatchExpression}");
+                Logger.Info($"INFO  : EXTRACT ({this.Attribute}): {key}");
+                Logger.Info($"NEED  : EXTRACT ({this.Attribute}): {this.MatchExpression}");
             }
 
             /*
@@ -112,7 +112,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 this.foundValue = newlyFoundValue.Value;
                 if (this.Verbose)
                 {
-                    Log.Info($"KEPT  : EXTRACT ({this.Attribute}): {key}");
+                    Logger.Info($"KEPT  : EXTRACT ({this.Attribute}): {key}");
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 if (this.Verbose)
                 {
-                    Log.Info($"Set fixedvalue ({this.Attribute})[{this.confidence}]: {this.fixedValue}");
+                    Logger.Info($"Set fixedvalue ({this.Attribute})[{this.confidence}]: {this.fixedValue}");
                 }
 
                 this.resultAgentField.SetValueForced(this.fixedValue, this.confidence);
@@ -148,7 +148,7 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 if (this.Verbose)
                 {
-                    Log.Info($"Set parsevalue ({this.Attribute})[{this.confidence}]: {this.foundValue}");
+                    Logger.Info($"Set parsevalue ({this.Attribute})[{this.confidence}]: {this.foundValue}");
                 }
 
                 this.resultAgentField.SetValueForced(this.foundValue, this.confidence);
@@ -157,7 +157,7 @@ namespace OrbintSoft.Yauaa.Analyze
 
             if (this.Verbose)
             {
-                Log.Info($"Nothing found for {this.Attribute}");
+                Logger.Info($"Nothing found for {this.Attribute}");
             }
 
             return false;
@@ -212,7 +212,7 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             if (this.Verbose)
             {
-                Log.Info($"-- set Fixed value({this.Attribute} , {this.confidence} , {newFixedValue})");
+                Logger.Info($"-- set Fixed value({this.Attribute} , {this.confidence} , {newFixedValue})");
             }
 
             this.fixedValue = newFixedValue;

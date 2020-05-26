@@ -31,14 +31,17 @@ namespace OrbintSoft.Yauaa.Calculate
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// CalculateDeviceName.
+    /// Utility to calculate the <see cref="DefaultUserAgentFields.DEVICE_NAME"/> field.
     /// </summary>
     [Serializable]
     public class CalculateDeviceName : IFieldCalculator
     {
         private static readonly Regex Clean1Pattern = new Regex("AppleWebKit", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calculate the <see cref="DefaultUserAgentFields.DEVICE_NAME"/> field.
+        /// </summary>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         public void Calculate(UserAgent userAgent)
         {
             // Make sure the DeviceName always starts with the DeviceBrand
@@ -73,6 +76,11 @@ namespace OrbintSoft.Yauaa.Calculate
             return $"Calculate {DefaultUserAgentFields.DEVICE_NAME}";
         }
 
+        /// <summary>
+        /// Removes bad substrings from device name.
+        /// </summary>
+        /// <param name="input">The string that should contain the device name.</param>
+        /// <returns>The cleaned string.</returns>
         private string RemoveBadSubStrings(string input)
         {
             input = Clean1Pattern.Replace(input, string.Empty);

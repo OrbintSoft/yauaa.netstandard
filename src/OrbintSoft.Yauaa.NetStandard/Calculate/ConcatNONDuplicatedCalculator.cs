@@ -22,13 +22,14 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 04, 16, 08:50</date>
+
 namespace OrbintSoft.Yauaa.Calculate
 {
     using System;
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// ConcatNONDuplicatedCalculator.
+    /// Used to calculate a field that is a concatenations of other fields.
     /// </summary>
     [Serializable]
     public class ConcatNONDuplicatedCalculator : IFieldCalculator
@@ -40,9 +41,9 @@ namespace OrbintSoft.Yauaa.Calculate
         /// <summary>
         /// Initializes a new instance of the <see cref="ConcatNONDuplicatedCalculator"/> class.
         /// </summary>
-        /// <param name="targetName">targetName.</param>
-        /// <param name="firstName">firstName.</param>
-        /// <param name="secondName">secondName.</param>
+        /// <param name="targetName">The name of target field.</param>
+        /// <param name="firstName">The name of the first field.</param>
+        /// <param name="secondName">The name of the second field.</param>
         public ConcatNONDuplicatedCalculator(string targetName, string firstName, string secondName)
         {
             this.targetName = targetName;
@@ -50,7 +51,10 @@ namespace OrbintSoft.Yauaa.Calculate
             this.secondName = secondName;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calculate a derived field from a concatenation of other fields.
+        /// </summary>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         public void Calculate(UserAgent userAgent)
         {
             var firstField = userAgent.Get(this.firstName);
@@ -73,12 +77,12 @@ namespace OrbintSoft.Yauaa.Calculate
                 secondConfidence = secondField.GetConfidence();
             }
 
-            if (first == null && second == null)
+            if (first is null && second is null)
             {
                 return; // Nothing to do
             }
 
-            if (second == null)
+            if (second is null)
             {
                 if (firstConfidence >= 0)
                 {
@@ -93,7 +97,7 @@ namespace OrbintSoft.Yauaa.Calculate
             }
             else
             {
-                if (first == null)
+                if (first is null)
                 {
                     if (secondConfidence >= 0)
                     {

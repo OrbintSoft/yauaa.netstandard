@@ -30,9 +30,9 @@ namespace OrbintSoft.Yauaa.Debug
     using System;
     using System.Collections.Generic;
     using System.Text;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Analyzer;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// Defines the <see cref="DebugUserAgent" />.
@@ -42,7 +42,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Defines the Log.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(DebugUserAgent));
+        private static readonly ILogger Logger = new Logger<DebugUserAgent>();
 
         /// <summary>
         /// Defines the appliedMatcherResults.
@@ -88,20 +88,14 @@ namespace OrbintSoft.Yauaa.Debug
                             {
                                 if (passed)
                                 {
-                                    Log.Error("***********************************************************");
-                                    Log.Error("***        REALLY IMPORTANT ERRORS IN THE RULESET       ***");
-                                    Log.Error("*** YOU MUST CHANGE THE CONFIDENCE LEVELS OF YOUR RULES ***");
-                                    Log.Error("***********************************************************");
+                                    Logger.Error($"***********************************************************");
+                                    Logger.Error($"***        REALLY IMPORTANT ERRORS IN THE RULESET       ***");
+                                    Logger.Error($"*** YOU MUST CHANGE THE CONFIDENCE LEVELS OF YOUR RULES ***");
+                                    Logger.Error($"***********************************************************");
                                 }
 
                                 passed = false;
-                                Log.Error(
-                                    string.Format(
-                                        "Found different value for \"{0}\" with SAME confidence {1}: \"{2}\" and \"{3}\"",
-                                        fieldName,
-                                        partialField.GetConfidence(),
-                                        previousValue,
-                                        partialField.GetValue()));
+                                Logger.Error($"Found different value for \"{fieldName}\" with SAME confidence {partialField.GetConfidence()}: \"{previousValue}\" and \"{partialField.GetValue()}\"");
                             }
                         }
                         else
@@ -167,7 +161,7 @@ namespace OrbintSoft.Yauaa.Debug
 
                     if (field == null)
                     {
-                        Log.Error("Should not happen");
+                        Logger.Error($"Should not happen");
                     }
 
                     if (field.GetConfidence() >= 0)

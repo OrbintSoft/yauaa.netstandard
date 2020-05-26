@@ -31,9 +31,9 @@ namespace OrbintSoft.Yauaa.Debug
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Text;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Analyzer;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// This class is used for test/debugging purposes.
@@ -46,7 +46,7 @@ namespace OrbintSoft.Yauaa.Debug
         /// <summary>
         /// Defines the Log.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerTester));
+        private static readonly ILogger Logger = new Logger<UserAgentAnalyzerTester>();
 
         /// <summary>
         /// The NewBuilder.
@@ -180,9 +180,9 @@ namespace OrbintSoft.Yauaa.Debug
 
             if (showPassedTests)
             {
-                Log.Info("+===========================================================================================");
-                Log.Info(sb.ToString());
-                Log.Info("+-------------------------------------------------------------------------------------------");
+                Logger.Info($"+===========================================================================================");
+                Logger.Info($"{sb}");
+                Logger.Info($"+-------------------------------------------------------------------------------------------");
             }
 
             var testcount = 0;
@@ -317,16 +317,16 @@ namespace OrbintSoft.Yauaa.Debug
 
                 if (init)
                 {
-                    Log.Info(testLogLine);
+                    Logger.Info($"{testLogLine}");
                     sb.Append(agent.ToYamlTestCase());
-                    Log.Info(sb.ToString());
+                    Logger.Info($"{sb}");
                 }
                 else
                 {
                     if (expected == null)
                     {
-                        Log.Info(testLogLine);
-                        Log.Warn("| - No expectations ... ");
+                        Logger.Info($"{testLogLine}");
+                        Logger.Warn($"| - No expectations ... ");
                         continue;
                     }
                 }
@@ -441,7 +441,7 @@ namespace OrbintSoft.Yauaa.Debug
                 {
                     if (showPassedTests)
                     {
-                        Log.Info(testLogLine);
+                        Logger.Info($"{testLogLine}");
                     }
 
                     continue;
@@ -449,18 +449,18 @@ namespace OrbintSoft.Yauaa.Debug
 
                 if (!pass)
                 {
-                    Log.Info(testLogLine);
-                    Log.Error("| TEST FAILED !");
+                    Logger.Info($"{testLogLine}");
+                    Logger.Error($"| TEST FAILED !");
                 }
 
                 if (agent.HasAmbiguity)
                 {
-                    Log.Info(string.Format("| Parsing problem: Ambiguity {0} times. ", agent.AmbiguityCount));
+                    Logger.Info($"| Parsing problem: Ambiguity {agent.AmbiguityCount} times.");
                 }
 
                 if (agent.HasSyntaxError)
                 {
-                    Log.Info("| Parsing problem: Syntax Error");
+                    Logger.Info($"| Parsing problem: Syntax Error");
                 }
 
                 if (init || !pass)
@@ -495,7 +495,7 @@ namespace OrbintSoft.Yauaa.Debug
                     sb.Append("#    - 'AgentVersion                        :      1 :' \n");
                     sb.Append('\n');
                     sb.Append('\n');
-                    Log.Info(sb.ToString());
+                    Logger.Info($"{sb}");
                 }
 
                 sb.Length = 0;
@@ -520,7 +520,7 @@ namespace OrbintSoft.Yauaa.Debug
                 sb.Append("-+");
 
                 var separator = sb.ToString();
-                Log.Info(separator);
+                Logger.Info($"{separator}");
 
                 sb.Length = 0;
                 sb.Append("| Result | Field ");
@@ -544,9 +544,9 @@ namespace OrbintSoft.Yauaa.Debug
 
                 sb.Append(" |");
 
-                Log.Info(sb.ToString());
+                Logger.Info($"{sb}");
 
-                Log.Info(separator);
+                Logger.Info($"{separator}");
 
                 var failComments = new Dictionary<string, string>();
 
@@ -599,7 +599,7 @@ namespace OrbintSoft.Yauaa.Debug
                         }
 
                         sb.Append(" |");
-                        Log.Info(sb.ToString());
+                        Logger.Info($"{sb}");
                     }
                     else
                     {
@@ -612,22 +612,22 @@ namespace OrbintSoft.Yauaa.Debug
                         sb.Append(" |");
                         if (result.Warn)
                         {
-                            Log.Warn(sb.ToString());
+                            Logger.Warn($"{sb}");
                         }
                         else
                         {
-                            Log.Error(sb.ToString());
+                            Logger.Error($"{sb}");
                         }
                     }
                 }
 
-                Log.Info(separator);
-                Log.Info(string.Empty);
+                Logger.Info($"{separator}");
+                Logger.Info($"");
 
-                Log.Info(agent.ToMatchTrace(failedFieldNames));
+                Logger.Info($"{agent.ToMatchTrace(failedFieldNames)}");
 
-                Log.Info(string.Format("\n\nconfig:\n {0}", agent.ToYamlTestCase(!init, failComments)));
-                Log.Info(string.Format("Location of failed test.({0}:{1})", filename, linenumber));
+                Logger.Info($"\n\nconfig:\n {agent.ToYamlTestCase(!init, failComments)}");
+                Logger.Info($"Location of failed test.({filename}:{linenumber})");
                 if (!pass && !showAll)
                 {
                     return false;
@@ -641,20 +641,20 @@ namespace OrbintSoft.Yauaa.Debug
 
             if (showPassedTests)
             {
-                Log.Info("+===========================================================================================");
+                Logger.Info($"+===========================================================================================");
             }
             else
             {
-                Log.Info(string.Format("All {0} tests passed", testcount));
+                Logger.Info($"All {testcount} tests passed");
             }
 
             fullStartStopWatch.Stop();
             var fullStop = fullStartStopWatch.ElapsedMilliseconds;
             var speed = testcount > 0 ? fullStop / testcount : float.NaN;
-            Log.Info($"This took {fullStop} ms for {testcount} tests : averaging to {speed} msec/test (This includes test validation and logging!!)");
+            Logger.Info($"This took {fullStop} ms for {testcount} tests : averaging to {speed} msec/test (This includes test validation and logging!!)");
             if (testcount == 0)
             {
-                Log.Error("NO tests were run at all!!!");
+                Logger.Error($"NO tests were run at all!!!");
                 allPass = false;
             }
 

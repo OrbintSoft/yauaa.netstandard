@@ -34,9 +34,9 @@ namespace OrbintSoft.Yauaa.Analyzer
     using System.Linq;
     using System.Text;
     using Antlr4.Runtime.Tree;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Calculate;
+    using OrbintSoft.Yauaa.Logger;
     using OrbintSoft.Yauaa.Parse;
     using OrbintSoft.Yauaa.Utils;
     using YamlDotNet.Core;
@@ -77,7 +77,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Defines the Logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgentAnalyzerDirect));
+        private static readonly ILogger Logger = new Logger<UserAgentAnalyzerDirect>();
 
         /// <summary>
         /// Defines the inform matcher action prefix lenghts.
@@ -438,7 +438,7 @@ namespace OrbintSoft.Yauaa.Analyzer
                 return;
             }
 
-            Log.Info("Initializing Analyzer data structures");
+            Logger.Info($"Initializing Analyzer data structures");
 
             if (!this.AllMatchers.Any())
             {
@@ -453,7 +453,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             stopwatch.Stop();
             this.matchersHaveBeenInitialized = true;
-            Log.Info($"Built in {stopwatch.ElapsedMilliseconds} msec : Hashmap {this.informMatcherActions.Count}, Ranges map:{this.informMatcherActionRanges.Count}");
+            Logger.Info($"Built in {stopwatch.ElapsedMilliseconds} msec : Hashmap {this.informMatcherActions.Count}, Ranges map:{this.informMatcherActionRanges.Count}");
 
             foreach (var matcher in this.AllMatchers)
             {
@@ -538,8 +538,8 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (!resources.Any())
             {
-                Log.Warn($"NO config files were found matching this expression: {resourceString}");
-                Log.Error("If you are using wildcards in your expression then try explicitly naming all yamls files explicitly.");
+                Logger.Warn($"NO config files were found matching this expression: {resourceString}");
+                Logger.Error($"If you are using wildcards in your expression then try explicitly naming all yamls files explicitly.");
                 return;
             }
 
@@ -549,7 +549,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (alreadyLoadedResourceBasenames.Length > 0)
             {
-                Log.Error($"Trying to load these {alreadyLoadedResourceBasenames.Length} resources for the second time: [{string.Join(",", alreadyLoadedResourceBasenames)}]");
+                Logger.Error($"Trying to load these {alreadyLoadedResourceBasenames.Length} resources for the second time: [{string.Join(",", alreadyLoadedResourceBasenames)}]");
                 throw new InvalidParserConfigurationException($"Trying to load {alreadyLoadedResourceBasenames.Length} resources for the second time");
             }
 
@@ -590,8 +590,8 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
 
             filesStopwatch.Stop();
-            var msg = $"Loading {resources.Count} files in {filesStopwatch.ElapsedMilliseconds} msec from {resourceString}";
-            Log.Info(msg);
+
+            Logger.Info($"Loading {resources.Count} files in {filesStopwatch.ElapsedMilliseconds} msec from {resourceString}");
 
             if (!resources.Any())
             {
@@ -654,7 +654,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
                     if (this.showMatcherStats)
                     {
-                        Log.Info($"Loading {matcherConfig.Count - (stopSkipped - startSkipped)} (dropped {stopSkipped - startSkipped}) matchers from {configFilename} took {stopwatch.ElapsedMilliseconds} msec");
+                        Logger.Info($"Loading {matcherConfig.Count - (stopSkipped - startSkipped)} (dropped {stopSkipped - startSkipped}) matchers from {configFilename} took {stopwatch.ElapsedMilliseconds} msec");
                     }
                 }
             }
@@ -786,25 +786,25 @@ namespace OrbintSoft.Yauaa.Analyzer
         {
             if (this.TestCases.Count == 0)
             {
-                Log.Warn("NO PREHEAT WAS DONE. Simply because there are no test cases available.");
+                Logger.Warn($"NO PREHEAT WAS DONE. Simply because there are no test cases available.");
                 return 0;
             }
 
             if (preheatIterations <= 0)
             {
-                Log.Warn($"NO PREHEAT WAS DONE. Simply because you asked for {preheatIterations} to run.");
+                Logger.Warn($"NO PREHEAT WAS DONE. Simply because you asked for {preheatIterations} to run.");
                 return 0;
             }
 
             if (preheatIterations > MAX_PRE_HEAT_ITERATIONS)
             {
-                Log.Warn($"NO PREHEAT WAS DONE. Simply because you asked for too many ({preheatIterations} > {MAX_PRE_HEAT_ITERATIONS}) to run.");
+                Logger.Warn($"NO PREHEAT WAS DONE. Simply because you asked for too many ({preheatIterations} > {MAX_PRE_HEAT_ITERATIONS}) to run.");
                 return 0;
             }
 
             if (log)
             {
-                Log.Info($"Preheating CLR by running {preheatIterations} testcases.");
+                Logger.Info($"Preheating CLR by running {preheatIterations} testcases.");
             }
 
             var remainingIterations = preheatIterations;
@@ -832,7 +832,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (log)
             {
-                Log.Info($"Preheating CLR completed. ({goodResults} of {preheatIterations} were proper results)");
+                Logger.Info($"Preheating CLR completed. ({goodResults} of {preheatIterations} were proper results)");
             }
 
             return preheatIterations;
@@ -995,11 +995,11 @@ namespace OrbintSoft.Yauaa.Analyzer
                     wantedSize--;
                 }
 
-                Log.Info($"Building all needed matchers for the requested {wantedSize} fields.");
+                Logger.Info($"Building all needed matchers for the requested {wantedSize} fields.");
             }
             else
             {
-                Log.Info("Building all matchers for all possible fields.");
+                Logger.Info($"Building all matchers for all possible fields.");
             }
 
             foreach (var r in resources)
@@ -1015,8 +1015,8 @@ namespace OrbintSoft.Yauaa.Analyzer
             fullStart.Stop();
             var fullStop = fullStart.ElapsedMilliseconds;
             var lookupsCount = (this.lookups == null) ? 0 : this.lookups.Count;
-            var msg = $"Loading {this.AllMatchers.Count} matchers, {lookupsCount} lookups, {this.lookupSets.Count} lookupsets, {this.TestCases.Count} testcases from {this.matcherConfigs.Count} files took {fullStop} msec";
-            Log.Info(msg);
+
+            Logger.Info($"Loading {this.AllMatchers.Count} matchers, {lookupsCount} lookups, {this.lookupSets.Count} lookupsets, {this.TestCases.Count} testcases from {this.matcherConfigs.Count} files took {fullStop} msec");
 
             this.VerifyWeAreNotAskingForImpossibleFields();
             if (!this.delayInitialization)
@@ -1121,16 +1121,16 @@ namespace OrbintSoft.Yauaa.Analyzer
             {
                 if (relevantActions is null)
                 {
-                    Log.Info($"--- Have (0): {match}");
+                    Logger.Info($"--- Have (0): {match}");
                 }
                 else
                 {
-                    Log.Info($"+++ Have ({relevantActions.Count}): {match}");
+                    Logger.Info($"+++ Have ({relevantActions.Count}): {match}");
 
                     var count = 1;
                     foreach (var action in relevantActions)
                     {
-                        Log.Info($"+++ -------> ({count}): {action}");
+                        Logger.Info($"+++ -------> ({count}): {action}");
                         count++;
                     }
                 }
@@ -1164,7 +1164,7 @@ namespace OrbintSoft.Yauaa.Analyzer
 
             if (loadedYaml is null)
             {
-                Log.Warn($"The file {filename} is empty");
+                Logger.Warn($"The file {filename} is empty");
                 return;
             }
 

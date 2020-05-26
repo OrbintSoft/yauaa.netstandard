@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IFieldCalculator.cs" company="OrbintSoft">
+// <copyright file="ILogger.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
 //   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
@@ -21,22 +21,40 @@
 //   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
-// <date>2020, 04, 16, 01:26</date>
-//-----------------------------------------------------------------------
+// <date>2020, 05, 26, 09:42</date>
+//------------------------------------
 
-namespace OrbintSoft.Yauaa.Calculate
+namespace OrbintSoft.Yauaa.Logger
 {
-    using OrbintSoft.Yauaa.Analyzer;
+    using System;
 
     /// <summary>
-    /// Interface for a field calculator.
+    /// Interface to make logging more generic and indipendent from the used library.
     /// </summary>
-    public interface IFieldCalculator
+    public interface ILogger
     {
         /// <summary>
-        /// Calculate derived fields from a user agent.
+        /// Log a message for debug purpose.
         /// </summary>
-        /// <param name="userAgent"><see cref="UserAgent"/>.</param>
-        void Calculate(UserAgent userAgent);
+        /// <param name="message">The message.</param>
+        void Debug(FormattableString message);
+
+        /// <summary>
+        /// Log an informational message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        void Info(FormattableString message);
+
+        /// <summary>
+        /// Log a warning.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        void Warn(FormattableString message);
+
+        /// <summary>
+        /// Log an error.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        void Error(FormattableString message);
     }
 }

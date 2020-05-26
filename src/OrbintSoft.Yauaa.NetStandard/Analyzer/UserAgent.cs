@@ -33,10 +33,10 @@ namespace OrbintSoft.Yauaa.Analyzer
     using System.Security;
     using System.Text;
     using Antlr4.Runtime;
-    using log4net;
     using Newtonsoft.Json;
     using OrbintSoft.Yauaa.Analyze;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// Defines the <see cref="UserAgent" /> class.
@@ -459,7 +459,7 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// <summary>
         /// Defines the logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(UserAgent));
+        private static readonly ILogger Logger = new Logger<UserAgent>();
 
         /// <summary>
         /// All fields extracted by the user agent.
@@ -909,11 +909,11 @@ namespace OrbintSoft.Yauaa.Analyzer
             {
                 if (updated)
                 {
-                    Log.Info($"USE  {attribute} ({confidence}) = {value ?? "null"}");
+                    Logger.Info($"USE  {attribute} ({confidence}) = {value ?? "null"}");
                 }
                 else
                 {
-                    Log.Info($"SKIP {attribute} ({confidence}) = {value ?? "null"}");
+                    Logger.Info($"SKIP {attribute} ({confidence}) = {value ?? "null"}");
                 }
             }
 
@@ -951,7 +951,7 @@ namespace OrbintSoft.Yauaa.Analyzer
             field.SetValueForced(value, confidence);
             if (this.IsDebug && !wasEmpty)
             {
-                Log.Info($"USE  {attribute} ({confidence}) = {value}");
+                Logger.Info($"USE  {attribute} ({confidence}) = {value}");
             }
 
             this.allFields[attribute] = field;
@@ -986,9 +986,9 @@ namespace OrbintSoft.Yauaa.Analyzer
         {
             if (this.IsDebug)
             {
-                Log.Error("Syntax error");
-                Log.Error($"Source : {this.userAgentString}");
-                Log.Error($"Message: {msg}");
+                Logger.Error($"Syntax error");
+                Logger.Error($"Source : {this.userAgentString}");
+                Logger.Error($"Message: {msg}");
             }
 
             this.HasSyntaxError = true;

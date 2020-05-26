@@ -32,7 +32,7 @@ namespace OrbintSoft.Yauaa.Calculate
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// CalculateDeviceBrand.
+    /// Utility to calculate the <see cref="DefaultUserAgentFields.DEVICE_BRAND"/> field.
     /// </summary>
     [Serializable]
     public class CalculateDeviceBrand : IFieldCalculator
@@ -58,7 +58,10 @@ namespace OrbintSoft.Yauaa.Calculate
             };
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calculate the <see cref="DefaultUserAgentFields.DEVICE_BRAND"/> field.
+        /// </summary>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         public void Calculate(UserAgent userAgent)
         {
             // The device brand field is a mess.
@@ -86,10 +89,10 @@ namespace OrbintSoft.Yauaa.Calculate
         }
 
         /// <summary>
-        /// The DetermineDeviceBrand.
+        /// Tries to determine the device brand from other fields (like email and url).
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
+        /// <returns>The device brand.</returns>
         private string DetermineDeviceBrand(UserAgent userAgent)
         {
             // If no brand is known but we do have a URL then we assume the hostname to be the brand.
@@ -137,10 +140,10 @@ namespace OrbintSoft.Yauaa.Calculate
         }
 
         /// <summary>
-        /// The ExtractCompanyFromHostName.
+        /// Extract the company name from the hostname.
         /// </summary>
-        /// <param name="hostname">The hostname<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="hostname">The hostname.</param>
+        /// <returns>The company name.</returns>
         private string ExtractCompanyFromHostName(string hostname, ISet<string> blackList)
         {
             if (DomainName.TryParse(hostname, out var outDomain))

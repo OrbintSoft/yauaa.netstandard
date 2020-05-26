@@ -28,9 +28,9 @@ namespace OrbintSoft.Yauaa.Analyze
 {
     using System;
     using Antlr4.Runtime;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// This class is used to define a require value action for a matcher.
@@ -41,7 +41,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Defines the logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherRequireAction));
+        private static readonly ILogger Logger = new Logger<MatcherRequireAction>();
 
         /// <summary>
         /// Defines wether a required value is found.
@@ -51,8 +51,8 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Initializes a new instance of the <see cref="MatcherRequireAction"/> class.
         /// </summary>
-        /// <param name="config">The config<see cref="string"/>.</param>
-        /// <param name="matcher">The matcher<see cref="Matcher"/>.</param>
+        /// <param name="config">The matcher configuration.</param>
+        /// <param name="matcher">The <see cref="Matcher"/>.</param>
         public MatcherRequireAction(string config, Matcher matcher)
         {
             this.Init(config, matcher);
@@ -79,9 +79,9 @@ namespace OrbintSoft.Yauaa.Analyze
             this.foundRequiredValue = true;
             if (this.Verbose)
             {
-                Log.Info($"Info REQUIRE: {key}");
-                Log.Info($"NEED REQUIRE: {this.MatchExpression}");
-                Log.Info($"KEPT REQUIRE: {key}");
+                Logger.Info($"Info REQUIRE: {key}");
+                Logger.Info($"NEED REQUIRE: {this.MatchExpression}");
+                Logger.Info($"KEPT REQUIRE: {key}");
             }
         }
 

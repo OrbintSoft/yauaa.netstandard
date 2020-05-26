@@ -22,6 +22,7 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 04, 16, 14:29</date>
+//-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Calculate
 {
@@ -30,7 +31,7 @@ namespace OrbintSoft.Yauaa.Calculate
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// MajorVersionCalculator.
+    /// This calculator extracts major version from other fields.
     /// </summary>
     [Serializable]
     public class MajorVersionCalculator : IFieldCalculator
@@ -41,19 +42,22 @@ namespace OrbintSoft.Yauaa.Calculate
         /// <summary>
         /// Initializes a new instance of the <see cref="MajorVersionCalculator"/> class.
         /// </summary>
-        /// <param name="majorVersionName">majorVersionName.</param>
-        /// <param name="versionName">versionName.</param>
+        /// <param name="majorVersionName">The major version with name.</param>
+        /// <param name="versionName">The version name.</param>
         public MajorVersionCalculator(string majorVersionName, string versionName)
         {
             this.majorVersionName = majorVersionName;
             this.versionName = versionName;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Calculate the major version from other fields.
+        /// </summary>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         public void Calculate(UserAgent userAgent)
         {
             var agentVersionMajor = userAgent.Get(this.majorVersionName);
-            if (agentVersionMajor == null || agentVersionMajor.GetConfidence() == -1)
+            if (agentVersionMajor is null || agentVersionMajor.GetConfidence() == -1)
             {
                 var agentVersion = userAgent.Get(this.versionName);
                 if (agentVersion != null)

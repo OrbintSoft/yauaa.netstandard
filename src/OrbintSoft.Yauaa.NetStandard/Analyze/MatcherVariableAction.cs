@@ -23,14 +23,15 @@
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:48</date>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyze
 {
     using System;
     using System.Collections.Generic;
     using Antlr4.Runtime;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// This class is used to define a variable value action for a matcher.
@@ -41,7 +42,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Defines the logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherVariableAction));
+        private static readonly ILogger Logger = new Logger<MatcherVariableAction>();
 
         /// <summary>
         /// Defines the expression.
@@ -49,7 +50,7 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly string expression;
 
         /// <summary>
-        /// Defines the foundValue.
+        /// Defines the found value.
         /// </summary>
         [NonSerialized]
         private WalkList.WalkResult foundValue = null;
@@ -86,8 +87,8 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             if (this.Verbose)
             {
-                Log.Info($"INFO  : VARIABLE ({this.VariableName}): {key}");
-                Log.Info($"NEED  : VARIABLE ({this.VariableName}): {this.MatchExpression}");
+                Logger.Info($"INFO  : VARIABLE ({this.VariableName}): {key}");
+                Logger.Info($"NEED  : VARIABLE ({this.VariableName}): {this.MatchExpression}");
             }
 
             /*
@@ -100,7 +101,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 this.foundValue = newlyFoundValue;
                 if (this.Verbose)
                 {
-                    Log.Info($"KEPT  : VARIABLE ({this.VariableName}): {key}");
+                    Logger.Info($"KEPT  : VARIABLE ({this.VariableName}): {key}");
                 }
 
                 if (this.interestedActions != null && this.interestedActions.Count != 0)

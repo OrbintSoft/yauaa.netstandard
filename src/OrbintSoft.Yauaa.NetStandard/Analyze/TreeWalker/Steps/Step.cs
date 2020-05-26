@@ -31,8 +31,8 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
     using System.Text;
     using Antlr4.Runtime;
     using Antlr4.Runtime.Tree;
-    using log4net;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
@@ -44,7 +44,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// <summary>
         /// The logger.
         /// </summary>
-        internal static readonly ILog Log = LogManager.GetLogger(typeof(Step));
+        private static readonly ILogger Logger = new Logger<Step>();
 
         /// <summary>
         /// The step number.
@@ -216,7 +216,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
 
                 if (this.Verbose)
                 {
-                    Log.Info($"{this.Logprefix} Final (implicit) step: {res}");
+                    Logger.Info($"{this.Logprefix} Final (implicit) step: {res}");
                 }
 
                 return new WalkList.WalkResult(tree, res);
@@ -224,15 +224,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
 
             if (this.Verbose)
             {
-                Log.Info($"{this.Logprefix} Tree: >>>{AntlrUtils.GetSourceText((ParserRuleContext)tree)}<<<");
-                Log.Info($"{this.Logprefix} Enter step({this.stepNr}): {this.NextStep}");
+                Logger.Info($"{this.Logprefix} Tree: >>>{AntlrUtils.GetSourceText((ParserRuleContext)tree)}<<<");
+                Logger.Info($"{this.Logprefix} Enter step({this.stepNr}): {this.NextStep}");
             }
 
             var result = this.NextStep.Walk(tree, value);
             if (this.Verbose)
             {
-                Log.Info($"{this.Logprefix} Result: >>>{(result is null ? "null" : result.ToString())}<<<");
-                Log.Info($"{this.Logprefix} Leave step({(result is null ? "-" : "+")}): {this.NextStep}");
+                Logger.Info($"{this.Logprefix} Result: >>>{(result is null ? "null" : result.ToString())}<<<");
+                Logger.Info($"{this.Logprefix} Leave step({(result is null ? "-" : "+")}): {this.NextStep}");
             }
 
             return result;

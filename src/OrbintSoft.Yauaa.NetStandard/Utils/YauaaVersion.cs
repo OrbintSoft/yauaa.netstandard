@@ -30,8 +30,8 @@ namespace OrbintSoft.Yauaa.Utils
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze;
+    using OrbintSoft.Yauaa.Logger;
     using YamlDotNet.RepresentationModel;
 
     /// <summary>
@@ -42,7 +42,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// <summary>
         /// Defines the Logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(YauaaVersion));
+        private static readonly ILogger Logger = new Logger<YauaaVersion>();
 
         /// <summary>
         /// Prevents a default instance of the <see cref="YauaaVersion"/> class from being created.
@@ -118,16 +118,16 @@ namespace OrbintSoft.Yauaa.Utils
             var libraryVersion = GetVersion(libraryProjectVersion, libraryGitCommitIdDescribeShort, libraryBuildTimestamp);
             var rulesVersion = GetVersion(projectVersion, gitCommitIdDescribeShort, buildTimestamp);
 
-            Log.Error("===============================================");
-            Log.Error("==========        FATAL ERROR       ===========");
-            Log.Error("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-            Log.Error(string.Empty);
-            Log.Error("Two different Yauaa versions have been loaded:");
-            Log.Error(string.Format("Runtime Library: {0}", libraryVersion));
-            Log.Error(string.Format("Rule sets      : {0}", rulesVersion));
-            Log.Error(string.Empty);
-            Log.Error("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-            Log.Error("===============================================");
+            Logger.Error($"===============================================");
+            Logger.Error($"==========        FATAL ERROR       ===========");
+            Logger.Error($"vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+            Logger.Error($"");
+            Logger.Error($"Two different Yauaa versions have been loaded:");
+            Logger.Error($"Runtime Library: {libraryVersion}");
+            Logger.Error($"Rule sets      : {rulesVersion}");
+            Logger.Error($"");
+            Logger.Error($"^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+            Logger.Error($"===============================================");
 
             throw new InvalidParserConfigurationException("Two different Yauaa versions have been loaded: \n" +
                 "Runtime Library: " + libraryVersion + "\n" +
@@ -179,10 +179,10 @@ namespace OrbintSoft.Yauaa.Utils
                 width = Math.Max(width, line.Length);
             }
 
-            Log.Info(string.Empty);
-            Log.Info(string.Format("/-{0}-\\", Padding('-', width)));
+            Logger.Info($"");
+            Logger.Info($"/-{Padding('-', width)}-\\");
             LogLine(version, width);
-            Log.Info(string.Format("+-{0}-+", Padding('-', width)));
+            Logger.Info($"+-{Padding('-', width)}-+");
             foreach (var line in lines)
             {
                 LogLine(line, width);
@@ -190,15 +190,15 @@ namespace OrbintSoft.Yauaa.Utils
 
             if (extraLines.Any())
             {
-                Log.Info(string.Format("+-{0}-+", Padding('-', width)));
+                Logger.Info($"+-{Padding('-', width)}-+");
                 foreach (var line in extraLines)
                 {
                     LogLine(line, width);
                 }
             }
 
-            Log.Info(string.Format("\\-{0}-/", Padding('-', width)));
-            Log.Info(string.Empty);
+            Logger.Info($"\\-{Padding('-', width)}-/");
+            Logger.Info($"");
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace OrbintSoft.Yauaa.Utils
         /// <param name="width">The width<see cref="int"/>.</param>
         private static void LogLine(string line, int width)
         {
-            Log.Info(string.Format("| {0}{1} |", line, Padding(' ', width - line.Length)));
+            Logger.Info($"| {line}{Padding(' ', width - line.Length)} |");
         }
 
         /// <summary>

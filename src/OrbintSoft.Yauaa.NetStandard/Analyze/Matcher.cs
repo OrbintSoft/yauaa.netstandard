@@ -31,8 +31,8 @@ namespace OrbintSoft.Yauaa.Analyze
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
-    using log4net;
     using OrbintSoft.Yauaa.Analyzer;
+    using OrbintSoft.Yauaa.Logger;
     using OrbintSoft.Yauaa.Utils;
     using YamlDotNet.RepresentationModel;
 
@@ -45,7 +45,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Defines the Logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(Matcher));
+        private static readonly ILogger Logger = new Logger<Matcher>();
 
         /// <summary>
         /// The analyzer used for parsing.
@@ -58,37 +58,41 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly IList<MatcherAction> fixedStringActions;
 
         /// <summary>
-        /// Defines the informMatcherActionsAboutVariables.
+        /// Defines the inform matchers about variables.
         /// </summary>
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
 
         /// <summary>
-        /// Defines the matcherSourceLocation.
+        /// Defines the matcher source location.
         /// </summary>
         private readonly string matcherSourceLocation;
 
         /// <summary>
-        /// Defines the permanentVerbose.
+        /// Defines whether verbose logging should be permanent.
         /// </summary>
+#if VERBOSE
+        private readonly bool permanentVerbose = true;
+#else
         private readonly bool permanentVerbose = false;
+#endif
 
         /// <summary>
-        /// Defines the variableActions.
+        /// Defines the variable actions.
         /// </summary>
         private readonly IList<MatcherVariableAction> variableActions;
 
         /// <summary>
-        /// Defines the newValuesUserAgent.
+        /// Defines the new values to be used in the user agent.
         /// </summary>
         private readonly UserAgent newValuesUserAgent = null;
 
         /// <summary>
-        /// Defines the actionsThatRequireInputAndReceivedInput.
+        /// The amount of actions that require an input and receive inputs.
         /// </summary>
         private long actionsThatRequireInputAndReceivedInput = 0;
 
         /// <summary>
-        /// Defines the dynamicActions.
+        /// Defines the dynamic actions.
         /// </summary>
         private IList<MatcherAction> dynamicActions = null;
 
@@ -196,8 +200,8 @@ namespace OrbintSoft.Yauaa.Analyze
 
             if (this.Verbose)
             {
-                Log.Info("---------------------------");
-                Log.Info("- MATCHER -");
+                Logger.Info($"---------------------------");
+                Logger.Info($"- MATCHER -");
             }
 
             if (!hasDefinedExtractConfigs)
@@ -214,7 +218,7 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 if (this.Verbose)
                 {
-                    Log.Info($"{configLine.Type}: {configLine.Expression}");
+                    Logger.Info($"{configLine.Type}: {configLine.Expression}");
                 }
 
                 switch (configLine.Type)
@@ -298,15 +302,15 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             if (this.Verbose)
             {
-                Log.Info(string.Empty);
-                Log.Info("--- Matcher ------------------------");
-                Log.Info("ANALYSE ----------------------------");
+                Logger.Info($"");
+                Logger.Info($"--- Matcher ------------------------");
+                Logger.Info($"ANALYSE ----------------------------");
                 var good = true;
                 foreach (var action in this.dynamicActions)
                 {
                     if (action.CannotBeValid())
                     {
-                        Log.Error($"CANNOT BE VALID : {action.MatchExpression}");
+                        Logger.Error($"CANNOT BE VALID : {action.MatchExpression}");
                         good = false;
                     }
                 }
@@ -315,18 +319,18 @@ namespace OrbintSoft.Yauaa.Analyze
                 {
                     if (!action.ObtainResult())
                     {
-                        Log.Error($"FAILED : {action.MatchExpression}");
+                        Logger.Error($"FAILED : {action.MatchExpression}");
                         good = false;
                     }
                 }
 
                 if (good)
                 {
-                    Log.Info("COMPLETE ----------------------------");
+                    Logger.Info($"COMPLETE ----------------------------");
                 }
                 else
                 {
-                    Log.Info("INCOMPLETE ----------------------------");
+                    Logger.Info($"INCOMPLETE ----------------------------");
                     return;
                 }
             }
@@ -470,9 +474,9 @@ namespace OrbintSoft.Yauaa.Analyze
 
             foreach (var action in this.dynamicActions)
             {
-                if (action is MatcherExtractAction)
+                if (action is MatcherExtractAction action1)
                 {
-                    if (((MatcherExtractAction)action).IsFixedValue())
+                    if (action1.IsFixedValue())
                     {
                         this.fixedStringActions.Add(action);
                         action.ObtainResult();
@@ -539,12 +543,12 @@ namespace OrbintSoft.Yauaa.Analyze
             initStart.Stop();
             if (newEntries > 3000)
             {
-                Log.Warn($"Large matcher: {newEntries} in {initStart.ElapsedMilliseconds} ms:.({this.matcherSourceLocation})");
+                Logger.Warn($"Large matcher: {newEntries} in {initStart.ElapsedMilliseconds} ms:.({this.matcherSourceLocation})");
             }
 
             if (this.Verbose)
             {
-                Log.Info("---------------------------");
+                Logger.Info($"---------------------------");
             }
         }
 
@@ -604,9 +608,9 @@ namespace OrbintSoft.Yauaa.Analyze
             sb.Append("MATCHER.(").Append(this.matcherSourceLocation).Append("):\n").Append("    VARIABLE:\n");
             foreach (var action in this.dynamicActions)
             {
-                if (action is MatcherVariableAction)
+                if (action is MatcherVariableAction action1)
                 {
-                    sb.Append("        @").Append(((MatcherVariableAction)action).VariableName)
+                    sb.Append("        @").Append(action1.VariableName)
                         .Append(":    ").Append(action.MatchExpression).Append('\n');
                     sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
                 }
@@ -777,7 +781,7 @@ namespace OrbintSoft.Yauaa.Analyze
             public string Expression { get; }
 
             /// <summary>
-            /// Gets the Tconfiguration type.
+            /// Gets the configuration type.
             /// </summary>
             public ConfigType Type { get; }
         }

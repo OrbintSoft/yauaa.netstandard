@@ -22,6 +22,7 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 04, 16, 08:27</date>
+
 namespace OrbintSoft.Yauaa.Calculate
 {
     using System;
@@ -29,15 +30,15 @@ namespace OrbintSoft.Yauaa.Calculate
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// CalculateAgentEmail.
+    /// Utility to calculate the <see cref="DefaultUserAgentFields.AGENT_INFORMATION_EMAIL"/> field.
     /// </summary>
     [Serializable]
     public class CalculateAgentEmail : IFieldCalculator
     {
         /// <summary>
-        /// Calculate.
+        /// Calculate the <see cref="DefaultUserAgentFields.AGENT_INFORMATION_EMAIL"/> field.
         /// </summary>
-        /// <param name="userAgent">userAgent.</param>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         public void Calculate(UserAgent userAgent)
         {
             // The email address is a mess

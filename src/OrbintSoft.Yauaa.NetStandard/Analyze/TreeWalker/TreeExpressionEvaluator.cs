@@ -30,9 +30,9 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// This class gets the symbol table (1 value) uses that to evaluate
@@ -44,7 +44,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         /// <summary>
         /// Defines the logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(TreeExpressionEvaluator));
+        private static readonly ILogger Logger = new Logger<TreeExpressionEvaluator>();
 
         /// <summary>
         /// Defines the matcher.
@@ -102,15 +102,15 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         {
             if (this.verbose)
             {
-                Log.Info($"Evaluate: {key} => {value}");
-                Log.Info($"Pattern : {this.requiredPatternText}");
-                Log.Info($"WalkList: {this.WalkListForUnitTesting}");
+                Logger.Info($"Evaluate: {key} => {value}");
+                Logger.Info($"Pattern : {this.requiredPatternText}");
+                Logger.Info($"WalkList: {this.WalkListForUnitTesting}");
             }
 
             var result = this.WalkListForUnitTesting.Walk(tree, value);
             if (this.verbose)
             {
-                Log.Info($"Evaluate: Result = {(result is null ? "null" : result.Value)}");
+                Logger.Info($"Evaluate: Result = {(result is null ? "null" : result.Value)}");
             }
 
             return result;
@@ -119,7 +119,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker
         /// <summary>
         /// Finds the last step that cannot fail, and removes the following steps.
         /// </summary>
-        /// <returns>Number of steos that cannot fail.</returns>
+        /// <returns>Number of steps that cannot fail.</returns>
         public long PruneTrailingStepsThatCannotFail()
         {
             return this.WalkListForUnitTesting.PruneTrailingStepsThatCannotFail();

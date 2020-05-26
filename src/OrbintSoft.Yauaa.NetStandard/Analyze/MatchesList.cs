@@ -131,7 +131,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// The IncreaseCapacity.
+        /// Increase the internal capacity of the list.
         /// </summary>
         private void IncreaseCapacity()
         {

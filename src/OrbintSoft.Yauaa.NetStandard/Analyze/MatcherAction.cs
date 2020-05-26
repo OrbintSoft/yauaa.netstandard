@@ -31,15 +31,12 @@ namespace OrbintSoft.Yauaa.Analyze
     using System.IO;
     using System.Linq;
     using Antlr4.Runtime;
-    using Antlr4.Runtime.Atn;
-    using Antlr4.Runtime.Dfa;
     using Antlr4.Runtime.Misc;
-    using Antlr4.Runtime.Sharpen;
     using Antlr4.Runtime.Tree;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze.TreeWalker;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// This class is used to repesent an action associated to a matcher.
@@ -55,7 +52,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <summary>
         /// Defines the Logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(MatcherAction));
+        private static readonly ILogger Logger = new Logger<MatcherAction>();
 
         /// <summary>
         /// Defines the matcher.
@@ -425,9 +422,9 @@ namespace OrbintSoft.Yauaa.Analyze
             /// <inheritdoc/>
             public void SyntaxError(TextWriter output, IRecognizer recognizer, T offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
             {
-                Log.Error("Syntax error");
-                Log.Error($"Source : {this.MatcherAction.MatchExpression}");
-                Log.Error($"Message: {msg}");
+                Logger.Error($"Syntax error");
+                Logger.Error($"Source : {this.MatcherAction.MatchExpression}");
+                Logger.Error($"Message: {msg}");
                 throw new InvalidParserConfigurationException($"Syntax error \"{msg}\" caused by \"{this.MatcherAction.MatchExpression}\".");
             }
         }

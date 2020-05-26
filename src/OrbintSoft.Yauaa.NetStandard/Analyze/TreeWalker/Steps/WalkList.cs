@@ -32,13 +32,13 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
     using Antlr4.Runtime;
     using Antlr4.Runtime.Misc;
     using Antlr4.Runtime.Tree;
-    using log4net;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Lookup;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value;
     using OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Walk;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Antlr4Source;
+    using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
     /// This class gets the symbol table (1 value) uses that to evaluate
@@ -50,7 +50,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         /// <summary>
         /// Defines the Logger.
         /// </summary>
-        private static readonly ILog Log = LogManager.GetLogger(typeof(WalkList));
+        private static readonly ILogger Logger = new Logger<WalkList>();
 
         /// <summary>
         /// Defines the lookups dictionary.
@@ -98,12 +98,12 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             if (verbose)
             {
                 var i = 1;
-                Log.Info("------------------------------------");
-                Log.Info($"Required: {requiredPattern.GetText()}");
+                Logger.Info($"------------------------------------");
+                Logger.Info($"Required: {requiredPattern.GetText()}");
                 foreach (var step in this.steps)
                 {
                     step.SetVerbose(true);
-                    Log.Info($"{i++}: {step}");
+                    Logger.Info($"{i++}: {step}");
                 }
             }
         }
@@ -213,14 +213,14 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
             var firstStep = this.steps[0];
             if (this.verbose)
             {
-                Step.Log.Info($"Tree: >>>{tree.GetText()}<<<");
-                Step.Log.Info($"Enter step: {firstStep}");
+                Logger.Info($"Tree: >>>{tree.GetText()}<<<");
+                Logger.Info($"Enter step: {firstStep}");
             }
 
             var result = firstStep.Walk(tree, value);
             if (this.verbose)
             {
-                Step.Log.Info($"Leave step ({(result is null ? " - " : " + ")}): {firstStep}");
+                Logger.Info($"Leave step ({(result is null ? " - " : " + ")}): {firstStep}");
             }
 
             return result;
@@ -278,7 +278,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
         }
 
         /// <summary>
-        /// This class is a utility to build the <see cref="WalkList"/> based on the <see cref="UserAgentTreeWalkerBaseVisitor{object}"/>.
+        /// This class is a utility to build the <see cref="WalkList"/> based on the <see cref="UserAgentTreeWalkerBaseVisitor{Result}"/>.
         /// </summary>
         private class WalkListBuilder : UserAgentTreeWalkerBaseVisitor<object>
         {
