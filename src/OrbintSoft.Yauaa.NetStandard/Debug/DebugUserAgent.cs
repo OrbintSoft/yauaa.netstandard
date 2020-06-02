@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="DebugUserAgent.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Debug
@@ -35,17 +34,17 @@ namespace OrbintSoft.Yauaa.Debug
     using OrbintSoft.Yauaa.Logger;
 
     /// <summary>
-    /// Defines the <see cref="DebugUserAgent" />.
+    /// Defines an extension of <see cref="UserAgent"/> for debugging and testing purpose.
     /// </summary>
     public class DebugUserAgent : UserAgent
     {
         /// <summary>
-        /// Defines the Log.
+        /// Defines the logger.
         /// </summary>
         private static readonly ILogger Logger = new Logger<DebugUserAgent>();
 
         /// <summary>
-        /// Defines the appliedMatcherResults.
+        /// Defines the applied matchers results..
         /// </summary>
         [NonSerialized]
         private readonly IList<Tuple<UserAgent, Matcher>> appliedMatcherResults = new List<Tuple<UserAgent, Matcher>>();
@@ -60,14 +59,14 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// Gets the NumberOfAppliedMatches.
+        /// Gets the number of applied matches.
         /// </summary>
         public int NumberOfAppliedMatches => this.appliedMatcherResults.Count;
 
         /// <summary>
-        /// The AnalyzeMatchersResult.
+        /// Analyze the matcher results and checks if they are accepptable or if there are conflicts (ex: same confidence level but different values).
         /// </summary>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <returns>The analysis is ok.</returns>
         public bool AnalyzeMatchersResult()
         {
             var passed = true;
@@ -109,20 +108,14 @@ namespace OrbintSoft.Yauaa.Debug
             return passed;
         }
 
-        /// <summary>
-        /// The Reset.
-        /// </summary>
+        /// <inheritdoc/>
         public override void Reset()
         {
             this.appliedMatcherResults.Clear();
             base.Reset();
         }
 
-        /// <summary>
-        /// The Set.
-        /// </summary>
-        /// <param name="newValuesUserAgent">The newValuesUserAgent<see cref="UserAgent"/>.</param>
-        /// <param name="appliedMatcher">The appliedMatcher<see cref="Matcher"/>.</param>
+        /// <inheritdoc/>
         public override void Set(UserAgent newValuesUserAgent, Matcher appliedMatcher)
         {
             this.appliedMatcherResults.Add(new Tuple<UserAgent, Matcher>(new UserAgent(newValuesUserAgent), appliedMatcher));
@@ -130,31 +123,31 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The ToMatchTrace.
+        /// Generate a trace dump of applied matcher results.
         /// </summary>
-        /// <param name="highlightNames">The highlightNames.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="highlightNames">The filed names you want highlight.</param>
+        /// <returns>The trace.</returns>
         public string ToMatchTrace(IList<string> highlightNames)
         {
             var sb = new StringBuilder(4096);
-            sb.Append('\n');
-            sb.Append("+=========================================+\n");
-            sb.Append("| Matcher results that have been combined |\n");
-            sb.Append("+=========================================+\n");
-            sb.Append('\n');
+            sb.AppendLine();
+            sb.AppendLine("+=========================================+");
+            sb.AppendLine("| Matcher results that have been combined |");
+            sb.AppendLine("+=========================================+");
+            sb.AppendLine();
 
             foreach (var pair in this.appliedMatcherResults)
             {
-                sb.Append('\n');
-                sb.Append("+================\n");
-                sb.Append("+ Applied matcher\n");
-                sb.Append("+----------------\n");
+                sb.AppendLine();
+                sb.AppendLine("+================");
+                sb.AppendLine("+ Applied matcher");
+                sb.AppendLine("+----------------");
                 var result = pair.Item1;
                 var matcher = pair.Item2;
                 sb.Append(matcher.ToString());
-                sb.Append("+----------------\n");
-                sb.Append("+ Results\n");
-                sb.Append("+----------------\n");
+                sb.AppendLine("+----------------");
+                sb.AppendLine("+ Results");
+                sb.AppendLine("+----------------");
                 foreach (var fieldName in result.GetAvailableFieldNamesSorted())
                 {
                     var field = result.Get(fieldName);
@@ -178,11 +171,11 @@ namespace OrbintSoft.Yauaa.Debug
                             sb.Append(" => isDefaultValue");
                         }
 
-                        sb.Append(") = ").Append(field.GetValue()).Append(marker).Append('\n');
+                        sb.Append(") = ").Append(field.GetValue()).Append(marker).AppendLine();
                     }
                 }
 
-                sb.Append("+================\n");
+                sb.AppendLine("+================");
             }
 
             return sb.ToString();

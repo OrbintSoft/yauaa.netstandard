@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OrbintSoft.Yauaa.WebSample.AspNetCore.Services;
 using System.Collections.Generic;
 
 namespace OrbintSoft.Yauaa.WebSample.AspNetCore
@@ -26,7 +27,7 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore
         {
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
                 options.Secure = CookieSecurePolicy.None;
             });
@@ -51,6 +52,7 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore
                     new AcceptLanguageHeaderRequestCultureProvider()
                 };
             });
+            services.AddUserAgentService();
         }
 
         public void Configure(IApplicationBuilder app)

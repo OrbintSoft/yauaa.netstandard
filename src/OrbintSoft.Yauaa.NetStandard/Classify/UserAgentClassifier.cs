@@ -29,7 +29,7 @@ namespace OrbintSoft.Yauaa.Classify
     using OrbintSoft.Yauaa.Analyzer;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentClassifier" />.
+    /// This class is used to classify the user agent.
     /// </summary>
     public class UserAgentClassifier
     {
@@ -41,13 +41,13 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The GetDeviceClass.
+        /// Returns the device class of the user agent (Desktop, mobile, Robot, TV, ...).
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         /// <returns>The <see cref="DeviceClass"/>.</returns>
         public static DeviceClass GetDeviceClass(UserAgent userAgent)
         {
-            switch (userAgent.GetValue(UserAgent.DEVICE_CLASS))
+            switch (userAgent.GetValue(DefaultUserAgentFields.DEVICE_CLASS))
             {
                 case "Desktop": return DeviceClass.Desktop;
                 case "Anonymized": return DeviceClass.Anonymized;
@@ -72,10 +72,10 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsDeliberateMisuse.
+        /// Indicates if there is a misuse of the user agent (user agent has been anonymized, an hacker edited, a robot is trying to imitate a broser...).
         /// </summary>
-        /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>Do we see this as deliberate misuse?.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
+        /// <returns>True if deliberate misuse.</returns>
         public static bool IsDeliberateMisuse(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))
@@ -106,10 +106,10 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsHuman.
+        /// Indicates if the user agent is a human using the device(broswer or application).
         /// </summary>
-        /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>If this is probably a human using the device.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
+        /// <returns>True If this is probably a human using the device.</returns>
         public static bool IsHuman(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))
@@ -140,10 +140,10 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsMobile.
+        ///  Indicates if the device is a mobile device or a robot that want to be treated as mobile.
         /// </summary>
-        /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>Is this a 'mobile' device. (includes robots that want to be treated as mobile).</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
+        /// <returns>True if this is a mobile.</returns>
         public static bool IsMobile(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))
@@ -174,10 +174,10 @@ namespace OrbintSoft.Yauaa.Classify
         }
 
         /// <summary>
-        /// The IsNormalConsumerDevice.
+        /// Indicates if this a 'normal' consumer device that can simply be bought/downloaded and used as intended.
         /// </summary>
-        /// <param name="userAgent">The instance that needs to be classified.</param>
-        /// <returns>Is this a 'normal' consumer device that can simply be bought/downloaded and used as intended.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
+        /// <returns>True if normal consumer device.</returns>
         public static bool IsNormalConsumerDevice(UserAgent userAgent)
         {
             switch (GetDeviceClass(userAgent))

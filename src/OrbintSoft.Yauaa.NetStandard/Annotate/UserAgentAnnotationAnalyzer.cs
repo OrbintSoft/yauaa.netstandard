@@ -89,42 +89,7 @@ namespace OrbintSoft.Yauaa.Annotate
 
             var classOfT = classOfTArray[0];
 
-            // Get all methods of the correct signature that have been annotated with YauaaField
-            foreach (var method in theMapper.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
-            {
-                if (method.GetCustomAttribute(typeof(YauaaFieldAttribute)) is YauaaFieldAttribute field)
-                {
-                    var returnType = method.ReturnType;
-                    var parameters = method.GetParameters().Select(p => p.ParameterType).ToArray();
-                    if (returnType == typeof(void) && parameters.Length == 2 && parameters[0] == classOfT && parameters[1] == typeof(string))
-                    {
-                        if (!classOfT.IsVisible)
-                        {
-                            throw new InvalidParserConfigurationException($"The class {classOfT.Name} is not public.");
-                        }
-
-                        if (!method.IsPublic)
-                        {
-                            throw new InvalidParserConfigurationException($"Method annotated with YauaaField is not public: {method.Name}");
-                        }
-
-                        foreach (var fieldName in field.Value)
-                        {
-                            if (!this.fieldSetters.ContainsKey(fieldName))
-                            {
-                                this.fieldSetters[fieldName] = new List<MethodInfo>();
-                            }
-
-                            this.fieldSetters[fieldName].Add(method);
-                        }
-                    }
-                    else
-                    {
-                        throw new InvalidParserConfigurationException(
-                            $"In class [{this.mapper.GetType().Name}] the method [{method.Name}] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void {method.Name}({classOfT.Name} record, string value) ]");
-                    }
-                }
-            }
+            this.MapMethods(theMapper, classOfT);
 
             if (this.fieldSetters.Count == 0)
             {
@@ -190,6 +155,51 @@ namespace OrbintSoft.Yauaa.Annotate
             if (this.userAgentAnalyzer != null)
             {
                 this.userAgentAnalyzer.SetCacheSize(this.CacheSize);
+            }
+        }
+
+        /// <summary>
+        /// Maps all set methods in the class with the fields.
+        /// </summary>
+        /// <param name="theMapper">The mappr.</param>
+        /// <param name="classOfT">The type to be mapped.</param>
+        private void MapMethods(IUserAgentAnnotationMapper<T> theMapper, Type classOfT)
+        {
+            // Get all methods of the correct signature that have been annotated with YauaaField
+            foreach (var method in theMapper.GetType().GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
+            {
+                if (method.GetCustomAttribute(typeof(YauaaFieldAttribute)) is YauaaFieldAttribute field)
+                {
+                    var returnType = method.ReturnType;
+                    var parameters = method.GetParameters().Select(p => p.ParameterType).ToArray();
+                    if (returnType == typeof(void) && parameters.Length == 2 && classOfT.IsAssignableFrom(parameters[0]) && parameters[1] == typeof(string))
+                    {
+                        if (!classOfT.IsVisible)
+                        {
+                            throw new InvalidParserConfigurationException($"The class {classOfT.Name} is not public.");
+                        }
+
+                        if (!method.IsPublic)
+                        {
+                            throw new InvalidParserConfigurationException($"Method annotated with YauaaField is not public: {method.Name}");
+                        }
+
+                        foreach (var fieldName in field.Value)
+                        {
+                            if (!this.fieldSetters.ContainsKey(fieldName))
+                            {
+                                this.fieldSetters[fieldName] = new List<MethodInfo>();
+                            }
+
+                            this.fieldSetters[fieldName].Add(method);
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidParserConfigurationException(
+                            $"In class [{this.mapper.GetType().Name}] the method [{method.Name}] has been annotated with YauaaField but it has the wrong method signature. It must look like [ public void {method.Name}({classOfT.Name} record, string value) ]");
+                    }
+                }
             }
         }
     }
