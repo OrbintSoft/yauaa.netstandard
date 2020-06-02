@@ -217,7 +217,7 @@ namespace OrbintSoft.Yauaa.Analyze
         }
 
         /// <summary>
-        /// Supports iteration over a <see cref="Match[]"/> limited by count.
+        /// Supports iteration over a <see cref="T:Match[]"/> limited by count.
         /// </summary>
         public class MatchEnumerator : IEnumerator<Match>
         {
