@@ -22,6 +22,7 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 05, 26, 09:49</date>
+//-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Logger
 {

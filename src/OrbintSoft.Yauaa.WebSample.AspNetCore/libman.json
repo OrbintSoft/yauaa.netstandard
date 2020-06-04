@@ -11,7 +11,7 @@
       ]
     },
     {
-      "library": "font-awesome@5.13.0",
+      "library": "font-awesome@5.12.0-2",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [
         "css/all.css",
@@ -38,7 +38,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "jquery@3.5.0",
+      "library": "jquery@3.5.1",
       "destination": "wwwroot/lib/jquery/",
       "files": [
         "jquery.js"
@@ -54,7 +54,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "jquery-validate@1.19.1",
+      "library": "jquery-validate@1.19.2",
       "destination": "wwwroot/lib/jquery-validate/",
       "files": [
         "jquery.validate.js"
@@ -78,13 +78,24 @@
     },
     {
       "provider": "cdnjs",
-      "library": "twitter-bootstrap@4.4.0",
+      "library": "twitter-bootstrap@4.5.0",
       "destination": "wwwroot/lib/twitter-bootstrap/",
       "files": [
         "js/bootstrap.js",
         "css/bootstrap-grid.css",
         "css/bootstrap-reboot.css",
         "css/bootstrap.css"
+      ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "rainbow@1.2.0",
+      "destination": "wwwroot/lib/rainbow",
+      "files": [
+        "js/rainbow.js",
+        "js/language/generic.js",
+        "js/language/csharp.js",
+        "themes/blackboard.css"
       ]
     }
   ]

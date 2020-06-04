@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Normalize.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Utils
@@ -32,22 +31,15 @@ namespace OrbintSoft.Yauaa.Utils
     using System.Text.RegularExpressions;
 
     /// <summary>
-    /// Defines the <see cref="Normalize" />.
+    /// Utility class to normalize user agent strings.
     /// </summary>
-    public sealed class Normalize
+    public static class Normalize
     {
         /// <summary>
-        /// Prevents a default instance of the <see cref="Normalize"/> class from being created.
+        /// Normalize the brand name.
         /// </summary>
-        private Normalize()
-        {
-        }
-
-        /// <summary>
-        /// The Brand.
-        /// </summary>
-        /// <param name="brand">The brand<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="brand">The brand name.</param>
+        /// <returns>The normalized brand.</returns>
         public static string Brand(string brand)
         {
             if (brand.Length <= 3)
@@ -139,12 +131,12 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The ReplaceString.
+        /// Custom replace string.
         /// </summary>
-        /// <param name="input">The input<see cref="string"/>.</param>
-        /// <param name="searchFor">The searchFor<see cref="string"/>.</param>
-        /// <param name="replaceWith">The replaceWith<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="input">The input string.</param>
+        /// <param name="searchFor">The string to be replaced.</param>
+        /// <param name="replaceWith">The replacement.</param>
+        /// <returns>The resulting string.</returns>
         public static string ReplaceString(string input, string searchFor, string replaceWith)
         {
             // startIdx and idxSearchFor delimit various chunks of input; these
@@ -178,11 +170,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The CleanupDeviceBrandName.
+        /// Cleanum the device brand name.
         /// </summary>
-        /// <param name="deviceBrand">The deviceBrand<see cref="string"/>.</param>
-        /// <param name="deviceName">The deviceName<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="deviceBrand">The device brand name.</param>
+        /// <param name="deviceName">The device name.</param>
+        /// <returns>The cleaned device name.</returns>
         public static string CleanupDeviceBrandName(string deviceBrand, string deviceName)
         {
             var lowerDeviceBrand = deviceBrand.ToLower(CultureInfo.InvariantCulture);
@@ -224,10 +216,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The Email.
+        /// Normalize an email address.
         /// </summary>
-        /// <param name="email">The email<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="email">The email to be normalized.</param>
+        /// <returns>The normalized email.</returns>
         public static string Email(string email)
         {
             var cleaned = email;
@@ -244,10 +236,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsTokenSeparator.
+        /// Checks if a character is a token separator.
         /// </summary>
-        /// <param name="letter">The letter<see cref="char"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="letter">The character.</param>
+        /// <returns>True if separator.</returns>
         private static bool IsTokenSeparator(char letter)
         {
             switch (letter)

@@ -1,0 +1,298 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@{
+    ViewData["Title"] = "Sample";
+}
+
+<h2 localize>Before to start</h2>
+
+<p>
+    <localize>
+        You can find a complete sample at this address:
+    </localize>
+    <a href="https://github.com/OrbintSoft/yauaa.netstandard/tree/master/src/OrbintSoft.Yauaa.WebSample.AspNetCore">OrbintSoft.Yauaa.WebSample.AspNetCore</a>
+</p>
+
+<p>
+    <localize>
+        In this example we will use an ASP.NET Core 3.0 MVC project.
+    </localize>
+    <br />
+    <localize>
+        I will not explain how to create and configure an ASP.NET Core project, in this guide I'll just focus on how to use Yauaa on real case application.
+    </localize>
+</p>
+
+<h2 localize>Create a user agent model.</h2>
+<p>
+    <localize>
+        First we create an interface for our model with the fields that we need.
+    </localize>
+    <br>
+    <localize>
+        This allows us to abstract our model for IOC.
+    </localize>
+</p>
+<pre-code data-language="csharp">
+    public interface IUserAgentModel
+    {
+        string AgentClass { get; set; }
+        string AgentName { get; set; }
+        Version AgentVersion { get; set; }
+        string DeviceBrand { get; set; }
+        string DeviceClass { get; set; }
+        string DeviceCpu { get; set; }
+        string DeviceCpuBits { get; set; }
+        string DeviceName { get; set; }
+        string LayoutEngineClass { get; set; }
+        string LayoutEngineName { get; set; }
+        Version LayoutEngineVersion { get; set; }
+        string OperatingSystemClass { get; set; }
+        string OperatingSystemName { get; set; }
+        Version OperatingSystemVersion { get; set; }
+        string UserAgentString { get; }
+    }
+</pre-code>
+<p>
+    <localize>
+        Then we can create the concrete class.
+    </localize>
+    <br />
+    <localize>
+        Not that we also add the user agent string as readonly property.
+    </localize>
+</p>
+<pre-code data-language="csharp">
+    public class UserAgentModel : IUserAgentModel
+    {
+        public string UserAgentString { get; }
+        public string AgentClass { get; set; }
+        public string AgentName { get; set; }
+        public Version AgentVersion { get; set; }
+        public string DeviceBrand { get; set; }
+        public string DeviceClass { get; set; }
+        public string DeviceName { get; set; }
+        public string LayoutEngineClass { get; set; }
+        public string LayoutEngineName { get; set; }
+        public Version LayoutEngineVersion { get; set; }
+        public string OperatingSystemClass { get; set; }
+        public string OperatingSystemName { get; set; }
+        public Version OperatingSystemVersion { get; set; }
+        public string DeviceCpu { get; set; }
+        public string DeviceCpuBits { get; set; }
+
+        public UserAgentModel(string useragentString)
+        {
+            UserAgentString = useragentString;
+        }
+    }
+</pre-code>
+<h2 localize>Create the mapper.</h2>
+<p>
+    We create an interface that will be used with dependency injections.
+</p>
+<pre-code data-language="csharp">
+    public interface IUserAgentMapper
+    {
+        IUserAgentModel Enrich(string userAgent); //fills the useragent model
+        string GetUserAgentString(IUserAgentModel record); //Gets the useragent string       
+    }
+</pre-code>
+<p>
+    <localize>
+        We implement it using the user agent annotation mapper.
+    </localize>
+    <br />
+    <localize>
+        Every attribute will be automatically mapped thanks to YauaaField attribute.
+    </localize>
+    <br />
+    <localize>
+        We implement also a custom conversion for version fields.
+    </localize>
+    <br />
+    <localize>
+        Pay attention this is just an example, conversion is not perfect, in case of semantic versioning or other string versioning system, they cannot be converted.
+    </localize>
+</p>
+<pre-code data-language="csharp">
+    public class UserAgentMapper : IUserAgentAnnotationMapper&lt;IUserAgentModel&gt;, IUserAgentMapper
+    {
+        private readonly UserAgentAnnotationAnalyzer&lt;IUserAgentModel&gt; userAgentAnalyzer;
+
+        public UserAgentMapper()
+        {
+            userAgentAnalyzer = new UserAgentAnnotationAnalyzer&lt;IUserAgentModel&gt;();
+            userAgentAnalyzer.Initialize(this);
+        }
+
+        [YauaaField(DefaultUserAgentFields.AGENT_CLASS)]
+        public void SetAgentClass(UserAgentModel record, string value)
+        {
+            record.AgentClass = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.AGENT_NAME)]
+        public void SetAgentName(UserAgentModel record, string value)
+        {
+            record.AgentName = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.AGENT_VERSION)]
+        public void SetAgentVersion(UserAgentModel record, string value)
+        {
+            Version.TryParse(value, out var version);
+            record.AgentVersion = version;
+        }
+
+        [YauaaField(DefaultUserAgentFields.DEVICE_BRAND)]
+        public void SetDeviceBrand(UserAgentModel record, string value)
+        {
+            record.DeviceBrand = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.DEVICE_CLASS)]
+        public void SetDeviceClass(UserAgentModel record, string value)
+        {
+            record.DeviceClass = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.DEVICE_NAME)]
+        public void SetDeviceName(UserAgentModel record, string value)
+        {
+            record.DeviceName = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.LAYOUT_ENGINE_CLASS)]
+        public void SetLayoutEngineClass(UserAgentModel record, string value)
+        {
+            record.LayoutEngineClass = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.LAYOUT_ENGINE_NAME)]
+        public void SetLayoutEngineName(UserAgentModel record, string value)
+        {
+            record.LayoutEngineName = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.LAYOUT_ENGINE_VERSION)]
+        public void SetLayoutEngineVersion(UserAgentModel record, string value)
+        {
+            Version.TryParse(value, out var version);
+            record.LayoutEngineVersion = version;
+        }
+
+        [YauaaField(DefaultUserAgentFields.OPERATING_SYSTEM_CLASS)]
+        public void SetOperatingSystemClass(UserAgentModel record, string value)
+        {
+            record.OperatingSystemClass = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.OPERATING_SYSTEM_NAME)]
+        public void SetOperatingSystemName(UserAgentModel record, string value)
+        {
+            record.OperatingSystemName = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.OPERATING_SYSTEM_VERSION)]
+        public void SetOperatingSystemVersion(UserAgentModel record, string value)
+        {
+            Version.TryParse(value, out var version);
+            record.OperatingSystemVersion = version;
+        }
+
+        [YauaaField(DefaultUserAgentFields.DEVICE_CPU)]
+        public void SetDeviceCpu(UserAgentModel record, string value)
+        {
+            record.DeviceCpu = value;
+        }
+
+        [YauaaField(DefaultUserAgentFields.DEVICE_CPU_BITS)]
+        public void SetDeviceCpuBits(UserAgentModel record, string value)
+        {
+            record.DeviceCpuBits = value;
+        }
+
+        public IUserAgentModel Enrich(string userAgent)
+        {
+            var model = new UserAgentModel(userAgent);
+            return userAgentAnalyzer.Map(model);
+        }
+
+        public string GetUserAgentString(IUserAgentModel record)
+        {
+            return record.UserAgentString;
+        }
+    }
+</pre-code>
+<h2 localize>Create the service.</h2>
+<p localize>
+    We create the interface of our service that will be used for dependency injection.
+</p>
+<pre-code data-language="csharp">
+    public interface IUserAgentService
+    {
+        IUserAgentModel Parse(string userAgentString);
+    }
+</pre-code>
+<p localize>
+    Then we implement provide a very simple implementation with the injection of the IUserAgentMapper.
+</p>
+<pre-code data-language="csharp">
+    public class UserAgentService : IUserAgentService
+    {
+        private readonly IUserAgentMapper userAgentMapper;
+        public UserAgentService(IUserAgentMapper userAgentMapper)
+        {
+            this.userAgentMapper = userAgentMapper;
+        }
+
+        public IUserAgentModel Parse(string userAgentString)
+        {
+            return userAgentMapper.Enrich(userAgentString);
+        }
+    }
+</pre-code>
+<h2 localize>Dependency injection.</h2>
+<p localize>We create an extension method to register our components.</p>
+<pre-code data-language="csharp">
+    public static IServiceCollection AddUserAgentService(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection
+            .AddSingleton&lt;IUserAgentMapper, UserAgentMapper&gt;()
+            .AddSingleton&lt;IUserAgentService, UserAgentService&gt;();
+    }
+</pre-code>
+<p localize>And we register it in startup ConfigureServices.</p>
+<pre-code data-language="csharp">
+    services.AddUserAgentService();
+</pre-code>
+<h2 localize>Create a web API.</h2>
+<p localize>
+    We can create a new controller to parse our user agent.
+</p>
+<pre-code data-language="csharp">
+    [ApiController]
+    [Route("[Controller]")]
+    public class ApiController : ControllerBase
+    {
+        private readonly IUserAgentService userAgentService;
+
+        public ApiController(IUserAgentService userAgentService)
+        {
+            this.userAgentService = userAgentService;
+        }
+
+        [HttpGet]
+        public IUserAgentModel Get()
+        {
+            string userAgent = this.HttpContext?.Request?.Headers?.FirstOrDefault(s => s.Key.ToLower() == "user-agent").Value;
+            return userAgentService.Parse(userAgent);
+        }
+
+        [HttpPost]
+        public IUserAgentModel Post(string userAgent)
+        {            
+            return userAgentService.Parse(userAgent);
+        }
+    }
+</pre-code>

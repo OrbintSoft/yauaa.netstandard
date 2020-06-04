@@ -22,7 +22,6 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Debug
@@ -44,14 +43,14 @@ namespace OrbintSoft.Yauaa.Debug
     public class UserAgentAnalyzerTester : UserAgentAnalyzer
     {
         /// <summary>
-        /// Defines the Log.
+        /// Defines the Logger.
         /// </summary>
         private static readonly ILogger Logger = new Logger<UserAgentAnalyzerTester>();
 
         /// <summary>
-        /// The NewBuilder.
+        /// Used to get a new instance of <see cref="UserAgentAnalyzerTesterBuilder"/>.
         /// </summary>
-        /// <returns>The <see cref="UserAgentAnalyzerTesterBuilder"/>.</returns>
+        /// <returns>The builder.</returns>
         public static new UserAgentAnalyzerTesterBuilder NewBuilder()
         {
             var a = new UserAgentAnalyzerTester();
@@ -78,9 +77,9 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// The GetUsedMatches.
+        /// Gets all used matches.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
+        /// <param name="userAgent">The <see cref="UserAgent"/>.</param>
         /// <returns>The matches.</returns>
         public IList<MatchesList.Match> GetUsedMatches(UserAgent userAgent)
         {
@@ -103,9 +102,9 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// Run all the test_cases available.
+        /// Run all available test cases.
         /// </summary>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <returns>True if all tests passed.</returns>
         public bool RunTests()
         {
             return this.RunTests(false, true);
@@ -116,21 +115,21 @@ namespace OrbintSoft.Yauaa.Debug
         /// </summary>
         /// <param name="showAll">If true shows all results of the tests.</param>
         /// <param name="failOnUnexpected">If true the test fails in case of unexpected result.</param>
-        /// <returns>True if test has passed.</returns>
+        /// <returns>True if all tests passed.</returns>
         public bool RunTests(bool showAll, bool failOnUnexpected)
         {
             return this.RunTests(showAll, failOnUnexpected, null, false, false);
         }
 
         /// <summary>
-        /// The RunTests.
+        /// Run all available test cases.
         /// </summary>
-        /// <param name="showAll">The showAll<see cref="bool"/>.</param>
-        /// <param name="failOnUnexpected">The failOnUnexpected<see cref="bool"/>.</param>
-        /// <param name="onlyValidateFieldNames">The onlyValidateFieldNames.</param>
-        /// <param name="measureSpeed">The measureSpeed<see cref="bool"/>.</param>
-        /// <param name="showPassedTests">The showPassedTests<see cref="bool"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="showAll">If true shows all results of the tests.</param>
+        /// <param name="failOnUnexpected">If true the test fails in case of unexpected result.</param>
+        /// <param name="onlyValidateFieldNames">Validate only the specified field names.</param>
+        /// <param name="measureSpeed">If true measure the speed.</param>
+        /// <param name="showPassedTests">If true shows the the results of passed tests.</param>
+        /// <returns>True if all tests passed.</returns>
         public bool RunTests(bool showAll, bool failOnUnexpected, ICollection<string> onlyValidateFieldNames, bool measureSpeed, bool showPassedTests)
         {
             var allPass = true;
@@ -662,7 +661,7 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// Defines the <see cref="UserAgentAnalyzerTesterBuilder" />.
+        /// This builder is used to create and configure an instance of <see cref="UserAgentAnalyzerTester"/>.
         /// </summary>
         public class UserAgentAnalyzerTesterBuilder : UserAgentAnalyzerBuilder
         {
@@ -676,7 +675,7 @@ namespace OrbintSoft.Yauaa.Debug
             }
 
             /// <summary>
-            /// The Build.
+            /// Builds the user agent analyzer.
             /// </summary>
             /// <returns>The <see cref="UserAgentAnalyzer"/>.</returns>
             public override UserAgentAnalyzer Build()
@@ -686,37 +685,37 @@ namespace OrbintSoft.Yauaa.Debug
         }
 
         /// <summary>
-        /// Defines the <see cref="TestResult" />.
+        /// This class defines a test reuslt for a field.
         /// </summary>
         internal class TestResult
         {
             /// <summary>
-            /// Gets or sets the Actual.
+            /// Gets or sets the Actual value of the field.
             /// </summary>
             internal string Actual { get; set; }
 
             /// <summary>
-            /// Gets or sets the Confidence.
+            /// Gets or sets the Confidence of the field.
             /// </summary>
             internal long Confidence { get; set; }
 
             /// <summary>
-            /// Gets or sets the Expected.
+            /// Gets or sets the Expected value for the field.
             /// </summary>
             internal string Expected { get; set; }
 
             /// <summary>
-            /// Gets or sets the Field.
+            /// Gets or sets the Field name.
             /// </summary>
             internal string Field { get; set; }
 
             /// <summary>
-            /// Gets or sets a value indicating whether Pass.
+            /// Gets or sets a value indicating whether the test passed.
             /// </summary>
             internal bool Pass { get; set; }
 
             /// <summary>
-            /// Gets or sets a value indicating whether Warn.
+            /// Gets or sets a value indicating whether there is a warning.
             /// </summary>
             internal bool Warn { get; set; }
         }

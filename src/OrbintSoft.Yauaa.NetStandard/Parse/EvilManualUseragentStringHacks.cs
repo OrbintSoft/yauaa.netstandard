@@ -1,29 +1,29 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="EvilManualUseragentStringHacks.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Parse
 {
     using System;
@@ -33,32 +33,32 @@ namespace OrbintSoft.Yauaa.Parse
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// Defines the <see cref="EvilManualUseragentStringHacks" />.
+    /// This class is used to parse, clean and fix bad user agents that cannot be handled by common rules.
     /// </summary>
     public sealed class EvilManualUseragentStringHacks
     {
         /// <summary>
-        /// Defines the MissingProductAtStart.
+        /// Regex to match user agents with missing product at start.
         /// </summary>
         private static readonly Regex MissingProductAtStart = new Regex("^\\(( |;|null|compatible|windows|android|linux).*", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary>
-        /// Defines the MissingSpace.
+        /// Regex to match user agents with missing space.
         /// </summary>
         private static readonly Regex MissingSpace = new Regex("(/[0-9]+\\.[0-9]+)([A-Z][a-z][a-z][a-z]+ )", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary>
-        /// Defines the MultipleSpaces.
+        /// Regex to match user agents with multiple spaces.
         /// </summary>
         private static readonly Regex MultipleSpaces = new Regex("(?: {2,})", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary>
-        /// Defines the AvoidBase64Match.
+        /// Regex to match user agents that are not base64.
         /// </summary>
         private static readonly Regex AvoidBase64Match = new Regex("(android/[0-9]+)(/)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
         /// <summary>
-        /// Defines the AndroidDashVersion.
+        /// Regex to match user agents that are android with dash version.
         /// </summary>
         private static readonly Regex AndroidDashVersion = new Regex("(android)-([0-9]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
@@ -73,7 +73,7 @@ namespace OrbintSoft.Yauaa.Parse
         /// There are a few situations where in order to parse the useragent we need to 'fix it'.
         /// Yes, all of this is pure evil but we "have to".
         /// </summary>
-        /// <param name="useragent">useragent Raw useragent.</param>
+        /// <param name="useragent">Raw useragent.</param>
         /// <returns>Cleaned useragent.</returns>
         public static string FixIt(string useragent)
         {

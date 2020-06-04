@@ -73,5 +73,10 @@ namespace OrbintSoft.Yauaa.WebSample.AspNetCore.Controllers
         {
             return this.View();
         }
+
+        public IActionResult Sample()
+        {
+            return this.View();
+        }
     }
 }

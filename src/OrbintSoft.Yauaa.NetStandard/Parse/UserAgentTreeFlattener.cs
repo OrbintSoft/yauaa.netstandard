@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="UserAgentTreeFlattener.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Parse
@@ -37,83 +36,83 @@ namespace OrbintSoft.Yauaa.Parse
     using OrbintSoft.Yauaa.Utils;
 
     /// <summary>
-    /// Defines the <see cref="UserAgentTreeFlattener" />.
+    /// Implements <see cref="UserAgentBaseListener"/>, used to flatten the parsing tree.
     /// </summary>
     [Serializable]
     public class UserAgentTreeFlattener : UserAgentBaseListener
     {
         /// <summary>
-        /// Defines the AGENT.
+        /// Name of the agent node.
         /// </summary>
         internal const string AGENT = "agent";
 
         /// <summary>
-        /// Defines the BASE64.
+        /// Name of the base64 node.
         /// </summary>
         internal const string BASE64 = "base64";
 
         /// <summary>
-        /// Defines the COMMENTS.
+        /// Name of the comments node.
         /// </summary>
         internal const string COMMENTS = "comments";
 
         /// <summary>
-        /// Defines the EMAIL.
+        /// Name of the email node.
         /// </summary>
         internal const string EMAIL = "email";
 
         /// <summary>
-        /// Defines the ENTRY.
+        /// Name of the entry node.
         /// </summary>
         internal const string ENTRY = "entry";
 
         /// <summary>
-        /// Defines the KEY.
+        /// Name of the key node.
         /// </summary>
         internal const string KEY = "key";
 
         /// <summary>
-        /// Defines the KEYVALUE.
+        /// Name of the keyvalue node.
         /// </summary>
         internal const string KEYVALUE = "keyvalue";
 
         /// <summary>
-        /// Defines the NAME.
+        /// Name of the name node.
         /// </summary>
         internal const string NAME = "name";
 
         /// <summary>
-        /// Defines the PRODUCT.
+        /// Name of the product node.
         /// </summary>
         internal const string PRODUCT = "product";
 
         /// <summary>
-        /// Defines the TEXT.
+        /// Name of the text node.
         /// </summary>
         internal const string TEXT = "text";
 
         /// <summary>
-        /// Defines the URL.
+        /// Name of the url node.
         /// </summary>
         internal const string URL = "url";
 
         /// <summary>
-        /// Defines the UUID.
+        /// Name of the uuid node.
         /// </summary>
         internal const string UUID = "uuid";
 
         /// <summary>
-        /// Defines the VALUE.
+        /// Name of the value node.
         /// </summary>
         internal const string VALUE = "value";
 
         /// <summary>
-        /// Defines the VERSION.
+        /// Name of the version node.
         /// </summary>
         internal const string VERSION = "version";
 
         /// <summary>
-        /// Defines the Walker.
+        /// Defines the tree walker.
         /// </summary>
         private static readonly ParseTreeWalker Walker = new ParseTreeWalker();
 
@@ -123,13 +122,13 @@ namespace OrbintSoft.Yauaa.Parse
         private readonly IAnalyzer analyzer;
 
         /// <summary>
-        /// Defines the state.
+        /// Defines the state of the parse tree property.
         /// </summary>
         [NonSerialized]
         private ParseTreeProperty<State> state = null;
 
         /// <summary>
-        /// Defines the verbose.
+        /// Defines whether verbose logging is enabled.
         /// </summary>
         private bool verbose = false;
 
@@ -143,156 +142,156 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// Defines the PathType.
+        /// Defines the path type.
         /// </summary>
         public enum PathType
         {
             /// <summary>
-            /// Defines the CHILD
+            /// Child node
             /// </summary>
             CHILD,
 
             /// <summary>
-            /// Defines the COMMENT
+            /// Comment
             /// </summary>
             COMMENT,
 
             /// <summary>
-            /// Defines the VERSION
+            /// Version
             /// </summary>
             VERSION,
         }
 
         /// <summary>
-        /// The EnterBase64.
+        /// When a base64 node is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.Base64Context"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterBase64([NotNull] UserAgentParser.Base64Context context)
         {
             this.Inform(context, BASE64, context.value.Text);
         }
 
         /// <summary>
-        /// The EnterCommentBlock.
+        /// When a comment node is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentBlockContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterCommentBlock([NotNull] UserAgentParser.CommentBlockContext context)
         {
             this.Inform(context, COMMENTS);
         }
 
         /// <summary>
-        /// The EnterCommentEntry.
+        /// When a comment entry is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentEntryContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterCommentEntry([NotNull] UserAgentParser.CommentEntryContext context)
         {
             this.InformSubstrings(context, "entry");
         }
 
         /// <summary>
-        /// The EnterCommentProduct.
+        /// When a comment product is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.CommentProductContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterCommentProduct([NotNull] UserAgentParser.CommentProductContext context)
         {
             this.InformSubstrings(context, PRODUCT);
         }
 
         /// <summary>
-        /// The EnterEmailAddress.
+        /// When an e-mail is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.EmailAddressContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterEmailAddress([NotNull] UserAgentParser.EmailAddressContext context)
         {
             this.Inform(context, EMAIL, context.email.Text);
         }
 
         /// <summary>
-        /// The EnterEmptyWord.
+        /// When an empty word is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.EmptyWordContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterEmptyWord([NotNull] UserAgentParser.EmptyWordContext context)
         {
             this.Inform(context, TEXT, string.Empty);
         }
 
         /// <summary>
-        /// The EnterKeyName.
+        /// When a key name is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyNameContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterKeyName([NotNull] UserAgentParser.KeyNameContext context)
         {
             this.InformSubstrings(context, KEY);
         }
 
         /// <summary>
-        /// The EnterKeyValue.
+        /// When a key value is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyValueContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterKeyValue([NotNull] UserAgentParser.KeyValueContext context)
         {
             this.Inform(context, KEYVALUE);
         }
 
         /// <summary>
-        /// The EnterKeyValueProductVersionName.
+        /// When a product version name is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyValueProductVersionNameContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterKeyValueProductVersionName([NotNull] UserAgentParser.KeyValueProductVersionNameContext context)
         {
             this.InformSubstrings(context, VERSION);
         }
 
         /// <summary>
-        /// The EnterKeyValueVersionName.
+        /// When a key value version name is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyValueVersionNameContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterKeyValueVersionName([NotNull] UserAgentParser.KeyValueVersionNameContext context)
         {
             this.InformSubstrings(context, VERSION);
         }
 
         /// <summary>
-        /// The EnterKeyWithoutValue.
+        /// When a key without value is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.KeyWithoutValueContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterKeyWithoutValue([NotNull] UserAgentParser.KeyWithoutValueContext context)
         {
             this.Inform(context, KEYVALUE);
         }
 
         /// <summary>
-        /// The EnterMultipleWords.
+        /// When multiple words are found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.MultipleWordsContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterMultipleWords([NotNull] UserAgentParser.MultipleWordsContext context)
         {
             this.InformSubstrings(context, TEXT);
         }
 
         /// <summary>
-        /// The EnterProduct.
+        /// When a product is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProduct([NotNull] UserAgentParser.ProductContext context)
         {
             this.InformSubstrings(context, PRODUCT);
         }
 
         /// <summary>
-        /// The EnterProductNameEmail.
+        /// When a product name email is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameEmailContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductNameEmail([NotNull] UserAgentParser.ProductNameEmailContext context)
         {
             this.Inform(context, NAME);
         }
 
         /// <summary>
-        /// The EnterProductNameKeyValue.
+        /// When a product name key value is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameKeyValueContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductNameKeyValue([NotNull] UserAgentParser.ProductNameKeyValueContext context)
         {
             this.Inform(context, "name.(1)keyvalue", context.GetText(), false);
@@ -300,126 +299,126 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The EnterProductNameNoVersion.
+        /// When a product name without version is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameNoVersionContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductNameNoVersion([NotNull] UserAgentParser.ProductNameNoVersionContext context)
         {
             this.InformSubstrings(context, PRODUCT);
         }
 
         /// <summary>
-        /// The EnterProductNameUrl.
+        /// When a product name url is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameUrlContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductNameUrl([NotNull] UserAgentParser.ProductNameUrlContext context)
         {
             this.Inform(context, NAME);
         }
 
         /// <summary>
-        /// The EnterProductNameUuid.
+        /// When a product name uuid is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameUuidContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductNameUuid([NotNull] UserAgentParser.ProductNameUuidContext context)
         {
             this.Inform(context, NAME);
         }
 
         /// <summary>
-        /// The EnterProductNameVersion.
+        /// When a product name version is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameVersionContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductNameVersion([NotNull] UserAgentParser.ProductNameVersionContext context)
         {
             this.InformSubstrings(context, NAME);
         }
 
         /// <summary>
-        /// The EnterProductNameWords.
+        /// When product name words are found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductNameWordsContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductNameWords([NotNull] UserAgentParser.ProductNameWordsContext context)
         {
             this.InformSubstrings(context, NAME);
         }
 
         /// <summary>
-        /// The EnterProductVersion.
+        /// When a product version is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductVersion([NotNull] UserAgentParser.ProductVersionContext context)
         {
             this.EnterProductVersion(context);
         }
 
         /// <summary>
-        /// The EnterProductVersionSingleWord.
+        /// When a product name version with single word is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionSingleWordContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductVersionSingleWord([NotNull] UserAgentParser.ProductVersionSingleWordContext context)
         {
             this.Inform(context, VERSION);
         }
 
         /// <summary>
-        /// The EnterProductVersionWithCommas.
+        /// When a product version with commas is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWithCommasContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductVersionWithCommas([NotNull] UserAgentParser.ProductVersionWithCommasContext context)
         {
             this.EnterProductVersion(context);
         }
 
         /// <summary>
-        /// The EnterProductVersionWords.
+        /// When a product name version with multiple words is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.ProductVersionWordsContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterProductVersionWords([NotNull] UserAgentParser.ProductVersionWordsContext context)
         {
             this.InformSubstrings(context, VERSION);
         }
 
         /// <summary>
-        /// The EnterRootText.
+        /// When a root text is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.RootTextContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterRootText([NotNull] UserAgentParser.RootTextContext context)
         {
             this.InformSubstrings(context, TEXT);
         }
 
         /// <summary>
-        /// The EnterSingleVersion.
+        /// When a single version is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.SingleVersionContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterSingleVersion([NotNull] UserAgentParser.SingleVersionContext context)
         {
             this.InformSubVersions(context, VERSION);
         }
 
         /// <summary>
-        /// The EnterSingleVersionWithCommas.
+        /// When a single version with commas is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.SingleVersionWithCommasContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterSingleVersionWithCommas([NotNull] UserAgentParser.SingleVersionWithCommasContext context)
         {
             this.InformSubVersions(context, VERSION);
         }
 
         /// <summary>
-        /// The EnterSiteUrl.
+        /// When a site url is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.SiteUrlContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterSiteUrl([NotNull] UserAgentParser.SiteUrlContext context)
         {
             this.Inform(context, URL, context.url.Text);
         }
 
         /// <summary>
-        /// The EnterUserAgent.
+        /// When a user agent is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.UserAgentContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterUserAgent([NotNull] UserAgentParser.UserAgentContext context)
         {
             // In case of a parse error the 'parsed' version of agent can be incomplete
@@ -427,28 +426,28 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The EnterUuId.
+        /// When a uuid is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.UuIdContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterUuId([NotNull] UserAgentParser.UuIdContext context)
         {
             this.Inform(context, UUID, context.uuid.Text);
         }
 
         /// <summary>
-        /// The EnterVersionWords.
+        /// When aversion words is found.
         /// </summary>
-        /// <param name="context">The context<see cref="UserAgentParser.VersionWordsContext"/>.</param>
+        /// <param name="context">The context node.</param>
         public override void EnterVersionWords([NotNull] UserAgentParser.VersionWordsContext context)
         {
             this.InformSubstrings(context, TEXT);
         }
 
         /// <summary>
-        /// The Parse.
+        /// Parse the user agen string.
         /// </summary>
-        /// <param name="userAgentString">The userAgentString<see cref="string"/>.</param>
-        /// <returns>The <see cref="UserAgent"/>.</returns>
+        /// <param name="userAgentString">The user agent string.</param>
+        /// <returns>The parsed <see cref="UserAgent"/>.</returns>
         public UserAgent Parse(string userAgentString)
         {
             var userAgent = new UserAgent(userAgentString);
@@ -456,10 +455,10 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The Parse.
+        /// Parse a <see cref="UserAgent"/>.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <returns>The <see cref="UserAgent"/>.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/> to be parsed.</param>
+        /// <returns>The parsed <see cref="UserAgent"/>.</returns>
         public UserAgent Parse(UserAgent userAgent)
         {
             userAgent.Reset();
@@ -467,18 +466,18 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The SetVerbose.
+        /// Set true to enable verbose logging.
         /// </summary>
-        /// <param name="newVerbose">The newVerbose<see cref="bool"/>.</param>
+        /// <param name="newVerbose">True to enable verbose logging.</param>
         public void SetVerbose(bool newVerbose)
         {
             this.verbose = newVerbose;
         }
 
         /// <summary>
-        /// The EnterProductVersion.
+        /// Handles the product version special cases.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
+        /// <param name="ctx">The context.</param>
         private void EnterProductVersion(IParseTree ctx)
         {
             if (ctx.ChildCount != 1)
@@ -500,50 +499,50 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The Inform.
+        /// Inform about a node.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="ctx">The context.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        /// <returns>The inform result.</returns>
         private string Inform(IParseTree ctx, string name, string value)
         {
             return this.Inform(ctx, ctx, name, value, false);
         }
 
         /// <summary>
-        /// The Inform.
+        /// Inform about a node.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="fakeChild">The fakeChild<see cref="bool"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="ctx">The context.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="fakeChild">True if it's a fake child.</param>
+        /// <returns>The inform result.</returns>
         private string Inform(IParseTree ctx, string name, string value, bool fakeChild)
         {
             return this.Inform(ctx, ctx, name, value, fakeChild);
         }
 
         /// <summary>
-        /// The Inform.
+        /// Inform about a node.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
-        /// <param name="path">The path<see cref="string"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="ctx">The context.</param>
+        /// <param name="path">The name.</param>
+        /// <returns>The inform result.</returns>
         private string Inform(IParseTree ctx, string path)
         {
             return this.Inform(ctx, path, AntlrUtils.GetSourceText((ParserRuleContext)ctx));
         }
 
         /// <summary>
-        /// The Inform.
+        /// Inform about a node.
         /// </summary>
-        /// <param name="stateCtx">The stateCtx<see cref="IParseTree"/>.</param>
-        /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="fakeChild">The fakeChild<see cref="bool"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="stateCtx">The context state.</param>
+        /// <param name="ctx">The context.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="fakeChild">True if it's a fake child.</param>
+        /// <returns>The inform result.</returns>
         private string Inform(IParseTree stateCtx, IParseTree ctx, string name, string value, bool fakeChild)
         {
             var path = name;
@@ -581,33 +580,33 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The InformSubstrings.
+        /// Inform about substrings.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
+        /// <param name="ctx">The context.</param>
+        /// <param name="name">The name.</param>
         private void InformSubstrings(ParserRuleContext ctx, string name)
         {
             this.InformSubstrings(ctx, name, false);
         }
 
         /// <summary>
-        /// The InformSubstrings.
+        /// Inform about substrings.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
-        /// <param name="fakeChild">The fakeChild<see cref="bool"/>.</param>
+        /// <param name="ctx">The context.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="fakeChild">True if it's a fake child.</param>
         private void InformSubstrings(ParserRuleContext ctx, string name, bool fakeChild)
         {
             this.InformSubstrings(ctx, name, fakeChild, WordSplitter.GetInstance());
         }
 
         /// <summary>
-        /// The InformSubstrings.
+        /// Inform about substrings.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
-        /// <param name="fakeChild">The fakeChild<see cref="bool"/>.</param>
-        /// <param name="splitter">The splitter<see cref="Splitter"/>.</param>
+        /// <param name="ctx">The context.</param>
+        /// <param name="name">The name.</param>
+        /// <param name="fakeChild">True if it's a fake child.</param>
+        /// <param name="splitter">The <see cref="Splitter"/>.</param>
         private void InformSubstrings(ParserRuleContext ctx, string name, bool fakeChild, Splitter splitter)
         {
             var text = AntlrUtils.GetSourceText(ctx);
@@ -640,25 +639,25 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The InformSubVersions.
+        /// Inform about subversions.
         /// </summary>
-        /// <param name="ctx">The ctx<see cref="ParserRuleContext"/>.</param>
-        /// <param name="name">The name<see cref="string"/>.</param>
+        /// <param name="ctx">The context.</param>
+        /// <param name="name">The name.</param>
         private void InformSubVersions(ParserRuleContext ctx, string name)
         {
             this.InformSubstrings(ctx, name, false, VersionSplitter.GetInstance());
         }
 
         /// <summary>
-        /// The ParseIntoCleanUserAgent.
+        /// Parse the <see cref="UserAgent"/> into a clean one.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <returns>The <see cref="UserAgent"/>.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/> to parse.</param>
+        /// <returns>The claened <see cref="UserAgent"/>.</returns>
         private UserAgent ParseIntoCleanUserAgent(UserAgent userAgent)
         {
             if (userAgent.UserAgentString == null)
             {
-                userAgent.Set(UserAgent.SYNTAX_ERROR, "true", 1);
+                userAgent.Set(DefaultUserAgentFields.SYNTAX_ERROR, "true", 1);
                 return userAgent; // Cannot parse this
             }
 
@@ -674,11 +673,11 @@ namespace OrbintSoft.Yauaa.Parse
 
             if (userAgent.HasSyntaxError)
             {
-                this.Inform(null, UserAgent.SYNTAX_ERROR, "true");
+                this.Inform(null, DefaultUserAgentFields.SYNTAX_ERROR, "true");
             }
             else
             {
-                this.Inform(null, UserAgent.SYNTAX_ERROR, "false");
+                this.Inform(null, DefaultUserAgentFields.SYNTAX_ERROR, "false");
             }
 
             Walker.Walk(this, userAgentContext);
@@ -686,10 +685,10 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// The ParseUserAgent.
+        /// Parse the <see cref="UserAgent"/>.
         /// </summary>
-        /// <param name="userAgent">The userAgent<see cref="UserAgent"/>.</param>
-        /// <returns>The <see cref="UserAgentParser.UserAgentContext"/>.</returns>
+        /// <param name="userAgent">The <see cref="UserAgent"/> to parse.</param>
+        /// <returns>The parsing context.</returns>
         private UserAgentParser.UserAgentContext ParseUserAgent(UserAgent userAgent)
         {
             var userAgentString = EvilManualUseragentStringHacks.FixIt(userAgent.UserAgentString);
@@ -714,13 +713,13 @@ namespace OrbintSoft.Yauaa.Parse
         }
 
         /// <summary>
-        /// Defines the <see cref="State" />.
+        /// Defines the state of the node.
         /// </summary>
         [Serializable]
         public class State
         {
             /// <summary>
-            /// Defines the ctx.
+            /// Defines the context.
             /// </summary>
             private readonly IParseTree ctx = null;
 
@@ -730,17 +729,17 @@ namespace OrbintSoft.Yauaa.Parse
             private readonly string name;
 
             /// <summary>
-            /// Defines the userAgentTreeFlattener.
+            /// Defines the user agent tree flattener.
             /// </summary>
             private readonly UserAgentTreeFlattener userAgentTreeFlattener;
 
             /// <summary>
-            /// Defines the child.
+            /// Defines the child count.
             /// </summary>
             private long child = 0;
 
             /// <summary>
-            /// Defines the comment.
+            /// Defines the comments count.
             /// </summary>
             private long comment = 0;
 
@@ -750,16 +749,16 @@ namespace OrbintSoft.Yauaa.Parse
             private string path;
 
             /// <summary>
-            /// Defines the version.
+            /// Defines the version count.
             /// </summary>
             private long version = 0;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="State"/> class.
             /// </summary>
-            /// <param name="userAgentTreeFlattener">The userAgentTreeFlattener<see cref="UserAgentTreeFlattener"/>.</param>
-            /// <param name="ctx">The ctx<see cref="IParseTree"/>.</param>
-            /// <param name="name">The name<see cref="string"/>.</param>
+            /// <param name="userAgentTreeFlattener">The <see cref="UserAgentTreeFlattener"/>.</param>
+            /// <param name="ctx">The context.</param>
+            /// <param name="name">The name of the node.</param>
             public State(UserAgentTreeFlattener userAgentTreeFlattener, IParseTree ctx, string name)
                 : this(userAgentTreeFlattener, name)
             {
@@ -769,8 +768,8 @@ namespace OrbintSoft.Yauaa.Parse
             /// <summary>
             /// Initializes a new instance of the <see cref="State"/> class.
             /// </summary>
-            /// <param name="userAgentTreeFlattener">The userAgentTreeFlattener<see cref="UserAgentTreeFlattener"/>.</param>
-            /// <param name="name">The name<see cref="string"/>.</param>
+            /// <param name="userAgentTreeFlattener">The <see cref="UserAgentTreeFlattener"/>.</param>
+            /// <param name="name">The name of the node.</param>
             public State(UserAgentTreeFlattener userAgentTreeFlattener, string name)
             {
                 this.userAgentTreeFlattener = userAgentTreeFlattener;
@@ -778,16 +777,16 @@ namespace OrbintSoft.Yauaa.Parse
             }
 
             /// <summary>
-            /// The CalculatePath.
+            /// Calculate the path of the current node based on the type.
             /// </summary>
-            /// <param name="type">The type<see cref="PathType"/>.</param>
-            /// <param name="fakeChild">The fakeChild<see cref="bool"/>.</param>
-            /// <returns>The <see cref="string"/>.</returns>
+            /// <param name="type">The type.</param>
+            /// <param name="fakeChild">The fake child.</param>
+            /// <returns>The resulting path.</returns>
             public string CalculatePath(PathType type, bool fakeChild)
             {
                 var node = this.ctx;
                 this.path = this.name;
-                if (node == null)
+                if (node is null)
                 {
                     return this.path;
                 }
@@ -797,7 +796,7 @@ namespace OrbintSoft.Yauaa.Parse
                 while (parentState == null)
                 {
                     node = node.Parent;
-                    if (node == null)
+                    if (node is null)
                     {
                         return this.path;
                     }
