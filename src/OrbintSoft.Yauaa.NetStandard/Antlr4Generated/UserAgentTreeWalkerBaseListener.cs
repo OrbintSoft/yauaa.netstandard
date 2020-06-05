@@ -116,6 +116,20 @@ public partial class UserAgentTreeWalkerBaseListener : IUserAgentTreeWalkerListe
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by the <c>matcherPathLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>matcherPathLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by the <c>matcherConcatPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -199,6 +213,20 @@ public partial class UserAgentTreeWalkerBaseListener : IUserAgentTreeWalkerListe
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by the <c>matcherPathIsInLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterMatcherPathIsInLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by the <c>matcherPathIsInLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitMatcherPathIsInLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.

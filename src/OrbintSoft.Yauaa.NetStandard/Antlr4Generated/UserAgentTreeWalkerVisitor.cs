@@ -73,6 +73,13 @@ public interface IUserAgentTreeWalkerVisitor<Result> : IParseTreeVisitor<Result>
 	/// <return>The visitor result.</return>
 	Result VisitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>matcherPathLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>matcherConcatPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
 	/// </summary>
@@ -114,6 +121,13 @@ public interface IUserAgentTreeWalkerVisitor<Result> : IParseTreeVisitor<Result>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>matcherPathIsInLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMatcherPathIsInLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.

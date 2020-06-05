@@ -99,6 +99,17 @@ public partial class UserAgentTreeWalkerBaseVisitor<Result> : AbstractParseTreeV
 	/// <return>The visitor result.</return>
 	public virtual Result VisitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context) { return VisitChildren(context); }
 	/// <summary>
+	/// Visit a parse tree produced by the <c>matcherPathLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext context) { return VisitChildren(context); }
+	/// <summary>
 	/// Visit a parse tree produced by the <c>matcherConcatPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
 	/// <para>
@@ -164,6 +175,17 @@ public partial class UserAgentTreeWalkerBaseVisitor<Result> : AbstractParseTreeV
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	public virtual Result VisitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>matcherPathIsInLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitMatcherPathIsInLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext context) { return VisitChildren(context); }
 	/// <summary>
 	/// Visit a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.

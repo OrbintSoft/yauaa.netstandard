@@ -100,6 +100,18 @@ public interface IUserAgentTreeWalkerListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitMatcherPathLookupPrefix([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext context);
 	/// <summary>
+	/// Enter a parse tree produced by the <c>matcherPathLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>matcherPathLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext context);
+	/// <summary>
 	/// Enter a parse tree produced by the <c>matcherConcatPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
 	/// </summary>
@@ -171,6 +183,18 @@ public interface IUserAgentTreeWalkerListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitMatcherConcatPostfix([NotNull] UserAgentTreeWalkerParser.MatcherConcatPostfixContext context);
+	/// <summary>
+	/// Enter a parse tree produced by the <c>matcherPathIsInLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMatcherPathIsInLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext context);
+	/// <summary>
+	/// Exit a parse tree produced by the <c>matcherPathIsInLookupContains</c>
+	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMatcherPathIsInLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext context);
 	/// <summary>
 	/// Enter a parse tree produced by the <c>matcherPathIsInLookupPrefix</c>
 	/// labeled alternative in <see cref="UserAgentTreeWalkerParser.matcher"/>.
