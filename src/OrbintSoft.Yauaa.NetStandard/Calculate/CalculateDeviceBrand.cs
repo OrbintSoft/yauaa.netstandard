@@ -143,6 +143,7 @@ namespace OrbintSoft.Yauaa.Calculate
         /// Extract the company name from the hostname.
         /// </summary>
         /// <param name="hostname">The hostname.</param>
+        /// <param name="blackList">The of black listen names (they are not brands).</param>
         /// <returns>The company name.</returns>
         private string ExtractCompanyFromHostName(string hostname, ISet<string> blackList)
         {

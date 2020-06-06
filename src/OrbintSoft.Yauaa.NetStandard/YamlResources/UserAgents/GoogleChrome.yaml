@@ -97,12 +97,16 @@ config:
     - 'AgentName                           :     2014 :"Chrome"'
     - 'AgentVersion                        :     2014 :agent.product.name="Chrome"^.version'
 
-  # Chrome on iOS
+  # Chrome on iOS is the only Chrome that does not use Blink
 - matcher:
     extract:
     - 'AgentClass                          :     2014 :"Browser"'
     - 'AgentName                           :     2014 :"Chrome"'
     - 'AgentVersion                        :     2014 :agent.product.name="CriOS"^.version'
+    - 'LayoutEngineClass                   :     1000 :"Browser"'
+    - 'LayoutEngineName                    :     1000 :"AppleWebKit"'
+    - 'LayoutEngineVersion                 :     1000 :agent.product.name="AppleWebKit"^.version'
+
 
   # Chrome uses Blink starting with version 28
   # See https://en.wikipedia.org/wiki/Blink_(web_engine)
@@ -379,7 +383,7 @@ config:
 
 - matcher:
     variable:
-    - 'Chrome:agent.product.name="Chrome"^'
+    - 'Chrome                              :agent.product.name="Chrome"^'
     require:
     - 'agent.product.name="Version"'
     extract:
@@ -391,7 +395,7 @@ config:
 
 - matcher:
     variable:
-    - 'Browser: LookUp[SpecialChromeBrowserNames;agent.product.name]'
+    - 'Browser                             :LookUp[SpecialChromeBrowserNames;agent.product.name]'
     extract:
     - 'AgentClass                          :       38 :"Browser"'
     - 'AgentName                           :     2038 :@Browser'
@@ -399,7 +403,7 @@ config:
 
 - matcher:
     variable:
-    - 'Browser: LookUp[SpecialChromeBrowserNames;agent.product.name[2-]]'
+    - 'Browser                             :LookUp[SpecialChromeBrowserNames;agent.product.name[2-]]'
     extract:
     - 'AgentClass                          :       38 :"Browser"'
     - 'AgentName                           :     2037 :@Browser'
@@ -407,7 +411,7 @@ config:
 
 - matcher:
     variable:
-    - 'WebViewProduct: agent.product.name="Chrome"^>>'
+    - 'WebViewProduct                      :agent.product.name="Chrome"^>>'
     require:
     - 'agent.product.name="Version"'
     extract:
@@ -422,7 +426,7 @@ config:
     - 'agent.product.name="Version"'
     - 'agent.product.name="Chrome"'
     variable:
-    - 'WebViewProduct: agent.product.name="Version"^>>.name="Chrome"^<'
+    - 'WebViewProduct                      :agent.product.name="Version"^>>.name="Chrome"^<'
     extract:
     - 'AgentClass                          :     2500 :"Browser Webview"'
     - 'AgentName                           :     2500 :"Chrome Webview"'
@@ -437,7 +441,7 @@ config:
     - 'agent.product.name="Chrome"'
     - 'agent.product.name="Safari"'
     variable:
-    - 'WebViewProduct: agent.product.name="Version"^>.name="Chrome"^>>.name="Safari"^<'
+    - 'WebViewProduct                      :agent.product.name="Version"^>.name="Chrome"^>>.name="Safari"^<'
     extract:
     - 'AgentClass                          :     2500 :"Browser Webview"'
     - 'AgentName                           :     2500 :"Chrome Webview"'
@@ -451,7 +455,7 @@ config:
     - 'agent.product.name="Chrome"'
     - 'agent.product.name="Mobile Safari"'
     variable:
-    - 'WebViewProduct: agent.product.name="Version"^>.name="Chrome"^>>.name="Mobile Safari"^<'
+    - 'WebViewProduct                      :agent.product.name="Version"^>.name="Chrome"^>>.name="Mobile Safari"^<'
     extract:
     - 'AgentClass                          :     2500 :"Browser Webview"'
     - 'AgentName                           :     2500 :"Chrome Webview"'
@@ -461,7 +465,7 @@ config:
 
 - matcher:
     variable:
-    - 'WebViewProduct: agent.product.name="Chrome"^>>'
+    - 'WebViewProduct                      :agent.product.name="Chrome"^>>'
     require:
     - 'agent.product.name="Version"'
     extract:
@@ -473,7 +477,7 @@ config:
 
 - matcher:
     variable:
-    - 'WebViewProduct: agent.product.name="Version"^>>.name="Chrome"^<'
+    - 'WebViewProduct                      :agent.product.name="Version"^>>.name="Chrome"^<'
     extract:
     - 'AgentClass                          :     2500 :"Browser Webview"'
     - 'AgentName                           :     2500 :"Chrome Webview"'
@@ -483,7 +487,7 @@ config:
 
 - matcher:
     variable:
-    - 'WebViewProduct: agent.product.name="Version"^>>.name="Chrome"^<'
+    - 'WebViewProduct                      :agent.product.name="Version"^>>.name="Chrome"^<'
     extract:
     - 'AgentClass                          :     2500 :"Browser Webview"'
     - 'AgentName                           :     2500 :"Chrome Webview"'
@@ -661,28 +665,28 @@ config:
 
 - matcher:
     variable:
-    - 'ProductAfterChrome: agent.product.name="Chrome"^>'
+    - 'ProductAfterChrome                  :agent.product.name="Chrome"^>'
     extract:
     - 'AgentName                           :     2072 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.name]'
     - 'AgentVersion                        :     2072 :@ProductAfterChrome.(1)version'
 
 - matcher:
     variable:
-    - 'ProductAfterChrome: agent.product.name="Chrome"^>>'
+    - 'ProductAfterChrome                  :agent.product.name="Chrome"^>>'
     extract:
     - 'AgentName                           :     2071 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.name]'
     - 'AgentVersion                        :     2071 :@ProductAfterChrome.(1)version'
 
 - matcher:
     variable:
-    - 'ProductAfterChrome: agent.product.name="Chrome"^>>>'
+    - 'ProductAfterChrome                  :agent.product.name="Chrome"^>>>'
     extract:
     - 'AgentName                           :     2070 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.name]'
     - 'AgentVersion                        :     2070 :@ProductAfterChrome.(1)version'
 
 - matcher:
     variable:
-    - 'ProductAfterChrome: agent.product.name="Chrome"^>>>>'
+    - 'ProductAfterChrome                  :agent.product.name="Chrome"^>>>>'
     extract:
     - 'AgentName                           :     2069 :LookUp[SpecialChromeBrowserNames;@ProductAfterChrome.name]'
     - 'AgentVersion                        :     2069 :@ProductAfterChrome.(1)version'
@@ -694,7 +698,7 @@ config:
 
 - matcher:
     variable:
-    - 'ProductBeforeChrome: agent.product.name="Chrome"^<'
+    - 'ProductBeforeChrome                 :agent.product.name="Chrome"^<'
     extract:
     - 'AgentName                           :     2087 :LookUp[SpecialChromeBrowserNames;@ProductBeforeChrome.name]'
     - 'AgentVersion                        :     2087 :@ProductBeforeChrome.(1)version'
@@ -702,7 +706,7 @@ config:
 
 - matcher:
     variable:
-    - 'ProductBeforeChrome: agent.product.name="Chrome"^<<'
+    - 'ProductBeforeChrome                 :agent.product.name="Chrome"^<<'
     extract:
     - 'AgentName                           :     2086 :LookUp[SpecialChromeBrowserNames;@ProductBeforeChrome.name]'
     - 'AgentVersion                        :     2086 :@ProductBeforeChrome.(1)version'
@@ -712,7 +716,7 @@ config:
     require:
     - 'agent.product.name="Safari"' # Performance trick
     variable:
-    - 'Product: agent.product.name="Chrome"^>>.name="Safari"^<'
+    - 'Product                             :agent.product.name="Chrome"^>>.name="Safari"^<'
     extract:
     - 'AgentClass                          :     2080 :"Browser"'
     - 'AgentName                           :     2080 :@Product.name'
@@ -722,7 +726,7 @@ config:
     require:
     - 'agent.product.name="Mobile Safari"' # Performance trick
     variable:
-    - 'Product: agent.product.name="Chrome"^>>.name="Mobile Safari"^<'
+    - 'Product                             :agent.product.name="Chrome"^>>.name="Mobile Safari"^<'
     extract:
     - 'AgentClass                          :     2080 :"Browser"'
     - 'AgentName                           :     2080 :@Product.name'
@@ -733,7 +737,7 @@ config:
     require:
     - 'agent.product.name="Safari"' # Performance trick
     variable:
-    - 'Product: agent.product.name="Chrome"^>>>.name="Safari"^<<'
+    - 'Product                             :agent.product.name="Chrome"^>>>.name="Safari"^<<'
     extract:
     - 'AgentClass                          :     2080 :"Browser"'
     - 'AgentName                           :     2080 :@Product.name'
@@ -743,7 +747,7 @@ config:
     require:
     - 'agent.product.name="Mobile Safari"' # Performance trick
     variable:
-    - 'Product: agent.product.name="Chrome"^>>>.name="Mobile Safari"^<<'
+    - 'Product                             :agent.product.name="Chrome"^>>>.name="Mobile Safari"^<<'
     extract:
     - 'AgentClass                          :     2080 :"Browser"'
     - 'AgentName                           :     2080 :@Product.name'
@@ -1973,9 +1977,9 @@ config:
 
 - matcher:
     variable:
-    - 'ChromeName:agent.product.name[1]="Chrome"'
-    - 'SafariName:agent.product.name="Iron Safari"'
-    - 'ProductName:@SafariName@[1]'
+    - 'ChromeName                          :agent.product.name[1]="Chrome"'
+    - 'SafariName                          :agent.product.name="Iron Safari"'
+    - 'ProductName                         :@SafariName@[1]'
     require:
     - 'IsNull[agent.product.name="Mobile Safari"]'
     extract:
@@ -1984,9 +1988,9 @@ config:
 
 - matcher:
     variable:
-    - 'ChromeName:agent.product.name[1]="Chrome"'
-    - 'SafariName:agent.product.name[3]="Safari"'
-    - 'ProductName:@SafariName@[2]'
+    - 'ChromeName                          :agent.product.name[1]="Chrome"'
+    - 'SafariName                          :agent.product.name[3]="Safari"'
+    - 'ProductName                         :@SafariName@[2]'
     require:
     - 'agent.product.name[1]="Mobile"' # Speedup trick
     - '@SafariName@[1]="Mobile"'
@@ -2319,6 +2323,33 @@ config:
       AgentVersionMajor                    : '45'
       AgentNameVersion                     : 'Comodo Dragon 45.9.12.393'
       AgentNameVersionMajor                : 'Comodo Dragon 45'
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Dragon/36.1.1.21 Chrome/36.0.1985.97 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Desktop'
+      DeviceName                           : 'Desktop'
+      DeviceBrand                          : 'Unknown'
+      DeviceCpuBits                        : '32'
+      OperatingSystemClass                 : 'Desktop'
+      OperatingSystemName                  : 'Windows NT'
+      OperatingSystemVersion               : '7'
+      OperatingSystemVersionMajor          : '7'
+      OperatingSystemNameVersion           : 'Windows 7'
+      OperatingSystemNameVersionMajor      : 'Windows 7'
+      LayoutEngineClass                    : 'Browser'
+      LayoutEngineName                     : 'Blink'
+      LayoutEngineVersion                  : '36.0'
+      LayoutEngineVersionMajor             : '36'
+      LayoutEngineNameVersion              : 'Blink 36.0'
+      LayoutEngineNameVersionMajor         : 'Blink 36'
+      AgentClass                           : 'Browser'
+      AgentName                            : 'Comodo Dragon'
+      AgentVersion                         : '36.1.1.21'
+      AgentVersionMajor                    : '36'
+      AgentNameVersion                     : 'Comodo Dragon 36.1.1.21'
+      AgentNameVersionMajor                : 'Comodo Dragon 36'
 
 
 # Comodo IceDragon https://browser.comodo.com/

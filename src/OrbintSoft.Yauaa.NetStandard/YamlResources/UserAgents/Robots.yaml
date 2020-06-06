@@ -23,14 +23,18 @@ config:
 - lookup:
     name: 'NamedRobots'
     map:
+      'Apache Nifi'                : 'Apache'
       'App3leWebKit'               : 'App3leWebKit'
+      'Buck'                       : 'Hypefactors'
       'Catchpoint'                 : 'Catchpoint'
+      'curl'                       : 'curl'
       'magpie-crawler'             : 'Brandwatch' # 'watch' causes it to be seen as a wristwatch
       'Dataprovider.com'           : 'Dataprovider.com'
       'Daum'                       : 'Daom'
       'Daumoa'                     : 'Daom'
       'DashLinkPreviews'           : 'DashLinkPreviews'
       'DejaClick'                  : 'DejaClick'
+      'DownloaderChrome'           : 'DownloaderChrome'
       'Echoping'                   : 'Echoping'
       'evc-batch'                  : 'evc-batch'
       'exal'                       : 'exal'
@@ -55,6 +59,7 @@ config:
       'CBSBot'                     : 'CBS'
       'ScoutJet'                   : 'ScoutJet'
       'Site-Shot'                  : 'Site-Shot'
+      'Swayy'                      : 'Swayy'
       'TencentTraveler'            : 'Tencent'
       'TrueClicks'                 : 'TrueClicks'
       'Twitterbot'                 : 'Twitter'
@@ -64,9 +69,7 @@ config:
       'Vagabondo'                  : 'Wise-Guys'
       'YaK'                        : 'Linkfluence'
       'wget'                       : 'wget'
-      'curl'                       : 'curl'
-      'Apache Nifi'                : 'Apache'
-
+      'zgrab'                      : 'zgrab'
 
 - lookup:
     name: 'NamedSpecialLayoutEngines'
@@ -77,48 +80,67 @@ config:
 
 - matcher:
     variable:
-    - 'RobotProductName:agent.(1)product.(1)comments.entry.(1)product.name?NamedSpecialLayoutEngines'
-    - 'RobotProductVersion:@RobotProductName^.version'
+    - 'RobotProductName                    :agent.(1)product.(1)comments.entry.(1)product.name?NamedSpecialLayoutEngines'
+    - 'RobotProductVersion                 :@RobotProductName^.version'
     extract:
     - 'DeviceClass                         :   300000 :"Robot"'
+    - 'LayoutEngineClass                   :   300002 :"Robot"'
+    - 'LayoutEngineName                    :   300002 :LookUp[NamedSpecialLayoutEngines;@RobotProductName]'
+    - 'LayoutEngineVersion                 :   300002 :@RobotProductVersion'
+
+- matcher:
+    variable:
+    - 'RobotProductName                    :agent.(1)product.(1)comments.entry.(1)product.(1)comments.(1)entry.(1)product.name?NamedSpecialLayoutEngines'
+    - 'RobotProductVersion                 :@RobotProductName^.version'
+    extract:
+    - 'DeviceClass                         :   300000 :"Robot"'
+    - 'LayoutEngineClass                   :   300002 :"Robot"'
+    - 'LayoutEngineName                    :   300002 :LookUp[NamedSpecialLayoutEngines;@RobotProductName]'
+    - 'LayoutEngineVersion                 :   300002 :@RobotProductVersion'
+
+
+- matcher:
+    variable:
+    - 'RobotProductName                    :agent.product.name?NamedRobots'
+    - 'RobotProductVersion                 :@RobotProductName^.version'
+    extract:
+    - '__Set_ALL_Fields__                  :   299901 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
+    - 'DeviceClass                         :   300001 :"Robot"'
+    - 'DeviceBrand                         :   300001 :LookUp[NamedRobots;@RobotProductName]'
+    - 'DeviceName                          :   300001 :@RobotProductName'
+    - 'OperatingSystemClass                :   300001 :"Cloud"'
+    - 'OperatingSystemName                 :   300001 :"Cloud"'
+    - 'OperatingSystemVersion              :   300001 :"??"'
     - 'LayoutEngineClass                   :   300001 :"Robot"'
-    - 'LayoutEngineName                    :   300001 :LookUp[NamedSpecialLayoutEngines;@RobotProductName]'
+    - 'LayoutEngineName                    :   300001 :@RobotProductName'
     - 'LayoutEngineVersion                 :   300001 :@RobotProductVersion'
+    - 'AgentClass                          :   300001 :"Robot"'
+    - 'AgentName                           :   300001 :@RobotProductName'
+    - 'AgentVersion                        :   300001 :@RobotProductVersion'
+
 
 - matcher:
     variable:
-    - 'RobotProductName:agent.(1)product.(1)comments.entry.(1)product.(1)comments.(1)entry.(1)product.name?NamedSpecialLayoutEngines'
-    - 'RobotProductVersion:@RobotProductName^.version'
+    - 'RobotProductName                    :agent.product.name?NamedRobots'
     extract:
-    - 'DeviceClass                         :   300000 :"Robot"'
+    - '__Set_ALL_Fields__                  :   299901 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
+    - 'DeviceClass                         :   300001 :"Robot"'
+    - 'DeviceBrand                         :   300001 :LookUp[NamedRobots;@RobotProductName]'
+    - 'DeviceName                          :   300001 :@RobotProductName'
+    - 'OperatingSystemClass                :   300001 :"Cloud"'
+    - 'OperatingSystemName                 :   300001 :"Cloud"'
+    - 'OperatingSystemVersion              :   300001 :"??"'
     - 'LayoutEngineClass                   :   300001 :"Robot"'
-    - 'LayoutEngineName                    :   300001 :LookUp[NamedSpecialLayoutEngines;@RobotProductName]'
-    - 'LayoutEngineVersion                 :   300001 :@RobotProductVersion'
+    - 'LayoutEngineName                    :   300001 :@RobotProductName'
+    - 'LayoutEngineVersion                 :   299901 :"??"'
+    - 'AgentClass                          :   300001 :"Robot"'
+    - 'AgentName                           :   300001 :@RobotProductName'
+    - 'AgentVersion                        :   299901 :"??"'
 
 
 - matcher:
     variable:
-    - 'RobotProductName:agent.product.name?NamedRobots'
-    - 'RobotProductVersion:@RobotProductName^.version'
-    extract:
-    - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
-    - 'DeviceClass                         :   300000 :"Robot"'
-    - 'DeviceBrand                         :   300000 :LookUp[NamedRobots;@RobotProductName]'
-    - 'DeviceName                          :   300000 :@RobotProductName'
-    - 'OperatingSystemClass                :   300000 :"Cloud"'
-    - 'OperatingSystemName                 :   300000 :"Cloud"'
-    - 'OperatingSystemVersion              :   300000 :"??"'
-    - 'LayoutEngineClass                   :   300000 :"Robot"'
-    - 'LayoutEngineName                    :   300000 :@RobotProductName'
-    - 'LayoutEngineVersion                 :   300000 :@RobotProductVersion'
-    - 'AgentClass                          :   300000 :"Robot"'
-    - 'AgentName                           :   300000 :@RobotProductName'
-    - 'AgentVersion                        :   300000 :@RobotProductVersion'
-
-
-- matcher:
-    variable:
-    - 'RobotProductName:agent.product.name?NamedRobots'
+    - 'RobotProductName                    :agent.product.(2)version?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300000 :"Robot"'
@@ -137,27 +159,8 @@ config:
 
 - matcher:
     variable:
-    - 'RobotProductName:agent.product.(2)version?NamedRobots'
-    extract:
-    - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
-    - 'DeviceClass                         :   300000 :"Robot"'
-    - 'DeviceBrand                         :   300000 :LookUp[NamedRobots;@RobotProductName]'
-    - 'DeviceName                          :   300000 :@RobotProductName'
-    - 'OperatingSystemClass                :   300000 :"Cloud"'
-    - 'OperatingSystemName                 :   300000 :"Cloud"'
-    - 'OperatingSystemVersion              :   300000 :"??"'
-    - 'LayoutEngineClass                   :   300000 :"Robot"'
-    - 'LayoutEngineName                    :   300000 :@RobotProductName'
-    - 'LayoutEngineVersion                 :   299900 :"??"'
-    - 'AgentClass                          :   300000 :"Robot"'
-    - 'AgentName                           :   300000 :@RobotProductName'
-    - 'AgentVersion                        :   299900 :"??"'
-
-
-- matcher:
-    variable:
-    - 'RobotProductName:agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
-    - 'RobotProductVersion:@RobotProductName^.version'
+    - 'RobotProductName                    :agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
+    - 'RobotProductVersion                 :@RobotProductName^.version'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300000 :"Robot"'
@@ -176,7 +179,7 @@ config:
 
 - matcher:
     variable:
-    - 'RobotProductName:agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
+    - 'RobotProductName                    :agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300000 :"Robot"'
@@ -195,7 +198,7 @@ config:
 
 - matcher:
     variable:
-    - 'RobotProductName:agent.(1-4)product.comments.entry.(1-2)text?NamedRobots'
+    - 'RobotProductName                    :agent.(1-4)product.comments.entry.(1-2)text?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300000 :"Robot"'
@@ -240,7 +243,7 @@ config:
     require:
     - 'agent~"Phone"'
     variable:
-    - 'RobotProductName:agent.product.name?NamedRobots'
+    - 'RobotProductName                    :agent.product.name?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300100 :"Robot Mobile"'
@@ -261,7 +264,7 @@ config:
     require:
     - 'agent~"Phone"'
     variable:
-    - 'RobotProductName:agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
+    - 'RobotProductName                    :agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300100 :"Robot Mobile"'
@@ -282,7 +285,7 @@ config:
     require:
     - 'agent~"Phone"'
     variable:
-    - 'RobotProductName:agent.(1-4)product.comments.entry.(1-2)text?NamedRobots'
+    - 'RobotProductName                    :agent.(1-4)product.comments.entry.(1-2)text?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300100 :"Robot Mobile"'
@@ -303,7 +306,7 @@ config:
     require:
     - 'agent~"Android"'
     variable:
-    - 'RobotProductName:agent.product.name?NamedRobots'
+    - 'RobotProductName                    :agent.product.name?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300100 :"Robot Mobile"'
@@ -324,7 +327,7 @@ config:
     require:
     - 'agent~"Android"'
     variable:
-    - 'RobotProductName:agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
+    - 'RobotProductName                    :agent.(1-4)product.comments.entry.(1-2)product.name?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300100 :"Robot Mobile"'
@@ -345,7 +348,7 @@ config:
     require:
     - 'agent~"Android"'
     variable:
-    - 'RobotProductName:agent.(1-4)product.comments.entry.(1-2)text?NamedRobots'
+    - 'RobotProductName                    :agent.(1-4)product.comments.entry.(1-2)text?NamedRobots'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300100 :"Robot Mobile"'
@@ -365,7 +368,7 @@ config:
 
 - matcher:
     variable:
-    - 'PhantomJSVersion:agent.product.name="PhantomJS"^.version'
+    - 'PhantomJSVersion                    :agent.product.name="PhantomJS"^.version'
     extract:
     - 'DeviceClass                         :   100000 :"Robot"'
     - 'DeviceBrand                         :   100000 :"PhantomJS"'
@@ -382,7 +385,7 @@ config:
 # http://casperjs.org/ : Navigation scripting & testing for PhantomJS and SlimerJS
 - matcher:
     variable:
-    - 'CasperJSVersion:agent.product.name="CasperJS"^.version'
+    - 'CasperJSVersion                     :agent.product.name="CasperJS"^.version'
     extract:
     - 'DeviceClass                         :   100100 :"Robot"'
     - 'DeviceBrand                         :   100100 :"CasperJS"'
@@ -1581,8 +1584,8 @@ config:
       user_agent_string: 'Curious George - www.analyticsseo.com/crawler'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Curious George'
-      DeviceBrand                          : 'Unknown'
+      DeviceName                           : 'Analyticsseo Curious George'
+      DeviceBrand                          : 'Analyticsseo'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
       OperatingSystemVersion               : '??'
@@ -1836,7 +1839,7 @@ config:
 
 - matcher:
     variable:
-    - 'PTSTVersion:agent.(1-4)product.comments.entry.(1-2)product.name="PTST"^.version'
+    - 'PTSTVersion                         :agent.(1-4)product.comments.entry.(1-2)product.name="PTST"^.version'
     extract:
     - '__Set_ALL_Fields__                  :   499900 : "<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   500000 : "Robot"'
@@ -1854,7 +1857,7 @@ config:
 
 - matcher:
     variable:
-    - 'PTSTVersion:agent.product.name="PTST"^.version'
+    - 'PTSTVersion                         :agent.product.name="PTST"^.version'
     extract:
     - '__Set_ALL_Fields__                  :   499900 : "<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   500000 : "Robot"'
@@ -1876,7 +1879,7 @@ config:
     - 'agent.product.(1)version="SpeedCurve"'
     - 'agent.product.name="PTST"^.(1)version="SpeedCurve"'
     variable:
-    - 'PTSTVersion:agent.product.name="PTST"^.(2)version'
+    - 'PTSTVersion                         :agent.product.name="PTST"^.(2)version'
     extract:
     - '__Set_ALL_Fields__                  :   499900 : "<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   500100 : "Robot"'
@@ -2475,8 +2478,8 @@ config:
 
 - matcher:
     variable:
-    - 'RobotName:agent.(1-6)product.comments.entry.(1-2)product.name="YandexMobileBot"'
-    - 'RobotVersion:@RobotName^.version'
+    - 'RobotName                           :agent.(1-6)product.comments.entry.(1-2)product.name="YandexMobileBot"'
+    - 'RobotVersion                        :@RobotName^.version'
     extract:
     - 'DeviceClass                         :   111100 :"Robot Mobile"'
     - 'DeviceName                          :    11100 :@RobotName'
@@ -2893,7 +2896,7 @@ config:
       user_agent_string: 'Mozilla/5.0 (compatible; alexa site audit/1.0; +http://www.alexa.com/help/webmasters; )'
     expected:
       DeviceClass                          : 'Robot'
-      DeviceName                           : 'Alexa Robot'
+      DeviceName                           : 'Alexa Site Audit'
       DeviceBrand                          : 'Alexa'
       OperatingSystemClass                 : 'Cloud'
       OperatingSystemName                  : 'Cloud'
@@ -2901,13 +2904,13 @@ config:
       OperatingSystemVersionMajor          : '??'
       OperatingSystemNameVersion           : 'Cloud ??'
       OperatingSystemNameVersionMajor      : 'Cloud ??'
-      LayoutEngineClass                    : 'Browser'
-      LayoutEngineName                     : 'Mozilla'
-      LayoutEngineVersion                  : '5.0'
-      LayoutEngineVersionMajor             : '5'
-      LayoutEngineNameVersion              : 'Mozilla 5.0'
-      LayoutEngineNameVersionMajor         : 'Mozilla 5'
-      AgentClass                           : 'Browser'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'alexa site audit'
+      LayoutEngineVersion                  : '1.0'
+      LayoutEngineVersionMajor             : '1'
+      LayoutEngineNameVersion              : 'alexa site audit 1.0'
+      LayoutEngineNameVersionMajor         : 'alexa site audit 1'
+      AgentClass                           : 'Robot'
       AgentName                            : 'alexa site audit'
       AgentVersion                         : '1.0'
       AgentVersionMajor                    : '1'
@@ -3418,7 +3421,6 @@ config:
       AgentNameVersion                     : 'PingdomPageSpeed 1.0'
       AgentNameVersionMajor                : 'PingdomPageSpeed 1'
 
-#FIXME: Facebook external hit ?!?!
 - test:
     input:
       user_agent_string: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.4 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.4 facebookexternalhit/1.1 Facebot Twitterbot/1.0'
@@ -4367,7 +4369,7 @@ config:
       AgentNameVersion                     : 'lua-resty-http 0.07'
       AgentNameVersionMajor                : 'lua-resty-http 0'
 
-- test: #TODO Implement
+- test:
     input:
       user_agent_string: 'PHP/5.3.28'
     expected:
@@ -4393,6 +4395,7 @@ config:
       AgentNameVersion                     : 'PHP 5.3.28'
       AgentNameVersionMajor                : 'PHP 5'
 
+# https://any23.apache.org/ --> Anything To Triples (any23) is a library, a web service and a command line tool that extracts structured data in RDF format from a variety of Web documents.24x
 #- test: #TODO Implement
 #    input:
 #      user_agent_string: 'Any23-CLI'
@@ -4418,6 +4421,10 @@ config:
 #    input:
 #      user_agent_string: 'WhatsApp'
 
+# https://www.site24x7.com/ --> All-in-One Monitoring Solution
+#- test: #TODO Implement
+#    input:
+#      user_agent_string: 'Site24x7'
 
 - test:
     input:
@@ -5101,7 +5108,6 @@ config:
 #Microsoft Office Mobile/15.0
 #libwww-perl/5.805
 #Python-urllib/2.7
-#Mozilla/3.0 (compatible; Indy Library)
 #Google-HTTP-Java-Client/1.17.0-rc (gzip)
 #SilkCentral Central/3.6+simulating+Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.0)
 #Mozilla/4.0 (compatible; Synapse)
@@ -5213,37 +5219,34 @@ config:
       AgentNameVersionMajor                : 'WatchMouse 27333'
       AgentInformationUrl                  : 'itmil01.watchmouse.net' # Two urls, one is picked ...
 
-
-
-
 # https://www.linkedin.com/company/swayy/about/
 # Founded in 2013 and taken over in 2015.
-#- test: # FIXME: (Lowprio) Implement (current rules classify this one wrong)
-#    input:
-#      user_agent_string: 'Swayy/2.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; +http://www.swayy.co)'
-#    expected:
-#      DeviceClass                          : 'Robot'
-#      DeviceName                           : 'Google'
-#      DeviceBrand                          : 'Google'
-#      OperatingSystemClass                 : 'Cloud'
-#      OperatingSystemName                  : 'Google Cloud'
-#      OperatingSystemVersion               : '??'
-#      OperatingSystemNameVersion           : 'Google Cloud ??'
-#      OperatingSystemNameVersionMajor      : 'Google Cloud ??'
-#      LayoutEngineClass                    : 'Robot'
-#      LayoutEngineName                     : 'Googlebot'
-#      LayoutEngineVersion                  : 'Googlebot'
-#      LayoutEngineVersionMajor             : 'Googlebot'
-#      LayoutEngineNameVersion              : 'Googlebot'
-#      LayoutEngineNameVersionMajor         : 'Googlebot'
-#      AgentClass                           : 'Robot'
-#      AgentName                            : 'Swayy'
-#      AgentVersion                         : '2.0'
-#      AgentVersionMajor                    : '2'
-#      AgentNameVersion                     : 'Swayy 2.0'
-#      AgentNameVersionMajor                : 'Swayy 2'
-#      AgentInformationUrl                  : 'http://www.swayy.co'
-
+- test:
+    input:
+      user_agent_string: 'Swayy/2.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html; +http://www.swayy.co)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Swayy'
+      DeviceBrand                          : 'Swayy'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Swayy'
+      LayoutEngineVersion                  : '2.0'
+      LayoutEngineVersionMajor             : '2'
+      LayoutEngineNameVersion              : 'Swayy 2.0'
+      LayoutEngineNameVersionMajor         : 'Swayy 2'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Swayy'
+      AgentVersion                         : '2.0'
+      AgentVersionMajor                    : '2'
+      AgentNameVersion                     : 'Swayy 2.0'
+      AgentNameVersionMajor                : 'Swayy 2'
+      AgentInformationUrl                  : 'http://www.google.com/bot.html'
 
 # Download managers:
 
@@ -5262,7 +5265,7 @@ config:
 
 - matcher:
     variable:
-    - 'FDMVersion:agent.(1)product.name="FDM"^.version'
+    - 'FDMVersion                          :agent.(1)product.name="FDM"^.version'
     extract:
     - '__Set_ALL_Fields__                  :   299900 :"<<<null>>>"' # Must be 1 lower than the rest (or you will wipe yourself too)
     - 'DeviceClass                         :   300000 :"Robot"'
@@ -6113,7 +6116,7 @@ config:
 # You can run chrome from the commandline.
 - matcher:
     variable:
-    - 'HeadlessChrome:agent.product.name="HeadlessChrome"'
+    - 'HeadlessChrome                      :agent.product.name="HeadlessChrome"'
     extract:
     - 'LayoutEngineName                    :   310000 : "Blink"'
     - 'LayoutEngineVersion                 :   310000 : @HeadlessChrome^.version[-2]'
@@ -6147,9 +6150,6 @@ config:
       AgentVersionMajor                    : '68'
       AgentNameVersion                     : 'HeadlessChrome 68.0.3440.106'
       AgentNameVersionMajor                : 'HeadlessChrome 68'
-      WebviewAppVersionMajor               : '??'
-      WebviewAppNameVersionMajor           : 'Unknown'
-      __SyntaxError__                      : 'false'
 
 
 - test:
@@ -6265,6 +6265,7 @@ config:
       AgentNameVersion                     : 'HeadlessChrome 71.0.3563.0'
       AgentNameVersionMajor                : 'HeadlessChrome 71'
 
+
 - test:
     input:
       user_agent_string: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/60.0.3095.0 Safari/537.36 SeoSiteCheckup (https://seositecheckup.com)'
@@ -6291,9 +6292,6 @@ config:
       AgentNameVersion                     : 'SeoSiteCheckup ??'
       AgentNameVersionMajor                : 'SeoSiteCheckup ??'
       AgentInformationUrl                  : 'https://seositecheckup.com'
-      WebviewAppVersionMajor               : '??'
-      WebviewAppNameVersionMajor           : 'Unknown'
-      __SyntaxError__                      : 'false'
 
 - test:
     input:
@@ -6773,32 +6771,32 @@ config:
       AgentInformationUrl                  : 'http://www.reddit.com/feedback'
 
 
-#- test: # FIXME: Implement
-#    input:
-#      user_agent_string: 'Mozilla/5.0 (compatible; SiteGuru Linkchecker; +https://www.siteguru.co/crawler)'
-#    expected:
-#      DeviceClass                           : 'Robot'
-#      DeviceName                            : 'Siteguru Robot'
-#      DeviceBrand                           : 'Siteguru'
-#      OperatingSystemClass                  : 'Cloud'
-#      OperatingSystemName                   : 'Cloud'
-#      OperatingSystemVersion                : '??'
-#      OperatingSystemVersionMajor           : '??'
-#      OperatingSystemNameVersion            : 'Cloud ??'
-#      OperatingSystemNameVersionMajor       : 'Cloud ??'
-#      LayoutEngineClass                     : 'Robot'
-#      LayoutEngineName                      : 'Mozilla'
-#      LayoutEngineVersion                   : '5.0'
-#      LayoutEngineVersionMajor              : '5'
-#      LayoutEngineNameVersion               : 'Mozilla 5.0'
-#      LayoutEngineNameVersionMajor          : 'Mozilla 5'
-#      AgentClass                            : 'Robot'
-#      AgentName                             : 'SiteGuru Linkchecker'
-#      AgentVersion                          : '??'
-#      AgentVersionMajor                     : '??'
-#      AgentNameVersion                      : 'SiteGuru Linkchecker ??'
-#      AgentNameVersionMajor                 : 'SiteGuru Linkchecker ??'
-#      AgentInformationUrl                   : 'https://www.siteguru.co/crawler'
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (compatible; SiteGuru Linkchecker; +https://www.siteguru.co/crawler)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'SiteGuru Linkchecker'
+      DeviceBrand                          : 'Siteguru'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'SiteGuru Linkchecker'
+      LayoutEngineVersion                  : 'SiteGuru Linkchecker'
+      LayoutEngineVersionMajor             : 'SiteGuru Linkchecker'
+      LayoutEngineNameVersion              : 'SiteGuru Linkchecker'
+      LayoutEngineNameVersionMajor         : 'SiteGuru Linkchecker'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'SiteGuru Linkchecker'
+      AgentVersion                         : 'SiteGuru Linkchecker'
+      AgentVersionMajor                    : 'SiteGuru Linkchecker'
+      AgentNameVersion                     : 'SiteGuru Linkchecker'
+      AgentNameVersionMajor                : 'SiteGuru Linkchecker'
+      AgentInformationUrl                  : 'https://www.siteguru.co/crawler'
 
 
 #- test: # TODO Implement
@@ -6822,13 +6820,13 @@ config:
       OperatingSystemVersionMajor          : '??'
       OperatingSystemNameVersion           : 'Cloud ??'
       OperatingSystemNameVersionMajor      : 'Cloud ??'
-      LayoutEngineClass                    : 'Browser'
+      LayoutEngineClass                    : 'Robot'
       LayoutEngineName                     : 'Mozilla'
       LayoutEngineVersion                  : '5.0'
       LayoutEngineVersionMajor             : '5'
       LayoutEngineNameVersion              : 'Mozilla 5.0'
       LayoutEngineNameVersionMajor         : 'Mozilla 5'
-      AgentClass                           : 'Browser'
+      AgentClass                           : 'Robot'
       AgentName                            : 'special_archiver'
       AgentVersion                         : '3.4.0'
       AgentVersionMajor                    : '3'
@@ -6978,7 +6976,7 @@ config:
       OperatingSystemNameVersion           : 'Windows XP'
       OperatingSystemNameVersionMajor      : 'Windows XP'
       LayoutEngineClass                    : 'Browser'
-      LayoutEngineName                     : 'Internet Explorer'
+      LayoutEngineName                     : 'Internet Explorer'   # FIXME: This should really be the EmbeddedWB engine...
       LayoutEngineVersion                  : '6.0'
       LayoutEngineVersionMajor             : '6'
       LayoutEngineNameVersion              : 'Internet Explorer 6.0'
@@ -6990,3 +6988,599 @@ config:
       AgentNameVersion                     : 'Internet Explorer 6.0'
       AgentNameVersionMajor                : 'Internet Explorer 6'
 
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 zgrab/0.x'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Zgrab'
+      DeviceBrand                          : 'Zgrab'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'zgrab'
+      LayoutEngineVersion                  : '0.x'
+      LayoutEngineVersionMajor             : '0'
+      LayoutEngineNameVersion              : 'zgrab 0.x'
+      LayoutEngineNameVersionMajor         : 'zgrab 0'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'zgrab'
+      AgentVersion                         : '0.x'
+      AgentVersionMajor                    : '0'
+      AgentNameVersion                     : 'zgrab 0.x'
+      AgentNameVersionMajor                : 'zgrab 0'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (compatible; Nimbostratus-Bot/v1.3.2; http://cloudsystemnetworks.com)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Cloudsystemnetworks Nimbostratus-BOT'
+      DeviceBrand                          : 'Cloudsystemnetworks'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Nimbostratus-Bot'
+      LayoutEngineVersion                  : 'v1.3.2'
+      LayoutEngineVersionMajor             : 'v1'
+      LayoutEngineNameVersion              : 'Nimbostratus-Bot v1.3.2'
+      LayoutEngineNameVersionMajor         : 'Nimbostratus-Bot v1'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Nimbostratus-Bot'
+      AgentVersion                         : 'v1.3.2'
+      AgentVersionMajor                    : 'v1'
+      AgentNameVersion                     : 'Nimbostratus-Bot v1.3.2'
+      AgentNameVersionMajor                : 'Nimbostratus-Bot v1'
+      AgentInformationUrl                  : 'http://cloudsystemnetworks.com'
+
+
+- test:
+    input:
+      user_agent_string: 'Buck/2.2; (+https://app.hypefactors.com/media-monitoring/about.html)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Hypefactors Buck'
+      DeviceBrand                          : 'Hypefactors'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Buck'
+      LayoutEngineVersion                  : '2.2'
+      LayoutEngineVersionMajor             : '2'
+      LayoutEngineNameVersion              : 'Buck 2.2'
+      LayoutEngineNameVersionMajor         : 'Buck 2'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Buck'
+      AgentVersion                         : '2.2'
+      AgentVersionMajor                    : '2'
+      AgentNameVersion                     : 'Buck 2.2'
+      AgentNameVersionMajor                : 'Buck 2'
+      AgentInformationUrl                  : 'https://app.hypefactors.com/media-monitoring/about.html'
+
+
+#- test:
+#    input:
+#      user_agent_string: 'bumb.ly/0.01 (bumb.ly crawler; https://crawler.bumb.ly; crawler@bumb.ly)'
+#    expected:
+#      DeviceClass                          : 'Robot'
+#      DeviceName                           : 'Bumb Crawler'
+#      DeviceBrand                          : 'Bumb'
+#      OperatingSystemClass                 : 'Cloud'
+#      OperatingSystemName                  : 'Cloud'
+#      OperatingSystemVersion               : '??'
+#      OperatingSystemVersionMajor          : '??'
+#      OperatingSystemNameVersion           : 'Cloud ??'
+#      OperatingSystemNameVersionMajor      : 'Cloud ??'
+#      LayoutEngineClass                    : 'Robot'
+#      LayoutEngineName                     : 'crawler'
+#      LayoutEngineVersion                  : 'crawler'
+#      LayoutEngineVersionMajor             : 'crawler'
+#      LayoutEngineNameVersion              : 'crawler'
+#      LayoutEngineNameVersionMajor         : 'crawler'
+#      AgentClass                           : 'Robot'
+#      AgentName                            : 'bumb.ly'
+#      AgentVersion                         : 'crawler'
+#      AgentVersionMajor                    : 'bumb.ly crawler'
+#      AgentNameVersion                     : 'bumb.ly crawler'
+#      AgentNameVersionMajor                : 'bumb.ly crawler'
+#      AgentInformationEmail                : 'crawler@bumb.ly'
+#      AgentInformationUrl                  : 'bumb.ly'
+
+# It is a "Robot" from within the Apache webserver
+# https://cwiki.apache.org/confluence/display/httpd/InternalDummyConnection
+- test:
+    input:
+      user_agent_string: 'Apache/2.4.6 (CentOS) PHP/5.4.16 (internal dummy connection)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'PHP'
+      DeviceBrand                          : 'PHP'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'PHP'
+      LayoutEngineVersion                  : '5.4.16'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'PHP 5.4.16'
+      LayoutEngineNameVersionMajor         : 'PHP 5'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'PHP'
+      AgentVersion                         : '5.4.16'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'PHP 5.4.16'
+      AgentNameVersionMajor                : 'PHP 5'
+
+- test:
+    input:
+      user_agent_string: 'Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/5.4.16 (internal dummy connection)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'PHP'
+      DeviceBrand                          : 'PHP'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'PHP'
+      LayoutEngineVersion                  : '5.4.16'
+      LayoutEngineVersionMajor             : '5'
+      LayoutEngineNameVersion              : 'PHP 5.4.16'
+      LayoutEngineNameVersionMajor         : 'PHP 5'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'PHP'
+      AgentVersion                         : '5.4.16'
+      AgentVersionMajor                    : '5'
+      AgentNameVersion                     : 'PHP 5.4.16'
+      AgentNameVersionMajor                : 'PHP 5'
+
+
+- test:
+    input:
+      user_agent_string: 'Wotbox/2.01 (+http://www.wotbox.com/bot/)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Wotbox Robot'
+      DeviceBrand                          : 'Wotbox'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'Unknown ??'
+      LayoutEngineNameVersionMajor         : 'Unknown ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Wotbox'
+      AgentVersion                         : '2.01'
+      AgentVersionMajor                    : '2'
+      AgentNameVersion                     : 'Wotbox 2.01'
+      AgentNameVersionMajor                : 'Wotbox 2'
+      AgentInformationUrl                  : 'http://www.wotbox.com/bot/'
+
+- test:
+    input:
+      user_agent_string: 'www.probethenet.com scanner'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Probethenet Scanner'
+      DeviceBrand                          : 'Probethenet'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'scanner'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'scanner ??'
+      LayoutEngineNameVersionMajor         : 'scanner ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'scanner'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'scanner ??'
+      AgentNameVersionMajor                : 'scanner ??'
+      AgentInformationUrl                  : 'www.probethenet.com'
+
+
+- test:
+    input:
+      user_agent_string: 'YisouSpider'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'YisouSpider'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'YisouSpider'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'YisouSpider ??'
+      LayoutEngineNameVersionMajor         : 'YisouSpider ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'YisouSpider'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'YisouSpider ??'
+      AgentNameVersionMajor                : 'YisouSpider ??'
+      HackerAttackVector                   : 'Unknown'
+      HackerToolkit                        : 'Unknown'
+
+- test:
+    input:
+      user_agent_string: 'ZoominfoBot (zoominfobot at zoominfo dot com)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Zoominfo BOT'
+      DeviceBrand                          : 'Zoominfo'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'ZoominfoBot'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'ZoominfoBot ??'
+      LayoutEngineNameVersionMajor         : 'ZoominfoBot ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'ZoominfoBot'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'ZoominfoBot ??'
+      AgentNameVersionMajor                : 'ZoominfoBot ??'
+      AgentInformationEmail                : 'zoominfobot@zoominfo.com'
+
+
+- test:
+    input:
+      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) DownloaderChrome/62.0.3202.75 Safari/537.36'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'DownloaderChrome'
+      DeviceBrand                          : 'DownloaderChrome'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'DownloaderChrome'
+      LayoutEngineVersion                  : '62.0.3202.75'
+      LayoutEngineVersionMajor             : '62'
+      LayoutEngineNameVersion              : 'DownloaderChrome 62.0.3202.75'
+      LayoutEngineNameVersionMajor         : 'DownloaderChrome 62'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'DownloaderChrome'
+      AgentVersion                         : '62.0.3202.75'
+      AgentVersionMajor                    : '62'
+      AgentNameVersion                     : 'DownloaderChrome 62.0.3202.75'
+      AgentNameVersionMajor                : 'DownloaderChrome 62'
+
+
+- test:
+    input:
+      user_agent_string: 'VelenPublicWebCrawler (velen.io)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Velen PublicWebcrawler'
+      DeviceBrand                          : 'Velen'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'VelenPublicWebCrawler'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'VelenPublicWebCrawler ??'
+      LayoutEngineNameVersionMajor         : 'VelenPublicWebCrawler ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'VelenPublicWebCrawler'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'VelenPublicWebCrawler ??'
+      AgentNameVersionMajor                : 'VelenPublicWebCrawler ??'
+      AgentInformationUrl                  : 'velen.io'
+
+
+# TODO: https://github.com/vibora-io/vibora
+#- test:
+#    input:
+#      user_agent_string: 'Vibora, Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'
+
+- test: # This one does not conform to any of the normal patterns so the result is a bit dodgy.
+    input:
+      user_agent_string: 'Visited by http://tools.geek-tools.org'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Geek-Tools Visited BY'
+      DeviceBrand                          : 'Geek-Tools'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Visited by'
+      LayoutEngineVersion                  : 'http://tools.geek-tools.org'
+      LayoutEngineVersionMajor             : 'http://tools.geek-tools.org'
+      LayoutEngineNameVersion              : 'Visited by http://tools.geek-tools.org'
+      LayoutEngineNameVersionMajor         : 'Visited by http://tools.geek-tools.org'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Visited by'
+      AgentVersion                         : 'http://tools.geek-tools.org'
+      AgentVersionMajor                    : 'http://tools.geek-tools.org'
+      AgentNameVersion                     : 'Visited by http://tools.geek-tools.org'
+      AgentNameVersionMajor                : 'Visited by http://tools.geek-tools.org'
+      AgentInformationUrl                  : 'http://tools.geek-tools.org'
+
+- test:
+    input:
+      user_agent_string: 'TurnitinBot (https://turnitin.com/robot/crawlerinfo.html)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Turnitin BOT'
+      DeviceBrand                          : 'Turnitin'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'TurnitinBot'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'TurnitinBot ??'
+      LayoutEngineNameVersionMajor         : 'TurnitinBot ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'TurnitinBot'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'TurnitinBot ??'
+      AgentNameVersionMajor                : 'TurnitinBot ??'
+      AgentInformationUrl                  : 'https://turnitin.com/robot/crawlerinfo.html'
+
+- test:
+    input:
+      user_agent_string: 'Thither.Direct Bot/0.0.1 (+https://thither.direct/en/opensearch/details/webmaster/)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Thither .direct BOT'
+      DeviceBrand                          : 'Thither'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Thither.Direct Bot'
+      LayoutEngineVersion                  : '0.0.1'
+      LayoutEngineVersionMajor             : '0'
+      LayoutEngineNameVersion              : 'Thither.Direct Bot 0.0.1'
+      LayoutEngineNameVersionMajor         : 'Thither.Direct Bot 0'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Thither.Direct Bot'
+      AgentVersion                         : '0.0.1'
+      AgentVersionMajor                    : '0'
+      AgentNameVersion                     : 'Thither.Direct Bot 0.0.1'
+      AgentNameVersionMajor                : 'Thither.Direct Bot 0'
+      AgentInformationUrl                  : 'https://thither.direct/en/opensearch/details/webmaster/'
+
+
+
+- test:
+    input:
+      user_agent_string: 'Slackbot 1.0 (+https://api.slack.com/robots)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Slack BOT'
+      DeviceBrand                          : 'Slack'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Slackbot'
+      LayoutEngineVersion                  : '1.0'
+      LayoutEngineVersionMajor             : '1'
+      LayoutEngineNameVersion              : 'Slackbot 1.0'
+      LayoutEngineNameVersionMajor         : 'Slackbot 1'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Slackbot'
+      AgentVersion                         : '1.0'
+      AgentVersionMajor                    : '1'
+      AgentNameVersion                     : 'Slackbot 1.0'
+      AgentNameVersionMajor                : 'Slackbot 1'
+      AgentInformationUrl                  : 'https://api.slack.com/robots'
+
+- test:
+    input:
+      user_agent_string: 'Slackbot-LinkExpanding 1.0 (+https://api.slack.com/robots)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Slack BOT-LinkExpanding'
+      DeviceBrand                          : 'Slack'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Slackbot-LinkExpanding'
+      LayoutEngineVersion                  : '1.0'
+      LayoutEngineVersionMajor             : '1'
+      LayoutEngineNameVersion              : 'Slackbot-LinkExpanding 1.0'
+      LayoutEngineNameVersionMajor         : 'Slackbot-LinkExpanding 1'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Slackbot-LinkExpanding'
+      AgentVersion                         : '1.0'
+      AgentVersionMajor                    : '1'
+      AgentNameVersion                     : 'Slackbot-LinkExpanding 1.0'
+      AgentNameVersionMajor                : 'Slackbot-LinkExpanding 1'
+      AgentInformationUrl                  : 'https://api.slack.com/robots'
+
+
+- test:
+    input:
+      user_agent_string: 'Screaming Frog SEO Spider/11.3"'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Screaming Frog SEO Spider'
+      DeviceBrand                          : 'Unknown'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Screaming Frog SEO Spider'
+      LayoutEngineVersion                  : '11.3'
+      LayoutEngineVersionMajor             : '11'
+      LayoutEngineNameVersion              : 'Screaming Frog SEO Spider 11.3'
+      LayoutEngineNameVersionMajor         : 'Screaming Frog SEO Spider 11'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'Screaming Frog SEO Spider'
+      AgentVersion                         : '11.3'
+      AgentVersionMajor                    : '11'
+      AgentNameVersion                     : 'Screaming Frog SEO Spider 11.3'
+      AgentNameVersionMajor                : 'Screaming Frog SEO Spider 11'
+
+
+- test:
+    input:
+      user_agent_string: 'SafeDNSBot (https://www.safedns.com/searchbot)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Safedns BOT'
+      DeviceBrand                          : 'Safedns'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'SafeDNSBot'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'SafeDNSBot ??'
+      LayoutEngineNameVersionMajor         : 'SafeDNSBot ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'SafeDNSBot'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'SafeDNSBot ??'
+      AgentNameVersionMajor                : 'SafeDNSBot ??'
+      AgentInformationUrl                  : 'https://www.safedns.com/searchbot'
+
+
+- test:
+    input:
+      user_agent_string: 'Riddler (http://riddler.io/about)'
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'Riddler Robot'
+      DeviceBrand                          : 'Riddler'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Unknown'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'Unknown ??'
+      LayoutEngineNameVersionMajor         : 'Unknown ??'
+      AgentClass                           : 'Special'
+      AgentName                            : 'Riddler'
+      AgentVersion                         : '??'
+      AgentVersionMajor                    : '??'
+      AgentNameVersion                     : 'Riddler ??'
+      AgentNameVersionMajor                : 'Riddler ??'
+      AgentInformationUrl                  : 'http://riddler.io/about'
+
+
+- test:
+    input:
+      user_agent_string: 'TagVisit/0.1 (+http://tag-visit.com/CSwZNAIbW1ZbF3BeNDI/bot)' # Note that the part in the URL depends on the domain being scraped basjes.nl
+    expected:
+      DeviceClass                          : 'Robot'
+      DeviceName                           : 'TAG-Visit Robot'
+      DeviceBrand                          : 'TAG-Visit'
+      OperatingSystemClass                 : 'Cloud'
+      OperatingSystemName                  : 'Cloud'
+      OperatingSystemVersion               : '??'
+      OperatingSystemVersionMajor          : '??'
+      OperatingSystemNameVersion           : 'Cloud ??'
+      OperatingSystemNameVersionMajor      : 'Cloud ??'
+      LayoutEngineClass                    : 'Robot'
+      LayoutEngineName                     : 'Unknown'
+      LayoutEngineVersion                  : '??'
+      LayoutEngineVersionMajor             : '??'
+      LayoutEngineNameVersion              : 'Unknown ??'
+      LayoutEngineNameVersionMajor         : 'Unknown ??'
+      AgentClass                           : 'Robot'
+      AgentName                            : 'TagVisit'
+      AgentVersion                         : '0.1'
+      AgentVersionMajor                    : '0'
+      AgentNameVersion                     : 'TagVisit 0.1'
+      AgentNameVersionMajor                : 'TagVisit 0'
+      AgentInformationUrl                  : 'http://tag-visit.com/CSwZNAIbW1ZbF3BeNDI/bot'
+
+
+# FIXME: Two examples of robots
+#- test:
+#    input:
+#      user_agent_string: 'Python-urllib/3.5, Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+#- test:
+#    input:
+#      user_agent_string: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36, Python-urllib/3.5'
+
+#  "Wappalyzer" niels.basjes.nl
+#  "WebexTeams" niels.basjes.nl
