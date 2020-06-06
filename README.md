@@ -17,28 +17,6 @@ The Java documentation can be found here https://yauaa.basjes.nl, soon will be p
 
 You can download the .nuget package there: https://www.nuget.org/packages/OrbintSoft.Yauaa.NetStandard
 
-## HIGH Profile release notes:
-
-### 5.8.1
-
-The detection for Microsoft Edge now no longer reports the 'EdgeHtml' version as if it is the version of 'Edge' itself. Microsoft made a mess of things again.
-
-### 5.6.2
-
-In version 5.6 the number of detected DeviceBrands is greatly increased. 
-
-The detection system for the DeviceBrand has been rewritten and as a consequence both the memory usage and the time needed for the analysis have been decreased.
-
-**Warning** The version 5.6.1 on .nuget has package issue, please upgrade to 5.6.2
-
-### 5.5.1
-
-With Google Chrome 70 the useragent string pattern has been changed on Android ( https://www.chromestatus.com/feature/4558585463832576 ) . As a consequence the detection of the DeviceBrand failed and you always get "Unknown". This has been fixed in Yauaa 5.5.
-
-**Warning** Before 5.5-beta.3, if you use this library throught .nuget, you may experience a reference issue with .yaml definitions,
-since they aren't automatically copied to output folder.
-
-
 ## Example output
 
 As an example the useragent of a phone:

@@ -1,28 +1,27 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Splitter.cs" company="OrbintSoft">
-// Yet Another User Agent Analyzer for .NET Standard
-// porting realized by Stefano Balzarotti, Copyright 2019 (C) OrbintSoft
+//   Yet Another User Agent Analyzer for .NET Standard
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
-// Original Author and License:
+//   Original Author and License:
 //
-// Yet Another UserAgent Analyzer
-// Copyright(C) 2013-2019 Niels Basjes
+//   Yet Another UserAgent Analyzer
+//   Copyright(C) 2013-2020 Niels Basjes
 //
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//   You may obtain a copy of the License at
 //
-// https://www.apache.org/licenses/LICENSE-2.0
+//   https://www.apache.org/licenses/LICENSE-2.0
 //
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+//   Unless required by applicable law or agreed to in writing, software
+//   distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//   See the License for the specific language governing permissions and
+//   limitations under the License.
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2018, 11, 24, 12:49</date>
-// <summary></summary>
 //-----------------------------------------------------------------------
 namespace OrbintSoft.Yauaa.Utils
 {
@@ -30,30 +29,30 @@ namespace OrbintSoft.Yauaa.Utils
     using System.Collections.Generic;
 
     /// <summary>
-    /// Defines the <see cref="Splitter" />.
+    /// Abstract class to implement a string splitter.
     /// </summary>
     public abstract class Splitter
     {
         /// <summary>
-        /// The IsSeparator.
+        /// Checks if the character is a separator.
         /// </summary>
-        /// <param name="c">The c<see cref="char"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="c">The character separator.</param>
+        /// <returns>True if the character is a separator.</returns>
         public abstract bool IsSeparator(char c);
 
         /// <summary>
-        /// The IsEndOfStringSeparator.
+        /// Checks if the character is a string terminator.
         /// </summary>
-        /// <param name="c">The c<see cref="char"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="c">The character.</param>
+        /// <returns>The if a end of string serparator.</returns>
         public abstract bool IsEndOfStringSeparator(char c);
 
         /// <summary>
-        /// The FindNextSplitStart Find the start offset of next split.
+        /// Find the start offset of next split.
         /// </summary>
         /// <param name="chars">The input in which we are seeking.</param>
-        /// <param name="offset">The start offset from where to seek<see cref="int"/>.</param>
-        /// <returns>The offset of the next split <see cref="int"/>.</returns>
+        /// <param name="offset">The start offset from where to seek.</param>
+        /// <returns>The offset of the next split.</returns>
         public int FindNextSplitStart(char[] chars, int offset)
         {
             for (var charNr = offset; charNr < chars.Length; charNr++)
@@ -74,7 +73,7 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The FindEndOfString find the end of the string.
+        /// Finds the end of the string.
         /// </summary>
         /// <param name="chars">The chars input in which we are seeking>.</param>
         /// <param name="offset">The start offset from where to seek.</param>
@@ -94,11 +93,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The FindSplitStart find the start offset of split.
+        /// Finds the start offset of split.
         /// </summary>
         /// <param name="chars">The chars input in which we are seeking.</param>
-        /// <param name="split">The split number for which we are looking for the start<see cref="int"/>.</param>
-        /// <returns>The offset or -1 if it does not exist <see cref="int"/>.</returns>
+        /// <param name="split">The split number for which we are looking for the start.</param>
+        /// <returns>The offset or -1 if it does not exist.</returns>
         public int FindSplitStart(char[] chars, int split)
         {
             if (split <= 0)
@@ -144,11 +143,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The FindSplitEnd.
+        /// Finds the end offeset of the split.
         /// </summary>
         /// <param name="chars">The chars.</param>
-        /// <param name="startOffset">The startOffset<see cref="int"/>.</param>
-        /// <returns>The <see cref="int"/>.</returns>
+        /// <param name="startOffset">The start offset.</param>
+        /// <returns>The end offset.</returns>
         public int FindSplitEnd(char[] chars, int startOffset)
         {
             var i = startOffset;
@@ -166,11 +165,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetSingleSplit.
+        /// Gets a single split from a string.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="split">The split<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="value">The value.</param>
+        /// <param name="split">The split offset.</param>
+        /// <returns>The single split.</returns>
         public virtual string GetSingleSplit(string value, int split)
         {
             var characters = value.ToCharArray();
@@ -185,11 +184,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetFirstSplits.
+        /// Gets the first split froma string.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="split">The split<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="value">The value.</param>
+        /// <param name="split">The split offset.</param>
+        /// <returns>The first split.</returns>
         public virtual string GetFirstSplits(string value, int split)
         {
             var characters = value.ToCharArray();
@@ -204,15 +203,15 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetSplitRange.
+        /// Gets a split from a range.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="firstSplit">The firstSplit<see cref="int"/>.</param>
-        /// <param name="lastSplit">The lastSplit<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="value">The value.</param>
+        /// <param name="firstSplit">The first split.</param>
+        /// <param name="lastSplit">The last split.</param>
+        /// <returns>The split range.</returns>
         public string GetSplitRange(string value, int firstSplit, int lastSplit)
         {
-            if (value == null || (lastSplit > 0 && lastSplit < firstSplit))
+            if (value is null || (lastSplit > 0 && lastSplit < firstSplit))
             {
                 return null;
             }
@@ -245,36 +244,36 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetSplitRange.
+        /// Gets a split from a range.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="range">The range<see cref="Analyze.WordRangeVisitor.Range"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="value">The value.</param>
+        /// <param name="range">The <see cref="Analyze.WordRangeVisitor.Range"/>.</param>
+        /// <returns>The split.</returns>
         public string GetSplitRange(string value, Analyze.WordRangeVisitor.Range range)
         {
             return this.GetSplitRange(value, range.First, range.Last);
         }
 
         /// <summary>
-        /// The GetSplitRange.
+        /// Gets a split from a range.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="splitList">The splitList.</param>
-        /// <param name="range">The range<see cref="Analyze.WordRangeVisitor.Range"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="value">The value.</param>
+        /// <param name="splitList">The split list.</param>
+        /// <param name="range">The <see cref="Analyze.WordRangeVisitor.Range"/>.</param>
+        /// <returns>The split.</returns>
         public string GetSplitRange(string value, IList<Tuple<int, int>> splitList, Analyze.WordRangeVisitor.Range range)
         {
             return this.GetSplitRange(value, splitList, range.First, range.Last);
         }
 
         /// <summary>
-        /// The GetSplitRange.
+        /// Gets a split from a range.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="splitList">The splitList.</param>
-        /// <param name="first">The first<see cref="int"/>.</param>
-        /// <param name="last">The last<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="value">The value.</param>
+        /// <param name="splitList">The split list.</param>
+        /// <param name="first">The start of range.</param>
+        /// <param name="last">The end of range.</param>
+        /// <returns>The split.</returns>
         public string GetSplitRange(string value, IList<Tuple<int, int>> splitList, int first, int last)
         {
             var lastIndex = last - 1;
@@ -300,9 +299,9 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The CreateSplitList.
+        /// Creates a split list from a string.
         /// </summary>
-        /// <param name="characters">The characters<see cref="string"/>.</param>
+        /// <param name="characters">The characters string.</param>
         /// <returns>The split list.</returns>
         public IList<Tuple<int, int>> CreateSplitList(string characters)
         {
@@ -310,7 +309,7 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The CreateSplitList.
+        ///  Creates a split list from a char array.
         /// </summary>
         /// <param name="characters">The characters.</param>
         /// <returns>The split list.</returns>

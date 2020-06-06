@@ -1,5 +1,18 @@
 This is intended as an overview of the major changes
 
+v5.14
+===
+- Target equivalent Java 5.14 Version
+- Analyzer:
+  - Handles a COMMA better.
+  - New LookUpContains and IsInLookUpContains functions used to speedup Hacker and Robot pattern matching.
+- Bugs:
+  - LayoutEngine for Chrome on iOS is AppleWebKit (not Blink)
+  - Matchers with only IsNull rules did not fire after deserialization with Kryo.
+  - Fixed nasty problem in the serialization of various classes. Added many toString implementations to track it down.
+- New/improved detections
+  - Agent: EmbeddedBrowser
+
 v5.13
 ===
 - Target equivalent Java 5.13 Version
