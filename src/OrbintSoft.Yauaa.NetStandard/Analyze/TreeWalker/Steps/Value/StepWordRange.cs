@@ -117,7 +117,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Value
                 var child = tree.GetChild(0);
                 if (child is UserAgentParser.SingleVersionContext || child is UserAgentParser.SingleVersionWithCommasContext)
                 {
-                    filteredValue = VersionSplitter.GetInstance().GetSplitRange(actualValue, this.firstWord, this.lastWord);
+                    filteredValue = VersionSplitter.Instance.GetSplitRange(actualValue, this.firstWord, this.lastWord);
                 }
                 else
                 {

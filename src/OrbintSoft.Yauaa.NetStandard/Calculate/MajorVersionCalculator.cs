@@ -65,7 +65,7 @@ namespace OrbintSoft.Yauaa.Calculate
                     string version = agentVersion.GetValue();
                     if (version != null)
                     {
-                        version = VersionSplitter.GetInstance().GetSingleSplit(agentVersion.GetValue(), 1);
+                        version = VersionSplitter.Instance.GetSingleSplit(agentVersion.GetValue(), 1);
                     }
                     else
                     {

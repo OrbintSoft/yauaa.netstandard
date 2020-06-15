@@ -110,7 +110,6 @@ namespace OrbintSoft.Yauaa.Analyzer
             }
         }
 
-
         /// <summary>
         /// Sets the new size of the parsing cache.
         /// Note that this will also wipe the existing cache.
@@ -136,6 +135,5 @@ namespace OrbintSoft.Yauaa.Analyzer
                 this.parseCache = null;
             }
         }
-
     }
 }

@@ -651,7 +651,7 @@ namespace OrbintSoft.Yauaa.Parse
         /// <param name="name">The name.</param>
         private void InformSubVersions(ParserRuleContext ctx, string name)
         {
-            this.InformSubstrings(ctx, name, false, VersionSplitter.GetInstance());
+            this.InformSubstrings(ctx, name, false, VersionSplitter.Instance);
         }
 
         /// <summary>

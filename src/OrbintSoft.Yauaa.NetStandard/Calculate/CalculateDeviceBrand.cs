@@ -101,7 +101,6 @@ namespace OrbintSoft.Yauaa.Calculate
             // If no brand is known but we do have a URL then we assume the hostname to be the brand.
             // We put this AFTER the creation of the DeviceName because we choose to not have
             // this brandname in the DeviceName.
-
             var informationUrl = userAgent.Get(DefaultUserAgentFields.AGENT_INFORMATION_URL);
             if (informationUrl != null && informationUrl.GetConfidence() >= 0)
             {

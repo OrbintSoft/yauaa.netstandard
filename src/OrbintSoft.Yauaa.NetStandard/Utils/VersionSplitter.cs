@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="VersionSplitter.cs" company="OrbintSoft">
 //   Yet Another User Agent Analyzer for .NET Standard
-//   porting realized by Stefano Balzarotti, Copyright 2018-2019 (C) OrbintSoft
+//   porting realized by Stefano Balzarotti, Copyright 2018-2020 (C) OrbintSoft
 //
 //   Original Author and License:
 //
 //   Yet Another UserAgent Analyzer
-//   Copyright(C) 2013-2019 Niels Basjes
+//   Copyright(C) 2013-2020 Niels Basjes
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -26,14 +26,22 @@
 
 namespace OrbintSoft.Yauaa.Utils
 {
+    using System;
+
     /// <summary>
-    /// Defines the <see cref="VersionSplitter" />.
+    /// Utility to split a version string.
     /// </summary>
     public class VersionSplitter : Splitter
     {
         /// <summary>
+        /// Lazy thread safe singleton instance.
+        /// </summary>
+        private static readonly Lazy<VersionSplitter> LazyInstance = new Lazy<VersionSplitter>(() => new VersionSplitter());
+
+        /// <summary>
         /// Defines the instance.
         /// </summary>
+        [Obsolete]
         private static VersionSplitter instance;
 
         /// <summary>
@@ -44,9 +52,15 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
+        /// Gets the Singleton instance.
+        /// </summary>
+        public static VersionSplitter Instance => LazyInstance.Value;
+
+        /// <summary>
         /// The GetInstance.
         /// </summary>
         /// <returns>The <see cref="VersionSplitter"/>.</returns>
+        [Obsolete("Use Instance property")]
         public static VersionSplitter GetInstance()
         {
             if (instance == null)
@@ -58,11 +72,11 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetFirstSplits.
+        /// Gets the first splits.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="split">The split<see cref="int"/>.</param>
-        /// <returns>The <see cref="string"/>.</returns>
+        /// <param name="value">The value to split.</param>
+        /// <param name="split">The split start position.</param>
+        /// <returns>The splits.</returns>
         public override string GetFirstSplits(string value, int split)
         {
             if (this.LooksLikeEmailOrWebaddress(value))
@@ -82,10 +96,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The GetSingleSplit.
+        /// Gets the a single split.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <param name="split">The split<see cref="int"/>.</param>
+        /// <param name="value">The value to split.</param>
+        /// <param name="split">The split start position.</param>
         /// <returns>The <see cref="string"/>.</returns>
         public override string GetSingleSplit(string value, int split)
         {
@@ -106,20 +120,16 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The IsEndOfStringSeparator.
+        /// There are no end string separators.
         /// </summary>
-        /// <param name="c">The c<see cref="char"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="c">The character to check.</param>
+        /// <returns>false.</returns>
         public override bool IsEndOfStringSeparator(char c)
         {
             return false;
         }
 
-        /// <summary>
-        /// The IsSeparator.
-        /// </summary>
-        /// <param name="c">The c<see cref="char"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <inheritdoc/>
         public override bool IsSeparator(char c)
         {
             switch (c)
@@ -134,10 +144,10 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// The LooksLikeEmailOrWebaddress.
+        /// Checks if the string value looks like an email or web address.
         /// </summary>
-        /// <param name="value">The value<see cref="string"/>.</param>
-        /// <returns>The <see cref="bool"/>.</returns>
+        /// <param name="value">The value to check.</param>
+        /// <returns>True if looks like an email or a web address.</returns>
         private bool LooksLikeEmailOrWebaddress(string value)
         {
             // Simple quick and dirty way to avoid splitting email and web addresses

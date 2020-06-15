@@ -25,11 +25,18 @@
 //-----------------------------------------------------------------------
 namespace OrbintSoft.Yauaa.Utils
 {
+    using System;
+
     /// <summary>
     /// Utility to extract the host name from an uri string.
     /// </summary>
     public static class HostnameExtractor
     {
+        /// <summary>
+        /// Extract the host name from an uri string.
+        /// </summary>
+        /// <param name="uriString">The uri string.</param>
+        /// <returns>The name of the host.</returns>
         public static string ExtractHostname(string uriString)
         {
             if (string.IsNullOrEmpty(uriString))
@@ -58,10 +65,52 @@ namespace OrbintSoft.Yauaa.Utils
                     cutIndex = firstQuestionMark;
                 }
             }
+
             if (cutIndex != -1)
             {
                 uriString = uriString.Substring(0, cutIndex);
             }
+
+            Uri uri;
+            try
+            {
+                if (uriString[0] == '/')
+                {
+                    if (uriString[1] == '/')
+                    {
+                        uri = new Uri(uriString);
+                    }
+                    else
+                    {
+                        // So no hostname
+                        return null;
+                    }
+                }
+                else
+                {
+                    if (uriString.Contains(":"))
+                    {
+                        uri = new Uri(uriString);
+                    }
+                    else
+                    {
+                        if (uriString.Contains("/"))
+                        {
+                            return uriString.Split(new char[] { '/' }, 2)[0];
+                        }
+                        else
+                        {
+                            return uriString;
+                        }
+                    }
+                }
+            }
+            catch (UriFormatException)
+            {
+                return null;
+            }
+
+            return uri.Host;
         }
     }
 }

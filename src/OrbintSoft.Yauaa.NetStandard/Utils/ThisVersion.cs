@@ -61,27 +61,27 @@ namespace OrbintSoft.Yauaa.Utils
         }
 
         /// <summary>
-        /// Gets the BuildTimestamp.
+        /// Gets the build timestamp.
         /// </summary>
         public static string BuildTimestamp => ((Fi.LastWriteTime.Ticks - 621355968000000000) / 10000).ToString();
 
         /// <summary>
-        /// Gets the Copyright.
+        /// Gets the copyright text.
         /// </summary>
         public static string Copyright => $"Copyright (C) 2013-{DateTime.Now.Year} Niels Basjes, Ported in .NET By Balzarotti Stefano (OrbintSoft)";
 
         /// <summary>
-        /// Gets the GitCommitIdDescribeShort.
+        /// Gets the git commit id.
         /// </summary>
         public static string GitCommitIdDescribeShort => ThisAssembly.Git.Commit;
 
         /// <summary>
-        /// Gets the License.
+        /// Gets the license text.
         /// </summary>
         public static string License => "License Apache 2.0";
 
         /// <summary>
-        /// Gets the ProjectVersion.
+        /// Gets the project version.
         /// </summary>
         public static string ProjectVersion => string.Format($"{AssemblyName.Version.Major}.{AssemblyName.Version.Minor}{GetPreReleaseByPatch(AssemblyName.Version.Build)}.{AssemblyName.Version.Revision}");
 
