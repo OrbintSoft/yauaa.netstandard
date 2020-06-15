@@ -31,6 +31,7 @@ namespace OrbintSoft.Yauaa.Analyze
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using OrbintSoft.Yauaa.Analyzer;
     using OrbintSoft.Yauaa.Logger;
     using OrbintSoft.Yauaa.Utils;
@@ -63,11 +64,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private readonly IDictionary<string, ISet<MatcherAction>> informMatcherActionsAboutVariables = new Dictionary<string, ISet<MatcherAction>>();
 
         /// <summary>
-        /// Defines the matcher source location.
-        /// </summary>
-        private readonly string matcherSourceLocation;
-
-        /// <summary>
         /// Defines whether verbose logging should be permanent.
         /// </summary>
 #if VERBOSE
@@ -75,6 +71,11 @@ namespace OrbintSoft.Yauaa.Analyze
 #else
         private readonly bool permanentVerbose = false;
 #endif
+
+        /// <summary>
+        /// Defines the dynamic actions.
+        /// </summary>
+        private readonly IList<MatcherAction> dynamicActions = null;
 
         /// <summary>
         /// Defines the variable actions.
@@ -92,20 +93,33 @@ namespace OrbintSoft.Yauaa.Analyze
         private long actionsThatRequireInputAndReceivedInput = 0;
 
         /// <summary>
-        /// Defines the dynamic actions.
+        /// Indicates whether we have already notified that the analyzer has already received the input.
         /// </summary>
-        private IList<MatcherAction> dynamicActions = null;
+        private bool alreadyNotifiedAnalyzerWeReceivedInput = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Matcher"/> class.
         /// </summary>
         /// <param name="analyzer">The analyzer used for parsing>.</param>
-        /// <param name="lookups">The lookups.</param>
-        /// <param name="lookupSets">The lookup Sets.</param>
+        /// <param name="lookups">Lookups Not used.</param>
+        /// <param name="lookupSets">LookupSets Not used.</param>
         /// <param name="wantedFieldNames">The wanted field names.</param>
         /// <param name="matcherConfig">The matcher configuration.</param>
         /// <param name="filename">The filename.</param>
+        [Obsolete("Change constructor")]
         public Matcher(IAnalyzer analyzer, IDictionary<string, IDictionary<string, string>> lookups, IDictionary<string, ISet<string>> lookupSets, ICollection<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
+            : this(analyzer, wantedFieldNames, matcherConfig, filename)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Matcher"/> class.
+        /// </summary>
+        /// <param name="analyzer">The analyzer used for parsing>.</param>
+        /// <param name="wantedFieldNames">The wanted field names.</param>
+        /// <param name="matcherConfig">The matcher configuration.</param>
+        /// <param name="filename">The filename.</param>
+        public Matcher(IAnalyzer analyzer, ICollection<string> wantedFieldNames, YamlMappingNode matcherConfig, string filename)
         {
             this.analyzer = analyzer;
             this.fixedStringActions = new List<MatcherAction>();
@@ -113,7 +127,7 @@ namespace OrbintSoft.Yauaa.Analyze
             this.dynamicActions = new List<MatcherAction>();
             this.newValuesUserAgent = new UserAgent(wantedFieldNames);
 
-            this.matcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
+            this.MatcherSourceLocation = filename + ':' + matcherConfig.Start.Line;
 
 #if VERBOSE
             this.Verbose = true;
@@ -127,15 +141,15 @@ namespace OrbintSoft.Yauaa.Analyze
             var configLines = new List<ConfigLine>(16);
             foreach (var nodeTuple in matcherConfig)
             {
-                var name = YamlUtils.GetKeyAsString(nodeTuple, this.matcherSourceLocation);
+                var name = YamlUtils.GetKeyAsString(nodeTuple, this.MatcherSourceLocation);
                 switch (name)
                 {
                     case "options":
-                        var options = YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation);
+                        var options = YamlUtils.GetStringValues(nodeTuple.Value, this.MatcherSourceLocation);
                         this.Verbose = options.Contains("verbose");
                         break;
                     case "variable":
-                        foreach (var variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation))
+                        foreach (var variableConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.MatcherSourceLocation))
                         {
                             var configParts = variableConfig.Split(new char[] { ':' }, 2);
 
@@ -152,14 +166,14 @@ namespace OrbintSoft.Yauaa.Analyze
 
                         break;
                     case "require":
-                        foreach (var requireConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation))
+                        foreach (var requireConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.MatcherSourceLocation))
                         {
                             configLines.Add(new ConfigLine(ConfigLine.ConfigType.REQUIRE, null, null, requireConfig));
                         }
 
                         break;
                     case "extract":
-                        foreach (var extractConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.matcherSourceLocation))
+                        foreach (var extractConfig in YamlUtils.GetStringValues(nodeTuple.Value, this.MatcherSourceLocation))
                         {
                             var configParts = extractConfig.Split(new char[] { ':' }, 3);
 
@@ -206,12 +220,12 @@ namespace OrbintSoft.Yauaa.Analyze
 
             if (!hasDefinedExtractConfigs)
             {
-                throw new InvalidParserConfigurationException($"Matcher does not extract anything: {this.matcherSourceLocation}");
+                throw new InvalidParserConfigurationException($"Matcher does not extract anything: {this.MatcherSourceLocation}");
             }
 
             if (!hasActiveExtractConfigs)
             {
-                throw new UselessMatcherException($"Does not extract any wanted fields: {this.matcherSourceLocation}");
+                throw new UselessMatcherException($"Does not extract any wanted fields: {this.MatcherSourceLocation}");
             }
 
             foreach (var configLine in configLines)
@@ -289,9 +303,9 @@ namespace OrbintSoft.Yauaa.Analyze
         public bool Verbose { get; private set; } = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether we have already notified that the analyzer has already received the input.
+        /// Gets defines the matcher source location.
         /// </summary>
-        internal bool AlreadyNotifiedAnalyzerWeReceivedInput { get; set; } = false;
+        internal string MatcherSourceLocation { get; private set; }
 
         /// <summary>
         /// Fires all matcher actions.
@@ -303,7 +317,7 @@ namespace OrbintSoft.Yauaa.Analyze
             if (this.Verbose)
             {
                 Logger.Info($"");
-                Logger.Info($"--- Matcher ------------------------");
+                Logger.Info($"--- Matcher.({this.MatcherSourceLocation}) ------------------------");
                 Logger.Info($"ANALYSE ----------------------------");
                 var good = true;
                 foreach (var action in this.dynamicActions)
@@ -450,7 +464,7 @@ namespace OrbintSoft.Yauaa.Analyze
             }
             catch (InvalidParserConfigurationException e)
             {
-                throw new InvalidParserConfigurationException($"Syntax error.({this.matcherSourceLocation})", e);
+                throw new InvalidParserConfigurationException($"Syntax error.({this.MatcherSourceLocation})", e);
             }
 
             var uselessRequireActions = new HashSet<MatcherAction>();
@@ -465,7 +479,7 @@ namespace OrbintSoft.Yauaa.Analyze
                     if (!e.Message.StartsWith("It is useless to put a fixed value"))
                     {
                         // Ignore fixed values in require
-                        throw new InvalidParserConfigurationException($"Syntax error.({this.matcherSourceLocation})" + e.Message, e);
+                        throw new InvalidParserConfigurationException($"Syntax error.({this.MatcherSourceLocation})" + e.Message, e);
                     }
 
                     uselessRequireActions.Add(dynamicAction);
@@ -506,7 +520,7 @@ namespace OrbintSoft.Yauaa.Analyze
                     {
                         if (seenVariables.Contains(interestedAction))
                         {
-                            throw new InvalidParserConfigurationException($"Syntax error: ({this.matcherSourceLocation}): The line >>{interestedAction}<< is referencing variable @{variableAction.VariableName} which is not defined yet.");
+                            throw new InvalidParserConfigurationException($"Syntax error: ({this.MatcherSourceLocation}): The line >>{interestedAction}<< is referencing variable @{variableAction.VariableName} which is not defined yet.");
                         }
                     }
                 }
@@ -530,20 +544,21 @@ namespace OrbintSoft.Yauaa.Analyze
 
             if (missingVariableNames.Count > 0)
             {
-                throw new InvalidParserConfigurationException($"Syntax error ({this.matcherSourceLocation}): Used, yet undefined variables: {missingVariableNames}");
+                throw new InvalidParserConfigurationException($"Syntax error ({this.MatcherSourceLocation}): Used, yet undefined variables: {missingVariableNames}");
             }
 
-            var allDynamicActions = new List<MatcherAction>();
-            allDynamicActions.AddRange(this.variableActions);
-            allDynamicActions.AddRange(this.dynamicActions);
-            this.dynamicActions = allDynamicActions;
+            // Make sure the variable actions are BEFORE the rest in the list
+            for (var i = this.variableActions.Count - 1; i >= 0; i--)
+            {
+                this.dynamicActions.Insert(0, this.variableActions[i]);
+            }
 
             this.ActionsThatRequireInput = this.CountActionsThatMustHaveMatches(this.dynamicActions);
 
             initStart.Stop();
             if (newEntries > 3000)
             {
-                Logger.Warn($"Large matcher: {newEntries} in {initStart.ElapsedMilliseconds} ms:.({this.matcherSourceLocation})");
+                Logger.Warn($"Large matcher: {newEntries} in {initStart.ElapsedMilliseconds} ms:.({this.MatcherSourceLocation})");
             }
 
             if (this.Verbose)
@@ -567,10 +582,10 @@ namespace OrbintSoft.Yauaa.Analyze
         /// </summary>
         public void ReceivedInput()
         {
-            if (!this.AlreadyNotifiedAnalyzerWeReceivedInput)
+            if (!this.alreadyNotifiedAnalyzerWeReceivedInput)
             {
                 this.analyzer.ReceivedInput(this);
-                this.AlreadyNotifiedAnalyzerWeReceivedInput = true;
+                this.alreadyNotifiedAnalyzerWeReceivedInput = true;
             }
         }
 
@@ -580,7 +595,7 @@ namespace OrbintSoft.Yauaa.Analyze
         public void Reset()
         {
             // If there are no dynamic actions we have fixed strings only
-            this.AlreadyNotifiedAnalyzerWeReceivedInput = false;
+            this.alreadyNotifiedAnalyzerWeReceivedInput = false;
             this.actionsThatRequireInputAndReceivedInput = 0;
             this.Verbose = this.permanentVerbose;
             foreach (var action in this.dynamicActions)
@@ -605,31 +620,26 @@ namespace OrbintSoft.Yauaa.Analyze
         public override string ToString()
         {
             var sb = new StringBuilder(512);
-            sb.Append("MATCHER.(").Append(this.matcherSourceLocation).Append("):\n").Append("    VARIABLE:\n");
+            sb.Append("MATCHER.(").Append(this.MatcherSourceLocation).Append("):\n").AppendLine("    VARIABLE:");
             foreach (var action in this.dynamicActions)
             {
                 if (action is MatcherVariableAction action1)
                 {
                     sb.Append("        @").Append(action1.VariableName)
-                        .Append(":    ").Append(action.MatchExpression).Append('\n');
-                    sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
+                      .Append(":    ").Append(action.MatchExpression).AppendLine();
+                    sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).AppendLine("]");
                 }
             }
 
-            sb.Append("    REQUIRE:\n");
+            sb.AppendLine("    REQUIRE:");
             foreach (var action in this.dynamicActions)
             {
                 if (action is MatcherRequireAction)
                 {
-                    sb.Append("        ").Append(action.MatchExpression).Append('\n');
-                    var matches = action.Matches;
-                    if (matches is null)
+                    sb.Append("        ").Append(action.MatchExpression).AppendLine();
+                    if (action.Matches != null)
                     {
-                        sb.Append("        --> []\n");
-                    }
-                    else
-                    {
-                        sb.Append("        --> [").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
+                        sb.Append("        --> [").Append(string.Join(",", action.Matches.ToStrings().ToArray())).AppendLine("]");
                     }
                 }
             }
@@ -639,22 +649,18 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 if (action is MatcherExtractAction)
                 {
-                    sb.Append("        ").Append(action.ToString()).Append('\n');
+                    sb.Append("        ").Append(action.ToString()).AppendLine();
                     var matches = action.Matches;
-                    if (matches is null)
+                    if (matches != null)
                     {
-                        sb.Append("        --> []\n");
-                    }
-                    else
-                    {
-                        sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).Append("]\n");
+                        sb.Append("        -->[").Append(string.Join(",", action.Matches.ToStrings().ToArray())).AppendLine("]");
                     }
                 }
             }
 
             foreach (var action in this.fixedStringActions)
             {
-                sb.Append("        ").Append(action.ToString()).Append('\n');
+                sb.Append("        ").Append(action.ToString()).AppendLine();
             }
 
             return sb.ToString();

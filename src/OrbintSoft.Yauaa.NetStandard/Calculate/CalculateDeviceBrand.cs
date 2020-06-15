@@ -22,6 +22,7 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 04, 16, 01:36</date>
+//-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Calculate
 {
@@ -47,12 +48,14 @@ namespace OrbintSoft.Yauaa.Calculate
         {
             this.unwantedUrlBrands = new HashSet<string>
             {
+                "Localhost",
                 "Github",
                 "Gitlab",
             };
 
             this.unwantedEmailBrands = new HashSet<string>
             {
+                "Localhost",
                 "Gmail",
                 "Outlook",
             };
@@ -98,6 +101,7 @@ namespace OrbintSoft.Yauaa.Calculate
             // If no brand is known but we do have a URL then we assume the hostname to be the brand.
             // We put this AFTER the creation of the DeviceName because we choose to not have
             // this brandname in the DeviceName.
+
             var informationUrl = userAgent.Get(DefaultUserAgentFields.AGENT_INFORMATION_URL);
             if (informationUrl != null && informationUrl.GetConfidence() >= 0)
             {

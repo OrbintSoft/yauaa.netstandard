@@ -22,6 +22,8 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 05, 15, 12:33</date>
+//-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyzer
 {
     /// <summary>

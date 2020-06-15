@@ -156,7 +156,7 @@ namespace OrbintSoft.Yauaa.Parse
             // The Weibo useragent This one is a single useragent that hold significant traffic
             result = Normalize.ReplaceString(result, "__", " ");
 
-            if (result.Contains("%20"))
+            if (result.Contains("%20") || result.Contains("%3B"))
             {
                 try
                 {

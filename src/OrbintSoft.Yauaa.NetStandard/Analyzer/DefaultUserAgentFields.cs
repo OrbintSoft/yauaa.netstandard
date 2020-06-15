@@ -22,6 +22,8 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 05, 15, 00:30</date>
+//-----------------------------------------------------------------------
+
 namespace OrbintSoft.Yauaa.Analyzer
 {
     /// <summary>
@@ -248,6 +250,11 @@ namespace OrbintSoft.Yauaa.Analyzer
         /// This fields repesents the layout engine version major.
         /// </summary>
         public const string LAYOUT_ENGINE_VERSION_MAJOR = "LayoutEngineVersionMajor";
+
+        /// <summary>
+        /// This fields repesents the network type (3g, wifi, lte...)
+        /// </summary>
+        public const string NETWORK_TYPE = "NetworkType";
 
         /// <summary>
         /// For internal use (null user agent).

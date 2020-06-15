@@ -423,13 +423,25 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 var lookupName = context.lookup.Text;
                 var lookup = this.GetLookup(lookupName);
 
-                string defaultValue = null;
-                if (context.defaultValue != null)
-                {
-                    defaultValue = context.defaultValue.Text;
-                }
+                this.Add(new StepLookup(lookupName, lookup, this.ExtractText(context.defaultValue)));
+                return null; // Void
+            }
 
-                this.Add(new StepLookup(lookupName, lookup, defaultValue));
+            /// <summary>
+            /// When match a path lookup contains context adds a <see cref="StepLookupContains"/>.
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathLookupContainsContext"/>.</param>
+            /// <returns>null.</returns>
+            public override object VisitMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext context)
+            {
+                this.Visit(context.matcher());
+
+                this.FromHereItCannotBeInHashMapAnymore();
+
+                var lookupName = context.lookup.Text;
+                var lookup = this.GetLookup(lookupName);
+
+                this.Add(new StepLookupContains(lookupName, lookup, this.ExtractText(context.defaultValue)));
                 return null; // Void
             }
 
@@ -447,13 +459,25 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 var lookupName = context.lookup.Text;
                 var lookup = this.GetLookup(lookupName);
 
-                string defaultValue = null;
-                if (context.defaultValue != null)
-                {
-                    defaultValue = context.defaultValue.Text;
-                }
+                this.Add(new StepLookupPrefix(lookupName, lookup, this.ExtractText(context.defaultValue)));
+                return null; // Void
+            }
 
-                this.Add(new StepLookupPrefix(lookupName, lookup, defaultValue));
+            /// <summary>
+            /// When match a path is in lookup contains context adds a <see cref="StepLookupPrefix"/>.
+            /// </summary>
+            /// <param name="context">The context<see cref="UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext"/>.</param>
+            /// <returns>null.</returns>
+            public override object VisitMatcherPathIsInLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext context)
+            {
+                this.Visit(context.matcher());
+
+                this.FromHereItCannotBeInHashMapAnymore();
+
+                var lookupName = context.lookup.Text;
+                var lookup = this.GetLookup(lookupName);
+
+                this.Add(new StepIsInLookupContains(lookupName, lookup));
                 return null; // Void
             }
 
@@ -823,6 +847,21 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps
                 {
                     this.Visit(nextStep);
                 }
+            }
+
+            /// <summary>
+            /// Extract text from a given token.
+            /// </summary>
+            /// <param name="token">The token.</param>
+            /// <returns>The text value.</returns>
+            private string ExtractText(IToken token)
+            {
+                if (token is null)
+                {
+                    return null;
+                }
+
+                return token.Text;
             }
         }
     }

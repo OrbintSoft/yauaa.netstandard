@@ -139,15 +139,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Basic
         /// <returns>The cached <see cref="IDictionary<string, UserAgent>"> of parsed user agents.</returns>
         private IDictionary<string, UserAgent> GetCache(UserAgentAnalyzer uaa)
         {
-            IDictionary<string, UserAgent> actualCache = null;
-            var parseCacheProperty = uaa.GetType().GetField("parseCache", BindingFlags.Instance | BindingFlags.NonPublic);
-
-            var rawParseCache = parseCacheProperty.GetValue(uaa);
-            if (rawParseCache is IDictionary<string, UserAgent>)
-            {
-                actualCache = rawParseCache as IDictionary<string, UserAgent>;
-            }
-            return actualCache;
+            return uaa?.ParseCache;
         }
 
         /// <summary>

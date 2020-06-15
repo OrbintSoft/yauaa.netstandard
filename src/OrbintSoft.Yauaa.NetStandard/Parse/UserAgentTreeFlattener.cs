@@ -443,6 +443,12 @@ namespace OrbintSoft.Yauaa.Parse
             this.InformSubstrings(context, TEXT);
         }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"UserAgentTreeFlattener{{verbose={this.verbose}}} ";
+        }
+
         /// <summary>
         /// Parse the user agen string.
         /// </summary>

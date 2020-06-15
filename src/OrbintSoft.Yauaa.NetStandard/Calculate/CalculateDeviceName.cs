@@ -22,6 +22,7 @@
 // </copyright>
 // <author>Stefano Balzarotti, Niels Basjes</author>
 // <date>2020, 04, 16, 08:28</date>
+//-----------------------------------------------------------------------
 
 namespace OrbintSoft.Yauaa.Calculate
 {

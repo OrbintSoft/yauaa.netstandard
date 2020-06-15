@@ -55,11 +55,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private static readonly ILogger Logger = new Logger<MatcherAction>();
 
         /// <summary>
-        /// Defines the matcher.
-        /// </summary>
-        private Matcher matcher = null;
-
-        /// <summary>
         /// True if verbose logging is enabled and permanent.
         /// </summary>
         private bool verbosePermanent = false;
@@ -97,6 +92,8 @@ namespace OrbintSoft.Yauaa.Analyze
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherNormalizeBrandContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherCleanVersionContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherCleanVersionContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathLookupContainsContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupContainsContext)tree).matcher());
+            CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathIsInLookupContainsContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathLookupPrefixContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherPathIsInLookupPrefixContext)tree).matcher());
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.MatcherWordRangeContext)] = (action, treeName, tree) => CalculateInformPath(action, treeName, ((UserAgentTreeWalkerParser.MatcherWordRangeContext)tree).matcher());
@@ -104,7 +101,7 @@ namespace OrbintSoft.Yauaa.Analyze
             // -------------
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.PathVariableContext)] = (action, treeName, tree) =>
             {
-                action.matcher.InformMeAboutVariable(action, ((UserAgentTreeWalkerParser.PathVariableContext)tree).variable.Text);
+                action.Matcher.InformMeAboutVariable(action, ((UserAgentTreeWalkerParser.PathVariableContext)tree).variable.Text);
                 return 0;
             };
 
@@ -126,14 +123,14 @@ namespace OrbintSoft.Yauaa.Analyze
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.StepEqualsValueContext)] = (action, treeName, tree) =>
             {
                 var thisTree = (UserAgentTreeWalkerParser.StepEqualsValueContext)tree;
-                action.matcher.InformMeAbout(action, treeName + "=\"" + thisTree.value.Text + "\"");
+                action.Matcher.InformMeAbout(action, treeName + "=\"" + thisTree.value.Text + "\"");
                 return 1;
             };
 
             CalculateInformPaths[typeof(UserAgentTreeWalkerParser.StepStartsWithValueContext)] = (action, treeName, tree) =>
             {
                 var thisTree = (UserAgentTreeWalkerParser.StepStartsWithValueContext)tree;
-                action.matcher.InformMeAboutPrefix(action, treeName, thisTree.value.Text);
+                action.Matcher.InformMeAboutPrefix(action, treeName, thisTree.value.Text);
                 return 1;
             };
 
@@ -141,7 +138,7 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 var thisTree = (UserAgentTreeWalkerParser.StepWordRangeContext)tree;
                 var range = WordRangeVisitor.GetRange(thisTree.wordRange());
-                action.matcher.LookingForRange(treeName, range);
+                action.Matcher.LookingForRange(treeName, range);
 
                 return CalculateInformPath(action, treeName + range, thisTree.nextStep);
             };
@@ -154,7 +151,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="treeName">The name of the tree.</param>
         /// <param name="tree">The tree context.</param>
         /// <returns>The result.</returns>
-        internal delegate int CalculateInformPathFunction(MatcherAction action, string treeName, ParserRuleContext tree);
+        private delegate int CalculateInformPathFunction(MatcherAction action, string treeName, ParserRuleContext tree);
 
         /// <summary>
         /// Gets the list of matches.
@@ -182,6 +179,11 @@ namespace OrbintSoft.Yauaa.Analyze
         internal bool Verbose { get; private set; } = false;
 
         /// <summary>
+        /// Gets the matcher.
+        /// </summary>
+        protected Matcher Matcher { get; private set; }
+
+        /// <summary>
         /// Gets or sets the tree expression evaluator.
         /// </summary>
         protected TreeExpressionEvaluator Evaluator { get; set; } = null;
@@ -194,12 +196,12 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="result">The match result.</param>
         public void Inform(string key, string value, IParseTree result)
         {
-            this.matcher.ReceivedInput();
+            this.Matcher.ReceivedInput();
 
             // Only if this needs input we tell the matcher on the first one.
             if (this.MustHaveMatches && this.Matches.Count == 0)
             {
-                this.matcher.GotMyFirstStartingPoint();
+                this.Matcher.GotMyFirstStartingPoint();
             }
 
             this.Matches.Add(key, value, result);
@@ -238,7 +240,7 @@ namespace OrbintSoft.Yauaa.Analyze
             new UnQuoteValues().Visit(requiredPattern);
 
             // Now we create an evaluator instance
-            this.Evaluator = new TreeExpressionEvaluator(requiredPattern, this.matcher, this.Verbose);
+            this.Evaluator = new TreeExpressionEvaluator(requiredPattern, this.Matcher, this.Verbose);
 
             // Is a fixed value (i.e. no events will ever be fired)?
             var fixedValue = this.Evaluator.FixedValue;
@@ -288,6 +290,20 @@ namespace OrbintSoft.Yauaa.Analyze
             }
         }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return "MatcherAction{" +
+                "matchExpression='" + this.MatchExpression + '\'' +
+                ", evaluator=" + this.Evaluator +
+                ", matches=" + this.Matches +
+                ", mustHaveMatches=" + this.MustHaveMatches +
+                ", verbose=" + this.Verbose +
+                ", verbosePermanent=" + this.verbosePermanent +
+                ", verboseTemporary=" + this.verboseTemporary +
+            '}';
+        }
+
         /// <summary>
         /// Set the verbose logging to be enabled or disabled.
         /// </summary>
@@ -310,17 +326,17 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <returns>The <see cref="bool"/>.</returns>
         internal bool CannotBeValid()
         {
-            return this.MustHaveMatches == !this.Matches.Any();
+            return this.MustHaveMatches && !this.Matches.Any();
         }
 
         /// <summary>
         /// Initialize the matcher.
         /// </summary>
         /// <param name="newMatchExpression">The newMatchExpression<see cref="string"/>.</param>
-        /// <param name="newMatcher">The newMatcher<see cref="Matcher"/>.</param>
+        /// <param name="newMatcher">The newMatcher<see cref="Analyze.Matcher"/>.</param>
         internal void Init(string newMatchExpression, Matcher newMatcher)
         {
-            this.matcher = newMatcher;
+            this.Matcher = newMatcher;
             this.MatchExpression = newMatchExpression;
             this.SetVerbose(newMatcher.Verbose);
         }
@@ -375,7 +391,7 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             if (tree == null)
             {
-                action.matcher.InformMeAbout(action, treeName);
+                action.Matcher.InformMeAbout(action, treeName);
                 return 1;
             }
 
@@ -385,7 +401,7 @@ namespace OrbintSoft.Yauaa.Analyze
                 return CalculateInformPaths[type].Invoke(action, treeName, tree);
             }
 
-            action.matcher.InformMeAbout(action, treeName);
+            action.Matcher.InformMeAbout(action, treeName);
             return 1;
         }
 
@@ -477,6 +493,17 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 this.UnQuoteToken(context.defaultValue);
                 return base.VisitMatcherPathLookup(context);
+            }
+
+            /// <summary>
+            /// Removes quotes from default value when visiting a MatcherPathLookupContains.
+            /// </summary>
+            /// <param name="ctx">The context.</param>
+            /// <returns>null.</returns>
+            public override object VisitMatcherPathLookupContains([NotNull] UserAgentTreeWalkerParser.MatcherPathLookupContainsContext ctx)
+            {
+                this.UnQuoteToken(ctx.defaultValue);
+                return base.VisitMatcherPathLookupContains(ctx);
             }
 
             /// <summary>

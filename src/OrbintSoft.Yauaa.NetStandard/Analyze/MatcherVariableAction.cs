@@ -45,11 +45,6 @@ namespace OrbintSoft.Yauaa.Analyze
         private static readonly ILogger Logger = new Logger<MatcherVariableAction>();
 
         /// <summary>
-        /// Defines the expression.
-        /// </summary>
-        private readonly string expression;
-
-        /// <summary>
         /// Defines the found value.
         /// </summary>
         [NonSerialized]
@@ -69,7 +64,6 @@ namespace OrbintSoft.Yauaa.Analyze
         public MatcherVariableAction(string variableName, string config, Matcher matcher)
         {
             this.VariableName = variableName;
-            this.expression = config;
             this.Init(config, matcher);
         }
 
@@ -136,7 +130,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"VARIABLE: ({this.VariableName}): {this.expression}";
+            return $"Variable. ({this.Matcher.MatcherSourceLocation}): ({this.VariableName}): {this.MatchExpression}";
         }
 
         /// <summary>

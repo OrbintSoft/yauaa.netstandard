@@ -186,11 +186,11 @@ namespace OrbintSoft.Yauaa.Analyze
         {
             if (this.IsFixedValue())
             {
-                return $"FIXED  : ({this.Attribute}, {this.confidence}) =   \"{this.fixedValue}\"";
+                return $"Extract FIXED. ({this.Matcher.MatcherSourceLocation}): ({this.Attribute}, {this.confidence}) =   \"{this.fixedValue}\"";
             }
             else
             {
-                return $"DYNAMIC: ({this.Attribute}, {this.confidence}):    {this.expression}";
+                return $"Extract DYNAMIC. ({this.Matcher.MatcherSourceLocation}): ({this.Attribute}, {this.confidence}):    {this.expression}";
             }
         }
 

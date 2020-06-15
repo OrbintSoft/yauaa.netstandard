@@ -88,6 +88,12 @@ namespace OrbintSoft.Yauaa.Analyze
             return result;
         }
 
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"MatchesList({this.Count}) [{string.Join(",", this.ToStrings())}]";
+        }
+
         /// <summary>
         /// Gets the enumerator for the collection.
         /// </summary>
@@ -117,8 +123,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <param name="result">The tree.</param>
-        /// <returns>True match added successfully.</returns>
-        internal bool Add(string key, string value, IParseTree result)
+        internal void Add(string key, string value, IParseTree result)
         {
             if (this.Count >= this.maxSize)
             {
@@ -127,7 +132,6 @@ namespace OrbintSoft.Yauaa.Analyze
 
             this.allElements[this.Count].Fill(key, value, result);
             this.Count++;
-            return true;
         }
 
         /// <summary>

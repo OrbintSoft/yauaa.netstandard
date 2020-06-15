@@ -44,7 +44,7 @@ namespace OrbintSoft.Yauaa.Testing.Tests.Analyze
         /// This is an helper method to test if the created <see cref="UserAgentAnalyzer"/> works as exected. 
         /// </summary>
         /// <param name="userAgentAnalyzer">The userAgentAnalyzer<see cref="UserAgentAnalyzerDirect"/></param>
-        private void RunTestCase(UserAgentAnalyzerDirect userAgentAnalyzer)
+        private void RunTestCase(AbstractUserAgentAnalyzerDirect userAgentAnalyzer)
         {
             var parsedAgent = userAgentAnalyzer.Parse("Mozilla/5.0 (Linux; Android 7.0; Nexus 6 Build/NBD90Z) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.124 Mobile Safari/537.36");
 

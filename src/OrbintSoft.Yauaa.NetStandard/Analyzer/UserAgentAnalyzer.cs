@@ -27,38 +27,13 @@
 namespace OrbintSoft.Yauaa.Analyzer
 {
     using System;
-    using System.Collections.Generic;
 
     /// <summary>
     /// This class is used to analyze/parse a user agent.
     /// </summary>
     [Serializable]
-    public class UserAgentAnalyzer : UserAgentAnalyzerDirect
+    public class UserAgentAnalyzer : AbstractUserAgentAnalyzer
     {
-        /// <summary>
-        /// Defines the default cache to be used.
-        /// </summary>
-        public const int DEFAULT_PARSE_CACHE_SIZE = 10000;
-
-        /// <summary>
-        /// Used as parsing cache, stores all user agents that have already been parsed.
-        /// </summary>
-        private IDictionary<string, UserAgent> parseCache = null;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="UserAgentAnalyzer"/> class.
-        /// </summary>
-        protected UserAgentAnalyzer()
-            : base()
-        {
-            this.InitializeCache();
-        }
-
-        /// <summary>
-        /// Gets the cache size.
-        /// </summary>
-        public int CacheSize { get; private set; } = DEFAULT_PARSE_CACHE_SIZE;
-
         /// <summary>
         /// Creates a new instance of <see cref="UserAgentAnalyzerBuilder"/>.
         /// </summary>
@@ -72,95 +47,27 @@ namespace OrbintSoft.Yauaa.Analyzer
         }
 
         /// <summary>
-        /// Used to disable cache.
+        /// Gets the User Agent max length.
         /// </summary>
-        public void DisableCaching()
+        /// <returns>The length.</returns>
+        [Obsolete("Use UserAgentMaxLength property")]
+        public int GetUserAgentMaxLength()
         {
-            this.SetCacheSize(0);
-        }
-
-        /// <summary>
-        /// Parse the user agent and fills all fields with extracted values.
-        /// </summary>
-        /// <param name="userAgent">The user agent to be parsed.</param>
-        /// <returns>The parsed user agent.</returns>
-        public override UserAgent Parse(UserAgent userAgent)
-        {
-            lock (this)
-            {
-                if (userAgent is null)
-                {
-                    return null;
-                }
-
-                userAgent.Reset();
-                if (this.parseCache is null)
-                {
-                    return base.Parse(userAgent);
-                }
-
-                var userAgentString = userAgent.UserAgentString;
-                if (userAgentString != null)
-                {
-                    if (this.parseCache.ContainsKey(userAgentString))
-                    {
-                        userAgent.Clone(this.parseCache[userAgentString]);
-                    }
-                    else
-                    {
-                        this.parseCache[userAgentString] = new UserAgent(base.Parse(userAgent));
-                    }
-                }
-
-                // We have our answer.
-                return userAgent;
-            }
-        }
-
-        /// <summary>
-        /// Sets the new size of the parsing cache.
-        /// Note that this will also wipe the existing cache.
-        /// </summary>
-        /// <param name="newCacheSize">The size of the new LRU cache. As size of 0 will disable caching.</param>
-        public void SetCacheSize(int newCacheSize)
-        {
-            this.CacheSize = newCacheSize > 0 ? newCacheSize : 0;
-            this.InitializeCache();
-        }
-
-        /// <summary>
-        /// Initialize the cache.
-        /// </summary>
-        private void InitializeCache()
-        {
-            if (this.CacheSize >= 1)
-            {
-                this.parseCache = new Dictionary<string, UserAgent>(this.CacheSize);
-            }
-            else
-            {
-                this.parseCache = null;
-            }
+            return this.UserAgentMaxLength;
         }
 
         /// <summary>
         /// This class is used to build a <see cref="UserAgentAnalyzer"/>.
         /// </summary>
-        public class UserAgentAnalyzerBuilder : UserAgentAnalyzerDirectBuilder<UserAgentAnalyzer, UserAgentAnalyzerBuilder>
+        public class UserAgentAnalyzerBuilder : AbstractUserAgentAnalyzerBuilder<UserAgentAnalyzer, UserAgentAnalyzerBuilder>
         {
-            /// <summary>
-            /// Defines the user agent analyzer.
-            /// </summary>
-            private readonly UserAgentAnalyzer uaa;
-
             /// <summary>
             /// Initializes a new instance of the <see cref="UserAgentAnalyzerBuilder"/> class.
             /// </summary>
-            /// <param name="newUaa">The newUaa<see cref="UserAgentAnalyzer"/>.</param>
+            /// <param name="newUaa">The user agent analyzer</param>
             public UserAgentAnalyzerBuilder(UserAgentAnalyzer newUaa)
                 : base(newUaa)
             {
-                this.uaa = newUaa;
             }
 
             /// <summary>
@@ -170,29 +77,6 @@ namespace OrbintSoft.Yauaa.Analyzer
             public override UserAgentAnalyzer Build()
             {
                 return base.Build();
-            }
-
-            /// <summary>
-            /// Sets the cache size.
-            /// </summary>
-            /// <param name="newCacheSize">The new cache size.</param>
-            /// <returns>The builder for chaining.</returns>
-            public UserAgentAnalyzerBuilder WithCache(int newCacheSize)
-            {
-                this.FailIfAlreadyBuilt();
-                this.uaa.SetCacheSize(newCacheSize);
-                return this;
-            }
-
-            /// <summary>
-            /// Sets to don't use cache.
-            /// </summary>
-            /// <returns>The builder for chaining.</returns>
-            public UserAgentAnalyzerBuilder WithoutCache()
-            {
-                this.FailIfAlreadyBuilt();
-                this.uaa.SetCacheSize(0);
-                return this;
             }
         }
     }

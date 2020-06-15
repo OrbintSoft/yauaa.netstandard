@@ -151,7 +151,7 @@ namespace OrbintSoft.Yauaa.Annotate
         /// <param name="newCacheSize">The size of the new LRU cache. As size of 0 will disable caching.</param>
         public void SetCacheSize(int newCacheSize)
         {
-            this.CacheSize = newCacheSize > 0 ? newCacheSize : 0;
+            this.CacheSize = Math.Max(newCacheSize, 0);
             if (this.userAgentAnalyzer != null)
             {
                 this.userAgentAnalyzer.SetCacheSize(this.CacheSize);

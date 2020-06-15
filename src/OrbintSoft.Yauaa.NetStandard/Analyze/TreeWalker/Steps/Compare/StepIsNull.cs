@@ -73,7 +73,7 @@ namespace OrbintSoft.Yauaa.Analyze.TreeWalker.Steps.Compare
 
             if (actualValue?.Value is null)
             {
-                return new WalkList.WalkResult(tree, "<<<Null Value>>>");
+                return new WalkList.WalkResult(tree, "<<<IsNull Success Value>>>");
             }
             else
             {

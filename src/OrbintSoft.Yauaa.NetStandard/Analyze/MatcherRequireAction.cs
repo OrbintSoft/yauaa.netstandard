@@ -95,8 +95,11 @@ namespace OrbintSoft.Yauaa.Analyze
             {
                 this.foundRequiredValue = true;
             }
+            else
+            {
+                this.ProcessInformedMatches();
+            }
 
-            this.ProcessInformedMatches();
             return this.foundRequiredValue;
         }
 
@@ -112,7 +115,7 @@ namespace OrbintSoft.Yauaa.Analyze
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"Require: {this.MatchExpression}";
+            return $"Require. {this.Matcher.MatcherSourceLocation}: {this.MatchExpression}";
         }
 
         /// <summary>
